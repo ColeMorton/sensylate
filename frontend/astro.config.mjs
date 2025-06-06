@@ -7,6 +7,7 @@ import { defineConfig } from "astro/config";
 import remarkCollapse from "remark-collapse";
 import remarkToc from "remark-toc";
 import sharp from "sharp";
+import path from "path";
 import config from "./src/config/config.json";
 
 // https://astro.build/config
@@ -15,7 +16,21 @@ export default defineConfig({
   base: config.site.base_path ? config.site.base_path : "/",
   trailingSlash: config.site.trailing_slash ? "always" : "never",
   image: { service: sharp() },
-  vite: { plugins: [tailwindcss()] },
+  vite: { 
+    plugins: [tailwindcss()],
+    resolve: {
+      alias: {
+        '@/components': path.resolve('./src/layouts/components'),
+        '@/shortcodes': path.resolve('./src/layouts/shortcodes'),
+        '@/helpers': path.resolve('./src/layouts/helpers'),
+        '@/partials': path.resolve('./src/layouts/partials'),
+        '@/lib': path.resolve('./src/lib'),
+        '@/config': path.resolve('./src/config'),
+        '@/layouts': path.resolve('./src/layouts'),
+        '@': path.resolve('./src')
+      }
+    }
+  },
   integrations: [
     react(),
     sitemap(),
