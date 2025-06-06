@@ -1,0 +1,41 @@
+# Model Training Configuration
+metadata:
+  name: "Model Training Pipeline"
+  version: "1.0.0"
+  description: "Train machine learning models on processed features"
+
+input:
+  file_format: "parquet"
+  validation:
+    required_columns: ["target", "features"]
+    min_rows: 100
+
+output:
+  file_path: "data/processed/models/trained_model_{timestamp}.pkl"
+  format: "pickle"
+  metrics_file: "outputs/reports/model_metrics_{timestamp}.json"
+
+model:
+  type: "random_forest"
+  parameters:
+    n_estimators: 100
+    max_depth: 10
+    random_state: 42
+  
+  validation:
+    method: "time_series_split"
+    n_splits: 5
+    test_size: 0.2
+  
+  evaluation:
+    metrics: ["mse", "mae", "r2"]
+    cross_validation: true
+
+feature_selection:
+  method: "recursive_feature_elimination"
+  n_features: 10
+  step: 1
+
+logging:
+  level: "INFO"
+  file: "outputs/logs/model_training_{date}.log"

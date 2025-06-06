@@ -1,0 +1,16 @@
+# Shared path configurations
+base_paths:
+  data_root: "data"
+  output_root: "outputs"
+  logs_root: "outputs/logs"
+
+data_paths:
+  raw: "${base_paths.data_root}/raw"
+  interim: "${base_paths.data_root}/interim"
+  processed: "${base_paths.data_root}/processed"
+  external: "${base_paths.data_root}/external"
+
+output_paths:
+  reports: "${output_root}/reports"
+  visualizations: "${output_root}/visualizations"
+  exports: "${output_root}/exports"

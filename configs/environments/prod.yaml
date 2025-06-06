@@ -1,0 +1,34 @@
+# Production environment configuration
+metadata:
+  environment: "production"
+  debug: false
+
+logging:
+  level: "WARNING"
+  file: "outputs/logs/prod_{script}_{date}.log"
+
+processing:
+  validation:
+    strict_mode: true
+    schema_validation: true
+    
+output:
+  cleanup_temp_files: true
+  backup_outputs: true
+  compression: "gzip"
+  
+database:
+  connection_string: "${PROD_DB_CONNECTION_STRING}"
+  timeout: 15
+  ssl_mode: "require"
+  
+model:
+  quick_training: false
+  validation:
+    cross_validation: true
+    n_splits: 5
+    
+monitoring:
+  enabled: true
+  metrics_endpoint: "${METRICS_ENDPOINT}"
+  alert_on_failure: true

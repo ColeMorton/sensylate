@@ -1,0 +1,22 @@
+# Sample configuration for testing
+metadata:
+  name: "Test Pipeline"
+  version: "1.0.0"
+  description: "Test configuration"
+
+input:
+  database:
+    connection_string: "sqlite:///test.db"
+    timeout: 30
+
+output:
+  file_path: "tests/fixtures/test_output.parquet"
+  format: "parquet"
+
+processing:
+  validate_schema: true
+  max_retries: 1
+
+logging:
+  level: "DEBUG"
+  file: "tests/fixtures/test.log"

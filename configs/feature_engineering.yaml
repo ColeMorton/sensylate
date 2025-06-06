@@ -1,0 +1,42 @@
+# Feature Engineering Configuration
+metadata:
+  name: "Feature Engineering Pipeline"
+  version: "1.0.0"
+  description: "Transform raw data into features for modeling"
+
+input:
+  file_format: "parquet"
+  validation:
+    required_columns: ["id", "timestamp", "value"]
+    schema_check: true
+
+output:
+  file_path: "data/processed/features_{timestamp}.parquet"
+  format: "parquet"
+  compression: "snappy"
+
+processing:
+  features:
+    - name: "rolling_mean_7d"
+      type: "rolling"
+      window: 7
+      function: "mean"
+    - name: "rolling_std_7d"
+      type: "rolling"
+      window: 7
+      function: "std"
+    - name: "lag_1d"
+      type: "lag"
+      periods: 1
+  
+  scaling:
+    method: "standard"
+    columns: ["value", "rolling_mean_7d", "rolling_std_7d"]
+  
+  missing_values:
+    strategy: "forward_fill"
+    max_consecutive: 3
+
+logging:
+  level: "INFO"
+  file: "outputs/logs/feature_engineering_{date}.log"

@@ -1,0 +1,27 @@
+# Data Extraction Configuration
+metadata:
+  name: "Data Extraction Pipeline"
+  version: "1.0.0"
+  description: "Extract raw data from multiple sources"
+
+input:
+  database:
+    connection_string: "${DB_CONNECTION_STRING}"
+    timeout: 30
+  api:
+    endpoint: "https://api.example.com/data"
+    batch_size: 1000
+
+output:
+  file_path: "data/raw/extracted_data_{timestamp}.parquet"
+  format: "parquet"
+  compression: "snappy"
+
+processing:
+  validate_schema: true
+  remove_duplicates: true
+  max_retries: 3
+
+logging:
+  level: "INFO"
+  file: "outputs/logs/data_extraction_{date}.log"

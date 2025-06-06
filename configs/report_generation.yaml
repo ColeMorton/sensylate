@@ -1,0 +1,59 @@
+# Report Generation Configuration
+metadata:
+  name: "Report Generation Pipeline"
+  version: "1.0.0"
+  description: "Generate analysis reports and visualizations"
+
+input:
+  data_file_format: "parquet"
+  model_file_format: "pickle"
+  validation:
+    required_data_columns: ["timestamp", "value", "predictions"]
+
+output:
+  file_path: "outputs/reports/analysis_report_{timestamp}.html"
+  format: "html"
+  include_pdf: true
+  pdf_path: "outputs/reports/analysis_report_{timestamp}.pdf"
+
+report:
+  title: "Data Analysis Report"
+  author: "Automated Pipeline"
+  sections:
+    - name: "executive_summary"
+      enabled: true
+    - name: "data_overview"
+      enabled: true
+    - name: "model_performance"
+      enabled: true
+    - name: "visualizations"
+      enabled: true
+    - name: "recommendations"
+      enabled: true
+
+visualizations:
+  - type: "time_series"
+    title: "Data Trends Over Time"
+    x_column: "timestamp"
+    y_column: "value"
+    output_path: "outputs/visualizations/time_series_{timestamp}.png"
+  
+  - type: "correlation_matrix"
+    title: "Feature Correlations"
+    output_path: "outputs/visualizations/correlation_matrix_{timestamp}.png"
+  
+  - type: "prediction_vs_actual"
+    title: "Model Predictions vs Actual"
+    x_column: "actual"
+    y_column: "predictions"
+    output_path: "outputs/visualizations/predictions_{timestamp}.png"
+
+export:
+  csv_export: true
+  csv_path: "outputs/exports/analysis_data_{timestamp}.csv"
+  json_export: true
+  json_path: "outputs/exports/analysis_summary_{timestamp}.json"
+
+logging:
+  level: "INFO"
+  file: "outputs/logs/report_generation_{date}.log"

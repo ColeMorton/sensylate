@@ -1,0 +1,26 @@
+# Staging environment configuration
+metadata:
+  environment: "staging"
+  debug: false
+
+logging:
+  level: "INFO"
+  file: "outputs/logs/staging_{script}_{date}.log"
+
+processing:
+  validation:
+    strict_mode: true
+    
+output:
+  cleanup_temp_files: true
+  backup_outputs: true
+  
+database:
+  connection_string: "${STAGING_DB_CONNECTION_STRING}"
+  timeout: 30
+  
+model:
+  quick_training: false
+  validation:
+    cross_validation: true
+    n_splits: 3
