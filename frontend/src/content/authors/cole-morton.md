@@ -1,9 +1,13 @@
 ---
 title: Cole Morton
 email: cole.morton@hotmail.com
-image: "/images/avatar.png"
+image: "/images/photo_2025-06-07 09.33.21.jpeg"
 description: this is meta description
 social:
+  - name: substack
+    icon: FaSubstack
+    link: https://colemorton.substack.com/
+
   - name: github
     icon: FaGithub
     link: https://github.com/ColeMorton
@@ -17,4 +21,6 @@ social:
     link: https://www.linkedin.com/in/cole-morton-72300745/
 ---
 
-lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostr navigation et dolore magna aliqua.
+🧠 Trading System Engineer
+🖥️ Software Dev
+📊 Risk Manager

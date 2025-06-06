@@ -21,6 +21,17 @@ const iconLibraries: { [key: string]: IconMap } = {
 };
 
 const DynamicIcon: FC<IDynamicIcon> = ({ icon, ...props }) => {
+  // Handle custom SVG icons
+  if (icon === "FaSubstack") {
+    return (
+      <img 
+        src="/images/substack.svg" 
+        alt="Substack" 
+        className={`${props.className} h-5 w-5`}
+      />
+    );
+  }
+
   const IconLibrary = getIconLibrary(icon);
   const Icon = IconLibrary ? IconLibrary[icon] : undefined;
 

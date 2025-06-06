@@ -1,24 +1,24 @@
 {
   "main": [
     {
-      "name": "facebook",
-      "icon": "FaFacebook",
-      "link": "https://www.facebook.com/"
+      "name": "substack",
+      "icon": "FaSubstack", 
+      "link": "https://colemorton.substack.com/"
     },
     {
       "name": "twitter",
       "icon": "FaTwitter",
-      "link": "https://twitter.com/"
+      "link": "https://x.com/colemorton7"
     },
     {
       "name": "github",
       "icon": "FaGithub",
-      "link": "https://www.github.com/"
+      "link": "https://github.com/ColeMorton"
     },
     {
       "name": "linkedin",
       "icon": "FaLinkedin",
-      "link": "https://www.linkedin.com/"
+      "link": "https://www.linkedin.com/in/cole-morton-72300745/"
     }
   ]
 }
