@@ -487,10 +487,15 @@ class CollaborationEngine:
 
 def main():
     """Example usage of the Collaboration Engine"""
+    # Auto-detect project or specify manually
     engine = CollaborationEngine()
     
+    print(f"=== Collaboration Engine for Project: {engine.project_name} ===")
+    print(f"Project root: {engine.project_root}")
+    print(f"Team workspace: {engine.workspace_path}")
+    
     # Example: Resolve dependencies for architect command
-    print("=== Dependency Resolution Example ===")
+    print("\n=== Dependency Resolution Example ===")
     context, missing = engine.resolve_dependencies("architect")
     
     print(f"Command: architect")
@@ -503,6 +508,18 @@ def main():
     workflow = engine.get_workflow_recommendations(["code-owner", "product-owner", "architect"])
     print(f"Suggested sequence: {workflow['suggested_sequence']}")
     print(f"Estimated total time: {workflow['estimated_total_time']}")
+    
+    # Example: Project-specific vs user commands
+    print(f"\n=== Command Resolution Paths ===")
+    print(f"User commands: {engine.user_commands_path}")
+    print(f"Project commands: {engine.project_commands_path}")
+    
+    # Example usage for different projects
+    print(f"\n=== Multi-Project Usage ===")
+    print(f"# Current project: {engine.project_name}")
+    print(f"# For different project: CollaborationEngine(project_name='other-project')")
+    print(f"# Auto-detect from path: CollaborationEngine()")
+    
 
 
 if __name__ == "__main__":
