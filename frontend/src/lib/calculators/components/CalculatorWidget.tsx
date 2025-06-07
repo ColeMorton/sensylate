@@ -1,0 +1,305 @@
+import React, { useState } from "react";
+import type { BaseCalculator, CalculatorConfig } from "../core/Calculator.ts";
+import { defaultTheme, type CalculatorTheme } from "../core/UIRenderer.ts";
+import { FieldRenderer } from "./FieldRenderer.tsx";
+
+interface CalculatorWidgetProps {
+  calculator: BaseCalculator;
+  config?: CalculatorConfig;
+  theme?: CalculatorTheme;
+  onResult?: (result: any) => void;
+  onError?: (error: string) => void;
+}
+
+export const CalculatorWidget: React.FC<CalculatorWidgetProps> = ({
+  calculator,
+  config = {},
+  theme = defaultTheme,
+  onResult,
+  onError,
+}) => {
+  const [inputs, setInputs] = useState<Record<string, any>>(() =>
+    calculator.getDefaultInputs(),
+  );
+  const [outputs, setOutputs] = useState<Record<string, any>>({});
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [isCalculating, setIsCalculating] = useState(false);
+  const [lastResult, setLastResult] = useState<any>(null);
+
+  const handleInputChange = (name: string, value: any) => {
+    setInputs((prev) => ({ ...prev, [name]: value }));
+
+    // Clear field error when user starts typing
+    if (errors[name]) {
+      setErrors((prev) => {
+        const newErrors = { ...prev };
+        delete newErrors[name];
+        return newErrors;
+      });
+    }
+  };
+
+  const handleCalculate = async () => {
+    setIsCalculating(true);
+    setErrors({});
+
+    try {
+      const result = await Promise.resolve(calculator.calculate(inputs));
+
+      if (result.success) {
+        setOutputs(result.data || {});
+        setLastResult(result);
+        onResult?.(result);
+      } else {
+        const errorMessage = result.error || "Calculation failed";
+        setErrors({ general: errorMessage });
+        onError?.(errorMessage);
+      }
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : "Unexpected error";
+      setErrors({ general: errorMessage });
+      onError?.(errorMessage);
+    } finally {
+      setIsCalculating(false);
+    }
+  };
+
+  const handleReset = () => {
+    setInputs(calculator.getDefaultInputs());
+    setOutputs({});
+    setErrors({});
+    setLastResult(null);
+  };
+
+  const hasRequiredInputs = calculator.schema.inputs
+    .filter((field) => field.required)
+    .every((field) => {
+      const value = inputs[field.name];
+      return value !== undefined && value !== null && value !== "";
+    });
+
+  const containerStyle = {
+    backgroundColor: theme.colors.background,
+    color: theme.colors.text,
+    fontFamily: theme.typography.fontFamily,
+    borderRadius: theme.borderRadius,
+    boxShadow: theme.shadow,
+    padding: theme.spacing.lg,
+    border: `1px solid ${theme.colors.border}`,
+  };
+
+  const buttonStyle = {
+    backgroundColor: theme.colors.primary,
+    color: theme.colors.background,
+    padding: `${theme.spacing.sm} ${theme.spacing.md}`,
+    borderRadius: theme.borderRadius,
+    border: "none",
+    fontSize: theme.typography.fontSize.md,
+    fontWeight: theme.typography.fontWeight.medium,
+    cursor: "pointer",
+    opacity: !hasRequiredInputs || isCalculating ? 0.6 : 1,
+    transition: "opacity 0.2s",
+  };
+
+  const sectionStyle = {
+    marginBottom: theme.spacing.lg,
+  };
+
+  const titleStyle = {
+    fontSize: theme.typography.fontSize.xl,
+    fontWeight: theme.typography.fontWeight.bold,
+    marginBottom: theme.spacing.sm,
+    color: theme.colors.text,
+  };
+
+  const descriptionStyle = {
+    fontSize: theme.typography.fontSize.sm,
+    color: theme.colors.textSecondary,
+    marginBottom: theme.spacing.lg,
+  };
+
+  const errorStyle = {
+    color: theme.colors.error,
+    fontSize: theme.typography.fontSize.sm,
+    marginTop: theme.spacing.xs,
+  };
+
+  return (
+    <div style={containerStyle}>
+      {config.showMetadata !== false && (
+        <div style={sectionStyle}>
+          <h3 style={titleStyle}>{calculator.metadata.name}</h3>
+          <p style={descriptionStyle}>{calculator.metadata.description}</p>
+        </div>
+      )}
+
+      {/* General Error */}
+      {errors.general && <div style={errorStyle}>{errors.general}</div>}
+
+      {/* Input Fields */}
+      <div style={sectionStyle}>
+        <h4
+          style={{
+            fontSize: theme.typography.fontSize.lg,
+            fontWeight: theme.typography.fontWeight.medium,
+            marginBottom: theme.spacing.md,
+            color: theme.colors.text,
+          }}
+        >
+          Inputs
+        </h4>
+
+        <div
+          style={{
+            display: "grid",
+            gap: theme.spacing.md,
+            gridTemplateColumns:
+              config.layout === "horizontal"
+                ? "repeat(auto-fit, minmax(200px, 1fr))"
+                : "1fr",
+          }}
+        >
+          {calculator.schema.inputs.map((field) => (
+            <FieldRenderer
+              key={field.name}
+              field={field}
+              value={inputs[field.name]}
+              error={errors[field.name]}
+              onChange={(value) => handleInputChange(field.name, value)}
+              theme={theme}
+              disabled={isCalculating}
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* Calculate Button */}
+      <div style={{ ...sectionStyle, textAlign: "center" }}>
+        <button
+          onClick={handleCalculate}
+          disabled={!hasRequiredInputs || isCalculating}
+          style={buttonStyle}
+        >
+          {isCalculating ? "Calculating..." : "Calculate"}
+        </button>
+
+        {Object.keys(outputs).length > 0 && (
+          <button
+            onClick={handleReset}
+            style={{
+              ...buttonStyle,
+              backgroundColor: theme.colors.secondary,
+              marginLeft: theme.spacing.sm,
+            }}
+          >
+            Reset
+          </button>
+        )}
+      </div>
+
+      {/* Output Fields */}
+      {Object.keys(outputs).length > 0 && (
+        <div style={sectionStyle}>
+          <h4
+            style={{
+              fontSize: theme.typography.fontSize.lg,
+              fontWeight: theme.typography.fontWeight.medium,
+              marginBottom: theme.spacing.md,
+              color: theme.colors.text,
+            }}
+          >
+            Results
+          </h4>
+
+          <div
+            style={{
+              display: "grid",
+              gap: theme.spacing.sm,
+              gridTemplateColumns:
+                config.layout === "horizontal"
+                  ? "repeat(auto-fit, minmax(200px, 1fr))"
+                  : "1fr",
+            }}
+          >
+            {calculator.schema.outputs.map((field) => {
+              const value = outputs[field.name];
+              if (value === undefined || value === null) {
+                return null;
+              }
+
+              const formattedValue =
+                field.type === "number"
+                  ? typeof value === "number"
+                    ? value.toLocaleString()
+                    : value
+                  : value;
+
+              return (
+                <div
+                  key={field.name}
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    padding: theme.spacing.sm,
+                    backgroundColor: theme.colors.surface,
+                    borderRadius: theme.borderRadius,
+                    border: `1px solid ${theme.colors.border}`,
+                  }}
+                >
+                  <span
+                    style={{
+                      fontSize: theme.typography.fontSize.sm,
+                      color: theme.colors.textSecondary,
+                    }}
+                  >
+                    {field.label}:
+                  </span>
+                  <span
+                    style={{
+                      fontSize: theme.typography.fontSize.md,
+                      fontWeight: theme.typography.fontWeight.medium,
+                      color: theme.colors.text,
+                    }}
+                  >
+                    {field.type === "number" && typeof value === "number"
+                      ? "$"
+                      : ""}
+                    {formattedValue}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Metadata */}
+          {lastResult?.metadata && config.showMetadata !== false && (
+            <div
+              style={{
+                marginTop: theme.spacing.md,
+                padding: theme.spacing.sm,
+                backgroundColor: theme.colors.surface,
+                borderRadius: theme.borderRadius,
+                fontSize: theme.typography.fontSize.xs,
+                color: theme.colors.textSecondary,
+              }}
+            >
+              Calculated in {lastResult.metadata.calculationTime?.toFixed(2)}ms
+              {lastResult.warnings && lastResult.warnings.length > 0 && (
+                <div
+                  style={{
+                    color: theme.colors.error,
+                    marginTop: theme.spacing.xs,
+                  }}
+                >
+                  ⚠️ {lastResult.warnings.join(", ")}
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+};
