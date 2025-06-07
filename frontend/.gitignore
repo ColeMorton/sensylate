@@ -12,6 +12,7 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 package-lock.json
+astro.log
 
 
 # environment variables
@@ -26,3 +27,32 @@ package-lock.json
 
 # ide
 .idea/
+
+# testing
+coverage/
+test-results/
+playwright-report/
+src/test/e2e/screenshots/
+*.png
+*.jpg
+*.jpeg
+*.gif
+.nyc_output
+
+# E2E test artifacts
+e2e-test-results/
+test-artifacts/
+test-screenshots/
+*.webm
+*.mp4
+
+# temporary test files
+/tmp/
+*.test.log
+
+# vitest cache
+node_modules/.vite/vitest/
+
+# puppeteer cache
+.puppeteer/
+puppeteer-cache/

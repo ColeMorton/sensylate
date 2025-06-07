@@ -82,6 +82,8 @@ export const FieldRenderer: React.FC<FieldRendererProps> = ({
             step={field.step}
             disabled={disabled}
             style={baseInputStyle}
+            data-testid={`input-${field.name}`}
+            name={field.name}
           />
         );
 
@@ -94,6 +96,25 @@ export const FieldRenderer: React.FC<FieldRendererProps> = ({
             placeholder={field.placeholder}
             disabled={disabled}
             style={baseInputStyle}
+            data-testid={`input-${field.name}`}
+            name={field.name}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                const form = e.currentTarget.closest("form");
+                if (form) {
+                  const submitButton = form.querySelector(
+                    'button[type="submit"]',
+                  ) as HTMLButtonElement;
+                  submitButton?.click();
+                } else {
+                  const calculateButton = document.querySelector(
+                    '[data-testid="calculate-button"]',
+                  ) as HTMLButtonElement;
+                  calculateButton?.click();
+                }
+              }
+            }}
           />
         );
 
@@ -105,6 +126,8 @@ export const FieldRenderer: React.FC<FieldRendererProps> = ({
             onChange={handleChange}
             disabled={disabled}
             style={baseInputStyle}
+            data-testid={`input-${field.name}`}
+            name={field.name}
           />
         );
 
@@ -127,6 +150,8 @@ export const FieldRenderer: React.FC<FieldRendererProps> = ({
                 marginRight: theme.spacing.sm,
                 accentColor: theme.colors.primary,
               }}
+              data-testid={`input-${field.name}`}
+              name={field.name}
             />
             <span
               style={{
@@ -149,6 +174,8 @@ export const FieldRenderer: React.FC<FieldRendererProps> = ({
               ...baseInputStyle,
               cursor: disabled ? "not-allowed" : "pointer",
             }}
+            data-testid={`input-${field.name}`}
+            name={field.name}
           >
             <option value="">Select an option...</option>
             {field.options?.map((option) => (
@@ -168,6 +195,8 @@ export const FieldRenderer: React.FC<FieldRendererProps> = ({
             placeholder={field.placeholder}
             disabled={disabled}
             style={baseInputStyle}
+            data-testid={`input-${field.name}`}
+            name={field.name}
           />
         );
     }

@@ -1,0 +1,34 @@
+# Test artifacts and screenshots
+screenshots/*.png
+screenshots/*.jpg
+screenshots/*.jpeg
+screenshots/*.gif
+screenshots/*.webm
+screenshots/*.mp4
+
+# Test results and reports
+results/
+reports/
+coverage/
+.coverage
+
+# Temporary test files
+*.tmp
+*.temp
+temp/
+.temp/
+
+# Browser artifacts
+.chrome/
+.firefox/
+.safari/
+.edge/
+
+# Debug files
+debug.log
+test-debug.log
+puppeteer-debug.log
+
+# Performance test results
+benchmark-results/
+performance-logs/

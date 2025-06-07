@@ -26,8 +26,8 @@ const { title, meta_title, description, image, calculator_id } = calculator.data
 // Render the content
 const { Content } = await render(calculator);
 
-// Get the calculator instance from registry
-const calculatorInstance = calculatorRegistry.get(calculator_id);
+// Check if calculator exists in registry (server-side verification)
+const calculatorExists = calculatorRegistry.exists(calculator_id);
 ---
 
 <Base
@@ -44,10 +44,10 @@ const calculatorInstance = calculatorRegistry.get(calculator_id);
         <div class="mx-auto lg:col-10">
           {/* Calculator Widget */}
           <div class="mb-14">
-            {calculatorInstance ? (
+            {calculatorExists ? (
               <div class="calculator-container">
                 <CalculatorWidget 
-                  calculator={calculatorInstance} 
+                  calculatorId={calculator_id}
                   client:load 
                   config={{
                     layout: 'vertical',

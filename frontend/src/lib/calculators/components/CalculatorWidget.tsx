@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import type { BaseCalculator, CalculatorConfig } from "../core/Calculator.ts";
 import { defaultTheme, type CalculatorTheme } from "../core/UIRenderer.ts";
+import { calculatorRegistry } from "../registry/CalculatorRegistry.ts";
 import { FieldRenderer } from "./FieldRenderer.tsx";
 
 interface CalculatorWidgetProps {
-  calculator: BaseCalculator;
+  calculatorId: string;
   config?: CalculatorConfig;
   theme?: CalculatorTheme;
   onResult?: (result: any) => void;
@@ -12,19 +13,29 @@ interface CalculatorWidgetProps {
 }
 
 export const CalculatorWidget: React.FC<CalculatorWidgetProps> = ({
-  calculator,
+  calculatorId,
   config = {},
   theme = defaultTheme,
   onResult,
   onError,
 }) => {
-  const [inputs, setInputs] = useState<Record<string, any>>(() =>
-    calculator.getDefaultInputs(),
-  );
+  const [calculator, setCalculator] = useState<BaseCalculator | null>(null);
+  const [inputs, setInputs] = useState<Record<string, any>>({});
   const [outputs, setOutputs] = useState<Record<string, any>>({});
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isCalculating, setIsCalculating] = useState(false);
   const [lastResult, setLastResult] = useState<any>(null);
+
+  // Initialize calculator on client side
+  useEffect(() => {
+    const calcInstance = calculatorRegistry.get(calculatorId);
+    if (calcInstance) {
+      setCalculator(calcInstance);
+      setInputs(calcInstance.getDefaultInputs());
+    } else {
+      setErrors({ general: `Calculator "${calculatorId}" not found` });
+    }
+  }, [calculatorId]);
 
   const handleInputChange = (name: string, value: any) => {
     setInputs((prev) => ({ ...prev, [name]: value }));
@@ -66,18 +77,24 @@ export const CalculatorWidget: React.FC<CalculatorWidgetProps> = ({
   };
 
   const handleReset = () => {
-    setInputs(calculator.getDefaultInputs());
+    if (calculator) {
+      setInputs(calculator.getDefaultInputs());
+    } else {
+      setInputs({});
+    }
     setOutputs({});
     setErrors({});
     setLastResult(null);
   };
 
-  const hasRequiredInputs = calculator.schema.inputs
-    .filter((field) => field.required)
-    .every((field) => {
-      const value = inputs[field.name];
-      return value !== undefined && value !== null && value !== "";
-    });
+  const hasRequiredInputs = calculator
+    ? calculator.schema.inputs
+        .filter((field) => field.required)
+        .every((field) => {
+          const value = inputs[field.name];
+          return value !== undefined && value !== null && value !== "";
+        })
+    : false;
 
   const containerStyle = {
     backgroundColor: theme.colors.background,
@@ -125,8 +142,27 @@ export const CalculatorWidget: React.FC<CalculatorWidgetProps> = ({
     marginTop: theme.spacing.xs,
   };
 
+  // Show loading state while calculator is initializing
+  if (!calculator) {
+    return (
+      <div style={containerStyle} data-testid="calculator-widget">
+        {errors.general ? (
+          <div style={errorStyle} data-testid="error" role="alert">
+            {errors.general}
+          </div>
+        ) : (
+          <div style={{ textAlign: "center", padding: theme.spacing.lg }}>
+            <p style={{ color: theme.colors.textSecondary }}>
+              Loading calculator...
+            </p>
+          </div>
+        )}
+      </div>
+    );
+  }
+
   return (
-    <div style={containerStyle}>
+    <div style={containerStyle} data-testid="calculator-widget">
       {config.showMetadata !== false && (
         <div style={sectionStyle}>
           <h3 style={titleStyle}>{calculator.metadata.name}</h3>
@@ -135,7 +171,11 @@ export const CalculatorWidget: React.FC<CalculatorWidgetProps> = ({
       )}
 
       {/* General Error */}
-      {errors.general && <div style={errorStyle}>{errors.general}</div>}
+      {errors.general && (
+        <div style={errorStyle} data-testid="error" role="alert">
+          {errors.general}
+        </div>
+      )}
 
       {/* Input Fields */}
       <div style={sectionStyle}>
@@ -180,6 +220,8 @@ export const CalculatorWidget: React.FC<CalculatorWidgetProps> = ({
           onClick={handleCalculate}
           disabled={!hasRequiredInputs || isCalculating}
           style={buttonStyle}
+          data-testid="calculate-button"
+          type="submit"
         >
           {isCalculating ? "Calculating..." : "Calculate"}
         </button>
@@ -192,6 +234,8 @@ export const CalculatorWidget: React.FC<CalculatorWidgetProps> = ({
               backgroundColor: theme.colors.secondary,
               marginLeft: theme.spacing.sm,
             }}
+            data-testid="reset-button"
+            type="reset"
           >
             Reset
           </button>
@@ -221,6 +265,7 @@ export const CalculatorWidget: React.FC<CalculatorWidgetProps> = ({
                   ? "repeat(auto-fit, minmax(200px, 1fr))"
                   : "1fr",
             }}
+            data-testid="results-container"
           >
             {calculator.schema.outputs.map((field) => {
               const value = outputs[field.name];
@@ -247,6 +292,7 @@ export const CalculatorWidget: React.FC<CalculatorWidgetProps> = ({
                     borderRadius: theme.borderRadius,
                     border: `1px solid ${theme.colors.border}`,
                   }}
+                  data-testid={`result-${field.name}`}
                 >
                   <span
                     style={{
@@ -262,10 +308,8 @@ export const CalculatorWidget: React.FC<CalculatorWidgetProps> = ({
                       fontWeight: theme.typography.fontWeight.medium,
                       color: theme.colors.text,
                     }}
+                    data-testid={`result-value-${field.name}`}
                   >
-                    {field.type === "number" && typeof value === "number"
-                      ? "$"
-                      : ""}
                     {formattedValue}
                   </span>
                 </div>

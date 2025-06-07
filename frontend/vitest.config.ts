@@ -9,6 +9,7 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: ['./src/test/setup.ts'],
     globals: true,
+    testTimeout: 30000, // Increased timeout for E2E tests
     coverage: {
       provider: 'v8',
       reporter: ['text', 'html', 'lcov'],
