@@ -39,7 +39,7 @@ describe("Pocket Calculator E2E Tests", () => {
         'input[type="text"], input[placeholder*="expression"]',
       );
       const button = await page.$(
-        'button[type="submit"], button:contains("Calculate")',
+        'button[type="submit"], [data-testid="calculate-button"]',
       );
 
       expect(input).toBeTruthy();
@@ -61,7 +61,14 @@ describe("Pocket Calculator E2E Tests", () => {
       );
 
       // Verify navigation to pocket calculator page
-      await page.waitForURL(/\/calculators\/pocket-calculator$/);
+      await page.waitForFunction(
+        () => {
+          return window.location.pathname.includes(
+            "/calculators/pocket-calculator",
+          );
+        },
+        { timeout: 10000 },
+      );
       await e2eHelper.waitForCalculatorReady(page);
 
       const calculatorWidget = await page.$(
@@ -190,16 +197,27 @@ describe("Pocket Calculator E2E Tests", () => {
       it(`should handle error case: ${description}`, async () => {
         if (expression) {
           await e2eHelper.typeExpression(page, expression);
+          await e2eHelper.clickCalculate(page);
+
+          const error = await e2eHelper.getErrorMessage(page);
+          expect(error).toBeTruthy();
+          expect(error).not.toBe("");
+
+          // Verify no result is shown when there's an error
+          const result = await e2eHelper.getCalculationResult(page);
+          expect(result).toBeNull();
+        } else {
+          // For empty expression, verify the button is disabled
+          const buttonSelector =
+            'button[type="submit"], [data-testid="calculate-button"]';
+          await page.waitForSelector(buttonSelector, { timeout: 5000 });
+
+          const isDisabled = await page.$eval(
+            buttonSelector,
+            (button: any) => button.disabled,
+          );
+          expect(isDisabled).toBe(true);
         }
-        await e2eHelper.clickCalculate(page);
-
-        const error = await e2eHelper.getErrorMessage(page);
-        expect(error).toBeTruthy();
-        expect(error).not.toBe("");
-
-        // Verify no result is shown when there's an error
-        const result = await e2eHelper.getCalculationResult(page);
-        expect(result).toBeNull();
       });
     });
 
@@ -228,7 +246,25 @@ describe("Pocket Calculator E2E Tests", () => {
   describe("User Interactions", () => {
     it("should calculate when pressing Enter key", async () => {
       await e2eHelper.typeExpression(page, "5 + 7");
-      await e2eHelper.pressEnterToCalculate(page);
+
+      // Press Enter
+      const inputSelector =
+        'input[type="text"], input[placeholder*="expression"], input[name="expression"]';
+      await page.focus(inputSelector);
+      await page.keyboard.press("Enter");
+
+      // Wait for calculation to complete with more specific selectors
+      await page.waitForFunction(
+        () => {
+          const result = document.querySelector(
+            '[data-testid="result-value-result"], [data-testid="result-value-formattedResult"]',
+          );
+          return (
+            result && result.textContent && result.textContent.trim() !== ""
+          );
+        },
+        { timeout: 5000 },
+      );
 
       const result = await e2eHelper.getCalculationResult(page);
       expect(result).toBe("12");

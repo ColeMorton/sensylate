@@ -28,12 +28,30 @@ export const CalculatorWidget: React.FC<CalculatorWidgetProps> = ({
 
   // Initialize calculator on client side
   useEffect(() => {
-    const calcInstance = calculatorRegistry.get(calculatorId);
-    if (calcInstance) {
-      setCalculator(calcInstance);
-      setInputs(calcInstance.getDefaultInputs());
-    } else {
-      setErrors({ general: `Calculator "${calculatorId}" not found` });
+    try {
+      if (!calculatorRegistry) {
+        setErrors({ general: "Calculator registry not available" });
+        return;
+      }
+
+      const calcInstance = calculatorRegistry.get(calculatorId);
+      if (calcInstance) {
+        setCalculator(calcInstance);
+        try {
+          const defaultInputs = calcInstance.getDefaultInputs();
+          setInputs(defaultInputs || {});
+        } catch (error) {
+          console.error("Error getting default inputs:", error);
+          setInputs({});
+        }
+        // Clear any previous errors
+        setErrors({});
+      } else {
+        setErrors({ general: `Calculator "${calculatorId}" not found` });
+      }
+    } catch (error) {
+      console.error("Error initializing calculator:", error);
+      setErrors({ general: "Failed to initialize calculator" });
     }
   }, [calculatorId]);
 
@@ -51,6 +69,11 @@ export const CalculatorWidget: React.FC<CalculatorWidgetProps> = ({
   };
 
   const handleCalculate = async () => {
+    if (!calculator) {
+      setErrors({ general: "Calculator not available" });
+      return;
+    }
+
     setIsCalculating(true);
     setErrors({});
 
@@ -87,14 +110,15 @@ export const CalculatorWidget: React.FC<CalculatorWidgetProps> = ({
     setLastResult(null);
   };
 
-  const hasRequiredInputs = calculator
-    ? calculator.schema.inputs
-        .filter((field) => field.required)
-        .every((field) => {
-          const value = inputs[field.name];
-          return value !== undefined && value !== null && value !== "";
-        })
-    : false;
+  const hasRequiredInputs =
+    calculator && calculator.schema?.inputs
+      ? calculator.schema.inputs
+          .filter((field) => field.required)
+          .every((field) => {
+            const value = inputs[field.name];
+            return value !== undefined && value !== null && value !== "";
+          })
+      : false;
 
   const containerStyle = {
     backgroundColor: theme.colors.background,
@@ -200,7 +224,7 @@ export const CalculatorWidget: React.FC<CalculatorWidgetProps> = ({
                 : "1fr",
           }}
         >
-          {calculator.schema.inputs.map((field) => (
+          {calculator.schema?.inputs?.map((field) => (
             <FieldRenderer
               key={field.name}
               field={field}
@@ -267,7 +291,7 @@ export const CalculatorWidget: React.FC<CalculatorWidgetProps> = ({
             }}
             data-testid="results-container"
           >
-            {calculator.schema.outputs.map((field) => {
+            {calculator.schema?.outputs?.map((field) => {
               const value = outputs[field.name];
               if (value === undefined || value === null) {
                 return null;
