@@ -1,0 +1,137 @@
+# Project Context - Shared understanding of current project state
+# Auto-updated by Command Collaboration Framework
+
+metadata:
+  last_updated: "2025-01-07T15:30:00Z"
+  updated_by: "command-collaboration-framework"
+  version: "1.0.0"
+
+project_overview:
+  name: "sensylate"
+  type: "multi_component_system"
+  primary_language: "python"
+  frontend_framework: "astro"
+  description: "Python + YAML + Makefile Framework with Astro frontend"
+
+git_context:
+  current_branch: "main"
+  main_branch: "main"
+  last_commit: "2dc8135"
+  modified_files:
+    - "CLAUDE.md"
+    - "README.md"
+    - "frontend/package.json"
+    - "frontend/src/lib/utils/readingTime.ts"
+    - "frontend/src/lib/utils/textConverter.ts"
+    - "frontend/yarn.lock"
+  untracked_files:
+    - "architect/"
+    - "data/images/"
+    - "frontend/eslint.config.js"
+  recent_commits:
+    - id: "2dc8135"
+      message: "Add Substack integration and personal branding updates"
+    - id: "ef462b8"
+      message: "Personalize site content with Cole Morton branding"
+    - id: "672cd79"
+      message: "Add missing utils files that were not tracked by git"
+
+technology_stack:
+  backend:
+    language: "python"
+    framework: "custom_yaml_makefile"
+    key_libraries: ["yaml", "pathlib", "argparse", "logging"]
+    config_management: "yaml_based"
+  
+  frontend:
+    framework: "astro"
+    version: "5.7+"
+    styling: "tailwindcss_4"
+    language: "typescript"
+    package_manager: "yarn"
+    testing: "vitest"
+  
+  infrastructure:
+    containerization: "docker"
+    deployment: "netlify"
+    ci_cd: "git_hooks"
+
+directory_structure:
+  key_directories:
+    - "/configs" # YAML configuration files
+    - "/scripts" # Python execution scripts
+    - "/data" # Data storage hierarchy
+    - "/outputs" # Generated outputs and exports
+    - "/frontend" # Astro frontend application
+    - "/team-workspace" # Command collaboration workspace
+
+current_capabilities:
+  data_processing:
+    - data_extraction
+    - feature_engineering
+    - model_training
+    - report_generation
+  
+  content_management:
+    - astro_blog_system
+    - markdown_authoring
+    - multi_author_support
+    - dark_light_theming
+  
+  automation:
+    - makefile_orchestration
+    - yaml_configuration
+    - git_workflow_automation
+    - command_collaboration_framework
+
+active_development_areas:
+  - command_collaboration_framework
+  - pre_commit_hooks_implementation
+  - frontend_optimization
+  - trading_strategy_content_generation
+
+pain_points:
+  - isolated_command_execution
+  - manual_data_transfer_between_commands
+  - inconsistent_output_formats
+  - lack_of_dependency_tracking
+
+improvement_opportunities:
+  - automated_workflow_orchestration
+  - standardized_data_formats
+  - cross_command_optimization
+  - enhanced_team_collaboration
+
+business_context:
+  domain: "data_processing_and_content_creation"
+  use_cases:
+    - "trading_strategy_analysis"
+    - "technical_documentation"
+    - "social_media_content_optimization"
+    - "automated_reporting"
+  
+  stakeholders:
+    - development_team
+    - content_creators
+    - trading_analysts
+    - end_users
+
+quality_standards:
+  code_quality:
+    - dry_principle
+    - solid_principles
+    - kiss_principle
+    - yagni_principle
+    - fail_fast_approach
+  
+  documentation:
+    - comprehensive_planning
+    - phase_summaries
+    - evidence_based_recommendations
+    - up_to_date_specifications
+
+workflow_preferences:
+  planning_approach: "research_driven"
+  implementation_style: "phase_based"
+  quality_assurance: "validation_checkpoints"
+  collaboration_model: "team_based_agents"

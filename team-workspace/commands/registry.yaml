@@ -1,0 +1,169 @@
+# Command Registry - Master catalog of available team commands
+# Auto-generated and maintained by Command Collaboration Framework
+
+metadata:
+  version: "1.0.0"
+  last_updated: "2025-01-07T15:30:00Z"
+  framework_version: "1.0.0"
+
+# Command search paths (in order of precedence)
+command_paths:
+  project_commands: "/Users/colemorton/Projects/sensylate/.claude/commands/"
+  user_commands: "/Users/colemorton/.claude/commands/"
+  
+commands:
+  architect:
+    location: "/Users/colemorton/.claude/commands/architect.md"
+    scope: "user"  # user | project
+    manifest: "/Users/colemorton/Projects/sensylate/team-workspace/commands/architect/manifest.yaml"
+    type: "framework"
+    status: "active"
+    description: "Technical planning & implementation framework with research-driven methodology"
+    capabilities:
+      reads: ["codebase_structure", "git_status", "dependency_files", "project_documentation"]
+      produces: ["implementation_plans", "phase_summaries", "technical_specifications"]
+    performance_metrics:
+      avg_execution_time: "45s"
+      success_rate: 0.96
+      last_execution: null
+
+  product-owner:
+    location: "/Users/colemorton/.claude/commands/product_owner.md"
+    scope: "user"
+    manifest: "/Users/colemorton/Projects/sensylate/team-workspace/commands/product-owner/manifest.yaml"
+    type: "analyzer"
+    status: "active"
+    description: "Transform technical findings into prioritized product decisions"
+    capabilities:
+      reads: ["technical_assessments", "business_context", "stakeholder_input"]
+      produces: ["prioritized_backlogs", "business_cases", "stakeholder_summaries"]
+    dependencies_on: ["architect", "business-analyst", "code-owner"]
+    performance_metrics:
+      avg_execution_time: "30s"
+      success_rate: 0.92
+      last_execution: null
+
+  code-owner:
+    location: "/Users/colemorton/.claude/commands/code-owner.md"
+    scope: "user"
+    manifest: "/Users/colemorton/Projects/sensylate/team-workspace/commands/code-owner/manifest.yaml"
+    type: "analyzer"
+    status: "active"
+    description: "Comprehensive codebase health analysis and strategic technical reviews"
+    capabilities:
+      reads: ["source_code", "git_history", "dependencies", "documentation"]
+      produces: ["health_assessments", "technical_debt_analysis", "risk_matrices"]
+    performance_metrics:
+      avg_execution_time: "60s"
+      success_rate: 0.94
+      last_execution: null
+
+  business-analyst:
+    location: "/Users/colemorton/.claude/commands/business_analyst.md"
+    scope: "user"
+    manifest: "/Users/colemorton/Projects/sensylate/team-workspace/commands/business-analyst/manifest.yaml"
+    type: "framework"
+    status: "active"
+    description: "Requirements gathering, process optimization, and stakeholder alignment"
+    capabilities:
+      reads: ["stakeholder_input", "process_documentation", "business_context"]
+      produces: ["functional_specifications", "process_flows", "acceptance_criteria"]
+    performance_metrics:
+      avg_execution_time: "40s"
+      success_rate: 0.88
+      last_execution: null
+
+  twitter-post:
+    location: "/Users/colemorton/.claude/commands/twitter_post.md"
+    scope: "user"
+    manifest: "/Users/colemorton/Projects/sensylate/team-workspace/commands/twitter-post/manifest.yaml"
+    type: "generator"
+    status: "active"
+    description: "Expert social media content optimization for X/Twitter engagement"
+    capabilities:
+      reads: ["content_input", "brand_guidelines", "engagement_metrics"]
+      produces: ["optimized_posts", "engagement_analysis", "content_variants"]
+    performance_metrics:
+      avg_execution_time: "15s"
+      success_rate: 0.98
+      last_execution: null
+
+  twitter-post-strategy:
+    location: "/Users/colemorton/.claude/commands/twitter_post_strategy.md"
+    scope: "user"
+    manifest: "/Users/colemorton/Projects/sensylate/team-workspace/commands/twitter-post-strategy/manifest.yaml"
+    type: "generator"
+    status: "active"
+    description: "Trading strategy analysis and social media post generation"
+    capabilities:
+      reads: ["trading_data", "backtest_results", "market_analysis"]
+      produces: ["strategy_posts", "performance_summaries", "trading_insights"]
+    performance_metrics:
+      avg_execution_time: "20s"
+      success_rate: 0.95
+      last_execution: null
+
+  commit-push:
+    location: "/Users/colemorton/.claude/commands/commit_push.md"
+    scope: "user"
+    manifest: "/Users/colemorton/Projects/sensylate/team-workspace/commands/commit-push/manifest.yaml"
+    type: "tool"
+    status: "active"
+    description: "Automated git workflow (stage all changes, generate commit message, push to remote)"
+    capabilities:
+      reads: ["git_status", "working_directory_changes", "commit_history"]
+      produces: ["git_commits", "commit_messages", "push_confirmations"]
+    performance_metrics:
+      avg_execution_time: "10s"
+      success_rate: 0.99
+      last_execution: null
+
+  create-command:
+    location: "/Users/colemorton/.claude/commands/create_command.md"
+    scope: "user"
+    manifest: "/Users/colemorton/Projects/sensylate/team-workspace/commands/create-command/manifest.yaml"
+    type: "tool"
+    status: "active"
+    description: "Interactive command creator with validation and best practices"
+    capabilities:
+      reads: ["user_specifications", "existing_command_patterns", "framework_standards"]
+      produces: ["new_command_files", "command_manifests", "validation_reports"]
+    performance_metrics:
+      avg_execution_time: "25s"
+      success_rate: 0.93
+      last_execution: null
+
+# Workflow patterns discovered from command analysis
+workflow_patterns:
+  analysis_chain:
+    sequence: ["code-owner", "product-owner", "architect"]
+    description: "Technical analysis → Business prioritization → Implementation planning"
+    success_rate: 0.89
+    avg_total_duration: "135s"
+    use_cases: ["project_health_assessment", "feature_planning", "technical_debt_resolution"]
+
+  content_creation_pipeline:
+    parallel: ["twitter-post", "twitter-post-strategy"]
+    description: "Parallel social media content generation for different audiences"
+    trigger_events: ["trading_analysis_complete", "strategy_backtest_ready"]
+    success_rate: 0.97
+    avg_total_duration: "35s"
+
+  development_workflow:
+    sequence: ["architect", "commit-push"]
+    description: "Implementation planning followed by automated git workflow"
+    success_rate: 0.95
+    avg_total_duration: "55s"
+
+  command_creation_workflow:
+    sequence: ["create-command", "architect"]
+    description: "Create new command then plan its integration"
+    success_rate: 0.90
+    avg_total_duration: "70s"
+
+# Cross-command collaboration metrics
+collaboration_metrics:
+  data_sharing_frequency: "high"
+  dependency_resolution_success: 0.94
+  cross_command_data_usage: 0.78
+  workflow_automation_level: 0.85

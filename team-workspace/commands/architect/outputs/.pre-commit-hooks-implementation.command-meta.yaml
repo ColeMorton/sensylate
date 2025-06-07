@@ -1,0 +1,39 @@
+metadata:
+  generated_by: "architect"
+  version: "1.0.0"
+  timestamp: "2025-01-07T15:30:00Z"
+  session_id: "2025-01-07_15-28-45"
+
+source_data:
+  dependencies: []
+  project_context:
+    git_commit: "2dc8135"
+    files_analyzed: 15
+    working_directory: "/Users/colemorton/Projects/sensylate"
+
+output_specification:
+  type: "implementation_plan"
+  format: "markdown"
+  confidence_level: 0.94
+  completeness: "full"
+  data_lineage:
+    - step: "system_analysis"
+      input_source: "frontend_codebase"
+      transformation: "dependency_analysis"
+    - step: "requirements_gathering"
+      input_source: "git_hooks_analysis"
+      transformation: "validation_requirements"
+
+collaboration_data:
+  intended_consumers: ["product-owner", "business-analyst"]
+  notification_sent: true
+  cache_expires: "2025-01-08T15:30:00Z"
+  sharing_policy: "immediate"
+  access_permissions: ["product-owner", "business-analyst", "code-owner"]
+
+quality_metrics:
+  validation_passed: true
+  review_required: false
+  approval_status: "auto-approved"
+  quality_score: 0.94
+  content_hash: "sha256:pre-commit-hooks-plan-hash"

@@ -1,0 +1,145 @@
+# Architect Command Manifest
+# Defines collaboration capabilities and data requirements
+
+command:
+  name: "architect"
+  version: "1.0.0"
+  type: "framework"
+  description: "Technical planning & implementation framework with research-driven methodology"
+  command_file: "/Users/colemorton/.claude/commands/architect.md"
+
+capabilities:
+  reads:
+    - codebase_structure
+    - git_status
+    - dependency_files
+    - project_documentation
+    - existing_implementations
+    - technical_specifications
+  
+  produces:
+    - implementation_plans
+    - phase_summaries
+    - technical_specifications
+    - risk_assessments
+    - quality_gates
+    - architecture_decisions
+
+dependencies:
+  required: []
+  optional:
+    - command: "code-owner"
+      output_type: "technical_health_assessment"
+      enhancement: "Incorporates technical debt and health metrics into planning"
+    - command: "business-analyst"
+      output_type: "functional_specifications"
+      enhancement: "Aligns implementation with business requirements"
+    - command: "product-owner"
+      output_type: "prioritized_backlog"
+      enhancement: "Focuses implementation on highest business value items"
+  conflicts: []
+
+data_schema:
+  inputs:
+    project_context:
+      type: "object"
+      required: true
+      schema: "/team-workspace/shared/project-context.yaml"
+    technical_requirements:
+      type: "markdown"
+      required: false
+      source: "user_input"
+    dependency_data:
+      type: "object"
+      required: false
+      source: "team_workspace"
+  
+  outputs:
+    implementation_plan:
+      type: "markdown"
+      location: "/team-workspace/commands/architect/outputs/"
+      filename_pattern: "implementation-plan-{timestamp}.md"
+      format: "phase_based_xml_structured"
+      metadata_required: true
+    phase_summaries:
+      type: "markdown"
+      location: "/team-workspace/commands/architect/outputs/"
+      filename_pattern: "phase-summary-{phase}-{timestamp}.md"
+      format: "structured_summary"
+      metadata_required: true
+
+collaboration:
+  consumption_pattern: "research_driven"
+  pre_execution_behavior:
+    - "Load project context from team workspace"
+    - "Scan for relevant command outputs from code-owner, business-analyst, product-owner"
+    - "Incorporate existing technical documentation"
+    - "Analyze git status and recent changes"
+  
+  output_sharing: "immediate"
+  post_execution_behavior:
+    - "Store implementation plan with full metadata"
+    - "Update project context with new architecture decisions"
+    - "Notify dependent commands of plan availability"
+    - "Cache research data for performance optimization"
+  
+  cache_strategy: "session_based"
+  cache_duration: "24h"
+  
+  notification_events:
+    - event: "plan_phase_completed"
+      notify: ["product-owner", "business-analyst"]
+      payload: ["phase_summary", "next_phase_requirements"]
+    - event: "risk_identified"
+      notify: ["code-owner", "product-owner"]
+      payload: ["risk_assessment", "mitigation_strategies"]
+    - event: "dependency_blocked"
+      notify: ["all_commands"]
+      payload: ["blocked_dependency", "alternative_approaches"]
+
+quality_standards:
+  validation_criteria:
+    - "Implementation plan includes measurable phases"
+    - "Risk assessment covers technical and business risks"
+    - "Quality gates defined for each phase"
+    - "Rollback strategies documented"
+    - "Success criteria clearly defined"
+  
+  output_requirements:
+    - "XML structured phases with clear deliverables"
+    - "Evidence-based recommendations"
+    - "Integration with existing codebase patterns"
+    - "Performance impact considerations"
+    - "Security implications addressed"
+
+performance_characteristics:
+  typical_execution_time: "45s"
+  complexity_factors:
+    - "Codebase size"
+    - "Number of dependencies"
+    - "Availability of team data"
+    - "Implementation complexity"
+  
+  optimization_strategies:
+    - "Cache frequently accessed project data"
+    - "Incremental analysis for large codebases"
+    - "Parallel processing of independent research tasks"
+
+integration_patterns:
+  workflow_chains:
+    - name: "comprehensive_analysis"
+      sequence: ["code-owner", "architect"]
+      trigger: "technical_health_assessment_complete"
+    - name: "business_aligned_implementation"
+      sequence: ["business-analyst", "product-owner", "architect"]
+      trigger: "requirements_gathering_complete"
+  
+  data_flow:
+    incoming:
+      - "Technical health matrices from code-owner"
+      - "Functional specifications from business-analyst"
+      - "Prioritized backlogs from product-owner"
+    outgoing:
+      - "Implementation plans to product-owner"
+      - "Technical specifications to development team"
+      - "Risk assessments to stakeholders"
