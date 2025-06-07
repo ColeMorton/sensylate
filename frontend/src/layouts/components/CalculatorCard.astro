@@ -1,0 +1,51 @@
+---
+import { plainify } from "@/lib/utils/textConverter";
+import type { CollectionEntry } from "astro:content";
+
+const { data } = Astro.props as { data: CollectionEntry<"calculators"> };
+const { title, description, calculator_id, category, features } = data.data;
+---
+
+<div class="bg-body dark:bg-darkmode-body shadow-sm rounded-lg p-6 transition-all duration-300 hover:shadow-lg">
+  <div class="mb-4">
+    <span class="text-xs uppercase text-primary font-medium tracking-wider">
+      {category}
+    </span>
+  </div>
+  
+  <h3 class="mb-3 text-xl font-semibold">
+    <a
+      href={`/calculators/${data.id}`}
+      class="block text-dark dark:text-white hover:text-primary dark:hover:text-primary transition-colors duration-200"
+    >
+      {title}
+    </a>
+  </h3>
+  
+  <p class="text-text dark:text-gray-300 mb-4">
+    {plainify(description || "")}
+  </p>
+  
+  {features && features.length > 0 && (
+    <ul class="mb-4 space-y-1">
+      {features.slice(0, 3).map((feature: string) => (
+        <li class="text-sm text-text/80 dark:text-gray-400 flex items-start">
+          <svg class="w-4 h-4 text-primary mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+          </svg>
+          {feature}
+        </li>
+      ))}
+    </ul>
+  )}
+  
+  <a
+    class="btn btn-primary btn-sm inline-flex items-center gap-2"
+    href={`/calculators/${data.id}`}
+  >
+    <span>Try Calculator</span>
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+    </svg>
+  </a>
+</div>

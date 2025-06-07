@@ -147,6 +147,22 @@ const testimonialSectionCollection = defineCollection({
   }),
 });
 
+// Calculators collection schema
+const calculatorsCollection = defineCollection({
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "src/content/calculators" }),
+  schema: z.object({
+    title: z.string(),
+    meta_title: z.string().optional(),
+    description: z.string().optional(),
+    date: z.date().optional(),
+    image: z.string().optional(),
+    calculator_id: z.string(),
+    category: z.string(),
+    features: z.array(z.string()).optional(),
+    draft: z.boolean().optional(),
+  }),
+});
+
 // Export collections
 export const collections = {
   // Pages
@@ -156,6 +172,7 @@ export const collections = {
   pages: pagesCollection,
   about: aboutCollection,
   contact: contactCollection,
+  calculators: calculatorsCollection,
 
   // sections
   ctaSection: ctaSectionCollection,

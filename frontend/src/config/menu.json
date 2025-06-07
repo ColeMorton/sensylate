@@ -9,6 +9,10 @@
       "url": "/about"
     },
     {
+      "name": "Calculators",
+      "url": "/calculators"
+    },
+    {
       "name": "Elements",
       "url": "/elements"
     },
