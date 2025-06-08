@@ -1,15 +1,12 @@
 ---
-import config from "@/config/config.json";
+import { features } from "@/lib/featureFlags";
+import { enhancedConfig } from "@/lib/config";
 
-const {
-  theme_switcher,
-  // default_theme,
-}: { theme_switcher: boolean; default_theme: string } = config.settings;
 const { className }: { className?: string } = Astro.props;
 ---
 
 {
-  theme_switcher && (
+  features.theme_switcher && (
     <div class={`theme-switcher ${className}`}>
       <input id="theme-switcher" data-theme-switcher type="checkbox" />
       <label for="theme-switcher">
@@ -45,47 +42,51 @@ const { className }: { className?: string } = Astro.props;
 }
 
 <script>
-  import { settings } from "@/config/config.json";
-  const matchMedia = window.matchMedia("(prefers-color-scheme: dark)");
+  import { enhancedConfig } from "@/lib/config";
+  
+  // Only load theme functionality if theme switcher is enabled
+  if (enhancedConfig.features.theme_switcher) {
+    const matchMedia = window.matchMedia("(prefers-color-scheme: dark)");
 
-  matchMedia.addEventListener("change", () =>
-    toggleTheme(document.querySelectorAll("[data-theme-switcher]"))
-  );
+    matchMedia.addEventListener("change", () =>
+      toggleTheme(document.querySelectorAll("[data-theme-switcher]"))
+    );
 
-  function toggleTheme(themeSwitch: NodeListOf<Element>) {
-    const defaulTheme =
-      settings.default_theme === "system"
-        ? matchMedia.matches
-          ? "dark"
-          : "light"
-        : settings.default_theme;
-    const currentTheme = localStorage.getItem("theme") || defaulTheme;
-    const isDarkTheme = currentTheme === "dark";
-    themeSwitch.forEach((sw: any) => (sw.checked = isDarkTheme));
-    document.documentElement.classList.toggle("dark", isDarkTheme);
-  }
+    function toggleTheme(themeSwitch: NodeListOf<Element>) {
+      const defaulTheme =
+        enhancedConfig.settings.default_theme === "system"
+          ? matchMedia.matches
+            ? "dark"
+            : "light"
+          : enhancedConfig.settings.default_theme;
+      const currentTheme = localStorage.getItem("theme") || defaulTheme;
+      const isDarkTheme = currentTheme === "dark";
+      themeSwitch.forEach((sw: any) => (sw.checked = isDarkTheme));
+      document.documentElement.classList.toggle("dark", isDarkTheme);
+    }
 
-  const setDarkMode = () => {
-    const themeSwitch = document.querySelectorAll("[data-theme-switcher]");
-    toggleTheme(themeSwitch);
-    themeSwitch.forEach((sw) => {
-      sw.addEventListener("click", function () {
-        const defaulTheme =
-          settings.default_theme === "system"
-            ? matchMedia.matches
-              ? "dark"
-              : "light"
-            : settings.default_theme;
-        const currentTheme = localStorage.getItem("theme") || defaulTheme;
-        const newTheme = currentTheme === "light" ? "dark" : "light";
-        localStorage.setItem("theme", newTheme);
-        toggleTheme(themeSwitch);
+    const setDarkMode = () => {
+      const themeSwitch = document.querySelectorAll("[data-theme-switcher]");
+      toggleTheme(themeSwitch);
+      themeSwitch.forEach((sw) => {
+        sw.addEventListener("click", function () {
+          const defaulTheme =
+            enhancedConfig.settings.default_theme === "system"
+              ? matchMedia.matches
+                ? "dark"
+                : "light"
+              : enhancedConfig.settings.default_theme;
+          const currentTheme = localStorage.getItem("theme") || defaulTheme;
+          const newTheme = currentTheme === "light" ? "dark" : "light";
+          localStorage.setItem("theme", newTheme);
+          toggleTheme(themeSwitch);
+        });
       });
-    });
-  };
+    };
 
-  // Runs on initial navigation
-  setDarkMode();
-  // Runs on view transitions navigation
-  document.addEventListener("astro:after-swap", setDarkMode);
+    // Runs on initial navigation
+    setDarkMode();
+    // Runs on view transitions navigation
+    document.addEventListener("astro:after-swap", setDarkMode);
+  }
 </script>

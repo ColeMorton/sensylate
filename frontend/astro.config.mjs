@@ -10,6 +10,20 @@ import sharp from "sharp";
 import path from "path";
 import config from "./src/config/config.json";
 
+// Build-time feature flag optimization
+const getFeatureFlags = () => {
+  const envToBoolean = (value) => value?.toLowerCase() === 'true';
+  return {
+    search: envToBoolean(process.env.PUBLIC_FEATURE_SEARCH) ?? config.settings.search,
+    theme_switcher: envToBoolean(process.env.PUBLIC_FEATURE_THEME_SWITCHER) ?? config.settings.theme_switcher,
+    comments: envToBoolean(process.env.PUBLIC_FEATURE_COMMENTS) ?? config.disqus.enable,
+    gtm: envToBoolean(process.env.PUBLIC_FEATURE_GTM) ?? config.google_tag_manager.enable,
+    calculator_advanced: envToBoolean(process.env.PUBLIC_FEATURE_CALCULATOR_ADVANCED) ?? false
+  };
+};
+
+const buildTimeFlags = getFeatureFlags();
+
 // https://astro.build/config
 export default defineConfig({
   site: config.site.base_url ? config.site.base_url : "http://examplesite.com",
@@ -18,6 +32,14 @@ export default defineConfig({
   image: { service: sharp() },
   vite: { 
     plugins: [tailwindcss()],
+    define: {
+      // Build-time feature flags for dead code elimination
+      __FEATURE_SEARCH__: buildTimeFlags.search,
+      __FEATURE_THEME_SWITCHER__: buildTimeFlags.theme_switcher,
+      __FEATURE_COMMENTS__: buildTimeFlags.comments,
+      __FEATURE_GTM__: buildTimeFlags.gtm,
+      __FEATURE_CALCULATOR_ADVANCED__: buildTimeFlags.calculator_advanced,
+    },
     resolve: {
       alias: {
         '@/components': path.resolve('./src/layouts/components'),

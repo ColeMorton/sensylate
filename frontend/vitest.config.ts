@@ -31,6 +31,11 @@ export default defineConfig({
       '@/shortcodes': resolve(__dirname, './src/layouts/shortcodes'),
       '@/helpers': resolve(__dirname, './src/layouts/helpers'),
       '@/partials': resolve(__dirname, './src/layouts/partials'),
+      '@/lib': resolve(__dirname, './src/lib'),
+      '@/config': resolve(__dirname, './src/config'),
+      '@/layouts': resolve(__dirname, './src/layouts'),
+      '@/hooks': resolve(__dirname, './src/hooks'),
+      '@/types': resolve(__dirname, './src/types')
     }
   }
 });

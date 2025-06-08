@@ -1,7 +1,8 @@
 ---
 import Logo from "@/components/Logo.astro";
 import ThemeSwitcher from "@/components/ThemeSwitcher.astro";
-import config from "@/config/config.json";
+import { enhancedConfig } from "@/lib/config";
+import { features } from "@/lib/featureFlags";
 import menu from "@/config/menu.json";
 import { IoSearch } from "react-icons/io5";
 
@@ -18,7 +19,7 @@ export interface NavigationLink {
 }
 
 const { main }: { main: NavigationLink[] } = menu;
-const { navigation_button, settings } = config;
+const { navigation_button, settings } = enhancedConfig;
 const { pathname } = Astro.url;
 ---
 
@@ -119,7 +120,7 @@ const { pathname } = Astro.url;
     </ul>
     <div class="order-1 ml-auto flex items-center md:order-2 lg:ml-0">
       {
-        settings.search && (
+        features.search && (
           <button
             class="border-border text-text-dark hover:text-primary dark:border-darkmode-border mr-5 inline-block border-r pr-5 text-xl dark:text-white dark:hover:text-darkmode-primary"
             aria-label="search"
