@@ -1,6 +1,6 @@
 ---
 title: "Bitcoin Dollar Cost Averaging Calculator"
-meta_title: "Bitcoin DCA Calculator - Analyze Your Investment Strategy | Sensylate"
+meta_title: "Bitcoin DCA Calculator - Analyze Your Investment Strategy | Cole Morton"
 description: "Calculate returns from dollar-cost averaging into Bitcoin. See how regular investments can build wealth over time."
 date: 2025-06-07
 calculator_id: "dca-calculator"

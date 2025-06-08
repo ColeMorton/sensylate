@@ -1,6 +1,6 @@
 ---
 title: "Pocket Calculator"
-meta_title: "Basic Arithmetic Calculator | Sensylate"
+meta_title: "Basic Arithmetic Calculator | Cole Morton"
 description: "Simple and fast pocket calculator for everyday arithmetic operations. Add, subtract, multiply, and divide with ease."
 date: 2025-06-07
 calculator_id: "pocket-calculator"

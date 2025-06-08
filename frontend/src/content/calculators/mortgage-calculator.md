@@ -1,6 +1,6 @@
 ---
 title: "Mortgage Payment Calculator"
-meta_title: "Mortgage Calculator - Calculate Your Monthly Payments | Sensylate"
+meta_title: "Mortgage Calculator - Calculate Your Monthly Payments | Cole Morton"
 description: "Calculate your monthly mortgage payments including principal, interest, taxes, and insurance. Plan your home purchase with confidence."
 date: 2025-06-07
 calculator_id: "mortgage-calculator"
