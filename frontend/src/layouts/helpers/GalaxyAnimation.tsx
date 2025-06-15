@@ -27,7 +27,8 @@ const GalaxyAnimation: React.FC<GalaxyAnimationProps> = ({
 
     // Scene setup
     refs.scene = new THREE.Scene();
-    refs.scene.background = new THREE.Color(0x201919);
+    // Set background to transparent to inherit page background
+    refs.scene.background = null;
 
     // Camera setup
     refs.camera = new THREE.PerspectiveCamera(
@@ -48,9 +49,10 @@ const GalaxyAnimation: React.FC<GalaxyAnimationProps> = ({
     refs.camera.lookAt(0, targetY, 0);
 
     // Renderer setup
-    refs.renderer = new THREE.WebGLRenderer({ antialias: true });
+    refs.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     refs.renderer.setPixelRatio(window.devicePixelRatio);
     refs.renderer.setSize(container.clientWidth, container.clientHeight);
+    refs.renderer.setClearColor(0x000000, 0); // Transparent background
     container.appendChild(refs.renderer.domElement);
 
     // Galaxy parameters
