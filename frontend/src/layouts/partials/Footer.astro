@@ -5,8 +5,15 @@ import config from "@/config/config.json";
 import menu from "@/config/menu.json";
 import social from "@/config/social.json";
 import { markdownify } from "@/lib/utils/textConverter";
+import { features } from "@/lib/featureFlags";
 
-const { footer }: { footer: { name: string; url: string }[] } = menu;
+// Filter footer menu items based on feature flags
+const filteredFooter = menu.footer.filter((item) => {
+  if (item.url === "/elements" && !features.elements_page) {
+    return false;
+  }
+  return true;
+});
 ---
 
 <footer class="bg-light dark:bg-darkmode-light">
@@ -18,7 +25,7 @@ const { footer }: { footer: { name: string; url: string }[] } = menu;
       <div class="mb-8 text-center lg:col-6 lg:mb-0">
         <ul>
           {
-            footer.map((menu) => (
+            filteredFooter.map((menu) => (
               <li class="m-3 inline-block">
                 <a href={menu.url}>{menu.name}</a>
               </li>

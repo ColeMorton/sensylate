@@ -18,7 +18,33 @@ export interface NavigationLink {
   children?: ChildNavigationLink[];
 }
 
-const { main }: { main: NavigationLink[] } = menu;
+// Filter menu items based on feature flags
+const filteredMain = menu.main.filter((item) => {
+  if (item.url === "/elements" && !features.elements_page) {
+    return false;
+  }
+  return true;
+}).map((item) => {
+  // Filter children menu items based on feature flags
+  if (item.hasChildren && item.children) {
+    const filteredChildren = item.children.filter((child) => {
+      if (child.url === "/authors" && !features.authors_page) {
+        return false;
+      }
+      if (child.url === "/404" && !features.not_found_page) {
+        return false;
+      }
+      return true;
+    });
+    
+    return {
+      ...item,
+      children: filteredChildren
+    };
+  }
+  return item;
+});
+
 const { navigation_button, settings } = enhancedConfig;
 const { pathname } = Astro.url;
 ---
@@ -52,7 +78,7 @@ const { pathname } = Astro.url;
       class="navbar-nav order-3 hidden w-full pb-6 lg:order-1 lg:flex lg:w-auto lg:space-x-2 lg:pb-0 xl:space-x-8"
     >
       {
-        main.map((menu) => (
+        filteredMain.map((menu) => (
           <>
             {menu.hasChildren ? (
               <li class="nav-item nav-dropdown group relative">

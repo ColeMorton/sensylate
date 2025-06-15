@@ -19,7 +19,9 @@ const getFeatureFlags = () => {
     comments: envToBoolean(process.env.PUBLIC_FEATURE_COMMENTS) ?? config.disqus.enable,
     gtm: envToBoolean(process.env.PUBLIC_FEATURE_GTM) ?? config.google_tag_manager.enable,
     calculator_advanced: envToBoolean(process.env.PUBLIC_FEATURE_CALCULATOR_ADVANCED) ?? false,
-    elements_page: envToBoolean(process.env.PUBLIC_FEATURE_ELEMENTS_PAGE) ?? true
+    elements_page: envToBoolean(process.env.PUBLIC_FEATURE_ELEMENTS_PAGE) ?? true,
+    authors_page: envToBoolean(process.env.PUBLIC_FEATURE_AUTHORS_PAGE) ?? true,
+    not_found_page: envToBoolean(process.env.PUBLIC_FEATURE_NOT_FOUND_PAGE) ?? true
   };
 };
 
@@ -41,6 +43,8 @@ export default defineConfig({
       __FEATURE_GTM__: buildTimeFlags.gtm,
       __FEATURE_CALCULATOR_ADVANCED__: buildTimeFlags.calculator_advanced,
       __FEATURE_ELEMENTS_PAGE__: buildTimeFlags.elements_page,
+      __FEATURE_AUTHORS_PAGE__: buildTimeFlags.authors_page,
+      __FEATURE_NOT_FOUND_PAGE__: buildTimeFlags.not_found_page,
     },
     resolve: {
       alias: {
