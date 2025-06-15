@@ -1,12 +1,22 @@
 ---
 import Base from "@/layouts/Base.astro";
+import GalaxyAnimation from "@/helpers/GalaxyAnimation";
 ---
 
 <Base>
-  <!-- Main content area - intentionally blank -->
-  <section class="min-h-screen flex items-center justify-center">
-    <div class="container">
-      <!-- Blank space for main content -->
+  <!-- Galaxy Animation Background -->
+  <section class="relative h-screen overflow-hidden">
+    <GalaxyAnimation client:load className="absolute inset-0" />
+    <!-- Optional overlay content can be added here -->
+    <div class="relative z-10 flex items-center justify-center h-full">
+      <!-- Content overlay (currently empty) -->
     </div>
   </section>
 </Base>
+
+<style>
+  html, body {
+    overflow: hidden;
+    height: 100vh;
+  }
+</style>
