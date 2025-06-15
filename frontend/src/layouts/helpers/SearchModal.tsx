@@ -1,8 +1,10 @@
 import searchData from ".json/search.json";
 import React, { useEffect, useState } from "react";
 import SearchResult, { type ISearchItem } from "./SearchResult";
+import { useFeatureFlag } from "@/hooks/useFeatureFlag";
 
 const SearchModal = () => {
+  const isSearchEnabled = useFeatureFlag("search");
   const [searchString, setSearchString] = useState("");
 
   // handle input change
@@ -121,6 +123,11 @@ const SearchModal = () => {
       updateSelection();
     });
   }, [searchString]);
+
+  // Don't render if search feature is disabled
+  if (!isSearchEnabled) {
+    return null;
+  }
 
   return (
     <div id="searchModal" className="search-modal">
