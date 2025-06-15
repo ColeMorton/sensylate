@@ -22,18 +22,9 @@ const filteredFooter = menu.footer.filter((item) => {
       <div class="mb-8 text-center lg:col-3 lg:mb-0 lg:text-left">
       </div>
       <div class="mb-8 text-center lg:col-6 lg:mb-0">
-        <ul>
-          {
-            filteredFooter.map((menu) => (
-              <li class="m-3 inline-block">
-                <a href={menu.url}>{menu.name}</a>
-              </li>
-            ))
-          }
-        </ul>
+        <Social source={social.main} className="social-icons" />
       </div>
       <div class="mb-8 text-center lg:col-3 lg:mb-0 lg:mt-0 lg:text-right">
-        <Social source={social.main} className="social-icons" />
       </div>
     </div>
   </div>
