@@ -1,0 +1,110 @@
+# Pre-commit configuration for Sensylate multi-component system
+# Enforces code quality for Python data processing and TypeScript frontend
+
+repos:
+  # Python code quality
+  - repo: https://github.com/psf/black
+    rev: 23.12.1
+    hooks:
+      - id: black
+        files: ^scripts/.*\.py$
+        language_version: python3
+
+  - repo: https://github.com/pycqa/isort
+    rev: 5.13.2
+    hooks:
+      - id: isort
+        files: ^scripts/.*\.py$
+        args: ["--profile", "black"]
+
+  - repo: https://github.com/pycqa/flake8
+    rev: 7.0.0
+    hooks:
+      - id: flake8
+        files: ^scripts/.*\.py$
+        args: ["--max-line-length=88", "--extend-ignore=E203,W503"]
+
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.8.0
+    hooks:
+      - id: mypy
+        files: ^scripts/.*\.py$
+        additional_dependencies: [types-PyYAML, pandas-stubs]
+        args: ["--ignore-missing-imports", "--no-strict-optional"]
+
+  - repo: https://github.com/PyCQA/bandit
+    rev: 1.7.6
+    hooks:
+      - id: bandit
+        files: ^scripts/.*\.py$
+        args: ["-r", "-f", "json"]
+        exclude: ^scripts/.*test.*\.py$
+
+  # Frontend TypeScript/JavaScript quality
+  - repo: local
+    hooks:
+      - id: prettier-frontend
+        name: prettier (frontend)
+        entry: bash -c 'cd frontend && yarn format'
+        language: system
+        files: ^frontend/.*\.(ts|tsx|js|jsx|json|css|md|astro)$
+        pass_filenames: false
+
+      - id: eslint-frontend
+        name: eslint (frontend)
+        entry: bash -c 'cd frontend && yarn lint'
+        language: system
+        files: ^frontend/src/.*\.(ts|tsx|js|jsx)$
+        pass_filenames: false
+
+  # YAML configuration validation
+  - repo: https://github.com/adrienverge/yamllint
+    rev: v1.35.1
+    hooks:
+      - id: yamllint
+        files: ^configs/.*\.yaml$
+        args: ["-d", "relaxed"]
+
+  # General file formatting and validation
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: trailing-whitespace
+        exclude: ^frontend/.*\.(md|mdx)$
+      - id: end-of-file-fixer
+        exclude: ^frontend/.*\.(md|mdx)$
+      - id: check-yaml
+        files: ^configs/.*\.yaml$
+      - id: check-json
+        files: ^frontend/src/config/.*\.json$
+      - id: check-merge-conflict
+      - id: check-added-large-files
+        args: ["--maxkb=1000"]
+      - id: mixed-line-ending
+        args: ["--fix=lf"]
+
+  # Security scanning for dependencies
+  - repo: https://github.com/Lucas-C/pre-commit-hooks-safety
+    rev: v1.3.2
+    hooks:
+      - id: python-safety-dependencies-check
+        files: requirements.*\.txt$
+
+# Configuration
+default_install_hook_types: [pre-commit, pre-push]
+default_stages: [pre-commit]
+fail_fast: false
+minimum_pre_commit_version: "3.3.0"
+
+# Performance optimization
+ci:
+  autofix_commit_msg: |
+    [pre-commit.ci] auto fixes from pre-commit hooks
+
+    for more information, see https://pre-commit.ci
+  autofix_prs: true
+  autoupdate_branch: ''
+  autoupdate_commit_msg: '[pre-commit.ci] pre-commit autoupdate'
+  autoupdate_schedule: weekly
+  skip: []
+  submodules: false
