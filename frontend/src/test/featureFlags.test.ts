@@ -9,7 +9,6 @@ const mockEnv = {
   PUBLIC_FEATURE_CALCULATOR_ADVANCED: "true",
   PUBLIC_FEATURE_ELEMENTS_PAGE: "true",
   PUBLIC_FEATURE_AUTHORS_PAGE: "true",
-  PUBLIC_FEATURE_NOT_FOUND_PAGE: "true",
   PUBLIC_ENV: "test",
 };
 
@@ -62,7 +61,6 @@ describe("Feature Flags Configuration", () => {
       expect(enhancedConfig.features.calculator_advanced).toBe(true); // env: true, config: undefined
       expect(enhancedConfig.features.elements_page).toBe(true); // env: true, config: undefined
       expect(enhancedConfig.features.authors_page).toBe(true); // env: true, config: undefined
-      expect(enhancedConfig.features.not_found_page).toBe(true); // env: true, config: undefined
     });
 
     it("should fall back to static config when environment variable is undefined", async () => {
@@ -94,13 +92,11 @@ describe("Feature Flags Configuration", () => {
       expect(isFeatureEnabled("calculator_advanced")).toBe(true);
       expect(isFeatureEnabled("elements_page")).toBe(true);
       expect(isFeatureEnabled("authors_page")).toBe(true);
-      expect(isFeatureEnabled("not_found_page")).toBe(true);
 
       expect(features.search).toBe(true);
       expect(features.theme_switcher).toBe(false);
       expect(features.elements_page).toBe(true);
       expect(features.authors_page).toBe(true);
-      expect(features.not_found_page).toBe(true);
     });
 
     it("should handle multiple feature flag checks", async () => {
@@ -138,7 +134,6 @@ describe("Feature Flags Configuration", () => {
         "calculator_advanced",
         "elements_page",
         "authors_page",
-        "not_found_page",
       ];
 
       requiredFlags.forEach((flag) => {

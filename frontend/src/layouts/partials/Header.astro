@@ -31,7 +31,8 @@ const filteredMain = menu.main.filter((item) => {
       if (child.url === "/authors" && !features.authors_page) {
         return false;
       }
-      if (child.url === "/404" && !features.not_found_page) {
+      // Always hide 404 page from menu navigation (it should only be accessible via direct URL for actual 404 errors)
+      if (child.url === "/404") {
         return false;
       }
       return true;
