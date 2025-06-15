@@ -18,7 +18,8 @@ const getFeatureFlags = () => {
     theme_switcher: envToBoolean(process.env.PUBLIC_FEATURE_THEME_SWITCHER) ?? config.settings.theme_switcher,
     comments: envToBoolean(process.env.PUBLIC_FEATURE_COMMENTS) ?? config.disqus.enable,
     gtm: envToBoolean(process.env.PUBLIC_FEATURE_GTM) ?? config.google_tag_manager.enable,
-    calculator_advanced: envToBoolean(process.env.PUBLIC_FEATURE_CALCULATOR_ADVANCED) ?? false
+    calculator_advanced: envToBoolean(process.env.PUBLIC_FEATURE_CALCULATOR_ADVANCED) ?? false,
+    elements_page: envToBoolean(process.env.PUBLIC_FEATURE_ELEMENTS_PAGE) ?? true
   };
 };
 
@@ -39,6 +40,7 @@ export default defineConfig({
       __FEATURE_COMMENTS__: buildTimeFlags.comments,
       __FEATURE_GTM__: buildTimeFlags.gtm,
       __FEATURE_CALCULATOR_ADVANCED__: buildTimeFlags.calculator_advanced,
+      __FEATURE_ELEMENTS_PAGE__: buildTimeFlags.elements_page,
     },
     resolve: {
       alias: {

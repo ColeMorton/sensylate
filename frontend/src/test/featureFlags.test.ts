@@ -7,6 +7,7 @@ const mockEnv = {
   PUBLIC_FEATURE_COMMENTS: "true",
   PUBLIC_FEATURE_GTM: "false",
   PUBLIC_FEATURE_CALCULATOR_ADVANCED: "true",
+  PUBLIC_FEATURE_ELEMENTS_PAGE: "true",
   PUBLIC_ENV: "test",
 };
 
@@ -57,6 +58,7 @@ describe("Feature Flags Configuration", () => {
       expect(enhancedConfig.features.comments).toBe(true); // env: true, config: false
       expect(enhancedConfig.features.gtm).toBe(false); // env: false, config: false
       expect(enhancedConfig.features.calculator_advanced).toBe(true); // env: true, config: undefined
+      expect(enhancedConfig.features.elements_page).toBe(true); // env: true, config: undefined
     });
 
     it("should fall back to static config when environment variable is undefined", async () => {
@@ -86,9 +88,11 @@ describe("Feature Flags Configuration", () => {
       expect(isFeatureEnabled("search")).toBe(true);
       expect(isFeatureEnabled("theme_switcher")).toBe(false);
       expect(isFeatureEnabled("calculator_advanced")).toBe(true);
+      expect(isFeatureEnabled("elements_page")).toBe(true);
 
       expect(features.search).toBe(true);
       expect(features.theme_switcher).toBe(false);
+      expect(features.elements_page).toBe(true);
     });
 
     it("should handle multiple feature flag checks", async () => {
@@ -124,6 +128,7 @@ describe("Feature Flags Configuration", () => {
         "comments",
         "gtm",
         "calculator_advanced",
+        "elements_page",
       ];
 
       requiredFlags.forEach((flag) => {

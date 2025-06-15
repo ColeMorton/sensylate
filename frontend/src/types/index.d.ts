@@ -19,6 +19,7 @@ export interface FeatureFlags {
   comments: boolean;
   gtm: boolean;
   calculator_advanced: boolean;
+  elements_page: boolean;
 }
 
 export interface EnhancedConfig {
