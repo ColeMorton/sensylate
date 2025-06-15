@@ -2,6 +2,10 @@
   @apply bg-body dark:bg-darkmode-body py-6;
 }
 
+.footer {
+  @apply py-3 lg:py-6;
+}
+
 /* navbar items */
 .navbar {
   @apply relative flex flex-wrap items-center justify-between;
