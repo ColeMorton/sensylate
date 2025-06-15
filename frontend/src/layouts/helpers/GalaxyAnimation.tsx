@@ -64,7 +64,7 @@ const GalaxyAnimation: React.FC<GalaxyAnimationProps> = ({
       spin: 1,
       randomness: 0.2,
       randomnessPower: 3,
-      insideColor: "#26c6da", // Cyan for inner core
+      insideColor: "#4dd0e1", // Cyan for inner core
       outsideColor: "#7e57c2", // Purple for outer edges
     };
 
@@ -130,17 +130,12 @@ const GalaxyAnimation: React.FC<GalaxyAnimationProps> = ({
       );
       geometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
 
-      // Detect theme mode for appropriate blending
-      const isDarkMode =
-        window.matchMedia("(prefers-color-scheme: dark)").matches ||
-        document.documentElement.classList.contains("dark");
-
       // Material
       const material = new THREE.PointsMaterial({
         size: parameters.size,
         sizeAttenuation: true,
         depthWrite: false,
-        blending: isDarkMode ? THREE.AdditiveBlending : THREE.MultiplyBlending,
+        blending: THREE.NormalBlending,
         vertexColors: true,
       });
 
@@ -157,14 +152,9 @@ const GalaxyAnimation: React.FC<GalaxyAnimationProps> = ({
         return;
       }
 
-      // Detect current theme
-      const isDarkMode = document.documentElement.classList.contains("dark");
-
       // Update blending mode without recreating the galaxy
       const material = refs.galaxy.material as THREE.PointsMaterial;
-      material.blending = isDarkMode
-        ? THREE.AdditiveBlending
-        : THREE.NormalBlending;
+      material.blending = THREE.NormalBlending;
       material.needsUpdate = true;
     };
 
