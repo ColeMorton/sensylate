@@ -36,7 +36,16 @@ const GalaxyAnimation: React.FC<GalaxyAnimationProps> = ({
       0.1,
       100,
     );
-    refs.camera.position.set(4, 2, 5);
+    // Position camera at 23.6 degrees above horizontal
+    const angle = (23.6 * Math.PI) / 180; // Convert to radians
+    const distance = 8;
+    const x = 0;
+    const y = Math.sin(angle) * distance;
+    const z = Math.cos(angle) * distance;
+    refs.camera.position.set(x, y, z);
+    // Look at a point below galaxy center to raise it on screen
+    const targetY = -y * 0.4; // Look below center to raise galaxy visually
+    refs.camera.lookAt(0, targetY, 0);
 
     // Renderer setup
     refs.renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -135,23 +144,6 @@ const GalaxyAnimation: React.FC<GalaxyAnimationProps> = ({
 
     createGalaxy();
 
-    // Mouse controls
-    let mouseX = 0;
-    let mouseY = 0;
-    let targetRotationX = 0;
-    let targetRotationY = 0;
-
-    const onMouseMove = (event: MouseEvent) => {
-      mouseX =
-        (event.clientX - container.clientWidth / 2) / container.clientWidth;
-      mouseY =
-        (event.clientY - container.clientHeight / 2) / container.clientHeight;
-      targetRotationX = mouseY * 0.5;
-      targetRotationY = mouseX * 0.5;
-    };
-
-    container.addEventListener("mousemove", onMouseMove);
-
     // Animation loop
     const clock = new THREE.Clock();
 
@@ -163,13 +155,6 @@ const GalaxyAnimation: React.FC<GalaxyAnimationProps> = ({
       // Rotate galaxy
       if (refs.galaxy) {
         refs.galaxy.rotation.y = elapsedTime * 0.1;
-
-        // Smooth camera movement based on mouse
-        refs.camera!.position.x +=
-          (targetRotationY * 10 - refs.camera!.position.x) * 0.02;
-        refs.camera!.position.y +=
-          (targetRotationX * 10 - refs.camera!.position.y) * 0.02;
-        refs.camera!.lookAt(refs.scene!.position);
       }
 
       refs.renderer!.render(refs.scene!, refs.camera!);
@@ -197,7 +182,6 @@ const GalaxyAnimation: React.FC<GalaxyAnimationProps> = ({
       }
 
       window.removeEventListener("resize", handleResize);
-      container.removeEventListener("mousemove", onMouseMove);
 
       if (refs.galaxy) {
         refs.galaxy.geometry.dispose();
