@@ -64,8 +64,8 @@ const GalaxyAnimation: React.FC<GalaxyAnimationProps> = ({
       spin: 1,
       randomness: 0.2,
       randomnessPower: 3,
-      insideColor: "#ffa575",
-      outsideColor: "#311599",
+      insideColor: "#26c6da", // Cyan for inner core
+      outsideColor: "#7e57c2", // Purple for outer edges
     };
 
     // Create galaxy
@@ -130,12 +130,17 @@ const GalaxyAnimation: React.FC<GalaxyAnimationProps> = ({
       );
       geometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
 
+      // Detect theme mode for appropriate blending
+      const isDarkMode =
+        window.matchMedia("(prefers-color-scheme: dark)").matches ||
+        document.documentElement.classList.contains("dark");
+
       // Material
       const material = new THREE.PointsMaterial({
         size: parameters.size,
         sizeAttenuation: true,
         depthWrite: false,
-        blending: THREE.AdditiveBlending,
+        blending: isDarkMode ? THREE.AdditiveBlending : THREE.MultiplyBlending,
         vertexColors: true,
       });
 
@@ -145,6 +150,62 @@ const GalaxyAnimation: React.FC<GalaxyAnimationProps> = ({
     };
 
     createGalaxy();
+
+    // Theme change detection function
+    const handleThemeChange = () => {
+      if (!refs.galaxy) {
+        return;
+      }
+
+      // Detect current theme
+      const isDarkMode = document.documentElement.classList.contains("dark");
+
+      // Update blending mode without recreating the galaxy
+      const material = refs.galaxy.material as THREE.PointsMaterial;
+      material.blending = isDarkMode
+        ? THREE.AdditiveBlending
+        : THREE.NormalBlending;
+      material.needsUpdate = true;
+    };
+
+    // Multiple listeners for theme changes
+    const themeObserver = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (
+          mutation.type === "attributes" &&
+          mutation.attributeName === "class"
+        ) {
+          // Add a small delay to ensure the DOM has updated
+          setTimeout(handleThemeChange, 10);
+        }
+      });
+    });
+
+    // Observe changes to the document element's class attribute
+    themeObserver.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+
+    // Listen for storage changes (theme switcher uses localStorage)
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === "theme") {
+        setTimeout(handleThemeChange, 10);
+      }
+    };
+    window.addEventListener("storage", handleStorageChange);
+
+    // Listen for click events on theme switcher
+    const handleThemeClick = (e: Event) => {
+      const target = e.target as HTMLElement;
+      if (
+        target.matches("[data-theme-switcher]") ||
+        target.closest("[data-theme-switcher]")
+      ) {
+        setTimeout(handleThemeChange, 100);
+      }
+    };
+    document.addEventListener("click", handleThemeClick);
 
     // Animation loop
     const clock = new THREE.Clock();
@@ -184,6 +245,9 @@ const GalaxyAnimation: React.FC<GalaxyAnimationProps> = ({
       }
 
       window.removeEventListener("resize", handleResize);
+      window.removeEventListener("storage", handleStorageChange);
+      document.removeEventListener("click", handleThemeClick);
+      themeObserver.disconnect();
 
       if (refs.galaxy) {
         refs.galaxy.geometry.dispose();
