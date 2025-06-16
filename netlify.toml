@@ -1,18 +1,17 @@
 [build]
 base = "frontend"
 publish = "frontend/dist"
-command = "yarn install && yarn build"
+command = "rm -rf node_modules && yarn install --include=dev && yarn build"
 ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF ."
 
 [build.environment]
 NODE_VERSION = "20"
 DISABLE_PYTHON = "true"
-NPM_FLAGS = "--include=dev"
 
 [context.staging]
-command = "yarn install && yarn build"
+command = "rm -rf node_modules && yarn install --include=dev && yarn build"
 environment = { NODE_ENV = "staging" }
 
 [context.production]
-command = "yarn install && yarn build"
+command = "rm -rf node_modules && yarn install --include=dev && yarn build"
 environment = { NODE_ENV = "production" }
