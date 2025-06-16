@@ -10,9 +10,9 @@ DISABLE_PYTHON = "true"
 NPM_FLAGS = "--include=dev"
 
 [context.staging]
-command = "yarn build"
+command = "yarn install && yarn build"
 environment = { NODE_ENV = "staging" }
 
 [context.production]
-command = "yarn build"
+command = "yarn install && yarn build"
 environment = { NODE_ENV = "production" }
