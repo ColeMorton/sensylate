@@ -1,6 +1,6 @@
 # Core dependencies
 pandas>=2.0.0,<3.0.0
-numpy>=1.24.0,<2.0.0
+numpy>=1.24.0,<3.0.0
 pyyaml>=6.0,<7.0.0
 pathlib2>=2.3.7,<3.0.0
 
