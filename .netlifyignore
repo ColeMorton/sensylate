@@ -1,0 +1,9 @@
+# Ignore Python files for frontend deployment
+requirements.txt
+requirements-dev.txt
+*.py
+scripts/
+team-workspace/
+docs/
+.pre-commit-config.yaml
+setup.cfg
