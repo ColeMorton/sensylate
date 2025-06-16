@@ -5,7 +5,14 @@ description: "Calculate returns from dollar-cost averaging into Bitcoin. See how
 date: 2025-06-07
 calculator_id: "dca-calculator"
 category: "crypto"
-features: ["Weekly investment tracking", "Total return calculation", "Average cost basis", "Annualized returns", "Portfolio value estimation"]
+features:
+  [
+    "Weekly investment tracking",
+    "Total return calculation",
+    "Average cost basis",
+    "Annualized returns",
+    "Portfolio value estimation",
+  ]
 draft: false
 ---
 

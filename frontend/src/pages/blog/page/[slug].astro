@@ -16,7 +16,7 @@ const BLOG_FOLDER = "blog";
 const { slug } = Astro.params;
 const postIndex = (await getEntry(
   BLOG_FOLDER,
-  "-index"
+  "-index",
 )) as CollectionEntry<"blog">;
 const posts = await getSinglePage(BLOG_FOLDER);
 const allCategories = await getAllTaxonomy(BLOG_FOLDER, "categories");

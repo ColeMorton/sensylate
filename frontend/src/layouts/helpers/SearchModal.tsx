@@ -136,7 +136,7 @@ const SearchModal = () => {
         <div className="search-wrapper-header">
           <label
             htmlFor="searchInput"
-            className="absolute left-7 top-[calc(50%-7px)]"
+            className="absolute top-[calc(50%-7px)] left-7"
           >
             <span className="sr-only">search icon</span>
             {searchString ? (
@@ -145,7 +145,7 @@ const SearchModal = () => {
                 viewBox="0 0 512 512"
                 height="18"
                 width="18"
-                className="hover:text-red-500 cursor-pointer -mt-0.5"
+                className="-mt-0.5 cursor-pointer hover:text-red-500"
               >
                 <title>close icon</title>
                 <path

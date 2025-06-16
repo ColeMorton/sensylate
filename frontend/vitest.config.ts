@@ -26,7 +26,6 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@': resolve(__dirname, './src'),
       '@/components': resolve(__dirname, './src/layouts/components'),
       '@/shortcodes': resolve(__dirname, './src/layouts/shortcodes'),
       '@/helpers': resolve(__dirname, './src/layouts/helpers'),
@@ -35,7 +34,8 @@ export default defineConfig({
       '@/config': resolve(__dirname, './src/config'),
       '@/layouts': resolve(__dirname, './src/layouts'),
       '@/hooks': resolve(__dirname, './src/hooks'),
-      '@/types': resolve(__dirname, './src/types')
+      '@/types': resolve(__dirname, './src/types'),
+      '@': resolve(__dirname, './src')
     }
   }
 });

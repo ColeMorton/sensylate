@@ -5,17 +5,20 @@ import GalaxyAnimation from "@/helpers/GalaxyAnimation";
 
 <Base>
   <!-- Galaxy Animation Background -->
-  <section class="relative h-screen overflow-hidden bg-body dark:bg-darkmode-body">
+  <section
+    class="bg-body dark:bg-darkmode-body relative h-screen overflow-hidden"
+  >
     <GalaxyAnimation client:load className="absolute inset-0" />
     <!-- Optional overlay content can be added here -->
-    <div class="relative z-10 flex items-center justify-center h-full">
+    <div class="relative z-10 flex h-full items-center justify-center">
       <!-- Content overlay (currently empty) -->
     </div>
   </section>
 </Base>
 
 <style>
-  html, body {
+  html,
+  body {
     overflow: hidden;
     height: 100vh;
   }

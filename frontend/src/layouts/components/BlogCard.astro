@@ -34,12 +34,12 @@ const { title, image, date, author, categories } = data.data;
   <ul class="mb-4">
     <li class="mr-4 inline-block">
       <a href={`/authors/${slugify(author)}`}>
-        <FaRegUserCircle className={"mr-2 -mt-1 inline-block"} />
+        <FaRegUserCircle className={"-mt-1 mr-2 inline-block"} />
         {humanize(author)}
       </a>
     </li>
     <li class="mr-4 inline-block">
-      <FaRegFolder className={"mr-2 -mt-1 inline-block"} />
+      <FaRegFolder className={"-mt-1 mr-2 inline-block"} />
       {
         categories.map((category: string, index: number) => (
           <a href={`/categories/${slugify(category)}`}>

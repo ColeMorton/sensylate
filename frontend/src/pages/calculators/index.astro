@@ -12,27 +12,32 @@ const CALCULATORS_FOLDER = "calculators";
 
 const calculatorsIndex = (await getEntry(
   CALCULATORS_FOLDER,
-  "-index"
+  "-index",
 )) as CollectionEntry<"calculators">;
 
 const calculators = await getSinglePage(CALCULATORS_FOLDER);
 const sortedCalculators = sortByDate(calculators);
 
 // Group calculators by category
-const calculatorsByCategory = sortedCalculators.reduce((acc, calc) => {
-  const category = calc.data.category || "other";
-  if (!acc[category]) {
-    acc[category] = [];
-  }
-  acc[category].push(calc);
-  return acc;
-}, {} as Record<string, typeof calculators>);
+const calculatorsByCategory = sortedCalculators.reduce(
+  (acc, calc) => {
+    const category = calc.data.category || "other";
+    if (!acc[category]) {
+      acc[category] = [];
+    }
+    acc[category].push(calc);
+    return acc;
+  },
+  {} as Record<string, typeof calculators>,
+);
 
 const categoryOrder = ["finance", "crypto", "math", "other"];
-const orderedCategories = categoryOrder.filter(cat => calculatorsByCategory[cat]);
+const orderedCategories = categoryOrder.filter(
+  (cat) => calculatorsByCategory[cat],
+);
 
 // Add any categories not in the order
-Object.keys(calculatorsByCategory).forEach(cat => {
+Object.keys(calculatorsByCategory).forEach((cat) => {
   if (!orderedCategories.includes(cat)) {
     orderedCategories.push(cat);
   }
@@ -42,7 +47,7 @@ const categoryTitles: Record<string, string> = {
   finance: "Financial Calculators",
   crypto: "Cryptocurrency Calculators",
   math: "Mathematics Calculators",
-  other: "Other Calculators"
+  other: "Other Calculators",
 };
 ---
 
@@ -53,38 +58,45 @@ const categoryTitles: Record<string, string> = {
   description={calculatorsIndex.data.description}
 >
   <PageHeader title={calculatorsIndex?.data.title} />
-  
+
   <section class="section">
     <div class="container">
       <div class="row">
         <div class="mx-auto lg:col-10">
-          {calculatorsIndex.data.description && (
-            <div class="content mb-14 text-center">
-              <p class="text-lg">{calculatorsIndex.data.description}</p>
-            </div>
-          )}
-          
-          {orderedCategories.map((category) => (
-            <div class="mb-14">
-              <h2 class="mb-8 text-2xl font-bold text-dark dark:text-white">
-                {categoryTitles[category] || category.charAt(0).toUpperCase() + category.slice(1)}
-              </h2>
-              
-              <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                {calculatorsByCategory[category].map((calculator) => (
-                  <CalculatorCard data={calculator} />
-                ))}
+          {
+            calculatorsIndex.data.description && (
+              <div class="content mb-14 text-center">
+                <p class="text-lg">{calculatorsIndex.data.description}</p>
               </div>
-            </div>
-          ))}
-          
-          {sortedCalculators.length === 0 && (
-            <div class="text-center py-10">
-              <p class="text-lg text-text dark:text-gray-300">
-                No calculators available yet. Check back soon!
-              </p>
-            </div>
-          )}
+            )
+          }
+
+          {
+            orderedCategories.map((category) => (
+              <div class="mb-14">
+                <h2 class="text-dark mb-8 text-2xl font-bold dark:text-white">
+                  {categoryTitles[category] ||
+                    category.charAt(0).toUpperCase() + category.slice(1)}
+                </h2>
+
+                <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                  {calculatorsByCategory[category].map((calculator) => (
+                    <CalculatorCard data={calculator} />
+                  ))}
+                </div>
+              </div>
+            ))
+          }
+
+          {
+            sortedCalculators.length === 0 && (
+              <div class="py-10 text-center">
+                <p class="text-text text-lg dark:text-gray-300">
+                  No calculators available yet. Check back soon!
+                </p>
+              </div>
+            )
+          }
         </div>
       </div>
     </div>

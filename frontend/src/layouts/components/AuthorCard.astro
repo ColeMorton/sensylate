@@ -7,7 +7,7 @@ const { data } = Astro.props;
 const { title, image, social } = data.data;
 ---
 
-<div class="rounded bg-light p-8 text-center dark:bg-darkmode-light">
+<div class="bg-light dark:bg-darkmode-light rounded p-8 text-center">
   {
     image && (
       <ImageMod

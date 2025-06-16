@@ -19,32 +19,34 @@ export interface NavigationLink {
 }
 
 // Filter menu items based on feature flags
-const filteredMain = menu.main.filter((item) => {
-  if (item.url === "/elements" && !features.elements_page) {
-    return false;
-  }
-  return true;
-}).map((item) => {
-  // Filter children menu items based on feature flags
-  if (item.hasChildren && item.children) {
-    const filteredChildren = item.children.filter((child) => {
-      if (child.url === "/authors" && !features.authors_page) {
-        return false;
-      }
-      // Always hide 404 page from menu navigation (it should only be accessible via direct URL for actual 404 errors)
-      if (child.url === "/404") {
-        return false;
-      }
-      return true;
-    });
-    
-    return {
-      ...item,
-      children: filteredChildren
-    };
-  }
-  return item;
-});
+const filteredMain = menu.main
+  .filter((item) => {
+    if (item.url === "/elements" && !features.elements_page) {
+      return false;
+    }
+    return true;
+  })
+  .map((item) => {
+    // Filter children menu items based on feature flags
+    if (item.hasChildren && item.children) {
+      const filteredChildren = item.children.filter((child) => {
+        if (child.url === "/authors" && !features.authors_page) {
+          return false;
+        }
+        // Always hide 404 page from menu navigation (it should only be accessible via direct URL for actual 404 errors)
+        if (child.url === "/404") {
+          return false;
+        }
+        return true;
+      });
+
+      return {
+        ...item,
+        children: filteredChildren,
+      };
+    }
+    return item;
+  });
 
 const { navigation_button, settings } = enhancedConfig;
 const { pathname } = Astro.url;
@@ -60,13 +62,13 @@ const { pathname } = Astro.url;
     <input id="nav-toggle" type="checkbox" class="hidden" />
     <label
       for="nav-toggle"
-      class="order-3 cursor-pointer flex items-center lg:hidden text-text-dark dark:text-white lg:order-1"
+      class="text-text-dark order-3 flex cursor-pointer items-center lg:order-1 lg:hidden dark:text-white"
     >
-      <svg id="show-button" class="h-6 fill-current block" viewBox="0 0 20 20">
+      <svg id="show-button" class="block h-6 fill-current" viewBox="0 0 20 20">
         <title>Menu Open</title>
         <path d="M0 3h20v2H0V3z m0 6h20v2H0V9z m0 6h20v2H0V0z"></path>
       </svg>
-      <svg id="hide-button" class="h-6 fill-current hidden" viewBox="0 0 20 20">
+      <svg id="hide-button" class="hidden h-6 fill-current" viewBox="0 0 20 20">
         <title>Menu Close</title>
         <polygon
           points="11 9 22 9 22 11 11 11 11 22 9 22 9 11 -2 11 -2 9 9 9 9 -2 11 -2"
@@ -149,7 +151,7 @@ const { pathname } = Astro.url;
       {
         features.search && (
           <button
-            class="border-border text-text-dark hover:text-primary dark:border-darkmode-border mr-5 inline-block border-r pr-5 text-xl dark:text-white dark:hover:text-darkmode-primary"
+            class="border-border text-text-dark hover:text-primary dark:border-darkmode-border dark:hover:text-darkmode-primary mr-5 inline-block border-r pr-5 text-xl dark:text-white"
             aria-label="search"
             data-search-trigger
           >

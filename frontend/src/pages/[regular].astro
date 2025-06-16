@@ -10,7 +10,7 @@ export async function getStaticPaths() {
   const COLLECTION_FOLDER = "pages";
 
   const pages = await getSinglePage(COLLECTION_FOLDER);
-  
+
   // Filter out elements page if feature flag is disabled
   const filteredPages = pages.filter((page) => {
     if (page.id === "elements" && !isFeatureEnabled("elements_page")) {

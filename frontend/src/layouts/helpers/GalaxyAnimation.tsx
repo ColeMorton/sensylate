@@ -256,7 +256,7 @@ const GalaxyAnimation: React.FC<GalaxyAnimationProps> = ({
   return (
     <div
       ref={containerRef}
-      className={`w-full h-full ${className}`}
+      className={`h-full w-full ${className}`}
       style={{ minHeight: "100vh" }}
     />
   );

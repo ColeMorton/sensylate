@@ -10,11 +10,11 @@ import { render } from "astro:content";
 // get all static paths for authors
 export async function getStaticPaths() {
   const { isFeatureEnabled } = await import("@/lib/featureFlags");
-  
+
   if (!isFeatureEnabled("authors_page")) {
     return [];
   }
-  
+
   const COLLECTION_FOLDER = "authors";
   const { getSinglePage } = await import("@/lib/contentParser.astro");
   const authors = await getSinglePage(COLLECTION_FOLDER);
@@ -36,7 +36,7 @@ const { Content } = await render(author);
 const BLOG_FOLDER = "blog";
 const posts = await getSinglePage(BLOG_FOLDER);
 const postFilterByAuthor = posts.filter(
-  (post) => slugify(post.data.author) === slugify(title)
+  (post) => slugify(post.data.author) === slugify(title),
 );
 ---
 
@@ -49,7 +49,7 @@ const postFilterByAuthor = posts.filter(
   <section class="section-sm pb-0">
     <div class="container">
       <div
-        class="row justify-center border-b border-border pb-14 dark:border-darkmode-border"
+        class="row border-border dark:border-darkmode-border justify-center border-b pb-14"
       >
         <div class="text-center lg:col-4">
           {
@@ -72,7 +72,7 @@ const postFilterByAuthor = posts.filter(
         </div>
       </div>
 
-      <div class="row justify-center pb-16 pt-14">
+      <div class="row justify-center pt-14 pb-16">
         {
           postFilterByAuthor.map((post) => (
             <div class="mb-12 md:col-6 lg:col-4">

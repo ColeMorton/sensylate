@@ -5,7 +5,8 @@ description: "Simple and fast pocket calculator for everyday arithmetic operatio
 date: 2025-06-07
 calculator_id: "pocket-calculator"
 category: "math"
-features: ["Basic arithmetic operations", "Instant calculations", "Clean interface", "Mobile friendly"]
+features:
+  ["Basic arithmetic operations", "Instant calculations", "Clean interface", "Mobile friendly"]
 draft: false
 ---
 
@@ -16,7 +17,7 @@ Our pocket calculator provides a simple, clean interface for performing basic ar
 ### Features
 
 - **Basic Operations**: Addition, subtraction, multiplication, and division
-- **Expression Support**: Enter complex expressions like "2 + 3 * 4"
+- **Expression Support**: Enter complex expressions like "2 + 3 \* 4"
 - **Instant Results**: See your calculations in real-time
 - **Error Handling**: Clear error messages for invalid expressions
 
@@ -26,4 +27,4 @@ Our pocket calculator provides a simple, clean interface for performing basic ar
 2. Click "Calculate" or press Enter
 3. View your result instantly
 
-The calculator supports standard mathematical order of operations (PEMDAS/BODMAS), so expressions like "2 + 3 * 4" will correctly evaluate to 14, not 20.
+The calculator supports standard mathematical order of operations (PEMDAS/BODMAS), so expressions like "2 + 3 \* 4" will correctly evaluate to 14, not 20.

@@ -5,7 +5,14 @@ description: "Calculate your monthly mortgage payments including principal, inte
 date: 2025-06-07
 calculator_id: "mortgage-calculator"
 category: "finance"
-features: ["Principal & interest calculation", "Property tax inclusion", "Insurance estimation", "PMI calculation", "Total interest over loan life"]
+features:
+  [
+    "Principal & interest calculation",
+    "Property tax inclusion",
+    "Insurance estimation",
+    "PMI calculation",
+    "Total interest over loan life",
+  ]
 draft: false
 ---
 

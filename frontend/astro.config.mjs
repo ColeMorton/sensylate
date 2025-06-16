@@ -32,7 +32,7 @@ export default defineConfig({
   base: config.site.base_path ? config.site.base_path : "/",
   trailingSlash: config.site.trailing_slash ? "always" : "never",
   image: { service: sharp() },
-  vite: { 
+  vite: {
     plugins: [tailwindcss()],
     define: {
       // Build-time feature flags for dead code elimination
@@ -53,6 +53,8 @@ export default defineConfig({
         '@/lib': path.resolve('./src/lib'),
         '@/config': path.resolve('./src/config'),
         '@/layouts': path.resolve('./src/layouts'),
+        '@/hooks': path.resolve('./src/hooks'),
+        '@/types': path.resolve('./src/types'),
         '@': path.resolve('./src')
       }
     }

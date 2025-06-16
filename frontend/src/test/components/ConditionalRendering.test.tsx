@@ -1,6 +1,8 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import React from "react";
+import { useFeatureFlag } from "@/hooks/useFeatureFlag";
+import { isFeatureEnabled } from "@/lib/featureFlags";
 
 // Mock environment variables for different scenarios
 const createMockEnv = (overrides: Record<string, string> = {}) => ({
@@ -43,7 +45,6 @@ describe("Component Conditional Rendering", () => {
   describe("SearchModal Conditional Rendering", () => {
     const MockSearchModal = () => {
       // Mock the SearchModal component behavior
-      const { useFeatureFlag } = require("@/hooks/useFeatureFlag");
       const isSearchEnabled = useFeatureFlag("search");
 
       if (!isSearchEnabled) {
@@ -78,11 +79,11 @@ describe("Component Conditional Rendering", () => {
 
   describe("Calculator Feature Integration", () => {
     const MockCalculatorList = () => {
-      const { features } = require("@/lib/featureFlags");
       const baseCalculators = ["pocket", "dca", "mortgage"];
       const advancedCalculators = ["compound-interest", "roi-tracker"];
+      const isAdvancedEnabled = isFeatureEnabled("calculator_advanced");
 
-      const availableCalculators = features.calculator_advanced
+      const availableCalculators = isAdvancedEnabled
         ? [...baseCalculators, ...advancedCalculators]
         : baseCalculators;
 
@@ -138,7 +139,6 @@ describe("Component Conditional Rendering", () => {
 
   describe("Feature Flag Fallback Behavior", () => {
     const MockComponent = () => {
-      const { useFeatureFlag } = require("@/hooks/useFeatureFlag");
       const searchEnabled = useFeatureFlag("search");
       const themeEnabled = useFeatureFlag("theme_switcher");
 
