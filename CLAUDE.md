@@ -244,3 +244,6 @@ Use these by asking Claude to execute them (e.g., "run the architect command" or
 ```
 
 **Note**: These are custom workflow commands with AI collaboration capabilities. Commands automatically share context and data through the team workspace for enhanced results.
+
+### Memory Notes
+- **Architect Command Outputs**: Output from the architect commands should be saved into: `./team-workspace/commands/architect/outputs`
