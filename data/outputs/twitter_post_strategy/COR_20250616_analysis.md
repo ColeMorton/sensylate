@@ -30,18 +30,18 @@
 - R. vol: 16.19%
 
 **Right Panel Seasonality Chart (15 years)**:
-- January: 47%
-- February: 67%
-- March: 53%
-- April: 47%
-- May: 57%
-- **June: 67%** (Current month - Strong)
-- July: 43%
-- August: 73%
-- September: 80%
-- October: 53%
-- November: 67%
-- December: 53%
+- January: 87% positive, 47% mean change
+- February: 67% positive
+- March: 53% positive
+- April: 47% positive
+- May: 67% positive
+- June: 67% positive, 57% mean change (Current month - Strong)
+- July: 43% positive (59% visual bar)
+- August: 73% positive
+- September: 80% positive
+- October: 53% positive
+- November: 67% positive
+- December: 53% positive
 
 ### SECONDARY: Fundamental Analysis Integration
 **Source**: `/data/raw/analysis_fundamental/COR_20250516.md`
@@ -72,12 +72,28 @@
 ### FALLBACK: CSV Strategy Data
 **Source**: `/data/raw/analysis_strategy/COR_20250516.csv`
 
-**Supporting Metrics** (used for validation):
-- Strategy Type: SMA (8,26)
+**Strategy Parameters & Supporting Metrics**:
+- **Strategy Type**: SMA dual moving average cross
+- **Parameters**: Short Window (8), Long Window (26)
+- **Formatted**: dual SMA (8/26) cross strategy
 - Win Rate: 48.05% (similar to TrendSpider 45%)
 - Total Return: 5,286.99% (vs TrendSpider 373.6% - different calculation method)
 - Sharpe Ratio: 0.84 (vs TrendSpider 0.62 - similar range)
 - Sortino Ratio: 1.27 (vs TrendSpider 1.33 - highly consistent)
+
+## Hook Generation Analysis
+
+**Standout Metrics Identified**:
+1. High reward/risk ratio (2.87) - exceptional asymmetric returns
+2. GLP-1 drug catalyst (36% YoY growth) - fundamental mega-trend
+3. Strong June seasonality (67%) - current timing advantage
+4. Low beta (0.44) - defensive positioning in volatile market
+
+**Hook Construction Process**:
+- Combined quantitative edge (2.87 R/R) with fundamental catalyst (GLP-1 boom)
+- Emphasized "rare combo" to create intrigue
+- Used "math edge + mega catalyst" for memorable phrasing
+- Character count: 142 (well under 280 limit)
 
 ## Data Priority & Cross-Validation
 
@@ -86,27 +102,32 @@
 - Complete seasonality analysis from right panel
 - 15-year historical data period
 
-**CSV Metrics for Context**:
-- Strategy type confirmation (SMA crossover)
+**CSV Strategy Parameters**:
+- Strategy Type: SMA dual moving average cross
+- Window Parameters: Short (8), Long (26)
+- Formatted as: dual SMA (8/26) cross strategy
 - Additional validation of risk metrics
 - Consistent Sortino ratio confirms data reliability
 
 **Data Consistency Check**: ✅ PASSED
+- Strategy parameters extracted: SMA (8/26) cross
 - Similar win rates (45% vs 48%)
 - Consistent risk-adjusted returns (Sortino ratios align)
-- Strategy type confirmed (SMA)
+- Strategy type confirmed and properly formatted
 
 ## Extraction Methodology Summary
 
-1. **Image Analysis Priority**: Extracted all metrics from TrendSpider tabular display
-2. **Seasonality Focus**: Analyzed monthly performance bars for timing insights
-3. **Fundamental Integration**: Connected strategy performance to investment thesis
-4. **Technical Confirmation**: Incorporated current chart pattern completion
-5. **Cross-Validation**: Used CSV data to verify key metrics consistency
+1. **Strategy Parameter Extraction**: Parsed CSV for SMA (8/26) cross strategy details
+2. **Image Analysis Priority**: Extracted all metrics from TrendSpider tabular display
+3. **Seasonality Focus**: Analyzed monthly performance bars for timing insights
+4. **Fundamental Integration**: Connected strategy performance to investment thesis
+5. **Technical Confirmation**: Incorporated current chart pattern completion
+6. **Cross-Validation**: Used CSV data to verify key metrics consistency
 
 ## Quality Assurance Checklist
 
 **Data Integration**: ✅
+- [x] Strategy parameters extracted from CSV: SMA (8/26) cross
 - [x] All four data sources successfully accessed and parsed
 - [x] Cross-source validation completed (COR ticker, consistent metrics)
 - [x] Fundamental thesis aligns with technical strategy performance
@@ -117,12 +138,16 @@
 - [x] Fundamental insights reflect analysis document ($325 target, GLP-1 thesis)
 - [x] Technical patterns consistent with misc notes (bullish triangle)
 - [x] Seasonality data extracted precisely from visual chart
+- [x] NO BOLD FORMATTING used anywhere in content
 
 **Engagement Optimization**: ✅
-- [x] Hook leverages strongest performance metric (22.1% annual return)
-- [x] Strategy performance supported by fundamental case
-- [x] Current timing relevance established (June neutral, Aug/Sep strength ahead)
-- [x] Content tells cohesive investment story (defensive healthcare + growth)
+- [x] Unique hook created based on standout data points
+- [x] Hook under 280 characters (142 chars)
+- [x] Hook combines quantitative and fundamental angles
+- [x] Strategy performance validates today's signal opportunity
+- [x] Current timing relevance established (June 67% strength)
+- [x] Content creates actionable urgency for immediate positioning
+- [x] Call-to-action reflects live trading opportunity
 
 ## Data Confidence Assessment
 

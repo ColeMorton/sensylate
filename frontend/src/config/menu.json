@@ -13,6 +13,10 @@
       "url": "/calculators"
     },
     {
+      "name": "Trading Strategies",
+      "url": "/trading-strategies"
+    },
+    {
       "name": "Elements",
       "url": "/elements"
     },
@@ -28,10 +32,6 @@
         {
           "name": "Blog",
           "url": "/blog"
-        },
-        {
-          "name": "Authors",
-          "url": "/authors"
         },
         {
           "name": "Categories",

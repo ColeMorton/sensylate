@@ -1,5 +1,6 @@
 ---
 import BlogCard from "@/components/BlogCard.astro";
+import TradingStrategyCard from "@/components/TradingStrategyCard.astro";
 import Share from "@/components/Share.astro";
 import Disqus from "@/helpers/Disqus";
 import { getSinglePage } from "@/lib/contentParser.astro";
@@ -10,13 +11,31 @@ import { render } from "astro:content";
 import { FaRegClock, FaRegFolder, FaRegUserCircle } from "react-icons/fa";
 import ImageMod from "./components/ImageMod.astro";
 
-const COLLECTION_FOLDER = "blog";
 const { post } = Astro.props;
+
+// Determine collection type from post.collection
+const collectionType = post.collection;
+const COLLECTION_FOLDER = collectionType;
 
 const posts = await getSinglePage(COLLECTION_FOLDER);
 const similarPosts = similarItems(post, posts);
 const { Content } = await render(post);
 const { title, description, author, categories, image, date, tags } = post.data;
+
+// Generate appropriate URLs based on collection type
+const getCategoryUrl = (category: string) => {
+  if (collectionType === "trading-strategies") {
+    return `/trading-strategies/categories/${slugify(category)}`;
+  }
+  return `/categories/${slugify(category)}`;
+};
+
+const getTagUrl = (tag: string) => {
+  if (collectionType === "trading-strategies") {
+    return `/trading-strategies/tags/${slugify(tag)}`;
+  }
+  return `/tags/${slugify(tag)}`;
+};
 ---
 
 <section class="section pt-7">
@@ -40,22 +59,22 @@ const { title, description, author, categories, image, date, tags } = post.data;
         <h1 set:html={markdownify(title)} class="h2 mb-4" />
         <ul class="mb-4">
           <li class="mr-4 inline-block">
-            <a href={`/authors/${slugify(author)}`}>
-              <FaRegUserCircle className={"-mt-1 mr-2 inline-block"} />
-              {humanize(author)}
-            </a>
+            <FaRegUserCircle className={"-mt-1 mr-2 inline-block"} />
+            {humanize(author)}
           </li>
-          <li class="mr-4 inline-block">
-            <FaRegFolder className={"-mt-1 mr-2 inline-block"} />
-            {
-              categories.map((category: string, index: number) => (
-                <a href={`/categories/${slugify(category)}`}>
-                  {humanize(category)}
-                  {index !== categories.length - 1 && ","}
-                </a>
-              ))
-            }
-          </li>
+          {
+            categories && categories.length > 0 && (
+              <li class="mr-4 inline-block">
+                <FaRegFolder className={"-mt-1 mr-2 inline-block"} />
+                {categories.map((category: string, index: number) => (
+                  <a href={getCategoryUrl(category)}>
+                    {humanize(category)}
+                    {index !== categories.length - 1 && ","}
+                  </a>
+                ))}
+              </li>
+            )
+          }
           <li class="mr-4 inline-block">
             <FaRegClock className={"-mt-1 mr-2 inline-block"} />
             {dateFormat(date)}
@@ -73,7 +92,7 @@ const { title, description, author, categories, image, date, tags } = post.data;
                   <li class="inline-block">
                     <a
                       class="bg-light hover:bg-primary dark:bg-darkmode-light dark:hover:bg-darkmode-primary dark:hover:text-text-dark m-1 block rounded px-3 py-1 hover:text-white"
-                      href={`/tags/${slugify(tag)}`}
+                      href={getTagUrl(tag)}
                     >
                       {humanize(tag)}
                     </a>
@@ -98,12 +117,22 @@ const { title, description, author, categories, image, date, tags } = post.data;
 
     <!-- Related posts -->
     <div class="section pb-0">
-      <h2 class="h3 mb-12 text-center">Related Posts</h2>
+      <h2 class="h3 mb-12 text-center">
+        {
+          collectionType === "trading-strategies"
+            ? "Related Strategies"
+            : "Related Posts"
+        }
+      </h2>
       <div class="row justify-center">
         {
           similarPosts.map((post) => (
             <div class="mb-14 md:col-6 lg:col-4">
-              <BlogCard data={post} />
+              {collectionType === "trading-strategies" ? (
+                <TradingStrategyCard data={post} />
+              ) : (
+                <BlogCard data={post} />
+              )}
             </div>
           ))
         }
