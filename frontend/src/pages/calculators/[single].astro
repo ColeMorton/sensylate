@@ -63,7 +63,7 @@ const calculatorExists = calculatorRegistry.exists(calculator_id);
                 <div class="calculator-container">
                   <CalculatorWidget
                     calculatorId={calculator_id}
-                    client:load
+                    client:only="react"
                     config={{
                       layout: "vertical",
                       showMetadata: false,

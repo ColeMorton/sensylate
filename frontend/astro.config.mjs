@@ -41,6 +41,12 @@ export default defineConfig({
   image: { service: sharp() },
   vite: {
     plugins: [tailwindcss()],
+    optimizeDeps: {
+      include: ["three"],
+    },
+    ssr: {
+      noExternal: ["three"],
+    },
     define: {
       // Build-time feature flags for dead code elimination
       __FEATURE_SEARCH__: buildTimeFlags.search,
