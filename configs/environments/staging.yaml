@@ -10,15 +10,15 @@ logging:
 processing:
   validation:
     strict_mode: true
-    
+
 output:
   cleanup_temp_files: true
   backup_outputs: true
-  
+
 database:
   connection_string: "${STAGING_DB_CONNECTION_STRING}"
   timeout: 30
-  
+
 model:
   quick_training: false
   validation:

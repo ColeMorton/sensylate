@@ -28,11 +28,11 @@ processing:
     - name: "lag_1d"
       type: "lag"
       periods: 1
-  
+
   scaling:
     method: "standard"
     columns: ["value", "rolling_mean_7d", "rolling_std_7d"]
-  
+
   missing_values:
     strategy: "forward_fill"
     max_consecutive: 3

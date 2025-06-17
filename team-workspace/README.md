@@ -17,7 +17,7 @@ The Team Workspace enables your commands to collaborate as team members, sharing
 
 > "/product-owner - prioritize technical debt"
 # → Reads architect implementation plans
-# → Incorporates code-owner health assessments  
+# → Incorporates code-owner health assessments
 # → Creates business-aligned prioritization
 ```
 
@@ -102,7 +102,7 @@ architect:
 
 # After: Team collaboration
 architect:
-  inputs: 
+  inputs:
     - "user_request"
     - "codebase_scan"
     - "code-owner.health_assessment"     # Technical debt context
@@ -324,7 +324,7 @@ Add this pattern to command prompts:
 3. Resolve dependencies using collaboration engine
 4. Enhance context with available team data
 
-## Post-Execution Protocol  
+## Post-Execution Protocol
 1. Generate metadata using standard schema
 2. Store output with rich metadata
 3. Update team knowledge base
@@ -402,7 +402,7 @@ context, missing = engine.resolve_dependencies("your-command")
 ### From Isolated to Collaborative Commands
 
 1. **Assess Current Commands**: Identify data inputs and outputs
-2. **Define Dependencies**: Create manifest files for each command  
+2. **Define Dependencies**: Create manifest files for each command
 3. **Update Command Logic**: Add collaboration protocol
 4. **Test Workflows**: Validate common command sequences
 5. **Monitor Performance**: Track execution times and success rates

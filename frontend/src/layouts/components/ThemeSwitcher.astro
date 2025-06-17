@@ -61,6 +61,7 @@ const { className }: { className?: string } = Astro.props;
           : enhancedConfig.settings.default_theme;
       const currentTheme = localStorage.getItem("theme") || defaulTheme;
       const isDarkTheme = currentTheme === "dark";
+
       themeSwitch.forEach((sw: any) => (sw.checked = isDarkTheme));
       document.documentElement.classList.toggle("dark", isDarkTheme);
     }

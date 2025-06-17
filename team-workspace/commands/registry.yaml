@@ -10,7 +10,7 @@ metadata:
 command_paths:
   project_commands: "/Users/colemorton/Projects/sensylate/.claude/commands/"
   user_commands: "/Users/colemorton/.claude/commands/"
-  
+
 commands:
   architect:
     location: "/Users/colemorton/.claude/commands/architect.md"

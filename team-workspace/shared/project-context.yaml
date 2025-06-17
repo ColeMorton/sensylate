@@ -42,7 +42,7 @@ technology_stack:
     framework: "custom_yaml_makefile"
     key_libraries: ["yaml", "pathlib", "argparse", "logging"]
     config_management: "yaml_based"
-  
+
   frontend:
     framework: "astro"
     version: "5.7+"
@@ -50,7 +50,7 @@ technology_stack:
     language: "typescript"
     package_manager: "yarn"
     testing: "vitest"
-  
+
   infrastructure:
     containerization: "docker"
     deployment: "netlify"
@@ -71,13 +71,13 @@ current_capabilities:
     - feature_engineering
     - model_training
     - report_generation
-  
+
   content_management:
     - astro_blog_system
     - markdown_authoring
     - multi_author_support
     - dark_light_theming
-  
+
   automation:
     - makefile_orchestration
     - yaml_configuration
@@ -109,7 +109,7 @@ business_context:
     - "technical_documentation"
     - "social_media_content_optimization"
     - "automated_reporting"
-  
+
   stakeholders:
     - development_team
     - content_creators
@@ -123,7 +123,7 @@ quality_standards:
     - kiss_principle
     - yagni_principle
     - fail_fast_approach
-  
+
   documentation:
     - comprehensive_planning
     - phase_summaries

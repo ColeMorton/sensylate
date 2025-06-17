@@ -11,14 +11,14 @@ processing:
   sample_size: 1000  # Use smaller sample for faster development
   validation:
     strict_mode: false
-    
+
 output:
   cleanup_temp_files: false  # Keep temp files for debugging
-  
+
 database:
   connection_string: "${DEV_DB_CONNECTION_STRING}"
   timeout: 60  # Longer timeout for development
-  
+
 model:
   quick_training: true
   parameters:

@@ -3,28 +3,28 @@ logging:
   level: "INFO"
   format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
   date_format: "%Y-%m-%d %H:%M:%S"
-  
+
   handlers:
     console:
       enabled: true
       level: "INFO"
-      
+
     file:
       enabled: true
       level: "DEBUG"
       rotation:
         max_bytes: 10485760  # 10MB
         backup_count: 5
-        
+
   loggers:
     scripts:
       level: "INFO"
       propagate: true
-      
+
     utils:
       level: "DEBUG"
       propagate: true
-      
+
     external:
       level: "WARNING"
       propagate: true

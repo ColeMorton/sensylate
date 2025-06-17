@@ -47,7 +47,7 @@ export default [
       'no-unused-vars': 'off', // Use TypeScript version instead
       'prefer-const': 'error',
       'no-var': 'error',
-      
+
       // Relax some rules for warnings only
       '@typescript-eslint/no-explicit-any': 'warn', // Allow any but warn
       'react-hooks/exhaustive-deps': 'warn', // Warn instead of error

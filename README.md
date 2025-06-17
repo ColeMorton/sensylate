@@ -130,11 +130,11 @@ input:
     endpoint: "https://api.tradingview.com/data"
     symbols: ["AAPL", "GOOGL", "TSLA"]
     timeframe: "1d"
-    
+
 output:
   file_path: "data/raw/market_data_{timestamp}.parquet"
   format: "parquet"
-  
+
 processing:
   indicators: ["SMA", "EMA", "RSI", "MACD"]
   validation: true

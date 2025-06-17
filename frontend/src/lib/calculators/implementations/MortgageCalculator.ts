@@ -13,7 +13,7 @@ export class MortgageCalculator extends BaseCalculator {
       "Calculate monthly mortgage payments with principal, interest, taxes, and insurance",
     category: "finance",
     version: "1.0.0",
-    author: "Sensylate",
+    author: "Cole Morton",
     tags: ["mortgage", "loan", "finance", "payment"],
   };
 

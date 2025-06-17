@@ -12,7 +12,7 @@ export class PocketCalculator extends BaseCalculator {
     description: "Basic arithmetic calculator with standard operations",
     category: "math",
     version: "1.0.0",
-    author: "Sensylate",
+    author: "Cole Morton",
     tags: ["arithmetic", "basic", "math"],
   };
 

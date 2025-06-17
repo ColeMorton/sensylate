@@ -69,7 +69,7 @@ command:
   version: "1.0.0"
   type: "framework"                    # framework|tool|analyzer|generator
   description: "Technical planning & implementation framework"
-  
+
 capabilities:
   reads:
     - codebase_structure
@@ -80,14 +80,14 @@ capabilities:
     - implementation_plans
     - phase_summaries
     - technical_specifications
-  
+
 dependencies:
   required: []                         # Must have these command outputs
   optional:                           # Enhanced functionality with these
     - "code-owner.technical_health"
     - "business-analyst.requirements"
   conflicts: []                       # Cannot run with these
-  
+
 data_schema:
   inputs:
     project_context:
@@ -100,7 +100,7 @@ data_schema:
       location: "/team-workspace/commands/architect/outputs/"
       format: "phase-based-plan"
       metadata_required: true
-      
+
 collaboration:
   consumption_pattern: "research-driven"
   output_sharing: "immediate"
@@ -120,7 +120,7 @@ metadata:
   version: "1.0.0"
   timestamp: "2025-01-07T15:30:00Z"
   session_id: "2025-01-07_15-28-45"
-  
+
 source_data:
   dependencies:
     - command: "code-owner"
@@ -130,20 +130,20 @@ source_data:
   project_context:
     git_commit: "2dc8135"
     files_analyzed: 47
-    
+
 output_specification:
   type: "implementation_plan"
   format: "markdown"
   confidence_level: 0.92
   completeness: "full"
-  
+
 collaboration_data:
   intended_consumers:
     - "product-owner"
     - "business-analyst"
   notification_sent: true
   cache_expires: "2025-01-08T15:30:00Z"
-  
+
 quality_metrics:
   validation_passed: true
   review_required: false
@@ -165,19 +165,19 @@ commands:
     performance_metrics:
       avg_execution_time: "45s"
       success_rate: 0.96
-      
+
   product-owner:
     location: "/Users/colemorton/.claude/commands/product_owner.md"
     manifest: "/team-workspace/commands/product-owner/manifest.yaml"
     status: "active"
     dependencies_on: ["architect", "business-analyst"]
-    
+
 workflow_patterns:
   analysis_chain:
     sequence: ["code-owner", "product-owner", "architect"]
     description: "Technical analysis → Business prioritization → Implementation"
     success_rate: 0.89
-    
+
   content_creation:
     parallel: ["twitter-post", "twitter-post-strategy"]
     trigger: "trading_analysis_complete"
@@ -195,18 +195,18 @@ def resolve_command_dependencies(command_name, available_data):
     5. Return execution plan with data sources
     """
     manifest = load_manifest(command_name)
-    
+
     # Check required dependencies
     for dep in manifest.dependencies.required:
         if not is_available(dep, available_data):
             suggest_dependency_command(dep)
-            
+
     # Optimize with optional dependencies
     optimization_data = {}
     for opt_dep in manifest.dependencies.optional:
         if is_available(opt_dep, available_data):
             optimization_data[opt_dep] = load_dependency_data(opt_dep)
-            
+
     return ExecutionPlan(
         command=command_name,
         required_data=resolve_required_data(manifest),
@@ -231,11 +231,11 @@ command_behaviors:
   research_driven:
     commands: ["architect", "code-owner"]
     behavior: "Read all available team data before generating new content"
-    
+
   context_aware:
     commands: ["product-owner", "business-analyst"]
     behavior: "Consume specific dependency outputs and project context"
-    
+
   transform_focused:
     commands: ["twitter-post", "commit-push"]
     behavior: "Process provided inputs with minimal external dependencies"
@@ -260,7 +260,7 @@ active_workflows:
       - command: "architect"
         status: "pending"
         depends_on: ["product-owner"]
-        
+
 notifications:
   - event: "dependency_available"
     target_command: "product-owner"
@@ -275,27 +275,27 @@ notifications:
 ```python
 def pre_execution_protocol(command_name):
     """Standard protocol executed before any command"""
-    
+
     # 1. Register command execution
     register_execution_session(command_name)
-    
+
     # 2. Load team workspace context
     project_context = load_shared_context()
     available_data = scan_team_workspace()
-    
+
     # 3. Resolve dependencies
     execution_plan = resolve_dependencies(command_name, available_data)
-    
+
     # 4. Load relevant team knowledge
     relevant_outputs = find_relevant_team_outputs(command_name, project_context)
-    
+
     # 5. Prepare enhanced context
     enhanced_context = merge_contexts(
         project_context,
         relevant_outputs,
         execution_plan.optimization_data
     )
-    
+
     return enhanced_context
 ```
 
@@ -304,23 +304,23 @@ def pre_execution_protocol(command_name):
 ```python
 def post_execution_protocol(command_name, outputs):
     """Standard protocol executed after any command"""
-    
+
     # 1. Generate metadata
     metadata = generate_output_metadata(command_name, outputs)
-    
+
     # 2. Store outputs with metadata
     store_command_outputs(command_name, outputs, metadata)
-    
+
     # 3. Update team workspace
     update_project_context(outputs)
     update_team_knowledge(command_name, outputs)
-    
+
     # 4. Notify dependent commands
     notify_dependent_commands(command_name, outputs)
-    
+
     # 5. Update workflow state
     update_workflow_progress(command_name, "completed")
-    
+
     # 6. Cache optimization data
     cache_performance_data(command_name, execution_metrics)
 ```
@@ -333,12 +333,12 @@ def post_execution_protocol(command_name, outputs):
 validation_rules:
   metadata_completeness:
     required_fields: ["generated_by", "timestamp", "source_data", "output_specification"]
-    
+
   dependency_integrity:
     check_dependency_versions: true
     validate_dependency_freshness: "24h"
     require_source_traceability: true
-    
+
   output_quality:
     schema_validation: true
     format_compliance: true
@@ -353,12 +353,12 @@ consistency_checks:
     file_naming: "snake_case"
     command_naming: "kebab-case"
     variable_naming: "snake_case"
-    
+
   documentation_standards:
     metadata_required: true
     source_attribution: true
     version_tracking: true
-    
+
   workflow_compliance:
     dependency_declaration: true
     output_registration: true

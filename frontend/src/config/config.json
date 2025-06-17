@@ -1,7 +1,7 @@
 {
   "site": {
     "title": "Cole Morton",
-    "base_url": "https://sensylate.netlify.app/",
+    "base_url": "https://colemorton.netlify.app/",
     "base_path": "/",
     "trailing_slash": false,
     "favicon": "/images/favicon.png",
@@ -24,13 +24,13 @@
 
   "params": {
     "contact_form_action": "#",
-    "copyright": "Designed And Developed by [Zeon Studio](https://zeon.studio)"
+    "copyright": "© 2025 Cole Morton. All rights reserved."
   },
 
   "navigation_button": {
     "enable": true,
-    "label": "Get Started",
-    "link": "https://github.com/zeon-studio/astroplate"
+    "label": "View Analysis",
+    "link": "/blog"
   },
 
   "google_tag_manager": {
@@ -40,13 +40,13 @@
 
   "disqus": {
     "enable": true,
-    "shortname": "themefisher-template",
+    "shortname": "colemorton",
     "settings": {}
   },
 
   "metadata": {
-    "meta_author": "zeon.studio",
+    "meta_author": "Cole Morton",
     "meta_image": "/images/og-image.png",
-    "meta_description": "astro and tailwind boilerplate"
+    "meta_description": "Cole Morton's personal portfolio featuring trading strategy analysis and technology insights"
   }
 }

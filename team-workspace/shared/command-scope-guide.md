@@ -50,7 +50,7 @@ product-owner:
 These commands are specific to the sensylate project:
 
 ```yaml
-# Registry entry for project command  
+# Registry entry for project command
 sensylate-data-analyzer:
   location: "/Users/colemorton/Projects/sensylate/.claude/commands/sensylate-data-analyzer.md"
   scope: "project"
@@ -162,17 +162,17 @@ def discover_command(command_name):
     project_file = f"/Users/colemorton/Projects/sensylate/.claude/commands/{command_name}.md"
     if exists(project_file):
         return load_command(project_file, scope="project")
-    
+
     # 2. Check user commands second
     user_file = f"/Users/colemorton/.claude/commands/{command_name}.md"
     if exists(user_file):
         return load_command(user_file, scope="user")
-    
+
     # 3. Use registry location as fallback
     registry_location = get_registry_location(command_name)
     if exists(registry_location):
         return load_command(registry_location, scope="registry")
-    
+
     # 4. Command not found
     return None
 ```
@@ -210,7 +210,7 @@ Project A:
 ├── team-workspace-a/     # Project A's collaboration data
 └── .claude/commands/     # Project A's specific commands
 
-Project B:  
+Project B:
 ├── team-workspace-b/     # Project B's collaboration data
 └── .claude/commands/     # Project B's specific commands
 

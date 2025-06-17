@@ -13,7 +13,7 @@ export class DCACalculator extends BaseCalculator {
       "Calculate Bitcoin DCA strategy returns and statistics over time",
     category: "crypto",
     version: "1.0.0",
-    author: "Sensylate",
+    author: "Cole Morton",
     tags: ["bitcoin", "dca", "investment", "crypto", "dollar-cost-averaging"],
   };
 

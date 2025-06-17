@@ -21,12 +21,12 @@ model:
     n_estimators: 100
     max_depth: 10
     random_state: 42
-  
+
   validation:
     method: "time_series_split"
     n_splits: 5
     test_size: 0.2
-  
+
   evaluation:
     metrics: ["mse", "mae", "r2"]
     cross_validation: true

@@ -37,11 +37,11 @@ visualizations:
     x_column: "timestamp"
     y_column: "value"
     output_path: "outputs/visualizations/time_series_{timestamp}.png"
-  
+
   - type: "correlation_matrix"
     title: "Feature Correlations"
     output_path: "outputs/visualizations/correlation_matrix_{timestamp}.png"
-  
+
   - type: "prediction_vs_actual"
     title: "Model Predictions vs Actual"
     x_column: "actual"

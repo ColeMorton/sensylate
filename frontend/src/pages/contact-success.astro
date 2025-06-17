@@ -1,0 +1,44 @@
+---
+import Base from "@/layouts/Base.astro";
+import PageHeader from "@/partials/PageHeader.astro";
+---
+
+<Base
+  title="Message Sent Successfully"
+  meta_title="Contact Form Success"
+  description="Your message has been sent successfully."
+>
+  <PageHeader title="Message Sent!" />
+  <section class="section-sm">
+    <div class="container">
+      <div class="row">
+        <div class="mx-auto text-center md:col-10 lg:col-6">
+          <div class="rounded-lg bg-green-50 p-8 shadow-sm">
+            <div
+              class="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-green-100"
+            >
+              <svg
+                class="h-6 w-6 text-green-600"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M5 13l4 4L19 7"></path>
+              </svg>
+            </div>
+            <h2 class="mb-4 text-2xl font-bold text-green-800">Thank You!</h2>
+            <p class="mb-6 text-green-700">
+              Your message has been sent successfully. I'll get back to you as
+              soon as possible.
+            </p>
+            <a href="/" class="btn btn-primary"> Return to Home </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
