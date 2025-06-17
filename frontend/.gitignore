@@ -33,10 +33,6 @@ coverage/
 test-results/
 playwright-report/
 src/test/e2e/screenshots/
-*.png
-*.jpg
-*.jpeg
-*.gif
 .nyc_output
 
 # E2E test artifacts

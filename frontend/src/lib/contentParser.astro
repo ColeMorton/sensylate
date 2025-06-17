@@ -22,7 +22,11 @@ export const getSinglePage = async <C extends CollectionKey>(
 
   const removeDrafts = removeIndex.filter((data) => {
     const pageData = data.data as PageData;
-    return pageData.draft !== true;
+    // Show drafts in development, hide in production
+    if (import.meta.env.DEV) {
+      return true; // Show all posts in development
+    }
+    return pageData.draft !== true; // Hide drafts in production
   });
 
   return removeDrafts;
