@@ -6,7 +6,7 @@ Generate institutional-quality fundamental analysis with sophisticated reasoning
 
 Produces comprehensive fundamental analysis that systematically identifies relevant business metrics, applies multi-perspective evaluation frameworks, and generates risk-adjusted investment recommendations with explicit confidence levels and reasoning transparency.
 
-**Output Format**: Single file `TICKER_YYYYMMDD.md` in `/data/outputs/fundamental_analysis/` directory.
+**Output Format**: Single file `TICKER_YYYYMMDD.md` in `/data/outputs/analysis_fundamental/` directory.
 
 **Focus Requirement**: Analysis must remain strictly focused on the requested ticker symbol. Do not create additional industry or peer analysis files beyond the core fundamental analysis.
 
@@ -217,7 +217,7 @@ DECISION FRAMEWORK:
 ## Output Structure
 
 **File Naming**: `TICKER_YYYYMMDD.md` (e.g., `AAPL_20250617.md`)
-**Directory**: `/data/outputs/fundamental_analysis/`
+**Directory**: `/data/outputs/analysis_fundamental/`
 
 ```markdown
 # [COMPANY NAME] (TICKER) - Fundamental Analysis

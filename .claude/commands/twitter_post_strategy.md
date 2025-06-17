@@ -12,7 +12,7 @@ You are an expert financial content analyzer and social media strategist. Your s
    - Win/loss streaks, reward/risk ratios, exposure levels
    - Tabular performance data takes precedence over CSV files
 
-2. **Fundamental Analysis**: `@data/raw/analysis_fundamental/`
+2. **Fundamental Analysis**: `@data/outputs/analysis_fundamental/`
    - Comprehensive markdown investment analysis files
    - Company financials, business model, competitive positioning
    - Investment thesis, valuation metrics, risk factors
