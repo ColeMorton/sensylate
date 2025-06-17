@@ -1,6 +1,5 @@
 ---
 import BlogCard from "@/components/BlogCard.astro";
-import TradingStrategyCard from "@/components/TradingStrategyCard.astro";
 import Share from "@/components/Share.astro";
 import Disqus from "@/helpers/Disqus";
 import { getSinglePage } from "@/lib/contentParser.astro";
@@ -8,7 +7,7 @@ import dateFormat from "@/lib/utils/dateFormat";
 import similarItems from "@/lib/utils/similarItems";
 import { humanize, markdownify, slugify } from "@/lib/utils/textConverter";
 import { render } from "astro:content";
-import { FaRegClock, FaRegFolder, FaRegUserCircle } from "react-icons/fa";
+import { FaRegClock, FaRegFolder } from "react-icons/fa";
 import ImageMod from "./components/ImageMod.astro";
 
 const { post } = Astro.props;
@@ -20,20 +19,14 @@ const COLLECTION_FOLDER = collectionType;
 const posts = await getSinglePage(COLLECTION_FOLDER);
 const similarPosts = similarItems(post, posts);
 const { Content } = await render(post);
-const { title, description, author, categories, image, date, tags } = post.data;
+const { title, description, categories, image, date, tags } = post.data;
 
 // Generate appropriate URLs based on collection type
 const getCategoryUrl = (category: string) => {
-  if (collectionType === "trading-strategies") {
-    return `/trading-strategies/categories/${slugify(category)}`;
-  }
   return `/categories/${slugify(category)}`;
 };
 
 const getTagUrl = (tag: string) => {
-  if (collectionType === "trading-strategies") {
-    return `/trading-strategies/tags/${slugify(tag)}`;
-  }
   return `/tags/${slugify(tag)}`;
 };
 ---
@@ -59,8 +52,8 @@ const getTagUrl = (tag: string) => {
         <h1 set:html={markdownify(title)} class="h2 mb-4" />
         <ul class="mb-4">
           <li class="mr-4 inline-block">
-            <FaRegUserCircle className={"-mt-1 mr-2 inline-block"} />
-            {humanize(author)}
+            <FaRegClock className={"-mt-1 mr-2 inline-block"} />
+            {dateFormat(date)}
           </li>
           {
             categories && categories.length > 0 && (
@@ -75,10 +68,6 @@ const getTagUrl = (tag: string) => {
               </li>
             )
           }
-          <li class="mr-4 inline-block">
-            <FaRegClock className={"-mt-1 mr-2 inline-block"} />
-            {dateFormat(date)}
-          </li>
         </ul>
         <div class="content mb-10">
           <Content />
@@ -117,22 +106,12 @@ const getTagUrl = (tag: string) => {
 
     <!-- Related posts -->
     <div class="section pb-0">
-      <h2 class="h3 mb-12 text-center">
-        {
-          collectionType === "trading-strategies"
-            ? "Related Strategies"
-            : "Related Posts"
-        }
-      </h2>
+      <h2 class="h3 mb-12 text-center">Related Posts</h2>
       <div class="row justify-center">
         {
           similarPosts.map((post) => (
             <div class="mb-14 md:col-6 lg:col-4">
-              {collectionType === "trading-strategies" ? (
-                <TradingStrategyCard data={post} />
-              ) : (
-                <BlogCard data={post} />
-              )}
+              <BlogCard data={post} />
             </div>
           ))
         }

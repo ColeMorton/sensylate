@@ -18,6 +18,7 @@ export interface FeatureFlags {
   theme_switcher: boolean;
   comments: boolean;
   gtm: boolean;
+  calculators: boolean;
   calculator_advanced: boolean;
   elements_page: boolean;
   authors_page: boolean;

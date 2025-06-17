@@ -67,11 +67,6 @@ export async function getStaticPaths() {
               ))
             }
           </div>
-          <Pagination
-            section={BLOG_FOLDER}
-            currentPage={currentPage}
-            totalPages={totalPages}
-          />
         </div>
 
         <!-- sidebar -->
@@ -81,6 +76,13 @@ export async function getStaticPaths() {
           allCategories={allCategories}
         />
       </div>
+
+      <!-- pagination -->
+      <Pagination
+        section={BLOG_FOLDER}
+        currentPage={currentPage}
+        totalPages={totalPages}
+      />
     </div>
   </section>
 </Base>

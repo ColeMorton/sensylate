@@ -47,11 +47,6 @@ const currentPosts = sortedPosts.slice(0, config.settings.pagination);
               ))
             }
           </div>
-          <Pagination
-            section={BLOG_FOLDER}
-            currentPage={1}
-            totalPages={totalPages}
-          />
         </div>
 
         <!-- sidebar -->
@@ -61,6 +56,13 @@ const currentPosts = sortedPosts.slice(0, config.settings.pagination);
           allCategories={allCategories}
         />
       </div>
+
+      <!-- pagination -->
+      <Pagination
+        section={BLOG_FOLDER}
+        currentPage={1}
+        totalPages={totalPages}
+      />
     </div>
   </section>
 </Base>

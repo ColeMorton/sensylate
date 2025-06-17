@@ -7,6 +7,12 @@ import { sortByDate } from "@/lib/utils/sortFunctions";
 import PageHeader from "@/partials/PageHeader.astro";
 import type { CollectionEntry } from "astro:content";
 import { getEntry } from "astro:content";
+import { features } from "@/lib/featureFlags";
+
+// Return 404 if calculators feature is disabled
+if (!features.calculators) {
+  return Astro.redirect("/404", 404);
+}
 
 const CALCULATORS_FOLDER = "calculators";
 

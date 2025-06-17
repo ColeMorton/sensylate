@@ -41,6 +41,8 @@ function getFeatureFlags(): FeatureFlags {
     gtm:
       envToBoolean(import.meta.env.PUBLIC_FEATURE_GTM) ??
       config.google_tag_manager.enable,
+    calculators:
+      envToBoolean(import.meta.env.PUBLIC_FEATURE_CALCULATORS) ?? true,
     calculator_advanced:
       envToBoolean(import.meta.env.PUBLIC_FEATURE_CALCULATOR_ADVANCED) ?? false,
     elements_page:
@@ -59,6 +61,7 @@ function validateFeatureFlags(flags: FeatureFlags): void {
     "theme_switcher",
     "comments",
     "gtm",
+    "calculators",
     "calculator_advanced",
     "elements_page",
     "authors_page",

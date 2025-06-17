@@ -10,7 +10,6 @@ const blogCollection = defineCollection({
     description: z.string().optional(),
     date: z.date().optional(),
     image: z.string().optional(),
-    author: z.string().default("Admin"),
     categories: z.array(z.string()).default(["others"]),
     tags: z.array(z.string()).default(["others"]),
     draft: z.boolean().optional(),
@@ -139,25 +138,6 @@ const calculatorsCollection = defineCollection({
   }),
 });
 
-// Trading Strategies collection schema
-const tradingStrategiesCollection = defineCollection({
-  loader: glob({
-    pattern: "**/*.{md,mdx}",
-    base: "src/content/trading-strategies",
-  }),
-  schema: z.object({
-    title: z.string(),
-    meta_title: z.string().optional(),
-    description: z.string().optional(),
-    date: z.date().optional(),
-    image: z.string().optional(),
-    author: z.string().default("Admin"),
-    categories: z.array(z.string()).default(["others"]),
-    tags: z.array(z.string()).default(["others"]),
-    draft: z.boolean().optional(),
-  }),
-});
-
 // Export collections
 export const collections = {
   // Pages
@@ -167,7 +147,6 @@ export const collections = {
   about: aboutCollection,
   contact: contactCollection,
   calculators: calculatorsCollection,
-  "trading-strategies": tradingStrategiesCollection,
 
   // sections
   ctaSection: ctaSectionCollection,

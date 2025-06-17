@@ -18,6 +18,7 @@ const getFeatureFlags = () => {
     theme_switcher: envToBoolean(process.env.PUBLIC_FEATURE_THEME_SWITCHER) ?? config.settings.theme_switcher,
     comments: envToBoolean(process.env.PUBLIC_FEATURE_COMMENTS) ?? config.disqus.enable,
     gtm: envToBoolean(process.env.PUBLIC_FEATURE_GTM) ?? config.google_tag_manager.enable,
+    calculators: envToBoolean(process.env.PUBLIC_FEATURE_CALCULATORS) ?? true,
     calculator_advanced: envToBoolean(process.env.PUBLIC_FEATURE_CALCULATOR_ADVANCED) ?? false,
     elements_page: envToBoolean(process.env.PUBLIC_FEATURE_ELEMENTS_PAGE) ?? true,
     authors_page: envToBoolean(process.env.PUBLIC_FEATURE_AUTHORS_PAGE) ?? true
@@ -40,6 +41,7 @@ export default defineConfig({
       __FEATURE_THEME_SWITCHER__: buildTimeFlags.theme_switcher,
       __FEATURE_COMMENTS__: buildTimeFlags.comments,
       __FEATURE_GTM__: buildTimeFlags.gtm,
+      __FEATURE_CALCULATORS__: buildTimeFlags.calculators,
       __FEATURE_CALCULATOR_ADVANCED__: buildTimeFlags.calculator_advanced,
       __FEATURE_ELEMENTS_PAGE__: buildTimeFlags.elements_page,
       __FEATURE_AUTHORS_PAGE__: buildTimeFlags.authors_page,

@@ -6,8 +6,19 @@ import { calculatorRegistry } from "@/lib/calculators";
 import { CalculatorWidget } from "@/lib/calculators/components/CalculatorWidget.tsx";
 import { render } from "astro:content";
 import type { CollectionEntry } from "astro:content";
+import { features } from "@/lib/featureFlags";
+
+// Return 404 if calculators feature is disabled
+if (!features.calculators) {
+  return Astro.redirect("/404", 404);
+}
 
 export async function getStaticPaths() {
+  // Return empty paths if calculators feature is disabled
+  if (!features.calculators) {
+    return [];
+  }
+
   const CALCULATORS_FOLDER = "calculators";
   const calculators = await getSinglePage(CALCULATORS_FOLDER);
 

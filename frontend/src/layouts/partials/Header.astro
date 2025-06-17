@@ -24,6 +24,9 @@ const filteredMain = menu.main
     if (item.url === "/elements" && !features.elements_page) {
       return false;
     }
+    if (item.url === "/calculators" && !features.calculators) {
+      return false;
+    }
     return true;
   })
   .map((item) => {

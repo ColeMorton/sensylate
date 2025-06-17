@@ -14,4 +14,4 @@ environment = { NODE_ENV = "staging" }
 
 [context.production]
 command = "rm -rf node_modules && NODE_ENV=development yarn install && yarn build"
-environment = { NODE_ENV = "production" }
+environment = { NODE_ENV = "production", PUBLIC_FEATURE_CALCULATORS = "false" }

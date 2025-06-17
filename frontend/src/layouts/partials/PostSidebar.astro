@@ -5,16 +5,10 @@ const { tags, categories, allCategories, section = "blog" } = Astro.props;
 
 // Generate appropriate URLs based on section
 const getCategoryUrl = (category: string) => {
-  if (section === "trading-strategies") {
-    return `/trading-strategies/categories/${category}`;
-  }
   return `/categories/${category}`;
 };
 
 const getTagUrl = (tag: string) => {
-  if (section === "trading-strategies") {
-    return `/trading-strategies/tags/${tag}`;
-  }
   return `/tags/${tag}`;
 };
 ---
