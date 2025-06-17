@@ -179,6 +179,20 @@ const { title, meta_title, description, image, noindex, canonical } =
       }`}
     />
     <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Initialize theme before render to prevent FOUC -->
+    <script is:inline>
+      const loadTheme = function () {
+        // Default theme is now 'dark'
+        const defaultTheme = "dark";
+        const theme = localStorage.getItem("theme") || defaultTheme;
+        document.documentElement.classList.toggle("dark", theme === "dark");
+      };
+      // Initial load
+      loadTheme();
+      // Listen for storage changes (cross-tab syncing)
+      window.addEventListener("storage", loadTheme);
+    </script>
   </head>
   <body>
     {/* google tag manager noscript */}
