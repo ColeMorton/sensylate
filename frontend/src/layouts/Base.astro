@@ -192,6 +192,9 @@ const { title, meta_title, description, image, noindex, canonical } =
       loadTheme();
       // Listen for storage changes (cross-tab syncing)
       window.addEventListener("storage", loadTheme);
+      // Listen for Astro view transitions to maintain theme
+      document.addEventListener("astro:page-load", loadTheme);
+      document.addEventListener("astro:after-swap", loadTheme);
     </script>
   </head>
   <body>
