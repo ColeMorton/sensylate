@@ -1,4 +1,5 @@
 import mdx from "@astrojs/mdx";
+import netlify from "@astrojs/netlify";
 import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
@@ -29,6 +30,8 @@ const buildTimeFlags = getFeatureFlags();
 
 // https://astro.build/config
 export default defineConfig({
+  output: "server",
+  adapter: netlify(),
   site: config.site.base_url ? config.site.base_url : "http://examplesite.com",
   base: config.site.base_path ? config.site.base_path : "/",
   trailingSlash: config.site.trailing_slash ? "always" : "never",

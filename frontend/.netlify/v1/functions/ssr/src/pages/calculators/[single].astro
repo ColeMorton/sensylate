@@ -1,0 +1,131 @@
+---
+import Base from "@/layouts/Base.astro";
+import { getSinglePage } from "@/lib/contentParser.astro";
+import PageHeader from "@/partials/PageHeader.astro";
+import { calculatorRegistry } from "@/lib/calculators";
+import { CalculatorWidget } from "@/lib/calculators/components/CalculatorWidget.tsx";
+import { render } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+import { features } from "@/lib/featureFlags";
+
+// Return 404 if calculators feature is disabled
+if (!features.calculators) {
+  return Astro.redirect("/404", 404);
+}
+
+export async function getStaticPaths() {
+  // Return empty paths if calculators feature is disabled
+  if (!features.calculators) {
+    return [];
+  }
+
+  const CALCULATORS_FOLDER = "calculators";
+  const calculators = await getSinglePage(CALCULATORS_FOLDER);
+
+  const paths = calculators.map((calculator) => ({
+    params: {
+      single: calculator.id,
+    },
+    props: { calculator },
+  }));
+  return paths;
+}
+
+const { calculator } = Astro.props as {
+  calculator: CollectionEntry<"calculators">;
+};
+const { title, meta_title, description, image, calculator_id } =
+  calculator.data;
+
+// Render the content
+const { Content } = await render(calculator);
+
+// Check if calculator exists in registry (server-side verification)
+const calculatorExists = calculatorRegistry.exists(calculator_id);
+---
+
+<Base
+  title={title}
+  meta_title={meta_title}
+  description={description}
+  image={image}
+>
+  <PageHeader title={title} />
+
+  <section class="section">
+    <div class="container">
+      <div class="row">
+        <div class="mx-auto lg:col-10">
+          {/* Calculator Widget */}
+          <div class="mb-14">
+            {
+              calculatorExists ? (
+                <div class="calculator-container">
+                  <CalculatorWidget
+                    calculatorId={calculator_id}
+                    client:load
+                    config={{
+                      layout: "vertical",
+                      showMetadata: false,
+                    }}
+                  />
+                </div>
+              ) : (
+                <div class="bg-light dark:bg-darkmode-body rounded-lg p-8 text-center">
+                  <p class="text-text text-lg dark:text-gray-300">
+                    Calculator not available. Please try again later.
+                  </p>
+                </div>
+              )
+            }
+          </div>
+
+          {/* Calculator Description Content */}
+          <div class="content">
+            <Content />
+          </div>
+
+          {/* Back to Calculators Link */}
+          <div class="mt-10 text-center">
+            <a
+              href="/calculators"
+              class="btn btn-outline-primary inline-flex items-center gap-2"
+            >
+              <svg
+                class="h-4 w-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M11 17l-5-5m0 0l5-5m-5 5h12"></path>
+              </svg>
+              <span>Back to All Calculators</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .calculator-container {
+    background-color: #ffffff;
+    border-radius: 0.5rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  :global(.dark) .calculator-container {
+    background-color: var(--color-darkmode-body);
+  }
+
+  .calculator-container :global(.calculator-widget) {
+    max-width: 100%;
+  }
+</style>

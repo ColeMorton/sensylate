@@ -2,8 +2,6 @@
   publish = "dist"
   command = "yarn build"
 
-[[plugins]]
-  package = "@astrojs/netlify"
 
 [functions]
   directory = "netlify/functions"
