@@ -6,6 +6,10 @@ Generate institutional-quality fundamental analysis with sophisticated reasoning
 
 Produces comprehensive fundamental analysis that systematically identifies relevant business metrics, applies multi-perspective evaluation frameworks, and generates risk-adjusted investment recommendations with explicit confidence levels and reasoning transparency.
 
+**Output Format**: Single file `TICKER_YYYYMMDD.md` in `/data/outputs/fundamental_analysis/` directory.
+
+**Focus Requirement**: Analysis must remain strictly focused on the requested ticker symbol. Do not create additional industry or peer analysis files beyond the core fundamental analysis.
+
 ## Parameters
 
 - `ticker`: Stock symbol (required, uppercase format)
@@ -212,8 +216,11 @@ DECISION FRAMEWORK:
 
 ## Output Structure
 
+**File Naming**: `TICKER_YYYYMMDD.md` (e.g., `AAPL_20250617.md`)
+**Directory**: `/data/outputs/fundamental_analysis/`
+
 ```markdown
-# [COMPANY NAME] ( $TICKER ) - Fundamental Analysis
+# [COMPANY NAME] (TICKER) - Fundamental Analysis
 *Generated: [DATE] | Confidence: [X.X/1.0] | Data Quality: [X.X/1.0]*
 
 ## 🎯 Investment Thesis & Recommendation
@@ -363,20 +370,34 @@ Key variables impact on fair value:
    - Monitoring plan is executable
    - Time horizons are specified
 
+3. **Output Validation**
+   - Single file output in correct format: `TICKER_YYYYMMDD.md`
+   - Analysis focused solely on requested ticker
+   - No additional industry/peer files generated
+   - Confidence scores integrated throughout analysis
+
 ## Usage Examples
 
 ```bash
-# Standard comprehensive analysis
-/project:fundamental_analysis AAPL
+# Standard comprehensive analysis (generates TICKER_YYYYMMDD.md)
+/fundamental_analysis TICKER
 
 # Deep dive with high confidence requirement
-/project:fundamental_analysis MSFT depth=deep-dive confidence_threshold=0.8
+/fundamental_analysis TICKER depth=deep-dive confidence_threshold=0.8
 
 # Quick summary with extended timeframe
-/project:fundamental_analysis GOOGL depth=summary timeframe=10y
+/fundamental_analysis TICKER depth=summary timeframe=10y
 
 # Full analysis with extra scenarios
-/project:fundamental_analysis NVDA scenario_count=7 peer_count=7
+/fundamental_analysis TICKER scenario_count=7 peer_count=7
 ```
+
+## Key Implementation Notes
+
+1. **Single File Output**: Always generate exactly one file named `TICKER_YYYYMMDD.md`
+2. **Ticker Focus**: Analyze only the requested ticker - no additional industry files
+3. **Quantitative Framework**: Include confidence scores (0.0-1.0) throughout analysis
+4. **Risk-Adjusted Approach**: Use probability-weighted scenarios and sensitivity ranges
+5. **Actionable Structure**: Clear entry/exit triggers and monitoring framework
 
 This enhanced framework ensures institutional-quality analysis with transparent reasoning, quantified confidence levels, and actionable insights suitable for sophisticated investment decision-making.
