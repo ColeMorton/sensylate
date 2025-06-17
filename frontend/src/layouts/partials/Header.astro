@@ -162,7 +162,7 @@ const { pathname } = Astro.url;
           </button>
         )
       }
-      <ThemeSwitcher className="mr-5" />
+      {import.meta.env.DEV && <ThemeSwitcher className="mr-5" />}
       {
         navigation_button.enable && (
           <a
