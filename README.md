@@ -100,14 +100,20 @@ make prod-pipeline         # Production environment
 
 Your AI team includes specialized agents that collaborate automatically:
 
+#### Core Product Commands (User-facing AI functionality)
+| Agent | Role | Capabilities |
+|-------|------|-------------|
+| **twitter-post** | Content Creation | Social media optimization, engagement analysis |
+| **twitter-post-strategy** | Financial Content | Trading strategy posts, performance summaries |
+| **fundamental-analysis** | Market Analysis | Trading strategies, market insights, performance analysis |
+
+#### Infrastructure Commands (Development/business support)
 | Agent | Role | Capabilities |
 |-------|------|-------------|
 | **architect** | Technical Planning | Implementation plans, risk assessment, architecture decisions |
 | **product-owner** | Business Strategy | Prioritization, stakeholder alignment, business cases |
 | **code-owner** | Technical Health | Codebase analysis, technical debt assessment, quality metrics |
 | **business-analyst** | Requirements | Process optimization, functional specifications, acceptance criteria |
-| **twitter-post** | Content Creation | Social media optimization, engagement analysis |
-| **twitter-post-strategy** | Financial Content | Trading strategy posts, performance summaries |
 
 ### Collaboration Benefits
 

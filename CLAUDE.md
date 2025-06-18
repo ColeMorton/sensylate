@@ -164,9 +164,11 @@ Sensylate features an advanced **Command Collaboration Framework** where AI agen
 
 ### Command Locations
 
-- **User Commands**: `/Users/colemorton/.claude/commands/` (global, cross-project)
 - **Project Commands**: `/Users/colemorton/Projects/sensylate/.claude/commands/` (sensylate-specific)
+- **User Commands**: `/Users/colemorton/.claude/commands/` (global, cross-project)
 - **Team Workspace**: `/team-workspace/` (collaboration data and outputs)
+
+**Note**: All current commands are project-scoped and located in `.claude/commands/` within this project.
 
 ### Collaboration Benefits
 
@@ -179,47 +181,54 @@ Sensylate features an advanced **Command Collaboration Framework** where AI agen
 
 Use these by asking Claude to execute them (e.g., "run the architect command" or "use /architect"):
 
-#### Development & Architecture
-- **`/architect`** - Technical planning & implementation framework with research-driven methodology
-  - **Location**: `/Users/colemorton/.claude/commands/architect.md` (user scope)
-  - **Collaboration**: Reads code-owner health metrics, business-analyst requirements
-  - **Usage**: Research-driven phase-based implementation planning
-
-- **`/code-owner`** - Comprehensive codebase health analysis and strategic technical reviews
-  - **Location**: `/Users/colemorton/.claude/commands/code-owner.md` (user scope)
-  - **Collaboration**: Provides technical health data to architect and product-owner
-  - **Usage**: Technical debt assessment and architecture reviews
-
-- **`/commit_push`** - Automated git workflow (stage all changes, generate commit message, push to remote)
-  - **Location**: `/Users/colemorton/.claude/commands/commit_push.md` (user scope)
-  - **Collaboration**: Can be triggered after architect implementation phases
-  - **Usage**: Streamlined git operations with generated commit messages
-
-#### Product Management
-- **`/product_owner`** - Transform technical findings into prioritized product decisions with business impact analysis
-  - **Location**: `/Users/colemorton/.claude/commands/product_owner.md` (user scope)
-  - **Collaboration**: Consumes architect plans and code-owner assessments
-  - **Usage**: Technical to business translation and prioritization
-
-- **`/business_analyst`** - Requirements gathering, process optimization, and stakeholder alignment
-  - **Location**: `/Users/colemorton/.claude/commands/business_analyst.md` (user scope)
-  - **Collaboration**: Provides requirements to architect and product-owner
-  - **Usage**: Process analysis and requirements documentation
-
-#### Content Creation
+#### **Core Product Commands** (User-facing AI functionality)
 - **`/twitter_post`** - Expert social media content optimization for X/Twitter engagement
-  - **Location**: `/Users/colemorton/.claude/commands/twitter_post.md` (user scope)
+  - **Location**: `.claude/commands/twitter_post.md` (project scope)
   - **Collaboration**: Uses team workspace data for context-aware content
   - **Usage**: Social media content creation and optimization
 
 - **`/twitter_post_strategy`** - Trading strategy analysis and social media post generation
-  - **Location**: `/Users/colemorton/.claude/commands/twitter_post_strategy.md` (user scope)
+  - **Location**: `.claude/commands/twitter_post_strategy.md` (project scope)
   - **Collaboration**: Reads trading analysis data from outputs/exports/markdown/
   - **Usage**: Financial strategy content for social media
 
-#### Utilities
+- **`/fundamental_analysis`** - Comprehensive fundamental analysis for trading strategies
+  - **Location**: `.claude/commands/fundamental_analysis.md` (project scope)
+  - **Collaboration**: Enhanced with team collaboration context
+  - **Usage**: Market analysis and trading insights
+
+#### **Collaboration Infrastructure Commands** (Enable product development)
+
+##### Development & Architecture
+- **`/architect`** - Technical planning & implementation framework with research-driven methodology
+  - **Location**: `.claude/commands/architect.md` (project scope)
+  - **Collaboration**: Reads code-owner health metrics, business-analyst requirements
+  - **Usage**: Research-driven phase-based implementation planning
+
+- **`/code-owner`** - Comprehensive codebase health analysis and strategic technical reviews
+  - **Location**: `.claude/commands/code-owner.md` (project scope)
+  - **Collaboration**: Provides technical health data to architect and product-owner
+  - **Usage**: Technical debt assessment and architecture reviews
+
+- **`/commit_push`** - Automated git workflow (stage all changes, generate commit message, push to remote)
+  - **Location**: `.claude/commands/commit_push.md` (project scope)
+  - **Collaboration**: Can be triggered after architect implementation phases
+  - **Usage**: Streamlined git operations with generated commit messages
+
+##### Product Management
+- **`/product_owner`** - Transform technical findings into prioritized product decisions with business impact analysis
+  - **Location**: `.claude/commands/product_owner.md` (project scope)
+  - **Collaboration**: Consumes architect plans and code-owner assessments
+  - **Usage**: Technical to business translation and prioritization
+
+- **`/business_analyst`** - Requirements gathering, process optimization, and stakeholder alignment
+  - **Location**: `.claude/commands/business_analyst.md` (project scope)
+  - **Collaboration**: Provides requirements to architect and product-owner
+  - **Usage**: Process analysis and requirements documentation
+
+##### Utilities
 - **`/create_command`** - Interactive command creator with validation and best practices
-  - **Location**: `/Users/colemorton/.claude/commands/create_command.md` (user scope)
+  - **Location**: `.claude/commands/create_command.md` (project scope)
   - **Collaboration**: Can create project-specific commands in .claude/commands/
   - **Usage**: Generate new custom command templates
 

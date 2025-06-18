@@ -336,6 +336,62 @@ class TestCommandDiscovery(unittest.TestCase):
         self.assertEqual(metrics["avg_execution_time"], "45s")
         self.assertEqual(metrics["cache_hit_rate"], 0.75)
 
+    def test_command_classification_discovery(self):
+        """Test discovery and classification of product vs infrastructure commands"""
+        # Test infrastructure command
+        analyzer_info = self.engine.discover_command("test-analyzer")
+        self.assertIsNotNone(analyzer_info)
+        self.assertEqual(analyzer_info["type"], "infrastructure")
+        self.assertEqual(analyzer_info["classification"], "collaboration_infrastructure")
+
+        # Test product command
+        product_info = self.engine.discover_command("test-product-command")
+        self.assertIsNotNone(product_info)
+        self.assertEqual(product_info["type"], "product")
+        self.assertEqual(product_info["classification"], "core_product")
+
+        # Verify classification is included in command info
+        self.assertIn("classification", analyzer_info)
+        self.assertIn("classification", product_info)
+
+    def test_command_type_filtering(self):
+        """Test filtering commands by type and classification"""
+        # Get all commands
+        all_commands = ["test-analyzer", "test-strategist", "test-implementer", "test-product-command"]
+
+        infrastructure_commands = []
+        product_commands = []
+
+        for cmd_name in all_commands:
+            cmd_info = self.engine.discover_command(cmd_name)
+            if cmd_info and cmd_info.get("classification") == "collaboration_infrastructure":
+                infrastructure_commands.append(cmd_name)
+            elif cmd_info and cmd_info.get("classification") == "core_product":
+                product_commands.append(cmd_name)
+
+        # Verify correct classification
+        self.assertIn("test-analyzer", infrastructure_commands)
+        self.assertIn("test-strategist", infrastructure_commands)
+        self.assertIn("test-implementer", infrastructure_commands)
+        self.assertIn("test-product-command", product_commands)
+
+        # Verify separation
+        self.assertEqual(len(infrastructure_commands), 3)
+        self.assertEqual(len(product_commands), 1)
+
+    def test_manifest_classification_consistency(self):
+        """Test that manifest classification matches registry classification"""
+        cmd_info = self.engine.discover_command("test-analyzer")
+
+        # Check registry classification
+        registry_classification = cmd_info.get("classification")
+
+        # Check manifest classification if available
+        if "manifest_data" in cmd_info:
+            manifest_classification = cmd_info["manifest_data"]["command"].get("classification")
+            if manifest_classification:
+                self.assertEqual(registry_classification, manifest_classification)
+
     def test_multi_project_command_discovery(self):
         """Test command discovery across multiple projects"""
         # Create second project workspace

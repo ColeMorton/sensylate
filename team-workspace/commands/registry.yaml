@@ -6,6 +6,10 @@ metadata:
   last_updated: "2025-01-07T15:30:00Z"
   framework_version: "1.0.0"
 
+# Command Classifications:
+# - core_product: User-facing AI commands that ARE the product (twitter-post, fundamental-analysis, etc.)
+# - collaboration_infrastructure: Commands that enable team collaboration and product development
+
 # Command search paths (in order of precedence)
 command_paths:
   project_commands: "/Users/colemorton/Projects/sensylate/.claude/commands/"
@@ -13,10 +17,11 @@ command_paths:
 
 commands:
   architect:
-    location: "/Users/colemorton/.claude/commands/architect.md"
-    scope: "user"  # user | project
+    location: "/Users/colemorton/Projects/sensylate/.claude/commands/architect.md"
+    scope: "project"  # user | project
     manifest: "/Users/colemorton/Projects/sensylate/team-workspace/commands/architect/manifest.yaml"
-    type: "framework"
+    type: "infrastructure"
+    classification: "collaboration_infrastructure"
     status: "active"
     description: "Technical planning & implementation framework with research-driven methodology"
     capabilities:
@@ -28,10 +33,11 @@ commands:
       last_execution: null
 
   product-owner:
-    location: "/Users/colemorton/.claude/commands/product_owner.md"
-    scope: "user"
+    location: "/Users/colemorton/Projects/sensylate/.claude/commands/product_owner.md"
+    scope: "project"
     manifest: "/Users/colemorton/Projects/sensylate/team-workspace/commands/product-owner/manifest.yaml"
-    type: "analyzer"
+    type: "infrastructure"
+    classification: "collaboration_infrastructure"
     status: "active"
     description: "Transform technical findings into prioritized product decisions"
     capabilities:
@@ -44,10 +50,11 @@ commands:
       last_execution: null
 
   code-owner:
-    location: "/Users/colemorton/.claude/commands/code-owner.md"
-    scope: "user"
+    location: "/Users/colemorton/Projects/sensylate/.claude/commands/code-owner.md"
+    scope: "project"
     manifest: "/Users/colemorton/Projects/sensylate/team-workspace/commands/code-owner/manifest.yaml"
-    type: "analyzer"
+    type: "infrastructure"
+    classification: "collaboration_infrastructure"
     status: "active"
     description: "Comprehensive codebase health analysis and strategic technical reviews"
     capabilities:
@@ -59,10 +66,11 @@ commands:
       last_execution: null
 
   business-analyst:
-    location: "/Users/colemorton/.claude/commands/business_analyst.md"
-    scope: "user"
+    location: "/Users/colemorton/Projects/sensylate/.claude/commands/business_analyst.md"
+    scope: "project"
     manifest: "/Users/colemorton/Projects/sensylate/team-workspace/commands/business-analyst/manifest.yaml"
-    type: "framework"
+    type: "infrastructure"
+    classification: "collaboration_infrastructure"
     status: "active"
     description: "Requirements gathering, process optimization, and stakeholder alignment"
     capabilities:
@@ -74,10 +82,11 @@ commands:
       last_execution: null
 
   twitter-post:
-    location: "/Users/colemorton/.claude/commands/twitter_post.md"
-    scope: "user"
+    location: "/Users/colemorton/Projects/sensylate/.claude/commands/twitter_post.md"
+    scope: "project"
     manifest: "/Users/colemorton/Projects/sensylate/team-workspace/commands/twitter-post/manifest.yaml"
-    type: "generator"
+    type: "product"
+    classification: "core_product"
     status: "active"
     description: "Expert social media content optimization for X/Twitter engagement"
     capabilities:
@@ -89,10 +98,11 @@ commands:
       last_execution: null
 
   twitter-post-strategy:
-    location: "/Users/colemorton/.claude/commands/twitter_post_strategy.md"
-    scope: "user"
+    location: "/Users/colemorton/Projects/sensylate/.claude/commands/twitter_post_strategy.md"
+    scope: "project"
     manifest: "/Users/colemorton/Projects/sensylate/team-workspace/commands/twitter-post-strategy/manifest.yaml"
-    type: "generator"
+    type: "product"
+    classification: "core_product"
     status: "active"
     description: "Trading strategy analysis and social media post generation"
     capabilities:
@@ -104,10 +114,11 @@ commands:
       last_execution: null
 
   commit-push:
-    location: "/Users/colemorton/.claude/commands/commit_push.md"
-    scope: "user"
+    location: "/Users/colemorton/Projects/sensylate/.claude/commands/commit_push.md"
+    scope: "project"
     manifest: "/Users/colemorton/Projects/sensylate/team-workspace/commands/commit-push/manifest.yaml"
-    type: "tool"
+    type: "infrastructure"
+    classification: "collaboration_infrastructure"
     status: "active"
     description: "Automated git workflow (stage all changes, generate commit message, push to remote)"
     capabilities:
@@ -119,10 +130,11 @@ commands:
       last_execution: null
 
   create-command:
-    location: "/Users/colemorton/.claude/commands/create_command.md"
-    scope: "user"
+    location: "/Users/colemorton/Projects/sensylate/.claude/commands/create_command.md"
+    scope: "project"
     manifest: "/Users/colemorton/Projects/sensylate/team-workspace/commands/create-command/manifest.yaml"
-    type: "tool"
+    type: "infrastructure"
+    classification: "collaboration_infrastructure"
     status: "active"
     description: "Interactive command creator with validation and best practices"
     capabilities:
@@ -131,6 +143,22 @@ commands:
     performance_metrics:
       avg_execution_time: "25s"
       success_rate: 0.93
+      last_execution: null
+
+  fundamental-analysis:
+    location: "/Users/colemorton/Projects/sensylate/.claude/commands/fundamental_analysis.md"
+    scope: "project"
+    manifest: "/Users/colemorton/Projects/sensylate/team-workspace/commands/fundamental-analysis/manifest.yaml"
+    type: "product"
+    classification: "core_product"
+    status: "active"
+    description: "Comprehensive fundamental analysis for trading strategies and market insights"
+    capabilities:
+      reads: ["market_data", "financial_statements", "economic_indicators", "trading_context"]
+      produces: ["fundamental_analysis_reports", "market_insights", "trading_recommendations"]
+    performance_metrics:
+      avg_execution_time: "120s"
+      success_rate: 0.92
       last_execution: null
 
 # Workflow patterns discovered from command analysis

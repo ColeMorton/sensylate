@@ -7,6 +7,8 @@ The Command Collaboration Framework supports two scopes of commands:
 - **User Commands**: Global commands available across all projects (`/Users/colemorton/.claude/commands/`)
 - **Project Commands**: Project-specific commands for this project (`/Users/colemorton/Projects/sensylate/.claude/commands/`)
 
+**Current State**: All commands in this project are project-scoped and located in `.claude/commands/` within the project directory.
+
 ## Command Resolution Order
 
 The framework resolves commands with the following precedence:
@@ -37,11 +39,17 @@ product-owner:
 ```
 
 **Typical User Commands**:
+
+*Core Product Commands (User-facing functionality):*
+- `twitter-post` - Social media content optimization
+- `twitter-post-strategy` - Financial/trading content for social media
+- `fundamental-analysis` - Market analysis and trading insights
+
+*Infrastructure Commands (Development/business support):*
 - `architect` - Technical planning framework
 - `product-owner` - Business prioritization and decision-making
 - `code-owner` - Codebase health analysis
 - `business-analyst` - Requirements gathering
-- `twitter-post` - Social media content optimization
 - `commit-push` - Automated git workflow
 - `create-command` - Command creation utility
 

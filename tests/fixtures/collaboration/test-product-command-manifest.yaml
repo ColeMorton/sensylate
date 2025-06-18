@@ -1,0 +1,40 @@
+command:
+  name: "test-product-command"
+  version: "1.0.0"
+  type: "product"
+  classification: "core_product"
+  description: "Test user-facing product functionality command"
+
+dependencies:
+  required: []
+  optional:
+    - command: "test-analyzer"
+      output_type: "analysis_report"
+      enhancement: "Analysis context for product features"
+
+outputs:
+  - type: "product_output"
+    format: "markdown"
+    description: "User-facing product functionality output"
+  - type: "user_experience"
+    format: "json"
+    description: "User experience metrics and feedback"
+
+collaboration:
+  pre_execution_behavior:
+    - "scan_for_user_context"
+    - "load_product_preferences"
+    - "optimize_user_experience"
+
+  post_execution_behavior:
+    - "store_user_output"
+    - "track_usage_metrics"
+    - "improve_product_features"
+
+  output_sharing: "immediate"
+  cache_strategy: "user_based"
+
+quality_thresholds:
+  min_confidence_score: 0.85
+  require_validation: true
+  max_execution_time: "45s"

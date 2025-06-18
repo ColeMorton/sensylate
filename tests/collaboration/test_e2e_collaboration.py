@@ -44,7 +44,8 @@ class TestE2ECollaboration(unittest.TestCase):
                 "command": {
                     "name": "test-analyzer",
                     "version": "1.0.0",
-                    "type": "analyzer"
+                    "type": "analyzer",
+                    "classification": "collaboration_infrastructure"
                 },
                 "dependencies": {
                     "required": [],
@@ -71,7 +72,8 @@ class TestE2ECollaboration(unittest.TestCase):
                 "command": {
                     "name": "test-strategist",
                     "version": "1.0.0",
-                    "type": "strategist"
+                    "type": "strategist",
+                    "classification": "collaboration_infrastructure"
                 },
                 "dependencies": {
                     "required": ["test-analyzer"],
@@ -98,7 +100,8 @@ class TestE2ECollaboration(unittest.TestCase):
                 "command": {
                     "name": "test-implementer",
                     "version": "1.0.0",
-                    "type": "implementer"
+                    "type": "implementer",
+                    "classification": "collaboration_infrastructure"
                 },
                 "dependencies": {
                     "required": ["test-strategist"],
@@ -549,6 +552,91 @@ tasks:
         strategist_context, _ = self.engine.resolve_dependencies("test-strategist")
 
         print("✅ New command successfully integrated into ecosystem")
+
+    def test_product_vs_infrastructure_command_behavior(self):
+        """Test different behaviors between product and infrastructure commands"""
+
+        print("\n=== Testing Product vs Infrastructure Command Behavior ===")
+
+        # Create product command manifest
+        product_manifest = {
+            "command": {
+                "name": "test-product-service",
+                "version": "1.0.0",
+                "type": "product",
+                "classification": "core_product"
+            },
+            "dependencies": {
+                "required": [],
+                "optional": [
+                    {
+                        "command": "test-analyzer",
+                        "output_type": "analysis_report",
+                        "enhancement": "Analysis context for product features"
+                    }
+                ]
+            },
+            "outputs": [
+                {"type": "user_output", "format": "markdown"},
+                {"type": "product_metrics", "format": "json"}
+            ],
+            "collaboration": {
+                "pre_execution_behavior": ["load_user_context", "optimize_user_experience"],
+                "post_execution_behavior": ["track_usage_metrics", "improve_product_features"],
+                "output_sharing": "user_focused",
+                "cache_strategy": "user_based"
+            }
+        }
+
+        # Write product manifest
+        product_manifest_path = self.test_workspace / "test-product-service-manifest.yaml"
+        with open(product_manifest_path, "w") as f:
+            yaml.dump(product_manifest, f)
+
+        # Add product command to registry
+        self.engine.registry["commands"]["test-product-service"] = {
+            "name": "Test Product Service",
+            "description": "Test user-facing product functionality",
+            "type": "product",
+            "classification": "core_product",
+            "scope": "test",
+            "location": "/test/product-service.md",
+            "manifest": str(product_manifest_path)
+        }
+
+        # Create infrastructure analysis output for product to use
+        self.test_framework.create_test_output("test-analyzer", "analysis_report",
+                                             "# Infrastructure Analysis\n\nTechnical context for product", 0.88)
+
+        # Test infrastructure command behavior
+        print("Testing infrastructure command...")
+        infra_context, infra_missing = self.engine.resolve_dependencies("test-analyzer")
+
+        # Infrastructure commands should focus on collaboration
+        self.assertEqual(len(infra_missing), 0)
+        # Infrastructure commands may have limited data as they create foundation
+
+        # Test product command behavior
+        print("Testing product command...")
+        product_context, product_missing = self.engine.resolve_dependencies("test-product-service")
+
+        # Product commands should leverage infrastructure outputs
+        self.assertEqual(len(product_missing), 0)
+        self.assertIn("test-analyzer", product_context.get("available_data", {}))
+
+        # Verify different collaboration behaviors
+        infra_cmd_info = self.engine.discover_command("test-analyzer")
+        product_cmd_info = self.engine.discover_command("test-product-service")
+
+        # Infrastructure commands focus on team collaboration
+        self.assertEqual(infra_cmd_info["classification"], "collaboration_infrastructure")
+        self.assertEqual(infra_cmd_info["type"], "infrastructure")
+
+        # Product commands focus on user value
+        self.assertEqual(product_cmd_info["classification"], "core_product")
+        self.assertEqual(product_cmd_info["type"], "product")
+
+        print("✅ Product and infrastructure commands show distinct behaviors")
 
     def _verify_data_lineage(self):
         """Verify complete data lineage tracking"""

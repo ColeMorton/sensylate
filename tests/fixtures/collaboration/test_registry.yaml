@@ -2,7 +2,8 @@ commands:
   test-analyzer:
     name: "Test Analyzer"
     description: "Analyzes test codebase health and metrics"
-    type: "analyzer"
+    type: "infrastructure"
+    classification: "collaboration_infrastructure"
     scope: "test"
     location: "/test/path/test-analyzer.md"
     manifest: "/test/path/test-analyzer-manifest.yaml"
@@ -13,7 +14,8 @@ commands:
   test-strategist:
     name: "Test Strategist"
     description: "Creates test business strategy from analysis"
-    type: "strategist"
+    type: "infrastructure"
+    classification: "collaboration_infrastructure"
     scope: "test"
     location: "/test/path/test-strategist.md"
     manifest: "/test/path/test-strategist-manifest.yaml"
@@ -24,13 +26,26 @@ commands:
   test-implementer:
     name: "Test Implementer"
     description: "Generates test implementation plans"
-    type: "implementer"
+    type: "infrastructure"
+    classification: "collaboration_infrastructure"
     scope: "test"
     location: "/test/path/test-implementer.md"
     manifest: "/test/path/test-implementer-manifest.yaml"
     performance_metrics:
       avg_execution_time: "90s"
       cache_hit_rate: 0.80
+
+  test-product-command:
+    name: "Test Product Command"
+    description: "Test user-facing product functionality"
+    type: "product"
+    classification: "core_product"
+    scope: "test"
+    location: "/test/path/test-product-command.md"
+    manifest: "/test/path/test-product-command-manifest.yaml"
+    performance_metrics:
+      avg_execution_time: "30s"
+      cache_hit_rate: 0.85
 
 workflow_patterns:
   test-analysis-flow:

@@ -158,17 +158,26 @@ workflow_patterns:
 
 ## Command Capabilities
 
-### Enhanced Commands
+### Command Classifications
 
-All commands now have enhanced capabilities through collaboration:
+Commands are classified by their role in the system:
 
-| Command | Reads From | Provides To | Enhancement |
-|---------|------------|-------------|-------------|
-| **architect** | code-owner, business-analyst | product-owner, team | Technical plans with business context |
-| **product-owner** | architect, code-owner | business-analyst, team | Business-aligned technical decisions |
-| **code-owner** | git, codebase | architect, product-owner | Health metrics for planning |
-| **business-analyst** | stakeholders, processes | architect, product-owner | Requirements and acceptance criteria |
-| **twitter-post** | any content, team knowledge | social media | Context-aware content optimization |
+#### **Core Product Commands** (User-facing AI functionality)
+| Command | Purpose | Enhancement Through Collaboration |
+|---------|---------|----------------------------------|
+| **twitter-post** | Social media content optimization | Uses team workspace data for context |
+| **twitter-post-strategy** | Trading strategy social content | Reads analysis data from team outputs |
+| **fundamental-analysis** | Market analysis and trading insights | Enhanced with team collaboration context |
+
+#### **Collaboration Infrastructure Commands** (Enable product development)
+| Command | Purpose | Enhancement Through Collaboration |
+|---------|---------|----------------------------------|
+| **architect** | Technical planning & implementation | Reads code-owner health, business requirements |
+| **product-owner** | Business strategy & prioritization | Uses architect plans, code assessments |
+| **code-owner** | Technical health & architecture review | Provides health metrics for planning |
+| **business-analyst** | Requirements & process optimization | Provides requirements to architect/product-owner |
+| **commit-push** | Automated git workflow | Can be triggered after architect phases |
+| **create-command** | Command creation & validation | Creates new commands with best practices |
 
 ### Dependency Resolution
 
@@ -312,6 +321,8 @@ commands:
     manifest: "/team-workspace/commands/my-global-command/manifest.yaml"
     status: "active"
 ```
+
+**Note**: Currently, all commands in this project are project-scoped and located in `.claude/commands/` within the project directory.
 
 ### Enabling Collaboration in Existing Commands
 

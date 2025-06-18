@@ -2,6 +2,7 @@ command:
   name: "test-strategist"
   version: "1.0.0"
   type: "strategist"
+  classification: "collaboration_infrastructure"
   description: "Test command for creating business strategies"
 
 dependencies:

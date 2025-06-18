@@ -2,6 +2,7 @@ command:
   name: "test-analyzer"
   version: "1.0.0"
   type: "analyzer"
+  classification: "collaboration_infrastructure"
   description: "Test command for analyzing codebase health"
 
 dependencies:

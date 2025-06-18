@@ -1,0 +1,44 @@
+command:
+  name: "test-implementer"
+  version: "1.0.0"
+  type: "implementer"
+  classification: "collaboration_infrastructure"
+  description: "Test command for generating implementation plans"
+
+dependencies:
+  required:
+    - "test-strategist"
+  optional:
+    - command: "test-analyzer"
+      output_type: "analysis_report"
+      enhancement: "Technical context for implementation"
+    - command: "architect"
+      output_type: "implementation_plan"
+      enhancement: "Architectural guidance for implementation"
+
+outputs:
+  - type: "implementation_plan"
+    format: "markdown"
+    description: "Detailed implementation plan with steps"
+  - type: "technical_specs"
+    format: "yaml"
+    description: "Technical specifications for implementation"
+
+collaboration:
+  pre_execution_behavior:
+    - "load_strategy_outputs"
+    - "check_for_architectural_guidance"
+    - "prepare_implementation_templates"
+
+  post_execution_behavior:
+    - "store_implementation_plan"
+    - "trigger_development_workflow"
+    - "update_project_roadmap"
+
+  output_sharing: "on_completion"
+  cache_strategy: "strategy_based"
+
+quality_thresholds:
+  min_confidence_score: 0.85
+  require_validation: true
+  max_execution_time: "2m"
