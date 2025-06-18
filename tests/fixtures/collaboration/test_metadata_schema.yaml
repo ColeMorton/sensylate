@@ -1,0 +1,98 @@
+metadata:
+  type: object
+  required:
+    - command
+    - timestamp
+    - version
+    - session_id
+  properties:
+    command:
+      type: string
+      description: "Name of the command that generated this output"
+    timestamp:
+      type: string
+      format: date-time
+      description: "ISO 8601 timestamp of output generation"
+    version:
+      type: string
+      description: "Command version"
+    session_id:
+      type: string
+      description: "Collaboration session identifier"
+
+input_context:
+  type: object
+  properties:
+    dependencies_used:
+      type: array
+      items:
+        type: object
+        properties:
+          command:
+            type: string
+          output_type:
+            type: string
+          timestamp:
+            type: string
+            format: date-time
+    optimization_data:
+      type: array
+      items:
+        type: string
+
+output_specification:
+  type: object
+  required:
+    - type
+    - format
+  properties:
+    type:
+      type: string
+      description: "Type of output (e.g., analysis_report, strategy_plan)"
+    format:
+      type: string
+      enum: ["markdown", "json", "yaml"]
+    size_bytes:
+      type: integer
+    line_count:
+      type: integer
+
+quality_metrics:
+  type: object
+  properties:
+    quality_score:
+      type: number
+      minimum: 0
+      maximum: 1
+    confidence_level:
+      type: string
+      enum: ["low", "medium", "high"]
+    validation_passed:
+      type: boolean
+    execution_time:
+      type: string
+    content_hash:
+      type: string
+
+collaboration_data:
+  type: object
+  properties:
+    intended_consumers:
+      type: array
+      items:
+        type: string
+    sharing_policy:
+      type: string
+      enum: ["immediate", "on_completion", "on_request"]
+    cache_expires:
+      type: string
+      format: date-time
+    data_lineage:
+      type: array
+      items:
+        type: object
+        properties:
+          source_command:
+            type: string
+          contribution:
+            type: string

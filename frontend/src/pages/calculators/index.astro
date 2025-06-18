@@ -76,10 +76,12 @@ const categoryTitles: Record<string, string> = {
           )
         }
 
-        <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div class="row">
           {
             sortedCalculators.map((calculator) => (
-              <CalculatorCard data={calculator} />
+              <div class="mb-6 md:col-6 lg:col-4">
+                <CalculatorCard data={calculator} />
+              </div>
             ))
           }
         </div>

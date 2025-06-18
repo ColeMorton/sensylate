@@ -1,0 +1,43 @@
+command:
+  name: "test-strategist"
+  version: "1.0.0"
+  type: "strategist"
+  description: "Test command for creating business strategies"
+
+dependencies:
+  required:
+    - "test-analyzer"
+  optional:
+    - command: "product-owner"
+      output_type: "prioritization"
+      enhancement: "Product roadmap alignment"
+    - command: "test-optimizer"
+      output_type: "optimization_report"
+      enhancement: "Performance optimization insights"
+
+outputs:
+  - type: "strategy_plan"
+    format: "markdown"
+    description: "Strategic plan based on analysis"
+  - type: "action_items"
+    format: "yaml"
+    description: "Prioritized action items"
+
+collaboration:
+  pre_execution_behavior:
+    - "load_analyzer_outputs"
+    - "check_for_optimization_data"
+    - "prepare_strategy_templates"
+
+  post_execution_behavior:
+    - "store_strategy_outputs"
+    - "trigger_implementation_planning"
+    - "update_project_context"
+
+  output_sharing: "on_completion"
+  cache_strategy: "dependency_based"
+
+quality_thresholds:
+  min_confidence_score: 0.80
+  require_validation: true
+  max_execution_time: "90s"

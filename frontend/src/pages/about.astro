@@ -34,7 +34,7 @@ const { title, description, meta_title, image } = about.data;
             )
           }
           <div class="content">
-            <h2 set:html={markdownify(title)} class="mb-6" />
+            <h2 class="mb-6" set:html={markdownify(title)} />
             <Content />
           </div>
         </div>

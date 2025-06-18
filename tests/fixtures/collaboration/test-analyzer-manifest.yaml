@@ -1,0 +1,42 @@
+command:
+  name: "test-analyzer"
+  version: "1.0.0"
+  type: "analyzer"
+  description: "Test command for analyzing codebase health"
+
+dependencies:
+  required: []
+  optional:
+    - command: "code-owner"
+      output_type: "health_assessment"
+      enhancement: "Previous health metrics for trend analysis"
+    - command: "business-analyst"
+      output_type: "requirements"
+      enhancement: "Business context for technical analysis"
+
+outputs:
+  - type: "analysis_report"
+    format: "markdown"
+    description: "Comprehensive test analysis report"
+  - type: "metrics_data"
+    format: "json"
+    description: "Raw metrics data for further processing"
+
+collaboration:
+  pre_execution_behavior:
+    - "scan_workspace_for_relevant_data"
+    - "load_cached_analysis_patterns"
+    - "optimize_execution_plan"
+
+  post_execution_behavior:
+    - "store_analysis_results"
+    - "update_team_knowledge"
+    - "notify_dependent_commands"
+
+  output_sharing: "immediate"
+  cache_strategy: "session_based"
+
+quality_thresholds:
+  min_confidence_score: 0.75
+  require_validation: true
+  max_execution_time: "2m"

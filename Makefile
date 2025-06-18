@@ -18,7 +18,9 @@ help:
 	@echo "  generate-report  - Generate final report"
 	@echo "  full-pipeline    - Run complete pipeline"
 	@echo "  clean           - Clean generated files"
-	@echo "  test            - Run tests"
+	@echo "  test            - Run all tests"
+	@echo "  test-collaboration - Run collaboration framework tests"
+	@echo "  test-e2e        - Run end-to-end collaboration tests"
 	@echo "  install         - Install dependencies"
 
 # Individual script targets
@@ -92,9 +94,33 @@ clean-all:
 test:
 	$(PYTHON) -m pytest tests/ -v
 
+.PHONY: test-collaboration
+test-collaboration:
+	@echo "Running Command Collaboration Framework tests..."
+	$(PYTHON) -m pytest tests/collaboration/ -v --tb=short
+
+.PHONY: test-collaboration-verbose
+test-collaboration-verbose:
+	@echo "Running Command Collaboration Framework tests (verbose)..."
+	$(PYTHON) -m pytest tests/collaboration/ -v -s --tb=long
+
+.PHONY: test-collaboration-coverage
+test-collaboration-coverage:
+	@echo "Running Command Collaboration Framework tests with coverage..."
+	$(PYTHON) -m pytest tests/collaboration/ --cov=team_workspace --cov-report=html --cov-report=term
+
+.PHONY: test-e2e
+test-e2e:
+	@echo "Running end-to-end collaboration workflow tests..."
+	$(PYTHON) -m pytest tests/collaboration/test_e2e_collaboration.py -v -s
+
 .PHONY: test-coverage
 test-coverage:
-	$(PYTHON) -m pytest tests/ --cov=scripts --cov-report=html
+	$(PYTHON) -m pytest tests/ --cov=scripts --cov=team_workspace --cov-report=html
+
+.PHONY: test-all
+test-all: test test-collaboration
+	@echo "All tests completed successfully"
 
 # Environment setup
 .PHONY: install

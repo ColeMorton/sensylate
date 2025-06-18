@@ -1,0 +1,47 @@
+commands:
+  test-analyzer:
+    name: "Test Analyzer"
+    description: "Analyzes test codebase health and metrics"
+    type: "analyzer"
+    scope: "test"
+    location: "/test/path/test-analyzer.md"
+    manifest: "/test/path/test-analyzer-manifest.yaml"
+    performance_metrics:
+      avg_execution_time: "45s"
+      cache_hit_rate: 0.75
+
+  test-strategist:
+    name: "Test Strategist"
+    description: "Creates test business strategy from analysis"
+    type: "strategist"
+    scope: "test"
+    location: "/test/path/test-strategist.md"
+    manifest: "/test/path/test-strategist-manifest.yaml"
+    performance_metrics:
+      avg_execution_time: "60s"
+      cache_hit_rate: 0.60
+
+  test-implementer:
+    name: "Test Implementer"
+    description: "Generates test implementation plans"
+    type: "implementer"
+    scope: "test"
+    location: "/test/path/test-implementer.md"
+    manifest: "/test/path/test-implementer-manifest.yaml"
+    performance_metrics:
+      avg_execution_time: "90s"
+      cache_hit_rate: 0.80
+
+workflow_patterns:
+  test-analysis-flow:
+    name: "Test Analysis Workflow"
+    description: "Complete test analysis to implementation flow"
+    sequence:
+      - test-analyzer
+      - test-strategist
+      - test-implementer
+    avg_total_duration: "3m"
+    optimization_opportunities:
+      - "Parallel analysis of subcomponents"
+      - "Cached strategy templates"
+      - "Reusable implementation patterns"
