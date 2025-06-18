@@ -4,7 +4,7 @@
     "base_url": "https://colemorton.netlify.app/",
     "base_path": "/",
     "trailing_slash": false,
-    "favicon": "/images/favicon.png",
+    "favicon": "/images/favicon.ico",
     "logo": "",
     "logo_darkmode": "",
     "logo_width": "150",
@@ -20,6 +20,10 @@
     "pagination": 2,
     "summary_length": 200,
     "blog_folder": "blog"
+  },
+
+  "features": {
+    "image_expand": false
   },
 
   "params": {

@@ -22,6 +22,7 @@ export interface FeatureFlags {
   calculator_advanced: boolean;
   elements_page: boolean;
   authors_page: boolean;
+  image_expand: boolean;
 }
 
 export interface EnhancedConfig {
