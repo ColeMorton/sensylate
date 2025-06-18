@@ -1,0 +1,82 @@
+---
+import Base from "@/layouts/Base.astro";
+import ImageMod from "@/components/ImageMod.astro";
+---
+
+<Base title="Lightbox Test">
+  <div class="container">
+    <h1>React Awesome Lightbox Test</h1>
+
+    <div class="section">
+      <h2>Images with Lightbox (Default)</h2>
+      <p>Click on any image to open it in a lightbox:</p>
+
+      <div class="my-8 grid grid-cols-1 gap-6 md:grid-cols-2">
+        <div>
+          <ImageMod
+            src="/images/logo.png"
+            alt="Logo"
+            class="w-full rounded-lg shadow-lg"
+          />
+          <p class="mt-2 text-center">Logo Image</p>
+        </div>
+
+        <div>
+          <ImageMod
+            src="/images/og-image.png"
+            alt="OG Image"
+            class="w-full rounded-lg shadow-lg"
+          />
+          <p class="mt-2 text-center">OG Image</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Images without Lightbox</h2>
+      <p>These images have lightbox disabled:</p>
+
+      <div class="my-8 grid grid-cols-1 gap-6 md:grid-cols-2">
+        <div>
+          <ImageMod
+            src="/images/logo.png"
+            alt="Logo"
+            enableLightbox={false}
+            class="w-full rounded-lg shadow-lg"
+          />
+          <p class="mt-2 text-center">Logo (No Lightbox)</p>
+        </div>
+
+        <div>
+          <ImageMod
+            src="/images/og-image.png"
+            alt="OG Image"
+            enableLightbox={false}
+            class="w-full rounded-lg shadow-lg"
+          />
+          <p class="mt-2 text-center">OG Image (No Lightbox)</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="my-8 rounded-lg bg-blue-50 p-6 dark:bg-blue-900">
+      <h3>Testing Instructions:</h3>
+      <ul class="list-inside list-disc space-y-2">
+        <li>
+          <strong>Desktop:</strong> Click on images in the first section to open
+          lightbox
+        </li>
+        <li><strong>Mobile:</strong> Tap on images to open lightbox</li>
+        <li>
+          <strong>Keyboard:</strong> Tab to images and press Enter/Space to open
+        </li>
+        <li>
+          <strong>Close:</strong> Click outside, press ESC, or use the close button
+        </li>
+        <li>
+          <strong>Disabled:</strong> Images in second section should not open lightbox
+        </li>
+      </ul>
+    </div>
+  </div>
+</Base>

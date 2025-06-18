@@ -1,3 +1,5 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/f076302a-1a27-49d4-a2b9-0bfa3a5c84af/deploy-status)](https://app.netlify.com/projects/colemorton/deploys)
+
 # Sensylate - Multi-Modal Data Processing & Content Creation Platform
 
 ## Project Overview
@@ -16,7 +18,7 @@ Sensylate is a sophisticated platform combining **Python data processing** with 
 
 ```
 sensylate/
-├── frontend/                   # Astro frontend (blog, content management)
+├── frontend/                  # Astro frontend (blog, content management)
 │   ├── src/                   # Astro source code
 │   ├── public/               # Static assets
 │   └── package.json          # Frontend dependencies

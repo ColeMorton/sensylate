@@ -17,13 +17,9 @@
     "sticky_header": true,
     "theme_switcher": true,
     "default_theme": "dark",
-    "pagination": 2,
+    "pagination": 8,
     "summary_length": 200,
     "blog_folder": "blog"
-  },
-
-  "features": {
-    "image_expand": false
   },
 
   "params": {

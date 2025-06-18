@@ -146,50 +146,6 @@
   @apply bg-light text-text-dark dark:bg-darkmode-light dark:text-darkmode-text-dark absolute top-3 right-3 h-8 w-8 rounded-full text-center leading-8;
 }
 
-/* image modal */
-.image-modal {
-  backdrop-filter: blur(4px);
-}
-
-.image-modal-overlay {
-  animation: fadeIn 0.3s ease-out;
-}
-
-.image-modal-content {
-  animation: scaleIn 0.3s ease-out;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes scaleIn {
-  from {
-    opacity: 0;
-    transform: scale(0.9);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-@keyframes imageModalFadeIn {
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
 /* content style */
 .content {
   @apply prose max-w-none;

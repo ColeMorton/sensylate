@@ -60,7 +60,7 @@ You are an expert financial content analyzer and social media strategist. Your s
   - Best/worst performing months identification
   - **MANDATORY**: Cross-reference bar heights with percentage labels if visible
 
-**Step 2: Fundamental Analysis Integration** (`@data/raw/analysis_fundamental/{TICKER}_{YYYYMMDD}.md`)
+**Step 2: Fundamental Analysis Integration** (`@data/outputs/analysis_fundamental/{TICKER}_{YYYYMMDD}.md`)
 - Extract investment thesis and key business drivers
 - Identify valuation metrics (P/E, PEG, enterprise value ratios)
 - Note growth catalysts and risk factors
@@ -297,7 +297,7 @@ Deliver comprehensive analysis featuring:
 
 **Data will be automatically sourced from matching UID files:**
 - `@data/images/trendspider_tabular/{TICKER}_{YYYYMMDD}.png` (PRIMARY)
-- `@data/raw/analysis_fundamental/{TICKER}_{YYYYMMDD}.md`
+- `@data/outputs/analysis_fundamental/{TICKER}_{YYYYMMDD}.md`
 - `@data/raw/analysis_misc/{TICKER}_{YYYYMMDD}.md`
 - `@data/raw/analysis_strategy/{TICKER}_{YYYYMMDD}.csv` (FALLBACK)
 
