@@ -2,7 +2,7 @@
 title: "Hey, I'm Cole!"
 meta_title: "About Cole Morton"
 description: "Trading strategy analyst and technology developer with expertise in financial markets, data analysis, and modern web development."
-image: "/images/avatar.png"
+image: "/images/photo_2025-06-07 09.33.21.jpeg"
 draft: false
 ---
 
