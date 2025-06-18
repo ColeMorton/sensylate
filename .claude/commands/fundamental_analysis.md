@@ -19,6 +19,68 @@ Produces comprehensive fundamental analysis that systematically identifies relev
 - `confidence_threshold`: Minimum confidence for recommendations - `0.6` | `0.7` | `0.8` (optional, default: 0.7)
 - `scenario_count`: Number of valuation scenarios - `3` | `5` | `7` (optional, default: 3)
 
+## Real-Time Data Acquisition
+
+**MANDATORY**: All analysis must use the latest available market data. Before beginning analysis, systematically gather current information using multiple data sources.
+
+### Phase 0: Current Market Data Collection
+
+**0.1 Live Price & Market Data**
+```
+REQUIRED DATA POINTS:
+1. Current Stock Price & Trading Data
+   → Real-time price, volume, bid/ask spread
+   → Intraday price movement and volatility
+   → Market cap calculation with latest share count
+   → 52-week high/low context
+   → Trading volume vs average (liquidity assessment)
+
+2. Recent Price Performance
+   → 1D, 1W, 1M, 3M, 6M, 1Y returns
+   → Relative performance vs S&P 500 and sector ETF
+   → Recent volatility metrics (30-day, 90-day)
+   → Beta calculation with recent price data
+
+3. Current Valuation Multiples
+   → P/E, P/B, EV/EBITDA using latest price
+   → P/S, P/FCF with most recent financials
+   → PEG ratio with forward growth estimates
+   → Compare to sector median multiples
+```
+
+**0.2 Financial Data Sources (Latest Available)**
+```
+DATA ACQUISITION PRIORITY:
+1. SEC Filings (Primary)
+   → Most recent 10-K, 10-Q filings
+   → Latest 8-K announcements
+   → Proxy statements for governance insights
+   → Insider trading activity (Form 4s)
+
+2. Real-Time Financial APIs
+   → Yahoo Finance, Alpha Vantage, or similar
+   → Current financial metrics and ratios
+   → Analyst estimates and revisions
+   → Recent earnings call transcripts
+
+3. News & Market Intelligence
+   → Recent news sentiment analysis
+   → Analyst rating changes (last 30 days)
+   → Industry developments affecting stock
+   → Regulatory updates or changes
+```
+
+**0.3 Data Validation & Freshness Check**
+```
+QUALITY ASSURANCE PROTOCOL:
+□ Verify all price data is from current trading session
+□ Confirm financial statements are most recent available
+□ Check data consistency across multiple sources
+□ Flag any stale data points (>1 trading day for prices)
+□ Document data collection timestamp for all sources
+□ Set confidence scores based on data recency and reliability
+```
+
 ## Systematic Analysis Framework
 
 ### Phase 1: Foundation & Discovery (Confidence Building)
