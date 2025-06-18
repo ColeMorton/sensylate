@@ -1,6 +1,6 @@
 .header,
 .footer {
-  @apply bg-body dark:bg-darkmode-body py-6;
+  @apply bg-body dark:bg-darkmode-dark py-6;
 }
 
 .footer {
@@ -21,6 +21,8 @@
 
 .brand-text {
   font-family: var(--font-brand), sans-serif !important;
+  @apply flex items-center;
+  transform: translateY(-5px);
 }
 
 .navbar-nav {
@@ -44,7 +46,7 @@
 }
 
 .nav-dropdown-list {
-  @apply bg-body dark:bg-darkmode-body z-10 hidden min-w-[180px] rounded p-4 shadow-sm lg:invisible lg:absolute lg:block lg:opacity-0;
+  @apply bg-body dark:bg-darkmode-dark z-10 hidden min-w-[180px] rounded p-4 shadow-sm lg:invisible lg:absolute lg:block lg:opacity-0;
 }
 
 .nav-dropdown-item {

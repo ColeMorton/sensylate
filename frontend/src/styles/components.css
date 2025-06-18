@@ -1,10 +1,10 @@
 /* section style */
 .section {
-  @apply py-24 xl:py-28;
+  @apply pb-24 xl:pb-28;
 }
 
 .section-sm {
-  @apply py-16 xl:py-20;
+  @apply pb-16 xl:pb-20;
 }
 
 /* container */
@@ -144,6 +144,11 @@
 
 .modal-close {
   @apply bg-light text-text-dark dark:bg-darkmode-light dark:text-darkmode-text-dark absolute top-3 right-3 h-8 w-8 rounded-full text-center leading-8;
+}
+
+/* main content */
+#main-content {
+  @apply pb-14;
 }
 
 /* content style */

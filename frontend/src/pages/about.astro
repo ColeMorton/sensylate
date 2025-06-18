@@ -16,7 +16,7 @@ const { title, description, meta_title, image } = about.data;
   description={description}
   image={image}
 >
-  <section class="section-sm">
+  <section class="section-sm py-14">
     <div class="container">
       <div class="row justify-center">
         <div class="text-center md:col-10 lg:col-7">
@@ -29,11 +29,12 @@ const { title, description, meta_title, image } = about.data;
                 height={200}
                 alt={title}
                 format="webp"
+                enableLightbox={false}
               />
             )
           }
-          <h2 set:html={markdownify(title)} class="mb-6" />
           <div class="content">
+            <h2 set:html={markdownify(title)} class="mb-6" />
             <Content />
           </div>
         </div>
