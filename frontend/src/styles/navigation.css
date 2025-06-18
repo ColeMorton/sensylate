@@ -19,6 +19,10 @@
   }
 }
 
+.brand-text {
+  font-family: var(--font-brand), sans-serif !important;
+}
+
 .navbar-nav {
   @apply text-center lg:text-left;
 }
