@@ -360,30 +360,6 @@ Key variables impact on fair value:
 - [Variable 2]: ±10% change = ±$[XX] ([XX]%)
 - [Variable 3]: ±10% change = ±$[XX] ([XX]%)
 
-## 🎬 Action Plan
-
-### Entry Strategy
-- **Optimal Entry**: Below $[XXX] ([XX]% margin of safety)
-- **Accumulation Zone**: $[XXX] - $[XXX]
-- **Position Building**: [Gradual/Opportunistic/Immediate]
-
-### Monitoring Framework
-**Weekly Indicators**:
-- [Metric 1]: Alert if [condition]
-- [Metric 2]: Alert if [condition]
-
-**Quarterly Checkpoints**:
-- [ ] Revenue growth vs guidance
-- [ ] Margin progression on track
-- [ ] Competitive position stable/improving
-- [ ] Key risks materialization check
-
-### Exit Triggers
-1. **Thesis Broken**: [Specific conditions]
-2. **Valuation Target**: $[XXX] ([XX]% gain)
-3. **Better Opportunity**: Required excess return: [XX]%
-4. **Risk Materialization**: [Specific scenarios]
-
 ## 📋 Analysis Metadata
 
 **Data Sources & Quality**:
