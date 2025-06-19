@@ -4,6 +4,7 @@
 
 [build.environment]
 DISABLE_PYTHON = "true"
+DISABLE_MISE = "true"
 
 
 [functions]
