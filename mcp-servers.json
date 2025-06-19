@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "fetch": {
+      "command": "/Users/colemorton/.pyenv/shims/mcp-server-fetch",
+      "args": []
+    }
+  }
+}

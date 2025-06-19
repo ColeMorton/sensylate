@@ -264,6 +264,10 @@ Business Impact:
 - `technical`: System integration requirements
 - `regulatory`: Compliance-driven changes
 
+## Output Location
+
+All business analyst requirements documents and process analysis outputs must be saved to `team-workspace/commands/business-analyst/outputs/` to enable collaboration with other AI commands. This centralized location allows other commands (architect, product-owner, code-owner) to access business requirements and stakeholder analysis for informed technical and product decisions.
+
 ---
 
 **Framework Principles:**

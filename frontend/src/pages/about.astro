@@ -19,22 +19,24 @@ const { title, description, meta_title, image } = about.data;
   <section class="section-sm py-14">
     <div class="container">
       <div class="row justify-center">
-        <div class="text-center md:col-10 lg:col-7">
-          {
-            image && (
-              <ImageMod
-                class="mx-auto mb-6 rounded-lg"
-                src={image}
-                width={200}
-                height={200}
-                alt={title}
-                format="webp"
-                enableLightbox={false}
-              />
-            )
-          }
-          <div class="content">
+        <div class="lg:col-10">
+          <div class="mb-8 text-center">
+            {
+              image && (
+                <ImageMod
+                  class="mx-auto mb-6 rounded-lg"
+                  src={image}
+                  width={200}
+                  height={200}
+                  alt={title}
+                  format="webp"
+                  enableLightbox={false}
+                />
+              )
+            }
             <h2 class="mb-6" set:html={markdownify(title)} />
+          </div>
+          <div class="content">
             <Content />
           </div>
         </div>

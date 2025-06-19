@@ -54,6 +54,7 @@ Functions as an automated Product Owner that converts code reviews, technical de
 - Generate priority-ranked backlog with clear acceptance criteria
 - Create stakeholder-specific summaries with relevant metrics
 - Establish success metrics and monitoring triggers
+- Save outputs to `team-workspace/commands/product-owner/outputs/` for collaboration
 
 ## Usage
 
@@ -67,6 +68,10 @@ Functions as an automated Product Owner that converts code reviews, technical de
 # Executive summary
 /project:product_owner architecture_review.md --format=stakeholder-summary
 ```
+
+## Output Location
+
+All product owner analysis outputs are saved to `team-workspace/commands/product-owner/outputs/` to enable collaboration with other AI commands. This centralized location allows other commands (architect, code-owner, business-analyst) to access product decisions and priorities.
 
 ## Output Structure
 

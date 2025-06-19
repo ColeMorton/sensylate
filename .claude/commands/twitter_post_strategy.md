@@ -20,7 +20,7 @@ You are an expert financial content analyzer and social media strategist. Your s
 3. **Technical & Market Context**: `@data/raw/analysis_misc/`
    - Chart patterns, technical signals, relative performance notes
    - Current market context and positioning insights
-   - **Enhanced with Yahoo Finance MCP server (ID: yfmcp)** for real-time market data
+   - **Enhanced with Yahoo Finance bridge system** for real-time market data
 
 4. **Strategy Backtesting Data** (FALLBACK): `@data/raw/analysis_strategy/`
    - CSV files as backup when TrendSpider data unavailable
@@ -71,10 +71,10 @@ You are an expert financial content analyzer and social media strategist. Your s
 - Extract current chart patterns and technical signals
 - Note relative performance vs benchmarks
 - Identify support/resistance levels or trend analysis
-- **Supplement with Yahoo Finance MCP server data**:
-  - Use yfmcp_quote_summary for current price and volume
-  - Use yfmcp_technical_indicators for additional technical context
-  - Use yfmcp_price_history for recent performance validation
+- **Supplement with Yahoo Finance bridge system**:
+  - Use `python scripts/yahoo_finance_bridge.py info TICKER` for current price/volume
+  - Use `python scripts/yahoo_finance_bridge.py history TICKER` for recent performance
+  - Cross-reference with real-time market data for validation
 
 **Step 4: Strategy Parameters from CSV** (`@data/raw/analysis_strategy/{TICKER}_{YYYYMMDD}.csv`)
 - **REQUIRED**: Extract strategy type and window parameters regardless of TrendSpider availability
@@ -170,9 +170,9 @@ Here's why this signal matters. 👇
 
 🔍 Why This Signal Triggered TODAY
 • Entry Condition: [SMA/EMA] ([short]/[long]) crossover signal confirmed
-• Technical Setup: [Current chart pattern/confirmation from MCP data]
+• Technical Setup: [Current chart pattern/confirmation from bridge data]
 • Fundamental Catalyst: [Key business driver supporting timing]
-• Market Context: [Real-time market conditions from yfmcp_quote_summary]
+• Market Context: [Real-time market conditions from Yahoo Finance bridge]
 • Risk Management: [Stop loss level, position sizing considerations]
 
 📊 $[TICKER] Fundamentals
@@ -308,15 +308,15 @@ Deliver comprehensive analysis featuring:
 
 **Processing Priority:**
 1. **EXTRACT STRATEGY PARAMETERS**: Parse CSV file for Strategy Type, Short Window, Long Window
-2. **GET REAL-TIME MARKET DATA**: Use Yahoo Finance MCP server (yfmcp_quote_summary) for current price/volume
+2. **GET REAL-TIME MARKET DATA**: Use Yahoo Finance bridge system (`python scripts/yahoo_finance_bridge.py info TICKER`) for current price/volume
 3. Extract all metrics from TrendSpider tabular image (left panel) with precision
 4. **CRITICAL**: Extract seasonality data from TrendSpider chart (right panel) with extreme care
    - Verify each monthly bar height against scale
    - Double-check current month percentage
    - Cross-validate peak/trough months
 5. Integrate fundamental analysis for investment context
-6. Add technical misc supplemented with MCP server data for current market setup
-7. **MANDATORY FINAL CHECK**: Review strategy parameters, market data, and seasonality data for accuracy
+6. Add technical misc supplemented with Yahoo Finance bridge data for current market setup
+7. **MANDATORY FINAL CHECK**: Review strategy parameters, bridge data, and seasonality data for accuracy
 
 ---
 

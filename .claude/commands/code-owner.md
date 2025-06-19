@@ -153,6 +153,10 @@ Evaluate alignment between technical and business needs:
 - Recommendations tailored to team capabilities and constraints
 - Success metrics for tracking improvement progress
 
+## Output Location
+
+All code owner technical health assessments and reviews must be saved to `team-workspace/commands/code-owner/outputs/` to enable collaboration with other AI commands. This centralized location allows other commands (architect, product-owner, business-analyst) to access technical health metrics and recommendations for informed decision-making.
+
 ## Usage
 
 ```

@@ -130,57 +130,62 @@ CACHE_IMPLEMENTATION = {
 
 ## Real-Time Data Acquisition
 
-**MANDATORY**: All analysis must use the latest available market data. Before beginning analysis, systematically gather current information using the Yahoo Finance MCP server (ID: yfmcp).
+**MANDATORY**: All analysis must use the latest available market data. Before beginning analysis, systematically gather current information using the Yahoo Finance bridge system.
 
 ### Phase 0: Current Market Data Collection
 
-**0.1 Yahoo Finance MCP Server Integration**
+**0.1 Yahoo Finance Data Integration**
 ```
-YAHOO FINANCE MCP SERVER (ID: yfmcp) - PRIMARY DATA SOURCE:
-Use the following MCP tools for real-time financial data:
+YAHOO FINANCE DATA COLLECTION - PRIMARY DATA SOURCE:
+Use the Yahoo Finance bridge script for real-time financial data:
+
+BRIDGE SCRIPT: scripts/yahoo_finance_bridge.py
 
 1. Stock Quote Data
-   → yfmcp_quote_summary: Real-time price, volume, market cap
-   → yfmcp_price_history: Historical price data and returns
-   → yfmcp_key_statistics: Valuation multiples and financial ratios
-   → yfmcp_financial_data: Balance sheet, income statement, cash flow
+   → python scripts/yahoo_finance_bridge.py info TICKER
+   → Real-time price, volume, market cap, key ratios
+   → Market positioning and trading metrics
 
-2. Company Information
-   → yfmcp_company_profile: Business description and sector info
-   → yfmcp_analyst_estimates: Forward guidance and analyst consensus
-   → yfmcp_insider_transactions: Recent insider trading activity
-   → yfmcp_institutional_holders: Major shareholders and ownership
+2. Historical Analysis
+   → python scripts/yahoo_finance_bridge.py history TICKER [period]
+   → Historical price data and performance metrics
+   → Volatility analysis and trend identification
 
-3. Market Analysis
-   → yfmcp_recommendation_trends: Analyst ratings and changes
-   → yfmcp_earnings_calendar: Upcoming earnings dates
-   → yfmcp_news_sentiment: Recent news and sentiment analysis
-   → yfmcp_technical_indicators: Technical analysis metrics
+3. Financial Statements
+   → python scripts/yahoo_finance_bridge.py financials TICKER
+   → Balance sheet, income statement, cash flow data
+   → Comprehensive financial statement analysis
+
+DATA INTEGRATION APPROACH:
+- Use bridge script for systematic data collection
+- Cache results for performance optimization
+- Cross-reference with Claude Desktop Yahoo Finance data when available
+- Maintain data quality and freshness standards
 ```
 
 **0.2 Required Data Points Collection**
 ```
-SYSTEMATIC DATA GATHERING USING MCP TOOLS:
+SYSTEMATIC DATA GATHERING USING BRIDGE SYSTEM:
 1. Current Stock Price & Trading Data
-   → Use yfmcp_quote_summary for real-time price, volume, bid/ask
+   → Use bridge script for real-time price, volume, market data
    → Extract market cap, shares outstanding, trading volume
    → Calculate 52-week high/low positioning
    → Assess liquidity via average volume comparison
 
 2. Historical Performance Analysis
-   → Use yfmcp_price_history for 1D, 1W, 1M, 3M, 6M, 1Y returns
-   → Calculate relative performance vs S&P 500
+   → Use bridge script for historical performance data
+   → Calculate relative performance vs benchmarks
    → Extract volatility metrics and beta calculations
    → Analyze price momentum and trend strength
 
 3. Financial Statements & Ratios
-   → Use yfmcp_financial_data for latest financial statements
-   → Extract yfmcp_key_statistics for valuation multiples
+   → Use bridge script for latest financial statements
+   → Extract key valuation multiples and ratios
    → Calculate P/E, P/B, EV/EBITDA, P/S, P/FCF ratios
    → Compare metrics to sector medians and historical averages
 
 4. Forward-Looking Data
-   → Use yfmcp_analyst_estimates for consensus estimates
+   → Use available analyst consensus estimates
    → Extract earnings growth projections and guidance
    → Calculate PEG ratios with forward growth estimates
    → Analyze estimate revisions and trends
@@ -202,35 +207,35 @@ QUALITY ASSURANCE PROTOCOL:
 
 ## Real-Time Data Integration
 
-### Yahoo Finance MCP Server Data Collection
-**MANDATORY**: Always use Yahoo Finance MCP server (yfmcp) for current market data before analysis to ensure accurate valuation assessments.
+### Yahoo Finance Bridge Data Collection
+**MANDATORY**: Always use Yahoo Finance bridge system for current market data before analysis to ensure accurate valuation assessments.
 
 ```
-MCP DATA COLLECTION PROTOCOL:
-1. Real-Time Quote Data (yfmcp_quote_summary)
-   → Current stock price, bid/ask spread, volume
-   → Market capitalization and shares outstanding
-   → Day's range, 52-week high/low positioning
+BRIDGE DATA COLLECTION PROTOCOL:
+1. Real-Time Quote Data (info command)
+   → Current stock price, market cap, trading volume
+   → 52-week high/low positioning and trend analysis
+   → Key financial ratios and valuation metrics
    → Average volume comparison for liquidity assessment
    → Confidence score: [0.0-1.0] based on data freshness
 
-2. Historical Price Analysis (yfmcp_price_history)
+2. Historical Price Analysis (history command)
    → Price performance across multiple timeframes
-   → Volatility metrics and beta calculations
+   → Volatility metrics and return calculations
    → Moving averages and trend analysis
    → Volume-weighted average pricing patterns
 
-3. Valuation Metrics Integration (yfmcp_key_statistics)
-   → Price-to-Fair-Value ratio calculations
-   → Upside/Downside potential from current levels
-   → Risk-adjusted returns based on actual entry price
+3. Financial Data Integration (financials command)
+   → Comprehensive financial statement access
+   → Key valuation multiples and ratios
+   → Balance sheet, income, and cash flow metrics
    → Update recommendation strength with real-time data
 
-4. Technical Context (yfmcp_technical_indicators)
-   → Support/resistance levels identification
+4. Technical Context Enhancement
+   → Support/resistance levels from price history
    → Momentum indicators and trend strength
-   → RSI, MACD, and other technical signals
-   → Volume patterns and market sentiment indicators
+   → Price action patterns and market sentiment
+   → Volume patterns and trading behavior analysis
 ```
 
 ## Systematic Analysis Framework

@@ -181,6 +181,10 @@ Update after each phase:
 **Evidence-Based**: Performance metrics guide methodology choices
 **Living Documentation**: Plans evolve with implementation reality
 
+## Output Location
+
+All architect implementation plans and analysis outputs must be saved to `team-workspace/commands/architect/outputs/` to enable collaboration with other AI commands. This centralized location allows other commands (product-owner, code-owner, business-analyst) to access technical plans and implementation details for enhanced decision-making.
+
 ---
 
 _This framework applies SOLID, DRY, KISS, and YAGNI principles to both planning and implementation, ensuring maintainable, scalable solutions._
