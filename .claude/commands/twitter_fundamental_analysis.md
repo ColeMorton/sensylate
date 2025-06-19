@@ -12,7 +12,8 @@ You are an expert fundamental analyst and social media strategist. Your specialt
   - Business-specific KPIs and financial health scorecards
 
 - **Real-Time Market Data**: **MANDATORY**
-  - Current stock price via WebFetch from Yahoo Finance (https://finance.yahoo.com/quote/{TICKER}/)
+  - Current stock price via Yahoo Finance MCP server (ID: yfmcp)
+  - Use yfmcp_quote_summary for real-time price, volume, and market data
   - **CRITICAL REQUIREMENT**: Always use current market price, never analysis price
   - Ensures Twitter content reflects real-time market conditions
 
@@ -258,7 +259,7 @@ Confidence level: [X.X/1.0] | Data quality: [X.X/1.0]
 - `/twitter_fundamental_analysis AMZN_20250618`
 
 **Processing Steps:**
-1. **CRITICAL: Get real-time stock price** - Use WebFetch to get current market price from Yahoo Finance (https://finance.yahoo.com/quote/{TICKER}/)
+1. **CRITICAL: Get real-time stock price** - Use Yahoo Finance MCP server (yfmcp_quote_summary) to get current market price
 2. Load fundamental analysis from `@data/outputs/analysis_fundamental/{TICKER}_{YYYYMMDD}.md`
 3. **Update all price references** - Replace analysis price with current market price throughout content
 4. Extract 2-3 most compelling insights
@@ -272,13 +273,14 @@ Confidence level: [X.X/1.0] | Data quality: [X.X/1.0]
 
 ## MANDATORY WORKFLOW REMINDER
 
-⚠️ **CRITICAL FIRST STEP**: Before processing any analysis, ALWAYS get current stock price using WebFetch from Yahoo Finance. Example:
+⚠️ **CRITICAL FIRST STEP**: Before processing any analysis, ALWAYS get current stock price using Yahoo Finance MCP server. Example:
 ```
-WebFetch: https://finance.yahoo.com/quote/NFLX/
-Prompt: "Get the current stock price for NFLX, including the current trading price and any recent price change."
+Use yfmcp_quote_summary tool with ticker symbol (e.g., NFLX)
+Extract: current price, price change, volume, market cap
+Validate data freshness and market hours context
 ```
 
-**Never use the price from the fundamental analysis file - it may be outdated. Always use real-time market data from Yahoo Finance.**
+**Never use the price from the fundamental analysis file - it may be outdated. Always use real-time market data from Yahoo Finance MCP server (ID: yfmcp).**
 
 ---
 

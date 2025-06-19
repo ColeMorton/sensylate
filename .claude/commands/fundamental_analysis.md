@@ -130,53 +130,60 @@ CACHE_IMPLEMENTATION = {
 
 ## Real-Time Data Acquisition
 
-**MANDATORY**: All analysis must use the latest available market data. Before beginning analysis, systematically gather current information using multiple data sources.
+**MANDATORY**: All analysis must use the latest available market data. Before beginning analysis, systematically gather current information using the Yahoo Finance MCP server (ID: yfmcp).
 
 ### Phase 0: Current Market Data Collection
 
-**0.1 Live Price & Market Data**
+**0.1 Yahoo Finance MCP Server Integration**
 ```
-REQUIRED DATA POINTS:
+YAHOO FINANCE MCP SERVER (ID: yfmcp) - PRIMARY DATA SOURCE:
+Use the following MCP tools for real-time financial data:
+
+1. Stock Quote Data
+   → yfmcp_quote_summary: Real-time price, volume, market cap
+   → yfmcp_price_history: Historical price data and returns
+   → yfmcp_key_statistics: Valuation multiples and financial ratios
+   → yfmcp_financial_data: Balance sheet, income statement, cash flow
+
+2. Company Information
+   → yfmcp_company_profile: Business description and sector info
+   → yfmcp_analyst_estimates: Forward guidance and analyst consensus
+   → yfmcp_insider_transactions: Recent insider trading activity
+   → yfmcp_institutional_holders: Major shareholders and ownership
+
+3. Market Analysis
+   → yfmcp_recommendation_trends: Analyst ratings and changes
+   → yfmcp_earnings_calendar: Upcoming earnings dates
+   → yfmcp_news_sentiment: Recent news and sentiment analysis
+   → yfmcp_technical_indicators: Technical analysis metrics
+```
+
+**0.2 Required Data Points Collection**
+```
+SYSTEMATIC DATA GATHERING USING MCP TOOLS:
 1. Current Stock Price & Trading Data
-   → Real-time price, volume, bid/ask spread
-   → Intraday price movement and volatility
-   → Market cap calculation with latest share count
-   → 52-week high/low context
-   → Trading volume vs average (liquidity assessment)
+   → Use yfmcp_quote_summary for real-time price, volume, bid/ask
+   → Extract market cap, shares outstanding, trading volume
+   → Calculate 52-week high/low positioning
+   → Assess liquidity via average volume comparison
 
-2. Recent Price Performance
-   → 1D, 1W, 1M, 3M, 6M, 1Y returns
-   → Relative performance vs S&P 500 and sector ETF
-   → Recent volatility metrics (30-day, 90-day)
-   → Beta calculation with recent price data
+2. Historical Performance Analysis
+   → Use yfmcp_price_history for 1D, 1W, 1M, 3M, 6M, 1Y returns
+   → Calculate relative performance vs S&P 500
+   → Extract volatility metrics and beta calculations
+   → Analyze price momentum and trend strength
 
-3. Current Valuation Multiples
-   → P/E, P/B, EV/EBITDA using latest price
-   → P/S, P/FCF with most recent financials
-   → PEG ratio with forward growth estimates
-   → Compare to sector median multiples
-```
+3. Financial Statements & Ratios
+   → Use yfmcp_financial_data for latest financial statements
+   → Extract yfmcp_key_statistics for valuation multiples
+   → Calculate P/E, P/B, EV/EBITDA, P/S, P/FCF ratios
+   → Compare metrics to sector medians and historical averages
 
-**0.2 Financial Data Sources (Latest Available)**
-```
-DATA ACQUISITION PRIORITY:
-1. SEC Filings (Primary)
-   → Most recent 10-K, 10-Q filings
-   → Latest 8-K announcements
-   → Proxy statements for governance insights
-   → Insider trading activity (Form 4s)
-
-2. Real-Time Financial APIs
-   → Yahoo Finance, Alpha Vantage, or similar
-   → Current financial metrics and ratios
-   → Analyst estimates and revisions
-   → Recent earnings call transcripts
-
-3. News & Market Intelligence
-   → Recent news sentiment analysis
-   → Analyst rating changes (last 30 days)
-   → Industry developments affecting stock
-   → Regulatory updates or changes
+4. Forward-Looking Data
+   → Use yfmcp_analyst_estimates for consensus estimates
+   → Extract earnings growth projections and guidance
+   → Calculate PEG ratios with forward growth estimates
+   → Analyze estimate revisions and trends
 ```
 
 **0.3 Data Validation & Quality Assurance**
@@ -195,28 +202,35 @@ QUALITY ASSURANCE PROTOCOL:
 
 ## Real-Time Data Integration
 
-### Current Price Fetching
-**MANDATORY**: Always fetch current stock price before analysis to ensure accurate valuation assessments.
+### Yahoo Finance MCP Server Data Collection
+**MANDATORY**: Always use Yahoo Finance MCP server (yfmcp) for current market data before analysis to ensure accurate valuation assessments.
 
 ```
-PRICE DATA COLLECTION:
-1. Query multiple financial data sources for current price
-   → Yahoo Finance, Google Finance, Market APIs
-   → Cross-validate pricing across 2+ sources
-   → Timestamp all price data collection
-   → Confidence score: [0.0-1.0] based on source consensus
+MCP DATA COLLECTION PROTOCOL:
+1. Real-Time Quote Data (yfmcp_quote_summary)
+   → Current stock price, bid/ask spread, volume
+   → Market capitalization and shares outstanding
+   → Day's range, 52-week high/low positioning
+   → Average volume comparison for liquidity assessment
+   → Confidence score: [0.0-1.0] based on data freshness
 
-2. Calculate valuation metrics with current price
-   → Price-to-Fair-Value ratio
+2. Historical Price Analysis (yfmcp_price_history)
+   → Price performance across multiple timeframes
+   → Volatility metrics and beta calculations
+   → Moving averages and trend analysis
+   → Volume-weighted average pricing patterns
+
+3. Valuation Metrics Integration (yfmcp_key_statistics)
+   → Price-to-Fair-Value ratio calculations
    → Upside/Downside potential from current levels
    → Risk-adjusted returns based on actual entry price
-   → Update recommendation strength accordingly
+   → Update recommendation strength with real-time data
 
-3. Historical context analysis
-   → 52-week price range positioning
-   → Recent price momentum and volatility
-   → Volume patterns and market sentiment
-   → Technical support/resistance levels
+4. Technical Context (yfmcp_technical_indicators)
+   → Support/resistance levels identification
+   → Momentum indicators and trend strength
+   → RSI, MACD, and other technical signals
+   → Volume patterns and market sentiment indicators
 ```
 
 ## Systematic Analysis Framework
