@@ -74,6 +74,9 @@ temp/
 .env.local
 .env.*.local
 
+# direnv
+.envrc
+
 # Testing
 .coverage
 htmlcov/

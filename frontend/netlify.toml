@@ -22,8 +22,8 @@ DISABLE_MISE = "true"
   [[form.notification]]
     type = "email"
     event = "submission"
-    to = "cole.morton@hotmail.com"
-    subject = "New Contact Form Submission - Cole Morton Website"
+    to = "${CONTACT_EMAIL}"
+    subject = "${CONTACT_NOTIFICATION_SUBJECT}"
     body = """
     You have received a new contact form submission:
 

@@ -136,50 +136,55 @@ CACHE_IMPLEMENTATION = {
 
 **0.1 Yahoo Finance Data Integration**
 ```
-YAHOO FINANCE DATA COLLECTION - PRIMARY DATA SOURCE:
-Use the Yahoo Finance bridge script for real-time financial data:
+YAHOO FINANCE DATA COLLECTION - PRODUCTION SERVICE:
+Use the Yahoo Finance service class for reliable financial data:
 
-BRIDGE SCRIPT: scripts/yahoo_finance_bridge.py
+SERVICE CLASS: scripts/yahoo_finance_service.py
 
 1. Stock Quote Data
-   → python scripts/yahoo_finance_bridge.py info TICKER
+   → python scripts/yahoo_finance_service.py info TICKER
    → Real-time price, volume, market cap, key ratios
    → Market positioning and trading metrics
+   → Automatic validation, retry logic, and caching
 
 2. Historical Analysis
-   → python scripts/yahoo_finance_bridge.py history TICKER [period]
+   → python scripts/yahoo_finance_service.py history TICKER [period]
    → Historical price data and performance metrics
    → Volatility analysis and trend identification
+   → Comprehensive error handling and data quality validation
 
 3. Financial Statements
-   → python scripts/yahoo_finance_bridge.py financials TICKER
+   → python scripts/yahoo_finance_service.py financials TICKER
    → Balance sheet, income statement, cash flow data
    → Comprehensive financial statement analysis
+   → Production-grade reliability with rate limiting
 
 DATA INTEGRATION APPROACH:
-- Use bridge script for systematic data collection
-- Cache results for performance optimization
+- Use production service for systematic data collection
+- Automatic caching with 15-minute TTL for performance
+- Rate limiting prevents API abuse (10 requests/minute)
+- Comprehensive error handling with specific exception types
 - Cross-reference with Claude Desktop Yahoo Finance data when available
 - Maintain data quality and freshness standards
 ```
 
 **0.2 Required Data Points Collection**
 ```
-SYSTEMATIC DATA GATHERING USING BRIDGE SYSTEM:
+SYSTEMATIC DATA GATHERING USING PRODUCTION SERVICE:
 1. Current Stock Price & Trading Data
-   → Use bridge script for real-time price, volume, market data
+   → Use service class for real-time price, volume, market data
    → Extract market cap, shares outstanding, trading volume
    → Calculate 52-week high/low positioning
    → Assess liquidity via average volume comparison
 
 2. Historical Performance Analysis
-   → Use bridge script for historical performance data
+   → Use service class for historical performance data
    → Calculate relative performance vs benchmarks
    → Extract volatility metrics and beta calculations
    → Analyze price momentum and trend strength
 
 3. Financial Statements & Ratios
-   → Use bridge script for latest financial statements
+   → Use service class for latest financial statements
    → Extract key valuation multiples and ratios
    → Calculate P/E, P/B, EV/EBITDA, P/S, P/FCF ratios
    → Compare metrics to sector medians and historical averages
@@ -207,35 +212,39 @@ QUALITY ASSURANCE PROTOCOL:
 
 ## Real-Time Data Integration
 
-### Yahoo Finance Bridge Data Collection
-**MANDATORY**: Always use Yahoo Finance bridge system for current market data before analysis to ensure accurate valuation assessments.
+### Yahoo Finance Service Data Collection
+**MANDATORY**: Always use Yahoo Finance service class for current market data before analysis to ensure accurate valuation assessments.
 
 ```
-BRIDGE DATA COLLECTION PROTOCOL:
+PRODUCTION SERVICE DATA COLLECTION PROTOCOL:
 1. Real-Time Quote Data (info command)
    → Current stock price, market cap, trading volume
    → 52-week high/low positioning and trend analysis
    → Key financial ratios and valuation metrics
    → Average volume comparison for liquidity assessment
    → Confidence score: [0.0-1.0] based on data freshness
+   → Automatic retry and error handling for reliability
 
 2. Historical Price Analysis (history command)
    → Price performance across multiple timeframes
    → Volatility metrics and return calculations
    → Moving averages and trend analysis
    → Volume-weighted average pricing patterns
+   → Cached results for performance optimization
 
 3. Financial Data Integration (financials command)
    → Comprehensive financial statement access
    → Key valuation multiples and ratios
    → Balance sheet, income, and cash flow metrics
    → Update recommendation strength with real-time data
+   → Production-grade data validation and quality checks
 
 4. Technical Context Enhancement
    → Support/resistance levels from price history
    → Momentum indicators and trend strength
    → Price action patterns and market sentiment
    → Volume patterns and trading behavior analysis
+   → Rate-limited API access for sustainable operations
 ```
 
 ## Systematic Analysis Framework
