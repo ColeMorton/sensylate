@@ -40,7 +40,8 @@ class CollaborationEngine:
                 workspace_path = str(self.project_root / "team-workspace")
         else:
             self.project_root = Path(workspace_path).parent
-            project_name = self.project_root.name
+            if project_name is None:
+                project_name = self.project_root.name
 
         self.workspace_path = Path(workspace_path)
         self.commands_path = self.workspace_path / "commands"
@@ -96,15 +97,20 @@ class CollaborationEngine:
     def _setup_logging(self):
         """Setup session logging"""
         log_file = self.session_path / "collaboration-engine.log"
-        logging.basicConfig(
-            level=logging.INFO,
-            format='%(asctime)s - %(levelname)s - %(message)s',
-            handlers=[
-                logging.FileHandler(log_file),
-                logging.StreamHandler()
-            ]
-        )
-        self.logger = logging.getLogger(__name__)
+
+        # Create a specific logger for this engine instance
+        self.logger = logging.getLogger(f"collaboration_engine_{id(self)}")
+        self.logger.setLevel(logging.INFO)
+
+        # Clear any existing handlers
+        self.logger.handlers.clear()
+
+        # Add file handler
+        file_handler = logging.FileHandler(log_file)
+        file_handler.setLevel(logging.INFO)
+        formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+        file_handler.setFormatter(formatter)
+        self.logger.addHandler(file_handler)
 
     def discover_command(self, command_name: str) -> Optional[Dict[str, Any]]:
         """Discover command information and capabilities with scope awareness"""
@@ -117,16 +123,24 @@ class CollaborationEngine:
                 command_info["resolved_location"] = str(command_file)
 
             # Load manifest if available
-            manifest_path = Path(command_info.get("manifest", ""))
-            if manifest_path.exists():
-                with open(manifest_path, 'r') as f:
-                    manifest = yaml.safe_load(f)
-                command_info["manifest_data"] = manifest
+            manifest_str = command_info.get("manifest", "")
+            if manifest_str:  # Only proceed if manifest path is not empty
+                manifest_path = Path(manifest_str)
+                if manifest_path.exists():
+                    with open(manifest_path, 'r') as f:
+                        manifest = yaml.safe_load(f)
+                    command_info["manifest_data"] = manifest
 
             self.logger.info(f"Discovered command: {command_name} (scope: {command_info.get('scope', 'unknown')})")
+            # Ensure log is flushed to file
+            for handler in self.logger.handlers:
+                handler.flush()
             return command_info
 
         self.logger.warning(f"Command not found in registry: {command_name}")
+        # Ensure log is flushed to file
+        for handler in self.logger.handlers:
+            handler.flush()
         return None
 
     def _resolve_command_location(self, command_name: str, command_info: Dict[str, Any]) -> Optional[Path]:
@@ -304,6 +318,9 @@ class CollaborationEngine:
         output_file = output_dir / f"{output_type}-{timestamp}.md"
         meta_file = output_dir / f".{output_type}-{timestamp}.command-meta.yaml"
 
+        # Add output specification to metadata
+        metadata.setdefault("output_specification", {})["type"] = output_type
+
         # Enhance metadata with framework data
         enhanced_metadata = self._enhance_metadata(command_name, metadata, output_content)
 
@@ -334,6 +351,7 @@ class CollaborationEngine:
 
         # Add session tracking
         enhanced.setdefault("metadata", {})["session_id"] = self.session_id
+        enhanced["metadata"]["timestamp"] = datetime.now().isoformat()
 
         # Add collaboration data
         command_info = self.discover_command(command_name)

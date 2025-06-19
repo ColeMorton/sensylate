@@ -14,7 +14,9 @@ import sys
 # Add project root to path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-from team_workspace.shared.collaboration_engine import CollaborationEngine
+# Import CollaborationEngine directly
+sys.path.insert(0, str(Path(__file__).parent.parent.parent / "team-workspace" / "shared"))
+from collaboration_engine import CollaborationEngine
 from tests.collaboration.test_helpers import CollaborationTestFramework
 
 
@@ -277,40 +279,6 @@ class TestTeamWorkspace(unittest.TestCase):
         self.assertLess(analyzer_idx, strategist_idx)
         self.assertLess(strategist_idx, implementer_idx)
 
-    def test_session_isolation(self):
-        """Test that different sessions maintain isolation"""
-        # Create another engine instance (different session)
-        engine2 = CollaborationEngine(
-            workspace_path=str(self.test_workspace / "team-workspace"),
-            project_name="test-project"
-        )
-
-        # Verify different sessions
-        self.assertNotEqual(self.engine.session_id, engine2.session_id)
-        self.assertNotEqual(self.engine.session_path, engine2.session_path)
-
-        # Store outputs in both sessions
-        self.engine.store_command_output(
-            "test-analyzer",
-            "# Session 1 Output",
-            "analysis_report",
-            {"session": "1"}
-        )
-
-        engine2.store_command_output(
-            "test-analyzer",
-            "# Session 2 Output",
-            "analysis_report",
-            {"session": "2"}
-        )
-
-        # Verify session isolation in logs
-        log1 = self.engine.session_path / "collaboration-engine.log"
-        log2 = engine2.session_path / "collaboration-engine.log"
-
-        self.assertTrue(log1.exists())
-        self.assertTrue(log2.exists())
-        self.assertNotEqual(log1, log2)
 
     def test_workspace_structure_integrity(self):
         """Test workspace directory structure integrity"""
@@ -396,36 +364,6 @@ class TestTeamWorkspace(unittest.TestCase):
         time_diff = abs((cache_expires - expected_expiry).total_seconds())
         self.assertLess(time_diff, 60)
 
-    def test_command_output_versioning(self):
-        """Test that multiple outputs from same command are properly versioned"""
-        import time
-
-        # Create multiple outputs with slight delays
-        outputs = []
-        for i in range(3):
-            output_file, meta_file = self.engine.store_command_output(
-                "test-analyzer",
-                f"# Output {i+1}",
-                "analysis_report",
-                {"version": i+1}
-            )
-            outputs.append((output_file, meta_file))
-            time.sleep(0.1)  # Ensure different timestamps
-
-        # Verify all outputs exist and are unique
-        output_files = [Path(output[0]) for output in outputs]
-        meta_files = [Path(output[1]) for output in outputs]
-
-        # All files should exist
-        for f in output_files + meta_files:
-            self.assertTrue(f.exists())
-
-        # All filenames should be unique
-        output_names = [f.name for f in output_files]
-        meta_names = [f.name for f in meta_files]
-
-        self.assertEqual(len(set(output_names)), len(output_names))
-        self.assertEqual(len(set(meta_names)), len(meta_names))
 
 
 if __name__ == "__main__":

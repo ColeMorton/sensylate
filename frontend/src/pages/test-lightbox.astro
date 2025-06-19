@@ -1,6 +1,15 @@
 ---
 import Base from "@/layouts/Base.astro";
 import ImageMod from "@/components/ImageMod.astro";
+import ImageLightbox from "@/helpers/ImageLightbox.tsx";
+
+// Gallery images for navigation testing
+const galleryImages = [
+  { url: "/images/logo.png", title: "Logo" },
+  { url: "/images/og-image.png", title: "OG Image" },
+  { url: "/images/banner.png", title: "Banner" },
+  { url: "/images/call-to-action.png", title: "Call to Action" },
+];
 ---
 
 <Base title="Lightbox Test">
@@ -8,7 +17,33 @@ import ImageMod from "@/components/ImageMod.astro";
     <h1>React Awesome Lightbox Test</h1>
 
     <div class="section">
-      <h2>Images with Lightbox (Default)</h2>
+      <h2>Gallery with Navigation (Click to see arrows)</h2>
+      <p>
+        Click on any image to open it in a lightbox with left/right navigation
+        arrows:
+      </p>
+
+      <div class="my-8 grid grid-cols-2 gap-6 md:grid-cols-4">
+        {
+          galleryImages.map((image, index) => (
+            <div key={index}>
+              <ImageLightbox
+                src={image.url}
+                alt={image.title}
+                images={galleryImages}
+                className="w-full rounded-lg shadow-lg cursor-pointer hover:opacity-90 transition-opacity"
+                thumbnailClassName="w-full h-32 object-cover"
+                client:load
+              />
+              <p class="mt-2 text-center text-sm">{image.title}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Single Images with Lightbox</h2>
       <p>Click on any image to open it in a lightbox:</p>
 
       <div class="my-8 grid grid-cols-1 gap-6 md:grid-cols-2">
@@ -63,9 +98,14 @@ import ImageMod from "@/components/ImageMod.astro";
       <h3>Testing Instructions:</h3>
       <ul class="list-inside list-disc space-y-2">
         <li>
-          <strong>Desktop:</strong> Click on images in the first section to open
-          lightbox
+          <strong>Gallery Navigation:</strong> Click on images in the first section
+          to see navigation arrows (left/right)
         </li>
+        <li>
+          <strong>Arrow Navigation:</strong> Use left/right arrows or arrow keys
+          to navigate between images
+        </li>
+        <li><strong>Desktop:</strong> Click on images to open lightbox</li>
         <li><strong>Mobile:</strong> Tap on images to open lightbox</li>
         <li>
           <strong>Keyboard:</strong> Tab to images and press Enter/Space to open
@@ -74,7 +114,10 @@ import ImageMod from "@/components/ImageMod.astro";
           <strong>Close:</strong> Click outside, press ESC, or use the close button
         </li>
         <li>
-          <strong>Disabled:</strong> Images in second section should not open lightbox
+          <strong>Zoom/Rotate:</strong> Use zoom and rotate controls in the lightbox
+        </li>
+        <li>
+          <strong>Disabled:</strong> Images in the last section should not open lightbox
         </li>
       </ul>
     </div>

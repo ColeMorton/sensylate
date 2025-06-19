@@ -104,53 +104,53 @@ You're now using AI team collaboration. Each command builds on the work of other
 
 **Scenario**: Adding a user profile feature to your application
 
-#### Step 1: Technical Analysis
+#### Step 1: Business Requirements Analysis
+```bash
+> "/business-analyst - analyze user profile feature requirements"
+```
+
+**What happens**:
+- Gathers stakeholder requirements and user needs
+- Identifies functional specifications and acceptance criteria
+- Creates business requirements foundation
+
+**Output**: Requirements specification saved to team workspace
+
+#### Step 2: Technical Health Assessment
 ```bash
 > "/code-owner - analyze current user management code"
 ```
 
 **What happens**:
-- Scans your codebase for user-related code
-- Identifies technical debt and patterns
-- Creates health assessment
+- Automatically reads business requirements from Step 1
+- Scans codebase for user-related code and technical constraints
+- Identifies technical debt and implementation patterns
 
-**Output**: Technical health report saved to team workspace
+**Output**: Technical health report with business context
 
-#### Step 2: Business Strategy
+#### Step 3: Strategic Prioritization
 ```bash
-> "/product-owner - prioritize user profile features based on technical complexity"
+> "/product-owner - prioritize user profile features based on requirements and technical complexity"
 ```
 
 **What happens**:
-- Automatically reads the code health report from Step 1
-- Combines technical complexity with business value
-- Creates informed prioritization
+- Uses business requirements from Step 1
+- References technical assessment from Step 2
+- Creates informed feature prioritization with business value alignment
 
-**Output**: Feature prioritization with technical context
+**Output**: Strategic feature prioritization with full context
 
-#### Step 3: Implementation Planning
+#### Alternative Flow: Code-First Analysis
+
+For technical-focused projects, you might prefer this sequence:
+
 ```bash
-> "/architect - implement user profile editing with photo upload"
+> "/code-owner - analyze current user management architecture"     # Technical foundation
+> "/business-analyst - gather user profile requirements"           # Business context
+> "/product-owner - create implementation roadmap"                 # Strategic planning
 ```
 
-**What happens**:
-- Uses code health data from Step 1
-- References business priorities from Step 2
-- Creates detailed implementation plan
-
-**Output**: Complete implementation plan with full context
-
-#### Step 4: Content Creation
-```bash
-> "/twitter-post - announce the new user profile feature"
-```
-
-**What happens**:
-- Finds implementation details from architect
-- Creates compelling content based on actual features
-- Optimizes for social media engagement
-
-**Output**: Ready-to-post social media content
+This flow works well when technical constraints are the primary concern.
 
 ### Tutorial 2: Project Health Assessment
 
@@ -162,35 +162,12 @@ You're now using AI team collaboration. Each command builds on the work of other
 ```
 
 **What happens**:
-- Automatically executes: code-owner → product-owner → architect
+- Automatically executes: business-analyst → code-owner → product-owner
 - Each command builds on the previous output
-- Creates complete project assessment
+- Creates complete project assessment with requirements, technical health, and strategic priorities
 
-**Result**: Full project health report with technical, business, and implementation insights
+**Result**: Full project health report with business requirements, technical analysis, and strategic insights
 
-### Tutorial 3: Content Strategy Workflow
-
-**Scenario**: Creating data-driven content about your latest feature
-
-#### Step 1: Find Your Latest Work
-```bash
-> "/architect - summarize recent implementation work"
-```
-
-**What happens**:
-- Reviews recent implementation plans
-- Identifies completed features and improvements
-- Creates summary of recent work
-
-#### Step 2: Create Engaging Content
-```bash
-> "/twitter-post - create content about our latest productivity improvements"
-```
-
-**What happens**:
-- Automatically finds architect's recent work summary
-- Creates engaging social media content
-- Optimizes for platform engagement
 
 ---
 
@@ -240,27 +217,6 @@ You're now using AI team collaboration. Each command builds on the work of other
 
 **Outcome**: Data-driven technical debt roadmap that balances technical needs with business priorities.
 
-### Example 3: Content Marketing Automation
-
-**User Request**: "Create social media content about our AI improvements"
-
-**Team Collaboration Workflow**:
-```bash
-> "/architect - summarize recent AI feature implementations"
-# → Reviews team workspace for recent AI-related work
-# → Finds: New recommendation engine, improved search, automated categorization
-
-> "/twitter-post-strategy - create content series about AI improvements"
-# → Automatically incorporates architect's feature summary
-# → Result: 5-post series highlighting specific improvements with technical details
-
-> "/twitter-post - create first post about recommendation engine improvements"
-# → Uses strategy framework and technical details
-# → Result: Engaging post with specific performance improvements and user benefits
-```
-
-**Outcome**: Technically accurate, engaging content that showcases real improvements rather than generic marketing speak.
-
 ---
 
 ## 📚 Reference Guide
@@ -294,23 +250,23 @@ Your AI team includes these specialized agents, organized by their role in the s
 
 The system has discovered these optimal collaboration patterns:
 
-#### 1. **Analysis Chain** (89% success rate)
+#### 1. **Requirements-First Analysis Chain** (89% success rate)
 ```
-code-owner → product-owner → architect
+business-analyst → code-owner → product-owner
 ```
-**Best for**: Project health, feature planning, technical debt assessment
+**Best for**: Feature development, requirements-driven projects, stakeholder alignment
 
-#### 2. **Content Pipeline** (97% success rate)
+#### 2. **Technical-First Analysis Chain** (87% success rate)
 ```
-[data analysis] → twitter-post-strategy → twitter-post
+code-owner → business-analyst → product-owner
 ```
-**Best for**: Data-driven social media content
+**Best for**: Technical debt management, refactoring projects, architecture improvements
 
 #### 3. **Development Workflow** (95% success rate)
 ```
 architect → commit-push
 ```
-**Best for**: Implementation → Git automation
+**Best for**: Implementation planning → Automated git workflow
 
 ### Command Usage Patterns
 
@@ -327,21 +283,15 @@ architect → commit-push
 ```bash
 # Automatic workflow execution
 > "Run comprehensive project analysis"
-# Executes: code-owner → product-owner → architect
+# Executes: business-analyst → code-owner → product-owner
 
 # Custom workflow
-> "/code-owner then /architect then /commit-push"
-```
+> "/business-analyst then /code-owner then /product-owner"
+# Requirements → Technical analysis → Strategic prioritization
 
-#### Content Creation
-```bash
-# Context-aware content
-> "/twitter-post about our latest performance improvements"
-# Automatically finds recent architect work and creates relevant content
-
-# Strategy-driven content
-> "/twitter-post-strategy for our Q2 feature releases"
-# Creates content series based on actual implementation plans
+# Alternative technical-first workflow
+> "/code-owner then /business-analyst then /product-owner"
+# Technical assessment → Requirements alignment → Strategic planning
 ```
 
 ### Understanding Command Outputs
@@ -551,25 +501,27 @@ A: The system is designed to be resilient:
 **Q: Which commands work best together?**
 
 A: These combinations are highly effective:
-- **code-owner → architect**: Technical analysis → Implementation planning
+- **business-analyst → code-owner**: Requirements → Technical analysis
 - **code-owner → product-owner**: Technical health → Business prioritization
-- **architect → product-owner**: Implementation complexity → Resource planning
-- **[any analysis] → twitter-post**: Data insights → Content creation
+- **business-analyst → product-owner**: Requirements → Strategic planning
+- **architect → commit-push**: Implementation planning → Automated git workflow
 
 **Q: Should I run commands in a specific order?**
 
 A: While commands work in any order, these patterns are most effective:
-1. **Analysis first**: code-owner, business-analyst
-2. **Strategy second**: product-owner, architect
-3. **Action third**: implementation, content creation
+1. **Requirements first**: business-analyst (for feature development)
+2. **Technical analysis second**: code-owner (with business context)
+3. **Strategic planning third**: product-owner (with full context)
+4. **Implementation fourth**: architect (with strategic direction)
 
 **Q: How do I create the best workflow for my project?**
 
 A:
-1. **Start with assessment**: Run code-owner or business-analyst first
-2. **Build understanding**: Use architect or product-owner with the assessment context
-3. **Take action**: Use implementation or content commands with full context
-4. **Iterate**: Repeat the cycle to build team knowledge
+1. **Start with requirements**: Run business-analyst for feature-focused projects
+2. **Assess technical reality**: Use code-owner to understand implementation constraints
+3. **Create strategy**: Use product-owner to align business value with technical feasibility
+4. **Plan implementation**: Use architect with full business and technical context
+5. **Iterate**: Repeat the cycle to build team knowledge and refine understanding
 
 ### Troubleshooting Questions
 

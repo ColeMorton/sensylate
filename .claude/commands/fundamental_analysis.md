@@ -193,6 +193,32 @@ QUALITY ASSURANCE PROTOCOL:
 ```
 ```
 
+## Real-Time Data Integration
+
+### Current Price Fetching
+**MANDATORY**: Always fetch current stock price before analysis to ensure accurate valuation assessments.
+
+```
+PRICE DATA COLLECTION:
+1. Query multiple financial data sources for current price
+   → Yahoo Finance, Google Finance, Market APIs
+   → Cross-validate pricing across 2+ sources
+   → Timestamp all price data collection
+   → Confidence score: [0.0-1.0] based on source consensus
+
+2. Calculate valuation metrics with current price
+   → Price-to-Fair-Value ratio
+   → Upside/Downside potential from current levels
+   → Risk-adjusted returns based on actual entry price
+   → Update recommendation strength accordingly
+
+3. Historical context analysis
+   → 52-week price range positioning
+   → Recent price momentum and volatility
+   → Volume patterns and market sentiment
+   → Technical support/resistance levels
+```
+
 ## Systematic Analysis Framework
 
 ### Phase 1: Foundation & Discovery (Confidence Building)
@@ -464,7 +490,7 @@ DECISION FRAMEWORK:
 ### Quantified Risk Assessment
 | Risk Factor | Probability | Impact | Risk Score | Mitigation | Monitoring |
 |-------------|------------|---------|------------|------------|------------|
-| [Specific risks with numerical assessments and action plans] |
+| [Specific risks with numerical assessments] |
 
 ### Sensitivity Analysis
 Key variables impact on fair value:
