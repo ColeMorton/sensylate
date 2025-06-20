@@ -50,11 +50,11 @@ const baseSize = Number(themeConfig.fonts.font_size.base);
 const scale = Number(themeConfig.fonts.font_size.scale);
 const calculateFontSizes = (base, scale) => {
   const sizes = {};
-  let currentSize = scale;
+  let currentSize = scale; // Start with scale value (1.2) for H6
   for (let i = 6; i >= 1; i--) {
     sizes[`h${i}`] = `${currentSize}rem`;
     sizes[`h${i}-sm`] = `${currentSize * 0.9}rem`;
-    currentSize *= scale;
+    currentSize = currentSize * scale; // Multiply to get next larger heading size
   }
   sizes.base = `${base}px`;
   sizes["base-sm"] = `${base * 0.8}px`;

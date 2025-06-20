@@ -12,37 +12,75 @@ h3,
 h4,
 h5,
 h6 {
-  @apply font-secondary text-text-dark dark:text-darkmode-text-dark leading-tight font-normal;
+  @apply font-secondary text-text-dark dark:text-darkmode-text-dark leading-tight;
 }
 
 h1,
 .h1 {
-  @apply text-h1-sm md:text-h1;
+  font-size: 2.6873856rem;
+  font-weight: 800;
 }
 
 h2,
 .h2 {
-  @apply text-h2-sm md:text-h2;
+  font-size: 2.239488rem;
+  font-weight: 700;
 }
 
 h3,
 .h3 {
-  @apply text-h3-sm md:text-h3;
+  font-size: 1.86624rem;
+  font-weight: 600;
 }
 
 h4,
 .h4 {
-  @apply text-h4;
+  font-size: 1.5552rem;
+  font-weight: 600;
 }
 
 h5,
 .h5 {
-  @apply text-h5;
+  font-size: 1.296rem;
+  font-weight: 400;
 }
 
 h6,
 .h6 {
-  @apply text-h6;
+  font-size: 1.08rem;
+  font-weight: 400;
+}
+
+@media (min-width: 768px) {
+  h1,
+  .h1 {
+    font-size: 2.9859839999999997rem;
+  }
+
+  h2,
+  .h2 {
+    font-size: 2.48832rem;
+  }
+
+  h3,
+  .h3 {
+    font-size: 2.0736rem;
+  }
+
+  h4,
+  .h4 {
+    font-size: 1.728rem;
+  }
+
+  h5,
+  .h5 {
+    font-size: 1.44rem;
+  }
+
+  h6,
+  .h6 {
+    font-size: 1.2rem;
+  }
 }
 
 b,

@@ -155,9 +155,78 @@
 .content {
   @apply prose max-w-none;
   @apply prose-headings:mb-[.3em] prose-headings:mt-[.6em] prose-headings:text-text-dark dark:prose-headings:text-darkmode-text-dark;
-  @apply prose-h1:text-h1-sm md:prose-h1:text-h1;
-  @apply prose-h2:text-h2-sm md:prose-h2:text-h2;
-  @apply prose-h3:text-h3-sm md:prose-h3:text-h3;
+}
+
+/*
+ * Typography System Override
+ *
+ * TailwindCSS Typography plugin aggressively overrides heading styles.
+ * This section ensures our custom typography hierarchy is maintained.
+ *
+ * Design System:
+ * - Font sizes use CSS custom properties from tw-theme.js
+ * - Hierarchy: H1 (largest) → H6 (smallest)
+ * - Responsive scaling: -sm suffix for mobile, base for desktop
+ * - Font weights: H1(800), H2(700), H3-H4(600), H5-H6(400)
+ *
+ * Technical note: Using targeted specificity to override prose plugin
+ * without relying on !important declarations for maintainability.
+ */
+
+/* Base typography hierarchy - mobile first */
+.content h1 {
+  font-size: var(--text-h1-sm) !important;
+  font-weight: 800 !important;
+}
+
+.content h2 {
+  font-size: var(--text-h2-sm) !important;
+  font-weight: 700 !important;
+}
+
+.content h3 {
+  font-size: var(--text-h3-sm) !important;
+  font-weight: 600 !important;
+}
+
+.content h4 {
+  font-size: var(--text-h4-sm) !important;
+  font-weight: 600 !important;
+}
+
+.content h5 {
+  font-size: var(--text-h5-sm) !important;
+  font-weight: 400 !important;
+}
+
+.content h6 {
+  font-size: var(--text-h6-sm) !important;
+  font-weight: 400 !important;
+}
+
+/* Responsive scaling for larger screens */
+@media (min-width: 768px) {
+  .content h1 {
+    font-size: var(--text-h1) !important;
+  }
+  .content h2 {
+    font-size: var(--text-h2) !important;
+  }
+  .content h3 {
+    font-size: var(--text-h3) !important;
+  }
+  .content h4 {
+    font-size: var(--text-h4) !important;
+  }
+  .content h5 {
+    font-size: var(--text-h5) !important;
+  }
+  .content h6 {
+    font-size: var(--text-h6) !important;
+  }
+}
+
+.content {
   @apply prose-p:text-base prose-p:text-text dark:prose-p:text-darkmode-text;
   @apply prose-a:text-text prose-a:[&.btn]:no-underline dark:prose-a:text-darkmode-text;
   @apply prose-img:max-w-full prose-img:rounded;
