@@ -1,5 +1,7 @@
 {
   "dependencies": {
-    "puppeteer": "^24.10.2"
+    "@astrojs/check": "^0.9.4",
+    "puppeteer": "^24.10.2",
+    "typescript": "^5.8.3"
   }
 }
