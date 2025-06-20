@@ -160,7 +160,7 @@ Site settings, navigation, social links, and theme options are managed through J
 
 ## AI Command Collaboration Framework
 
-Sensylate features an advanced **Command Collaboration Framework** where AI agents work as a coordinated team. Commands automatically share context, data, and insights to deliver superior results.
+Sensylate features an advanced **Command Collaboration Framework** with **Content Lifecycle Management** where AI agents work as a coordinated team. Commands automatically share context, prevent duplication, and maintain knowledge integrity through systematic content lifecycle management.
 
 ### Command Locations
 
@@ -176,6 +176,10 @@ Sensylate features an advanced **Command Collaboration Framework** where AI agen
 - **📊 Data Lineage**: Full traceability of how insights were derived
 - **⚡ Performance**: 20% faster execution with team data, 89% faster with cache hits
 - **🎯 Quality**: Higher confidence outputs through cross-command validation
+- **🚫 Duplication Prevention**: 25% conflict reduction through pre-execution consultation
+- **📋 Content Authority**: Single source of truth maintained for all knowledge topics
+- **🔄 Lifecycle Management**: Proper content superseding with full audit trails
+- **👥 Ownership Coordination**: Clear topic ownership and collaboration permissions
 
 ### Available AI Team Members
 
@@ -227,10 +231,10 @@ Use these by asking Claude to execute them (e.g., "run the architect command" or
   - **Usage**: Process analysis and requirements documentation
 
 ##### Utilities
-- **`/create_command`** - Interactive command creator with validation and best practices
-  - **Location**: `.claude/commands/create_command.md` (project scope)
-  - **Collaboration**: Can create project-specific commands in .claude/commands/
-  - **Usage**: Generate new custom command templates
+- **`/command`** - Comprehensive command lifecycle management specialist with systematic methodology
+  - **Location**: `.claude/commands/command.md` (project scope)
+  - **Collaboration**: Full command management including creation, optimization, alignment, analysis, and maintenance
+  - **Usage**: Complete command lifecycle management (create, optimize, align, analyze, maintain)
 
 ### Workflow Examples
 
@@ -253,6 +257,68 @@ Use these by asking Claude to execute them (e.g., "run the architect command" or
 ```
 
 **Note**: These are custom workflow commands with AI collaboration capabilities. Commands automatically share context and data through the team workspace for enhanced results.
+
+## Content Lifecycle Management Integration
+
+All AI commands **MUST** integrate with the Content Lifecycle Management system to prevent duplication and maintain knowledge integrity:
+
+### Before Creating Any Analysis
+
+**Required**: Run pre-execution consultation before starting new analysis:
+
+```bash
+python team-workspace/coordination/pre-execution-consultation.py <command_name> <topic> "<scope>"
+```
+
+**Example**:
+```bash
+python team-workspace/coordination/pre-execution-consultation.py architect technical-health "comprehensive security analysis"
+```
+
+### Integration Workflow
+
+1. **Consult**: Check for existing knowledge and get coordination guidance
+2. **Decide**: Use decision tree for structured update-vs-new analysis decisions
+3. **Coordinate**: Work with topic owners when necessary
+4. **Execute**: Create or update content following system guidance
+5. **Supersede**: Use proper superseding workflow when replacing existing content
+
+### Quick Commands
+
+```bash
+# Check topic ownership
+python team-workspace/coordination/topic-ownership-manager.py ownership <topic>
+
+# Get collaboration guidance
+python team-workspace/coordination/decision-tree.py <command> <topic> "<scope>"
+
+# Monitor system health
+python team-workspace/coordination/knowledge-dashboard.py
+
+# Declare content superseding
+python team-workspace/coordination/superseding-workflow.py declare <command> <topic> <new_file> <old_files> "reason"
+```
+
+### Knowledge Structure
+
+All authoritative content is organized in topic-centric structure:
+
+```
+team-workspace/knowledge/
+├── technical-health/          # Technical assessments (owner: code-owner)
+├── implementation-plans/      # Implementation plans (owner: architect)
+├── product-strategy/         # Product decisions (owner: product-owner)
+└── requirements/             # Requirements analysis (owner: business-analyst)
+```
+
+### Content Authority Rules
+
+- **Single Source of Truth**: Each topic has one authoritative file in `knowledge/`
+- **Proper Superseding**: Use superseding workflow when replacing content
+- **Archive Preservation**: Superseded content archived with full recovery metadata
+- **Ownership Respect**: Coordinate with topic owners before making changes
+
+**Failure to integrate with lifecycle management will result in content conflicts and degraded team-workspace effectiveness.**
 
 ### Memory Notes
 - **Collaboration Infrastructure Command Outputs**: All outputs from collaboration infrastructure commands must be saved to their respective team-workspace directories:

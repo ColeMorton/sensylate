@@ -102,6 +102,8 @@ Key assumption: [CRITICAL DRIVER]
 
 [BULL/BEAR] case target: $[TARGET] ([probability]% chance)
 
+📋 Full analysis: https://www.colemorton.com/blog/[ticker-lowercase]-fundamental-analysis-[yyyymmdd]/
+
 #[TICKER] #StockAnalysis #Valuation
 ```
 
@@ -119,6 +121,8 @@ Expected value if all hit: $[TOTAL]
 The kicker: [TIMELINE DETAIL]
 
 Risk: [TOP RISK FACTOR]
+
+📋 Full analysis: https://www.colemorton.com/blog/[ticker-lowercase]-fundamental-analysis-[yyyymmdd]/
 
 #[TICKER] #Catalysts #StockAnalysis
 ```
@@ -139,6 +143,8 @@ Market share: [TREND]
 Pricing power: [ASSESSMENT]
 
 This moat = $[VALUE IMPACT] in fair value
+
+📋 Full analysis: https://www.colemorton.com/blog/[ticker-lowercase]-fundamental-analysis-[yyyymmdd]/
 
 #[TICKER] #CompetitiveAdvantage #Moats
 ```
@@ -161,6 +167,8 @@ Fair value: $[VALUE] vs $[CURRENT] current
 
 Timeline for correction: [EXPECTATION]
 
+📋 Full analysis: https://www.colemorton.com/blog/[ticker-lowercase]-fundamental-analysis-[yyyymmdd]/
+
 #[TICKER] #Contrarian #ValueInvesting
 ```
 
@@ -179,6 +187,8 @@ Green lights: [TOP STRENGTH]
 Key metric: [STANDOUT KPI]
 
 Bottom line: [INVESTMENT IMPLICATION]
+
+📋 Full analysis: https://www.colemorton.com/blog/[ticker-lowercase]-fundamental-analysis-[yyyymmdd]/
 
 #[TICKER] #FinancialAnalysis #StockAnalysis
 ```
@@ -211,6 +221,8 @@ Bottom line: [INVESTMENT IMPLICATION]
 - [ ] **Real-Time Price**: Current market price used (NEVER analysis price)
 - [ ] **Accuracy**: All numbers match source analysis exactly (except price)
 - [ ] **Attribution**: Analysis confidence scores included
+- [ ] **Blog Link Generated**: URL follows pattern https://www.colemorton.com/blog/[ticker-lowercase]-fundamental-analysis-[yyyymmdd]/
+- [ ] **Link Included**: Full analysis link added to selected template
 - [ ] **Completeness**: Key insight fully explained
 - [ ] **Accessibility**: No unexplained financial jargon
 - [ ] **Engagement**: Hook creates curiosity/discussion potential
@@ -239,12 +251,27 @@ Bottom line: [INVESTMENT IMPLICATION]
 - Character count for each tweet
 - Selected template rationale
 - Key insights extracted from source analysis
+- Generated blog post URL for full analysis access
+
+### Blog Post URL Generation
+
+**URL Pattern:** Convert analysis file identifier to blog post URL
+- **Input format:** `{TICKER}_{YYYYMMDD}` (e.g., `AMZN_20250618`)
+- **Output format:** `https://www.colemorton.com/blog/[ticker-lowercase]-fundamental-analysis-[yyyymmdd]/`
+- **Example conversion:** `AMZN_20250618` → `https://www.colemorton.com/blog/amzn-fundamental-analysis-20250618/`
+
+**Conversion Rules:**
+1. Convert ticker to lowercase
+2. Keep date format as YYYYMMDD
+3. Use hyphen separators in URL path
+4. Include trailing slash
 
 **Analysis attribution note:**
 ```
 Based on comprehensive fundamental analysis: {TICKER}_{YYYYMMDD}.md
 Full analysis includes: DCF valuation, competitive analysis, risk assessment
 Confidence level: [X.X/1.0] | Data quality: [X.X/1.0]
+Full analysis link: https://www.colemorton.com/blog/[ticker-lowercase]-fundamental-analysis-[yyyymmdd]/
 ```
 
 ## Command Usage
@@ -262,13 +289,15 @@ Confidence level: [X.X/1.0] | Data quality: [X.X/1.0]
 **Processing Steps:**
 1. **CRITICAL: Get real-time stock price** - Use Yahoo Finance bridge system (`python scripts/yahoo_finance_bridge.py info TICKER`) to get current market price
 2. Load fundamental analysis from `@data/outputs/analysis_fundamental/{TICKER}_{YYYYMMDD}.md`
-3. **Update all price references** - Replace analysis price with current market price throughout content
-4. Extract 2-3 most compelling insights
-5. Select optimal template based on insight type
-6. Craft engaging hook with specific data points
-7. Optimize for Twitter engagement and accessibility
-8. Validate accuracy and character limits
-9. Export clean, copy-paste ready content
+3. **Generate blog post URL** - Convert {TICKER}_{YYYYMMDD} to https://www.colemorton.com/blog/[ticker-lowercase]-fundamental-analysis-[yyyymmdd]/
+4. **Update all price references** - Replace analysis price with current market price throughout content
+5. Extract 2-3 most compelling insights
+6. Select optimal template based on insight type
+7. Craft engaging hook with specific data points
+8. **Include full analysis link** - Add generated URL to selected template
+9. Optimize for Twitter engagement and accessibility
+10. Validate accuracy and character limits
+11. Export clean, copy-paste ready content
 
 ---
 
