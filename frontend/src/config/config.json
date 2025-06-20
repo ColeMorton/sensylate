@@ -1,7 +1,7 @@
 {
   "site": {
     "title": "Cole Morton",
-    "base_url": "https://colemorton.netlify.app/",
+    "base_url": "https://www.colemorton.com",
     "base_path": "/",
     "trailing_slash": false,
     "favicon": "/images/favicon.ico",
