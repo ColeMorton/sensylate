@@ -36,7 +36,7 @@ class TopicOwnershipManager:
 
         # Validate command names
         valid_commands = {"architect", "code-owner", "product-owner", "business-analyst",
-                         "twitter-post", "twitter-post-strategy", "fundamental-analysis"}
+                         "twitter-post", "twitter-post-strategy", "fundamental-analysis", "command", "create-command", "commit-push"}
 
         if primary_owner not in valid_commands:
             return {"success": False, "error": f"Invalid primary owner command: {primary_owner}"}

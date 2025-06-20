@@ -1,296 +1,403 @@
-# Team-Workspace Topic Registry
-# Tracks active topics, ownership, and freshness for content lifecycle management
-
-version: "2.0"
-updated: "2025-06-20T12:30:00Z"
-
-# Active Knowledge Topics
-topics:
-  technical-health:
-    description: "Comprehensive technical health assessments and code quality analysis"
-    current_authority: "team-workspace/knowledge/technical-health/current-assessment.md"
-    primary_owner: "code-owner"
-    secondary_owners: ["architect", "product-owner"]
-    last_updated: "2025-06-19"
-    freshness_threshold_days: 30
-    status: "active"
-    related_files:
-      - "team-workspace/knowledge/technical-health/current-assessment.md"
-    archived_files:
-      - "team-workspace/archive/2025-06-20/code-owner/comprehensive-technical-health-assessment-20250619.md"
-      - "team-workspace/archive/2025-06-20/code-owner/sensylate-codebase-health-assessment.md"
-    conflicts_detected: false
-    conflict_details: "RESOLVED: Contradictory assessments archived, single authority established"
-    collaboration_permissions:
-      read_access: ["architect", "product-owner", "business-analyst"]
-      write_access: ["code-owner"]
-      coordination_required: ["architect"]
-
-  implementation-plans:
-    description: "Technical implementation plans and architecture decisions"
-    current_authority: "team-workspace/knowledge/implementation-plans/yahoo-finance-consolidation.md"
-    primary_owner: "architect"
-    secondary_owners: ["code-owner", "product-owner"]
-    last_updated: "2025-06-19"
-    freshness_threshold_days: 14
-    status: "active"
-    related_files:
-      - "team-workspace/knowledge/implementation-plans/yahoo-finance-consolidation.md"
-      - "team-workspace/knowledge/implementation-plans/typography-system.md"
-      - "team-workspace/knowledge/implementation-plans/technical-debt-resolution.md"
-    conflicts_detected: true
-    conflict_details: "Multiple implementation summaries for same phases creating status confusion"
-    collaboration_permissions:
-      read_access: ["code-owner", "product-owner", "business-analyst"]
-      write_access: ["architect"]
-      coordination_required: ["code-owner", "product-owner"]
-
-  product-strategy:
-    description: "Strategic product decisions and business prioritization"
-    current_authority: "team-workspace/knowledge/product-strategy/current-decisions.md"
-    primary_owner: "product-owner"
-    secondary_owners: ["business-analyst", "architect"]
-    last_updated: "2025-06-20"
-    freshness_threshold_days: 7
-    status: "active"
-    related_files:
-      - "team-workspace/knowledge/product-strategy/current-decisions.md"
-    archived_files:
-      - "team-workspace/archive/2025-06-20/product-owner/strategic-product-decisions-20250619.md"
-    conflicts_detected: false
-    conflict_details: "RESOLVED: Sequential decisions archived, latest authority established"
-    collaboration_permissions:
-      read_access: ["architect", "code-owner", "business-analyst"]
-      write_access: ["product-owner"]
-      coordination_required: ["business-analyst", "architect"]
-
-  requirements:
-    description: "Business requirements and stakeholder analysis"
-    current_authority: "team-workspace/knowledge/requirements/seo-optimization.md"
-    primary_owner: "business-analyst"
-    secondary_owners: ["product-owner", "architect"]
-    last_updated: "2025-06-20"
-    freshness_threshold_days: 30
-    status: "active"
-    related_files:
-      - "team-workspace/knowledge/requirements/seo-optimization.md"
-      - "team-workspace/commands/business-analyst/outputs/astroplate-cleanup-requirements.md"
-    conflicts_detected: true
-    conflict_details: "Duplicate requirements analysis by business-analyst and architect"
-    collaboration_permissions:
-      read_access: ["product-owner", "architect", "code-owner"]
-      write_access: ["business-analyst"]
-      coordination_required: ["product-owner"]
-
-  security-reviews:
-    description: "Security assessments and vulnerability analysis"
-    current_authority: "team-workspace/knowledge/security-reviews/"
-    primary_owner: "code-owner"
-    secondary_owners: ["architect"]
-    last_updated: "2025-06-20"
-    freshness_threshold_days: 14
-    status: "new"
-    related_files: []
-    conflicts_detected: false
-    conflict_details: "No conflicts - new topic"
-    collaboration_permissions:
-      read_access: ["architect", "product-owner", "business-analyst"]
-      write_access: ["code-owner"]
-      coordination_required: ["architect"]
-
-  performance-analysis:
-    description: "System performance analysis and optimization"
-    current_authority: "team-workspace/knowledge/performance-analysis/"
-    primary_owner: "code-owner"
-    secondary_owners: ["architect"]
-    last_updated: "2025-06-20"
-    freshness_threshold_days: 21
-    status: "new"
-    related_files: []
-    conflicts_detected: false
-    conflict_details: "No conflicts - new topic"
-    collaboration_permissions:
-      read_access: ["architect", "product-owner"]
-      write_access: ["code-owner"]
-      coordination_required: ["architect"]
-
-  technical-debt:
-    description: "Technical debt identification and remediation"
-    current_authority: "team-workspace/knowledge/technical-debt/"
-    primary_owner: "code-owner"
-    secondary_owners: ["architect", "product-owner"]
-    last_updated: "2025-06-20"
-    freshness_threshold_days: 14
-    status: "new"
-    related_files: []
-    conflicts_detected: false
-    conflict_details: "No conflicts - new topic"
-    collaboration_permissions:
-      read_access: ["architect", "product-owner", "business-analyst"]
-      write_access: ["code-owner"]
-      coordination_required: ["architect", "product-owner"]
-
-  business-priorities:
-    description: "Business priorities and strategic focus areas"
-    current_authority: "team-workspace/knowledge/business-priorities/"
-    primary_owner: "product-owner"
-    secondary_owners: ["business-analyst"]
-    last_updated: "2025-06-20"
-    freshness_threshold_days: 7
-    status: "new"
-    related_files: []
-    conflicts_detected: false
-    conflict_details: "No conflicts - new topic"
-    collaboration_permissions:
-      read_access: ["business-analyst", "architect", "code-owner"]
-      write_access: ["product-owner"]
-      coordination_required: ["business-analyst"]
-
-  stakeholder-communications:
-    description: "Stakeholder communications and engagement"
-    current_authority: "team-workspace/knowledge/stakeholder-communications/"
-    primary_owner: "product-owner"
-    secondary_owners: ["business-analyst"]
-    last_updated: "2025-06-20"
-    freshness_threshold_days: 14
-    status: "new"
-    related_files: []
-    conflicts_detected: false
-    conflict_details: "No conflicts - new topic"
-    collaboration_permissions:
-      read_access: ["business-analyst", "architect"]
-      write_access: ["product-owner"]
-      coordination_required: ["business-analyst"]
-
-  stakeholder-analysis:
-    description: "Stakeholder analysis and requirements gathering"
-    current_authority: "team-workspace/knowledge/stakeholder-analysis/"
-    primary_owner: "business-analyst"
-    secondary_owners: ["product-owner"]
-    last_updated: "2025-06-20"
-    freshness_threshold_days: 21
-    status: "new"
-    related_files: []
-    conflicts_detected: false
-    conflict_details: "No conflicts - new topic"
-    collaboration_permissions:
-      read_access: ["product-owner", "architect", "code-owner"]
-      write_access: ["business-analyst"]
-      coordination_required: ["product-owner"]
-
-  process-optimization:
-    description: "Business process optimization and improvement"
-    current_authority: "team-workspace/knowledge/process-optimization/"
-    primary_owner: "business-analyst"
-    secondary_owners: ["product-owner"]
-    last_updated: "2025-06-20"
-    freshness_threshold_days: 30
-    status: "new"
-    related_files: []
-    conflicts_detected: false
-    conflict_details: "No conflicts - new topic"
-    collaboration_permissions:
-      read_access: ["product-owner", "architect", "code-owner"]
-      write_access: ["business-analyst"]
-      coordination_required: ["product-owner"]
-
-  compliance-assessments:
-    description: "Compliance assessments and regulatory analysis"
-    current_authority: "team-workspace/knowledge/compliance-assessments/"
-    primary_owner: "business-analyst"
-    secondary_owners: ["code-owner", "product-owner"]
-    last_updated: "2025-06-20"
-    freshness_threshold_days: 30
-    status: "new"
-    related_files: []
-    conflicts_detected: false
-    conflict_details: "No conflicts - new topic"
-    collaboration_permissions:
-      read_access: ["code-owner", "product-owner", "architect"]
-      write_access: ["business-analyst"]
-      coordination_required: ["code-owner", "product-owner"]
-
-  git-operations:
-    description: "Git operations and content synchronization"
-    current_authority: "team-workspace/knowledge/git-operations/"
-    primary_owner: "commit-push"
-    secondary_owners: []
-    last_updated: "2025-06-20"
-    freshness_threshold_days: 365
-    status: "utility"
-    related_files: []
-    conflicts_detected: false
-    conflict_details: "No conflicts - utility topic"
-    collaboration_permissions:
-      read_access: ["architect", "code-owner", "product-owner", "business-analyst"]
-      write_access: ["commit-push"]
-      coordination_required: []
-
-  command-creation:
-    description: "Command creation and integration patterns"
-    current_authority: "team-workspace/knowledge/command-creation/"
-    primary_owner: "create-command"
-    secondary_owners: []
-    last_updated: "2025-06-20"
-    freshness_threshold_days: 90
-    status: "utility"
-    related_files: []
-    conflicts_detected: false
-    conflict_details: "No conflicts - utility topic"
-    collaboration_permissions:
-      read_access: ["architect", "business-analyst", "product-owner", "code-owner"]
-      write_access: ["create-command"]
-      coordination_required: ["business-analyst"]
-
-# Command Ownership Summary
 command_ownership:
   architect:
-    primary_topics: ["implementation-plans"]
-    secondary_topics: ["technical-health", "product-strategy", "requirements"]
+    primary_topics:
+    - implementation-plans
+    secondary_topics:
+    - technical-health
+    - product-strategy
+    - requirements
     total_topics: 4
-
-  code-owner:
-    primary_topics: ["technical-health", "security-reviews", "performance-analysis", "technical-debt"]
-    secondary_topics: ["implementation-plans", "compliance-assessments"]
-    total_topics: 6
-
-  product-owner:
-    primary_topics: ["product-strategy", "business-priorities", "stakeholder-communications"]
-    secondary_topics: ["technical-health", "implementation-plans", "requirements", "technical-debt", "stakeholder-analysis", "process-optimization", "compliance-assessments"]
-    total_topics: 10
-
   business-analyst:
-    primary_topics: ["requirements", "stakeholder-analysis", "process-optimization", "compliance-assessments"]
-    secondary_topics: ["product-strategy", "business-priorities", "stakeholder-communications", "implementation-plans"]
+    primary_topics:
+    - requirements
+    - stakeholder-analysis
+    - process-optimization
+    - compliance-assessments
+    secondary_topics:
+    - product-strategy
+    - business-priorities
+    - stakeholder-communications
+    - implementation-plans
     total_topics: 8
-
+  code-owner:
+    primary_topics:
+    - technical-health
+    - security-reviews
+    - performance-analysis
+    - technical-debt
+    secondary_topics:
+    - implementation-plans
+    - compliance-assessments
+    total_topics: 6
+  command:
+    primary_topics:
+    - command-creation
+    secondary_topics: []
+    total_topics: 1
   commit-push:
-    primary_topics: ["git-operations"]
+    primary_topics:
+    - git-operations
     secondary_topics: []
     total_topics: 1
-
   create-command:
-    primary_topics: ["command-creation"]
+    primary_topics: []
     secondary_topics: []
     total_topics: 1
-
-# Coordination Rules
+  product-owner:
+    primary_topics:
+    - product-strategy
+    - business-priorities
+    - stakeholder-communications
+    secondary_topics:
+    - technical-health
+    - implementation-plans
+    - requirements
+    - technical-debt
+    - stakeholder-analysis
+    - process-optimization
+    - compliance-assessments
+    total_topics: 10
 coordination_rules:
-  duplicate_analysis_threshold: 1  # Max analyses per topic before requiring coordination
-  freshness_warning_days: 7       # Days before flagging content as potentially stale
   conflict_resolution_required: true
-  superseding_approval_required: false  # Can be enabled for critical topics
-  pre_execution_consultation_required: true
-  topic_ownership_enforcement: true
   cross_command_coordination: true
-
-# Metadata
+  duplicate_analysis_threshold: 1
+  freshness_warning_days: 7
+  pre_execution_consultation_required: true
+  superseding_approval_required: false
+  topic_ownership_enforcement: true
 registry_metadata:
-  created: "2025-06-20T00:00:00Z"
-  updated_by: "architect"
-  purpose: "Content lifecycle management and duplication prevention"
-  schema_version: "2.0"
-  integration_level: "full_collaboration"
-  total_topics: 15
+  collaboration_features:
+  - pre_execution_consultation
+  - topic_ownership
+  - superseding_workflow
+  - conflict_detection
   commands_integrated: 6
-  collaboration_features: ["pre_execution_consultation", "topic_ownership", "superseding_workflow", "conflict_detection"]
+  created: '2025-06-20T00:00:00Z'
+  integration_level: full_collaboration
+  purpose: Content lifecycle management and duplication prevention
+  schema_version: '2.0'
+  total_topics: 15
+  updated_by: architect
+topics:
+  business-priorities:
+    collaboration_permissions:
+      coordination_required:
+      - business-analyst
+      read_access:
+      - business-analyst
+      - architect
+      - code-owner
+      write_access:
+      - product-owner
+    conflict_details: No conflicts - new topic
+    conflicts_detected: false
+    current_authority: team-workspace/knowledge/business-priorities/
+    description: Business priorities and strategic focus areas
+    freshness_threshold_days: 7
+    last_updated: '2025-06-20'
+    primary_owner: product-owner
+    related_files: []
+    secondary_owners:
+    - business-analyst
+    status: new
+  command-creation:
+    archived_files:
+    - team-workspace/archive/2025-06-20/command/command-creation/supersede_command-creation_20250620_150350/create_command.md
+    collaboration_permissions:
+      coordination_required:
+      - business-analyst
+      read_access:
+      - architect
+      - business-analyst
+      - product-owner
+      - code-owner
+      write_access:
+      - command
+    conflict_details: No conflicts - utility topic
+    conflicts_detected: false
+    current_authority: /Users/colemorton/Projects/sensylate/.claude/commands/command.md
+    description: Command creation and integration patterns
+    freshness_threshold_days: 90
+    last_ownership_update: '2025-06-20'
+    last_updated: '2025-06-20'
+    owner_command: command
+    primary_owner: command
+    related_files:
+    - /Users/colemorton/Projects/sensylate/.claude/commands/command.md
+    secondary_owners: []
+    status: utility
+  compliance-assessments:
+    collaboration_permissions:
+      coordination_required:
+      - code-owner
+      - product-owner
+      read_access:
+      - code-owner
+      - product-owner
+      - architect
+      write_access:
+      - business-analyst
+    conflict_details: No conflicts - new topic
+    conflicts_detected: false
+    current_authority: team-workspace/knowledge/compliance-assessments/
+    description: Compliance assessments and regulatory analysis
+    freshness_threshold_days: 30
+    last_updated: '2025-06-20'
+    primary_owner: business-analyst
+    related_files: []
+    secondary_owners:
+    - code-owner
+    - product-owner
+    status: new
+  git-operations:
+    collaboration_permissions:
+      coordination_required: []
+      read_access:
+      - architect
+      - code-owner
+      - product-owner
+      - business-analyst
+      write_access:
+      - commit-push
+    conflict_details: No conflicts - utility topic
+    conflicts_detected: false
+    current_authority: team-workspace/knowledge/git-operations/
+    description: Git operations and content synchronization
+    freshness_threshold_days: 365
+    last_updated: '2025-06-20'
+    primary_owner: commit-push
+    related_files: []
+    secondary_owners: []
+    status: utility
+  implementation-plans:
+    collaboration_permissions:
+      coordination_required:
+      - code-owner
+      - product-owner
+      read_access:
+      - code-owner
+      - product-owner
+      - business-analyst
+      write_access:
+      - architect
+    conflict_details: Multiple implementation summaries for same phases creating status
+      confusion
+    conflicts_detected: true
+    current_authority: team-workspace/knowledge/implementation-plans/yahoo-finance-consolidation.md
+    description: Technical implementation plans and architecture decisions
+    freshness_threshold_days: 14
+    last_updated: '2025-06-19'
+    primary_owner: architect
+    related_files:
+    - team-workspace/knowledge/implementation-plans/yahoo-finance-consolidation.md
+    - team-workspace/knowledge/implementation-plans/typography-system.md
+    - team-workspace/knowledge/implementation-plans/technical-debt-resolution.md
+    secondary_owners:
+    - code-owner
+    - product-owner
+    status: active
+  performance-analysis:
+    collaboration_permissions:
+      coordination_required:
+      - architect
+      read_access:
+      - architect
+      - product-owner
+      write_access:
+      - code-owner
+    conflict_details: No conflicts - new topic
+    conflicts_detected: false
+    current_authority: team-workspace/knowledge/performance-analysis/
+    description: System performance analysis and optimization
+    freshness_threshold_days: 21
+    last_updated: '2025-06-20'
+    primary_owner: code-owner
+    related_files: []
+    secondary_owners:
+    - architect
+    status: new
+  process-optimization:
+    collaboration_permissions:
+      coordination_required:
+      - product-owner
+      read_access:
+      - product-owner
+      - architect
+      - code-owner
+      write_access:
+      - business-analyst
+    conflict_details: No conflicts - new topic
+    conflicts_detected: false
+    current_authority: team-workspace/knowledge/process-optimization/
+    description: Business process optimization and improvement
+    freshness_threshold_days: 30
+    last_updated: '2025-06-20'
+    primary_owner: business-analyst
+    related_files: []
+    secondary_owners:
+    - product-owner
+    status: new
+  product-strategy:
+    archived_files:
+    - team-workspace/archive/2025-06-20/product-owner/strategic-product-decisions-20250619.md
+    collaboration_permissions:
+      coordination_required:
+      - business-analyst
+      - architect
+      read_access:
+      - architect
+      - code-owner
+      - business-analyst
+      write_access:
+      - product-owner
+    conflict_details: 'RESOLVED: Sequential decisions archived, latest authority established'
+    conflicts_detected: false
+    current_authority: team-workspace/knowledge/product-strategy/current-decisions.md
+    description: Strategic product decisions and business prioritization
+    freshness_threshold_days: 7
+    last_updated: '2025-06-20'
+    primary_owner: product-owner
+    related_files:
+    - team-workspace/knowledge/product-strategy/current-decisions.md
+    secondary_owners:
+    - business-analyst
+    - architect
+    status: active
+  requirements:
+    collaboration_permissions:
+      coordination_required:
+      - product-owner
+      read_access:
+      - product-owner
+      - architect
+      - code-owner
+      write_access:
+      - business-analyst
+    conflict_details: Duplicate requirements analysis by business-analyst and architect
+    conflicts_detected: true
+    current_authority: team-workspace/knowledge/requirements/seo-optimization.md
+    description: Business requirements and stakeholder analysis
+    freshness_threshold_days: 30
+    last_updated: '2025-06-20'
+    primary_owner: business-analyst
+    related_files:
+    - team-workspace/knowledge/requirements/seo-optimization.md
+    - team-workspace/commands/business-analyst/outputs/astroplate-cleanup-requirements.md
+    secondary_owners:
+    - product-owner
+    - architect
+    status: active
+  security-reviews:
+    collaboration_permissions:
+      coordination_required:
+      - architect
+      read_access:
+      - architect
+      - product-owner
+      - business-analyst
+      write_access:
+      - code-owner
+    conflict_details: No conflicts - new topic
+    conflicts_detected: false
+    current_authority: team-workspace/knowledge/security-reviews/
+    description: Security assessments and vulnerability analysis
+    freshness_threshold_days: 14
+    last_updated: '2025-06-20'
+    primary_owner: code-owner
+    related_files: []
+    secondary_owners:
+    - architect
+    status: new
+  stakeholder-analysis:
+    collaboration_permissions:
+      coordination_required:
+      - product-owner
+      read_access:
+      - product-owner
+      - architect
+      - code-owner
+      write_access:
+      - business-analyst
+    conflict_details: No conflicts - new topic
+    conflicts_detected: false
+    current_authority: team-workspace/knowledge/stakeholder-analysis/
+    description: Stakeholder analysis and requirements gathering
+    freshness_threshold_days: 21
+    last_updated: '2025-06-20'
+    primary_owner: business-analyst
+    related_files: []
+    secondary_owners:
+    - product-owner
+    status: new
+  stakeholder-communications:
+    collaboration_permissions:
+      coordination_required:
+      - business-analyst
+      read_access:
+      - business-analyst
+      - architect
+      write_access:
+      - product-owner
+    conflict_details: No conflicts - new topic
+    conflicts_detected: false
+    current_authority: team-workspace/knowledge/stakeholder-communications/
+    description: Stakeholder communications and engagement
+    freshness_threshold_days: 14
+    last_updated: '2025-06-20'
+    primary_owner: product-owner
+    related_files: []
+    secondary_owners:
+    - business-analyst
+    status: new
+  technical-debt:
+    collaboration_permissions:
+      coordination_required:
+      - architect
+      - product-owner
+      read_access:
+      - architect
+      - product-owner
+      - business-analyst
+      write_access:
+      - code-owner
+    conflict_details: No conflicts - new topic
+    conflicts_detected: false
+    current_authority: team-workspace/knowledge/technical-debt/
+    description: Technical debt identification and remediation
+    freshness_threshold_days: 14
+    last_updated: '2025-06-20'
+    primary_owner: code-owner
+    related_files: []
+    secondary_owners:
+    - architect
+    - product-owner
+    status: new
+  technical-health:
+    archived_files:
+    - team-workspace/archive/2025-06-20/code-owner/comprehensive-technical-health-assessment-20250619.md
+    - team-workspace/archive/2025-06-20/code-owner/sensylate-codebase-health-assessment.md
+    collaboration_permissions:
+      coordination_required:
+      - architect
+      read_access:
+      - architect
+      - product-owner
+      - business-analyst
+      write_access:
+      - code-owner
+    conflict_details: 'RESOLVED: Contradictory assessments archived, single authority
+      established'
+    conflicts_detected: false
+    current_authority: team-workspace/knowledge/technical-health/current-assessment.md
+    description: Comprehensive technical health assessments and code quality analysis
+    freshness_threshold_days: 30
+    last_updated: '2025-06-19'
+    primary_owner: code-owner
+    related_files:
+    - team-workspace/knowledge/technical-health/current-assessment.md
+    secondary_owners:
+    - architect
+    - product-owner
+    status: active
+updated: '2025-06-20T12:30:00Z'
+version: '2.0'

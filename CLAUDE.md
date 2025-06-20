@@ -231,10 +231,10 @@ Use these by asking Claude to execute them (e.g., "run the architect command" or
   - **Usage**: Process analysis and requirements documentation
 
 ##### Utilities
-- **`/create_command`** - Interactive command creator with validation and best practices
-  - **Location**: `.claude/commands/create_command.md` (project scope)
-  - **Collaboration**: Can create project-specific commands in .claude/commands/
-  - **Usage**: Generate new custom command templates
+- **`/command`** - Comprehensive command lifecycle management specialist with systematic methodology
+  - **Location**: `.claude/commands/command.md` (project scope)
+  - **Collaboration**: Full command management including creation, optimization, alignment, analysis, and maintenance
+  - **Usage**: Complete command lifecycle management (create, optimize, align, analyze, maintain)
 
 ### Workflow Examples
 
