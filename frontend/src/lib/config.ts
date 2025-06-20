@@ -37,7 +37,7 @@ function getFeatureFlags(): FeatureFlags {
       config.settings.theme_switcher,
     comments:
       envToBoolean(import.meta.env.PUBLIC_FEATURE_COMMENTS) ??
-      config.disqus.enable,
+      (isDevelopment() ? config.disqus.enable : false),
     gtm:
       envToBoolean(import.meta.env.PUBLIC_FEATURE_GTM) ??
       config.google_tag_manager.enable,

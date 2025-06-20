@@ -11,6 +11,7 @@ from typing import Dict, List, Any, Optional, Tuple
 from datetime import datetime, timedelta
 import hashlib
 import logging
+from status_synchronizer import StatusSynchronizer
 
 class CollaborationEngine:
     """Core engine for command discovery and dependency resolution"""
@@ -65,6 +66,9 @@ class CollaborationEngine:
 
         # Setup logging
         self._setup_logging()
+
+        # Initialize status synchronizer
+        self.status_sync = StatusSynchronizer(str(self.workspace_path), self.project_name)
 
     def _load_registry(self) -> Dict[str, Any]:
         """Load command registry"""
@@ -170,7 +174,18 @@ class CollaborationEngine:
         return None
 
     def resolve_dependencies(self, command_name: str) -> Tuple[Dict[str, Any], List[str]]:
-        """Resolve command dependencies and return execution context"""
+        """Resolve command dependencies and return execution context with status validation"""
+        # CRITICAL: Synchronize workspace status before dependency resolution
+        self.logger.info(f"Synchronizing workspace status before {command_name} execution")
+        workspace_status = self.status_sync.sync_global_status()
+
+        # Validate workspace consistency
+        validation_errors = workspace_status.get("validation_errors", [])
+        if validation_errors:
+            self.logger.warning(f"Found {len(validation_errors)} workspace validation errors")
+            for error in validation_errors[:3]:  # Log first 3 errors
+                self.logger.warning(f"  {error['type']}: {error['message']}")
+
         command_info = self.discover_command(command_name)
         if not command_info:
             raise ValueError(f"Command {command_name} not found")
@@ -182,10 +197,12 @@ class CollaborationEngine:
             "command": command_name,
             "session_id": self.session_id,
             "project_context": self.project_context,
+            "workspace_status": workspace_status,  # Include current workspace status
             "available_data": {},
             "missing_dependencies": [],
             "optimization_data": {},
-            "execution_plan": {}
+            "execution_plan": {},
+            "status_warnings": validation_errors  # Include validation warnings
         }
 
         # Check required dependencies
@@ -336,6 +353,10 @@ class CollaborationEngine:
 
         # Notify dependent commands
         self._notify_dependent_commands(command_name, enhanced_metadata)
+
+        # CRITICAL: Update workspace status after output generation
+        self.status_sync.sync_global_status()
+        self.logger.info(f"Workspace status synchronized after {command_name} output generation")
 
         self.logger.info(f"Stored output: {output_file}")
         return str(output_file), str(meta_file)
@@ -501,6 +522,81 @@ class CollaborationEngine:
                 break
 
         return sequence
+
+    def validate_before_execution(self, command_name: str) -> Dict[str, Any]:
+        """Validate workspace state before command execution - PREVENTS COLLABORATION FAILURES"""
+        self.logger.info(f"Running pre-execution validation for {command_name}")
+
+        # Synchronize current status
+        workspace_status = self.status_sync.sync_global_status()
+
+        validation_result = {
+            "command": command_name,
+            "validation_passed": True,
+            "errors": [],
+            "warnings": [],
+            "recommendations": [],
+            "workspace_summary": {}
+        }
+
+        # Check for completion status conflicts
+        validation_errors = workspace_status.get("validation_errors", [])
+        if validation_errors:
+            validation_result["errors"].extend(validation_errors)
+            validation_result["validation_passed"] = False
+
+        # Check dependency completion status
+        dependencies = self._get_command_dependencies(command_name)
+        for dep in dependencies:
+            dep_status = self.status_sync.get_command_status_summary(dep)
+            if dep_status:
+                if dep_status["status"] == "completed":
+                    validation_result["recommendations"].append(
+                        f"✅ Dependency {dep} is completed - use latest outputs"
+                    )
+                else:
+                    validation_result["warnings"].append(
+                        f"⚠️ Dependency {dep} appears incomplete - verify status before proceeding"
+                    )
+            else:
+                validation_result["warnings"].append(
+                    f"❓ No status found for dependency {dep} - check if work has been done"
+                )
+
+        # Generate workspace summary
+        commands = workspace_status.get("commands", {})
+        for cmd, status in commands.items():
+            completion_count = sum(1 for s in status["completion_status"].values() if s == "completed")
+            total_count = len(status["completion_status"])
+            validation_result["workspace_summary"][cmd] = {
+                "completion_rate": completion_count / total_count if total_count > 0 else 0,
+                "last_execution": status["last_execution"],
+                "active_phase": status["active_phase"]
+            }
+
+        # Log validation summary
+        if validation_result["validation_passed"]:
+            self.logger.info(f"✅ Pre-execution validation passed for {command_name}")
+        else:
+            self.logger.error(f"❌ Pre-execution validation failed for {command_name}")
+
+        return validation_result
+
+    def _get_command_dependencies(self, command_name: str) -> List[str]:
+        """Get list of command dependencies"""
+        command_info = self.discover_command(command_name)
+        if not command_info or "manifest_data" not in command_info:
+            return []
+
+        manifest = command_info["manifest_data"]
+        dependencies = manifest.get("dependencies", {})
+
+        # Combine required and optional dependencies
+        deps = dependencies.get("required", [])
+        optional_deps = [dep.get("command", "") for dep in dependencies.get("optional", [])]
+        deps.extend([d for d in optional_deps if d])
+
+        return deps
 
 
 def main():
