@@ -409,17 +409,20 @@ class YahooFinanceService:
             if not info or "symbol" not in info:
                 raise DataNotFoundError(f"No data available for symbol: {symbol}")
 
+            # Helper function to safely convert DataFrames to JSON-serializable format
+            def safe_dataframe_to_dict(df):
+                if df.empty:
+                    return {}
+                # Convert DataFrame to dict with string keys for JSON serialization
+                df_copy = df.copy()
+                df_copy.columns = df_copy.columns.astype(str)
+                return df_copy.to_dict()
+
             return {
                 "symbol": symbol,
-                "income_statement": ticker.financials.to_dict()
-                if not ticker.financials.empty
-                else {},
-                "balance_sheet": ticker.balance_sheet.to_dict()
-                if not ticker.balance_sheet.empty
-                else {},
-                "cash_flow": ticker.cashflow.to_dict()
-                if not ticker.cashflow.empty
-                else {},
+                "income_statement": safe_dataframe_to_dict(ticker.financials),
+                "balance_sheet": safe_dataframe_to_dict(ticker.balance_sheet),
+                "cash_flow": safe_dataframe_to_dict(ticker.cashflow),
                 "timestamp": datetime.now().isoformat(),
             }
 
