@@ -39,3 +39,11 @@ syncs:
     product-owner: 29
   timestamp: '2025-06-20T16:25:34.553542'
   validation_errors: 0
+- commands_scanned: 4
+  status_summary:
+    architect: 112
+    business-analyst: 16
+    code-owner: 8
+    product-owner: 29
+  timestamp: '2025-06-20T16:31:50.166765'
+  validation_errors: 0
