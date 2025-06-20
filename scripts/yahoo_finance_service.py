@@ -410,13 +410,13 @@ class YahooFinanceService:
                 raise DataNotFoundError(f"No data available for symbol: {symbol}")
 
             # Helper function to safely convert DataFrames to JSON-serializable format
-            def safe_dataframe_to_dict(df):
+            def safe_dataframe_to_dict(df: Any) -> Dict[str, Any]:
                 if df.empty:
                     return {}
                 # Convert DataFrame to dict with string keys for JSON serialization
                 df_copy = df.copy()
                 df_copy.columns = df_copy.columns.astype(str)
-                return df_copy.to_dict()
+                return df_copy.to_dict()  # type: ignore[no-any-return]
 
             return {
                 "symbol": symbol,

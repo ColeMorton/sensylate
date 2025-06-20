@@ -1,0 +1,126 @@
+# Team-Workspace Topic Registry
+# Tracks active topics, ownership, and freshness for content lifecycle management
+
+version: "1.0"
+updated: "2025-06-20T00:00:00Z"
+
+# Active Knowledge Topics
+topics:
+  technical-health:
+    description: "Comprehensive technical health assessments and code quality analysis"
+    current_authority: "team-workspace/knowledge/technical-health/current-assessment.md"
+    owner_command: "code-owner"
+    last_updated: "2025-06-19"
+    freshness_threshold_days: 30
+    status: "active"
+    related_files:
+      - "team-workspace/knowledge/technical-health/current-assessment.md"
+    archived_files:
+      - "team-workspace/archive/2025-06-20/code-owner/comprehensive-technical-health-assessment-20250619.md"
+      - "team-workspace/archive/2025-06-20/code-owner/sensylate-codebase-health-assessment.md"
+    conflicts_detected: false
+    conflict_details: "RESOLVED: Contradictory assessments archived, single authority established"
+
+  yahoo-finance-integration:
+    description: "Yahoo Finance integration consolidation and implementation"
+    current_authority: "team-workspace/knowledge/implementation-plans/yahoo-finance-consolidation.md"
+    owner_command: "architect"
+    last_updated: "2025-06-19"
+    freshness_threshold_days: 14
+    status: "active"
+    related_files:
+      - "team-workspace/knowledge/implementation-plans/yahoo-finance-consolidation.md"
+    conflicts_detected: false
+
+  astroplate-cleanup:
+    description: "Astroplate template cleanup requirements and implementation"
+    current_authority: "team-workspace/knowledge/requirements/astroplate-cleanup.md"
+    owner_command: "business-analyst"
+    last_updated: "2025-06-19"
+    freshness_threshold_days: 21
+    status: "active"
+    related_files:
+      - "team-workspace/commands/business-analyst/outputs/astroplate-cleanup-requirements.md"
+      - "team-workspace/commands/architect/outputs/astroplate-cleanup-requirements-analysis.md"
+    conflicts_detected: true
+    conflict_details: "Duplicate requirements analysis by business-analyst and architect"
+
+  product-strategy:
+    description: "Strategic product decisions and business prioritization"
+    current_authority: "team-workspace/knowledge/product-strategy/current-decisions.md"
+    owner_command: "product-owner"
+    last_updated: "2025-06-20"
+    freshness_threshold_days: 7
+    status: "active"
+    related_files:
+      - "team-workspace/knowledge/product-strategy/current-decisions.md"
+    archived_files:
+      - "team-workspace/archive/2025-06-20/product-owner/strategic-product-decisions-20250619.md"
+    conflicts_detected: false
+    conflict_details: "RESOLVED: Sequential decisions archived, latest authority established"
+
+  typography-system:
+    description: "Typography system unification implementation"
+    current_authority: "team-workspace/knowledge/implementation-plans/typography-system.md"
+    owner_command: "architect"
+    last_updated: "2025-06-19"
+    freshness_threshold_days: 14
+    status: "completed"
+    related_files:
+      - "team-workspace/commands/architect/outputs/typography-system-unification-implementation-plan.md"
+    conflicts_detected: false
+
+  technical-debt-resolution:
+    description: "Technical debt resolution and implementation tracking"
+    current_authority: "team-workspace/knowledge/implementation-plans/technical-debt-resolution.md"
+    owner_command: "architect"
+    last_updated: "2025-06-19"
+    freshness_threshold_days: 14
+    status: "in-progress"
+    related_files:
+      - "team-workspace/commands/architect/outputs/technical-debt-resolution-implementation-plan.md"
+    conflicts_detected: true
+    conflict_details: "Multiple implementation summaries for same phases creating status confusion"
+
+  seo-optimization:
+    description: "SEO optimization requirements and business analysis"
+    current_authority: "team-workspace/knowledge/requirements/seo-optimization.md"
+    owner_command: "business-analyst"
+    last_updated: "2025-06-20"
+    freshness_threshold_days: 30
+    status: "active"
+    related_files:
+      - "team-workspace/knowledge/requirements/seo-optimization.md"
+    conflicts_detected: false
+
+# Command Ownership Mapping
+command_ownership:
+  architect:
+    primary_topics: ["yahoo-finance-integration", "typography-system", "technical-debt-resolution"]
+    secondary_topics: ["astroplate-cleanup"]
+
+  code-owner:
+    primary_topics: ["technical-health"]
+    secondary_topics: []
+
+  product-owner:
+    primary_topics: ["product-strategy"]
+    secondary_topics: ["technical-health", "seo-optimization"]
+
+  business-analyst:
+    primary_topics: ["astroplate-cleanup", "seo-optimization"]
+    secondary_topics: ["product-strategy"]
+
+# Coordination Rules
+coordination_rules:
+  duplicate_analysis_threshold: 2  # Max analyses per topic before requiring coordination
+  freshness_warning_days: 7       # Days before flagging content as potentially stale
+  conflict_resolution_required: true
+  superseding_approval_required: false  # Can be enabled for critical topics
+
+# Metadata
+registry_metadata:
+  created: "2025-06-20T00:00:00Z"
+  created_by: "architect"
+  purpose: "Content lifecycle management and duplication prevention"
+  schema_version: "1.0"
