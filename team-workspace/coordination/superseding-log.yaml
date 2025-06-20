@@ -1,0 +1,100 @@
+archive_metadata_schema:
+  optional_fields:
+  - validation_notes
+  - recovery_instructions
+  - related_superseding_events
+  required_fields:
+  - original_path
+  - superseded_by
+  - superseding_reason
+  - archive_timestamp
+  - archived_by_command
+created: '2025-06-20T00:00:00Z'
+lifecycle_metrics:
+  average_content_lifespan_days: 0
+  content_conflicts_resolved: 0
+  failed_migrations: 0
+  most_active_commands: []
+  most_active_topics: []
+  successful_migrations: 1
+  total_superseding_events: 1
+log_metadata:
+  created_by: architect
+  last_updated: '2025-06-20T00:00:00Z'
+  purpose: Audit trail for content lifecycle management
+  schema_version: '1.0'
+notification_settings:
+  alert_thresholds:
+    rapid_superseding: 5
+    stale_content_days: 60
+  notification_channels:
+  - topic_registry_update
+  - conflict_detection_report
+  notify_on_superseding: true
+recovery_procedures:
+  archive_location: team-workspace/archive/{date}/{command}/{topic}/
+  backup_retention_days: 90
+  recovery_command: python coordination/recover-content.py --event-id {event_id}
+superseding_events:
+- description: Initial migration to topic-centric content lifecycle management
+  event_id: initial_migration_001
+  event_type: initial_migration
+  initiated_by: architect
+  reason: Implementation of content lifecycle management system
+  superseded_files: []
+  superseding_files: []
+  timestamp: '2025-06-20T00:00:00Z'
+  topic: lifecycle_management
+  validation_status: pending
+- archived_files:
+  - archive_path: team-workspace/archive/2025-06-20/command/command-creation/supersede_command-creation_20250620_150350/create_command.md
+    archive_timestamp: '2025-06-20T15:03:50.236890'
+    file_size: 5102
+    original_path: /Users/colemorton/Projects/sensylate/.claude/commands/create_command.md
+  description: Content superseding for command-creation by command
+  event_id: supersede_command-creation_20250620_150350
+  event_type: superseding_completed
+  initiated_by: command
+  reason: Superior command management system replaces basic create_command functionality
+  superseded_files:
+  - /Users/colemorton/Projects/sensylate/.claude/commands/create_command.md
+  superseding_files:
+  - /Users/colemorton/Projects/sensylate/.claude/commands/command.md
+  superseding_type: update
+  timestamp: '2025-06-20T15:03:50.262394'
+  topic: command-creation
+  validation_status: completed
+superseding_policies:
+  automatic_superseding:
+    enabled: true
+    rules:
+    - action: archive_older_version
+      approval_required: false
+      condition: same_topic_newer_date
+    - action: archive_superseded_content
+      approval_required: false
+      condition: explicit_superseding_declaration
+    - action: archive_draft_versions
+      approval_required: false
+      condition: status_change_to_completed
+  manual_superseding:
+    approval_required: true
+    approvers:
+    - architect
+    - product-owner
+    enabled: true
+  protection_rules:
+    backup_before_archive: true
+    protected_topics:
+    - technical-health
+    retention_minimum_days: 30
+validation_rules:
+  post_superseding_validation:
+  - confirm_archive_integrity
+  - update_topic_registry
+  - validate_no_broken_references
+  pre_superseding_checks:
+  - verify_content_authority
+  - check_cross_references
+  - validate_superseding_declaration
+version: '1.0'

@@ -1,0 +1,165 @@
+# Product-Owner Command Manifest
+# Defines collaboration capabilities and data requirements
+
+command:
+  name: "product-owner"
+  version: "1.0.0"
+  type: "strategic"
+  description: "Transform technical findings into prioritized product decisions with business impact analysis"
+  command_file: "/Users/colemorton/.claude/commands/product_owner.md"
+
+capabilities:
+  reads:
+    - technical_health_assessments
+    - implementation_plans
+    - business_requirements
+    - market_context
+    - stakeholder_feedback
+    - performance_metrics
+    - cost_benefit_analysis
+
+  produces:
+    - strategic_product_decisions
+    - prioritized_backlogs
+    - stakeholder_communications
+    - business_impact_assessments
+    - roadmap_updates
+    - resource_allocation_plans
+
+dependencies:
+  required: []
+  optional:
+    - command: "code-owner"
+      output_type: "technical_health_assessment"
+      enhancement: "Prioritizes technical debt based on business impact"
+    - command: "architect"
+      output_type: "implementation_plans"
+      enhancement: "Aligns technical execution with business strategy"
+    - command: "business-analyst"
+      output_type: "requirements_analysis"
+      enhancement: "Validates business requirements against technical feasibility"
+  conflicts: []
+
+data_schema:
+  inputs:
+    business_context:
+      type: "object"
+      required: true
+      schema: "/team-workspace/shared/business-context.yaml"
+    strategic_scope:
+      type: "string"
+      required: false
+      source: "user_input"
+    time_horizon:
+      type: "integer"
+      required: false
+      source: "user_input"
+      default: 12
+
+  outputs:
+    strategic_decisions:
+      type: "markdown"
+      location: "/team-workspace/commands/product-owner/outputs/"
+      filename_pattern: "strategic-decisions-{timestamp}.md"
+      format: "prioritized_decision_matrix"
+      metadata_required: true
+    stakeholder_summary:
+      type: "markdown"
+      location: "/team-workspace/commands/product-owner/outputs/"
+      filename_pattern: "stakeholder-summary-{timestamp}.md"
+      format: "executive_communication"
+      metadata_required: true
+
+collaboration:
+  consumption_pattern: "business_focused"
+  pre_execution_behavior:
+    - "Load business context and strategic objectives"
+    - "Review technical health assessments from code-owner"
+    - "Analyze implementation plans from architect"
+    - "Incorporate requirements analysis from business-analyst"
+
+  output_sharing: "immediate"
+  post_execution_behavior:
+    - "Store decisions with business impact metrics"
+    - "Update product strategy registry"
+    - "Notify stakeholders of priority changes"
+    - "Cache business context for efficiency"
+
+  cache_strategy: "strategy_based"
+  cache_duration: "30d"
+
+  notification_events:
+    - event: "priority_shift_detected"
+      notify: ["architect", "business-analyst"]
+      payload: ["priority_changes", "impact_assessment"]
+    - event: "resource_constraint_identified"
+      notify: ["architect", "code-owner"]
+      payload: ["constraint_details", "alternative_approaches"]
+    - event: "stakeholder_escalation_required"
+      notify: ["business-analyst", "executive_team"]
+      payload: ["escalation_context", "decision_rationale"]
+
+quality_standards:
+  validation_criteria:
+    - "Decisions include quantified business impact"
+    - "Technical feasibility validated"
+    - "Risk assessment includes business risks"
+    - "Stakeholder communication appropriate for audience"
+    - "Success metrics clearly defined"
+
+  output_requirements:
+    - "Business value quantification"
+    - "Technical risk assessment integration"
+    - "Resource requirement estimation"
+    - "Timeline and milestone definition"
+    - "Stakeholder-specific communication"
+
+performance_characteristics:
+  typical_execution_time: "35s"
+  complexity_factors:
+    - "Number of strategic options"
+    - "Stakeholder complexity"
+    - "Technical dependency depth"
+    - "Market volatility factors"
+
+  optimization_strategies:
+    - "Cache business strategy context"
+    - "Parallel analysis of multiple options"
+    - "Incremental stakeholder impact analysis"
+
+integration_patterns:
+  workflow_chains:
+    - name: "technical_to_business_alignment"
+      sequence: ["code-owner", "architect", "product-owner"]
+      trigger: "implementation_plan_complete"
+    - name: "requirements_to_strategy"
+      sequence: ["business-analyst", "product-owner"]
+      trigger: "requirements_analysis_complete"
+
+  data_flow:
+    incoming:
+      - "Technical health assessments from code-owner"
+      - "Implementation plans from architect"
+      - "Requirements analysis from business-analyst"
+    outgoing:
+      - "Strategic decisions to architect"
+      - "Business priorities to business-analyst"
+      - "Stakeholder communications to executives"
+
+# Topic Ownership Configuration
+topic_ownership:
+  primary_topics:
+    - "product-strategy"
+    - "business-priorities"
+    - "stakeholder-communications"
+    - "resource-allocation"
+
+  secondary_topics:
+    - "technical-health" # Can provide business impact perspective
+    - "implementation-plans" # Can influence technical priorities
+    - "requirements" # Can prioritize requirements
+
+  collaboration_permissions:
+    read_access: ["architect", "code-owner", "business-analyst"]
+    write_access: ["product-owner"]
+    coordination_required: ["business-analyst", "architect"] # For strategic alignment

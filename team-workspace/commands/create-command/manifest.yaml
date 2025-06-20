@@ -1,0 +1,154 @@
+# Create-Command Command Manifest
+# Defines collaboration capabilities and data requirements
+
+command:
+  name: "create-command"
+  version: "1.0.0"
+  type: "utility"
+  description: "Interactive command creator with lifecycle management integration"
+  command_file: "/Users/colemorton/.claude/commands/create_command.md"
+
+capabilities:
+  reads:
+    - existing_commands
+    - command_patterns
+    - integration_templates
+    - lifecycle_requirements
+    - collaboration_frameworks
+    - validation_rules
+
+  produces:
+    - new_commands
+    - command_manifests
+    - integration_patterns
+    - validation_frameworks
+    - collaboration_templates
+
+dependencies:
+  required: []
+  optional:
+    - command: "architect"
+      output_type: "implementation_plans"
+      enhancement: "Creates commands that integrate with implementation frameworks"
+    - command: "business-analyst"
+      output_type: "requirements_analysis"
+      enhancement: "Ensures new commands meet business requirements"
+  conflicts: []
+
+data_schema:
+  inputs:
+    command_specification:
+      type: "object"
+      required: true
+      source: "user_input"
+      schema: "/team-workspace/shared/command-specification.yaml"
+    integration_requirements:
+      type: "object"
+      required: false
+      source: "lifecycle_system"
+
+  outputs:
+    command_file:
+      type: "markdown"
+      location: "/Users/colemorton/.claude/commands/"
+      filename_pattern: "{command-name}.md"
+      format: "claude_command_template"
+      metadata_required: true
+    command_manifest:
+      type: "yaml"
+      location: "/team-workspace/commands/{command-name}/"
+      filename_pattern: "manifest.yaml"
+      format: "collaboration_manifest"
+      metadata_required: true
+
+collaboration:
+  consumption_pattern: "template_driven"
+  pre_execution_behavior:
+    - "Load existing command patterns"
+    - "Analyze integration requirements"
+    - "Validate command name uniqueness"
+    - "Check lifecycle management compliance"
+
+  output_sharing: "immediate"
+  post_execution_behavior:
+    - "Register new command in system"
+    - "Update command registry"
+    - "Validate integration compliance"
+    - "Notify system of new capability"
+
+  cache_strategy: "template_based"
+  cache_duration: "7d"
+
+  notification_events:
+    - event: "new_command_created"
+      notify: ["all_commands", "coordination_system"]
+      payload: ["command_details", "integration_capabilities"]
+    - event: "integration_pattern_added"
+      notify: ["architect", "business-analyst"]
+      payload: ["pattern_details", "usage_guidance"]
+    - event: "lifecycle_compliance_verified"
+      notify: ["coordination_system"]
+      payload: ["compliance_status", "validation_results"]
+
+quality_standards:
+  validation_criteria:
+    - "Command follows established patterns"
+    - "Integration with lifecycle management complete"
+    - "Collaboration capabilities properly defined"
+    - "Validation rules implemented"
+    - "Documentation is comprehensive"
+
+  output_requirements:
+    - "Pre-execution coordination integration"
+    - "Post-execution lifecycle management"
+    - "Topic ownership specifications"
+    - "Collaboration manifest complete"
+    - "Usage examples and validation"
+
+performance_characteristics:
+  typical_execution_time: "25s"
+  complexity_factors:
+    - "Command complexity specification"
+    - "Integration requirements depth"
+    - "Validation rule complexity"
+    - "Template customization needs"
+
+  optimization_strategies:
+    - "Template caching for common patterns"
+    - "Parallel validation of requirements"
+    - "Incremental manifest building"
+
+integration_patterns:
+  workflow_chains:
+    - name: "command_lifecycle_integration"
+      sequence: ["create-command", "lifecycle_validation"]
+      trigger: "command_creation_complete"
+    - name: "collaborative_command_design"
+      sequence: ["business-analyst", "create-command"]
+      trigger: "command_requirements_defined"
+
+  data_flow:
+    incoming:
+      - "Command requirements from business-analyst"
+      - "Integration patterns from architect"
+      - "Collaboration frameworks from coordination system"
+    outgoing:
+      - "New commands to system registry"
+      - "Integration patterns to all commands"
+      - "Validation frameworks to coordination system"
+
+# Topic Ownership Configuration
+topic_ownership:
+  primary_topics:
+    - "command-creation"
+    - "integration-patterns"
+    - "validation-frameworks"
+
+  secondary_topics:
+    - "requirements" # Can create commands based on requirements
+    - "implementation-plans" # Can create commands for implementation support
+
+  collaboration_permissions:
+    read_access: ["architect", "business-analyst", "product-owner", "code-owner"]
+    write_access: ["create-command"]
+    coordination_required: ["business-analyst"] # For requirement-based command creation

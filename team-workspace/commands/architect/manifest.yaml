@@ -143,3 +143,21 @@ integration_patterns:
       - "Implementation plans to product-owner"
       - "Technical specifications to development team"
       - "Risk assessments to stakeholders"
+
+# Topic Ownership Configuration
+topic_ownership:
+  primary_topics:
+    - "implementation-plans"
+    - "technical-architecture"
+    - "system-design"
+    - "risk-assessments"
+
+  secondary_topics:
+    - "technical-health" # Can provide implementation perspective
+    - "product-strategy" # Can influence technical implementation
+    - "requirements" # Can assess technical feasibility
+
+  collaboration_permissions:
+    read_access: ["code-owner", "product-owner", "business-analyst"]
+    write_access: ["architect"]
+    coordination_required: ["code-owner", "product-owner"] # For technical and business alignment
