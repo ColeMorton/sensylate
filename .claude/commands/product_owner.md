@@ -2,6 +2,29 @@
 
 Automatically transform technical findings into prioritized product decisions using evidence-based strategic framework and measurable outcomes.
 
+## MANDATORY: Pre-Execution Coordination
+
+**CRITICAL**: Before creating any product decisions or strategic analysis, you MUST integrate with the Content Lifecycle Management system to prevent duplication and maintain knowledge integrity.
+
+### Step 1: Pre-Execution Consultation
+```bash
+python team-workspace/coordination/pre-execution-consultation.py product-owner {proposed-topic} "{strategic-scope}"
+```
+
+### Step 2: Handle Consultation Results
+Based on consultation response:
+- **proceed**: Continue with product decision creation
+- **coordinate_required**: Contact topic owner for collaboration - check ownership and request coordination
+- **avoid_duplication**: Reference existing authoritative product strategy instead of creating new one
+- **update_existing**: Use superseding workflow to update existing authority decisions
+
+### Step 3: Workspace Validation
+```bash
+python team-workspace/coordination/validate-before-execution.py product-owner
+```
+
+**Only proceed with decision creation if consultation and validation are successful.**
+
 ## Purpose
 
 Functions as an automated Product Owner that converts code reviews, technical debt analysis, and implementation plans into actionable product backlogs. Applies consistent decision-making criteria focused on delivering maximum business value while managing risk and technical constraints.
@@ -209,3 +232,35 @@ team_constraints:
 - Document outcomes vs predictions for pattern recognition
 - Share decision framework learnings across product teams
 - Regular retrospectives on decision quality and process efficiency
+
+## MANDATORY: Post-Execution Lifecycle Management
+
+After creating any product decisions or strategic analysis, you MUST complete these lifecycle management steps:
+
+### Step 1: Content Authority Establishment
+```bash
+python team-workspace/coordination/topic-ownership-manager.py claim product-strategy product-owner "Product strategic decisions for {scope}"
+```
+
+### Step 2: Registry Update
+Update topic registry with new product decisions:
+- Authority file: `team-workspace/knowledge/product-strategy/{decision-topic}.md`
+- Update `coordination/topic-registry.yaml` with new authority path
+- Set product-owner as primary owner for product strategy topics
+
+### Step 3: Cross-Command Notification
+Notify dependent commands of new product decisions availability:
+- architect: For implementation planning alignment
+- code-owner: For technical health prioritization
+- business-analyst: For requirements impact assessment
+
+### Step 4: Superseding Workflow (if updating existing decisions)
+```bash
+python team-workspace/coordination/superseding-workflow.py declare product-owner product-strategy {new-decisions-file} {old-decisions-files} "Updated product decisions: {reason}"
+```
+
+## Output Location
+
+All product owner strategic decisions and analyses must be saved to `team-workspace/commands/product-owner/outputs/` to enable collaboration with other AI commands.
+
+**Authority Files**: Also save authoritative product decisions to `team-workspace/knowledge/product-strategy/` for single source of truth.
