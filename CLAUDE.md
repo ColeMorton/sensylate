@@ -326,3 +326,9 @@ team-workspace/knowledge/
   - **Code Owner**: `./team-workspace/commands/code-owner/outputs/`
   - **Product Owner**: `./team-workspace/commands/product-owner/outputs/`
   - **Business Analyst**: `./team-workspace/commands/business-analyst/outputs/`
+
+### Memory Guidance
+- **Always refer to the current date and year to ensure the latest up-to-date data**
+
+### Project Timezone Configuration
+- The Brisbane, Australia timezone is the default timezone.
