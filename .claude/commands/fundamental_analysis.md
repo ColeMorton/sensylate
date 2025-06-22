@@ -442,6 +442,21 @@ DECISION FRAMEWORK:
 □ Output internally consistent (no contradictions)
 ```
 
+**MANDATORY CONSISTENCY VALIDATION:**
+```
+□ ALL confidence scores use 0.0-1.0 format (reject any X/10 format)
+□ Header format: "Confidence: [X.X/1.0] | Data Quality: [X.X/1.0]"
+□ Author attribution: "Cole Morton" (consistent across all posts)
+□ Risk probabilities in decimal format (0.0-1.0), never percentages in tables
+□ Valuation table confidence column uses 0.X/1.0 format
+□ All monetary values include $ symbol with appropriate formatting
+□ Scenario analysis probabilities sum to 100%
+□ Data completeness percentage included in metadata
+□ Source quality scores in 0.X/1.0 format in metadata section
+□ Tables properly formatted with consistent column headers
+□ No X/10 or percentage formats in confidence/probability columns
+```
+
 ## Output Structure
 
 **File Naming**: `TICKER_YYYYMMDD.md` (e.g., `AAPL_20250617.md`)
@@ -450,6 +465,7 @@ DECISION FRAMEWORK:
 ```markdown
 # [COMPANY NAME] (TICKER) - Fundamental Analysis
 *Generated: [DATE] | Confidence: [X.X/1.0] | Data Quality: [X.X/1.0]*
+<!-- Author: Cole Morton (MANDATORY - ensure consistency) -->
 
 ## 🎯 Investment Thesis & Recommendation
 
@@ -500,10 +516,10 @@ DECISION FRAMEWORK:
 ### Multi-Method Valuation
 | Method | Fair Value | Weight | Confidence | Key Assumptions |
 |--------|-----------|---------|------------|-----------------|
-| DCF | $[XXX] | [XX]% | [X.X/1.0] | [List] |
-| Comps | $[XXX] | [XX]% | [X.X/1.0] | [List] |
-| Other | $[XXX] | [XX]% | [X.X/1.0] | [List] |
-| **Weighted Average** | **$[XXX]** | 100% | **[X.X/1.0]** | - |
+| DCF | $[XXX] | [XX]% | 0.X | [List] |
+| Comps | $[XXX] | [XX]% | 0.X | [List] |
+| Other | $[XXX] | [XX]% | 0.X | [List] |
+| **Weighted Average** | **$[XXX]** | 100% | **0.X** | - |
 
 ### Scenario Analysis
 | Scenario | Probability | Price Target | Return | Key Drivers |
@@ -518,7 +534,8 @@ DECISION FRAMEWORK:
 ### Quantified Risk Assessment
 | Risk Factor | Probability | Impact | Risk Score | Mitigation | Monitoring |
 |-------------|------------|---------|------------|------------|------------|
-| [Specific risks with numerical assessments] |
+| [Risk Name] | 0.X | [1-5] | [Score] | [Strategy] | [Metrics] |
+<!-- MANDATORY: Use 0.0-1.0 decimal format for probability column -->
 
 ### Sensitivity Analysis
 Key variables impact on fair value:
@@ -529,10 +546,11 @@ Key variables impact on fair value:
 ## 📋 Analysis Metadata
 
 **Data Sources & Quality**:
-- Primary Sources: [List with confidence scores]
+- Primary Sources: [Source Name] (0.X), [Source Name] (0.X), [Source Name] (0.X)
 - Data Completeness: [XX]%
 - Latest Data Point: [Date]
 - Data Freshness: All sources current as of analysis date
+<!-- MANDATORY: Use 0.0-1.0 format for all source confidence scores -->
 
 **Methodology Notes**:
 - [Any specific adjustments or assumptions]

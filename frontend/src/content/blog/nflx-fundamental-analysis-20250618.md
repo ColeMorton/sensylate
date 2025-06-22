@@ -12,7 +12,7 @@ draft: false
 
 # Netflix, Inc. (NFLX) - Fundamental Analysis
 
-_Generated: June 18, 2025 | Confidence: 8.2/10 | Data Quality: 8.5/10_
+_Generated: June 18, 2025 | Confidence: 0.82/1.0 | Data Quality: 0.85/1.0_
 
 ## 🎯 Investment Thesis & Recommendation
 
@@ -20,7 +20,7 @@ _Generated: June 18, 2025 | Confidence: 8.2/10 | Data Quality: 8.5/10_
 
 Netflix maintains dominant market position with 301.6M subscribers, but trades at significant premium (56x P/E) despite decelerating subscriber growth and intensifying competition from Disney+, Amazon Prime Video, and emerging ad-supported tiers.
 
-### Recommendation: HOLD | Conviction: 6.5/10
+### Recommendation: HOLD | Conviction: 0.65/1.0
 
 - **Fair Value Range**: $850 - $1,050 (Current: $1,241)
 - **Expected Return**: -15% to -18% (12-18M horizon)
@@ -39,12 +39,12 @@ Netflix maintains dominant market position with 301.6M subscribers, but trades a
 
 | Metric               | Current        | 3Y Avg | 5Y Trend    | vs Peers      | Confidence | Insight                        |
 | -------------------- | -------------- | ------ | ----------- | ------------- | ---------- | ------------------------------ |
-| Global Subscribers   | 301.6M         | 245M   | ↑ Strong    | Leader        | 9.5/10     | Record Q4 growth but slowing   |
-| ARPU (Global)        | $13.12         | $12.85 | ↑ Modest    | Premium       | 8.8/10     | Regional disparity significant |
-| Churn Rate           | 2.3%           | 3.1%   | ↓ Excellent | Best-in-class | 8.5/10     | Industry-leading retention     |
-| Content Hours Viewed | 100B+ annually | 85B    | ↑ Strong    | Leader        | 7.5/10     | Engagement driving retention   |
-| Free Cash Flow       | $6.9B          | $4.2B  | ↑ Strong    | Strong        | 9.0/10     | Substantial improvement        |
-| Operating Margin     | 22.2%          | 18.5%  | ↑ Strong    | Premium       | 8.8/10     | Approaching target of 29%      |
+| Global Subscribers   | 301.6M         | 245M   | ↑ Strong    | Leader        | 0.95       | Record Q4 growth but slowing   |
+| ARPU (Global)        | $13.12         | $12.85 | ↑ Modest    | Premium       | 0.88       | Regional disparity significant |
+| Churn Rate           | 2.3%           | 3.1%   | ↓ Excellent | Best-in-class | 0.85       | Industry-leading retention     |
+| Content Hours Viewed | 100B+ annually | 85B    | ↑ Strong    | Leader        | 0.75       | Engagement driving retention   |
+| Free Cash Flow       | $6.9B          | $4.2B  | ↑ Strong    | Strong        | 0.90       | Substantial improvement        |
+| Operating Margin     | 22.2%          | 18.5%  | ↑ Strong    | Premium       | 0.88       | Approaching target of 29%      |
 
 ### Financial Health Scorecard
 
@@ -61,11 +61,11 @@ Netflix maintains dominant market position with 301.6M subscribers, but trades a
 
 | Competitive Advantage       | Strength | Durability | Evidence                                | Confidence |
 | --------------------------- | -------- | ---------- | --------------------------------------- | ---------- |
-| Scale & Content Investment  | High     | Medium     | $18B content budget, global reach       | 8.5/10     |
-| Data-Driven Personalization | High     | High       | 80% discovery via algorithm, 2.3% churn | 9.0/10     |
-| Global Distribution Network | High     | High       | 190+ countries, local content           | 8.8/10     |
-| Original Content Portfolio  | Medium   | Medium     | 2,000+ originals, award recognition     | 7.5/10     |
-| Technology Infrastructure   | Medium   | Medium     | Recommendation engine, streaming tech   | 7.8/10     |
+| Scale & Content Investment  | High     | Medium     | $18B content budget, global reach       | 0.85       |
+| Data-Driven Personalization | High     | High       | 80% discovery via algorithm, 2.3% churn | 0.90       |
+| Global Distribution Network | High     | High       | 190+ countries, local content           | 0.88       |
+| Original Content Portfolio  | Medium   | Medium     | 2,000+ originals, award recognition     | 0.75       |
+| Technology Infrastructure   | Medium   | Medium     | Recommendation engine, streaming tech   | 0.78       |
 
 ### Industry Dynamics
 
@@ -80,11 +80,11 @@ Netflix maintains dominant market position with 301.6M subscribers, but trades a
 
 | Method               | Fair Value | Weight | Confidence | Key Assumptions                 |
 | -------------------- | ---------- | ------ | ---------- | ------------------------------- |
-| DCF                  | $865       | 40%    | 7.5/10     | 12% FCF growth, 8.5% WACC       |
-| P/E Multiple         | $1,025     | 30%    | 8.0/10     | 48x target P/E (vs 56x current) |
-| EV/EBITDA            | $950       | 20%    | 7.8/10     | 28x multiple vs peers           |
-| Sum-of-Parts         | $890       | 10%    | 6.5/10     | Core streaming + ad revenue     |
-| **Weighted Average** | **$925**   | 100%   | **7.7/10** | -                               |
+| DCF                  | $865       | 40%    | 0.75       | 12% FCF growth, 8.5% WACC       |
+| P/E Multiple         | $1,025     | 30%    | 0.80       | 48x target P/E (vs 56x current) |
+| EV/EBITDA            | $950       | 20%    | 0.78       | 28x multiple vs peers           |
+| Sum-of-Parts         | $890       | 10%    | 0.65       | Core streaming + ad revenue     |
+| **Weighted Average** | **$925**   | 100%   | **0.77**   | -                               |
 
 ### Scenario Analysis
 
@@ -101,11 +101,11 @@ Netflix maintains dominant market position with 301.6M subscribers, but trades a
 
 | Risk Factor             | Probability | Impact | Risk Score | Mitigation                           | Monitoring               |
 | ----------------------- | ----------- | ------ | ---------- | ------------------------------------ | ------------------------ |
-| Market Saturation (NA)  | 70%         | 4      | 2.8        | International expansion, ad tier     | Weekly sub metrics       |
-| Competitive Pressure    | 85%         | 3      | 2.6        | Content differentiation, pricing     | Market share data        |
-| Content Cost Inflation  | 60%         | 4      | 2.4        | Production efficiency, partnerships  | Quarterly spend analysis |
-| Regulatory Restrictions | 45%         | 3      | 1.4        | Compliance, local partnerships       | Policy tracking          |
-| Economic Downturn       | 35%         | 4      | 1.4        | Pricing flexibility, cost management | Macro indicators         |
+| Market Saturation (NA)  | 0.7         | 4      | 2.8        | International expansion, ad tier     | Weekly sub metrics       |
+| Competitive Pressure    | 0.85        | 3      | 2.6        | Content differentiation, pricing     | Market share data        |
+| Content Cost Inflation  | 0.6         | 4      | 2.4        | Production efficiency, partnerships  | Quarterly spend analysis |
+| Regulatory Restrictions | 0.45        | 3      | 1.4        | Compliance, local partnerships       | Policy tracking          |
+| Economic Downturn       | 0.35        | 4      | 1.4        | Pricing flexibility, cost management | Macro indicators         |
 
 ### Sensitivity Analysis
 
@@ -148,7 +148,7 @@ Key variables impact on fair value:
 
 **Data Sources & Quality**:
 
-- Primary Sources: Netflix IR (9.5/10), SEC filings (9.0/10), Industry reports (8.0/10)
+- Primary Sources: Netflix IR (0.95), SEC filings (0.90), Industry reports (0.80)
 - Data Completeness: 88%
 - Latest Data Point: Q4 2024 earnings (January 2025)
 
