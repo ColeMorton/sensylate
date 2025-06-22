@@ -1,0 +1,58 @@
+---
+import DonationButton from "@/components/DonationButton.astro";
+import donationsConfig from "@/config/donations.json";
+
+interface Props {
+  showInArticles?: boolean;
+  className?: string;
+}
+
+const { showInArticles = true, className = "" } = Astro.props;
+
+const shouldShow =
+  showInArticles && donationsConfig.settings.enable_article_footer;
+---
+
+{
+  shouldShow && (
+    <div
+      class={`donation-footer my-8 rounded-lg border border-gray-200 bg-gray-50 p-6 dark:border-gray-700 dark:bg-gray-800 ${className}`}
+    >
+      <div class="mb-4 text-center">
+        <h4 class="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
+          Found this analysis helpful?
+        </h4>
+        <p class="text-sm text-gray-600 dark:text-gray-400">
+          {donationsConfig.settings.default_message}
+        </p>
+      </div>
+
+      <div class="flex justify-center">
+        <DonationButton variant="inline" size="md" />
+      </div>
+
+      <div class="mt-4 text-center">
+        <p class="text-xs text-gray-500 dark:text-gray-400">
+          Your support helps maintain independent, unbiased financial research
+        </p>
+      </div>
+    </div>
+  )
+}
+
+<style>
+  .donation-footer {
+    animation: fadeInUp 0.6s ease-out;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>

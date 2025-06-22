@@ -1,0 +1,95 @@
+---
+import donationsConfig from "@/config/donations.json";
+import DynamicIcon from "@/helpers/DynamicIcon";
+
+interface Props {
+  variant?: "floating" | "inline" | "widget";
+  size?: "sm" | "md" | "lg";
+  showPrimary?: boolean;
+  className?: string;
+}
+
+const {
+  variant = "inline",
+  size = "md",
+  showPrimary = true,
+  className = "",
+} = Astro.props;
+
+const platforms = showPrimary
+  ? donationsConfig.platforms.filter((p) => p.primary)
+  : donationsConfig.platforms;
+
+const sizeClasses = {
+  sm: "px-3 py-1.5 text-sm",
+  md: "px-4 py-2 text-base",
+  lg: "px-6 py-3 text-lg",
+};
+
+const variantClasses = {
+  floating: "fixed bottom-6 right-6 z-50 shadow-lg",
+  inline: "inline-flex",
+  widget: "w-full",
+};
+---
+
+<div class={`donation-buttons ${variantClasses[variant]} ${className}`}>
+  {
+    variant === "widget" && (
+      <div class="mb-4 text-center">
+        <h3 class="mb-2 text-lg font-semibold">Support My Work</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-400">
+          {donationsConfig.settings.default_message}
+        </p>
+      </div>
+    )
+  }
+
+  <div
+    class={`flex ${variant === "widget" ? "flex-col space-y-2" : "flex-wrap gap-2"}`}
+  >
+    {
+      platforms.map((platform) => (
+        <a
+          href={platform.link}
+          target="_blank"
+          rel="noopener noreferrer"
+          class={`donation-btn ${sizeClasses[size]} flex items-center justify-center gap-2 rounded-lg border border-gray-200 bg-white text-gray-700 transition-all duration-200 hover:text-gray-900 hover:shadow-md dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:text-white ${variant === "widget" ? "w-full" : ""} `}
+          style={`--platform-color: ${platform.color}`}
+          data-platform={platform.name}
+          aria-label={`Support via ${platform.label}`}
+        >
+          <DynamicIcon icon={platform.icon} className="w-4 h-4" />
+          <span>{platform.label}</span>
+          {variant === "widget" && platform.description && (
+            <span class="ml-auto text-xs text-gray-500 dark:text-gray-400">
+              {platform.description}
+            </span>
+          )}
+        </a>
+      ))
+    }
+  </div>
+</div>
+
+<style>
+  .donation-btn:hover {
+    border-color: var(--platform-color);
+    background: linear-gradient(135deg, var(--platform-color) 10, transparent);
+  }
+
+  .donation-buttons.fixed {
+    animation: slideInRight 0.3s ease-out;
+  }
+
+  @keyframes slideInRight {
+    from {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+</style>
