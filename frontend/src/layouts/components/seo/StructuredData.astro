@@ -1,0 +1,81 @@
+---
+// StructuredData.astro - JSON-LD structured data component
+// Generates schema markup for improved search engine understanding
+
+import {
+  generatePersonSchema,
+  generateOrganizationSchema,
+  generateArticleSchema,
+  serializeSchema,
+  validateSchema,
+  type Article,
+  type Person,
+  type Organization,
+} from "@/lib/seo/schema-generators";
+
+export interface Props {
+  type: "person" | "organization" | "article";
+  // Article-specific props
+  title?: string;
+  description?: string;
+  datePublished?: Date;
+  dateModified?: Date;
+  image?: string;
+  categories?: string[];
+  tags?: string[];
+  slug?: string;
+}
+
+const {
+  type,
+  title,
+  description,
+  datePublished,
+  dateModified,
+  image,
+  categories,
+  tags,
+  slug,
+} = Astro.props;
+
+let schema: Person | Organization | Article;
+
+switch (type) {
+  case "person":
+    schema = generatePersonSchema();
+    break;
+  case "organization":
+    schema = generateOrganizationSchema();
+    break;
+  case "article":
+    if (!title || !description || !datePublished) {
+      throw new Error(
+        "Article schema requires title, description, and datePublished",
+      );
+    }
+    schema = generateArticleSchema(
+      title,
+      description,
+      datePublished,
+      dateModified,
+      image,
+      categories,
+      tags,
+      slug,
+    );
+    break;
+  default:
+    throw new Error(`Unsupported schema type: ${type}`);
+}
+
+// Validate schema in development
+if (import.meta.env.DEV) {
+  if (!validateSchema(schema)) {
+    console.warn(`Invalid schema generated for type: ${type}`);
+  }
+}
+
+const serializedSchema = serializeSchema(schema);
+---
+
+<script type="application/ld+json" set:html={serializedSchema} />
