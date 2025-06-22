@@ -258,6 +258,16 @@
     width: 100%;
     -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
   }
+  
+  /* Apply proper border that scrolls with content */
+  .content table {
+    @apply border border-border dark:border-darkmode-border rounded-lg;
+  }
+  
+  /* Disable the problematic pseudo-element border on mobile */
+  .content table::before {
+    display: none;
+  }
 }
 
 /* Ensure tables maintain proper structure while scrollable */

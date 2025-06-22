@@ -4,7 +4,7 @@
 }
 
 .footer {
-  @apply py-3 lg:py-6;
+  @apply py-2 lg:py-6;
 }
 
 /* navbar items */
