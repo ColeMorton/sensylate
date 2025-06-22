@@ -41,11 +41,14 @@ const { className }: { className?: string } = Astro.props;
   )
 }
 
-<script>
-  import { enhancedConfig } from "@/lib/config";
-
+<script
+  define:vars={{
+    themeSwitcherEnabled: features.theme_switcher,
+    config: enhancedConfig,
+  }}
+>
   // Only load theme functionality if theme switcher is enabled
-  if (enhancedConfig.features.theme_switcher) {
+  if (themeSwitcherEnabled) {
     const matchMedia = window.matchMedia("(prefers-color-scheme: dark)");
 
     matchMedia.addEventListener("change", () =>
@@ -54,11 +57,11 @@ const { className }: { className?: string } = Astro.props;
 
     function toggleTheme(themeSwitch: NodeListOf<Element>) {
       const defaulTheme =
-        enhancedConfig.settings.default_theme === "system"
+        config.settings.default_theme === "system"
           ? matchMedia.matches
             ? "dark"
             : "light"
-          : enhancedConfig.settings.default_theme;
+          : config.settings.default_theme;
       const currentTheme = localStorage.getItem("theme") || defaulTheme;
       const isDarkTheme = currentTheme === "dark";
 
@@ -76,7 +79,7 @@ const { className }: { className?: string } = Astro.props;
               ? matchMedia.matches
                 ? "dark"
                 : "light"
-              : enhancedConfig.settings.default_theme;
+              : config.settings.default_theme;
           const currentTheme = localStorage.getItem("theme") || defaulTheme;
           const newTheme = currentTheme === "light" ? "dark" : "light";
           localStorage.setItem("theme", newTheme);
