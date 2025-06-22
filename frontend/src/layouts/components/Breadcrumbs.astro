@@ -1,5 +1,6 @@
 ---
 import { humanize } from "@/lib/utils/textConverter";
+import BreadcrumbSchema from "@/layouts/components/seo/BreadcrumbSchema.astro";
 
 const { className }: { className?: string } = Astro.props;
 
@@ -21,7 +22,16 @@ paths.forEach((label: string, i: number) => {
       "aria-label": Astro.url.pathname === href ? "page" : undefined,
     });
 });
+
+// Prepare breadcrumb data for schema
+const breadcrumbData = parts.map((part) => ({
+  name: part.label,
+  url: part.href,
+}));
 ---
+
+<!-- Breadcrumb Schema Markup -->
+<BreadcrumbSchema breadcrumbs={breadcrumbData} />
 
 <nav aria-label="Breadcrumb" class={className}>
   <ol class="inline-flex" role="list">

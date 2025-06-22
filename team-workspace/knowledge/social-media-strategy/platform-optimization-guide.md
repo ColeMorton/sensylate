@@ -24,7 +24,7 @@ Software Engineer & Quantitative Trader
 **Profile Image**: Professional headshot with subtle tech/finance theme
 **Header Image**: Clean, professional design showcasing "Engineer's Approach to Trading"
 **Location**: Current location for credibility
-**Website**: https://sensylate.com
+**Website**: https://www.colemorton.com
 
 **Pinned Tweet Strategy**:
 Create high-value analysis thread demonstrating methodology:
@@ -78,7 +78,10 @@ Long-tail: #EngineersApproachToTrading #AIEnhancedAnalysis #QuantitativeFinance
 
 ## LinkedIn Optimization Strategy
 
-### Profile Optimization
+### Profile Optimization (Action Required)
+
+**Current Profile**: https://www.linkedin.com/in/cole-morton-72300745/ (Outdated)
+**Priority**: Update required to align with current positioning
 
 **Headline**: "Software Engineer & Quantitative Trader | AI-Enhanced Financial Analysis | Institutional-Quality Trading Content"
 
@@ -131,13 +134,13 @@ Currently developing Content Evaluator service for financial advisors and resear
 
 ---
 
-## Substack Strategy
+## Substack Strategy (Secondary Platform)
 
 ### Publication Setup
 
 **Publication Name**: "The Engineer's Approach to Trading"
 **Tagline**: "Institutional-Quality Market Analysis Through Systematic AI-Enhanced Processes"
-**URL**: colemorton.substack.com or engineering-trading.substack.com
+**URL**: https://colemorton.substack.com/ (Active)
 
 **About Page**:
 ```

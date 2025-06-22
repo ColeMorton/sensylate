@@ -129,13 +129,16 @@ Based on 2025 market research, Cole's unique position in the financial content c
 - Collaborate with complementary financial content creators
 - Leverage hashtags: #QuantTrading #FinTech #TradingAnalysis #AITrading
 
-### LinkedIn - Professional Authority (25% effort)
+### LinkedIn - Professional Authority (10% effort)
 
-**Profile Optimization**:
-- Professional headline emphasizing dual expertise
-- Experience section highlighting both technical and financial skills
-- Skills section featuring quantitative analysis and software engineering
-- Regular posts showcasing institutional-quality analysis
+**Note**: LinkedIn profile currently outdated - requires updating to align with current positioning
+
+**Profile Optimization** (Needs Update):
+- Current URL: https://www.linkedin.com/in/cole-morton-72300745/
+- Professional headline needs update to "Software Engineer & Quantitative Trader"
+- Experience section requires update with AI Command Collaboration Framework
+- Skills section needs quantitative trading and AI enhancement additions
+- Begin regular posts showcasing institutional-quality analysis
 
 **Content Strategy**:
 - Weekly thought leadership posts on market analysis
@@ -143,7 +146,23 @@ Based on 2025 market research, Cole's unique position in the financial content c
 - Case studies of successful trading analysis
 - Industry trend analysis and predictions
 
-### Website (colemorton.com) - Content Hub (15% effort)
+### Substack - Secondary Platform (20% effort)
+
+**Publication Strategy**:
+- Publication URL: https://colemorton.substack.com/
+- Secondary platform after X/Twitter for long-form content
+- Monthly deep-dive fundamental analysis reports
+- Quarterly AI Command Collaboration framework updates
+- Premium subscriber tier with exclusive trading insights
+- Free tier for lead generation and authority building
+
+**Content Themes**:
+- Detailed company valuations with full methodology
+- Sector analysis with AI-enhanced data gathering
+- Trading strategy development and backtesting
+- Framework development and open-source contributions
+
+### Website (colemorton.com) - Content Hub (10% effort)
 
 **Website Strategy**:
 - Primary content hub at https://www.colemorton.com/
@@ -152,12 +171,6 @@ Based on 2025 market research, Cole's unique position in the financial content c
 - Interactive financial tools and calculators
 - About page emphasizing dual expertise and AI framework
 - Lead magnets for premium content and services
-
-**Content Themes**:
-- Detailed company valuations with full methodology
-- Sector analysis with AI-enhanced data gathering
-- Trading strategy development and backtesting
-- Framework development and open-source contributions
 
 ---
 

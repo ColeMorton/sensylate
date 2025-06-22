@@ -23,7 +23,7 @@
 **Stakeholders**:
 - **Primary**: Cole Morton (Website Owner/Content Creator)
 - **Secondary**: Potential clients, traders, investors seeking financial analysis content
-- **Tertiary**: Search engines, content aggregators, social media platforms (X/Twitter primary, Substack secondary)
+- **Tertiary**: Search engines, content aggregators, social media platforms
 
 ## Current State Analysis
 
@@ -99,7 +99,6 @@ Based on the comprehensive social media strategy, SEO efforts must align with th
 - Search Intent: "systematic trading strategies", "quantitative analysis methods"
 - Content Needs: Detailed methodology, performance tracking, educational resources
 - Technical Level: High - can handle complex analysis
-- Primary Discovery: X/Twitter, then driven to website and Substack for deeper content
 
 **Secondary (25%): Financial Content Creators & Analysts**
 - Search Intent: "AI content creation finance", "systematic content production"
@@ -167,8 +166,7 @@ Based on the comprehensive social media strategy, SEO efforts must align with th
     "sameAs": [
       "https://twitter.com/ColeMoreton",
       "https://github.com/ColeMorton",
-      "https://www.linkedin.com/in/cole-morton-72300745/",
-      "https://colemorton.substack.com/"
+      "https://www.linkedin.com/in/colemorton"
     ]
   },
   "publisher": {
@@ -294,7 +292,7 @@ Based on the comprehensive social media strategy, SEO efforts must align with th
 2. **Cross-Platform Content Consistency**
    ```
    As a reader finding content through search,
-   I want consistent messaging across website, X/Twitter, and Substack
+   I want consistent messaging across website, social media, and newsletters
    So that I understand Cole's unique "Engineer's Approach to Trading" positioning.
    ```
 
@@ -474,7 +472,7 @@ This SEO optimization initiative directly impacts Cole Morton's "Engineer's Appr
 1. **Brand Authority**: Structured data positions Cole as the premier "Software Engineer & Quantitative Trader" creating institutional-quality content
 2. **Strategic Alignment**: SEO efforts directly support the social media strategy's content pillars and daily themes
 3. **Audience Targeting**: Optimization focuses on the three key personas: Active Traders (60%), Financial Content Creators (25%), and Tech Professionals (15%)
-4. **Cross-Platform Synergy**: Consistent messaging and optimization across website, X/Twitter (primary social), Substack (secondary platform), and content syndication channels
+4. **Cross-Platform Synergy**: Consistent messaging and optimization across website, social media, and content syndication channels
 5. **Revenue Support**: Enhanced visibility drives qualified traffic for trading content monetization and consulting services
 
 **Key Positioning Keywords**:

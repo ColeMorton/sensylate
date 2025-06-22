@@ -24,6 +24,31 @@ const filteredFooter = menu.footer.filter((item) => {
         <Social source={social.main} className="social-icons" />
       </div>
       <div class="mb-8 text-center lg:col-3 lg:mt-0 lg:mb-0 lg:text-right">
+        <div class="text-text/70 dark:text-darkmode-text/70 text-sm">
+          <a
+            href="/rss.xml"
+            class="hover:text-primary transition-colors duration-200"
+            title="RSS Feed"
+          >
+            RSS
+          </a>
+          <span class="mx-2">|</span>
+          <a
+            href="/atom.xml"
+            class="hover:text-primary transition-colors duration-200"
+            title="Atom Feed"
+          >
+            Atom
+          </a>
+          <span class="mx-2">|</span>
+          <a
+            href="/feed.json"
+            class="hover:text-primary transition-colors duration-200"
+            title="JSON Feed"
+          >
+            JSON
+          </a>
+        </div>
       </div>
     </div>
   </div>
