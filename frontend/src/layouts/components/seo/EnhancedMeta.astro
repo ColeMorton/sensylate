@@ -1,0 +1,163 @@
+---
+import { analyzeContent, extractTradingSymbols } from "@/lib/seo/content-analyzers";
+
+export interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  type: 'article' | 'website';
+  content: string;
+  datePublished: Date;
+  dateModified: Date;
+  author: string;
+  categories: string[];
+  tags: string[];
+  canonical: string;
+}
+
+const {
+  title,
+  description,
+  image,
+  type,
+  content,
+  datePublished,
+  dateModified,
+  author,
+  categories,
+  tags,
+  canonical
+} = Astro.props;
+
+// Analyze content for enhanced metadata
+const contentAnalysis = analyzeContent(content);
+const tradingSymbols = extractTradingSymbols(content, title);
+const seoScore = contentAnalysis.estimatedSeoScore;
+
+// Determine primary category and section
+const primaryCategory = categories && categories.length > 0 ? categories[0] : '';
+const articleSection = primaryCategory === 'fundamental-analysis' ? 'Fundamental Analysis' :
+                      primaryCategory === 'technical-analysis' ? 'Technical Analysis' :
+                      primaryCategory === 'market-analysis' ? 'Market Analysis' :
+                      primaryCategory === 'trading-strategies' ? 'Trading Strategies' :
+                      'Financial Analysis';
+
+// Format symbols for meta tag
+const symbolsString = tradingSymbols.length > 0 ? tradingSymbols.join(', ') : '';
+
+// Calculate reading time
+const wordsPerMinute = 200;
+const readingTimeMinutes = Math.ceil(contentAnalysis.wordCount / wordsPerMinute);
+---
+
+<!-- Enhanced Article Meta Tags -->
+{type === 'article' && (
+  <>
+    <!-- Article-specific Open Graph -->
+    <meta property="article:published_time" content={datePublished.toISOString()} />
+    <meta property="article:modified_time" content={dateModified.toISOString()} />
+    <meta property="article:author" content={author} />
+    <meta property="article:section" content={articleSection} />
+
+    {categories.map(category => (
+      <meta property="article:tag" content={category} />
+    ))}
+
+    {tags.map(tag => (
+      <meta property="article:tag" content={tag} />
+    ))}
+
+    <!-- Trading-specific metadata -->
+    {tradingSymbols.length > 0 && (
+      <>
+        <meta name="trading.symbols" content={symbolsString} />
+        <meta name="finance.instruments" content={symbolsString} />
+        <meta property="finance:symbol" content={tradingSymbols[0]} />
+      </>
+    )}
+
+    <!-- Content analysis metadata -->
+    <meta name="content.readingTime" content={readingTimeMinutes.toString()} />
+    <meta name="content.wordCount" content={contentAnalysis.wordCount.toString()} />
+    <meta name="content.estimatedSeoScore" content={seoScore.toString()} />
+
+    <!-- Schema.org Article metadata -->
+    <meta property="article:word_count" content={contentAnalysis.wordCount.toString()} />
+
+    <!-- Twitter Card enhanced metadata -->
+    <meta name="twitter:label1" content="Reading time" />
+    <meta name="twitter:data1" content={`${readingTimeMinutes} min read`} />
+
+    {tradingSymbols.length > 0 && (
+      <>
+        <meta name="twitter:label2" content="Symbols" />
+        <meta name="twitter:data2" content={symbolsString} />
+      </>
+    )}
+
+    <!-- Financial content indicators -->
+    <meta name="content.type" content="financial-analysis" />
+    <meta name="content.category" content={primaryCategory} />
+
+    <!-- Financial content analysis indicators would go here when implemented -->
+
+    <!-- SEO and quality indicators -->
+    <meta name="content.quality.score" content={seoScore.toString()} />
+    <meta name="content.analysis.version" content="1.0" />
+    <meta name="content.lastAnalyzed" content={new Date().toISOString()} />
+  </>
+)}
+
+<!-- Enhanced generic metadata for all content types -->
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+
+{canonical && (
+  <link rel="canonical" href={canonical} />
+)}
+
+<!-- Enhanced structured data hint -->
+<meta name="schema.type" content={type} />
+
+<!-- Performance and accessibility hints -->
+<meta name="format-detection" content="telephone=no" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="application-name" content="Cole Morton" />
+
+{image && (
+  <>
+    <meta property="og:image:alt" content={`Featured image for ${title}`} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/png" />
+  </>
+)}
+
+<!-- Enhanced social sharing metadata -->
+<meta property="og:site_name" content="Cole Morton" />
+<meta property="og:locale" content="en_US" />
+
+<!-- Twitter Card enhancements -->
+<meta name="twitter:site" content="@colemortoncom" />
+<meta name="twitter:creator" content="@colemortoncom" />
+
+<!-- Additional SEO enhancements -->
+<meta name="subject" content={primaryCategory || 'Financial Analysis'} />
+<meta name="coverage" content="Worldwide" />
+<meta name="distribution" content="Global" />
+<meta name="rating" content="General" />
+
+<!-- Content freshness indicators -->
+<meta name="revisit-after" content="7 days" />
+<meta name="expires" content={new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()} />
+
+<!-- Enhanced Dublin Core metadata -->
+<meta name="DC.title" content={title} />
+<meta name="DC.description" content={description} />
+<meta name="DC.creator" content={author} />
+<meta name="DC.publisher" content="Cole Morton" />
+<meta name="DC.date" content={datePublished.toISOString()} />
+<meta name="DC.type" content="Text" />
+<meta name="DC.format" content="text/html" />
+<meta name="DC.language" content="en" />
+<meta name="DC.coverage" content="World" />
+<meta name="DC.rights" content="© 2025 Cole Morton. All rights reserved." />

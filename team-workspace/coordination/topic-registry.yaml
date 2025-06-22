@@ -2,6 +2,7 @@ command_ownership:
   architect:
     primary_topics:
     - implementation-plans
+    - seo-components-restoration
     secondary_topics:
     - technical-health
     - product-strategy
@@ -159,6 +160,29 @@ topics:
     - code-owner
     - product-owner
     status: new
+  content-strategy:
+    collaboration_permissions:
+      coordination_required:
+      - business-analyst
+      - product-owner
+      read_access:
+      - business-analyst
+      - product-owner
+      - architect
+      write_access:
+      - social-media-strategist
+    conflict_details: No conflicts - new topic
+    conflicts_detected: false
+    current_authority: team-workspace/knowledge/content-strategy/
+    description: Content creation and distribution strategies
+    freshness_threshold_days: 14
+    last_updated: '2025-06-21'
+    primary_owner: social-media-strategist
+    related_files: []
+    secondary_owners:
+    - business-analyst
+    - product-owner
+    status: new
   git-operations:
     collaboration_permissions:
       coordination_required: []
@@ -206,6 +230,29 @@ topics:
     - code-owner
     - product-owner
     status: active
+  marketing-strategy:
+    collaboration_permissions:
+      coordination_required:
+      - business-analyst
+      - product-owner
+      read_access:
+      - business-analyst
+      - product-owner
+      - architect
+      write_access:
+      - social-media-strategist
+    conflict_details: No conflicts - new topic
+    conflicts_detected: false
+    current_authority: team-workspace/knowledge/marketing-strategy/
+    description: Marketing and audience development strategies
+    freshness_threshold_days: 14
+    last_updated: '2025-06-21'
+    primary_owner: social-media-strategist
+    related_files: []
+    secondary_owners:
+    - business-analyst
+    - product-owner
+    status: new
   performance-analysis:
     collaboration_permissions:
       coordination_required:
@@ -318,6 +365,29 @@ topics:
     secondary_owners:
     - architect
     status: new
+  social-media-strategy:
+    collaboration_permissions:
+      coordination_required:
+      - business-analyst
+      - product-owner
+      read_access:
+      - business-analyst
+      - product-owner
+      - architect
+      write_access:
+      - social-media-strategist
+    conflict_details: No conflicts - new topic
+    conflicts_detected: false
+    current_authority: team-workspace/knowledge/social-media-strategy/
+    description: Social media strategy and content marketing plans
+    freshness_threshold_days: 7
+    last_updated: '2025-06-21'
+    primary_owner: social-media-strategist
+    related_files: []
+    secondary_owners:
+    - business-analyst
+    - product-owner
+    status: new
   stakeholder-analysis:
     collaboration_permissions:
       coordination_required:
@@ -409,74 +479,5 @@ topics:
     - architect
     - product-owner
     status: active
-  social-media-strategy:
-    collaboration_permissions:
-      coordination_required:
-      - business-analyst
-      - product-owner
-      read_access:
-      - business-analyst
-      - product-owner
-      - architect
-      write_access:
-      - social-media-strategist
-    conflict_details: No conflicts - new topic
-    conflicts_detected: false
-    current_authority: team-workspace/knowledge/social-media-strategy/
-    description: Social media strategy and content marketing plans
-    freshness_threshold_days: 7
-    last_updated: '2025-06-21'
-    primary_owner: social-media-strategist
-    related_files: []
-    secondary_owners:
-    - business-analyst
-    - product-owner
-    status: new
-  content-strategy:
-    collaboration_permissions:
-      coordination_required:
-      - business-analyst
-      - product-owner
-      read_access:
-      - business-analyst
-      - product-owner
-      - architect
-      write_access:
-      - social-media-strategist
-    conflict_details: No conflicts - new topic
-    conflicts_detected: false
-    current_authority: team-workspace/knowledge/content-strategy/
-    description: Content creation and distribution strategies
-    freshness_threshold_days: 14
-    last_updated: '2025-06-21'
-    primary_owner: social-media-strategist
-    related_files: []
-    secondary_owners:
-    - business-analyst
-    - product-owner
-    status: new
-  marketing-strategy:
-    collaboration_permissions:
-      coordination_required:
-      - business-analyst
-      - product-owner
-      read_access:
-      - business-analyst
-      - product-owner
-      - architect
-      write_access:
-      - social-media-strategist
-    conflict_details: No conflicts - new topic
-    conflicts_detected: false
-    current_authority: team-workspace/knowledge/marketing-strategy/
-    description: Marketing and audience development strategies
-    freshness_threshold_days: 14
-    last_updated: '2025-06-21'
-    primary_owner: social-media-strategist
-    related_files: []
-    secondary_owners:
-    - business-analyst
-    - product-owner
-    status: new
 updated: '2025-06-20T12:30:00Z'
 version: '2.0'

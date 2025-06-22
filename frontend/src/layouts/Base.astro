@@ -1,7 +1,7 @@
 ---
 import TwSizeIndicator from "@/components/TwSizeIndicator.astro";
 import StructuredData from "@/layouts/components/seo/StructuredData.astro";
-// import WebVitals from "@/layouts/components/seo/WebVitals.astro";
+import WebVitals from "@/layouts/components/seo/WebVitals.astro";
 import config from "@/config/config.json";
 import theme from "@/config/theme.json";
 import { plainify } from "@/lib/utils/textConverter";
@@ -307,12 +307,10 @@ const { title, meta_title, description, image, noindex, canonical } =
     <Footer />
 
     <!-- Core Web Vitals Monitoring -->
-    {
-      /* <WebVitals
+    <WebVitals
       enableAnalytics={true}
       enableConsoleLogging={import.meta.env.DEV}
       enableBeacon={true}
-    /> */
-    }
+    />
   </body>
 </html>
