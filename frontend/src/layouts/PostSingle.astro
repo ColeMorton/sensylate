@@ -2,8 +2,8 @@
 import BlogCard from "@/components/BlogCard.astro";
 import Share from "@/components/Share.astro";
 import StructuredData from "@/layouts/components/seo/StructuredData.astro";
-import EnhancedMeta from "@/layouts/components/seo/EnhancedMeta.astro";
-import ReadingTime from "@/layouts/components/seo/ReadingTime.astro";
+// import EnhancedMeta from "@/layouts/components/seo/EnhancedMeta.astro";
+// import ReadingTime from "@/layouts/components/seo/ReadingTime.astro";
 import Disqus from "@/helpers/Disqus";
 import { getSinglePage } from "@/lib/contentParser.astro";
 import dateFormat from "@/lib/utils/dateFormat";
@@ -37,8 +37,8 @@ const getTagUrl = (tag: string) => {
 };
 ---
 
-<!-- Enhanced Meta Tags for Article -->
-<EnhancedMeta
+<!-- Enhanced Meta Tags for Article -->{
+  /* <EnhancedMeta
   title={title}
   description={description}
   image={image}
@@ -50,7 +50,8 @@ const getTagUrl = (tag: string) => {
   categories={categories}
   tags={tags}
   canonical={`https://www.colemorton.com/blog/${post.id}/`}
-/>
+/> */
+}
 
 <!-- Article Schema Markup -->
 <StructuredData
@@ -87,9 +88,11 @@ const getTagUrl = (tag: string) => {
             <FaRegClock className={"-mt-1 mr-2 inline-block"} />
             {dateFormat(date)}
           </li>
-          <li class="mr-4 inline-block">
+          {
+            /* <li class="mr-4 inline-block">
             <ReadingTime content={rawContent} variant="minimal" className="" />
-          </li>
+          </li> */
+          }
           {
             categories && categories.length > 0 && (
               <li class="mr-4 inline-block">
