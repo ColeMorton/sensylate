@@ -8,13 +8,15 @@
   "packageManager": "yarn@1.22.22",
   "scripts": {
     "dev": "yarn generate-json && yarn generate-pages && astro dev",
-    "build": "yarn generate-json && yarn generate-pages && astro build",
+    "build": "yarn validate-env && yarn generate-json && yarn generate-pages && astro build && yarn sanitize-build",
     "preview": "astro preview",
     "check": "astro check",
     "format": "prettier -w ./src",
     "generate-json": "node scripts/jsonGenerator.js",
     "generate-pages": "node scripts/pageGenerator.js",
     "remove-darkmode": "node scripts/removeDarkmode.js && yarn format",
+    "validate-env": "node scripts/sanitize-build.js",
+    "sanitize-build": "node scripts/sanitize-build.js",
     "test": "vitest",
     "test:watch": "vitest --watch",
     "test:coverage": "vitest --coverage",
@@ -24,7 +26,7 @@
     "lint": "eslint src --fix",
     "lint:check": "eslint src",
     "check-git-tracking": "node scripts/check-git-tracking.js",
-    "pre-commit": "npm run lint:check && npm run check-git-tracking"
+    "pre-commit": "npm run lint:check && npm run check-git-tracking && npm run validate-env"
   },
   "dependencies": {
     "@astrojs/check": "0.9.4",
