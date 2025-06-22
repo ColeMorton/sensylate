@@ -5,7 +5,7 @@ import type { FeatureFlags, EnhancedConfig } from "@/types";
  * Environment variable utilities
  */
 function envToBoolean(value: string | undefined): boolean | undefined {
-  if (value === undefined) {
+  if (value === undefined || value === "") {
     return undefined;
   }
   return value.toLowerCase() === "true";
@@ -41,8 +41,7 @@ function getFeatureFlags(): FeatureFlags {
     gtm:
       envToBoolean(import.meta.env.PUBLIC_FEATURE_GTM) ??
       config.google_tag_manager.enable,
-    calculators:
-      envToBoolean(import.meta.env.PUBLIC_FEATURE_CALCULATORS) ?? true,
+    calculators: true, // Always enabled - critical feature
     calculator_advanced:
       envToBoolean(import.meta.env.PUBLIC_FEATURE_CALCULATOR_ADVANCED) ?? false,
     elements_page:
