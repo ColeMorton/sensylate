@@ -1,0 +1,47 @@
+{
+  "platforms": [
+    {
+      "name": "tiptopjar",
+      "label": "Tip Top Jar",
+      "icon": "FaJar",
+      "link": "https://tiptopjar.com/colemorton",
+      "description": "Support with crypto or traditional payments",
+      "primary": true,
+      "color": "#FF6B35"
+    },
+    {
+      "name": "buymeacoffee",
+      "label": "Buy Me a Coffee",
+      "icon": "FaCoffee",
+      "link": "https://buymeacoffee.com/colemorton",
+      "description": "One-time coffee donations",
+      "primary": true,
+      "color": "#FFDD00"
+    },
+    {
+      "name": "paypal",
+      "label": "PayPal",
+      "icon": "FaPaypal",
+      "link": "https://paypal.me/colemorton7",
+      "description": "Direct PayPal donations",
+      "primary": false,
+      "color": "#003087"
+    },
+    {
+      "name": "linktree",
+      "label": "All Links",
+      "icon": "FaLink",
+      "link": "https://linktr.ee/colemorton",
+      "description": "View all support options",
+      "primary": false,
+      "color": "#39E09B"
+    }
+  ],
+  "settings": {
+    "enable_floating_button": true,
+    "enable_article_footer": true,
+    "enable_sidebar_widget": true,
+    "default_message": "Support independent analysis and research",
+    "thank_you_message": "Thank you for supporting independent financial analysis!"
+  }
+}

@@ -16,15 +16,19 @@ const filteredFooter = menu.footer.filter((item) => {
 });
 ---
 
-<footer class="footer fixed right-0 bottom-0 left-0 z-20">
-  <div class="container">
+<footer
+  class="footer fixed right-0 bottom-0 left-0 z-20 w-full overflow-hidden"
+>
+  <div class="container max-w-full">
     <div class="row items-center">
       <div class="mb-8 text-center lg:col-3 lg:mb-0 lg:text-left"></div>
       <div class="mb-8 text-center lg:col-6 lg:mb-0">
         <Social source={social.main} className="social-icons" />
       </div>
       <div class="mb-8 text-center lg:col-3 lg:mt-0 lg:mb-0 lg:text-right">
-        <div class="text-text/70 dark:text-darkmode-text/70 text-sm">
+        <div
+          class="text-text/70 dark:text-darkmode-text/70 hidden text-sm sm:block"
+        >
           <a
             href="/rss.xml"
             class="hover:text-primary transition-colors duration-200"

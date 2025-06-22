@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import AwesomeLightbox from "react-awesome-lightbox";
-import "react-awesome-lightbox/build/style.css";
+import Lightbox from "yet-another-react-lightbox";
+import "yet-another-react-lightbox/styles.css";
 
 interface ImageLightboxProps {
   src: string;
@@ -10,7 +10,7 @@ interface ImageLightboxProps {
   className?: string;
   thumbnailClassName?: string;
   enableLightbox?: boolean;
-  images?: Array<{ url: string; title?: string }>;
+  images?: Array<{ src: string; alt?: string }>;
 }
 
 export default function ImageLightbox({
@@ -31,8 +31,8 @@ export default function ImageLightbox({
     }
   };
 
-  const lightboxImages = images || [{ url: src, title: alt }];
-  const startIndex = images ? images.findIndex((img) => img.url === src) : 0;
+  const lightboxImages = images || [{ src: src, alt: alt }];
+  const startIndex = images ? images.findIndex((img) => img.src === src) : 0;
 
   const imageElement = (
     <img
@@ -57,17 +57,12 @@ export default function ImageLightbox({
   return (
     <div className={className}>
       {imageElement}
-      {enableLightbox && isOpen && (
-        <AwesomeLightbox
-          images={lightboxImages}
-          startIndex={startIndex}
-          onClose={() => setIsOpen(false)}
-          allowZoom={true}
-          allowRotate={true}
-          allowReset={true}
-          showTitle={true}
-        />
-      )}
+      <Lightbox
+        open={enableLightbox && isOpen}
+        close={() => setIsOpen(false)}
+        slides={lightboxImages}
+        index={startIndex}
+      />
     </div>
   );
 }
