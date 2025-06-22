@@ -23,7 +23,8 @@
     "test:e2e:ui": "E2E_SCREENSHOTS=true vitest run src/test/e2e",
     "lint": "eslint src --fix",
     "lint:check": "eslint src",
-    "pre-commit": "npm run lint:check"
+    "check-git-tracking": "node scripts/check-git-tracking.js",
+    "pre-commit": "npm run lint:check && npm run check-git-tracking"
   },
   "dependencies": {
     "@astrojs/check": "0.9.4",

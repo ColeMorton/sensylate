@@ -53,6 +53,7 @@ yarn test:coverage       # Run tests with coverage report
 # Code Quality
 yarn lint                # Run ESLint and auto-fix issues
 yarn lint:check          # Run ESLint without fixing
+yarn check-git-tracking  # Check for untracked files being imported (prevents build failures)
 yarn pre-commit          # Run all pre-commit checks manually
 
 # Python Development (from root directory)
