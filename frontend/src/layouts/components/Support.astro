@@ -1,0 +1,36 @@
+---
+import support from "@/config/support.json";
+import { FaCoffee, FaPaypal } from "react-icons/fa";
+import { GiGlassShot } from "react-icons/gi";
+
+const { className }: { className?: string } = Astro.props;
+
+// Icon mapping for support platforms
+const iconMap = {
+  FaCoffee: FaCoffee,
+  FaPaypal: FaPaypal,
+  FaJar: GiGlassShot, // Using glass shot icon for tip jar
+};
+
+const { platforms } = support;
+---
+
+<ul class={`${className}`}>
+  {
+    platforms.map((platform) => {
+      const IconComponent = iconMap[platform.icon as keyof typeof iconMap];
+      return (
+        <li class="inline-block">
+          <a
+            aria-label={platform.aria_label}
+            href={platform.link}
+            target="_blank"
+            rel="noreferrer noopener"
+          >
+            <IconComponent />
+          </a>
+        </li>
+      );
+    })
+  }
+</ul>

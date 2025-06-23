@@ -14,15 +14,29 @@
 
 /* social icons */
 .social-icons {
-  @apply space-x-8;
+  @apply space-x-6;
 }
 .social-icons li {
   @apply inline-block;
 }
 .social-icons li a {
-  @apply bg-primary dark:bg-darkmode-primary dark:text-text-dark flex h-9 w-9 items-center justify-center rounded-sm text-center leading-9 text-white;
+  @apply bg-primary dark:bg-darkmode-primary dark:text-text-dark flex h-9 w-9 items-center justify-center rounded-sm text-center leading-9 text-white transition-colors duration-200;
 }
 .social-icons li a svg {
+  @apply h-5 w-5;
+}
+
+/* support icons */
+.support-icons {
+  @apply space-x-6;
+}
+.support-icons li {
+  @apply inline-block;
+}
+.support-icons li a {
+  @apply bg-light text-text-dark dark:bg-darkmode-light dark:text-darkmode-text-dark hover:bg-primary dark:hover:bg-darkmode-primary flex h-9 w-9 items-center justify-center rounded-sm text-center leading-9 transition-colors duration-200 hover:text-white dark:hover:text-white;
+}
+.support-icons li a svg {
   @apply h-5 w-5;
 }
 

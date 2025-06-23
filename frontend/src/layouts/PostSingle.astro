@@ -1,6 +1,7 @@
 ---
 import BlogCard from "@/components/BlogCard.astro";
 import Share from "@/components/Share.astro";
+import Support from "@/components/Support.astro";
 import StructuredData from "@/layouts/components/seo/StructuredData.astro";
 import EnhancedMeta from "@/layouts/components/seo/EnhancedMeta.astro";
 import ReadingTime from "@/layouts/components/seo/ReadingTime.astro";
@@ -128,14 +129,20 @@ const getTagUrl = (tag: string) => {
             </div>
           </div>
           <div class="lg:col-4">
-            <div class="flex items-center justify-end gap-3">
-              <h5 class="shrink-0">Share:</h5>
-              <Share
-                className="social-icons"
-                title={title}
-                description={description}
-                slug={`blog/${post.id}`}
-              />
+            <div class="space-y-4">
+              <div class="flex items-center justify-end gap-4">
+                <h5 class="min-w-[60px] shrink-0">Share:</h5>
+                <Share
+                  className="social-icons"
+                  title={title}
+                  description={description}
+                  slug={`blog/${post.id}`}
+                />
+              </div>
+              <div class="flex items-center justify-end gap-4">
+                <h5 class="min-w-[60px] shrink-0">Support:</h5>
+                <Support className="support-icons" />
+              </div>
             </div>
           </div>
         </div>

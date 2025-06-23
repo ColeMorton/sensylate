@@ -1,0 +1,22 @@
+{
+  "platforms": [
+    {
+      "name": "Buy Me Coffee",
+      "icon": "FaCoffee",
+      "link": "https://buymeacoffee.com/colemorton",
+      "aria_label": "Support via Buy Me Coffee"
+    },
+    {
+      "name": "Tip Top Jar",
+      "icon": "FaJar",
+      "link": "https://tiptopjar.com/colemorton",
+      "aria_label": "Support via Tip Top Jar"
+    },
+    {
+      "name": "PayPal",
+      "icon": "FaPaypal",
+      "link": "https://www.paypal.com/paypalme/colemorton7",
+      "aria_label": "Support via PayPal"
+    }
+  ]
+}
