@@ -87,119 +87,13 @@ const detailedText = `${words} words • ${timeText}`;
       </span>
     </div>
 
-    <!-- Reading progress tracking -->
-    <script define:vars={{ minutes, words }}>
-      (function() {
-        // Track reading progress milestones
-        let hasTracked25 = false;
-        let hasTracked50 = false;
-        let hasTracked75 = false;
-        let hasTracked100 = false;
-        let startTime = Date.now();
-
-        // Make tracking variables globally accessible for tests
-        window._tracked25 = false;
-        window._tracked50 = false;
-        window._tracked75 = false;
-        window._tracked100 = false;
-
-        const trackMilestone = (percentage) => {
-          const timeSpent = (Date.now() - startTime) / 1000; // seconds
-
-          // Set global tracking variables for tests
-          if (percentage === 25) window._tracked25 = true;
-          if (percentage === 50) window._tracked50 = true;
-          if (percentage === 75) window._tracked75 = true;
-          if (percentage === 100) window._tracked100 = true;
-
-          // Send analytics event (placeholder)
-          if (typeof gtag !== 'undefined') {
-            gtag('event', 'reading_progress', {
-              'custom_parameter': percentage,
-              'time_spent': timeSpent,
-              'estimated_reading_time': minutes,
-              'word_count': words
-            });
-          }
-
-          // Send to other analytics services
-          if (typeof window.webVitalsMonitor !== 'undefined') {
-            window.webVitalsMonitor.trackReadingProgress = window.webVitalsMonitor.trackReadingProgress || [];
-            window.webVitalsMonitor.trackReadingProgress.push({
-              milestone: percentage,
-              timeSpent: timeSpent,
-              timestamp: Date.now()
-            });
-          }
-        };
-
-        const handleScroll = () => {
-          const scrolled = window.scrollY;
-          const maxScroll = document.body.scrollHeight - window.innerHeight;
-          const scrollPercentage = (scrolled / maxScroll) * 100;
-
-          if (scrollPercentage >= 25 && !hasTracked25) {
-            hasTracked25 = true;
-            trackMilestone(25);
-          }
-
-          if (scrollPercentage >= 50 && !hasTracked50) {
-            hasTracked50 = true;
-            trackMilestone(50);
-          }
-
-          if (scrollPercentage >= 75 && !hasTracked75) {
-            hasTracked75 = true;
-            trackMilestone(75);
-          }
-
-          if (scrollPercentage >= 90 && !hasTracked100) {
-            hasTracked100 = true;
-            trackMilestone(100);
-          }
-        };
-
-        // Track time spent on page
-        const trackTimeSpent = () => {
-          const timeSpent = (Date.now() - startTime) / 1000; // seconds
-          const estimatedTime = minutes * 60; // convert to seconds
-
-          if (timeSpent >= estimatedTime * 0.8) { // 80% of estimated reading time
-            if (typeof gtag !== 'undefined') {
-              gtag('event', 'thorough_reading', {
-                'time_spent': timeSpent,
-                'estimated_time': estimatedTime,
-                'word_count': words
-              });
-            }
-          }
-        };
-
-        // Add scroll listener
-        window.addEventListener('scroll', handleScroll, { passive: true });
-
-        // Track when user leaves page
-        window.addEventListener('beforeunload', trackTimeSpent);
-
-        // Track visibility changes (tab switching)
-        document.addEventListener('visibilitychange', () => {
-          if (document.hidden) {
-            trackTimeSpent();
-          } else {
-            startTime = Date.now(); // Reset timer when returning to tab
-          }
-        });
-      })();
-    </script>
   </div>
 )}
 
 <!-- Structured data for reading time -->
-<script type="application/ld+json">
-{
+<script type="application/ld+json" set:html={JSON.stringify({
   "@context": "https://schema.org",
   "@type": "Article",
   "timeRequired": `PT${minutes}M`,
   "wordCount": words
-}
-</script>
+})} />
