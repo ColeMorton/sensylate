@@ -5,7 +5,7 @@ description: "Comprehensive fundamental analysis of Iron Mountain reveals strong
 date: 2025-06-18T05:00:00Z
 image: "/images/tradingview/IRM_20250618.png"
 author: "Cole Morton"
-categories: ["Fundamental Analysis", "Real Estate", "Data Centers", "Storage"]
+categories: ["Analysis", "Fundamental Analysis", "Real Estate", "Data Centers", "Storage"]
 tags: ["irm", "fundamental-analysis", "hold-rating", "data-centers", "reit", "storage", "defensive"]
 draft: false
 ---

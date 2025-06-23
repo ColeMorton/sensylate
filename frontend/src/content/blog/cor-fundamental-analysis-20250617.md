@@ -5,7 +5,7 @@ description: "Deep fundamental analysis of Cencora Inc. (COR) reveals compelling
 date: 2025-06-17T05:00:00Z
 image: "/images/tradingview/COR_20250617.png"
 author: "Cole Morton"
-categories: ["Fundamental Analysis", "Healthcare", "Pharma Distribution"]
+categories: ["Analysis", "Fundamental Analysis", "Healthcare", "Pharma Distribution"]
 tags: ["cor", "fundamental-analysis", "buy-rating", "glp-1", "healthcare-distribution"]
 draft: false
 ---

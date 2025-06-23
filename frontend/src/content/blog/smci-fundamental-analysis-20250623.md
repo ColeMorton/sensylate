@@ -4,7 +4,7 @@ meta_title: "Super Micro Computer (SMCI) Fundamental Analysis"
 description: "SMCI is a high-growth AI infrastructure company executing exceptionally on the datacenter buildout megatrend, delivering 111% revenue growth in FY2024 while maintaining profitability. The company benefits from direct NVIDIA partnerships and a fast-to-market ODM model, though current working capital strain reflects typical growth-phase dynamics."
 date: 2025-06-23T05:00:00Z
 image: "/images/tradingview/SMCI_20250623.png"
-categories: ["Fundamental Analysis"]
+categories: ["Analysis", "Fundamental Analysis"]
 tags: ["smci", "fundamental-analysis", "ai", "datacenter"]
 draft: false
 ---

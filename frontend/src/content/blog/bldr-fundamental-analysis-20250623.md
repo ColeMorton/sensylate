@@ -4,7 +4,7 @@ meta_title: "Builders FirstSource (BLDR) Fundamental Analysis"
 description: "BLDR is the dominant market leader in structural building products distribution with compelling valuation despite cyclical headwinds. The company offers defensive growth through market consolidation, superior customer relationships, and value-added manufacturing capabilities while trading at significant discount to intrinsic value."
 date: 2025-06-23T05:00:00Z
 image: "/images/tradingview/BLDR_20250623.png"
-categories: ["Fundamental Analysis"]
+categories: ["Analysis", "Fundamental Analysis"]
 tags: ["bldr", "fundamental-analysis", "building-materials"]
 draft: false
 ---

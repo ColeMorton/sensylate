@@ -5,7 +5,7 @@ description: "Comprehensive fundamental analysis of Netflix reveals strong opera
 date: 2025-06-18T05:00:00Z
 image: "/images/tradingview/NFLX_20250618.png"
 author: "Cole Morton"
-categories: ["Fundamental Analysis", "Technology", "Entertainment", "Streaming"]
+categories: ["Analysis", "Fundamental Analysis", "Technology", "Entertainment", "Streaming"]
 tags: ["nflx", "fundamental-analysis", "hold-rating", "streaming", "entertainment", "valuation"]
 draft: false
 ---

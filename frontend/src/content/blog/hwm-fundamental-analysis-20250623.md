@@ -4,7 +4,7 @@ meta_title: "Howmet Aerospace (HWM) Fundamental Analysis"
 description: "Howmet Aerospace is executing a remarkable operational transformation, leveraging its dominance in advanced engineered products for aerospace & defense to deliver industry-leading margins and returns. The company benefits from multi-decade aerospace super-cycle demand, proprietary manufacturing capabilities, and accelerating free cash flow generation."
 date: 2025-06-23T05:00:00Z
 image: "/images/tradingview/HWM_20250623.png"
-categories: ["Fundamental Analysis"]
+categories: ["Analysis", "Fundamental Analysis"]
 tags: ["hwm", "fundamental-analysis", "aerospace"]
 draft: false
 ---

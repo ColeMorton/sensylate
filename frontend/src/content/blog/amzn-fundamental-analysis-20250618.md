@@ -5,7 +5,7 @@ description: "Comprehensive fundamental analysis of Amazon reveals compelling mu
 date: 2025-06-18T05:00:00Z
 image: "/images/tradingview/AMZN_20250618.png"
 author: "Cole Morton"
-categories: ["Fundamental Analysis", "Technology", "Cloud Computing", "E-commerce"]
+categories: ["Analysis", "Fundamental Analysis", "Technology", "Cloud Computing", "E-commerce"]
 tags: ["amzn", "fundamental-analysis", "buy-rating", "aws", "cloud-computing", "ai", "advertising"]
 draft: false
 ---
