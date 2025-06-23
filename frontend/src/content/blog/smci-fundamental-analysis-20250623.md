@@ -9,8 +9,6 @@ tags: ["smci", "fundamental-analysis", "ai", "datacenter"]
 draft: false
 ---
 
-_Generated: June 23, 2025 | Confidence: 0.92/1.0 | Data Quality: 0.95/1.0_
-
 ## 🎯 Investment Thesis & Recommendation
 
 ### Core Thesis

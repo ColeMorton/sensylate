@@ -9,8 +9,6 @@ tags: ["hwm", "fundamental-analysis", "aerospace"]
 draft: false
 ---
 
-_Generated: 2025-06-23 | Confidence: 0.92/1.0 | Data Quality: 0.95/1.0_
-
 ## 🎯 Investment Thesis & Recommendation
 
 ### Core Thesis

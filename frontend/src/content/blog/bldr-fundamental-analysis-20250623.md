@@ -9,8 +9,6 @@ tags: ["bldr", "fundamental-analysis", "building-materials"]
 draft: false
 ---
 
-_Generated: June 23, 2025 | Confidence: 0.85/1.0 | Data Quality: 0.96/1.0 | Analyst Consensus-Aligned_
-
 ## 🎯 Investment Thesis & Recommendation
 
 ### Core Thesis
