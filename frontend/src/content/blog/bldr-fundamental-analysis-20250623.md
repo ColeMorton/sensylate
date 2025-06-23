@@ -5,7 +5,7 @@ description: "BLDR is the dominant market leader in structural building products
 date: 2025-06-23T05:00:00Z
 image: "/images/tradingview/BLDR_20250623.png"
 categories: ["Analysis", "Fundamental Analysis"]
-tags: ["bldr", "fundamental-analysis", "building-materials"]
+tags: ["BLDR", "fundamental-analysis", "building-materials"]
 draft: false
 ---
 
