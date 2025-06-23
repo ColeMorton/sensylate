@@ -5,7 +5,7 @@ description: "Comprehensive fundamental analysis of Welltower Inc. (WELL) - A pr
 date: 2025-06-20T12:00:00Z
 image: "/images/tradingview/WELL_20250620.png"
 categories: ["Fundamental Analysis", "REITs", "Healthcare"]
-author: "Sensylate Research"
+author: "Cole Morton"
 tags:
   [
     "WELL",

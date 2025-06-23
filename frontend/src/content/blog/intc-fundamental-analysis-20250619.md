@@ -5,7 +5,7 @@ description: "Comprehensive fundamental analysis of Intel reveals a contrarian v
 date: 2025-06-19T16:00:00Z
 image: "/images/tradingview/INTC_20250619.png"
 author: "Cole Morton"
-categories: ["Fundamental Analysis", "Technology", "Semiconductors", "Contrarian", "Long Form"]
+categories: ["Fundamental Analysis", "Technology", "Semiconductors", "Contrarian"]
 tags:
   [
     "intc",

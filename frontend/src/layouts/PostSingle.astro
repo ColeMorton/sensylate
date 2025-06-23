@@ -107,32 +107,36 @@ const getTagUrl = (tag: string) => {
         <div class="content mb-10">
           <Content />
         </div>
-        <div class="row items-start justify-between">
-          <div class="mb-10 flex items-center lg:col-5 lg:mb-0">
-            <h5 class="mr-3">Tags :</h5>
-            <ul>
-              {
-                tags.map((tag: string) => (
-                  <li class="inline-block">
-                    <a
-                      class="bg-light hover:bg-primary dark:bg-darkmode-light dark:hover:bg-darkmode-primary dark:hover:text-text-dark m-1 block rounded px-3 py-1 hover:text-white"
-                      href={getTagUrl(tag)}
-                    >
-                      {humanize(tag)}
-                    </a>
-                  </li>
-                ))
-              }
-            </ul>
+        <div class="row items-center justify-between">
+          <div class="mb-10 lg:col-5 lg:mb-0">
+            <div class="flex flex-wrap items-center gap-3">
+              <h5 class="shrink-0">Tags:</h5>
+              <ul class="flex flex-wrap gap-2">
+                {
+                  tags.map((tag: string) => (
+                    <li>
+                      <a
+                        class="bg-light hover:bg-primary dark:bg-darkmode-light dark:hover:bg-darkmode-primary dark:hover:text-text-dark inline-block rounded px-3 py-1 transition-colors duration-200 hover:text-white"
+                        href={getTagUrl(tag)}
+                      >
+                        {humanize(tag)}
+                      </a>
+                    </li>
+                  ))
+                }
+              </ul>
+            </div>
           </div>
-          <div class="flex items-center lg:col-4">
-            <h5 class="mr-3">Share :</h5>
-            <Share
-              className="social-icons"
-              title={title}
-              description={description}
-              slug={`blog/${post.id}`}
-            />
+          <div class="lg:col-4">
+            <div class="flex items-center justify-end gap-3">
+              <h5 class="shrink-0">Share:</h5>
+              <Share
+                className="social-icons"
+                title={title}
+                description={description}
+                slug={`blog/${post.id}`}
+              />
+            </div>
           </div>
         </div>
         <Disqus className="mt-20" client:load />

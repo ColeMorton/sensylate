@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 
@@ -24,9 +24,21 @@ export default function ImageLightbox({
   images,
 }: ImageLightboxProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    checkIsMobile();
+    window.addEventListener("resize", checkIsMobile);
+
+    return () => window.removeEventListener("resize", checkIsMobile);
+  }, []);
 
   const handleImageClick = () => {
-    if (enableLightbox) {
+    if (enableLightbox && !isMobile) {
       setIsOpen(true);
     }
   };
@@ -40,17 +52,23 @@ export default function ImageLightbox({
       alt={alt}
       width={width}
       height={height}
-      className={`${thumbnailClassName} ${enableLightbox ? "cursor-pointer transition-opacity hover:opacity-90" : ""}`}
+      className={`${thumbnailClassName} ${enableLightbox && !isMobile ? "cursor-pointer transition-opacity hover:opacity-90" : ""}`}
       onClick={handleImageClick}
       onKeyDown={(e) => {
-        if (enableLightbox && (e.key === "Enter" || e.key === " ")) {
+        if (
+          enableLightbox &&
+          !isMobile &&
+          (e.key === "Enter" || e.key === " ")
+        ) {
           e.preventDefault();
           setIsOpen(true);
         }
       }}
-      tabIndex={enableLightbox ? 0 : -1}
-      role={enableLightbox ? "button" : undefined}
-      aria-label={enableLightbox ? `Open ${alt} in lightbox` : undefined}
+      tabIndex={enableLightbox && !isMobile ? 0 : -1}
+      role={enableLightbox && !isMobile ? "button" : undefined}
+      aria-label={
+        enableLightbox && !isMobile ? `Open ${alt} in lightbox` : undefined
+      }
     />
   );
 
@@ -62,6 +80,22 @@ export default function ImageLightbox({
         close={() => setIsOpen(false)}
         slides={lightboxImages}
         index={startIndex}
+        toolbar={{
+          buttons: ["close"],
+        }}
+        controller={{
+          closeOnBackdropClick: true,
+          closeOnPullDown: true,
+          closeOnPullUp: true,
+        }}
+        carousel={{
+          finite: true,
+          preload: 0,
+        }}
+        render={{
+          buttonPrev: () => null,
+          buttonNext: () => null,
+        }}
       />
     </div>
   );

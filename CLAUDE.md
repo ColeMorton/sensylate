@@ -333,3 +333,6 @@ team-workspace/knowledge/
 
 ### Project Timezone Configuration
 - The Brisbane, Australia timezone is the default timezone.
+
+### Memory Rules
+- Do not include author in markdown files unless specifically asked

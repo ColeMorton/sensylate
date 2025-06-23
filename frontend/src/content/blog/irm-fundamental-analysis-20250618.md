@@ -5,14 +5,14 @@ description: "Comprehensive fundamental analysis of Iron Mountain reveals strong
 date: 2025-06-18T05:00:00Z
 image: "/images/tradingview/IRM_20250618.png"
 author: "Cole Morton"
-categories: ["Fundamental Analysis", "Real Estate", "Data Centers", "Storage", "Long Form"]
+categories: ["Fundamental Analysis", "Real Estate", "Data Centers", "Storage"]
 tags: ["irm", "fundamental-analysis", "hold-rating", "data-centers", "reit", "storage", "defensive"]
 draft: false
 ---
 
 # Iron Mountain Incorporated (IRM) - Fundamental Analysis
 
-_Generated: June 18, 2025 | Confidence: 8.2/10 | Data Quality: 8.5/10_
+_Generated: June 18, 2025 | Confidence: 0.82/1.0 | Data Quality: 0.85/1.0_
 
 ## 🎯 Investment Thesis & Recommendation
 
@@ -20,7 +20,7 @@ _Generated: June 18, 2025 | Confidence: 8.2/10 | Data Quality: 8.5/10_
 
 Iron Mountain represents a unique value proposition combining defensive record storage cash flows with high-growth data center expansion, benefiting from AI and digital transformation trends while maintaining exceptional customer retention (98%) and high switching costs creating durable competitive advantages.
 
-### Recommendation: HOLD | Conviction: 7.5/10
+### Recommendation: HOLD | Conviction: 0.75/1.0
 
 - **Fair Value Range**: $85 - $110 (Current: $100.61)
 - **Expected Return**: 8-15% (2-3Y horizon)
@@ -45,12 +45,12 @@ Iron Mountain represents a unique value proposition combining defensive record s
 
 | Metric                  | Current         | 3Y Avg   | 5Y Trend       | vs Peers      | Confidence | Insight                 |
 | ----------------------- | --------------- | -------- | -------------- | ------------- | ---------- | ----------------------- |
-| Customer Retention Rate | 98%             | 97.5%    | ↑ Stable       | Best-in-Class | 9.5/10     | Exceptional stickiness  |
-| Average Customer Life   | 50 years        | 48 years | ↑ Growing      | Superior      | 9.0/10     | Long-term relationships |
-| Data Center Utilization | 85-89%          | 82%      | ↑ Rising       | Competitive   | 8.5/10     | Strong demand           |
-| Storage Rental Growth   | 8.8%            | 6.2%     | ↑ Accelerating | Above Average | 8.8/10     | Core business resilient |
-| MW Leased (Annual)      | 115.8MW         | 85MW     | ↑ Strong       | Competitive   | 8.2/10     | Expansion succeeding    |
-| Cross-sell Revenue      | 119% ALM growth | 45%      | ↑ Explosive    | Superior      | 8.0/10     | Diversification working |
+| Customer Retention Rate | 98%             | 97.5%    | ↑ Stable       | Best-in-Class | 0.95       | Exceptional stickiness  |
+| Average Customer Life   | 50 years        | 48 years | ↑ Growing      | Superior      | 0.90       | Long-term relationships |
+| Data Center Utilization | 85-89%          | 82%      | ↑ Rising       | Competitive   | 0.85       | Strong demand           |
+| Storage Rental Growth   | 8.8%            | 6.2%     | ↑ Accelerating | Above Average | 0.88       | Core business resilient |
+| MW Leased (Annual)      | 115.8MW         | 85MW     | ↑ Strong       | Competitive   | 0.82       | Expansion succeeding    |
+| Cross-sell Revenue      | 119% ALM growth | 45%      | ↑ Explosive    | Superior      | 0.80       | Diversification working |
 
 ### Financial Health Scorecard
 
@@ -67,12 +67,12 @@ Iron Mountain represents a unique value proposition combining defensive record s
 
 | Competitive Advantage | Strength    | Durability | Evidence                         | Confidence |
 | --------------------- | ----------- | ---------- | -------------------------------- | ---------- |
-| High Switching Costs  | Very Strong | 15+ years  | $2.94/ft cost vs $0.16/month fee | 9.5/10     |
-| Customer Stickiness   | Exceptional | 20+ years  | 98% retention, 50yr avg life     | 9.2/10     |
-| Regulatory Barriers   | Strong      | 10+ years  | Compliance requirements, trust   | 8.5/10     |
-| Network Effects       | Moderate    | 10+ years  | 1,400 facilities, global reach   | 7.5/10     |
-| Scale Economies       | Strong      | 10+ years  | 85M sq ft, 240K customers        | 8.0/10     |
-| Brand Reputation      | Strong      | 15+ years  | 95% Fortune 1000 penetration     | 8.5/10     |
+| High Switching Costs  | Very Strong | 15+ years  | $2.94/ft cost vs $0.16/month fee | 0.95       |
+| Customer Stickiness   | Exceptional | 20+ years  | 98% retention, 50yr avg life     | 0.92       |
+| Regulatory Barriers   | Strong      | 10+ years  | Compliance requirements, trust   | 0.85       |
+| Network Effects       | Moderate    | 10+ years  | 1,400 facilities, global reach   | 0.75       |
+| Scale Economies       | Strong      | 10+ years  | 85M sq ft, 240K customers        | 0.80       |
+| Brand Reputation      | Strong      | 15+ years  | 95% Fortune 1000 penetration     | 0.85       |
 
 ### Industry Dynamics
 
@@ -87,10 +87,10 @@ Iron Mountain represents a unique value proposition combining defensive record s
 
 | Method               | Fair Value | Weight | Confidence | Key Assumptions                           |
 | -------------------- | ---------- | ------ | ---------- | ----------------------------------------- |
-| DCF                  | $79        | 40%    | 7.5/10     | WACC: 8.1%, Terminal: 3%, FCF improvement |
-| P/FFO Comps          | $105       | 35%    | 8.5/10     | 18x multiple vs 15-20x peer range         |
-| Sum-of-Parts         | $95        | 25%    | 7.0/10     | RIM: 11x EBITDA, DC: 25x EBITDA           |
-| **Weighted Average** | **$92**    | 100%   | **7.7/10** | -                                         |
+| DCF                  | $79        | 40%    | 0.75       | WACC: 8.1%, Terminal: 3%, FCF improvement |
+| P/FFO Comps          | $105       | 35%    | 0.85       | 18x multiple vs 15-20x peer range         |
+| Sum-of-Parts         | $95        | 25%    | 0.70       | RIM: 11x EBITDA, DC: 25x EBITDA           |
+| **Weighted Average** | **$92**    | 100%   | **0.77**   | -                                         |
 
 ### Scenario Analysis
 
@@ -107,12 +107,12 @@ Iron Mountain represents a unique value proposition combining defensive record s
 
 | Risk Factor        | Probability | Impact | Risk Score | Mitigation                    | Monitoring                |
 | ------------------ | ----------- | ------ | ---------- | ----------------------------- | ------------------------- |
-| Interest Rate Risk | 70%         | 4      | 2.8        | Fixed-rate debt, refinancing  | Fed policy, bond yields   |
-| Debt Refinancing   | 40%         | 5      | 2.0        | $1.2B recent refinancing      | Credit ratios, maturities |
-| Digital Disruption | 60%         | 3      | 1.8        | Data center pivot, innovation | Cloud adoption rates      |
-| Competition        | 50%         | 3      | 1.5        | Moat strength, scale          | Market share trends       |
-| Recession Impact   | 30%         | 4      | 1.2        | Defensive characteristics     | Economic indicators       |
-| Execution Risk     | 40%         | 3      | 1.2        | Experienced management        | KPI tracking              |
+| Interest Rate Risk | 0.7         | 4      | 2.8        | Fixed-rate debt, refinancing  | Fed policy, bond yields   |
+| Debt Refinancing   | 0.4         | 5      | 2.0        | $1.2B recent refinancing      | Credit ratios, maturities |
+| Digital Disruption | 0.6         | 3      | 1.8        | Data center pivot, innovation | Cloud adoption rates      |
+| Competition        | 0.5         | 3      | 1.5        | Moat strength, scale          | Market share trends       |
+| Recession Impact   | 0.3         | 4      | 1.2        | Defensive characteristics     | Economic indicators       |
+| Execution Risk     | 0.4         | 3      | 1.2        | Experienced management        | KPI tracking              |
 
 ### Sensitivity Analysis
 
@@ -156,7 +156,7 @@ Key variables impact on fair value:
 
 **Data Sources & Quality**:
 
-- Primary Sources: SEC filings (9.0/10), earnings calls (8.5/10), investor relations (8.0/10)
+- Primary Sources: SEC filings (0.90), earnings calls (0.85), investor relations (0.80)
 - Data Completeness: 88%
 - Latest Data Point: Q4 2024 earnings (Feb 2025)
 

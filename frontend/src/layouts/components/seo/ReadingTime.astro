@@ -24,9 +24,11 @@ const detailedText = `${words} words • ${timeText}`;
 ---
 
 {variant === 'minimal' && (
-  <span class={`reading-time-minimal inline-flex items-center text-sm text-gray-600 dark:text-gray-400 ${className}`}>
+  <span class={`reading-time-minimal inline-flex items-center ${className}`}>
     <svg
-      class="mr-1 h-4 w-4"
+      class="-mt-1 mr-2 inline-block"
+      height="1em"
+      width="1em"
       fill="none"
       stroke="currentColor"
       viewBox="0 0 24 24"
