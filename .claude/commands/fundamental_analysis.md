@@ -128,9 +128,91 @@ CACHE_IMPLEMENTATION = {
 }
 ```
 
+## Pre-Analysis Evaluation Check
+
+**MANDATORY**: Before starting any new analysis, check for existing analysis improvement opportunities.
+
+### Phase 0A: Existing Analysis Enhancement Protocol
+
+**0A.1 Evaluation File Discovery**
+```
+EXISTING ANALYSIS IMPROVEMENT WORKFLOW:
+1. Search for existing analysis file: TICKER_YYYYMMDD_evaluation.md (today's date)
+   → Check /data/outputs/analysis_fundamental/ directory
+   → Pattern: {TICKER}_{YYYYMMDD}_evaluation.md where YYYYMMDD = today's date
+
+2. If evaluation file EXISTS:
+   → ROLE CHANGE: From "new analysis" to "analysis optimization specialist"
+   → OBJECTIVE: Improve Overall Reliability Score to 9+ through systematic enhancement
+   → METHOD: Examination → Evaluation → Optimization
+
+3. If evaluation file DOES NOT EXIST:
+   → Proceed with standard new analysis workflow (Phase 0 onwards)
+```
+
+**0A.2 Analysis Enhancement Workflow (When Evaluation File Found)**
+```
+SYSTEMATIC ENHANCEMENT PROCESS:
+Step 1: Examine Existing Analysis
+   → Read the original fundamental analysis file: TICKER_YYYYMMDD.md
+   → Extract current Overall Reliability Score and component scores
+   → Identify analysis structure, methodology, and conclusions
+   → Map confidence levels throughout the analysis
+
+Step 2: Examine Evaluation Assessment
+   → Read the evaluation file: TICKER_YYYYMMDD_evaluation.md
+   → Understand specific criticisms and improvement recommendations
+   → Extract reliability score breakdown and identified weaknesses
+   → Note data quality, methodology, and reasoning gaps
+
+Step 3: Optimization Implementation
+   → Address each evaluation point systematically
+   → Enhance data sources with higher confidence alternatives
+   → Strengthen analytical rigor in identified weak areas
+   → Improve reasoning chains and evidence backing
+   → Recalculate confidence scores with enhanced methodology
+   → Target Overall Reliability Score of 9.0+ out of 10.0
+
+Step 4: Enhanced Analysis Output
+   → Generate improved analysis: TICKER_YYYYMMDD_enhanced.md
+   → Include "Enhancement Summary" section documenting improvements made
+   → Show before/after reliability score comparison
+   → Reference evaluation feedback addressed
+   → Maintain all original analysis structure with enhanced content
+```
+
+**0A.3 Enhancement Quality Standards**
+```
+RELIABILITY SCORE IMPROVEMENT TARGETS:
+- Data Quality: Enhance from X.X → 9.0+ through premium sources
+- Methodology Rigor: Strengthen analytical frameworks and validation
+- Evidence Backing: Add quantitative support for all key assertions
+- Reasoning Transparency: Improve logic chains and assumption documentation
+- Risk Assessment: Enhance probability estimates and impact quantification
+- Competitive Analysis: Deepen moat assessment and industry positioning
+- Valuation Confidence: Narrow ranges through better scenario modeling
+- Overall Reliability: Achieve 9.0+ composite score through systematic enhancement
+
+ENHANCEMENT SUCCESS CRITERIA:
+□ All critical evaluation points addressed with specific improvements
+□ Overall Reliability Score increased to 9.0+ (target: 9.2-9.5)
+□ Enhanced analysis maintains original insights while strengthening foundation
+□ New data sources integrated to improve confidence levels
+□ Reasoning chains strengthened with quantitative backing
+□ Risk assessments enhanced with better probability estimates
+□ Competitive advantages validated with additional evidence
+□ Valuation methods cross-validated for consistency
+```
+
 ## Real-Time Data Acquisition
 
 **MANDATORY**: All analysis must use the latest available market data. Before beginning analysis, systematically gather current information using the Yahoo Finance bridge system.
+
+**CRITICAL WEB SEARCH REQUIREMENT**: When performing web searches for financial data, market information, or company updates:
+- **NEVER use hardcoded years** (especially "2024") in search queries
+- **ALWAYS use current year (2025)** or terms like "latest", "current", "recent", "Q1 2025", "2025 earnings"
+- **Search examples**: "Apple latest earnings 2025", "AAPL current financial results", "Apple Q1 2025 performance"
+- **Avoid**: "Apple 2024 earnings", "AAPL 2024 financial data", any 2024-specific searches
 
 ### Phase 0: Current Market Data Collection
 
@@ -746,12 +828,13 @@ AUTOMATED_CACHE_MAINTENANCE = {
 3. **Quantitative Framework**: Include confidence scores (0.0-1.0) throughout analysis
 4. **Risk-Adjusted Approach**: Use probability-weighted scenarios and sensitivity ranges
 5. **Data Quality Transparency**: Clear confidence levels and data source attribution
+6. **Current Data Requirement**: Always use current year (2025) data - never search for or reference 2024 data unless specifically comparing historical performance
 
 ### Technical Implementation (Invisible to User)
-6. **Cache-First Strategy**: Check cache before API calls, refresh only stale data
-7. **Performance Optimization**: Target >80% cache hit ratio for repeat analysis
-8. **Data Integrity**: MD5 validation and consistency checks across cached sources
-9. **Intelligent Refresh**: Refresh intervals optimized per data type and source reliability
-10. **Background Processing**: All caching operations happen transparently
+7. **Cache-First Strategy**: Check cache before API calls, refresh only stale data
+8. **Performance Optimization**: Target >80% cache hit ratio for repeat analysis
+9. **Data Integrity**: MD5 validation and consistency checks across cached sources
+10. **Intelligent Refresh**: Refresh intervals optimized per data type and source reliability
+11. **Background Processing**: All caching operations happen transparently
 
 This enhanced framework ensures institutional-quality analysis with transparent reasoning, quantified confidence levels, and actionable insights suitable for sophisticated investment decision-making. All performance optimizations through caching operate invisibly to provide fast, reliable analysis without exposing technical implementation details to the end user.
