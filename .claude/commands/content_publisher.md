@@ -9,7 +9,11 @@ Specializes in content synchronization between `data/outputs/` and `frontend/src
 
 ## Purpose
 
-Systematically manages the content publication pipeline by discovering unpublished analysis content, coordinating visual assets, transforming analytical insights into web-optimized blog posts, and ensuring quality publication standards are maintained throughout the Sensylate content ecosystem.
+Systematically manages the content publication pipeline by discovering unpublished analysis content, coordinating visual assets, and publishing analytical content with **absolute content fidelity** to maintain the integrity and accuracy of financial analysis while ensuring quality publication standards throughout the Sensylate content ecosystem.
+
+### Content Fidelity Mandate
+
+**CRITICAL**: This command serves as a faithful custodian of analytical content. The primary responsibility is preserving 100% content accuracy without any transformation, summarization, or editorial modification. The only permitted change is removing the H1 title heading to prevent duplication with frontmatter titles.
 
 **Output Location**: Published content in `frontend/src/content/blog/` with supporting assets in `frontend/public/images/`
 
@@ -40,13 +44,13 @@ ASSET COORDINATION WORKFLOW:
 
 ### Content Transformation
 ```
-ASTRO CONTENT CONVERSION:
-1. Transform analysis markdown to blog-compatible format
-2. Add proper frontmatter with metadata, SEO data, tags, categories
-3. Optimize content structure for web readability
-4. Integrate image references with proper paths
-5. Maintain analytical depth while ensuring accessibility
-6. Cross-reference related content for internal linking
+ASTRO CONTENT CONVERSION - CRITICAL CONTENT FIDELITY RULES:
+1. **NEVER TRANSFORM SOURCE CONTENT**: Content from @data/outputs/analysis_fundamental/ must be preserved 100% without any modifications, summarization, or editorial changes
+2. **ONLY REMOVE TITLE HEADING**: Remove the H1 title heading (e.g., "# Company Name - Fundamental Analysis") to prevent duplication with frontmatter title
+3. **PRESERVE ALL ANALYSIS CONTENT**: Maintain exact confidence scores, data quality metrics, investment recommendations, financial data, and methodology
+4. **ADD FRONTMATTER ONLY**: Add proper frontmatter with metadata, SEO data, tags, categories without altering content body
+5. **MAINTAIN ANALYTICAL INTEGRITY**: Preserve the analytical voice, formatting, tables, bullet points, and structure exactly as generated
+6. **NO CONTENT OPTIMIZATION**: Do not modify content for "web readability" - analytical accuracy takes precedence over accessibility
 ```
 
 ### Publication & Validation
@@ -71,12 +75,16 @@ FRONTEND INTEGRATION:
 
 ### Quality Assurance Checklist
 ```
-PRE-PUBLICATION VALIDATION:
-□ Content accuracy verified against source analysis
+PRE-PUBLICATION VALIDATION - CONTENT FIDELITY ENFORCEMENT:
+□ **CONTENT FIDELITY**: Source content preserved 100% without any transformations
+□ **TITLE REMOVAL ONLY**: H1 title heading removed, all other content identical to source
+□ **ANALYTICAL INTEGRITY**: All confidence scores, data quality metrics, and recommendations exactly as generated
+□ **FINANCIAL DATA ACCURACY**: Investment thesis, valuations, risk assessments, and methodology unchanged
+□ **FORMATTING PRESERVATION**: Tables, bullet points, section structure, and emphasis maintained exactly
+□ **NO EDITORIAL CHANGES**: Zero summarization, optimization, or content modifications applied
 □ All referenced images properly linked and accessible
-□ SEO metadata complete and optimized
-□ Consistent formatting and style maintained
-□ Proper categorization and tagging applied
+□ SEO metadata complete and optimized (frontmatter only)
+□ Proper categorization and tagging applied (frontmatter only)
 □ Cross-references validated and functional
 □ Mobile responsiveness confirmed
 □ Development server rendering verified
@@ -108,6 +116,7 @@ Systematically process unpublished analysis for publication opportunities and co
 ## Publication Metrics & Success Criteria
 
 ### Content Quality Metrics
+- **Content Fidelity Score**: 100% preservation of source analytical content (mandatory)
 - **Publication Readiness Score**: Comprehensive assessment of content completeness
 - **Asset Integration Rate**: Percentage of content with proper visual assets
 - **SEO Optimization Score**: Metadata completeness and search optimization
@@ -157,4 +166,16 @@ Systematically process unpublished analysis for publication opportunities and co
 /content_publisher mode=validation_only
 ```
 
-This content publisher command ensures Sensylate maintains high-quality, consistent content publication that properly leverages both analytical depth and visual presentation for maximum reader engagement and technical accuracy while integrating seamlessly with the team workspace collaboration framework.
+This content publisher command ensures Sensylate maintains high-quality, consistent content publication with **absolute analytical integrity** - preserving 100% content fidelity while adding proper web infrastructure (frontmatter, images, navigation). This approach maintains the trust and accuracy that readers depend on for investment decisions while integrating seamlessly with the team workspace collaboration framework.
+
+## Content Fidelity Enforcement
+
+**ZERO TOLERANCE POLICY**: Any transformation, summarization, optimization, or editorial modification of source analytical content is strictly prohibited. The content publisher role is to be a faithful custodian, not an editor, ensuring that:
+
+1. **Investment Recommendations**: BUY/SELL/HOLD ratings remain exactly as generated
+2. **Confidence Scores**: All analytical confidence metrics preserved precisely
+3. **Financial Data**: Valuations, price targets, and risk assessments unchanged
+4. **Methodology**: Analysis methodology and data sources maintained verbatim
+5. **Author Voice**: Analytical voice and technical language preserved completely
+
+This ensures readers receive the exact analytical output generated by the fundamental analysis system, maintaining credibility and accuracy in financial content publication.
