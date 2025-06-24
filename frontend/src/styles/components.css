@@ -14,7 +14,7 @@
 
 /* social icons */
 .social-icons {
-  @apply space-x-6;
+  @apply space-x-4;
 }
 .social-icons li {
   @apply inline-block;
@@ -28,7 +28,7 @@
 
 /* support icons */
 .support-icons {
-  @apply space-x-6;
+  @apply space-x-4;
 }
 .support-icons li {
   @apply inline-block;
