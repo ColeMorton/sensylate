@@ -10,10 +10,6 @@ tags: ["irm", "fundamental-analysis", "hold-rating", "data-centers", "reit", "st
 draft: false
 ---
 
-# Iron Mountain Incorporated (IRM) - Fundamental Analysis
-
-_Generated: June 18, 2025 | Confidence: 0.82/1.0 | Data Quality: 0.85/1.0_
-
 ## 🎯 Investment Thesis & Recommendation
 
 ### Core Thesis

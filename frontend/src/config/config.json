@@ -30,7 +30,7 @@
   "navigation_button": {
     "enable": true,
     "label": "View Analysis",
-    "link": "/blog"
+    "link": "/categories/analysis"
   },
 
   "google_tag_manager": {

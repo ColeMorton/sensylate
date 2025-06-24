@@ -10,10 +10,6 @@ tags: ["nflx", "fundamental-analysis", "hold-rating", "streaming", "entertainmen
 draft: false
 ---
 
-# Netflix, Inc. (NFLX) - Fundamental Analysis
-
-_Generated: June 18, 2025 | Confidence: 0.82/1.0 | Data Quality: 0.85/1.0_
-
 ## 🎯 Investment Thesis & Recommendation
 
 ### Core Thesis

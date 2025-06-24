@@ -10,10 +10,6 @@ tags: ["cor", "fundamental-analysis", "buy-rating", "glp-1", "healthcare-distrib
 draft: false
 ---
 
-# Cencora Inc. (COR) - Fundamental Analysis
-
-_Generated: June 17, 2025 | Confidence: 0.82/1.0 | Data Quality: 0.85/1.0_
-
 ## 🎯 Investment Thesis & Recommendation
 
 ### Core Thesis

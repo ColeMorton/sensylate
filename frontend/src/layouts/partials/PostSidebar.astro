@@ -28,7 +28,7 @@ const getTagUrl = (tag: string) => {
               return (
                 <li>
                   <a
-                    class="hover:text-primary dark:hover:text-darkmode-primary flex justify-between"
+                    class="hover:text-primary dark:hover:text-darkmode-primary flex justify-between transition-colors duration-200"
                     href={getCategoryUrl(category)}
                   >
                     {humanize(category)} <span>({count})</span>
@@ -51,7 +51,7 @@ const getTagUrl = (tag: string) => {
             return (
               <li class="inline-block">
                 <a
-                  class="hover:bg-primary dark:bg-darkmode-body dark:hover:bg-darkmode-primary dark:hover:text-text-dark m-1 block rounded bg-white px-3 py-1 hover:text-white"
+                  class="hover:text-primary dark:hover:text-darkmode-primary dark:bg-darkmode-body m-1 block rounded bg-white px-3 py-1 transition-colors duration-200"
                   href={getTagUrl(tag)}
                 >
                   {humanize(tag)}

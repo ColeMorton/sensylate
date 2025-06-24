@@ -42,7 +42,7 @@ const { title, image, date, categories } = data.data;
   <h4 class="mb-3 text-xl font-semibold">
     <a
       href={`/${blog_folder}/${data.id}`}
-      class="text-dark hover:text-primary dark:hover:text-primary block transition-colors duration-200 dark:text-white"
+      class="text-dark hover:text-primary block transition-colors duration-200 dark:text-white dark:hover:text-white"
     >
       {title}
     </a>
@@ -54,7 +54,7 @@ const { title, image, date, categories } = data.data;
         categories.map((category: string, index: number) => (
           <a
             href={`/categories/${slugify(category)}`}
-            class="hover:text-primary whitespace-nowrap transition-colors duration-200"
+            class="text-text dark:text-darkmode-text hover:text-primary dark:hover:text-darkmode-primary whitespace-nowrap transition-colors duration-200 hover:text-white dark:hover:text-white"
           >
             {humanize(category)}
             {index !== categories.length - 1 && ","}
