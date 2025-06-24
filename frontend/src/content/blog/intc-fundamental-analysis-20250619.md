@@ -5,7 +5,7 @@ description: "Comprehensive fundamental analysis of Intel reveals a contrarian v
 date: 2025-06-19T16:00:00Z
 image: "/images/tradingview/INTC_20250619.png"
 author: "Cole Morton"
-categories: ["Fundamental Analysis", "Technology", "Semiconductors", "Contrarian"]
+categories: ["Analysis", "Fundamental Analysis", "Technology", "Semiconductors", "Contrarian"]
 tags:
   [
     "intc",
@@ -19,10 +19,6 @@ tags:
   ]
 draft: false
 ---
-
-# Intel Corporation (INTC) - Fundamental Analysis
-
-_Generated: June 19, 2025 | Confidence: 0.8/1.0 | Data Quality: 0.9/1.0_
 
 ## 🎯 Investment Thesis & Recommendation
 

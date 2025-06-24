@@ -9,12 +9,12 @@
       "url": "/about"
     },
     {
-      "name": "Calculators",
-      "url": "/calculators"
-    },
-    {
       "name": "Blog",
       "url": "/blog"
+    },
+    {
+      "name": "Analysis",
+      "url": "/categories/analysis"
     },
     {
       "name": "Elements",
@@ -25,6 +25,10 @@
       "url": "",
       "hasChildren": true,
       "children": [
+        {
+          "name": "Calculators",
+          "url": "/calculators"
+        },
         {
           "name": "Contact",
           "url": "/contact"

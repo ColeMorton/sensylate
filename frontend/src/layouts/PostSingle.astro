@@ -1,6 +1,7 @@
 ---
 import BlogCard from "@/components/BlogCard.astro";
 import Share from "@/components/Share.astro";
+import Support from "@/components/Support.astro";
 import StructuredData from "@/layouts/components/seo/StructuredData.astro";
 import EnhancedMeta from "@/layouts/components/seo/EnhancedMeta.astro";
 import ReadingTime from "@/layouts/components/seo/ReadingTime.astro";
@@ -95,10 +96,15 @@ const getTagUrl = (tag: string) => {
               <li class="mr-4 inline-block">
                 <FaRegFolder className={"-mt-1 mr-2 inline-block"} />
                 {categories.map((category: string, index: number) => (
-                  <a href={getCategoryUrl(category)}>
-                    {humanize(category)}
-                    {index !== categories.length - 1 && ","}
-                  </a>
+                  <span key={category} class="inline">
+                    <a
+                      class="text-text dark:text-darkmode-text hover:text-primary dark:hover:text-darkmode-primary transition-colors duration-200"
+                      href={getCategoryUrl(category)}
+                    >
+                      {humanize(category)}
+                    </a>
+                    {index !== categories.length - 1 && ", "}
+                  </span>
                 ))}
               </li>
             )
@@ -107,35 +113,69 @@ const getTagUrl = (tag: string) => {
         <div class="content mb-10">
           <Content />
         </div>
-        <div class="row items-center justify-between">
-          <div class="mb-10 lg:col-5 lg:mb-0">
-            <div class="flex flex-wrap items-center gap-3">
-              <h5 class="shrink-0">Tags:</h5>
-              <ul class="flex flex-wrap gap-2">
+        <!-- Post Meta Section -->
+        <div
+          class="border-border dark:border-darkmode-border bg-light dark:bg-darkmode-light mt-10 rounded-lg border p-6"
+        >
+          <div class="space-y-6">
+            <!-- Tags Section -->
+            <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
+              <h5
+                class="shrink-0 font-medium"
+                style="color: var(--color-darkmode-text-dark);"
+              >
+                Tags:
+              </h5>
+              <div>
                 {
-                  tags.map((tag: string) => (
-                    <li>
+                  tags.map((tag: string, index: number) => (
+                    <span key={tag} class="inline">
                       <a
-                        class="bg-light hover:bg-primary dark:bg-darkmode-light dark:hover:bg-darkmode-primary dark:hover:text-text-dark inline-block rounded px-3 py-1 transition-colors duration-200 hover:text-white"
+                        class="text-text dark:text-darkmode-text hover:text-primary dark:hover:text-darkmode-primary transition-colors duration-200"
                         href={getTagUrl(tag)}
                       >
                         {humanize(tag)}
                       </a>
-                    </li>
+                      {index !== tags.length - 1 && ", "}
+                    </span>
                   ))
                 }
-              </ul>
+              </div>
             </div>
-          </div>
-          <div class="lg:col-4">
-            <div class="flex items-center justify-end gap-3">
-              <h5 class="shrink-0">Share:</h5>
-              <Share
-                className="social-icons"
-                title={title}
-                description={description}
-                slug={`blog/${post.id}`}
-              />
+
+            <!-- Divider -->
+            <hr class="border-border dark:border-darkmode-border" />
+
+            <!-- Share & Support Section -->
+            <div
+              class="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between"
+            >
+              <!-- Share Section -->
+              <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
+                <h5
+                  class="shrink-0 font-medium"
+                  style="color: var(--color-darkmode-text-dark);"
+                >
+                  Share:
+                </h5>
+                <Share
+                  className="social-icons"
+                  title={title}
+                  description={description}
+                  slug={`blog/${post.id}`}
+                />
+              </div>
+
+              <!-- Support Section -->
+              <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
+                <h5
+                  class="shrink-0 font-medium"
+                  style="color: var(--color-darkmode-text-dark);"
+                >
+                  Support:
+                </h5>
+                <Support className="support-icons" />
+              </div>
             </div>
           </div>
         </div>
