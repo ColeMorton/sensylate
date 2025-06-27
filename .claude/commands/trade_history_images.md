@@ -108,17 +108,17 @@ design_system:
     primary_data: "#26c6da"
     secondary_data: "#7e57c2"
     tertiary_data: "#3179f5"
-  
+
 output:
   formats: ["png", "pdf", "svg", "html"]  # Multi-format export
   scale: 3  # High-DPI export (3x = ~300 DPI)
   dual_mode: true  # Generate both light and dark variants
-  
+
 plotly:
   template: "sensylate_light"  # Plotly template integration
   high_dpi: true
   frontend_export: true  # Generate React component configs
-  
+
 production:
   enable_caching: true
   sample_large_datasets: true
@@ -134,14 +134,14 @@ report_visualizations:
     plotly_template: "sensylate_dashboard"
     export_formats: ["png", "pdf", "svg", "html"]
     frontend_config: true
-    
+
   live_signals:
     charts: ["signal_status", "alert_timeline", "performance_gauge"]
     layout: "vertical_stack"
     plotly_template: "sensylate_light"
     export_formats: ["png", "html"]
     interactive_features: ["hover", "zoom", "pan"]
-    
+
   trade_analysis:
     charts: ["distribution_histogram", "duration_scatter", "quality_bands"]
     layout: "flexible_grid"

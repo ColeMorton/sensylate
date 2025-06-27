@@ -1,8 +1,8 @@
 # Plotly Migration Guide and Best Practices
 
-**Version**: 1.0.0  
-**Date**: 2025-06-27  
-**Author**: Claude Code Architecture Team  
+**Version**: 1.0.0
+**Date**: 2025-06-27
+**Author**: Claude Code Architecture Team
 
 ## Table of Contents
 
@@ -316,7 +316,7 @@ optimizer.cleanup_resources()
 ```python
 # Process multiple charts efficiently
 chart_requests = [
-    {"chart_generator_func": generator.create_enhanced_monthly_bars, 
+    {"chart_generator_func": generator.create_enhanced_monthly_bars,
      "chart_type": "monthly_bars", "data": monthly_data},
     {"chart_generator_func": generator.create_enhanced_donut_chart,
      "chart_type": "donut", "data": quality_data}
@@ -474,7 +474,7 @@ grep -i "memory\|oom" logs/dashboard_generation.log
 1. **Use Factory Pattern**:
    ```python
    from scripts.utils.chart_generator_factory import ChartGeneratorFactory
-   
+
    generator = ChartGeneratorFactory.create_chart_generator(
        "plotly", theme_manager, scalability_manager
    )
@@ -635,14 +635,14 @@ def check_plotly_health():
     try:
         import plotly
         import kaleido
-        
+
         # Test chart generation
         fig = go.Figure()
         fig.add_trace(go.Scatter(x=[1, 2], y=[1, 2]))
-        
+
         # Test export
         fig.write_image("test_export.png", width=800, height=600)
-        
+
         return True
     except Exception as e:
         print(f"Health check failed: {e}")
@@ -655,10 +655,10 @@ def check_plotly_health():
 # Monitor generation times
 def monitor_performance():
     report = optimizer.get_performance_report()
-    
+
     if report["summary"]["avg_generation_time"] > 5.0:
         print("⚠️ Performance degradation detected")
-    
+
     if report["summary"]["cache_hit_rate"] < 0.3:
         print("⚠️ Cache efficiency low")
 ```

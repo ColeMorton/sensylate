@@ -68,11 +68,11 @@ class DashboardGenerator:
 
         self.scalability_manager = create_scalability_manager(config)
         self.layout_manager = create_layout_manager(config)
-        
+
         # Get chart engine from config (default to matplotlib)
         self.chart_engine = ChartGeneratorFactory.get_default_engine(config)
         self.logger.info(f"Using chart engine: {self.chart_engine}")
-        
+
         # Create chart generator using factory
         self.chart_generator = ChartGeneratorFactory.create_chart_generator(
             self.chart_engine, self.theme_manager, self.scalability_manager
@@ -98,6 +98,7 @@ class DashboardGenerator:
         # Use Plotly-native generator for Plotly engine
         if self.chart_engine == "plotly":
             from scripts.plotly_dashboard_generator import PlotlyDashboardGenerator
+
             plotly_generator = PlotlyDashboardGenerator(self.config)
             return plotly_generator.generate_dashboard(input_file, mode)
 

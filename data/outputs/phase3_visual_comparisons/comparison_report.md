@@ -29,4 +29,3 @@
 - **JSON Schema**: [scatter_schema_light.json](scatter_schema_light.json)
 
 ---
-

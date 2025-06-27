@@ -6,9 +6,10 @@ This module maps Sensylate theme configurations to Plotly templates
 and layout specifications for consistent styling across chart engines.
 """
 
-from typing import Dict, Any, List
-import plotly.io as pio
+from typing import Any, Dict, List
+
 import plotly.graph_objects as go
+import plotly.io as pio
 
 
 class PlotlyThemeMapper:
@@ -29,22 +30,22 @@ class PlotlyThemeMapper:
         # Create light mode template
         light_template = self._create_template("light")
         pio.templates["sensylate_light"] = light_template
-        
+
         # Create dark mode template
         dark_template = self._create_template("dark")
         pio.templates["sensylate_dark"] = dark_template
-        
+
         # Create high-DPI optimized templates
         light_hd_template = self._create_high_dpi_template("light")
         pio.templates["sensylate_light_hd"] = light_hd_template
-        
+
         dark_hd_template = self._create_high_dpi_template("dark")
         pio.templates["sensylate_dark_hd"] = dark_hd_template
-        
+
         # Create dashboard-specific template
         dashboard_template = self._create_dashboard_template("light")
         pio.templates["sensylate_dashboard"] = dashboard_template
-        
+
         # Set default template
         pio.templates.default = "sensylate_light"
 
@@ -60,36 +61,25 @@ class PlotlyThemeMapper:
         """
         theme = self.theme_manager.get_theme_colors(mode)
         colors = self.theme_manager.color_palette
-        
+
         # Get font configuration
         fonts = self.theme_manager._get_font_list()
         primary_font = fonts[0] if fonts else "sans-serif"
-        
+
         template = go.layout.Template()
-        
+
         # Layout configuration
         template.layout = go.Layout(
             # Color scheme
             plot_bgcolor=theme.background,
             paper_bgcolor=theme.background,
-            
             # Font configuration
-            font=dict(
-                family=", ".join(fonts),
-                size=12,
-                color=theme.body_text
-            ),
-            
+            font=dict(family=", ".join(fonts), size=12, color=theme.body_text),
             # Title styling
             title=dict(
-                font=dict(
-                    family=", ".join(fonts),
-                    size=18,
-                    color=theme.primary_text
-                ),
-                pad=dict(t=45)  # Match matplotlib title padding
+                font=dict(family=", ".join(fonts), size=18, color=theme.primary_text),
+                pad=dict(t=45),  # Match matplotlib title padding
             ),
-            
             # Axis styling
             xaxis=dict(
                 showgrid=True,
@@ -99,16 +89,9 @@ class PlotlyThemeMapper:
                 zerolinecolor=theme.borders,
                 showline=True,
                 linecolor=theme.borders,
-                tickfont=dict(
-                    size=10,
-                    color=theme.body_text
-                ),
-                title_font=dict(
-                    size=12,
-                    color=theme.body_text
-                )
+                tickfont=dict(size=10, color=theme.body_text),
+                title_font=dict(size=12, color=theme.body_text),
             ),
-            
             yaxis=dict(
                 showgrid=True,
                 gridcolor=theme.borders,
@@ -117,148 +100,119 @@ class PlotlyThemeMapper:
                 zerolinecolor=theme.borders,
                 showline=True,
                 linecolor=theme.borders,
-                tickfont=dict(
-                    size=10,
-                    color=theme.body_text
-                ),
-                title_font=dict(
-                    size=12,
-                    color=theme.body_text
-                )
+                tickfont=dict(size=10, color=theme.body_text),
+                title_font=dict(size=12, color=theme.body_text),
             ),
-            
             # Legend styling
             legend=dict(
                 bgcolor=theme.card_backgrounds,
                 bordercolor=theme.borders,
                 borderwidth=1,
-                font=dict(
-                    size=11,
-                    color=theme.body_text
-                )
+                font=dict(size=11, color=theme.body_text),
             ),
-            
             # Margin configuration
             margin=dict(l=60, r=60, t=80, b=60),
-            
             # Colorway (default color sequence)
-            colorway=colors.get_extended_palette()
+            colorway=colors.get_extended_palette(),
         )
-        
+
         # Bar chart styling
-        template.data.bar = [go.Bar(
-            marker=dict(
-                line=dict(
-                    color=theme.borders,
-                    width=1
-                )
-            ),
-            opacity=0.8
-        )]
-        
+        template.data.bar = [
+            go.Bar(marker=dict(line=dict(color=theme.borders, width=1)), opacity=0.8)
+        ]
+
         # Pie/Donut chart styling
-        template.data.pie = [go.Pie(
-            marker=dict(
-                line=dict(
-                    color=theme.background,
-                    width=2
-                )
-            ),
-            textfont=dict(
-                color="white",
-                size=9
+        template.data.pie = [
+            go.Pie(
+                marker=dict(line=dict(color=theme.background, width=2)),
+                textfont=dict(color="white", size=9),
             )
-        )]
-        
+        ]
+
         # Scatter plot styling
-        template.data.scatter = [go.Scatter(
-            marker=dict(
-                line=dict(
-                    color=theme.borders,
-                    width=0.8
-                )
-            )
-        )]
-        
+        template.data.scatter = [
+            go.Scatter(marker=dict(line=dict(color=theme.borders, width=0.8)))
+        ]
+
         return template
 
     def _create_high_dpi_template(self, mode: str) -> go.layout.Template:
         """
         Create high-DPI optimized template for print and export quality.
-        
+
         Args:
             mode: 'light' or 'dark'
-            
+
         Returns:
             High-DPI optimized Plotly template
         """
         # Start with base template
         template = self._create_template(mode)
-        
+
         # Enhance for high-DPI
         template.layout.font.size = 14  # Larger base font
         template.layout.title.font.size = 22  # Larger title
-        
+
         # Increase line widths and marker sizes for better visibility
-        if hasattr(template.data, 'scatter'):
+        if hasattr(template.data, "scatter"):
             for scatter in template.data.scatter:
-                if hasattr(scatter.marker, 'line'):
+                if hasattr(scatter.marker, "line"):
                     scatter.marker.line.width = 1.5
-        
-        if hasattr(template.data, 'bar'):
+
+        if hasattr(template.data, "bar"):
             for bar in template.data.bar:
-                if hasattr(bar.marker, 'line'):
+                if hasattr(bar.marker, "line"):
                     bar.marker.line.width = 1.5
-        
+
         # Enhanced grid and axis styling for high-DPI
         template.layout.xaxis.gridwidth = 1
         template.layout.yaxis.gridwidth = 1
         template.layout.xaxis.linewidth = 2
         template.layout.yaxis.linewidth = 2
-        
+
         return template
 
     def _create_dashboard_template(self, mode: str) -> go.layout.Template:
         """
         Create dashboard-specific template optimized for multi-chart layouts.
-        
+
         Args:
             mode: 'light' or 'dark'
-            
+
         Returns:
             Dashboard-optimized Plotly template
         """
         template = self._create_template(mode)
         theme = self.theme_manager.get_theme_colors(mode)
-        
+
         # Dashboard-specific layout optimizations
         template.layout.margin = dict(l=50, r=50, t=80, b=50)  # Tighter margins
         template.layout.font.size = 11  # Slightly smaller for space efficiency
         template.layout.title.font.size = 16  # Smaller title for dashboard context
-        
+
         # Optimize for subplot layouts
         template.layout.xaxis.ticklabelstandoff = 15
         template.layout.yaxis.ticklabelstandoff = 15
         template.layout.xaxis.tickfont.size = 9
         template.layout.yaxis.tickfont.size = 9
-        
+
         # Enhanced subplot borders and spacing
         template.layout.plot_bgcolor = theme.background
         template.layout.paper_bgcolor = theme.background
-        
+
         return template
 
-    def get_template_name(self, mode: str = "light", 
-                         high_dpi: bool = False,
-                         dashboard: bool = False) -> str:
+    def get_template_name(
+        self, mode: str = "light", high_dpi: bool = False, dashboard: bool = False
+    ) -> str:
         """
         Get appropriate template name based on requirements.
-        
+
         Args:
             mode: 'light' or 'dark'
             high_dpi: Whether to use high-DPI template
             dashboard: Whether to use dashboard-optimized template
-            
+
         Returns:
             Template name string
         """
@@ -269,19 +223,22 @@ class PlotlyThemeMapper:
         else:
             return f"sensylate_{mode}"
 
-    def apply_template(self, fig: go.Figure, 
-                      mode: str = "light",
-                      high_dpi: bool = False,
-                      dashboard: bool = False) -> go.Figure:
+    def apply_template(
+        self,
+        fig: go.Figure,
+        mode: str = "light",
+        high_dpi: bool = False,
+        dashboard: bool = False,
+    ) -> go.Figure:
         """
         Apply appropriate Sensylate template to figure.
-        
+
         Args:
             fig: Plotly figure
             mode: 'light' or 'dark'
             high_dpi: Whether to use high-DPI template
             dashboard: Whether to use dashboard template
-            
+
         Returns:
             Figure with applied template
         """
@@ -301,7 +258,7 @@ class PlotlyThemeMapper:
             Dictionary of layout parameters
         """
         theme = self.theme_manager.get_theme_colors(mode)
-        
+
         return {
             "template": f"sensylate_{mode}",
             "title": {
@@ -309,14 +266,14 @@ class PlotlyThemeMapper:
                 "font": {
                     "size": 18,
                     "color": theme.primary_text,
-                    "family": ", ".join(self.theme_manager._get_font_list())
+                    "family": ", ".join(self.theme_manager._get_font_list()),
                 },
-                "pad": {"t": 45}
+                "pad": {"t": 45},
             },
             "showlegend": False,  # Default, override as needed
             "hovermode": "closest",
             "plot_bgcolor": theme.background,
-            "paper_bgcolor": theme.background
+            "paper_bgcolor": theme.background,
         }
 
     def get_quality_colors_mapping(self) -> Dict[str, str]:
@@ -331,7 +288,9 @@ class PlotlyThemeMapper:
         """Get Plotly-compatible monthly color list."""
         return self.theme_manager.get_monthly_colors()
 
-    def apply_theme_to_figure(self, fig: go.Figure, mode: str = "light", title: str = ""):
+    def apply_theme_to_figure(
+        self, fig: go.Figure, mode: str = "light", title: str = ""
+    ):
         """
         Apply Sensylate theme to a Plotly figure.
 
@@ -343,7 +302,9 @@ class PlotlyThemeMapper:
         layout_config = self.get_layout_config(mode, title)
         fig.update_layout(**layout_config)
 
-    def create_export_config(self, width: int = 1600, height: int = 1200, scale: float = 2.0) -> Dict[str, Any]:
+    def create_export_config(
+        self, width: int = 1600, height: int = 1200, scale: float = 2.0
+    ) -> Dict[str, Any]:
         """
         Create export configuration for high-quality static images.
 
@@ -355,14 +316,11 @@ class PlotlyThemeMapper:
         Returns:
             Export configuration dictionary
         """
-        return {
-            "width": width,
-            "height": height,
-            "scale": scale,
-            "format": "png"
-        }
+        return {"width": width, "height": height, "scale": scale, "format": "png"}
 
-    def get_advanced_styling_config(self, chart_type: str, mode: str = "light") -> Dict[str, Any]:
+    def get_advanced_styling_config(
+        self, chart_type: str, mode: str = "light"
+    ) -> Dict[str, Any]:
         """
         Get advanced styling configuration for complex chart types.
 
@@ -375,7 +333,7 @@ class PlotlyThemeMapper:
         """
         theme = self.theme_manager.get_theme_colors(mode)
         performance_colors = self.get_performance_colors_mapping()
-        
+
         if chart_type == "waterfall":
             return {
                 "bars": {
@@ -383,7 +341,7 @@ class PlotlyThemeMapper:
                     "negative_color": performance_colors["negative"],
                     "opacity": 0.8,
                     "border_color": theme.borders,
-                    "border_width": 0.5
+                    "border_width": 0.5,
                 },
                 "cumulative_line": {
                     "color": self.theme_manager.color_palette.tertiary_data,
@@ -392,13 +350,13 @@ class PlotlyThemeMapper:
                     "marker_size": 6,
                     "marker_color": self.theme_manager.color_palette.tertiary_data,
                     "marker_border_color": "white",
-                    "marker_border_width": 1
+                    "marker_border_width": 1,
                 },
                 "annotations": {
                     "threshold": 2.0,
                     "font_size": 8,
                     "font_color": "white",
-                    "font_weight": "bold"
+                    "font_weight": "bold",
                 },
                 "zones": {
                     "breakeven_line_color": theme.body_text,
@@ -408,10 +366,10 @@ class PlotlyThemeMapper:
                     "breakeven_label_font_size": 8,
                     "breakeven_label_color": theme.body_text,
                     "breakeven_label_bg": theme.background,
-                    "breakeven_label_border": theme.borders
-                }
+                    "breakeven_label_border": theme.borders,
+                },
             }
-        
+
         elif chart_type == "scatter":
             return {
                 "markers": {
@@ -421,20 +379,20 @@ class PlotlyThemeMapper:
                     "base_alpha": 0.8,
                     "medium_density_alpha": 0.6,
                     "border_color": theme.borders,
-                    "border_width": 0.8
+                    "border_width": 0.8,
                 },
                 "quality_alphas": {
                     "Excellent": 0.9,
                     "Good": 0.8,
                     "Poor": 0.6,
                     "Failed": 0.5,
-                    "Poor Setup": 0.4
+                    "Poor Setup": 0.4,
                 },
                 "trend_line": {
                     "color": self.theme_manager.color_palette.tertiary_data,
                     "width": 2,
                     "style": "dash",
-                    "opacity": 0.7
+                    "opacity": 0.7,
                 },
                 "labels": {
                     "outlier_threshold": 5.0,
@@ -449,16 +407,16 @@ class PlotlyThemeMapper:
                     "border_width": 0.5,
                     "opacity": 0.8,
                     "offset_x": 2.0,
-                    "offset_y": 0.5
+                    "offset_y": 0.5,
                 },
                 "zero_line": {
                     "color": theme.body_text,
                     "style": "solid",
                     "width": 1,
-                    "opacity": 0.3
-                }
+                    "opacity": 0.3,
+                },
             }
-        
+
         elif chart_type == "clustering":
             return {
                 "centroids": {
@@ -468,13 +426,13 @@ class PlotlyThemeMapper:
                     "border_color": theme.borders,
                     "border_width": 2,
                     "text_color": "white",
-                    "text_size": 8
+                    "text_size": 8,
                 },
                 "noise_points": {
                     "size": 8,
                     "opacity": 0.6,
                     "border_color": theme.borders,
-                    "border_width": 0.5
+                    "border_width": 0.5,
                 },
                 "statistics": {
                     "font_size": 8,
@@ -483,10 +441,10 @@ class PlotlyThemeMapper:
                     "border_color": theme.borders,
                     "border_width": 1,
                     "opacity": 0.8,
-                    "position": {"x": 0.02, "y": 0.98}
-                }
+                    "position": {"x": 0.02, "y": 0.98},
+                },
             }
-        
+
         elif chart_type == "performance_bands":
             return {
                 "bars": {
@@ -496,23 +454,25 @@ class PlotlyThemeMapper:
                     "text_position": "outside",
                     "text_font_size": 10,
                     "text_font_color": theme.primary_text,
-                    "text_font_weight": "bold"
+                    "text_font_weight": "bold",
                 },
                 "colors": {
                     "winner_bands": performance_colors["positive"],
                     "loser_bands": performance_colors["negative"],
-                    "neutral_bands": theme.borders
+                    "neutral_bands": theme.borders,
                 },
                 "layout": {
                     "category_order": "total ascending",  # Best performers at top
                     "grid_color": theme.borders,
-                    "grid_width": 0.5
-                }
+                    "grid_width": 0.5,
+                },
             }
-        
+
         return {}
 
-    def get_scalability_styling(self, volume_category: str, mode: str = "light") -> Dict[str, Any]:
+    def get_scalability_styling(
+        self, volume_category: str, mode: str = "light"
+    ) -> Dict[str, Any]:
         """
         Get styling configuration based on data volume for scalability optimization.
 
@@ -524,7 +484,7 @@ class PlotlyThemeMapper:
             Scalability-optimized styling configuration
         """
         theme = self.theme_manager.get_theme_colors(mode)
-        
+
         base_config = {
             "small": {
                 "opacity": 0.8,
@@ -532,15 +492,15 @@ class PlotlyThemeMapper:
                 "label_frequency": 1,
                 "marker_size_multiplier": 1.0,
                 "show_individual_labels": True,
-                "show_annotations": True
+                "show_annotations": True,
             },
             "medium": {
                 "opacity": 0.6,
-                "detail_level": "medium", 
+                "detail_level": "medium",
                 "label_frequency": 2,
                 "marker_size_multiplier": 0.8,
                 "show_individual_labels": True,
-                "show_annotations": False
+                "show_annotations": False,
             },
             "large": {
                 "opacity": 0.5,
@@ -550,13 +510,15 @@ class PlotlyThemeMapper:
                 "show_individual_labels": False,
                 "show_annotations": False,
                 "use_clustering": True,
-                "use_performance_bands": True
-            }
+                "use_performance_bands": True,
+            },
         }
-        
+
         return base_config.get(volume_category, base_config["medium"])
 
-    def apply_advanced_styling(self, fig: go.Figure, chart_type: str, mode: str = "light", **kwargs):
+    def apply_advanced_styling(
+        self, fig: go.Figure, chart_type: str, mode: str = "light", **kwargs
+    ):
         """
         Apply advanced styling to a Plotly figure based on chart type.
 
@@ -568,10 +530,10 @@ class PlotlyThemeMapper:
         """
         # Get base theme configuration
         self.apply_theme_to_figure(fig, mode, kwargs.get("title", ""))
-        
+
         # Apply chart-specific advanced styling
         styling_config = self.get_advanced_styling_config(chart_type, mode)
-        
+
         # Update figure based on styling configuration
         if chart_type == "scatter":
             # Apply scatter-specific styling optimizations
@@ -585,51 +547,55 @@ class PlotlyThemeMapper:
             fig.update_traces(
                 opacity=styling_config.get("bars", {}).get("opacity", 0.8)
             )
-        
+
         # Apply responsive layout adjustments
-        fig.update_layout(
-            autosize=True
-        )
+        fig.update_layout(autosize=True)
 
     def get_font_configuration(self, mode: str = "light") -> Dict[str, Any]:
         """
         Get comprehensive font configuration for Plotly with Heebo integration.
-        
+
         Args:
             mode: Theme mode ('light' or 'dark')
-            
+
         Returns:
             Font configuration dictionary
         """
         # Get font list from theme manager
-        fonts = self.theme_manager._get_font_list() if self.theme_manager else ["sans-serif"]
-        
+        fonts = (
+            self.theme_manager._get_font_list()
+            if self.theme_manager
+            else ["sans-serif"]
+        )
+
         # Heebo font stack with fallbacks
         heebo_stack = [
             "Heebo",
-            "-apple-system", 
+            "-apple-system",
             "BlinkMacSystemFont",
             "Segoe UI",
             "Helvetica Neue",
             "Arial",
             "DejaVu Sans",
             "Liberation Sans",
-            "sans-serif"
+            "sans-serif",
         ]
-        
+
         # Combine Heebo with existing fonts, removing duplicates
         combined_fonts = []
         for font in heebo_stack:
             if font not in combined_fonts:
                 combined_fonts.append(font)
-        
+
         # Add any additional fonts from theme manager
         for font in fonts:
             if font not in combined_fonts:
                 combined_fonts.append(font)
-        
-        theme = self.theme_manager.get_theme_colors(mode) if self.theme_manager else None
-        
+
+        theme = (
+            self.theme_manager.get_theme_colors(mode) if self.theme_manager else None
+        )
+
         return {
             "family": ", ".join(combined_fonts),
             "sizes": {
@@ -639,72 +605,70 @@ class PlotlyThemeMapper:
                 "axis_labels": 10,
                 "legend": 11,
                 "annotation": 9,
-                "body": 12
+                "body": 12,
             },
             "colors": {
                 "primary": theme.primary_text if theme else "#121212",
                 "secondary": theme.body_text if theme else "#444444",
-                "muted": theme.borders if theme else "#666666"
+                "muted": theme.borders if theme else "#666666",
             },
-            "weights": {
-                "normal": "normal",
-                "medium": "500",
-                "bold": "bold"
-            }
+            "weights": {"normal": "normal", "medium": "500", "bold": "bold"},
         }
 
-    def apply_font_configuration(self, fig: go.Figure, mode: str = "light") -> go.Figure:
+    def apply_font_configuration(
+        self, fig: go.Figure, mode: str = "light"
+    ) -> go.Figure:
         """
         Apply comprehensive font configuration to Plotly figure.
-        
+
         Args:
             fig: Plotly figure
             mode: Theme mode
-            
+
         Returns:
             Figure with enhanced font configuration
         """
         font_config = self.get_font_configuration(mode)
-        
+
         # Apply global font settings
         fig.update_layout(
             font={
                 "family": font_config["family"],
                 "size": font_config["sizes"]["body"],
-                "color": font_config["colors"]["primary"]
+                "color": font_config["colors"]["primary"],
             },
             title_font={
                 "family": font_config["family"],
                 "size": font_config["sizes"]["title"],
-                "color": font_config["colors"]["primary"]
-            }
+                "color": font_config["colors"]["primary"],
+            },
         )
-        
+
         # Apply to all axes
         axis_config = {
             "title": {
                 "font": {
                     "family": font_config["family"],
                     "size": font_config["sizes"]["axis_title"],
-                    "color": font_config["colors"]["secondary"]
+                    "color": font_config["colors"]["secondary"],
                 }
             },
             "tickfont": {
                 "family": font_config["family"],
                 "size": font_config["sizes"]["axis_labels"],
-                "color": font_config["colors"]["secondary"]
-            }
+                "color": font_config["colors"]["secondary"],
+            },
         }
-        
+
         fig.update_xaxes(**axis_config)
         fig.update_yaxes(**axis_config)
-        
+
         return fig
 
-    def create_multi_format_exporter(self) -> 'MultiFormatExporter':
+    def create_multi_format_exporter(self) -> "MultiFormatExporter":
         """
         Create multi-format exporter with comprehensive format support.
-        
+
         Returns:
             MultiFormatExporter instance
         """
@@ -713,49 +677,51 @@ class PlotlyThemeMapper:
 
 class MultiFormatExporter:
     """Enhanced export system supporting multiple formats with optimized settings."""
-    
+
     def __init__(self, theme_mapper: PlotlyThemeMapper):
         """
         Initialize multi-format exporter.
-        
+
         Args:
             theme_mapper: PlotlyThemeMapper instance for styling
         """
         self.theme_mapper = theme_mapper
-        
-    def export_chart(self, 
-                    fig: go.Figure,
-                    filepath: str,
-                    formats: List[str] = None,
-                    high_dpi: bool = True,
-                    mode: str = "light") -> Dict[str, str]:
+
+    def export_chart(
+        self,
+        fig: go.Figure,
+        filepath: str,
+        formats: List[str] = None,
+        high_dpi: bool = True,
+        mode: str = "light",
+    ) -> Dict[str, str]:
         """
         Export chart in multiple formats with optimized settings.
-        
+
         Args:
             fig: Plotly figure to export
             filepath: Base filepath (without extension)
             formats: List of formats ('png', 'pdf', 'svg', 'html', 'webp')
             high_dpi: Whether to use high-DPI settings
             mode: Theme mode
-            
+
         Returns:
             Dictionary mapping format to exported filepath
         """
         if formats is None:
             formats = ["png", "pdf", "svg"]
-        
+
         # Apply font configuration
         fig = self.theme_mapper.apply_font_configuration(fig, mode)
-        
+
         # Apply appropriate template
         fig = self.theme_mapper.apply_template(fig, mode, high_dpi=high_dpi)
-        
+
         exported_files = {}
-        
+
         for format_type in formats:
             output_path = f"{filepath}.{format_type}"
-            
+
             try:
                 if format_type.lower() == "png":
                     self._export_png(fig, output_path, high_dpi)
@@ -770,95 +736,89 @@ class MultiFormatExporter:
                 else:
                     # Generic export
                     fig.write_image(output_path, format=format_type)
-                
+
                 exported_files[format_type] = output_path
-                
+
             except Exception as e:
                 print(f"Warning: Failed to export {format_type}: {e}")
-        
+
         return exported_files
-    
+
     def _export_png(self, fig: go.Figure, filepath: str, high_dpi: bool):
         """Export PNG with optimized settings."""
         config = {
             "width": 1600,
             "height": 1200,
             "scale": 3 if high_dpi else 2,
-            "format": "png"
+            "format": "png",
         }
         fig.write_image(filepath, **config)
-    
+
     def _export_pdf(self, fig: go.Figure, filepath: str, high_dpi: bool):
         """Export PDF with vector quality."""
-        config = {
-            "width": 1600,
-            "height": 1200,
-            "format": "pdf"
-        }
+        config = {"width": 1600, "height": 1200, "format": "pdf"}
         # PDF doesn't need scale factor as it's vector
         fig.write_image(filepath, **config)
-    
+
     def _export_svg(self, fig: go.Figure, filepath: str):
         """Export SVG with vector graphics."""
-        config = {
-            "width": 1600,
-            "height": 1200,
-            "format": "svg"
-        }
+        config = {"width": 1600, "height": 1200, "format": "svg"}
         fig.write_image(filepath, **config)
-    
+
     def _export_html(self, fig: go.Figure, filepath: str):
         """Export interactive HTML."""
         config = {
-            "include_plotlyjs": 'cdn',
+            "include_plotlyjs": "cdn",
             "div_id": "plotly-chart",
             "config": {
                 "displayModeBar": True,
                 "displaylogo": False,
-                "modeBarButtonsToRemove": ['pan2d', 'lasso2d']
-            }
+                "modeBarButtonsToRemove": ["pan2d", "lasso2d"],
+            },
         }
         fig.write_html(filepath, **config)
-    
+
     def _export_webp(self, fig: go.Figure, filepath: str, high_dpi: bool):
         """Export WebP with optimized compression."""
         config = {
             "width": 1600,
             "height": 1200,
             "scale": 2 if high_dpi else 1,
-            "format": "webp"
+            "format": "webp",
         }
         fig.write_image(filepath, **config)
-    
-    def create_export_batch(self, 
-                          figures: Dict[str, go.Figure],
-                          output_dir: str,
-                          formats: List[str] = None,
-                          high_dpi: bool = True,
-                          mode: str = "light") -> Dict[str, Dict[str, str]]:
+
+    def create_export_batch(
+        self,
+        figures: Dict[str, go.Figure],
+        output_dir: str,
+        formats: List[str] = None,
+        high_dpi: bool = True,
+        mode: str = "light",
+    ) -> Dict[str, Dict[str, str]]:
         """
         Export multiple figures in batch with consistent settings.
-        
+
         Args:
             figures: Dictionary mapping figure names to Plotly figures
             output_dir: Output directory path
             formats: List of export formats
             high_dpi: Whether to use high-DPI settings
             mode: Theme mode
-            
+
         Returns:
             Dictionary mapping figure names to exported file paths
         """
         from pathlib import Path
-        
+
         output_path = Path(output_dir)
         output_path.mkdir(parents=True, exist_ok=True)
-        
+
         batch_results = {}
-        
+
         for fig_name, fig in figures.items():
             filepath = str(output_path / fig_name)
             exported_files = self.export_chart(fig, filepath, formats, high_dpi, mode)
             batch_results[fig_name] = exported_files
-        
+
         return batch_results

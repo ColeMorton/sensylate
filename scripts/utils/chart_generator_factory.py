@@ -6,7 +6,7 @@ This module provides a factory pattern implementation for creating chart
 generators with the appropriate rendering engine.
 """
 
-from typing import Dict, Any, Optional
+from typing import Any, Dict, Optional
 
 from scripts.utils.abstract_chart_generator import AbstractChartGenerator
 from scripts.utils.matplotlib_chart_generator import MatplotlibChartGenerator

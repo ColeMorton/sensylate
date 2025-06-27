@@ -337,7 +337,7 @@ done
    ```bash
    # Validate configuration
    make validate-configs
-   
+
    # Test specific configuration
    python scripts/dashboard_generator.py --validate-only --input test_file.md
    ```
@@ -346,7 +346,7 @@ done
    ```bash
    # Check available files
    ls -la data/outputs/analysis_trade_history/
-   
+
    # Use most recent file
    make quick-dashboard
    ```
@@ -375,7 +375,7 @@ tail -f data/outputs/logs/dashboard_generation_*.log
 ### Memory Usage
 
 - Small datasets (≤50 trades): ~50MB peak memory
-- Medium datasets (51-100 trades): ~100MB peak memory  
+- Medium datasets (51-100 trades): ~100MB peak memory
 - Large datasets (101-200+ trades): ~200MB peak memory
 
 ### Generation Time

@@ -1,8 +1,8 @@
 # Plotly Dashboard Migration Implementation Plan
 
-**Date**: 2025-06-27  
-**Architect**: Claude Code  
-**Topic**: plotly-dashboard-migration  
+**Date**: 2025-06-27
+**Architect**: Claude Code
+**Topic**: plotly-dashboard-migration
 **Scope**: Migrate matplotlib dashboard system to Plotly for shared backend/frontend chart definitions with JSON schema consistency
 
 ## Executive Summary
@@ -127,14 +127,14 @@
     <step>Create stub `PlotlyChartGenerator` with interface compliance</step>
     <step>Update `DashboardGenerator` to use abstract interface with factory pattern</step>
     <step>Implement configuration flag for chart engine selection</step>
-    
+
     <validation>
       - Run existing dashboard generation with matplotlib wrapper
       - Verify output matches previous versions pixel-perfectly
       - Confirm Plotly dependencies install correctly
       - Test chart engine switching mechanism
     </validation>
-    
+
     <rollback>
       - Remove abstract interface and restore direct matplotlib calls
       - Uninstall Plotly dependencies if conflicts arise
@@ -159,8 +159,8 @@
 
 ## Phase 1: Implementation Summary
 
-**Status**: ✅ Complete  
-**Completion Date**: 2025-06-27  
+**Status**: ✅ Complete
+**Completion Date**: 2025-06-27
 **Actual Effort**: < 1 day (exceeded estimate efficiency)
 
 ### Accomplished
@@ -212,13 +212,13 @@
 
 ### Phase Insights
 
-- **Worked Well**: 
+- **Worked Well**:
   - Factory pattern provides clean separation between engines
   - Abstract interface captured all existing functionality cleanly
   - Test-driven approach caught configuration issues early
   - Backward compatibility maintained perfectly
 
-- **Optimize Next**: 
+- **Optimize Next**:
   - Consider lazy loading of Plotly dependencies to improve startup time
   - May need to refactor axes parameter type handling for Plotly integration
   - Font management could be abstracted for both engines
@@ -258,7 +258,7 @@
     <step>Create PlotlyThemeMapper for color and typography translation</step>
     <step>Develop visual comparison framework for matplotlib vs Plotly outputs</step>
     <step>Implement JSON schema export for chart configurations</step>
-    
+
     <validation>
       - Generate side-by-side comparisons of matplotlib vs Plotly charts
       - Measure chart generation performance and memory usage
@@ -266,7 +266,7 @@
       - Test theme switching (light/dark mode)
       - Verify JSON schema validity and completeness
     </validation>
-    
+
     <rollback>
       - Disable Plotly chart generation via configuration
       - Fall back to matplotlib implementation
@@ -291,14 +291,14 @@
 
 ## Phase 2: Implementation Summary
 
-**Status**: ✅ Complete  
-**Completion Date**: 2025-06-27  
+**Status**: ✅ Complete
+**Completion Date**: 2025-06-27
 **Actual Effort**: < 1 day (significantly under estimate)
 
 ### Accomplished
 
 - ✅ Created `PlotlyThemeMapper` with complete Sensylate design system integration
-- ✅ Implemented `create_enhanced_monthly_bars()` with dual-axis functionality and smart labeling  
+- ✅ Implemented `create_enhanced_monthly_bars()` with dual-axis functionality and smart labeling
 - ✅ Implemented `create_enhanced_donut_chart()` with center text and win rate indicators
 - ✅ Developed comprehensive visual comparison framework with 99.9% similarity validation
 - ✅ Created JSON schema export system for frontend integration
@@ -307,7 +307,7 @@
 ### Files Created/Modified
 
 - `scripts/utils/plotly_theme_mapper.py`: Complete theme translation system for Plotly templates
-- `scripts/utils/plotly_chart_generator.py`: Enhanced with working monthly bars and donut chart implementations  
+- `scripts/utils/plotly_chart_generator.py`: Enhanced with working monthly bars and donut chart implementations
 - `scripts/utils/chart_comparison_framework.py`: Visual validation and side-by-side comparison tools
 - `scripts/test_phase2_implementation.py`: Comprehensive test suite for Phase 2 validation
 - `requirements.txt`: Updated with compatible kaleido version (0.2.1)
@@ -316,7 +316,7 @@
 
 - **Unit Tests**: 6/6 passed (100% success)
   - PlotlyThemeMapper functionality ✅
-  - Monthly bars chart implementation ✅  
+  - Monthly bars chart implementation ✅
   - Donut chart implementation ✅
   - JSON schema export ✅
   - Visual comparison framework ✅
@@ -324,7 +324,7 @@
 
 - **Quality Metrics**: Exceptional visual fidelity achieved
   - **Monthly bars similarity**: 99.9% (exceeds 95% target)
-  - **Donut chart similarity**: 99.9% (exceeds 95% target)  
+  - **Donut chart similarity**: 99.9% (exceeds 95% target)
   - **Theme consistency**: 100% color accuracy maintained
   - **JSON schema validity**: Complete schema generated for both chart types
 
@@ -338,7 +338,7 @@
 - **Issue**: Plotly figure update method caused data assignment errors
   - **Resolution**: Implemented proper trace addition and layout merging approach
 
-- **Issue**: Kaleido version compatibility with Plotly 5.24.1  
+- **Issue**: Kaleido version compatibility with Plotly 5.24.1
   - **Resolution**: Downgraded to kaleido 0.2.1 for stable image export
 
 - **Issue**: Data structure mismatch in test framework
@@ -360,7 +360,7 @@
 ### Key Achievements
 
 - **99.9% Visual Similarity**: Plotly charts are visually indistinguishable from matplotlib
-- **JSON Schema Ready**: Frontend integration pathway established  
+- **JSON Schema Ready**: Frontend integration pathway established
 - **Theme Consistency**: Perfect Sensylate brand compliance maintained
 - **Extensible Architecture**: Patterns established for remaining chart types
 
@@ -406,7 +406,7 @@
     <step>Implement performance bands chart for large datasets</step>
     <step>Add DBSCAN clustering support for high-density scatter plots</step>
     <step>Create advanced styling system for complex chart customization</step>
-    
+
     <validation>
       - Test with various dataset sizes (10, 100, 1000+ trades)
       - Validate clustering algorithm integration
@@ -414,7 +414,7 @@
       - Test scalability thresholds and chart switching
       - Measure memory usage with large datasets
     </validation>
-    
+
     <rollback>
       - Disable complex Plotly charts via configuration
       - Maintain matplotlib versions for production use
@@ -439,8 +439,8 @@
 
 ## Phase 3: Implementation Summary
 
-**Status**: ✅ Complete  
-**Completion Date**: 2025-06-27  
+**Status**: ✅ Complete
+**Completion Date**: 2025-06-27
 **Actual Effort**: < 1 day (significantly under estimate)
 
 ### Accomplished
@@ -586,7 +586,7 @@
     <step>Create Plotly template system for consistent styling</step>
     <step>Implement font management for Plotly (Heebo integration)</step>
     <step>Add export format options (PNG, PDF, SVG)</step>
-    
+
     <validation>
       - Verify 300 DPI export quality matches matplotlib
       - Test font rendering across different systems
@@ -594,7 +594,7 @@
       - Test export format quality and file sizes
       - Confirm theme switching functionality
     </validation>
-    
+
     <rollback>
       - Revert to matplotlib theme and layout systems
       - Disable high-DPI export features
@@ -619,8 +619,8 @@
 
 ## Phase 4: Implementation Summary
 
-**Status**: ✅ Complete  
-**Completion Date**: 2025-06-27  
+**Status**: ✅ Complete
+**Completion Date**: 2025-06-27
 **Actual Effort**: < 1 day (significantly under estimate)
 
 ### Accomplished
@@ -778,7 +778,7 @@
     <step>Create migration documentation and best practices guide</step>
     <step>Implement feature flag system for gradual rollout</step>
     <step>Conduct comprehensive regression testing</step>
-    
+
     <validation>
       - Run full test suite with both chart engines
       - Validate JSON schema completeness and accuracy
@@ -786,7 +786,7 @@
       - Verify backward compatibility maintenance
       - Test migration procedures with sample data
     </validation>
-    
+
     <rollback>
       - Maintain matplotlib as default chart engine
       - Disable Plotly features via configuration
@@ -811,8 +811,8 @@
 
 ## Phase 5: Implementation Summary
 
-**Status**: ✅ Complete  
-**Completion Date**: 2025-06-27  
+**Status**: ✅ Complete
+**Completion Date**: 2025-06-27
 **Actual Effort**: < 1 day (significantly under estimate)
 
 ### Accomplished

@@ -29,4 +29,3 @@
 - **JSON Schema**: [donut_chart_schema_light.json](donut_chart_schema_light.json)
 
 ---
-

@@ -6,8 +6,9 @@ This module wraps the existing AdvancedChartGenerator to implement the
 AbstractChartGenerator interface for backward compatibility.
 """
 
-import matplotlib.pyplot as plt
 from typing import List
+
+import matplotlib.pyplot as plt
 
 from scripts.utils.abstract_chart_generator import AbstractChartGenerator
 from scripts.utils.chart_generators import AdvancedChartGenerator
