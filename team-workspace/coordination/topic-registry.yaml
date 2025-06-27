@@ -4,6 +4,7 @@ command_ownership:
     - implementation-plans
     - seo-components-restoration
     - security-hardening
+    - dashboard-visualization-implementation
     secondary_topics:
     - technical-health
     - product-strategy

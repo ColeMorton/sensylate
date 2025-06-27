@@ -16,6 +16,7 @@ help:
 	@echo "  process-data     - Process extracted data"
 	@echo "  train-model      - Train machine learning model"
 	@echo "  generate-report  - Generate final report"
+	@echo "  generate-dashboard - Generate performance dashboard"
 	@echo "  full-pipeline    - Run complete pipeline"
 	@echo "  clean           - Clean generated files"
 	@echo "  test            - Run all tests"
@@ -57,23 +58,96 @@ $(OUTPUT_DIR)/reports/analysis_report_$(TIMESTAMP).html: $(DATA_DIR)/processed/f
 		--input $< \
 		--env $(ENV)
 
+# Dashboard generation targets
+# Integrated report generation (report + dashboard)
+.PHONY: generate-report-with-dashboard
+generate-report-with-dashboard: $(OUTPUT_DIR)/reports/analysis_report_$(TIMESTAMP).html $(OUTPUT_DIR)/dashboards/historical-performance-dashboard-light-$(TIMESTAMP).png
+
+.PHONY: generate-report-integrated
+generate-report-integrated:
+	$(PYTHON) scripts/generate_report_with_dashboard.py \
+		--report-config $(CONFIG_DIR)/report_generation.yaml \
+		--dashboard-config $(CONFIG_DIR)/dashboard_generation.yaml \
+		--input $(shell ls -t $(DATA_DIR)/processed/features*.parquet | head -1) \
+		--env $(ENV) \
+		--quiet
+
+.PHONY: generate-dashboard
+generate-dashboard: $(OUTPUT_DIR)/dashboards/historical-performance-dashboard-light-$(TIMESTAMP).png
+
+$(OUTPUT_DIR)/dashboards/historical-performance-dashboard-light-$(TIMESTAMP).png: data/outputs/analysis_trade_history/HISTORICAL_PERFORMANCE_REPORT_$(TIMESTAMP).md
+	$(PYTHON) scripts/dashboard_generator.py \
+		--config $(CONFIG_DIR)/dashboard_generation.yaml \
+		--input $< \
+		--mode both \
+		--env $(ENV) \
+		--quiet
+
+.PHONY: generate-dashboard-light
+generate-dashboard-light: $(OUTPUT_DIR)/dashboards/historical-performance-dashboard-light-$(TIMESTAMP).png
+
+.PHONY: generate-dashboard-dark
+generate-dashboard-dark: $(OUTPUT_DIR)/dashboards/historical-performance-dashboard-dark-$(TIMESTAMP).png
+
+$(OUTPUT_DIR)/dashboards/historical-performance-dashboard-dark-$(TIMESTAMP).png: data/outputs/analysis_trade_history/HISTORICAL_PERFORMANCE_REPORT_$(TIMESTAMP).md
+	$(PYTHON) scripts/dashboard_generator.py \
+		--config $(CONFIG_DIR)/dashboard_generation.yaml \
+		--input $< \
+		--mode dark \
+		--env $(ENV) \
+		--quiet
+
 # Pipeline targets
 .PHONY: full-pipeline
 full-pipeline: extract-data process-data train-model generate-report
 	@echo "Pipeline completed successfully"
+
+.PHONY: full-pipeline-with-dashboard
+full-pipeline-with-dashboard: extract-data process-data train-model generate-report generate-dashboard
+	@echo "Pipeline with dashboard completed successfully"
 
 # Development shortcuts
 .PHONY: dev-pipeline
 dev-pipeline:
 	$(MAKE) full-pipeline ENV=dev
 
+.PHONY: dev-pipeline-dashboard
+dev-pipeline-dashboard:
+	$(MAKE) full-pipeline-with-dashboard ENV=dev
+
 .PHONY: staging-pipeline
 staging-pipeline:
 	$(MAKE) full-pipeline ENV=staging
 
+.PHONY: staging-pipeline-dashboard
+staging-pipeline-dashboard:
+	$(MAKE) full-pipeline-with-dashboard ENV=staging
+
 .PHONY: prod-pipeline
 prod-pipeline:
 	$(MAKE) full-pipeline ENV=prod
+
+.PHONY: prod-pipeline-dashboard
+prod-pipeline-dashboard:
+	$(MAKE) full-pipeline-with-dashboard ENV=prod
+
+# Quick dashboard generation (development)
+.PHONY: quick-dashboard
+quick-dashboard:
+	$(PYTHON) scripts/dashboard_generator.py \
+		--config $(CONFIG_DIR)/dashboard_generation.yaml \
+		--input $(shell ls -t data/outputs/analysis_trade_history/*.md | head -1) \
+		--mode both \
+		--env dev \
+		--log-level DEBUG
+
+.PHONY: quick-dashboard-validate
+quick-dashboard-validate:
+	$(PYTHON) scripts/dashboard_generator.py \
+		--config $(CONFIG_DIR)/dashboard_generation.yaml \
+		--input $(shell ls -t data/outputs/analysis_trade_history/*.md | head -1) \
+		--validate-only \
+		--env dev
 
 # Utility targets
 .PHONY: clean
@@ -81,6 +155,7 @@ clean:
 	rm -rf $(DATA_DIR)/interim/*
 	rm -rf $(OUTPUT_DIR)/logs/*
 	rm -rf $(OUTPUT_DIR)/reports/*
+	rm -rf $(OUTPUT_DIR)/dashboards/*
 
 .PHONY: clean-all
 clean-all:
@@ -88,6 +163,11 @@ clean-all:
 	rm -rf $(DATA_DIR)/interim/*
 	rm -rf $(DATA_DIR)/processed/*
 	rm -rf $(OUTPUT_DIR)/*
+
+.PHONY: clean-dashboards
+clean-dashboards:
+	rm -rf data/outputs/dashboards/*
+	@echo "Dashboard files cleaned"
 
 # Testing
 .PHONY: test
@@ -165,6 +245,7 @@ setup-dirs:
 	mkdir -p $(OUTPUT_DIR)/reports/markdown
 	mkdir -p $(OUTPUT_DIR)/visualizations/png
 	mkdir -p $(OUTPUT_DIR)/visualizations/svg
+	mkdir -p $(OUTPUT_DIR)/dashboards
 	mkdir -p $(OUTPUT_DIR)/exports/csv
 	mkdir -p $(OUTPUT_DIR)/exports/json
 	mkdir -p $(OUTPUT_DIR)/exports/parquet
