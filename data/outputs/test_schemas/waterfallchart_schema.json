@@ -1,0 +1,170 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Waterfall Chart Configuration",
+  "type": "object",
+  "properties": {
+    "chart_type": {
+      "type": "string",
+      "const": "waterfall_chart"
+    },
+    "data": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/TradeData"
+      },
+      "minItems": 1,
+      "description": "Array of trade data"
+    },
+    "theme": {
+      "$ref": "#/$defs/ThemeConfig"
+    },
+    "layout": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "width": {
+          "type": "integer",
+          "minimum": 100
+        },
+        "height": {
+          "type": "integer",
+          "minimum": 100
+        },
+        "show_cumulative_line": {
+          "type": "boolean",
+          "default": true
+        },
+        "show_performance_zones": {
+          "type": "boolean",
+          "default": true
+        },
+        "show_breakeven_line": {
+          "type": "boolean",
+          "default": true
+        }
+      }
+    },
+    "styling": {
+      "type": "object",
+      "properties": {
+        "bar_opacity": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "default": 0.8
+        },
+        "line_width": {
+          "type": "number",
+          "minimum": 1,
+          "default": 3
+        },
+        "annotation_threshold": {
+          "type": "number",
+          "default": 2.0
+        },
+        "marker_size": {
+          "type": "number",
+          "minimum": 2,
+          "default": 6
+        }
+      }
+    },
+    "scalability": {
+      "type": "object",
+      "properties": {
+        "max_bars": {
+          "type": "integer",
+          "minimum": 10,
+          "default": 50
+        },
+        "use_performance_bands": {
+          "type": "boolean",
+          "default": false
+        },
+        "volume_threshold": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 100
+        }
+      }
+    },
+    "export": {
+      "$ref": "#/$defs/ExportConfig"
+    }
+  },
+  "required": [
+    "chart_type",
+    "data"
+  ],
+  "$defs": {
+    "TradeData": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Trade Data",
+      "type": "object",
+      "properties": {
+        "ticker": {
+          "type": "string",
+          "description": "Stock ticker symbol"
+        },
+        "entry_date": {
+          "type": "string",
+          "format": "date",
+          "description": "Trade entry date (YYYY-MM-DD)"
+        },
+        "exit_date": {
+          "type": "string",
+          "format": "date",
+          "description": "Trade exit date (YYYY-MM-DD)"
+        },
+        "duration": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Trade duration in days"
+        },
+        "return_pct": {
+          "type": "number",
+          "description": "Trade return percentage"
+        },
+        "quality": {
+          "type": "string",
+          "enum": [
+            "Excellent",
+            "Good",
+            "Poor",
+            "Failed",
+            "Poor Setup"
+          ],
+          "description": "Trade quality assessment"
+        },
+        "entry_price": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Entry price per share"
+        },
+        "exit_price": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Exit price per share"
+        },
+        "position_size": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Position size in dollars"
+        }
+      },
+      "required": [
+        "ticker",
+        "entry_date",
+        "exit_date",
+        "duration",
+        "return_pct",
+        "quality"
+      ],
+      "additionalProperties": false
+    },
+    "ThemeConfig": {},
+    "ExportConfig": {}
+  }
+}

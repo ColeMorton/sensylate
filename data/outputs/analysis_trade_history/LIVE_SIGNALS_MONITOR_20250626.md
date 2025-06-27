@@ -7,8 +7,8 @@
 
 ### Current Status
 - **Active Positions**: 19 signals
-- **Portfolio Performance**: +8.59% YTD vs SPY +1.38%
-- **Market Outperformance**: +7.21%
+- **Portfolio Performance**: +8.59% YTD vs SPY +9.40%
+- **Market Underperformance**: -0.81%
 - **Average Hold Period**: 36 days
 
 ---
@@ -16,13 +16,13 @@
 ## 📊 Market Context & Macro Environment
 
 ### **2025 Market Regime Analysis**
-- **SPY Performance**: +1.38% YTD (cautious recovery from Q1 correction)
+- **SPY Performance**: +9.40% YTD (strong momentum through Q2)
 - **Market Regime**: Cautious Recovery with selective strength
 - **Volatility Environment**: Elevated volatility requiring careful position management
 - **Strategy Focus**: Multi-strategy approach with SMA and EMA signals
 
 ### **Portfolio vs Market Dynamics**
-- **Market Outperformance**: +7.21% vs SPY (+1.38% YTD)
+- **Market Underperformance**: -0.81% vs SPY (+9.40% YTD)
 - **Portfolio Beta**: ~0.30 (defensive characteristics with upside capture)
 - **Active Management**: 19 positions under active monitoring
 

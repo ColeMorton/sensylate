@@ -26,10 +26,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.patches import Wedge
 
-from scripts.utils.chart_generators import (
-    AdvancedChartGenerator,
-    create_chart_generator,
-)
+from scripts.utils.chart_generator_factory import ChartGeneratorFactory
 
 # Import our custom modules
 from scripts.utils.config_loader import ConfigLoader
@@ -71,8 +68,14 @@ class DashboardGenerator:
 
         self.scalability_manager = create_scalability_manager(config)
         self.layout_manager = create_layout_manager(config)
-        self.chart_generator = create_chart_generator(
-            self.theme_manager, self.scalability_manager
+        
+        # Get chart engine from config (default to matplotlib)
+        self.chart_engine = ChartGeneratorFactory.get_default_engine(config)
+        self.logger.info(f"Using chart engine: {self.chart_engine}")
+        
+        # Create chart generator using factory
+        self.chart_generator = ChartGeneratorFactory.create_chart_generator(
+            self.chart_engine, self.theme_manager, self.scalability_manager
         )
 
         # Validate theme colors
@@ -92,6 +95,13 @@ class DashboardGenerator:
         """
         self.logger.info(f"Generating {mode} mode dashboard from {input_file}")
 
+        # Use Plotly-native generator for Plotly engine
+        if self.chart_engine == "plotly":
+            from scripts.plotly_dashboard_generator import PlotlyDashboardGenerator
+            plotly_generator = PlotlyDashboardGenerator(self.config)
+            return plotly_generator.generate_dashboard(input_file, mode)
+
+        # Fall back to matplotlib implementation
         # Parse the input data
         data = parse_dashboard_data(str(input_file))
 

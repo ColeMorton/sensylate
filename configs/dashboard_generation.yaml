@@ -4,6 +4,29 @@ metadata:
   version: "1.0.0"
   description: "Generate scalable performance overview dashboards for trading reports"
 
+# Chart Generation Engine Configuration
+chart_engine: "plotly"  # Options: "plotly" (default), "matplotlib" (fallback)
+
+# Plotly-specific Configuration
+plotly:
+  template: "sensylate_light"  # Default template: sensylate_light, sensylate_dark, sensylate_dashboard
+  high_dpi: true              # Enable high-DPI templates for export quality
+  export:
+    formats: ["png", "pdf", "svg"]  # Multiple export formats available
+    scale: 3                   # Export scale factor (3x = ~300 DPI)
+  performance:
+    enable_caching: true       # Template and configuration caching
+    sample_large_datasets: true  # Intelligent data sampling for performance
+    use_webgl: true           # WebGL acceleration for large scatter plots
+  
+# Feature Flags for Migration Control
+feature_flags:
+  plotly_enabled: true
+  plotly_themes: true
+  plotly_layout_manager: true
+  frontend_config_export: true
+  production_optimization: true
+
 input:
   data_source: "markdown"
   report_path: "data/outputs/analysis_trade_history/HISTORICAL_PERFORMANCE_REPORT_{date}.md"

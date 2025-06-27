@@ -1,0 +1,577 @@
+{
+  "chart_type": "enhanced_scatter",
+  "data": [
+    {
+      "rank": 1,
+      "ticker": "NVDA_0",
+      "strategy": "Test Strategy",
+      "entry_date": "2024-01-01",
+      "exit_date": "2024-01-15",
+      "return_pct": -2.23,
+      "duration_days": 19,
+      "quality": "Poor"
+    },
+    {
+      "rank": 2,
+      "ticker": "WMT_1",
+      "strategy": "Test Strategy",
+      "entry_date": "2024-01-01",
+      "exit_date": "2024-01-15",
+      "return_pct": -1.82,
+      "duration_days": 7,
+      "quality": "Poor"
+    },
+    {
+      "rank": 3,
+      "ticker": "PG_2",
+      "strategy": "Test Strategy",
+      "entry_date": "2024-01-01",
+      "exit_date": "2024-01-15",
+      "return_pct": "12",
+      "duration_days": 26,
+      "quality": "Excellent"
+    },
+    {
+      "rank": 4,
+      "ticker": "JNJ_3",
+      "strategy": "Test Strategy",
+      "entry_date": "2024-01-01",
+      "exit_date": "2024-01-15",
+      "return_pct": 5.93,
+      "duration_days": "60",
+      "quality": "Good"
+    },
+    {
+      "rank": 5,
+      "ticker": "PYPL_4",
+      "strategy": "Test Strategy",
+      "entry_date": "2024-01-01",
+      "exit_date": "2024-01-15",
+      "return_pct": 4.55,
+      "duration_days": 13,
+      "quality": "Excellent"
+    },
+    {
+      "rank": 6,
+      "ticker": "TSLA_5",
+      "strategy": "Test Strategy",
+      "entry_date": "2024-01-01",
+      "exit_date": "2024-01-15",
+      "return_pct": -1.28,
+      "duration_days": 18,
+      "quality": "Poor"
+    },
+    {
+      "rank": 7,
+      "ticker": "MA_6",
+      "strategy": "Test Strategy",
+      "entry_date": "2024-01-01",
+      "exit_date": "2024-01-15",
+      "return_pct": -1.74,
+      "duration_days": 14,
+      "quality": "Poor"
+    },
+    {
+      "rank": 8,
+      "ticker": "NFLX_7",
+      "strategy": "Test Strategy",
+      "entry_date": "2024-01-01",
+      "exit_date": "2024-01-15",
+      "return_pct": 8.56,
+      "duration_days": 18,
+      "quality": "Good"
+    },
+    {
+      "rank": 9,
+      "ticker": "NFLX_8",
+      "strategy": "Test Strategy",
+      "entry_date": "2024-01-01",
+      "exit_date": "2024-01-15",
+      "return_pct": -1.67,
+      "duration_days": 24,
+      "quality": "Poor Setup"
+    },
+    {
+      "rank": 10,
+      "ticker": "JPM_9",
+      "strategy": "Test Strategy",
+      "entry_date": "2024-01-01",
+      "exit_date": "2024-01-15",
+      "return_pct": -0.47,
+      "duration_days": 22,
+      "quality": "Poor"
+    },
+    {
+      "rank": 11,
+      "ticker": "UNH_10",
+      "strategy": "Test Strategy",
+      "entry_date": "2024-01-01",
+      "exit_date": "2024-01-15",
+      "return_pct": "12",
+      "duration_days": 28,
+      "quality": "Failed"
+    },
+    {
+      "rank": 12,
+      "ticker": "CRM_11",
+      "strategy": "Test Strategy",
+      "entry_date": "2024-01-01",
+      "exit_date": "2024-01-15",
+      "return_pct": -2.68,
+      "duration_days": 19,
+      "quality": "Poor"
+    },
+    {
+      "rank": 13,
+      "ticker": "JPM_12",
+      "strategy": "Test Strategy",
+      "entry_date": "2024-01-01",
+      "exit_date": "2024-01-15",
+      "return_pct": 12.41,
+      "duration_days": 12,
+      "quality": "Excellent"
+    },
+    {
+      "rank": 14,
+      "ticker": "PG_13",
+      "strategy": "Test Strategy",
+      "entry_date": "2024-01-01",
+      "exit_date": "2024-01-15",
+      "return_pct": -8.11,
+      "duration_days": 6,
+      "quality": "Failed"
+    },
+    {
+      "rank": 15,
+      "ticker": "AAPL_14",
+      "strategy": "Test Strategy",
+      "entry_date": "2024-01-01",
+      "exit_date": "2024-01-15",
+      "return_pct": 1.77,
+      "duration_days": 14,
+      "quality": "Good"
+    },
+    {
+      "rank": 16,
+      "ticker": "CRM_15",
+      "strategy": "Test Strategy",
+      "entry_date": "2024-01-01",
+      "exit_date": "2024-01-15",
+      "return_pct": 3.67,
+      "duration_days": "1",
+      "quality": "Good"
+    },
+    {
+      "rank": 17,
+      "ticker": "AMZN_16",
+      "strategy": "Test Strategy",
+      "entry_date": "2024-01-01",
+      "exit_date": "2024-01-15",
+      "return_pct": 1.96,
+      "duration_days": 26,
+      "quality": "Good"
+    },
+    {
+      "rank": 18,
+      "ticker": "CRM_17",
+      "strategy": "Test Strategy",
+      "entry_date": "2024-01-01",
+      "exit_date": "2024-01-15",
+      "return_pct": -4.01,
+      "duration_days": 22,
+      "quality": "Failed"
+    },
+    {
+      "rank": 19,
+      "ticker": "WMT_18",
+      "strategy": "Test Strategy",
+      "entry_date": "2024-01-01",
+      "exit_date": "2024-01-15",
+      "return_pct": -3.29,
+      "duration_days": 12,
+      "quality": "Poor Setup"
+    },
+    {
+      "rank": 20,
+      "ticker": "PYPL_19",
+      "strategy": "Test Strategy",
+      "entry_date": "2024-01-01",
+      "exit_date": "2024-01-15",
+      "return_pct": -2.01,
+      "duration_days": 8,
+      "quality": "Poor"
+    },
+    {
+      "rank": 21,
+      "ticker": "AAPL_20",
+      "strategy": "Test Strategy",
+      "entry_date": "2024-01-01",
+      "exit_date": "2024-01-15",
+      "return_pct": 2.67,
+      "duration_days": 18,
+      "quality": "Good"
+    },
+    {
+      "rank": 22,
+      "ticker": "V_21",
+      "strategy": "Test Strategy",
+      "entry_date": "2024-01-01",
+      "exit_date": "2024-01-15",
+      "return_pct": 2.95,
+      "duration_days": 14,
+      "quality": "Good"
+    },
+    {
+      "rank": 23,
+      "ticker": "MSFT_22",
+      "strategy": "Test Strategy",
+      "entry_date": "2024-01-01",
+      "exit_date": "2024-01-15",
+      "return_pct": 15.39,
+      "duration_days": 15,
+      "quality": "Excellent"
+    },
+    {
+      "rank": 24,
+      "ticker": "AAPL_23",
+      "strategy": "Test Strategy",
+      "entry_date": "2024-01-01",
+      "exit_date": "2024-01-15",
+      "return_pct": 6.95,
+      "duration_days": 17,
+      "quality": "Good"
+    },
+    {
+      "rank": 25,
+      "ticker": "TSLA_24",
+      "strategy": "Test Strategy",
+      "entry_date": "2024-01-01",
+      "exit_date": "2024-01-15",
+      "return_pct": 2.73,
+      "duration_days": "45",
+      "quality": "Good"
+    },
+    {
+      "rank": 26,
+      "ticker": "WMT_25",
+      "strategy": "Test Strategy",
+      "entry_date": "2024-01-01",
+      "exit_date": "2024-01-15",
+      "return_pct": -4.92,
+      "duration_days": 26,
+      "quality": "Failed"
+    },
+    {
+      "rank": 27,
+      "ticker": "MSFT_26",
+      "strategy": "Test Strategy",
+      "entry_date": "2024-01-01",
+      "exit_date": "2024-01-15",
+      "return_pct": -0.98,
+      "duration_days": 5,
+      "quality": "Poor"
+    },
+    {
+      "rank": 28,
+      "ticker": "NVDA_27",
+      "strategy": "Test Strategy",
+      "entry_date": "2024-01-01",
+      "exit_date": "2024-01-15",
+      "return_pct": 0.24,
+      "duration_days": 12,
+      "quality": "Poor"
+    },
+    {
+      "rank": 29,
+      "ticker": "NFLX_28",
+      "strategy": "Test Strategy",
+      "entry_date": "2024-01-01",
+      "exit_date": "2024-01-15",
+      "return_pct": -2.56,
+      "duration_days": 13,
+      "quality": "Failed"
+    },
+    {
+      "rank": 30,
+      "ticker": "PYPL_29",
+      "strategy": "Test Strategy",
+      "entry_date": "2024-01-01",
+      "exit_date": "2024-01-15",
+      "return_pct": 3.52,
+      "duration_days": 5,
+      "quality": "Good"
+    },
+    {
+      "rank": 31,
+      "ticker": "MSFT_30",
+      "strategy": "Test Strategy",
+      "entry_date": "2024-01-01",
+      "exit_date": "2024-01-15",
+      "return_pct": -5.86,
+      "duration_days": 21,
+      "quality": "Failed"
+    },
+    {
+      "rank": 32,
+      "ticker": "PYPL_31",
+      "strategy": "Test Strategy",
+      "entry_date": "2024-01-01",
+      "exit_date": "2024-01-15",
+      "return_pct": -1.8,
+      "duration_days": "60",
+      "quality": "Failed"
+    },
+    {
+      "rank": 33,
+      "ticker": "MSFT_32",
+      "strategy": "Test Strategy",
+      "entry_date": "2024-01-01",
+      "exit_date": "2024-01-15",
+      "return_pct": 0.81,
+      "duration_days": 7,
+      "quality": "Good"
+    },
+    {
+      "rank": 34,
+      "ticker": "V_33",
+      "strategy": "Test Strategy",
+      "entry_date": "2024-01-01",
+      "exit_date": "2024-01-15",
+      "return_pct": 6.85,
+      "duration_days": 14,
+      "quality": "Excellent"
+    },
+    {
+      "rank": 35,
+      "ticker": "JPM_34",
+      "strategy": "Test Strategy",
+      "entry_date": "2024-01-01",
+      "exit_date": "2024-01-15",
+      "return_pct": 13.69,
+      "duration_days": 21,
+      "quality": "Excellent"
+    },
+    {
+      "rank": 36,
+      "ticker": "HD_35",
+      "strategy": "Test Strategy",
+      "entry_date": "2024-01-01",
+      "exit_date": "2024-01-15",
+      "return_pct": -1.38,
+      "duration_days": 14,
+      "quality": "Poor Setup"
+    },
+    {
+      "rank": 37,
+      "ticker": "AAPL_36",
+      "strategy": "Test Strategy",
+      "entry_date": "2024-01-01",
+      "exit_date": "2024-01-15",
+      "return_pct": -1.07,
+      "duration_days": 3,
+      "quality": "Poor"
+    },
+    {
+      "rank": 38,
+      "ticker": "MSFT_37",
+      "strategy": "Test Strategy",
+      "entry_date": "2024-01-01",
+      "exit_date": "2024-01-15",
+      "return_pct": -5.73,
+      "duration_days": 1,
+      "quality": "Failed"
+    },
+    {
+      "rank": 39,
+      "ticker": "AMZN_38",
+      "strategy": "Test Strategy",
+      "entry_date": "2024-01-01",
+      "exit_date": "2024-01-15",
+      "return_pct": -2.11,
+      "duration_days": 18,
+      "quality": "Poor Setup"
+    },
+    {
+      "rank": 40,
+      "ticker": "AAPL_39",
+      "strategy": "Test Strategy",
+      "entry_date": "2024-01-01",
+      "exit_date": "2024-01-15",
+      "return_pct": -3.87,
+      "duration_days": 16,
+      "quality": "Poor Setup"
+    },
+    {
+      "rank": 41,
+      "ticker": "JPM_40",
+      "strategy": "Test Strategy",
+      "entry_date": "2024-01-01",
+      "exit_date": "2024-01-15",
+      "return_pct": 1.11,
+      "duration_days": "2",
+      "quality": "Poor"
+    },
+    {
+      "rank": 42,
+      "ticker": "AAPL_41",
+      "strategy": "Test Strategy",
+      "entry_date": "2024-01-01",
+      "exit_date": "2024-01-15",
+      "return_pct": -4.6,
+      "duration_days": 15,
+      "quality": "Poor"
+    },
+    {
+      "rank": 43,
+      "ticker": "NFLX_42",
+      "strategy": "Test Strategy",
+      "entry_date": "2024-01-01",
+      "exit_date": "2024-01-15",
+      "return_pct": -1.23,
+      "duration_days": 18,
+      "quality": "Poor Setup"
+    },
+    {
+      "rank": 44,
+      "ticker": "AAPL_43",
+      "strategy": "Test Strategy",
+      "entry_date": "2024-01-01",
+      "exit_date": "2024-01-15",
+      "return_pct": "-12",
+      "duration_days": "60",
+      "quality": "Failed"
+    },
+    {
+      "rank": 45,
+      "ticker": "GOOGL_44",
+      "strategy": "Test Strategy",
+      "entry_date": "2024-01-01",
+      "exit_date": "2024-01-15",
+      "return_pct": 11.6,
+      "duration_days": 5,
+      "quality": "Excellent"
+    },
+    {
+      "rank": 46,
+      "ticker": "ADBE_45",
+      "strategy": "Test Strategy",
+      "entry_date": "2024-01-01",
+      "exit_date": "2024-01-15",
+      "return_pct": 12.68,
+      "duration_days": "45",
+      "quality": "Excellent"
+    },
+    {
+      "rank": 47,
+      "ticker": "AMZN_46",
+      "strategy": "Test Strategy",
+      "entry_date": "2024-01-01",
+      "exit_date": "2024-01-15",
+      "return_pct": -6.12,
+      "duration_days": 16,
+      "quality": "Failed"
+    },
+    {
+      "rank": 48,
+      "ticker": "JPM_47",
+      "strategy": "Test Strategy",
+      "entry_date": "2024-01-01",
+      "exit_date": "2024-01-15",
+      "return_pct": -5.04,
+      "duration_days": 4,
+      "quality": "Poor Setup"
+    },
+    {
+      "rank": 49,
+      "ticker": "CRM_48",
+      "strategy": "Test Strategy",
+      "entry_date": "2024-01-01",
+      "exit_date": "2024-01-15",
+      "return_pct": 9.51,
+      "duration_days": 16,
+      "quality": "Excellent"
+    },
+    {
+      "rank": 50,
+      "ticker": "AAPL_49",
+      "strategy": "Test Strategy",
+      "entry_date": "2024-01-01",
+      "exit_date": "2024-01-15",
+      "return_pct": 3.37,
+      "duration_days": 21,
+      "quality": "Good"
+    }
+  ],
+  "theme": {
+    "mode": "light",
+    "template": "sensylate_light",
+    "high_dpi": false,
+    "dashboard_optimized": false,
+    "colors": {
+      "primary": "#3179f5",
+      "secondary": "#26c6da",
+      "background": "#fff",
+      "text": "#121212",
+      "borders": "#eaeaea"
+    },
+    "typography": {
+      "font_family": "Heebo, -apple-system, BlinkMacSystemFont, sans-serif",
+      "font_sizes": {
+        "title": 20,
+        "subtitle": 16,
+        "body": 12,
+        "axis_labels": 10
+      }
+    }
+  },
+  "layout": {
+    "width": 800,
+    "height": 600,
+    "title": "Enhanced Scatter Analysis",
+    "responsive": true,
+    "show_trend_line": true,
+    "show_quality_legend": true,
+    "show_outlier_labels": true
+  },
+  "styling": {
+    "opacity": 0.8,
+    "border_width": 0.8,
+    "base_marker_size": 15,
+    "size_scaling_factor": 20
+  },
+  "export": {
+    "formats": [
+      "png"
+    ],
+    "quality": {
+      "width": 1600,
+      "height": 1200,
+      "scale": 2,
+      "dpi_equivalent": 192
+    },
+    "output": {
+      "directory": "data/outputs/charts",
+      "filename_pattern": "{chart_type}_{timestamp}",
+      "include_timestamp": true
+    }
+  },
+  "metadata": {
+    "generated_at": "2025-06-27 12:06:31",
+    "schema_version": "1.0.0",
+    "chart_engine": "plotly",
+    "export_format": "frontend_config",
+    "compatible_frameworks": [
+      "react",
+      "vue",
+      "angular"
+    ],
+    "plotly_version": "5.24.1"
+  },
+  "clustering": {
+    "enabled": false,
+    "min_samples": 5,
+    "eps": 2.5,
+    "show_centroids": true,
+    "volume_threshold": 100
+  }
+}

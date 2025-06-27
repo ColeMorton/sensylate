@@ -5,6 +5,7 @@ command_ownership:
     - seo-components-restoration
     - security-hardening
     - dashboard-visualization-implementation
+    - plotly-dashboard-migration
     secondary_topics:
     - technical-health
     - product-strategy
@@ -223,16 +224,42 @@ topics:
     current_authority: team-workspace/knowledge/implementation-plans/yahoo-finance-consolidation.md
     description: Technical implementation plans and architecture decisions
     freshness_threshold_days: 14
-    last_updated: '2025-06-19'
+    last_updated: '2025-06-27'
     primary_owner: architect
     related_files:
     - team-workspace/knowledge/implementation-plans/yahoo-finance-consolidation.md
     - team-workspace/knowledge/implementation-plans/typography-system.md
     - team-workspace/knowledge/implementation-plans/technical-debt-resolution.md
+    - team-workspace/knowledge/implementation-plans/plotly-dashboard-migration.md
     secondary_owners:
     - code-owner
     - product-owner
     status: active
+  plotly-dashboard-migration:
+    collaboration_permissions:
+      coordination_required:
+      - code-owner
+      - product-owner
+      read_access:
+      - code-owner
+      - product-owner
+      - business-analyst
+      write_access:
+      - architect
+    conflict_details: No conflicts - new implementation plan
+    conflicts_detected: false
+    current_authority: team-workspace/knowledge/implementation-plans/plotly-dashboard-migration.md
+    description: Implementation plan for migrating matplotlib dashboard system to Plotly with JSON schema consistency
+    freshness_threshold_days: 14
+    last_updated: '2025-06-27'
+    primary_owner: architect
+    related_files:
+    - team-workspace/knowledge/implementation-plans/plotly-dashboard-migration.md
+    - team-workspace/commands/architect/outputs/plotly-dashboard-migration-implementation-plan.md
+    secondary_owners:
+    - code-owner
+    - product-owner
+    status: new
   marketing-strategy:
     collaboration_permissions:
       coordination_required:

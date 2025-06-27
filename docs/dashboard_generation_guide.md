@@ -6,12 +6,14 @@ The Dashboard Generation system provides automated creation of high-quality perf
 
 ## Features
 
+- **Plotly-Powered**: Next-generation chart generation with interactive capabilities
 - **Dual-Mode Support**: Automatic generation of both light and dark theme dashboards
-- **Scalability**: Intelligent handling of datasets from 15 to 200+ trades and 1-12 months
-- **Brand Compliance**: Full integration with Sensylate color palette and typography
-- **Pipeline Integration**: Seamless integration with existing Makefile and report generation workflows
-- **Configuration-Driven**: Flexible YAML-based configuration system
-- **High Quality Output**: 300+ DPI PNG images suitable for professional reports
+- **Multi-Format Export**: PNG, PDF, SVG, and HTML export options
+- **JSON Schema Integration**: Frontend-ready chart configurations for React components
+- **Scalability**: Intelligent handling of datasets from 15 to 200+ trades with performance optimization
+- **Brand Compliance**: Full integration with Sensylate design system and 5 Plotly templates
+- **Production Optimized**: Template caching, data sampling, and batch processing
+- **High Quality Output**: 300+ DPI exports with professional print quality
 
 ## Quick Start
 
@@ -48,6 +50,50 @@ make full-pipeline-with-dashboard
 
 # Clean dashboard outputs
 make clean-dashboards
+```
+
+## Plotly Chart Engine
+
+The dashboard system now uses **Plotly** as the default chart generation engine, offering enhanced capabilities over the previous matplotlib system:
+
+### Chart Engine Options
+
+```bash
+# Use Plotly (default, recommended)
+python scripts/dashboard_generator.py --chart-engine plotly
+
+# Fallback to matplotlib if needed
+python scripts/dashboard_generator.py --chart-engine matplotlib
+```
+
+### Multi-Format Export
+
+```bash
+# Export in multiple formats
+python scripts/dashboard_generator.py \\
+    --export-formats png,pdf,svg \\
+    --high-dpi \\
+    --scale 3
+
+# Export for frontend integration
+python scripts/dashboard_generator.py \\
+    --export-frontend-config \\
+    --export-json-schema
+```
+
+### Template Selection
+
+```bash
+# Use specific Plotly template
+python scripts/dashboard_generator.py \\
+    --template sensylate_light_hd \\  # High-DPI optimized
+    --template sensylate_dashboard   # Dashboard optimized
+
+# Enable production optimizations
+python scripts/dashboard_generator.py \\
+    --enable-caching \\
+    --enable-sampling \\
+    --batch-processing
 ```
 
 ## Command Line Interface
@@ -370,6 +416,42 @@ output:
   dpi: 600          # Higher resolution
   format: "svg"     # Vector format
   filename_template: "custom-dashboard-{mode}-{timestamp}.{format}"
+```
+
+### Frontend Integration
+
+The Plotly-powered system now supports frontend integration through JSON schemas and chart configurations:
+
+```bash
+# Export chart configurations for React components
+python scripts/dashboard_generator.py \\
+    --export-frontend-config \\
+    --output-config-dir data/outputs/frontend_configs
+
+# Export JSON schemas for TypeScript definitions
+python scripts/dashboard_generator.py \\
+    --export-json-schema \\
+    --schema-output-dir data/outputs/schemas
+```
+
+#### Frontend Configuration Files
+
+Generated configuration files can be used directly in React components:
+
+```javascript
+// Example usage in React
+import monthlyBarsConfig from './configs/monthly_bars_config.json';
+
+function DashboardChart() {
+  return (
+    <PlotlyChart
+      chartType={monthlyBarsConfig.chart_type}
+      data={monthlyBarsConfig.data}
+      theme={monthlyBarsConfig.theme}
+      layout={monthlyBarsConfig.layout}
+    />
+  );
+}
 ```
 
 ### Environment Variables

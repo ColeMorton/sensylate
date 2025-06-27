@@ -16,10 +16,13 @@ help:
 	@echo "  process-data     - Process extracted data"
 	@echo "  train-model      - Train machine learning model"
 	@echo "  generate-report  - Generate final report"
-	@echo "  generate-dashboard - Generate performance dashboard"
+	@echo "  generate-dashboard - Generate performance dashboard (Plotly)"
+	@echo "  dashboard-multi-format - Export dashboard in multiple formats"
+	@echo "  dashboard-frontend-export - Export frontend configs and schemas"
 	@echo "  full-pipeline    - Run complete pipeline"
 	@echo "  clean           - Clean generated files"
 	@echo "  test            - Run all tests"
+	@echo "  test-plotly-migration - Run Plotly migration tests"
 	@echo "  test-collaboration - Run collaboration framework tests"
 	@echo "  test-e2e        - Run end-to-end collaboration tests"
 	@echo "  install         - Install dependencies"
@@ -167,7 +170,37 @@ clean-all:
 .PHONY: clean-dashboards
 clean-dashboards:
 	rm -rf data/outputs/dashboards/*
+	rm -rf data/outputs/frontend_configs/*
+	rm -rf data/outputs/schemas/*
 	@echo "Dashboard files cleaned"
+
+# Plotly-specific targets
+.PHONY: dashboard-multi-format
+dashboard-multi-format:
+	$(PYTHON) scripts/dashboard_generator.py \
+		--config $(CONFIG_DIR)/dashboard_generation.yaml \
+		--input $(shell ls -t data/outputs/analysis_trade_history/*.md | head -1) \
+		--export-formats png,pdf,svg \
+		--high-dpi \
+		--env dev
+
+.PHONY: dashboard-frontend-export
+dashboard-frontend-export:
+	$(PYTHON) scripts/dashboard_generator.py \
+		--config $(CONFIG_DIR)/dashboard_generation.yaml \
+		--input $(shell ls -t data/outputs/analysis_trade_history/*.md | head -1) \
+		--export-frontend-config \
+		--export-json-schema \
+		--env dev
+
+.PHONY: test-plotly-migration
+test-plotly-migration:
+	$(PYTHON) scripts/test_phase1_implementation.py
+	$(PYTHON) scripts/test_phase2_implementation.py
+	$(PYTHON) scripts/test_phase3_implementation.py
+	$(PYTHON) scripts/test_phase4_implementation.py
+	$(PYTHON) scripts/test_phase5_implementation.py
+	@echo "Plotly migration tests completed"
 
 # Testing
 .PHONY: test
