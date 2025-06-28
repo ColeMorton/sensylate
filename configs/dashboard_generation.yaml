@@ -77,13 +77,23 @@ design_system:
     muted_text: "#B4AFB6"
     borders: "#3E3E3E"
 
-  # Typography
+  # Typography - Local Font Configuration
   fonts:
     primary_family: "Heebo"
+    source: "local"  # Use local font files instead of external downloads
+    base_path: "fonts/heebo"  # Relative to project root
+    files:
+      400: "heebo-400.ttf"   # Regular weight
+      600: "heebo-600.ttf"   # Semi-bold weight
+      700: "heebo-700.ttf"   # Bold weight
+      800: "heebo-800.ttf"   # Extra-bold weight
     weights:
       regular: 400
       semibold: 600
+      bold: 700
+      extrabold: 800
     fallback: "sans-serif"
+    css_file: "heebo.css"  # CSS font declarations for frontend consistency
 
 # Output Configuration (merged with above output section)
 

@@ -9,7 +9,7 @@ ensuring consistency with the Sensylate brand guidelines.
 import logging
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, cast
 
 import yaml
 
@@ -97,7 +97,10 @@ class ThemeManager:
                 return self._get_default_config()
 
             with open(config_file, "r") as file:
-                return yaml.safe_load(file)
+                config_data: Any = yaml.safe_load(file)
+                if config_data is not None and isinstance(config_data, dict):
+                    return cast(Dict[str, Any], config_data)
+                return {}
 
         except Exception as e:
             self.logger.error(f"Failed to load config: {e}, using defaults")
@@ -135,7 +138,20 @@ class ThemeManager:
                 },
                 "fonts": {
                     "primary_family": "Heebo",
-                    "weights": {"regular": 400, "semibold": 600},
+                    "source": "local",
+                    "base_path": "fonts/heebo",
+                    "files": {
+                        400: "heebo-400.ttf",
+                        600: "heebo-600.ttf",
+                        700: "heebo-700.ttf",
+                        800: "heebo-800.ttf",
+                    },
+                    "weights": {
+                        "regular": 400,
+                        "semibold": 600,
+                        "bold": 700,
+                        "extrabold": 800,
+                    },
                     "fallback": "sans-serif",
                 },
             }
@@ -360,112 +376,18 @@ class ThemeManager:
         return fonts
 
     def configure_font_fallbacks(self) -> None:
-        """Configure font fallbacks and attempt to load Heebo font."""
-        import os
-        import tempfile
-        from zipfile import ZipFile
+        """Configure fonts using local font manager."""
+        from .local_font_manager import initialize_fonts
 
-        import matplotlib.font_manager as fm
-        import matplotlib.pyplot as plt
-        import requests
+        success = initialize_fonts()
 
-        # Refresh font cache to ensure up-to-date font list
-        fm.fontManager.__init__()
-        available_fonts = [f.name for f in fm.fontManager.ttflist]
-
-        # Check if Heebo is already available
-        if self.typography.primary_family in available_fonts:
-            self.logger.info(f"Font '{self.typography.primary_family}' is available")
-            plt.rcParams["font.family"] = self._get_font_list()
-            return
-
-        self.logger.warning(
-            f"Font '{self.typography.primary_family}' not found, attempting to download"
-        )
-
-        # Try to download and install Heebo font from Google Fonts
-        try:
-            self._download_and_install_heebo()
-
-            # Refresh font manager after installation
-            fm.fontManager.__init__()
-            available_fonts = [f.name for f in fm.fontManager.ttflist]
-
-            if self.typography.primary_family in available_fonts:
-                self.logger.info(
-                    f"Successfully installed and configured '{self.typography.primary_family}' font"
-                )
-                plt.rcParams["font.family"] = self._get_font_list()
-                return
-
-        except Exception as e:
-            self.logger.warning(f"Failed to download Heebo font: {e}")
-
-        # Fall back to best available system font
-        preferred_fallbacks = [
-            "Helvetica Neue",
-            "Arial",
-            "DejaVu Sans",
-            "Liberation Sans",
-        ]
-        selected_fallback = "sans-serif"  # Ultimate fallback
-
-        for fallback in preferred_fallbacks:
-            if fallback in available_fonts:
-                selected_fallback = fallback
-                break
-
-        self.logger.info(f"Using fallback font: {selected_fallback}")
-        fallback_fonts = [selected_fallback] + self._get_font_list()[1:]
-        plt.rcParams["font.family"] = fallback_fonts
-
-    def _download_and_install_heebo(self) -> None:
-        """Download and install Heebo font from Google Fonts."""
-        import os
-        import tempfile
-
-        import matplotlib.font_manager as fm
-        import requests
-
-        # Use direct GitHub link to Heebo font files (more reliable)
-        base_url = "https://github.com/google/fonts/raw/main/ofl/heebo"
-        font_files = [
-            "Heebo-Regular.ttf",
-            "Heebo-Medium.ttf",
-            "Heebo-SemiBold.ttf",
-            "Heebo-Bold.ttf",
-        ]
-
-        with tempfile.TemporaryDirectory() as temp_dir:
-            installed_count = 0
-
-            for font_file in font_files:
-                try:
-                    # Download individual font file
-                    font_url = f"{base_url}/{font_file}"
-                    response = requests.get(font_url, timeout=10)
-                    response.raise_for_status()
-
-                    # Save font file
-                    font_path = os.path.join(temp_dir, font_file)
-                    with open(font_path, "wb") as f:
-                        f.write(response.content)
-
-                    # Add font to matplotlib font manager
-                    fm.fontManager.addfont(font_path)
-                    self.logger.debug(f"Added font file: {font_file}")
-                    installed_count += 1
-
-                except Exception as e:
-                    self.logger.warning(f"Failed to download {font_file}: {e}")
-                    continue
-
-            if installed_count > 0:
-                self.logger.info(
-                    f"Successfully downloaded and installed {installed_count} Heebo font files"
-                )
-            else:
-                raise ValueError("No Heebo font files could be downloaded")
+        if success:
+            self.logger.info(
+                f"Successfully configured local "
+                f"'{self.typography.primary_family}' fonts"
+            )
+        else:
+            self.logger.warning("Local fonts not available, using system fallbacks")
 
     def get_title_style(self, mode: str = "light") -> Dict[str, Any]:
         """
@@ -480,14 +402,14 @@ class ThemeManager:
         theme = self.get_theme_colors(mode)
 
         return {
-            "fontsize": 18,  # Increased to 18 for maximum prominence and hierarchy
+            "fontsize": 18,  # Increased to 18 for maximum prominence
             "fontweight": "bold",
             "color": theme.primary_text,
-            "pad": 45,  # Significantly increased padding to eliminate overlap completely
+            "pad": 45,  # Significantly increased padding to eliminate overlap
             "fontfamily": self._get_font_list(),
         }
 
-    def apply_title_style(self, ax, title: str, mode: str = "light") -> None:
+    def apply_title_style(self, ax: object, title: str, mode: str = "light") -> None:
         """
         Apply standardized title styling to an axes object.
 
@@ -497,7 +419,8 @@ class ThemeManager:
             mode: 'light' or 'dark'
         """
         style = self.get_title_style(mode)
-        ax.set_title(title, **style)
+        if hasattr(ax, "set_title"):
+            ax.set_title(title, **style)
 
 
 def create_theme_manager(config_path: Optional[str] = None) -> ThemeManager:

@@ -1,3 +1,8 @@
+:root {
+  --font-primary: "Heebo", sans-serif;
+  --font-secondary: "Heebo", sans-serif;
+}
+
 html {
   @apply text-base-sm md:text-base;
 }
