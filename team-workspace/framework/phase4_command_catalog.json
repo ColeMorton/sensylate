@@ -1,0 +1,483 @@
+{
+  "timestamp": "2025-06-28T14:51:38.958887",
+  "total_commands": 17,
+  "integrated_commands": {
+    "fundamental_analysis": {
+      "phase": "Phase 2",
+      "status": "fully_integrated",
+      "has_eval_manifest": true,
+      "has_deps_manifest": true,
+      "integration_quality": "comprehensive"
+    },
+    "social_media_content": {
+      "phase": "Phase 2",
+      "status": "fully_integrated",
+      "has_eval_manifest": true,
+      "has_deps_manifest": true,
+      "integration_quality": "comprehensive"
+    }
+  },
+  "legacy_commands": {
+    "twitter_post": "consolidated_into_social_media_content",
+    "twitter_post_strategy": "consolidated_into_social_media_content",
+    "twitter_fundamental_analysis": "consolidated_into_social_media_content"
+  },
+  "remaining_commands": {
+    "product_owner": {
+      "file_path": ".claude/commands/product_owner.md",
+      "content_length": 9538,
+      "complexity": "high",
+      "command_type": "development",
+      "dependencies": [
+        "data_sources",
+        "file_systems",
+        "services",
+        "other_commands"
+      ],
+      "evaluation_requirements": {
+        "complexity": "comprehensive",
+        "quality_gates": [
+          "dependency_validation",
+          "confidence_scoring",
+          "output_validation",
+          "performance_monitoring"
+        ],
+        "confidence_scoring": true,
+        "phase_0a_compatible": true
+      },
+      "template_requirements": {
+        "output_types": [
+          "markdown",
+          "json",
+          "report"
+        ],
+        "template_complexity": "high",
+        "standardization_needed": true,
+        "metadata_requirements": false
+      },
+      "deployment_priority": "high"
+    },
+    "content_publisher": {
+      "file_path": ".claude/commands/content_publisher.md",
+      "content_length": 12588,
+      "complexity": "high",
+      "command_type": "analysis",
+      "dependencies": [
+        "data_sources",
+        "file_systems",
+        "services",
+        "other_commands"
+      ],
+      "evaluation_requirements": {
+        "complexity": "comprehensive",
+        "quality_gates": [
+          "dependency_validation",
+          "confidence_scoring",
+          "output_validation",
+          "performance_monitoring"
+        ],
+        "confidence_scoring": true,
+        "phase_0a_compatible": false
+      },
+      "template_requirements": {
+        "output_types": [
+          "markdown",
+          "json",
+          "report",
+          "visual"
+        ],
+        "template_complexity": "high",
+        "standardization_needed": true,
+        "metadata_requirements": true
+      },
+      "deployment_priority": "high"
+    },
+    "trade_history_images": {
+      "file_path": ".claude/commands/trade_history_images.md",
+      "content_length": 13766,
+      "complexity": "high",
+      "command_type": "development",
+      "dependencies": [
+        "data_sources",
+        "file_systems",
+        "services",
+        "other_commands"
+      ],
+      "evaluation_requirements": {
+        "complexity": "comprehensive",
+        "quality_gates": [
+          "dependency_validation",
+          "confidence_scoring",
+          "output_validation",
+          "performance_monitoring"
+        ],
+        "confidence_scoring": false,
+        "phase_0a_compatible": true
+      },
+      "template_requirements": {
+        "output_types": [
+          "markdown",
+          "json",
+          "report",
+          "visual"
+        ],
+        "template_complexity": "high",
+        "standardization_needed": true,
+        "metadata_requirements": true
+      },
+      "deployment_priority": "high"
+    },
+    "architect": {
+      "file_path": ".claude/commands/architect.md",
+      "content_length": 7833,
+      "complexity": "high",
+      "command_type": "development",
+      "dependencies": [
+        "file_systems",
+        "services",
+        "other_commands"
+      ],
+      "evaluation_requirements": {
+        "complexity": "comprehensive",
+        "quality_gates": [
+          "dependency_validation",
+          "confidence_scoring",
+          "output_validation",
+          "performance_monitoring"
+        ],
+        "confidence_scoring": false,
+        "phase_0a_compatible": true
+      },
+      "template_requirements": {
+        "output_types": [
+          "markdown",
+          "json",
+          "report"
+        ],
+        "template_complexity": "high",
+        "standardization_needed": true,
+        "metadata_requirements": false
+      },
+      "deployment_priority": "high"
+    },
+    "trade_history": {
+      "file_path": ".claude/commands/trade_history.md",
+      "content_length": 31099,
+      "complexity": "high",
+      "command_type": "development",
+      "dependencies": [
+        "data_sources",
+        "file_systems",
+        "services",
+        "other_commands"
+      ],
+      "evaluation_requirements": {
+        "complexity": "comprehensive",
+        "quality_gates": [
+          "dependency_validation",
+          "confidence_scoring",
+          "output_validation",
+          "performance_monitoring"
+        ],
+        "confidence_scoring": true,
+        "phase_0a_compatible": true
+      },
+      "template_requirements": {
+        "output_types": [
+          "markdown",
+          "json",
+          "report"
+        ],
+        "template_complexity": "high",
+        "standardization_needed": true,
+        "metadata_requirements": false
+      },
+      "deployment_priority": "high"
+    },
+    "content_evaluator": {
+      "file_path": ".claude/commands/content_evaluator.md",
+      "content_length": 12969,
+      "complexity": "high",
+      "command_type": "development",
+      "dependencies": [
+        "data_sources",
+        "file_systems",
+        "services",
+        "other_commands"
+      ],
+      "evaluation_requirements": {
+        "complexity": "comprehensive",
+        "quality_gates": [
+          "dependency_validation",
+          "confidence_scoring",
+          "output_validation",
+          "performance_monitoring"
+        ],
+        "confidence_scoring": true,
+        "phase_0a_compatible": true
+      },
+      "template_requirements": {
+        "output_types": [
+          "markdown",
+          "json",
+          "report"
+        ],
+        "template_complexity": "high",
+        "standardization_needed": true,
+        "metadata_requirements": false
+      },
+      "deployment_priority": "high"
+    },
+    "social_media_strategist": {
+      "file_path": ".claude/commands/social_media_strategist.md",
+      "content_length": 17453,
+      "complexity": "high",
+      "command_type": "development",
+      "dependencies": [
+        "file_systems",
+        "services",
+        "other_commands"
+      ],
+      "evaluation_requirements": {
+        "complexity": "comprehensive",
+        "quality_gates": [
+          "dependency_validation",
+          "confidence_scoring",
+          "output_validation",
+          "performance_monitoring"
+        ],
+        "confidence_scoring": false,
+        "phase_0a_compatible": true
+      },
+      "template_requirements": {
+        "output_types": [
+          "markdown",
+          "json",
+          "report",
+          "visual"
+        ],
+        "template_complexity": "high",
+        "standardization_needed": true,
+        "metadata_requirements": true
+      },
+      "deployment_priority": "high"
+    },
+    "code-owner": {
+      "file_path": ".claude/commands/code-owner.md",
+      "content_length": 9936,
+      "complexity": "high",
+      "command_type": "development",
+      "dependencies": [
+        "data_sources",
+        "file_systems",
+        "other_commands"
+      ],
+      "evaluation_requirements": {
+        "complexity": "comprehensive",
+        "quality_gates": [
+          "dependency_validation",
+          "confidence_scoring",
+          "output_validation",
+          "performance_monitoring"
+        ],
+        "confidence_scoring": false,
+        "phase_0a_compatible": true
+      },
+      "template_requirements": {
+        "output_types": [
+          "markdown",
+          "json",
+          "report",
+          "visual"
+        ],
+        "template_complexity": "high",
+        "standardization_needed": true,
+        "metadata_requirements": false
+      },
+      "deployment_priority": "high"
+    },
+    "twitter_trade_history": {
+      "file_path": ".claude/commands/twitter_trade_history.md",
+      "content_length": 11598,
+      "complexity": "high",
+      "command_type": "analysis",
+      "dependencies": [
+        "data_sources",
+        "file_systems",
+        "services",
+        "other_commands"
+      ],
+      "evaluation_requirements": {
+        "complexity": "comprehensive",
+        "quality_gates": [
+          "dependency_validation",
+          "confidence_scoring",
+          "output_validation",
+          "performance_monitoring"
+        ],
+        "confidence_scoring": false,
+        "phase_0a_compatible": false
+      },
+      "template_requirements": {
+        "output_types": [
+          "markdown",
+          "json",
+          "report",
+          "visual"
+        ],
+        "template_complexity": "high",
+        "standardization_needed": true,
+        "metadata_requirements": false
+      },
+      "deployment_priority": "high"
+    },
+    "command": {
+      "file_path": ".claude/commands/command.md",
+      "content_length": 13489,
+      "complexity": "high",
+      "command_type": "development",
+      "dependencies": [
+        "file_systems",
+        "services",
+        "other_commands"
+      ],
+      "evaluation_requirements": {
+        "complexity": "comprehensive",
+        "quality_gates": [
+          "dependency_validation",
+          "confidence_scoring",
+          "output_validation",
+          "performance_monitoring"
+        ],
+        "confidence_scoring": true,
+        "phase_0a_compatible": true
+      },
+      "template_requirements": {
+        "output_types": [
+          "markdown",
+          "json",
+          "report"
+        ],
+        "template_complexity": "high",
+        "standardization_needed": true,
+        "metadata_requirements": false
+      },
+      "deployment_priority": "high"
+    },
+    "business_analyst": {
+      "file_path": ".claude/commands/business_analyst.md",
+      "content_length": 10467,
+      "complexity": "medium",
+      "command_type": "development",
+      "dependencies": [
+        "file_systems",
+        "services",
+        "other_commands"
+      ],
+      "evaluation_requirements": {
+        "complexity": "comprehensive",
+        "quality_gates": [
+          "dependency_validation",
+          "confidence_scoring",
+          "output_validation",
+          "performance_monitoring"
+        ],
+        "confidence_scoring": true,
+        "phase_0a_compatible": false
+      },
+      "template_requirements": {
+        "output_types": [
+          "markdown",
+          "json",
+          "report",
+          "visual"
+        ],
+        "template_complexity": "high",
+        "standardization_needed": true,
+        "metadata_requirements": false
+      },
+      "deployment_priority": "high"
+    },
+    "commit_push": {
+      "file_path": ".claude/commands/commit_push.md",
+      "content_length": 3032,
+      "complexity": "low",
+      "command_type": "development",
+      "dependencies": [
+        "file_systems",
+        "services",
+        "other_commands"
+      ],
+      "evaluation_requirements": {
+        "complexity": "standard",
+        "quality_gates": [
+          "confidence_scoring",
+          "output_validation"
+        ],
+        "confidence_scoring": false,
+        "phase_0a_compatible": false
+      },
+      "template_requirements": {
+        "output_types": [],
+        "template_complexity": "low",
+        "standardization_needed": false,
+        "metadata_requirements": false
+      },
+      "deployment_priority": "high"
+    }
+  },
+  "categorized_deployment": {
+    "high_priority": [
+      "product_owner",
+      "content_publisher",
+      "trade_history_images",
+      "architect",
+      "trade_history",
+      "content_evaluator",
+      "social_media_strategist",
+      "code-owner",
+      "twitter_trade_history",
+      "command",
+      "business_analyst",
+      "commit_push"
+    ],
+    "medium_priority": [],
+    "low_priority": [],
+    "complex_analysis": [
+      "content_publisher",
+      "twitter_trade_history"
+    ],
+    "content_management": [],
+    "development_tools": [
+      "product_owner",
+      "trade_history_images",
+      "architect",
+      "trade_history",
+      "content_evaluator",
+      "social_media_strategist",
+      "code-owner",
+      "command",
+      "business_analyst",
+      "commit_push"
+    ],
+    "trading_utilities": [],
+    "business_management": []
+  },
+  "phase4_scope": {
+    "target_commands": 12,
+    "deployment_priority": [
+      "product_owner",
+      "content_publisher",
+      "trade_history_images",
+      "trade_history",
+      "content_evaluator",
+      "twitter_trade_history",
+      "architect",
+      "social_media_strategist",
+      "code-owner",
+      "command",
+      "business_analyst",
+      "commit_push"
+    ]
+  }
+}

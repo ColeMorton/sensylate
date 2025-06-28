@@ -1,0 +1,32 @@
+{
+  "suggestions": [
+    {
+      "command": "social_media_content",
+      "description": "Create social media post for AAPL analysis",
+      "parameters": {
+        "ticker": "AAPL",
+        "content_type": "fundamental_analysis"
+      },
+      "confidence": "high"
+    },
+    {
+      "command": "content_publisher",
+      "description": "Publish content to social platforms",
+      "parameters": {
+        "platforms": [
+          "twitter",
+          "linkedin"
+        ]
+      },
+      "confidence": "high"
+    }
+  ],
+  "context": {
+    "user_expertise": "beginner",
+    "time_available": 30,
+    "interaction_mode": "detailed",
+    "total_commands_used": 5
+  },
+  "reminder_time": "2025-06-28T15:46:31.323868",
+  "created_at": "2025-06-28T14:46:31.323879"
+}

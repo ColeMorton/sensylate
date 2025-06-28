@@ -1,0 +1,17 @@
+{
+  "rule_id": "default_fundamental_analysis",
+  "name": "High-Confidence Fundamental Analysis",
+  "command_pattern": "fundamental_analysis",
+  "confidence_threshold": 0.9,
+  "max_execution_time": 180,
+  "automation_level": "AutomationLevel.CONSERVATIVE",
+  "automation_scope": "AutomationScope.SINGLE_COMMAND",
+  "user_confirmation_required": true,
+  "cooldown_period": 300,
+  "success_rate_threshold": 0.85,
+  "enabled": false,
+  "created_at": "2025-06-28 15:16:58.404713",
+  "last_used": null,
+  "success_count": 0,
+  "total_executions": 0
+}

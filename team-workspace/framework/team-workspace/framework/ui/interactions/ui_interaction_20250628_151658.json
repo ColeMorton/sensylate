@@ -1,0 +1,14 @@
+{
+  "original_count": 2,
+  "filtered_count": 1,
+  "ui_context": {
+    "user_expertise": "beginner",
+    "interaction_mode": "detailed",
+    "presentation_style": "comprehensive",
+    "time_available": 15
+  },
+  "user_context": {
+    "user_id": "ux_test_user"
+  },
+  "timestamp": "2025-06-28T15:16:58.423940"
+}

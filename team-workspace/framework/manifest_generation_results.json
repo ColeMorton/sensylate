@@ -1,0 +1,118 @@
+{
+  "timestamp": "2025-06-28T14:52:58.186467",
+  "commands_processed": 12,
+  "evaluation_manifests": {
+    "product_owner": ".claude/commands/product_owner.eval.yaml",
+    "content_publisher": ".claude/commands/content_publisher.eval.yaml",
+    "trade_history_images": ".claude/commands/trade_history_images.eval.yaml",
+    "trade_history": ".claude/commands/trade_history.eval.yaml",
+    "content_evaluator": ".claude/commands/content_evaluator.eval.yaml",
+    "twitter_trade_history": ".claude/commands/twitter_trade_history.eval.yaml",
+    "architect": ".claude/commands/architect.eval.yaml",
+    "social_media_strategist": ".claude/commands/social_media_strategist.eval.yaml",
+    "code-owner": ".claude/commands/code-owner.eval.yaml",
+    "command": ".claude/commands/command.eval.yaml",
+    "business_analyst": ".claude/commands/business_analyst.eval.yaml",
+    "commit_push": ".claude/commands/commit_push.eval.yaml"
+  },
+  "dependency_manifests": {
+    "product_owner": ".claude/commands/product_owner.deps.yaml",
+    "content_publisher": ".claude/commands/content_publisher.deps.yaml",
+    "trade_history_images": ".claude/commands/trade_history_images.deps.yaml",
+    "trade_history": ".claude/commands/trade_history.deps.yaml",
+    "content_evaluator": ".claude/commands/content_evaluator.deps.yaml",
+    "twitter_trade_history": ".claude/commands/twitter_trade_history.deps.yaml",
+    "architect": ".claude/commands/architect.deps.yaml",
+    "social_media_strategist": ".claude/commands/social_media_strategist.deps.yaml",
+    "code-owner": ".claude/commands/code-owner.deps.yaml",
+    "command": ".claude/commands/command.deps.yaml",
+    "business_analyst": ".claude/commands/business_analyst.deps.yaml",
+    "commit_push": ".claude/commands/commit_push.deps.yaml"
+  },
+  "generation_summary": {
+    "product_owner": {
+      "complexity": "high",
+      "command_type": "development",
+      "quality_gates": 4,
+      "dependencies": 5,
+      "template_enforcement": true
+    },
+    "content_publisher": {
+      "complexity": "high",
+      "command_type": "analysis",
+      "quality_gates": 5,
+      "dependencies": 5,
+      "template_enforcement": true
+    },
+    "trade_history_images": {
+      "complexity": "high",
+      "command_type": "development",
+      "quality_gates": 4,
+      "dependencies": 5,
+      "template_enforcement": true
+    },
+    "trade_history": {
+      "complexity": "high",
+      "command_type": "development",
+      "quality_gates": 4,
+      "dependencies": 5,
+      "template_enforcement": true
+    },
+    "content_evaluator": {
+      "complexity": "high",
+      "command_type": "development",
+      "quality_gates": 4,
+      "dependencies": 5,
+      "template_enforcement": true
+    },
+    "twitter_trade_history": {
+      "complexity": "high",
+      "command_type": "analysis",
+      "quality_gates": 5,
+      "dependencies": 5,
+      "template_enforcement": true
+    },
+    "architect": {
+      "complexity": "high",
+      "command_type": "development",
+      "quality_gates": 4,
+      "dependencies": 4,
+      "template_enforcement": true
+    },
+    "social_media_strategist": {
+      "complexity": "high",
+      "command_type": "development",
+      "quality_gates": 4,
+      "dependencies": 4,
+      "template_enforcement": true
+    },
+    "code-owner": {
+      "complexity": "high",
+      "command_type": "development",
+      "quality_gates": 4,
+      "dependencies": 4,
+      "template_enforcement": true
+    },
+    "command": {
+      "complexity": "high",
+      "command_type": "development",
+      "quality_gates": 4,
+      "dependencies": 4,
+      "template_enforcement": true
+    },
+    "business_analyst": {
+      "complexity": "medium",
+      "command_type": "development",
+      "quality_gates": 4,
+      "dependencies": 4,
+      "template_enforcement": true
+    },
+    "commit_push": {
+      "complexity": "low",
+      "command_type": "development",
+      "quality_gates": 4,
+      "dependencies": 4,
+      "template_enforcement": false
+    }
+  }
+}

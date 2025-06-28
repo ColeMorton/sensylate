@@ -1,0 +1,25 @@
+[
+  {
+    "user_id": "ux_test_user",
+    "command": "social_media_content",
+    "features": {
+      "hour": 14,
+      "day_of_week": 5,
+      "is_weekend": true,
+      "estimated_time": 0,
+      "confidence": 0.88,
+      "priority": "medium",
+      "command_complexity": "medium",
+      "has_dependencies": false,
+      "output_type": "text",
+      "current_workflow": "general",
+      "recent_activity": "normal"
+    },
+    "action": "executed",
+    "outcome": {
+      "success": true,
+      "satisfaction": 0.9
+    },
+    "timestamp": "2025-06-28T14:48:47.249373"
+  }
+]

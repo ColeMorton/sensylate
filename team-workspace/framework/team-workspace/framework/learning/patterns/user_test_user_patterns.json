@@ -1,0 +1,18 @@
+[
+  {
+    "command": "fundamental_analysis",
+    "context_features": {
+      "priority": "high",
+      "current_workflow": "general",
+      "output_type": "text",
+      "estimated_time": 150.0,
+      "confidence": 0.75
+    },
+    "user_action": "rejected",
+    "success_rate": 0.5,
+    "frequency": 4,
+    "confidence_threshold": 0.85,
+    "time_preference": 120,
+    "last_updated": "2025-06-28 15:16:58.408206"
+  }
+]

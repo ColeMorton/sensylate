@@ -1,0 +1,52 @@
+{
+  "feature_weights": {
+    "hour": 0.2,
+    "day_of_week": 0.2,
+    "is_weekend": 0.2,
+    "estimated_time": 0.0,
+    "confidence": 0.17600000000000002,
+    "priority": 0.037000000000000005,
+    "command_complexity": 0.037000000000000005,
+    "has_dependencies": 0.0,
+    "output_type": 0.179,
+    "current_workflow": 0.12100000000000001,
+    "recent_activity": 0.043000000000000003
+  },
+  "confidence_adjustments": {
+    "social_media_content": 0.0
+  },
+  "temporal_patterns": {
+    "social_media_content": [
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      60,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50
+    ]
+  },
+  "success_predictors": {
+    "social_media_content_success": 0.5950000000000001
+  },
+  "model_accuracy": 0.5,
+  "training_samples": 2,
+  "last_trained": "2025-06-28 15:11:40.099286"
+}

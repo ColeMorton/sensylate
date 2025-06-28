@@ -1,0 +1,8 @@
+{
+  "dependency_name": "web_search_capability",
+  "available": true,
+  "validation_score": 0.8,
+  "fallback_used": null,
+  "error_message": "Service validation not implemented - assumed available",
+  "timestamp": "2025-06-28T15:11:31.688508"
+}

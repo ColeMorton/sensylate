@@ -1,0 +1,12 @@
+{
+  "command": "social_media_content",
+  "status": "completed",
+  "outputs": {},
+  "execution_time": 0,
+  "context": {
+    "content_type": "fundamental_analysis",
+    "user_id": "test_user"
+  },
+  "timestamp": "2025-06-28T14:48:47.230426",
+  "user_id": "test_user"
+}

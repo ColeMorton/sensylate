@@ -1,0 +1,17 @@
+{
+  "source_command": "social_media_content",
+  "suggestions": [
+    {
+      "command": "content_publisher",
+      "confidence": "high",
+      "priority": "high",
+      "estimated_time": 30,
+      "user_value": "Maximize reach of your high-quality content with strategic publishing"
+    }
+  ],
+  "context": {
+    "content_type": "fundamental_analysis",
+    "user_id": "test_user"
+  },
+  "timestamp": "2025-06-28T14:47:42.512259"
+}

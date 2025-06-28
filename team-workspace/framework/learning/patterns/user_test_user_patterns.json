@@ -1,0 +1,34 @@
+[
+  {
+    "command": "fundamental_analysis",
+    "context_features": {
+      "priority": "high",
+      "current_workflow": "general",
+      "output_type": "text",
+      "estimated_time": 150.0,
+      "confidence": 0.75
+    },
+    "user_action": "rejected",
+    "success_rate": 0.5,
+    "frequency": 8,
+    "confidence_threshold": 0.85,
+    "time_preference": 120,
+    "last_updated": "2025-06-28 14:48:47.236698"
+  },
+  {
+    "command": "social_media_content",
+    "context_features": {
+      "priority": "medium",
+      "current_workflow": "general",
+      "output_type": "text",
+      "estimated_time": 60.0,
+      "confidence": 0.75
+    },
+    "user_action": "executed",
+    "success_rate": 1.0,
+    "frequency": 4,
+    "confidence_threshold": 0.75,
+    "time_preference": 60,
+    "last_updated": "2025-06-28 14:48:47.236725"
+  }
+]

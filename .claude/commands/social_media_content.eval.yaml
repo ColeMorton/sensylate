@@ -1,0 +1,293 @@
+# Social Media Content - Universal Evaluation Manifest
+# Version: 1.0
+# Unified evaluation for all social media content types with intelligent routing
+
+version: "1.0"
+command: "social_media_content"
+
+metadata:
+  description: "Unified social media content generator with intelligent routing and optimization"
+  complexity_level: "standard"
+  expected_execution_time: 20
+  content_types:
+    - "generic_content_optimization"
+    - "trading_strategy_posts"
+    - "fundamental_analysis_posts"
+
+evaluation_phases:
+  0A_pre_execution:
+    description: "Pre-execution validation, content type detection, and enhancement detection"
+    gates:
+      - dependency_validation
+      - input_validation
+      - content_type_detection
+      - enhancement_detection
+      - audience_analysis
+      - routing_validation
+
+  0B_execution_monitoring:
+    description: "Real-time execution oversight and content generation monitoring"
+    gates:
+      - progress_tracking
+      - content_generation_monitoring
+      - data_source_validation
+      - engagement_prediction
+      - error_detection
+
+  0C_post_execution:
+    description: "Output validation and social media optimization assessment"
+    gates:
+      - output_validation
+      - engagement_optimization
+      - platform_compliance
+      - character_limit_validation
+      - content_quality_scoring
+      - audience_alignment_check
+
+  0D_feedback_integration:
+    description: "Learning integration and content optimization"
+    gates:
+      - engagement_learning
+      - content_optimization
+      - audience_preference_updates
+      - routing_optimization
+
+quality_gates:
+  pre_execution:
+    - gate: "input_validation"
+      threshold: 1.0
+      critical: true
+      description: "Valid content input or file references provided"
+
+    - gate: "content_type_detection"
+      threshold: 0.9
+      critical: true
+      description: "Accurate content type routing detection"
+
+    - gate: "enhancement_detection"
+      threshold: 0.6
+      critical: false
+      adaptive: true
+      description: "Phase 0A evaluation file detection across all content types"
+
+    - gate: "audience_analysis"
+      threshold: 0.8
+      critical: false
+      description: "Target audience identification and strategy alignment"
+
+  execution_monitoring:
+    - gate: "content_generation_progress"
+      threshold: 0.9
+      critical: true
+      description: "Successful content generation workflow execution"
+
+    - gate: "data_source_quality"
+      threshold: 0.8
+      critical: false
+      description: "Data source validation for content-specific requirements"
+
+    - gate: "engagement_prediction"
+      threshold: 0.7
+      critical: false
+      description: "Predicted engagement potential assessment"
+
+  post_execution:
+    - gate: "platform_compliance"
+      threshold: 1.0
+      critical: true
+      description: "Social media platform format compliance"
+
+    - gate: "character_limit_compliance"
+      threshold: 1.0
+      critical: true
+      description: "Character limit adherence (4000 character max)"
+
+    - gate: "engagement_optimization"
+      threshold: 0.8
+      adaptive: true
+      critical: false
+      description: "Content optimized for social media engagement"
+
+    - gate: "content_quality"
+      threshold: 0.8
+      critical: false
+      description: "Overall content quality and value delivery"
+
+    - gate: "audience_alignment"
+      threshold: 0.8
+      critical: false
+      description: "Content aligned with target audience sophistication"
+
+  feedback_integration:
+    - gate: "content_optimization_effectiveness"
+      threshold: 0.7
+      critical: false
+      adaptive: true
+      description: "Content optimization workflow effectiveness"
+
+content_type_routing:
+  trading_strategy_mode:
+    triggers:
+      - "TICKER_YYYYMMDD format"
+      - "TrendSpider data references"
+      - "Trading signal keywords"
+      - "Backtesting data context"
+    quality_thresholds:
+      signal_urgency: 0.9
+      data_accuracy: 0.95
+      seasonality_precision: 0.9
+
+  fundamental_analysis_mode:
+    triggers:
+      - "Fundamental analysis file references"
+      - "Investment thesis content"
+      - "Valuation metrics"
+      - "Company analysis context"
+    quality_thresholds:
+      insight_extraction: 0.8
+      accessibility: 0.8
+      credibility: 0.9
+
+  generic_content_mode:
+    triggers:
+      - "Raw text content"
+      - "General financial content"
+      - "Market commentary"
+      - "No specific file references"
+    quality_thresholds:
+      engagement_potential: 0.8
+      value_delivery: 0.8
+      audience_alignment: 0.8
+
+retry_strategies:
+  - strategy: "content_type_redetection"
+    trigger: "content_type_detection < 0.9"
+    max_attempts: 2
+    timeout: 30
+    description: "Re-analyze input for accurate content type routing"
+
+  - strategy: "engagement_enhancement"
+    trigger: "engagement_optimization < 0.8"
+    max_attempts: 2
+    timeout: 60
+    description: "Enhance content for better social media engagement"
+
+  - strategy: "platform_optimization"
+    trigger: "platform_compliance < 1.0 OR character_limit_compliance < 1.0"
+    max_attempts: 1
+    timeout: 30
+    description: "Optimize content for platform-specific requirements"
+
+  - strategy: "audience_realignment"
+    trigger: "audience_alignment < 0.8"
+    max_attempts: 1
+    timeout: 45
+    description: "Realign content with target audience sophistication"
+
+learning_config:
+  track_user_preferences: true
+  adaptive_thresholds: true
+  failure_pattern_analysis: true
+  success_pattern_optimization: true
+  content_type_optimization: true
+  engagement_pattern_learning: true
+  audience_preference_tracking: true
+  privacy_mode: "local_only"
+
+enhancement_detection:
+  enable_enhancement_mode: true
+  evaluation_file_patterns:
+    - "*_evaluation.md"
+    - "{TICKER}_{YYYYMMDD}_evaluation.md"
+    - "social_media_*_evaluation.md"
+  enhancement_threshold: 0.8
+  content_quality_target: 0.9
+  role_transformation:
+    original_role: "social media content creator"
+    enhanced_role: "content optimization specialist"
+  workflow_override:
+    examination_phase: "Read existing content and evaluation files"
+    optimization_phase: "Systematic enhancement for engagement and accuracy"
+    integration_phase: "Seamless production-ready output"
+
+template_enforcement:
+  enforce_templates: true
+  universal_requirements:
+    character_limit: 4000
+    bullet_format: "unicode_bullets_only"
+    hashtag_integration: "natural_not_appended"
+    format_ready: "copy_paste_ready"
+  content_specific_templates:
+    trading_strategy:
+      lead_with: "signal_urgency"
+      include: "timing_context"
+      data_sources: "trendspider_primary"
+    fundamental_analysis:
+      lead_with: "key_insights"
+      include: "credibility_backing"
+      data_sources: "fundamental_reports"
+    generic_content:
+      lead_with: "engagement_hook"
+      include: "value_proposition"
+      focus: "audience_optimization"
+
+phase_0a_integration:
+  preserve_existing_workflow: true
+  universal_enhancement:
+    evaluation_discovery:
+      search_patterns: ["*_evaluation.md", "{TICKER}_{YYYYMMDD}_evaluation.md"]
+      content_type_detection: true
+    enhancement_workflow:
+      step_1: "Examine existing content across all types"
+      step_2: "Examine evaluation assessment"
+      step_3: "Content type specific optimization"
+      step_4: "Production-ready output (overwrite original)"
+  quality_targets:
+    engagement_optimization: 0.9
+    content_accuracy: 0.9
+    platform_compliance: 1.0
+    audience_alignment: 0.8
+
+platform_requirements:
+  character_limits:
+    maximum: 4000
+    optimal_range: "280-2000"
+    hook_limit: 280
+  formatting_rules:
+    bullets: "unicode_standard"
+    no_em_dashes: true
+    hashtag_integration: "natural"
+    thread_format: false
+  engagement_optimization:
+    hook_architecture: true
+    value_delivery_structure: true
+    engagement_triggers: true
+    shareability_factors: true
+
+performance_expectations:
+  content_type_detection_time:
+    target_seconds: 2.0
+    warning_threshold: 5.0
+  content_generation_time:
+    target_seconds: 15.0
+    warning_threshold: 30.0
+  overall_execution_time:
+    target_seconds: 20.0
+    warning_threshold: 45.0
+
+validation_criteria:
+  critical_success_factors:
+    - "Content type correctly detected and routed"
+    - "Platform compliance achieved (character limits, formatting)"
+    - "Engagement optimization applied"
+    - "Quality standards met for content type"
+  engagement_indicators:
+    - "Hook creates genuine curiosity or urgency"
+    - "Value proposition clearly communicated"
+    - "Audience sophistication matched"
+    - "Shareability optimized"
+  content_quality_indicators:
+    - "Information accuracy verified"
+    - "Methodology transparency maintained"
+    - "Credibility backing provided"
+    - "Actionable insights delivered"

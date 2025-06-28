@@ -1,0 +1,8 @@
+{
+  "dependency_name": "yahoo_finance_api",
+  "available": true,
+  "validation_score": 0.9,
+  "fallback_used": null,
+  "error_message": null,
+  "timestamp": "2025-06-28T14:25:45.170905"
+}

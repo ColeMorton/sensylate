@@ -1,0 +1,65 @@
+command: trade_history
+created_at: '2025-06-28T14:52:58.202166'
+dependencies:
+  command_ecosystem:
+    description: Other commands in the ecosystem
+    fallback_strategies:
+    - description: Request manual input if commands unavailable
+      strategy: manual_mode
+      user_prompt: true
+    required: false
+    type: internal
+    validation:
+      command_availability: true
+      version_compatibility: true
+  external_services:
+    description: External service integrations
+    fallback_strategies:
+    - description: Continue with reduced functionality
+      impact: minor
+      strategy: degraded_mode
+    required: false
+    type: service
+    validation:
+      authentication: true
+      service_health: true
+  file_system:
+    description: File system access for input/output operations
+    fallback_strategies:
+    - cleanup_policy: auto
+      description: Use temporary storage if primary unavailable
+      strategy: temporary_storage
+    required: true
+    type: file_system
+    validation:
+      directory_access: true
+      disk_space: true
+      write_permissions: true
+  market_data_api:
+    description: Market data API access
+    fallback_strategies:
+    - description: Use cached data if API unavailable
+      max_age_hours: 4
+      strategy: cached_data
+    - description: Use alternative data source
+      source: backup_api
+      strategy: alternative_source
+    required: true
+    type: api
+    validation:
+      data_freshness: true
+      endpoint_check: true
+      rate_limit_check: true
+  team_workspace:
+    description: Team workspace infrastructure
+    fallback_strategies:
+    - description: Use local storage if workspace unavailable
+      strategy: local_mode
+      sync_when_available: true
+    required: true
+    type: internal
+    validation:
+      knowledge_authority: true
+      workspace_access: true
+description: Dependency manifest for trade_history command
+version: '1.0'

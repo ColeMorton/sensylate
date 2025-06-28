@@ -1,0 +1,18 @@
+[
+  {
+    "command": "social_media_content",
+    "context_features": {
+      "priority": "medium",
+      "current_workflow": "general",
+      "output_type": "text",
+      "estimated_time": 50.0,
+      "confidence": 0.7999999999999999
+    },
+    "user_action": "executed",
+    "success_rate": 1.0,
+    "frequency": 3,
+    "confidence_threshold": 0.7999999999999999,
+    "time_preference": 50,
+    "last_updated": "2025-06-28 14:48:47.242112"
+  }
+]

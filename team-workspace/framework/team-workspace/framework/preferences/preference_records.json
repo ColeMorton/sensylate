@@ -1,0 +1,182 @@
+[
+  {
+    "timestamp": "2025-06-28T15:11:31.689563",
+    "command": "fundamental_analysis",
+    "evaluation_type": "universal_evaluation",
+    "user_choice": "proceeded",
+    "context": {
+      "overall_score": 0.8799999999999999,
+      "can_proceed": true,
+      "phase_count": 4,
+      "failed_gates": [],
+      "execution_time": 0.000132
+    },
+    "outcome_score": 0.8,
+    "confidence_level": 0.8799999999999999
+  },
+  {
+    "timestamp": "2025-06-28T15:11:31.691447",
+    "command": "fundamental_analysis",
+    "evaluation_type": "universal_evaluation",
+    "user_choice": "proceeded",
+    "context": {
+      "overall_score": 0.8799999999999999,
+      "can_proceed": true,
+      "phase_count": 4,
+      "failed_gates": [],
+      "execution_time": 0.000212
+    },
+    "outcome_score": 0.8,
+    "confidence_level": 0.8799999999999999
+  },
+  {
+    "timestamp": "2025-06-28T15:11:31.693091",
+    "command": "fundamental_analysis",
+    "evaluation_type": "universal_evaluation",
+    "user_choice": "proceeded",
+    "context": {
+      "overall_score": 0.8799999999999999,
+      "can_proceed": true,
+      "phase_count": 4,
+      "failed_gates": [],
+      "execution_time": 6.7e-05
+    },
+    "outcome_score": 0.8,
+    "confidence_level": 0.8799999999999999
+  },
+  {
+    "timestamp": "2025-06-28T15:11:31.716211",
+    "command": "fundamental_analysis",
+    "evaluation_type": "universal_evaluation",
+    "user_choice": "proceeded",
+    "context": {
+      "overall_score": 0.85,
+      "can_proceed": true,
+      "phase_count": 0,
+      "failed_gates": [],
+      "execution_time": 120.0
+    },
+    "outcome_score": 0.9,
+    "confidence_level": 0.85
+  },
+  {
+    "timestamp": "2025-06-28T15:11:31.716528",
+    "command": "social_media_content",
+    "evaluation_type": "universal_evaluation",
+    "user_choice": "proceeded",
+    "context": {
+      "overall_score": 0.72,
+      "can_proceed": true,
+      "phase_count": 0,
+      "failed_gates": [],
+      "execution_time": 18.0
+    },
+    "outcome_score": 0.8,
+    "confidence_level": 0.72
+  },
+  {
+    "timestamp": "2025-06-28T15:11:31.716778",
+    "command": "fundamental_analysis",
+    "evaluation_type": "universal_evaluation",
+    "user_choice": "proceeded_anyway",
+    "context": {
+      "overall_score": 0.65,
+      "can_proceed": false,
+      "phase_count": 0,
+      "failed_gates": [],
+      "execution_time": 95.0
+    },
+    "outcome_score": 0.7,
+    "confidence_level": 0.65
+  },
+  {
+    "timestamp": "2025-06-28T15:16:58.025492",
+    "command": "fundamental_analysis",
+    "evaluation_type": "universal_evaluation",
+    "user_choice": "proceeded",
+    "context": {
+      "overall_score": 0.8799999999999999,
+      "can_proceed": true,
+      "phase_count": 4,
+      "failed_gates": [],
+      "execution_time": 8.5e-05
+    },
+    "outcome_score": 0.8,
+    "confidence_level": 0.8799999999999999
+  },
+  {
+    "timestamp": "2025-06-28T15:16:58.026762",
+    "command": "fundamental_analysis",
+    "evaluation_type": "universal_evaluation",
+    "user_choice": "proceeded",
+    "context": {
+      "overall_score": 0.8799999999999999,
+      "can_proceed": true,
+      "phase_count": 4,
+      "failed_gates": [],
+      "execution_time": 7.2e-05
+    },
+    "outcome_score": 0.8,
+    "confidence_level": 0.8799999999999999
+  },
+  {
+    "timestamp": "2025-06-28T15:16:58.027809",
+    "command": "fundamental_analysis",
+    "evaluation_type": "universal_evaluation",
+    "user_choice": "proceeded",
+    "context": {
+      "overall_score": 0.8799999999999999,
+      "can_proceed": true,
+      "phase_count": 4,
+      "failed_gates": [],
+      "execution_time": 5.5e-05
+    },
+    "outcome_score": 0.8,
+    "confidence_level": 0.8799999999999999
+  },
+  {
+    "timestamp": "2025-06-28T15:16:58.051167",
+    "command": "fundamental_analysis",
+    "evaluation_type": "universal_evaluation",
+    "user_choice": "proceeded",
+    "context": {
+      "overall_score": 0.85,
+      "can_proceed": true,
+      "phase_count": 0,
+      "failed_gates": [],
+      "execution_time": 120.0
+    },
+    "outcome_score": 0.9,
+    "confidence_level": 0.85
+  },
+  {
+    "timestamp": "2025-06-28T15:16:58.051585",
+    "command": "social_media_content",
+    "evaluation_type": "universal_evaluation",
+    "user_choice": "proceeded",
+    "context": {
+      "overall_score": 0.72,
+      "can_proceed": true,
+      "phase_count": 0,
+      "failed_gates": [],
+      "execution_time": 18.0
+    },
+    "outcome_score": 0.8,
+    "confidence_level": 0.72
+  },
+  {
+    "timestamp": "2025-06-28T15:16:58.051970",
+    "command": "fundamental_analysis",
+    "evaluation_type": "universal_evaluation",
+    "user_choice": "proceeded_anyway",
+    "context": {
+      "overall_score": 0.65,
+      "can_proceed": false,
+      "phase_count": 0,
+      "failed_gates": [],
+      "execution_time": 95.0
+    },
+    "outcome_score": 0.7,
+    "confidence_level": 0.65
+  }
+]

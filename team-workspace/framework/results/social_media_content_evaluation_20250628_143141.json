@@ -1,0 +1,106 @@
+{
+  "command": "social_media_content",
+  "version": "1.0",
+  "overall_score": 0.6625,
+  "can_proceed": false,
+  "phase_results": [
+    {
+      "phase": "0A_pre_execution",
+      "gates": [
+        {
+          "name": "dependency_validation",
+          "phase": "0A_pre_execution",
+          "threshold": 0.95,
+          "critical": true,
+          "adaptive": false,
+          "execution_time": 0.009642,
+          "result": 0.0,
+          "passed": false,
+          "error_message": "Critical dependencies failed: ['content_input']"
+        },
+        {
+          "name": "input_validation",
+          "phase": "0A_pre_execution",
+          "threshold": 1.0,
+          "critical": true,
+          "adaptive": false,
+          "execution_time": 1e-06,
+          "result": 1.0,
+          "passed": true,
+          "error_message": null
+        },
+        {
+          "name": "enhancement_detection",
+          "phase": "0A_pre_execution",
+          "threshold": 0.6,
+          "critical": false,
+          "adaptive": false,
+          "execution_time": 1e-06,
+          "result": 0.8,
+          "passed": true,
+          "error_message": null
+        },
+        {
+          "name": "historical_performance",
+          "phase": "0A_pre_execution",
+          "threshold": 0.7,
+          "critical": false,
+          "adaptive": false,
+          "execution_time": 1e-06,
+          "result": 0.85,
+          "passed": true,
+          "error_message": null
+        }
+      ],
+      "overall_score": 0.6625,
+      "passed": false,
+      "execution_time": 0.009664,
+      "timestamp": "2025-06-28T14:31:41.945893",
+      "recommendations": [
+        "Failed gates in 0A_pre_execution: ['dependency_validation']",
+        "Phase score below target: 0.66"
+      ]
+    }
+  ],
+  "enhancement_mode": false,
+  "fallback_strategy": {
+    "type": "evaluation_fallback",
+    "overall_score": 0.6625,
+    "failed_phases": [
+      "0A_pre_execution"
+    ],
+    "retry_strategies": [
+      {
+        "strategy": "content_type_redetection",
+        "trigger": "content_type_detection < 0.9",
+        "max_attempts": 2,
+        "timeout": 30,
+        "description": "Re-analyze input for accurate content type routing"
+      },
+      {
+        "strategy": "engagement_enhancement",
+        "trigger": "engagement_optimization < 0.8",
+        "max_attempts": 2,
+        "timeout": 60,
+        "description": "Enhance content for better social media engagement"
+      },
+      {
+        "strategy": "platform_optimization",
+        "trigger": "platform_compliance < 1.0 OR character_limit_compliance < 1.0",
+        "max_attempts": 1,
+        "timeout": 30,
+        "description": "Optimize content for platform-specific requirements"
+      },
+      {
+        "strategy": "audience_realignment",
+        "trigger": "audience_alignment < 0.8",
+        "max_attempts": 1,
+        "timeout": 45,
+        "description": "Realign content with target audience sophistication"
+      }
+    ],
+    "recommendation": "Review failed gates and retry with enhanced parameters"
+  },
+  "total_execution_time": 0.009709,
+  "timestamp": "2025-06-28T14:31:41.945876"
+}

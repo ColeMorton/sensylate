@@ -1,0 +1,29 @@
+{
+  "timestamp": "2025-06-28T14:56:58.596873",
+  "total_commands": 0,
+  "integrated_commands": {},
+  "integration_summary": {
+    "total_commands": 0,
+    "successful_integrations": 0,
+    "failed_integrations": 0,
+    "success_rate": 0.0,
+    "average_quality_score": 0.0
+  },
+  "validation_results": {
+    "integrated_commands": 0,
+    "compatibility_tests": {
+      "framework_compatibility": true,
+      "manifest_compatibility": true,
+      "template_compatibility": true,
+      "issues": []
+    },
+    "performance_tests": {
+      "average_evaluation_time": 0.0,
+      "average_dependency_time": 0.0,
+      "total_overhead": 0.0,
+      "performance_acceptable": true
+    },
+    "overall_health": "needs_improvement",
+    "validation_timestamp": "2025-06-28T14:56:58.597550"
+  }
+}

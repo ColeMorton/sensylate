@@ -1,0 +1,92 @@
+[
+  {
+    "timestamp": "2025-06-28T14:31:41.885267",
+    "command": "fundamental_analysis",
+    "evaluation_type": "universal_evaluation",
+    "user_choice": "proceeded",
+    "context": {
+      "overall_score": 0.6625,
+      "can_proceed": false,
+      "phase_count": 1,
+      "failed_gates": [],
+      "execution_time": 0.010175
+    },
+    "outcome_score": 0.8,
+    "confidence_level": 0.6625
+  },
+  {
+    "timestamp": "2025-06-28T14:31:41.895376",
+    "command": "fundamental_analysis",
+    "evaluation_type": "universal_evaluation",
+    "user_choice": "proceeded",
+    "context": {
+      "overall_score": 0.6625,
+      "can_proceed": false,
+      "phase_count": 1,
+      "failed_gates": [],
+      "execution_time": 0.009222
+    },
+    "outcome_score": 0.8,
+    "confidence_level": 0.6625
+  },
+  {
+    "timestamp": "2025-06-28T14:31:41.905543",
+    "command": "fundamental_analysis",
+    "evaluation_type": "universal_evaluation",
+    "user_choice": "proceeded",
+    "context": {
+      "overall_score": 0.6625,
+      "can_proceed": false,
+      "phase_count": 1,
+      "failed_gates": [],
+      "execution_time": 0.009321
+    },
+    "outcome_score": 0.8,
+    "confidence_level": 0.6625
+  },
+  {
+    "timestamp": "2025-06-28T14:31:41.955993",
+    "command": "fundamental_analysis",
+    "evaluation_type": "universal_evaluation",
+    "user_choice": "proceeded",
+    "context": {
+      "overall_score": 0.85,
+      "can_proceed": true,
+      "phase_count": 0,
+      "failed_gates": [],
+      "execution_time": 120.0
+    },
+    "outcome_score": 0.9,
+    "confidence_level": 0.85
+  },
+  {
+    "timestamp": "2025-06-28T14:31:41.956282",
+    "command": "social_media_content",
+    "evaluation_type": "universal_evaluation",
+    "user_choice": "proceeded",
+    "context": {
+      "overall_score": 0.72,
+      "can_proceed": true,
+      "phase_count": 0,
+      "failed_gates": [],
+      "execution_time": 18.0
+    },
+    "outcome_score": 0.8,
+    "confidence_level": 0.72
+  },
+  {
+    "timestamp": "2025-06-28T14:31:41.956529",
+    "command": "fundamental_analysis",
+    "evaluation_type": "universal_evaluation",
+    "user_choice": "proceeded_anyway",
+    "context": {
+      "overall_score": 0.65,
+      "can_proceed": false,
+      "phase_count": 0,
+      "failed_gates": [],
+      "execution_time": 95.0
+    },
+    "outcome_score": 0.7,
+    "confidence_level": 0.65
+  }
+]

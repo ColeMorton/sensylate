@@ -1,0 +1,22 @@
+fundamental_analysis:
+  follow_ups:
+  - command: social_media_content
+    condition: recommendation == 'BUY'
+    confidence: high
+    description: Create social media content for BUY recommendation
+    parameters:
+      content_type: fundamental_analysis
+  - command: content_evaluator
+    condition: confidence_score < 0.9
+    confidence: medium
+    description: Enhance analysis with evaluation feedback
+    parameters:
+      evaluation_mode: enhancement
+social_media_content:
+  follow_ups:
+  - command: content_publisher
+    condition: engagement_score > 0.8
+    confidence: high
+    description: Publish high-engagement content to Twitter
+    parameters:
+      platform: twitter

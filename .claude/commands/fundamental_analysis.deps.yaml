@@ -1,0 +1,282 @@
+# Fundamental Analysis - Dependency Manifest
+# Version: 1.0
+# Defines external data requirements and fallback strategies
+
+version: "1.0"
+command: "fundamental_analysis"
+
+metadata:
+  description: "Comprehensive fundamental analysis for trading strategies"
+  complexity_level: "complex"
+  expected_execution_time: 120
+  resource_requirements:
+    memory_mb: 512
+    disk_mb: 200
+    network_required: true
+
+dependencies:
+  yahoo_finance_api:
+    type: "api"
+    required: true
+    description: "Real-time market data and financial information via yfinance"
+    validation_method: "api_test"
+    timeout: 30
+    retry_attempts: 3
+    fallback_strategies:
+      - "cached_data"
+      - "alternative_source"
+      - "degraded_functionality"
+    configuration:
+      rate_limit_requests_per_minute: 60
+      data_types:
+        - "stock_info"
+        - "historical_prices"
+        - "financial_statements"
+        - "analyst_estimates"
+
+  yahoo_finance_service:
+    type: "file"
+    required: true
+    description: "Yahoo Finance integration service script"
+    validation_method: "file_exists"
+    timeout: 5
+    retry_attempts: 1
+    fallback_strategies:
+      - "manual_input"
+      - "alternative_implementation"
+    configuration:
+      file_path: "scripts/yahoo_finance_service.py"
+      required_permissions: ["read", "execute"]
+      expected_functions:
+        - "get_stock_info"
+        - "get_historical_data"
+        - "get_financial_statements"
+
+  market_data_cache:
+    type: "data_source"
+    required: false
+    description: "Local cache of historical market data in /data/raw/"
+    validation_method: "basic"
+    timeout: 10
+    retry_attempts: 1
+    fallback_strategies:
+      - "skip_feature"
+      - "direct_api_access"
+    configuration:
+      cache_directory: "/data/raw/"
+      retention_policy:
+        pricing_data: "2 years"
+        fundamentals: "10 years"
+        sec_filings: "10 years"
+      refresh_intervals:
+        real_time_prices: "15 minutes"
+        daily_fundamentals: "24 hours"
+        sec_filings: "90 days"
+
+  analysis_output_directory:
+    type: "file"
+    required: true
+    description: "Output directory for fundamental analysis files"
+    validation_method: "file_exists"
+    timeout: 5
+    retry_attempts: 1
+    fallback_strategies:
+      - "create_directory"
+      - "alternative_location"
+    configuration:
+      directory_path: "/data/outputs/analysis_fundamental/"
+      required_permissions: ["read", "write"]
+      file_pattern: "{TICKER}_{YYYYMMDD}.md"
+
+  evaluation_files:
+    type: "data_source"
+    required: false
+    description: "Phase 0A evaluation files for enhancement workflow"
+    validation_method: "basic"
+    timeout: 5
+    retry_attempts: 1
+    fallback_strategies:
+      - "skip_enhancement"
+      - "new_analysis_mode"
+    configuration:
+      search_directory: "/data/outputs/analysis_fundamental/"
+      file_patterns:
+        - "{TICKER}_{YYYYMMDD}_evaluation.md"
+        - "*_evaluation.md"
+      enhancement_mode_trigger: true
+
+  team_workspace_data:
+    type: "data_source"
+    required: false
+    description: "Team workspace knowledge for enhanced context"
+    validation_method: "basic"
+    timeout: 10
+    retry_attempts: 1
+    fallback_strategies:
+      - "default_values"
+      - "skip_feature"
+    configuration:
+      workspace_path: "team-workspace"
+      knowledge_areas:
+        - "technical-health"
+        - "implementation-plans"
+        - "requirements"
+      collaboration_data: true
+
+  web_search_capability:
+    type: "service"
+    required: false
+    description: "Web search for current market information and company updates"
+    validation_method: "basic"
+    timeout: 15
+    retry_attempts: 2
+    fallback_strategies:
+      - "cached_data"
+      - "skip_feature"
+    configuration:
+      search_constraints:
+        avoid_hardcoded_years: true
+        use_current_year: 2025
+        search_terms: ["latest", "current", "recent", "Q1 2025"]
+      quality_sources:
+        - "SEC filings"
+        - "Company press releases"
+        - "Financial news sources"
+        - "Analyst reports"
+
+api_dependencies:
+  yahoo_finance_api:
+    base_url: "https://query1.finance.yahoo.com"
+    endpoints:
+      - path: "/v8/finance/chart/{symbol}"
+        method: "GET"
+        required_params: ["symbol"]
+        description: "Historical price data"
+      - path: "/v10/finance/quoteSummary/{symbol}"
+        method: "GET"
+        required_params: ["symbol", "modules"]
+        description: "Comprehensive financial data"
+      - path: "/v11/finance/quoteSummary/{symbol}"
+        method: "GET"
+        required_params: ["symbol"]
+        description: "Alternative financial endpoint"
+    authentication:
+      type: "none"
+      required: false
+    rate_limits:
+      requests_per_minute: 60
+      burst_limit: 10
+      retry_after_limit: 60
+    error_handling:
+      timeout_errors: "retry_with_backoff"
+      rate_limit_errors: "wait_and_retry"
+      data_errors: "fallback_to_cache"
+
+data_source_dependencies:
+  market_data_cache:
+    source_type: "file_system"
+    connection_string: "/data/raw/"
+    required_directories:
+      - "financial_data"
+      - "economic_data"
+      - "alternative_data"
+      - "cache_metadata"
+    freshness_requirements:
+      max_age_hours: 24
+      update_frequency: "real_time"
+    validation_checks:
+      data_integrity: "MD5 hash validation"
+      completeness: "Required field validation"
+      freshness: "Timestamp verification"
+
+  team_workspace_data:
+    source_type: "team_workspace"
+    connection_string: "team-workspace"
+    required_directories:
+      - "knowledge"
+      - "commands"
+      - "coordination"
+    collaboration_features:
+      cross_command_data: true
+      knowledge_authority: true
+      superseding_workflows: true
+
+file_dependencies:
+  yahoo_finance_service:
+    file_type: "script"
+    path: "scripts/yahoo_finance_service.py"
+    required_permissions: ["read", "execute"]
+    validation_checks:
+      syntax_validation: true
+      import_validation: true
+      function_availability: true
+    expected_interface:
+      command_line: true
+      python_module: true
+      error_handling: true
+
+  analysis_output_directory:
+    file_type: "directory"
+    path: "/data/outputs/analysis_fundamental/"
+    required_permissions: ["read", "write", "create"]
+    file_operations:
+      create_files: true
+      overwrite_files: true
+      read_existing: true
+    naming_conventions:
+      primary_output: "{TICKER}_{YYYYMMDD}.md"
+      evaluation_files: "{TICKER}_{YYYYMMDD}_evaluation.md"
+
+service_dependencies:
+  web_search_capability:
+    service_type: "external_api"
+    availability_check: "basic"
+    fallback_behavior: "graceful_degradation"
+    search_quality:
+      current_information: true
+      financial_focus: true
+      source_reliability: true
+
+performance_expectations:
+  dependency_validation_time:
+    target_seconds: 3.0
+    warning_threshold: 8.0
+  data_collection_time:
+    yahoo_finance_api: 15.0
+    market_data_cache: 2.0
+    web_search: 10.0
+  overall_availability:
+    target_percentage: 95.0
+    measurement_window_hours: 24
+    critical_dependencies: ["yahoo_finance_api", "yahoo_finance_service"]
+
+fallback_configuration:
+  enable_fallbacks: true
+  fallback_order:
+    - "cached_data"
+    - "alternative_source"
+    - "degraded_functionality"
+    - "manual_input"
+  cache_settings:
+    enable_caching: true
+    cache_duration_hours: 24
+    cache_size_mb: 200
+    cache_compression: true
+  degraded_mode:
+    minimum_functionality: "basic_analysis_with_warnings"
+    data_quality_warnings: true
+    confidence_score_reduction: 0.2
+
+quality_assurance:
+  data_validation:
+    cross_reference_sources: true
+    outlier_detection: true
+    consistency_checks: true
+  institutional_requirements:
+    data_quality_minimum: 9.0
+    source_reliability_minimum: 0.9
+    methodology_rigor: "institutional_grade"
+  enhancement_support:
+    evaluation_file_integration: true
+    optimization_workflow: true
+    quality_improvement_tracking: true

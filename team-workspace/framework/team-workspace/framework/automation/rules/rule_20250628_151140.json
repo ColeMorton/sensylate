@@ -1,0 +1,17 @@
+{
+  "rule_id": "rule_20250628_151140",
+  "name": "Test High-Confidence Automation",
+  "command_pattern": "social_media_content",
+  "confidence_threshold": 0.85,
+  "max_execution_time": 60,
+  "automation_level": "AutomationLevel.CONSERVATIVE",
+  "automation_scope": "AutomationScope.SINGLE_COMMAND",
+  "user_confirmation_required": false,
+  "cooldown_period": 60,
+  "success_rate_threshold": 0.8,
+  "enabled": true,
+  "created_at": "2025-06-28 15:11:40.087304",
+  "last_used": null,
+  "success_count": 0,
+  "total_executions": 0
+}

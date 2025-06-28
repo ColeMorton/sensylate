@@ -1,0 +1,106 @@
+{
+  "command": "fundamental_analysis",
+  "version": "1.0",
+  "overall_score": 0.6625,
+  "can_proceed": false,
+  "phase_results": [
+    {
+      "phase": "0A_pre_execution",
+      "gates": [
+        {
+          "name": "dependency_validation",
+          "phase": "0A_pre_execution",
+          "threshold": 0.95,
+          "critical": true,
+          "adaptive": false,
+          "execution_time": 0.009261,
+          "result": 0.0,
+          "passed": false,
+          "error_message": "Critical dependencies failed: ['yahoo_finance_api', 'yahoo_finance_service', 'analysis_output_directory']"
+        },
+        {
+          "name": "input_validation",
+          "phase": "0A_pre_execution",
+          "threshold": 1.0,
+          "critical": true,
+          "adaptive": false,
+          "execution_time": 2e-06,
+          "result": 1.0,
+          "passed": true,
+          "error_message": null
+        },
+        {
+          "name": "enhancement_detection",
+          "phase": "0A_pre_execution",
+          "threshold": 0.6,
+          "critical": false,
+          "adaptive": false,
+          "execution_time": 1e-06,
+          "result": 0.8,
+          "passed": true,
+          "error_message": null
+        },
+        {
+          "name": "historical_performance",
+          "phase": "0A_pre_execution",
+          "threshold": 0.7,
+          "critical": false,
+          "adaptive": false,
+          "execution_time": 1e-06,
+          "result": 0.85,
+          "passed": true,
+          "error_message": null
+        }
+      ],
+      "overall_score": 0.6625,
+      "passed": false,
+      "execution_time": 0.009282,
+      "timestamp": "2025-06-28T14:31:41.895918",
+      "recommendations": [
+        "Failed gates in 0A_pre_execution: ['dependency_validation']",
+        "Phase score below target: 0.66"
+      ]
+    }
+  ],
+  "enhancement_mode": false,
+  "fallback_strategy": {
+    "type": "evaluation_fallback",
+    "overall_score": 0.6625,
+    "failed_phases": [
+      "0A_pre_execution"
+    ],
+    "retry_strategies": [
+      {
+        "strategy": "enhanced_parameters",
+        "trigger": "institutional_quality < 9.0",
+        "max_attempts": 2,
+        "timeout": 300,
+        "description": "Enhance analysis rigor for institutional quality"
+      },
+      {
+        "strategy": "alternative_data_sources",
+        "trigger": "data_integrity < 0.9",
+        "max_attempts": 1,
+        "timeout": 180,
+        "description": "Use alternative data sources for validation"
+      },
+      {
+        "strategy": "confidence_enhancement",
+        "trigger": "confidence_score < threshold",
+        "max_attempts": 2,
+        "timeout": 240,
+        "description": "Strengthen evidence backing and reasoning"
+      },
+      {
+        "strategy": "cache_refresh",
+        "trigger": "data_freshness < 0.8",
+        "max_attempts": 1,
+        "timeout": 60,
+        "description": "Refresh stale cached data"
+      }
+    ],
+    "recommendation": "Review failed gates and retry with enhanced parameters"
+  },
+  "total_execution_time": 0.009321,
+  "timestamp": "2025-06-28T14:31:41.895904"
+}

@@ -1,0 +1,8 @@
+{
+  "dependency_name": "test",
+  "available": true,
+  "validation_score": 0.7,
+  "fallback_used": null,
+  "error_message": "Generic API validation - assumed available",
+  "timestamp": "2025-06-28T15:01:03.214125"
+}

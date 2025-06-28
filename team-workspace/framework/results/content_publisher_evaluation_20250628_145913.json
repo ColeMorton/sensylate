@@ -1,0 +1,77 @@
+{
+  "command": "content_publisher",
+  "version": "1.0",
+  "overall_score": 0.6625,
+  "can_proceed": false,
+  "phase_results": [
+    {
+      "phase": "0A_pre_execution",
+      "gates": [
+        {
+          "name": "dependency_validation",
+          "phase": "0A_pre_execution",
+          "threshold": 0.95,
+          "critical": true,
+          "adaptive": false,
+          "execution_time": 0.002739,
+          "result": 0.0,
+          "passed": false,
+          "error_message": "Critical dependencies failed: ['file_system', 'market_data_api', 'team_workspace']"
+        },
+        {
+          "name": "input_validation",
+          "phase": "0A_pre_execution",
+          "threshold": 1.0,
+          "critical": true,
+          "adaptive": false,
+          "execution_time": 1e-06,
+          "result": 1.0,
+          "passed": true,
+          "error_message": null
+        },
+        {
+          "name": "enhancement_detection",
+          "phase": "0A_pre_execution",
+          "threshold": 0.6,
+          "critical": false,
+          "adaptive": false,
+          "execution_time": 0.0,
+          "result": 0.8,
+          "passed": true,
+          "error_message": null
+        },
+        {
+          "name": "historical_performance",
+          "phase": "0A_pre_execution",
+          "threshold": 0.7,
+          "critical": false,
+          "adaptive": false,
+          "execution_time": 0.0,
+          "result": 0.85,
+          "passed": true,
+          "error_message": null
+        }
+      ],
+      "overall_score": 0.6625,
+      "passed": false,
+      "execution_time": 0.002762,
+      "timestamp": "2025-06-28T14:59:13.034712",
+      "recommendations": [
+        "Failed gates in 0A_pre_execution: ['dependency_validation']",
+        "Phase score below target: 0.66"
+      ]
+    }
+  ],
+  "enhancement_mode": false,
+  "fallback_strategy": {
+    "type": "evaluation_fallback",
+    "overall_score": 0.6625,
+    "failed_phases": [
+      "0A_pre_execution"
+    ],
+    "retry_strategies": [],
+    "recommendation": "Review failed gates and retry with enhanced parameters"
+  },
+  "total_execution_time": 0.002819,
+  "timestamp": "2025-06-28T14:59:13.034688"
+}

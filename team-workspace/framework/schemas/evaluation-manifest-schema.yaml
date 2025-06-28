@@ -1,0 +1,275 @@
+# Universal Evaluation Manifest Schema
+# Version: 1.0
+# Based on existing Phase 0A protocols from fundamental_analysis and twitter_post_strategy
+
+evaluation_manifest_schema:
+  version: "1.0"
+  description: "Standardized evaluation protocol schema for AI command quality assurance"
+
+  required_fields:
+    - version
+    - command
+    - quality_gates
+    - evaluation_phases
+
+  structure:
+    version:
+      type: string
+      pattern: "^\\d+\\.\\d+$"
+      description: "Schema version number"
+
+    command:
+      type: string
+      description: "Command name this manifest applies to"
+      validation: "Must match existing command in .claude/commands/"
+
+    evaluation_phases:
+      type: object
+      required: ["0A_pre_execution", "0B_execution_monitoring", "0C_post_execution", "0D_feedback_integration"]
+
+      "0A_pre_execution":
+        type: object
+        description: "Pre-execution validation and preparation"
+        required_gates:
+          - dependency_validation
+          - input_validation
+          - historical_performance_check
+        optional_gates:
+          - fallback_strategy_preparation
+          - context_assessment
+          - enhancement_detection
+
+      "0B_execution_monitoring":
+        type: object
+        description: "Real-time execution oversight"
+        required_gates:
+          - progress_tracking
+          - error_detection
+        optional_gates:
+          - resource_monitoring
+          - performance_metrics
+          - quality_indicators
+
+      "0C_post_execution":
+        type: object
+        description: "Output validation and quality assessment"
+        required_gates:
+          - output_validation
+          - confidence_scoring
+        optional_gates:
+          - business_rule_compliance
+          - template_compliance_check
+          - content_fidelity_verification
+
+      "0D_feedback_integration":
+        type: object
+        description: "Learning and optimization integration"
+        required_gates:
+          - learning_integration
+        optional_gates:
+          - variant_generation
+          - parameter_optimization
+          - user_preference_updates
+
+    quality_gates:
+      type: object
+      description: "Specific validation criteria and thresholds"
+
+      pre_execution:
+        type: array
+        items:
+          type: object
+          required: ["gate", "threshold", "critical"]
+          properties:
+            gate:
+              type: string
+              enum: ["dependency_availability", "input_validation", "data_freshness", "context_validity"]
+            threshold:
+              type: number
+              minimum: 0.0
+              maximum: 1.0
+            critical:
+              type: boolean
+              description: "Whether failure blocks execution"
+            adaptive:
+              type: boolean
+              default: false
+              description: "Whether threshold can be learned/adjusted"
+
+      post_execution:
+        type: array
+        items:
+          type: object
+          required: ["gate", "threshold"]
+          properties:
+            gate:
+              type: string
+              enum: ["confidence_score", "template_compliance", "content_accuracy", "business_compliance"]
+            threshold:
+              type: number
+              minimum: 0.0
+              maximum: 1.0
+            critical:
+              type: boolean
+              default: false
+            adaptive:
+              type: boolean
+              default: true
+
+    retry_strategies:
+      type: array
+      description: "Automated recovery and enhancement strategies"
+      items:
+        type: object
+        required: ["strategy", "trigger", "max_attempts"]
+        properties:
+          strategy:
+            type: string
+            enum: ["enhanced_parameters", "fallback_data_sources", "alternative_validation", "manual_review"]
+          trigger:
+            type: string
+            description: "Condition that activates this strategy"
+          max_attempts:
+            type: integer
+            minimum: 1
+            maximum: 5
+          timeout:
+            type: integer
+            description: "Maximum time in seconds for strategy execution"
+
+    learning_config:
+      type: object
+      description: "Adaptive learning and optimization settings"
+      properties:
+        track_user_preferences:
+          type: boolean
+          default: true
+        adaptive_thresholds:
+          type: boolean
+          default: true
+        failure_pattern_analysis:
+          type: boolean
+          default: true
+        success_pattern_optimization:
+          type: boolean
+          default: true
+        privacy_mode:
+          type: string
+          enum: ["local_only", "anonymized", "disabled"]
+          default: "local_only"
+
+    enhancement_detection:
+      type: object
+      description: "Phase 0A enhancement protocol configuration"
+      properties:
+        enable_enhancement_mode:
+          type: boolean
+          default: true
+          description: "Enable existing analysis enhancement workflow"
+        evaluation_file_patterns:
+          type: array
+          items:
+            type: string
+          default: ["{TICKER}_{YYYYMMDD}_evaluation.md", "*_evaluation.md"]
+        enhancement_threshold:
+          type: number
+          minimum: 0.0
+          maximum: 1.0
+          default: 0.9
+          description: "Reliability score threshold for enhancement activation"
+        role_transformation:
+          type: object
+          properties:
+            original_role:
+              type: string
+              default: "new analysis specialist"
+            enhanced_role:
+              type: string
+              default: "optimization specialist"
+
+    template_enforcement:
+      type: object
+      description: "Output format and structure validation"
+      properties:
+        enforce_templates:
+          type: boolean
+          default: true
+        required_sections:
+          type: array
+          items:
+            type: string
+        confidence_score_format:
+          type: string
+          enum: ["0.0-1.0", "percentage", "letter_grade"]
+          default: "0.0-1.0"
+        metadata_requirements:
+          type: object
+          properties:
+            require_author:
+              type: boolean
+              default: true
+            require_timestamp:
+              type: boolean
+              default: true
+            require_confidence_summary:
+              type: boolean
+              default: true
+
+# Example Implementation Templates
+examples:
+  fundamental_analysis:
+    version: "1.0"
+    command: "fundamental_analysis"
+    evaluation_phases:
+      "0A_pre_execution":
+        gates: ["dependency_validation", "input_validation", "enhancement_detection"]
+      "0B_execution_monitoring":
+        gates: ["progress_tracking", "data_integration_monitoring", "error_detection"]
+      "0C_post_execution":
+        gates: ["confidence_scoring", "institutional_quality_check", "template_compliance"]
+      "0D_feedback_integration":
+        gates: ["enhancement_optimization", "parameter_learning"]
+    quality_gates:
+      pre_execution:
+        - gate: "dependency_availability"
+          threshold: 0.95
+          critical: true
+        - gate: "input_validation"
+          threshold: 1.0
+          critical: true
+      post_execution:
+        - gate: "confidence_score"
+          threshold: 0.7
+          adaptive: true
+        - gate: "institutional_quality"
+          threshold: 9.0
+          critical: false
+    enhancement_detection:
+      enable_enhancement_mode: true
+      evaluation_file_patterns: ["{TICKER}_{YYYYMMDD}_evaluation.md"]
+      enhancement_threshold: 0.9
+
+  twitter_post:
+    version: "1.0"
+    command: "twitter_post"
+    evaluation_phases:
+      "0A_pre_execution":
+        gates: ["input_validation", "content_assessment"]
+      "0B_execution_monitoring":
+        gates: ["progress_tracking", "engagement_prediction"]
+      "0C_post_execution":
+        gates: ["format_validation", "engagement_optimization"]
+      "0D_feedback_integration":
+        gates: ["engagement_learning", "preference_updates"]
+    quality_gates:
+      pre_execution:
+        - gate: "input_validation"
+          threshold: 1.0
+          critical: true
+      post_execution:
+        - gate: "engagement_potential"
+          threshold: 0.8
+          adaptive: true
+        - gate: "character_compliance"
+          threshold: 1.0
+          critical: true

@@ -1,0 +1,274 @@
+[
+  {
+    "user_id": "test_user",
+    "command": "fundamental_analysis",
+    "features": {
+      "hour": 14,
+      "day_of_week": 5,
+      "is_weekend": true,
+      "estimated_time": 120,
+      "confidence": 0.85,
+      "priority": "high",
+      "command_complexity": "medium",
+      "has_dependencies": false,
+      "output_type": "text",
+      "current_workflow": "general",
+      "recent_activity": "normal"
+    },
+    "action": "executed",
+    "outcome": {
+      "success": true,
+      "satisfaction": 0.9
+    },
+    "timestamp": "2025-06-28T14:47:04.578771"
+  },
+  {
+    "user_id": "test_user",
+    "command": "social_media_content",
+    "features": {
+      "hour": 14,
+      "day_of_week": 5,
+      "is_weekend": true,
+      "estimated_time": 60,
+      "confidence": 0.75,
+      "priority": "medium",
+      "command_complexity": "medium",
+      "has_dependencies": false,
+      "output_type": "text",
+      "current_workflow": "general",
+      "recent_activity": "normal"
+    },
+    "action": "executed",
+    "outcome": {
+      "success": true,
+      "satisfaction": 0.8
+    },
+    "timestamp": "2025-06-28T14:47:04.581260"
+  },
+  {
+    "user_id": "test_user",
+    "command": "fundamental_analysis",
+    "features": {
+      "hour": 14,
+      "day_of_week": 5,
+      "is_weekend": true,
+      "estimated_time": 180,
+      "confidence": 0.65,
+      "priority": "low",
+      "command_complexity": "medium",
+      "has_dependencies": false,
+      "output_type": "text",
+      "current_workflow": "general",
+      "recent_activity": "normal"
+    },
+    "action": "rejected",
+    "outcome": {
+      "reason": "too_time_consuming"
+    },
+    "timestamp": "2025-06-28T14:47:04.584847"
+  },
+  {
+    "user_id": "test_user",
+    "command": "fundamental_analysis",
+    "features": {
+      "hour": 14,
+      "day_of_week": 5,
+      "is_weekend": true,
+      "estimated_time": 120,
+      "confidence": 0.85,
+      "priority": "high",
+      "command_complexity": "medium",
+      "has_dependencies": false,
+      "output_type": "text",
+      "current_workflow": "general",
+      "recent_activity": "normal"
+    },
+    "action": "executed",
+    "outcome": {
+      "success": true,
+      "satisfaction": 0.9
+    },
+    "timestamp": "2025-06-28T14:48:14.225490"
+  },
+  {
+    "user_id": "test_user",
+    "command": "social_media_content",
+    "features": {
+      "hour": 14,
+      "day_of_week": 5,
+      "is_weekend": true,
+      "estimated_time": 60,
+      "confidence": 0.75,
+      "priority": "medium",
+      "command_complexity": "medium",
+      "has_dependencies": false,
+      "output_type": "text",
+      "current_workflow": "general",
+      "recent_activity": "normal"
+    },
+    "action": "executed",
+    "outcome": {
+      "success": true,
+      "satisfaction": 0.8
+    },
+    "timestamp": "2025-06-28T14:48:14.226439"
+  },
+  {
+    "user_id": "test_user",
+    "command": "fundamental_analysis",
+    "features": {
+      "hour": 14,
+      "day_of_week": 5,
+      "is_weekend": true,
+      "estimated_time": 180,
+      "confidence": 0.65,
+      "priority": "low",
+      "command_complexity": "medium",
+      "has_dependencies": false,
+      "output_type": "text",
+      "current_workflow": "general",
+      "recent_activity": "normal"
+    },
+    "action": "rejected",
+    "outcome": {
+      "reason": "too_time_consuming"
+    },
+    "timestamp": "2025-06-28T14:48:14.227419"
+  },
+  {
+    "user_id": "test_user",
+    "command": "fundamental_analysis",
+    "features": {
+      "hour": 14,
+      "day_of_week": 5,
+      "is_weekend": true,
+      "estimated_time": 120,
+      "confidence": 0.85,
+      "priority": "high",
+      "command_complexity": "medium",
+      "has_dependencies": false,
+      "output_type": "text",
+      "current_workflow": "general",
+      "recent_activity": "normal"
+    },
+    "action": "executed",
+    "outcome": {
+      "success": true,
+      "satisfaction": 0.9
+    },
+    "timestamp": "2025-06-28T14:48:34.483690"
+  },
+  {
+    "user_id": "test_user",
+    "command": "social_media_content",
+    "features": {
+      "hour": 14,
+      "day_of_week": 5,
+      "is_weekend": true,
+      "estimated_time": 60,
+      "confidence": 0.75,
+      "priority": "medium",
+      "command_complexity": "medium",
+      "has_dependencies": false,
+      "output_type": "text",
+      "current_workflow": "general",
+      "recent_activity": "normal"
+    },
+    "action": "executed",
+    "outcome": {
+      "success": true,
+      "satisfaction": 0.8
+    },
+    "timestamp": "2025-06-28T14:48:34.484570"
+  },
+  {
+    "user_id": "test_user",
+    "command": "fundamental_analysis",
+    "features": {
+      "hour": 14,
+      "day_of_week": 5,
+      "is_weekend": true,
+      "estimated_time": 180,
+      "confidence": 0.65,
+      "priority": "low",
+      "command_complexity": "medium",
+      "has_dependencies": false,
+      "output_type": "text",
+      "current_workflow": "general",
+      "recent_activity": "normal"
+    },
+    "action": "rejected",
+    "outcome": {
+      "reason": "too_time_consuming"
+    },
+    "timestamp": "2025-06-28T14:48:34.485934"
+  },
+  {
+    "user_id": "test_user",
+    "command": "fundamental_analysis",
+    "features": {
+      "hour": 14,
+      "day_of_week": 5,
+      "is_weekend": true,
+      "estimated_time": 120,
+      "confidence": 0.85,
+      "priority": "high",
+      "command_complexity": "medium",
+      "has_dependencies": false,
+      "output_type": "text",
+      "current_workflow": "general",
+      "recent_activity": "normal"
+    },
+    "action": "executed",
+    "outcome": {
+      "success": true,
+      "satisfaction": 0.9
+    },
+    "timestamp": "2025-06-28T14:48:47.231504"
+  },
+  {
+    "user_id": "test_user",
+    "command": "social_media_content",
+    "features": {
+      "hour": 14,
+      "day_of_week": 5,
+      "is_weekend": true,
+      "estimated_time": 60,
+      "confidence": 0.75,
+      "priority": "medium",
+      "command_complexity": "medium",
+      "has_dependencies": false,
+      "output_type": "text",
+      "current_workflow": "general",
+      "recent_activity": "normal"
+    },
+    "action": "executed",
+    "outcome": {
+      "success": true,
+      "satisfaction": 0.8
+    },
+    "timestamp": "2025-06-28T14:48:47.233408"
+  },
+  {
+    "user_id": "test_user",
+    "command": "fundamental_analysis",
+    "features": {
+      "hour": 14,
+      "day_of_week": 5,
+      "is_weekend": true,
+      "estimated_time": 180,
+      "confidence": 0.65,
+      "priority": "low",
+      "command_complexity": "medium",
+      "has_dependencies": false,
+      "output_type": "text",
+      "current_workflow": "general",
+      "recent_activity": "normal"
+    },
+    "action": "rejected",
+    "outcome": {
+      "reason": "too_time_consuming"
+    },
+    "timestamp": "2025-06-28T14:48:47.236647"
+  }
+]

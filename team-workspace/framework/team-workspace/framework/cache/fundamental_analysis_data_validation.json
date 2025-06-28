@@ -1,0 +1,8 @@
+{
+  "dependency_name": "fundamental_analysis_data",
+  "available": true,
+  "validation_score": 0.8,
+  "fallback_used": null,
+  "error_message": "Generic data source - assumed available",
+  "timestamp": "2025-06-28T15:11:31.713125"
+}

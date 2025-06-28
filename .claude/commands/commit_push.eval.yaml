@@ -1,0 +1,84 @@
+command: commit_push
+created_at: '2025-06-28T14:52:58.231289'
+description: Universal Evaluation manifest for commit_push command
+evaluation:
+  orchestration_integration:
+    automation_eligible: true
+    preference_learning: true
+    smart_suggestions: true
+  phases:
+    0A_pre_execution:
+      enhancement_detection:
+        enabled: true
+        file_patterns:
+        - '*_evaluation.md'
+        - commit_push_*_evaluation.md
+        role_transformation: "development specialist \u2192 optimization specialist"
+      gates:
+      - adaptive: false
+        critical: true
+        description: Validate command input parameters and context
+        name: input_validation
+        threshold: 1.0
+      - adaptive: false
+        critical: true
+        description: Validate external dependencies and data sources
+        name: dependency_validation
+        threshold: 0.95
+      - adaptive: false
+        critical: false
+        description: Detect evaluation files for Phase 0A enhancement mode
+        name: enhancement_detection
+        threshold: 0.6
+      - adaptive: true
+        critical: false
+        description: Check historical command performance metrics
+        name: historical_performance
+        threshold: 0.7
+    0B_execution_monitoring:
+      gates:
+      - adaptive: true
+        critical: false
+        description: Monitor command execution progress and milestones
+        name: execution_progress
+        threshold: 0.8
+      - adaptive: true
+        critical: false
+        description: Monitor system resource usage during execution
+        name: resource_monitoring
+        threshold: 0.9
+    0C_post_execution:
+      gates:
+      - adaptive: false
+        critical: true
+        description: Validate command output format and completeness
+        name: output_validation
+        threshold: 0.9
+      - adaptive: true
+        critical: false
+        description: Score output quality against command standards
+        name: quality_scoring
+        threshold: 0.8
+    0D_feedback_integration:
+      gates:
+      - adaptive: true
+        critical: false
+        description: Integrate execution results into learning systems
+        name: learning_integration
+        threshold: 0.8
+      - adaptive: false
+        critical: false
+        description: Record performance metrics for optimization
+        name: performance_metrics
+        threshold: 0.9
+  quality_targets:
+    critical_gate_threshold: 0.95
+    fast_execution: true
+    overall_threshold: 0.75
+    performance_target: 0.85
+  template_enforcement:
+    enabled: false
+    output_types: []
+    strictness: medium
+    validation_rules: []
+version: '1.0'

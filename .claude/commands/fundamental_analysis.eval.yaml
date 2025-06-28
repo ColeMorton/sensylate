@@ -1,0 +1,266 @@
+# Fundamental Analysis - Universal Evaluation Manifest
+# Version: 1.0
+# Integrates existing Phase 0A enhancement protocols with Universal Evaluation Framework
+
+version: "1.0"
+command: "fundamental_analysis"
+
+metadata:
+  description: "Institutional-quality fundamental analysis with sophisticated reasoning chains and transparent confidence assessments"
+  complexity_level: "complex"
+  expected_execution_time: 120
+  institutional_quality_target: 9.0
+  confidence_threshold_default: 0.7
+
+evaluation_phases:
+  0A_pre_execution:
+    description: "Pre-execution validation and enhancement detection"
+    gates:
+      - dependency_validation
+      - input_validation
+      - enhancement_detection
+      - historical_performance_check
+      - data_freshness_validation
+      - ticker_validation
+
+  0B_execution_monitoring:
+    description: "Real-time execution oversight and data collection"
+    gates:
+      - progress_tracking
+      - data_collection_monitoring
+      - api_response_validation
+      - cache_performance_monitoring
+      - error_detection
+      - execution_time_monitoring
+
+  0C_post_execution:
+    description: "Output validation and institutional quality assessment"
+    gates:
+      - output_validation
+      - confidence_scoring
+      - institutional_quality_check
+      - template_compliance_check
+      - data_integrity_validation
+      - reasoning_chain_validation
+
+  0D_feedback_integration:
+    description: "Learning integration and enhancement optimization"
+    gates:
+      - enhancement_learning
+      - parameter_optimization
+      - quality_pattern_analysis
+      - user_preference_updates
+
+quality_gates:
+  pre_execution:
+    - gate: "dependency_availability"
+      threshold: 0.95
+      critical: true
+      description: "Yahoo Finance API and service availability"
+
+    - gate: "input_validation"
+      threshold: 1.0
+      critical: true
+      description: "Valid ticker symbol and parameter validation"
+
+    - gate: "enhancement_detection"
+      threshold: 0.6
+      critical: false
+      adaptive: true
+      description: "Phase 0A evaluation file detection"
+
+    - gate: "data_freshness"
+      threshold: 0.8
+      critical: true
+      description: "Market data recency and cache validation"
+
+    - gate: "ticker_validation"
+      threshold: 1.0
+      critical: true
+      description: "Valid stock ticker existence and trading status"
+
+  execution_monitoring:
+    - gate: "data_collection_progress"
+      threshold: 0.9
+      critical: true
+      description: "Successful data acquisition from Yahoo Finance"
+
+    - gate: "api_response_quality"
+      threshold: 0.85
+      critical: true
+      description: "Yahoo Finance API response validation"
+
+    - gate: "execution_time_performance"
+      threshold: 0.7
+      critical: false
+      description: "Analysis completion within expected timeframe"
+
+  post_execution:
+    - gate: "confidence_score"
+      threshold: 0.7
+      adaptive: true
+      critical: false
+      description: "Overall analysis confidence meets threshold"
+
+    - gate: "institutional_quality"
+      threshold: 9.0
+      critical: true
+      description: "Institutional-grade quality score (0-10 scale)"
+
+    - gate: "template_compliance"
+      threshold: 0.95
+      critical: true
+      description: "Output format and structure compliance"
+
+    - gate: "data_integrity"
+      threshold: 0.9
+      critical: true
+      description: "Financial data accuracy and cross-validation"
+
+    - gate: "reasoning_transparency"
+      threshold: 0.8
+      critical: false
+      description: "Clear reasoning chains and evidence backing"
+
+  feedback_integration:
+    - gate: "enhancement_effectiveness"
+      threshold: 0.8
+      critical: false
+      adaptive: true
+      description: "Phase 0A enhancement workflow effectiveness"
+
+retry_strategies:
+  - strategy: "enhanced_parameters"
+    trigger: "institutional_quality < 9.0"
+    max_attempts: 2
+    timeout: 300
+    description: "Enhance analysis rigor for institutional quality"
+
+  - strategy: "alternative_data_sources"
+    trigger: "data_integrity < 0.9"
+    max_attempts: 1
+    timeout: 180
+    description: "Use alternative data sources for validation"
+
+  - strategy: "confidence_enhancement"
+    trigger: "confidence_score < threshold"
+    max_attempts: 2
+    timeout: 240
+    description: "Strengthen evidence backing and reasoning"
+
+  - strategy: "cache_refresh"
+    trigger: "data_freshness < 0.8"
+    max_attempts: 1
+    timeout: 60
+    description: "Refresh stale cached data"
+
+learning_config:
+  track_user_preferences: true
+  adaptive_thresholds: true
+  failure_pattern_analysis: true
+  success_pattern_optimization: true
+  enhancement_effectiveness_tracking: true
+  institutional_quality_optimization: true
+  privacy_mode: "local_only"
+
+enhancement_detection:
+  enable_enhancement_mode: true
+  evaluation_file_patterns:
+    - "{TICKER}_{YYYYMMDD}_evaluation.md"
+    - "*_evaluation.md"
+  enhancement_threshold: 0.9
+  institutional_quality_target: 9.0
+  role_transformation:
+    original_role: "fundamental analysis specialist"
+    enhanced_role: "analysis optimization specialist"
+  workflow_override:
+    examination_phase: "Read existing analysis and evaluation files"
+    optimization_phase: "Systematic enhancement to achieve 9.0+ reliability"
+    integration_phase: "Seamless production-ready output"
+
+template_enforcement:
+  enforce_templates: true
+  output_format: "TICKER_YYYYMMDD.md"
+  output_directory: "/data/outputs/analysis_fundamental/"
+  required_sections:
+    - "Investment Thesis & Recommendation"
+    - "Business Intelligence Dashboard"
+    - "Competitive Position Analysis"
+    - "Valuation Analysis"
+    - "Risk Matrix"
+    - "Market Context & Timing"
+  confidence_score_format: "0.0-1.0"
+  institutional_quality_format: "0.0-10.0"
+  metadata_requirements:
+    require_author: true
+    require_timestamp: true
+    require_confidence_summary: true
+    require_overall_reliability_score: true
+    author_format: "Cole Morton"
+
+phase_0a_integration:
+  preserve_existing_workflow: true
+  evaluation_discovery:
+    search_directory: "/data/outputs/analysis_fundamental/"
+    file_pattern: "{TICKER}_{YYYYMMDD}_evaluation.md"
+    date_format: "YYYYMMDD"
+  enhancement_workflow:
+    step_1: "Examine existing analysis file"
+    step_2: "Examine evaluation assessment"
+    step_3: "Systematic optimization implementation"
+    step_4: "Production-ready output (overwrite original)"
+  quality_targets:
+    overall_reliability_score: 9.0
+    data_quality_confidence: 9.0
+    methodology_rigor: 9.0
+    evidence_backing: 9.0
+    reasoning_transparency: 9.0
+
+institutional_requirements:
+  data_validation_protocol:
+    peer_group_verification: true
+    market_position_claims_verification: true
+    catalyst_probability_documentation: true
+    financial_metrics_cross_reference: true
+    industry_dynamics_validation: true
+    forward_projections_basis: true
+  transparency_enhancement:
+    methodology_notes: true
+    confidence_attribution: true
+    risk_quantification: true
+    peer_analysis_documentation: true
+    market_research_references: true
+    quality_assurance_variance_analysis: true
+
+performance_expectations:
+  dependency_validation_time:
+    target_seconds: 3.0
+    warning_threshold: 8.0
+  data_collection_time:
+    target_seconds: 15.0
+    warning_threshold: 30.0
+  analysis_generation_time:
+    target_seconds: 90.0
+    warning_threshold: 180.0
+  overall_execution_time:
+    target_seconds: 120.0
+    warning_threshold: 300.0
+
+validation_criteria:
+  critical_success_factors:
+    - "Valid ticker symbol provided"
+    - "Yahoo Finance API accessible"
+    - "Data collection successful"
+    - "Institutional quality threshold met (9.0+)"
+    - "Template compliance achieved"
+  quality_indicators:
+    - "Confidence scores properly formatted (0.0-1.0)"
+    - "Evidence backing quantified"
+    - "Reasoning chains documented"
+    - "Risk assessments calibrated"
+    - "Competitive analysis validated"
+  enhancement_indicators:
+    - "Evaluation file detection working"
+    - "Role transformation executed"
+    - "Systematic optimization applied"
+    - "Production-ready integration achieved"

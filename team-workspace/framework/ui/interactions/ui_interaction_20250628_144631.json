@@ -1,0 +1,18 @@
+{
+  "original_count": 2,
+  "filtered_count": 2,
+  "ui_context": {
+    "user_expertise": "beginner",
+    "interaction_mode": "detailed",
+    "presentation_style": "comprehensive",
+    "time_available": 10
+  },
+  "user_context": {
+    "time_available": 10,
+    "automation_comfort": 0.8,
+    "preferred_commands": [
+      "fundamental_analysis"
+    ]
+  },
+  "timestamp": "2025-06-28T14:46:31.324156"
+}

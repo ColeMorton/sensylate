@@ -1,0 +1,16 @@
+{
+  "execution_id": "auto_20250628_144847_rule_20250628_144847",
+  "rule_id": "rule_20250628_144847",
+  "command": "social_media_content",
+  "parameters": {
+    "content_type": "trading_strategy"
+  },
+  "confidence": 0.95,
+  "status": "queued",
+  "started_at": "2025-06-28 14:48:47.238215",
+  "completed_at": null,
+  "execution_time": null,
+  "success": null,
+  "error_message": null,
+  "user_override": false
+}

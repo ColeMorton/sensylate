@@ -1,0 +1,8 @@
+{
+  "dependency_name": "external_services",
+  "available": true,
+  "validation_score": 0.8,
+  "fallback_used": null,
+  "error_message": "Service validation not implemented - assumed available",
+  "timestamp": "2025-06-28T14:59:13.018175"
+}

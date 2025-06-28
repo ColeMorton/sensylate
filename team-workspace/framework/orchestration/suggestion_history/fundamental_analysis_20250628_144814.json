@@ -1,0 +1,17 @@
+{
+  "source_command": "fundamental_analysis",
+  "suggestions": [
+    {
+      "command": "social_media_content",
+      "confidence": "high",
+      "priority": "high",
+      "estimated_time": 45,
+      "user_value": "Amplify your high-confidence analysis with professional social media presence"
+    }
+  ],
+  "context": {
+    "ticker": "AAPL",
+    "user_id": "test_user"
+  },
+  "timestamp": "2025-06-28T14:48:14.224331"
+}

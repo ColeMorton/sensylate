@@ -7,6 +7,7 @@ command_ownership:
     - dashboard-visualization-implementation
     - plotly-dashboard-migration
     - plotly-dash-frontend-integration
+    - ai-command-ecosystem-implementation
     secondary_topics:
     - technical-health
     - product-strategy

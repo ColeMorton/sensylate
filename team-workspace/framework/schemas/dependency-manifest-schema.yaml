@@ -1,0 +1,431 @@
+# Dependency Manifest Schema
+# Version: 1.0
+# Defines external data requirements and fallback strategies for AI commands
+
+dependency_manifest_schema:
+  version: "1.0"
+  description: "Standardized dependency specification for AI command external requirements"
+
+  required_fields:
+    - version
+    - command
+    - dependencies
+
+  structure:
+    version:
+      type: string
+      pattern: "^\\d+\\.\\d+$"
+      description: "Schema version number"
+
+    command:
+      type: string
+      description: "Command name this manifest applies to"
+      validation: "Must match existing command in .claude/commands/"
+
+    metadata:
+      type: object
+      description: "Command metadata and execution context"
+      properties:
+        description:
+          type: string
+          description: "Brief description of command functionality"
+        complexity_level:
+          type: string
+          enum: ["simple", "standard", "complex"]
+          description: "Command complexity classification"
+        expected_execution_time:
+          type: integer
+          description: "Expected execution time in seconds"
+        resource_requirements:
+          type: object
+          properties:
+            memory_mb:
+              type: integer
+              minimum: 100
+            disk_mb:
+              type: integer
+              minimum: 50
+            network_required:
+              type: boolean
+              default: true
+
+    dependencies:
+      type: object
+      description: "External dependencies required for command execution"
+      patternProperties:
+        "^[a-zA-Z][a-zA-Z0-9_-]*$":
+          type: object
+          required: ["type", "required"]
+          properties:
+            type:
+              type: string
+              enum: ["api", "data_source", "file", "service", "library", "external_tool"]
+              description: "Type of dependency"
+            required:
+              type: boolean
+              description: "Whether dependency is critical for execution"
+            description:
+              type: string
+              description: "Human-readable description of dependency"
+            validation_method:
+              type: string
+              enum: ["api_test", "file_exists", "service_ping", "import_test", "basic"]
+              default: "basic"
+            timeout:
+              type: integer
+              minimum: 5
+              maximum: 300
+              default: 30
+              description: "Validation timeout in seconds"
+            retry_attempts:
+              type: integer
+              minimum: 1
+              maximum: 5
+              default: 3
+            fallback_strategies:
+              type: array
+              description: "Ordered list of fallback approaches"
+              items:
+                type: string
+                enum: [
+                  "cached_data",
+                  "alternative_source",
+                  "degraded_functionality",
+                  "manual_input",
+                  "skip_feature",
+                  "default_values",
+                  "local_fallback"
+                ]
+            configuration:
+              type: object
+              description: "Dependency-specific configuration"
+
+    api_dependencies:
+      type: object
+      description: "API-specific dependency configurations"
+      patternProperties:
+        ".*":
+          type: object
+          properties:
+            base_url:
+              type: string
+              format: uri
+            endpoints:
+              type: array
+              items:
+                type: object
+                required: ["path", "method"]
+                properties:
+                  path:
+                    type: string
+                  method:
+                    type: string
+                    enum: ["GET", "POST", "PUT", "DELETE"]
+                  required_params:
+                    type: array
+                    items:
+                      type: string
+            authentication:
+              type: object
+              properties:
+                type:
+                  type: string
+                  enum: ["none", "api_key", "bearer_token", "oauth2"]
+                required:
+                  type: boolean
+                env_var:
+                  type: string
+                  description: "Environment variable containing auth credentials"
+            rate_limits:
+              type: object
+              properties:
+                requests_per_minute:
+                  type: integer
+                  minimum: 1
+                burst_limit:
+                  type: integer
+                  minimum: 1
+
+    data_source_dependencies:
+      type: object
+      description: "Data source specific configurations"
+      patternProperties:
+        ".*":
+          type: object
+          properties:
+            source_type:
+              type: string
+              enum: ["file_system", "database", "web_service", "team_workspace", "market_data"]
+            connection_string:
+              type: string
+              description: "Connection details or file path"
+            required_tables:
+              type: array
+              items:
+                type: string
+            required_columns:
+              type: array
+              items:
+                type: string
+            freshness_requirements:
+              type: object
+              properties:
+                max_age_hours:
+                  type: integer
+                  minimum: 1
+                update_frequency:
+                  type: string
+                  enum: ["real_time", "hourly", "daily", "weekly"]
+
+    file_dependencies:
+      type: object
+      description: "File-based dependency configurations"
+      patternProperties:
+        ".*":
+          type: object
+          properties:
+            file_type:
+              type: string
+              enum: ["script", "configuration", "data", "template", "schema"]
+            path:
+              type: string
+              description: "Relative or absolute file path"
+            required_permissions:
+              type: array
+              items:
+                type: string
+                enum: ["read", "write", "execute"]
+            checksum:
+              type: string
+              description: "Expected file checksum for validation"
+            size_limits:
+              type: object
+              properties:
+                min_bytes:
+                  type: integer
+                max_bytes:
+                  type: integer
+
+    service_dependencies:
+      type: object
+      description: "Service-based dependency configurations"
+      patternProperties:
+        ".*":
+          type: object
+          properties:
+            service_type:
+              type: string
+              enum: ["database", "cache", "message_queue", "external_api", "local_service"]
+            host:
+              type: string
+            port:
+              type: integer
+              minimum: 1
+              maximum: 65535
+            health_check:
+              type: object
+              properties:
+                endpoint:
+                  type: string
+                expected_status:
+                  type: integer
+                  default: 200
+                timeout:
+                  type: integer
+                  default: 10
+
+    performance_expectations:
+      type: object
+      description: "Performance expectations and thresholds"
+      properties:
+        dependency_validation_time:
+          type: object
+          properties:
+            target_seconds:
+              type: number
+              minimum: 0.1
+              maximum: 60.0
+              default: 5.0
+            warning_threshold:
+              type: number
+              minimum: 0.1
+              default: 10.0
+        overall_availability:
+          type: object
+          properties:
+            target_percentage:
+              type: number
+              minimum: 50.0
+              maximum: 100.0
+              default: 95.0
+            measurement_window_hours:
+              type: integer
+              minimum: 1
+              default: 24
+
+    fallback_configuration:
+      type: object
+      description: "Global fallback behavior configuration"
+      properties:
+        enable_fallbacks:
+          type: boolean
+          default: true
+        fallback_order:
+          type: array
+          description: "Global fallback strategy order"
+          items:
+            type: string
+            enum: ["cached_data", "alternative_source", "degraded_functionality", "manual_input"]
+        cache_settings:
+          type: object
+          properties:
+            enable_caching:
+              type: boolean
+              default: true
+            cache_duration_hours:
+              type: integer
+              minimum: 1
+              maximum: 168
+              default: 24
+            cache_size_mb:
+              type: integer
+              minimum: 10
+              maximum: 1000
+              default: 100
+
+# Example Implementations
+examples:
+  fundamental_analysis:
+    version: "1.0"
+    command: "fundamental_analysis"
+    metadata:
+      description: "Comprehensive fundamental analysis for trading strategies"
+      complexity_level: "complex"
+      expected_execution_time: 120
+      resource_requirements:
+        memory_mb: 512
+        disk_mb: 200
+        network_required: true
+    dependencies:
+      yahoo_finance_api:
+        type: "api"
+        required: true
+        description: "Real-time market data and financial information"
+        validation_method: "api_test"
+        timeout: 30
+        retry_attempts: 3
+        fallback_strategies: ["cached_data", "alternative_source"]
+      market_data_cache:
+        type: "data_source"
+        required: false
+        description: "Local cache of historical market data"
+        validation_method: "file_exists"
+        fallback_strategies: ["skip_feature"]
+      yahoo_finance_service:
+        type: "file"
+        required: true
+        description: "Yahoo Finance integration script"
+        validation_method: "file_exists"
+        fallback_strategies: ["manual_input"]
+    api_dependencies:
+      yahoo_finance_api:
+        base_url: "https://query1.finance.yahoo.com"
+        endpoints:
+          - path: "/v8/finance/chart/{symbol}"
+            method: "GET"
+            required_params: ["symbol"]
+          - path: "/v10/finance/quoteSummary/{symbol}"
+            method: "GET"
+            required_params: ["symbol", "modules"]
+        authentication:
+          type: "none"
+          required: false
+        rate_limits:
+          requests_per_minute: 60
+          burst_limit: 10
+    file_dependencies:
+      yahoo_finance_service:
+        file_type: "script"
+        path: "scripts/yahoo_finance_service.py"
+        required_permissions: ["read", "execute"]
+    performance_expectations:
+      dependency_validation_time:
+        target_seconds: 3.0
+        warning_threshold: 8.0
+      overall_availability:
+        target_percentage: 95.0
+        measurement_window_hours: 24
+
+  twitter_post:
+    version: "1.0"
+    command: "twitter_post"
+    metadata:
+      description: "Social media content optimization for X/Twitter"
+      complexity_level: "simple"
+      expected_execution_time: 15
+      resource_requirements:
+        memory_mb: 128
+        disk_mb: 50
+        network_required: false
+    dependencies:
+      content_input:
+        type: "data_source"
+        required: true
+        description: "Input content for optimization"
+        validation_method: "basic"
+        fallback_strategies: ["manual_input"]
+      engagement_metrics:
+        type: "data_source"
+        required: false
+        description: "Historical engagement data for optimization"
+        validation_method: "basic"
+        fallback_strategies: ["default_values"]
+    performance_expectations:
+      dependency_validation_time:
+        target_seconds: 1.0
+        warning_threshold: 3.0
+      overall_availability:
+        target_percentage: 99.0
+
+  code_owner:
+    version: "1.0"
+    command: "code_owner"
+    metadata:
+      description: "Comprehensive codebase health analysis"
+      complexity_level: "standard"
+      expected_execution_time: 60
+      resource_requirements:
+        memory_mb: 256
+        disk_mb: 100
+        network_required: false
+    dependencies:
+      project_files:
+        type: "file"
+        required: true
+        description: "Access to project codebase"
+        validation_method: "file_exists"
+        fallback_strategies: ["degraded_functionality"]
+      git_repository:
+        type: "service"
+        required: true
+        description: "Git repository for history analysis"
+        validation_method: "service_ping"
+        fallback_strategies: ["skip_feature"]
+      team_workspace_data:
+        type: "data_source"
+        required: false
+        description: "Team workspace knowledge for context"
+        validation_method: "basic"
+        fallback_strategies: ["default_values"]
+    file_dependencies:
+      project_files:
+        file_type: "data"
+        path: "."
+        required_permissions: ["read"]
+    service_dependencies:
+      git_repository:
+        service_type: "local_service"
+        health_check:
+          endpoint: ".git"
+          expected_status: 1
+          timeout: 5

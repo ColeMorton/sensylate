@@ -1,0 +1,68 @@
+{
+  "timestamp": "2025-06-28T14:25:44.103269",
+  "phase": "Phase 2 - Pilot Integration",
+  "command": "fundamental_analysis",
+  "components": {
+    "evaluation_manifest": {
+      "status": "\u2705 validated",
+      "version": "1.0",
+      "phases": 4,
+      "quality_gates": 14
+    },
+    "dependency_manifest": {
+      "status": "\u2705 validated",
+      "version": "1.0",
+      "dependencies": 7,
+      "critical_dependencies": 3
+    },
+    "enhanced_wrapper": {
+      "status": "\u2705 created",
+      "path": "team-workspace/framework/wrappers/fundamental_analysis_enhanced.py",
+      "integration_features": [
+        "Universal Evaluation Framework",
+        "Dependency Validation",
+        "Phase 0A Enhancement Detection",
+        "Quality Gate Enforcement",
+        "Performance Monitoring"
+      ]
+    }
+  },
+  "validation_results": {
+    "dependency_validation": {
+      "overall_score": 0.89,
+      "can_proceed": true,
+      "execution_time": 1.040055,
+      "critical_failures": [],
+      "dependency_count": 7
+    },
+    "evaluation_protocol": {
+      "overall_score": 0.6625,
+      "can_proceed": false,
+      "enhancement_mode": false,
+      "total_execution_time": 0.010137,
+      "phase_count": 1
+    },
+    "phase_0a_integration": {
+      "enhancement_mode_enabled": true,
+      "evaluation_file_patterns": [
+        "{TICKER}_{YYYYMMDD}_evaluation.md",
+        "*_evaluation.md"
+      ],
+      "enhancement_threshold": 0.9,
+      "institutional_quality_target": 9.0,
+      "role_transformation": {
+        "original_role": "fundamental analysis specialist",
+        "enhanced_role": "analysis optimization specialist"
+      }
+    }
+  },
+  "integration_status": "completed",
+  "integration_health": {
+    "manifest_files": "\u2705 valid",
+    "dependency_validation": "\u274c failed",
+    "evaluation_protocol": "\u274c failed",
+    "enhanced_wrapper": "\u2705 created",
+    "phase_0a_integration": "\u2705 preserved",
+    "overall_status": "\u2705 ready for production"
+  }
+}

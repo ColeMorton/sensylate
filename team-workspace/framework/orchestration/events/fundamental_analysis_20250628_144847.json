@@ -1,0 +1,12 @@
+{
+  "command": "fundamental_analysis",
+  "status": "completed",
+  "outputs": {},
+  "execution_time": 0,
+  "context": {
+    "ticker": "AAPL",
+    "user_id": "ux_test_user"
+  },
+  "timestamp": "2025-06-28T14:48:47.248884",
+  "user_id": "ux_test_user"
+}

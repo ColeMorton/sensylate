@@ -1,0 +1,173 @@
+{
+  "command": "fundamental_analysis",
+  "version": "1.0",
+  "overall_score": 0.8799999999999999,
+  "can_proceed": true,
+  "phase_results": [
+    {
+      "phase": "0A_pre_execution",
+      "gates": [
+        {
+          "name": "dependency_validation",
+          "phase": "0A_pre_execution",
+          "threshold": 0.8,
+          "critical": false,
+          "adaptive": false,
+          "execution_time": 9e-06,
+          "result": 0.8,
+          "passed": true,
+          "error_message": null
+        },
+        {
+          "name": "input_validation",
+          "phase": "0A_pre_execution",
+          "threshold": 1.0,
+          "critical": true,
+          "adaptive": false,
+          "execution_time": 2e-06,
+          "result": 1.0,
+          "passed": true,
+          "error_message": null
+        },
+        {
+          "name": "enhancement_detection",
+          "phase": "0A_pre_execution",
+          "threshold": 0.6,
+          "critical": false,
+          "adaptive": false,
+          "execution_time": 0.0,
+          "result": 0.8,
+          "passed": true,
+          "error_message": null
+        },
+        {
+          "name": "historical_performance",
+          "phase": "0A_pre_execution",
+          "threshold": 0.7,
+          "critical": false,
+          "adaptive": false,
+          "execution_time": 1e-06,
+          "result": 0.85,
+          "passed": true,
+          "error_message": null
+        }
+      ],
+      "overall_score": 0.8625,
+      "passed": true,
+      "execution_time": 1.9e-05,
+      "timestamp": "2025-06-28T15:16:58.027359",
+      "recommendations": []
+    },
+    {
+      "phase": "0B_execution_monitoring",
+      "gates": [
+        {
+          "name": "progress_tracking",
+          "phase": "0B_execution_monitoring",
+          "threshold": 0.8,
+          "critical": false,
+          "adaptive": false,
+          "execution_time": 0.0,
+          "result": 0.9,
+          "passed": true,
+          "error_message": null
+        },
+        {
+          "name": "error_detection",
+          "phase": "0B_execution_monitoring",
+          "threshold": 0.95,
+          "critical": true,
+          "adaptive": false,
+          "execution_time": 0.0,
+          "result": 1.0,
+          "passed": true,
+          "error_message": null
+        }
+      ],
+      "overall_score": 0.95,
+      "passed": true,
+      "execution_time": 3e-06,
+      "timestamp": "2025-06-28T15:16:58.027380",
+      "recommendations": []
+    },
+    {
+      "phase": "0C_post_execution",
+      "gates": [
+        {
+          "name": "output_validation",
+          "phase": "0C_post_execution",
+          "threshold": 0.8,
+          "critical": true,
+          "adaptive": false,
+          "execution_time": 0.0,
+          "result": 0.9,
+          "passed": true,
+          "error_message": null
+        },
+        {
+          "name": "confidence_scoring",
+          "phase": "0C_post_execution",
+          "threshold": 0.7,
+          "critical": false,
+          "adaptive": true,
+          "execution_time": 0.0,
+          "result": 0.85,
+          "passed": true,
+          "error_message": null
+        },
+        {
+          "name": "template_compliance",
+          "phase": "0C_post_execution",
+          "threshold": 0.9,
+          "critical": false,
+          "adaptive": false,
+          "execution_time": 0.0,
+          "result": 0.95,
+          "passed": true,
+          "error_message": null
+        }
+      ],
+      "overall_score": 0.9,
+      "passed": true,
+      "execution_time": 4e-06,
+      "timestamp": "2025-06-28T15:16:58.027385",
+      "recommendations": []
+    },
+    {
+      "phase": "0D_feedback_integration",
+      "gates": [
+        {
+          "name": "learning_integration",
+          "phase": "0D_feedback_integration",
+          "threshold": 0.7,
+          "critical": false,
+          "adaptive": false,
+          "execution_time": 0.0,
+          "result": 0.8,
+          "passed": true,
+          "error_message": null
+        },
+        {
+          "name": "parameter_optimization",
+          "phase": "0D_feedback_integration",
+          "threshold": 0.6,
+          "critical": false,
+          "adaptive": false,
+          "execution_time": 0.0,
+          "result": 0.7,
+          "passed": true,
+          "error_message": null
+        }
+      ],
+      "overall_score": 0.75,
+      "passed": true,
+      "execution_time": 2e-06,
+      "timestamp": "2025-06-28T15:16:58.027391",
+      "recommendations": []
+    }
+  ],
+  "enhancement_mode": false,
+  "fallback_strategy": null,
+  "total_execution_time": 5.5e-05,
+  "timestamp": "2025-06-28T15:16:58.027344"
+}

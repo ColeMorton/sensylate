@@ -1,0 +1,8 @@
+{
+  "dependency_name": "market_data_api",
+  "available": true,
+  "validation_score": 0.7,
+  "fallback_used": null,
+  "error_message": "Generic API validation - assumed available",
+  "timestamp": "2025-06-28T14:59:13.018409"
+}

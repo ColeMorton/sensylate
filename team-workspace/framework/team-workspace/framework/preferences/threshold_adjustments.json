@@ -1,0 +1,20 @@
+{
+  "fundamental_analysis": [
+    {
+      "gate_name": "overall_threshold",
+      "original_threshold": 0.7,
+      "adjusted_threshold": 0.6,
+      "adjustment_reason": "User proceeded despite low score",
+      "success_rate": 0.8,
+      "timestamp": "2025-06-28T15:11:31.717015"
+    },
+    {
+      "gate_name": "overall_threshold",
+      "original_threshold": 0.7,
+      "adjusted_threshold": 0.6,
+      "adjustment_reason": "User proceeded despite low score",
+      "success_rate": 0.8,
+      "timestamp": "2025-06-28T15:16:58.052709"
+    }
+  ]
+}

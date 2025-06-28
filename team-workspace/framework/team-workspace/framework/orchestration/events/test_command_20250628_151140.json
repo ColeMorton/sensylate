@@ -1,0 +1,11 @@
+{
+  "command": "test_command",
+  "status": "completed",
+  "outputs": {},
+  "execution_time": 0,
+  "context": {
+    "user_id": "user_9"
+  },
+  "timestamp": "2025-06-28T15:11:40.094357",
+  "user_id": "user_9"
+}

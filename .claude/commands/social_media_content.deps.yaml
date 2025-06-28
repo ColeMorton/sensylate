@@ -1,0 +1,282 @@
+# Social Media Content - Dependency Manifest
+# Version: 1.0
+# Unified dependencies for all social media content types
+
+version: "1.0"
+command: "social_media_content"
+
+metadata:
+  description: "Unified social media content generator with intelligent routing"
+  complexity_level: "standard"
+  expected_execution_time: 20
+  resource_requirements:
+    memory_mb: 256
+    disk_mb: 100
+    network_required: false
+
+dependencies:
+  content_input:
+    type: "data_source"
+    required: true
+    description: "Input content for optimization (text, file references, or ticker data)"
+    validation_method: "basic"
+    timeout: 5
+    retry_attempts: 1
+    fallback_strategies:
+      - "manual_input"
+      - "prompt_for_clarification"
+    configuration:
+      input_types:
+        - "raw_text"
+        - "file_references"
+        - "ticker_format"
+        - "evaluation_files"
+
+  trendspider_data:
+    type: "data_source"
+    required: false
+    description: "TrendSpider tabular data for trading strategy posts"
+    validation_method: "file_exists"
+    timeout: 10
+    retry_attempts: 2
+    fallback_strategies:
+      - "alternative_source"
+      - "skip_feature"
+    configuration:
+      data_directory: "@data/images/trendspider_tabular/"
+      data_types:
+        - "seasonality_charts"
+        - "performance_metrics"
+        - "signal_data"
+      priority: "primary_for_trading_strategy"
+
+  fundamental_analysis_data:
+    type: "data_source"
+    required: false
+    description: "Fundamental analysis reports for investment insight posts"
+    validation_method: "file_exists"
+    timeout: 10
+    retry_attempts: 2
+    fallback_strategies:
+      - "cached_data"
+      - "skip_feature"
+    configuration:
+      data_directory: "@data/outputs/analysis_fundamental/"
+      file_pattern: "{TICKER}_{YYYYMMDD}.md"
+      data_types:
+        - "investment_thesis"
+        - "valuation_metrics"
+        - "risk_assessments"
+        - "financial_health"
+
+  yahoo_finance_service:
+    type: "file"
+    required: false
+    description: "Yahoo Finance service for real-time market data (fundamental posts)"
+    validation_method: "file_exists"
+    timeout: 5
+    retry_attempts: 1
+    fallback_strategies:
+      - "skip_realtime_data"
+      - "use_cached_prices"
+    configuration:
+      file_path: "scripts/yahoo_finance_service.py"
+      required_permissions: ["read", "execute"]
+      usage_context: "fundamental_analysis_posts"
+
+  technical_analysis_data:
+    type: "data_source"
+    required: false
+    description: "Technical analysis and market context data"
+    validation_method: "basic"
+    timeout: 5
+    retry_attempts: 1
+    fallback_strategies:
+      - "skip_feature"
+    configuration:
+      data_directory: "@data/raw/analysis_misc/"
+      data_types:
+        - "chart_patterns"
+        - "technical_signals"
+        - "market_context"
+
+  strategy_backtesting_data:
+    type: "data_source"
+    required: false
+    description: "Strategy backtesting data as fallback for trading posts"
+    validation_method: "basic"
+    timeout: 5
+    retry_attempts: 1
+    fallback_strategies:
+      - "skip_feature"
+    configuration:
+      data_directory: "@data/raw/analysis_strategy/"
+      file_types: ["csv"]
+      usage: "fallback_when_trendspider_unavailable"
+
+  evaluation_files:
+    type: "data_source"
+    required: false
+    description: "Phase 0A evaluation files for content enhancement"
+    validation_method: "basic"
+    timeout: 5
+    retry_attempts: 1
+    fallback_strategies:
+      - "skip_enhancement"
+      - "new_content_mode"
+    configuration:
+      search_directories:
+        - "@data/outputs/twitter_post_strategy/"
+        - "@data/outputs/analysis_fundamental/"
+        - "current_working_directory"
+      file_patterns:
+        - "*_evaluation.md"
+        - "{TICKER}_{YYYYMMDD}_evaluation.md"
+      enhancement_mode_trigger: true
+
+  team_workspace_data:
+    type: "data_source"
+    required: false
+    description: "Team workspace for enhanced context and collaboration"
+    validation_method: "basic"
+    timeout: 5
+    retry_attempts: 1
+    fallback_strategies:
+      - "default_values"
+      - "skip_feature"
+    configuration:
+      workspace_path: "team-workspace"
+      knowledge_areas:
+        - "social-media-strategy"
+        - "content-strategy"
+        - "marketing-strategy"
+      collaboration_features: true
+
+data_source_dependencies:
+  trendspider_data:
+    source_type: "file_system"
+    connection_string: "@data/images/trendspider_tabular/"
+    required_files:
+      - "seasonality_charts"
+      - "performance_metrics"
+    data_quality:
+      precision_requirement: "pixel_level_accuracy"
+      completeness_threshold: 0.9
+
+  fundamental_analysis_data:
+    source_type: "file_system"
+    connection_string: "@data/outputs/analysis_fundamental/"
+    required_sections:
+      - "investment_thesis"
+      - "valuation_analysis"
+      - "risk_matrix"
+    freshness_requirements:
+      max_age_days: 30
+      real_time_price_required: true
+
+  team_workspace_data:
+    source_type: "team_workspace"
+    connection_string: "team-workspace"
+    required_directories:
+      - "knowledge/social-media-strategy"
+      - "knowledge/content-strategy"
+    collaboration_features:
+      cross_command_data: true
+      knowledge_authority: true
+
+file_dependencies:
+  yahoo_finance_service:
+    file_type: "script"
+    path: "scripts/yahoo_finance_service.py"
+    required_permissions: ["read", "execute"]
+    validation_checks:
+      syntax_validation: true
+      import_validation: true
+      api_connectivity: false
+    usage_context: "real_time_market_data"
+
+content_type_routing:
+  trading_strategy_dependencies:
+    primary: ["trendspider_data"]
+    secondary: ["fundamental_analysis_data", "technical_analysis_data"]
+    fallback: ["strategy_backtesting_data"]
+    enhancement: ["evaluation_files"]
+
+  fundamental_analysis_dependencies:
+    primary: ["fundamental_analysis_data"]
+    secondary: ["yahoo_finance_service"]
+    optional: ["team_workspace_data"]
+    enhancement: ["evaluation_files"]
+
+  generic_content_dependencies:
+    primary: ["content_input"]
+    optional: ["team_workspace_data"]
+    enhancement: ["evaluation_files"]
+
+performance_expectations:
+  dependency_validation_time:
+    target_seconds: 2.0
+    warning_threshold: 5.0
+  data_collection_time:
+    trendspider_data: 3.0
+    fundamental_analysis_data: 2.0
+    real_time_data: 1.0
+  overall_availability:
+    target_percentage: 90.0
+    measurement_window_hours: 24
+    critical_dependencies: ["content_input"]
+
+fallback_configuration:
+  enable_fallbacks: true
+  fallback_order:
+    - "cached_data"
+    - "alternative_source"
+    - "skip_feature"
+    - "manual_input"
+  content_type_fallbacks:
+    trading_strategy:
+      trendspider_unavailable: "use_strategy_backtesting_data"
+      all_data_unavailable: "generic_content_mode"
+    fundamental_analysis:
+      reports_unavailable: "basic_company_analysis"
+      real_time_data_unavailable: "use_cached_prices"
+    generic_content:
+      minimal_dependencies: "proceed_with_input_only"
+  cache_settings:
+    enable_caching: true
+    cache_duration_hours: 6
+    cache_size_mb: 50
+
+quality_assurance:
+  content_type_detection:
+    accuracy_requirement: 0.9
+    fallback_detection: true
+    manual_override_available: true
+  data_validation:
+    cross_reference_sources: true
+    accuracy_thresholds:
+      trading_strategy: 0.95
+      fundamental_analysis: 0.9
+      generic_content: 0.8
+  platform_compliance:
+    character_limits: true
+    format_validation: true
+    engagement_optimization: true
+
+enhancement_support:
+  evaluation_file_integration: true
+  optimization_workflow: true
+  content_type_preservation: true
+  quality_improvement_tracking: true
+  phase_0a_compatibility: true
+
+routing_intelligence:
+  automatic_detection: true
+  confidence_thresholds:
+    high_confidence: 0.9
+    medium_confidence: 0.7
+    low_confidence: 0.5
+  fallback_routing:
+    unclear_input: "generic_content_mode"
+    multiple_indicators: "prompt_for_clarification"
+    conflicting_signals: "manual_routing_request"

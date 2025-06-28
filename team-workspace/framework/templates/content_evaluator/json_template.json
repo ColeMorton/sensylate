@@ -1,0 +1,20 @@
+{
+  "timestamp": "{{ timestamp }}",
+  "command": "content_evaluator",
+  "type": "utility",
+  "complexity": "medium",
+  "status": "{{ status }}",
+  "execution_time": "{{ execution_time }}",
+  "results": {
+    "summary": "{{ summary }}",
+    "details": "{{ details }}"
+  },
+  "quality_metrics": {
+    "score": "{{ quality_score }}",
+    "confidence": "{{ confidence_level }}"
+  },
+  "metadata": {
+    "generated_by": "AI Command Framework",
+    "version": "1.0"
+  }
+}

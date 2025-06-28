@@ -1,0 +1,24 @@
+[
+  {
+    "user_id": "perf_user_2",
+    "command": "test_command",
+    "features": {
+      "hour": 15,
+      "day_of_week": 5,
+      "is_weekend": true,
+      "estimated_time": 0,
+      "confidence": 0.8,
+      "priority": "medium",
+      "command_complexity": "medium",
+      "has_dependencies": false,
+      "output_type": "text",
+      "current_workflow": "general",
+      "recent_activity": "normal"
+    },
+    "action": "executed",
+    "outcome": {
+      "success": true
+    },
+    "timestamp": "2025-06-28T15:16:58.420634"
+  }
+]

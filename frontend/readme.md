@@ -1,6 +1,6 @@
-<h1 align=center>Astro + Tailwind CSS + TypeScript Starter and Boilerplate</h1>
+<h1 align=center>Sensylate Frontend - Astro + Tailwind CSS + TypeScript</h1>
 
-<p align=center>Astroplate is a free starter template built with Astro, TailwindCSS & TypeScript, providing everything you need to jumpstart your Astro project and save valuable time.</p>
+<p align=center>Modern frontend for Sensylate's multi-modal trading analysis platform, featuring AI command collaboration and Universal Evaluation Framework integration.</p>
 
 <p align=center>Made with ♥ by <a href="https://zeon.studio/">Zeon Studio</a></p>
 
@@ -116,6 +116,25 @@ docker run -it --rm astroplate ash
 
 We use GitHub Issues as the official bug tracker for this Template. Please Search [existing issues](https://github.com/zeon-studio/astroplate/issues). It’s possible someone has already reported the same problem.
 If your problem or idea has not been addressed yet, feel free to [open a new issue](https://github.com/zeon-studio/astroplate/issues).
+
+## 🎯 Universal Evaluation Framework Integration
+
+The Sensylate frontend integrates with the **Universal Evaluation Framework** deployed across all 14 AI commands:
+
+### Content Quality Assurance
+- **Automated Content Generation**: AI commands generate blog posts with quality validation
+- **Template Enforcement**: Consistent markdown formatting with automatic compliance fixes
+- **Quality Scoring**: Content quality metrics and validation before publication
+
+### AI Command Integration
+- **Content Pipeline**: Commands like `fundamental_analysis` and `content_publisher` generate blog content
+- **Social Media Integration**: `twitter_post_strategy` creates social media content from analysis
+- **Quality Gates**: 4-phase evaluation ensures institutional-grade content quality
+
+### Frontend Benefits
+- **Consistent Content**: Template enforcement ensures uniform blog post formatting
+- **Automated Publishing**: AI commands can directly publish to blog with quality assurance
+- **Performance Optimization**: Content validated and optimized before publication
 
 <!-- licence -->
 

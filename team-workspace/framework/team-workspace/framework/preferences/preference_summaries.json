@@ -1,0 +1,24 @@
+{
+  "fundamental_analysis": {
+    "command": "fundamental_analysis",
+    "total_interactions": 10,
+    "success_rate": 0.8,
+    "preferred_thresholds": {
+      "overall_threshold": 0.7724999999999999
+    },
+    "common_patterns": [],
+    "optimization_suggestions": [],
+    "last_updated": "2025-06-28T15:16:58.052440"
+  },
+  "social_media_content": {
+    "command": "social_media_content",
+    "total_interactions": 2,
+    "success_rate": 1.0,
+    "preferred_thresholds": {
+      "overall_threshold": 0.62
+    },
+    "common_patterns": [],
+    "optimization_suggestions": [],
+    "last_updated": "2025-06-28T15:16:58.051846"
+  }
+}
