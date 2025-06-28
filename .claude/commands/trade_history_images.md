@@ -32,16 +32,23 @@ This command automatically:
 
 ### 2. Visualization Selection
 **Report Type Mapping:**
-- `HISTORICAL_PERFORMANCE_REPORT_*.md` → Performance dashboard (dual-mode)
-- `LIVE_SIGNALS_MONITOR_*.md` → Signal status charts
-- `TRADE_ANALYSIS_*.md` → Trade distribution visualizations
-- `PORTFOLIO_SUMMARY_*.md` → Portfolio composition charts
+- `HISTORICAL_PERFORMANCE_REPORT_*.md` → 2x2 grid performance dashboard (dual-mode PNG)
+  - **Top Left**: Bar chart showing All Trade Performance (sorted by return, highest to lowest)
+  - **Top Right**: 2x2 gauge grid (Win Rate, Total Return, Profit Factor, Total Trades)
+  - **Bottom Left**: Scatter plot Return vs Duration with trend line
+  - **Bottom Right**: Weekly Performance bars based on entry dates
+- `LIVE_SIGNALS_MONITOR_*.md` → Signal status charts (disabled)
+- `TRADE_ANALYSIS_*.md` → Trade distribution visualizations (disabled)
+- `PORTFOLIO_SUMMARY_*.md` → Portfolio composition charts (disabled)
 
 ### 3. Interactive Dashboard Generation Pipeline
 1. **Parse Report Data**: Extract structured data from markdown with validation
 2. **Apply Scalability Logic**: Select appropriate Plotly chart types based on data volume
-3. **Generate Interactive Visualizations**: Create charts using Plotly with Sensylate design system
-4. **Multi-Format Export**: Save as high-DPI PNG, PDF, SVG, and HTML with matching filenames
+3. **Generate 2x2 Grid Visualizations**: Create bar chart dashboard using Plotly with Sensylate design system
+   - **Purple Box Prevention**: Uses individual bar charts instead of waterfall to eliminate purple box anomaly
+   - **Equal Grid Sections**: 2x2 layout with inter-chart spacing for visual clarity
+   - **Heebo Fonts**: Consistent typography throughout all dashboard elements
+4. **High-DPI PNG Export**: Save as PNG-only with 2x scale for high-resolution output
 5. **Frontend Configuration Export**: Generate JSON schemas and React component configurations
 6. **Production Optimization**: Apply template caching, data sampling, and performance enhancements
 
@@ -92,11 +99,12 @@ production_optimizer = ChartGenerationOptimizer()
 
 ### Error Handling
 - **Missing Reports**: Log warning and continue with available reports
-- **Parsing Errors**: Generate fallback Plotly visualization with error message
-- **Plotly Generation Failures**: Fallback to matplotlib with detailed error diagnostics
-- **Multi-Format Export Issues**: Retry with single format and log specific format failures
-- **Frontend Config Export Errors**: Continue with image generation, log config export issues
-- **Production Optimization Failures**: Disable optimizations and continue with standard generation
+- **Parsing Errors**: Generate fallback visualization with error message
+- **Chart Generation Failures**: Detailed error diagnostics with template fallback
+- **PNG Export Issues**: Retry with different scale and log specific format failures
+- **Purple Box Detection**: Automatic bar chart fallback for waterfall anomalies
+- **Grid Layout Issues**: Dynamic spacing adjustment for chart overlap prevention
+- **Font Loading Failures**: Fallback to Arial with Heebo preference maintained
 - **File Access Issues**: Check permissions and provide guidance
 
 ## Configuration
@@ -110,9 +118,10 @@ design_system:
     tertiary_data: "#3179f5"
 
 output:
-  formats: ["png", "pdf", "svg", "html"]  # Multi-format export
-  scale: 3  # High-DPI export (3x = ~300 DPI)
+  formats: ["png"]  # PNG-only export (high-DPI)
+  scale: 2  # High-DPI export (2x scale)
   dual_mode: true  # Generate both light and dark variants
+  dimensions: "1600x1600"  # Square format for 2x2 grid layout
 
 plotly:
   template: "sensylate_light"  # Plotly template integration
@@ -129,10 +138,16 @@ production:
 ```yaml
 report_visualizations:
   historical_performance:
-    charts: ["metrics_summary", "monthly_bars", "quality_donut", "waterfall"]
+    charts: ["gauge_grid_2x2", "bar_chart_sorted", "scatter_with_trend", "weekly_performance_bars"]
     layout: "2x2_grid"
+    positions:
+      top_left: "bar_chart_sorted"  # All Trade Performance (sorted by return)
+      top_right: "gauge_grid_2x2"   # 2x2 gauge grid (Win Rate, Total Return, Profit Factor, Total Trades)
+      bottom_left: "scatter_with_trend"  # Return vs Duration with trend line
+      bottom_right: "weekly_performance_bars"  # Weekly Performance based on entry dates
     plotly_template: "sensylate_dashboard"
-    export_formats: ["png", "pdf", "svg", "html"]
+    export_formats: ["png"]  # PNG-only export as specified
+    dual_mode: true  # Light and dark mode variants
     frontend_config: true
 
   live_signals:
@@ -311,11 +326,12 @@ done
 
 ## Command Metadata
 
-- **Version**: 2.0.0
+- **Version**: 2.1.0
 - **Author**: Command Management Specialist
-- **Updated**: 2025-06-27 (Plotly Migration Complete)
-- **Dependencies**: dashboard_generator, plotly, kaleido, json-schema-generator, frontend-config-exporter, production-optimizer
-- **Chart Engine**: Plotly (default), matplotlib (fallback)
-- **Export Capabilities**: Multi-format (PNG, PDF, SVG, HTML), Frontend JSON configs, React components
-- **Category**: Interactive Visualization, Frontend Integration, Reporting
-- **Lifecycle Stage**: Production-Ready with Advanced Features
+- **Updated**: 2025-06-28 (2x2 Grid Layout Implementation Complete)
+- **Dependencies**: dashboard_generator, plotly, kaleido, json-schema-generator, frontend-config-exporter
+- **Chart Engine**: Plotly with bar chart approach (purple box prevention)
+- **Export Capabilities**: High-DPI PNG (dual-mode), Frontend JSON configs, React components
+- **Layout**: 2x2 grid with equal quadrants and inter-chart spacing
+- **Category**: Dashboard Visualization, Frontend Integration, Trading Reports
+- **Lifecycle Stage**: Production-Ready with Template-Based Architecture
