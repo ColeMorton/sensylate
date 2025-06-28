@@ -9,7 +9,14 @@ import DynamicHomepageHook from "@/helpers/DynamicHomepageHook";
   <section
     class="bg-body dark:bg-darkmode-body relative h-screen overflow-hidden"
   >
-    <GalaxyAnimation client:only="react" className="absolute inset-0" />
+    <GalaxyAnimation
+      client:only="react"
+      className="absolute inset-0"
+      config={{
+        particles: { size: 0.06 }, // Optimized size for homepage visibility
+        camera: { lookAtOffset: 0 }, // Properly centered
+      }}
+    />
     <!-- Optional overlay content can be added here -->
     <div class="absolute inset-0 z-10 flex items-center justify-center">
       <DynamicHomepageHook
