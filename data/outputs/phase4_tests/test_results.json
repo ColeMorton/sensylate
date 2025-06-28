@@ -1,0 +1,172 @@
+{
+  "timestamp": "2025-06-27 11:53:02",
+  "total_tests": 6,
+  "passed_tests": 6,
+  "pass_rate": 100.0,
+  "total_time": 0.7479209899902344,
+  "status": "COMPLETE",
+  "detailed_results": {
+    "plotly_layout_manager": {
+      "layout_manager": {
+        "status": "\u2705 PASS",
+        "figure_dimensions": "1600x1200",
+        "total_traces": 5,
+        "indicator_traces": 4,
+        "theme_applied": true
+      }
+    },
+    "enhanced_theme_system": {
+      "theme_system": {
+        "status": "\u2705 PASS",
+        "templates_created": 0,
+        "template_tests": {
+          "light_False_False": {
+            "template_name": "sensylate_light",
+            "applied": true
+          },
+          "dark_False_False": {
+            "template_name": "sensylate_dark",
+            "applied": true
+          },
+          "light_True_False": {
+            "template_name": "sensylate_light_hd",
+            "applied": true
+          },
+          "light_False_True": {
+            "template_name": "sensylate_dashboard",
+            "applied": true
+          }
+        },
+        "font_configuration": {
+          "heebo_integrated": true,
+          "size_levels": 7,
+          "color_variants": 3
+        }
+      }
+    },
+    "high-dpi_export": {
+      "high_dpi_export": {
+        "status": "\u2705 PASS",
+        "export_config": {
+          "width": 1600,
+          "height": 1200,
+          "scale": 3.0,
+          "format": "png",
+          "engine": "kaleido"
+        },
+        "dpi_calculation": "300 DPI = 3.12x scale",
+        "layout_export": true,
+        "chart_export": true
+      }
+    },
+    "multi-format_export": {
+      "multi_format_export": {
+        "status": "\u2705 PASS",
+        "exporter_created": true,
+        "format_support": {
+          "png": {
+            "method_exists": true,
+            "supported": true
+          },
+          "pdf": {
+            "method_exists": true,
+            "supported": true
+          },
+          "svg": {
+            "method_exists": true,
+            "supported": true
+          },
+          "html": {
+            "method_exists": true,
+            "supported": true
+          },
+          "webp": {
+            "method_exists": true,
+            "supported": true
+          }
+        },
+        "batch_export": true,
+        "total_formats": 5
+      }
+    },
+    "layout_optimization": {
+      "layout_optimization": {
+        "status": "\u2705 PASS",
+        "chart_optimizations": {
+          "bar": {
+            "optimization_applied": true,
+            "chart_supported": true
+          },
+          "scatter": {
+            "optimization_applied": true,
+            "chart_supported": true
+          },
+          "pie": {
+            "optimization_applied": true,
+            "chart_supported": true
+          },
+          "waterfall": {
+            "optimization_applied": true,
+            "chart_supported": true
+          }
+        },
+        "responsive_breakpoints": 4,
+        "responsive_config": {
+          "mobile": {
+            "width": 480,
+            "height": 360,
+            "font_scale": 0.3,
+            "margin_scale": 0.3
+          },
+          "tablet": {
+            "width": 768,
+            "height": 576,
+            "font_scale": 0.48,
+            "margin_scale": 0.48
+          },
+          "desktop": {
+            "width": 1200,
+            "height": 900,
+            "font_scale": 0.75,
+            "margin_scale": 0.75
+          },
+          "large": {
+            "width": 1920,
+            "height": 1440,
+            "font_scale": 1.0,
+            "margin_scale": 1.2
+          }
+        }
+      }
+    },
+    "integration_testing": {
+      "integration_testing": {
+        "status": "\u2705 PASS",
+        "chart_tests": {
+          "monthly_bars": {
+            "chart_generated": true,
+            "theme_applied": true,
+            "template_applied": true
+          },
+          "donut_chart": {
+            "chart_generated": true,
+            "layout_integrated": true,
+            "subplot_added": true
+          },
+          "waterfall_chart": {
+            "chart_generated": true,
+            "export_configured": true,
+            "high_dpi_ready": true
+          },
+          "scatter_chart": {
+            "chart_generated": true,
+            "font_enhanced": true,
+            "dashboard_optimized": true
+          }
+        },
+        "successful_integrations": "4/4",
+        "integration_rate": "100.0%"
+      }
+    }
+  }
+}

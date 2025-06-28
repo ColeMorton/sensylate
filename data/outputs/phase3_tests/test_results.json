@@ -1,0 +1,91 @@
+{
+  "timestamp": "2025-06-27 11:37:18",
+  "total_tests": 10,
+  "passed_tests": 10,
+  "pass_rate": 100.0,
+  "total_time": 0.6795098781585693,
+  "status": "COMPLETE",
+  "detailed_results": {
+    "waterfall_chart": {
+      "waterfall_small": {
+        "status": "\u2705 PASS",
+        "traces": 16,
+        "generation_time": "0.135s",
+        "trades_processed": 15
+      },
+      "waterfall_medium": {
+        "status": "\u2705 PASS",
+        "traces": 51,
+        "generation_time": "0.174s",
+        "trades_processed": 50
+      }
+    },
+    "enhanced_scatter": {
+      "scatter_small": {
+        "status": "\u2705 PASS",
+        "traces": 6,
+        "generation_time": "0.072s",
+        "trades_processed": 15,
+        "clustering_used": false
+      },
+      "scatter_medium": {
+        "status": "\u2705 PASS",
+        "traces": 6,
+        "generation_time": "0.073s",
+        "trades_processed": 50,
+        "clustering_used": false
+      },
+      "scatter_large": {
+        "status": "\u2705 PASS",
+        "traces": 6,
+        "generation_time": "0.075s",
+        "trades_processed": 150,
+        "clustering_used": true
+      }
+    },
+    "scalability_integration": {
+      "scalability_detection": {
+        "status": "\u2705 PASS",
+        "small_category": "small",
+        "medium_category": "small",
+        "large_category": "large",
+        "scatter_category": "medium",
+        "performance_bands": 6
+      }
+    },
+    "performance_bands": {
+      "performance_bands": {
+        "status": "\u2705 PASS",
+        "traces": 1,
+        "generation_time": "0.056s",
+        "trades_processed": 150
+      }
+    },
+    "clustering": {
+      "clustering": {
+        "status": "\u2705 PASS",
+        "total_trades": 150,
+        "clusters": 4,
+        "clustered_points": 123,
+        "noise_points": 27,
+        "visualization_traces": 5,
+        "generation_time": "0.063s"
+      }
+    },
+    "advanced_styling": {
+      "advanced_styling": {
+        "status": "\u2705 PASS",
+        "chart_types_configured": 4,
+        "scalability_levels": 3,
+        "theme_application": "success"
+      }
+    },
+    "json_schema_export": {
+      "json_schema": {
+        "status": "\u2705 PASS",
+        "schemas_exported": 2,
+        "validation": "complete"
+      }
+    }
+  }
+}

@@ -109,6 +109,20 @@ superseding_events:
   event_type: topic_claimed
   timestamp: '2025-06-26T13:33:05.894793'
   topic: dashboard-visualization-implementation
+- command: architect
+  details: Implementation plan for migrating matplotlib dashboard system to Plotly
+    with JSON schema consistency
+  event_id: ownership_topic_claimed_20250627_110321
+  event_type: topic_claimed
+  timestamp: '2025-06-27T11:03:21.211986'
+  topic: plotly-dashboard-migration
+- command: architect
+  details: Frontend theme authority integration with Plotly Dash framework for unified
+    dashboard styling
+  event_id: ownership_topic_claimed_20250628_114353
+  event_type: topic_claimed
+  timestamp: '2025-06-28T11:43:53.451770'
+  topic: plotly-dash-frontend-integration
 superseding_policies:
   automatic_superseding:
     enabled: true

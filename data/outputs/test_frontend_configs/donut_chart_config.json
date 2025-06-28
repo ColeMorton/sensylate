@@ -1,0 +1,99 @@
+{
+  "chart_type": "enhanced_donut_chart",
+  "data": [
+    {
+      "category": "Excellent",
+      "count": 15,
+      "percentage": 25.5,
+      "win_rate": 85.2,
+      "average_return": 4.2
+    },
+    {
+      "category": "Good",
+      "count": 21,
+      "percentage": 35.8,
+      "win_rate": 68.5,
+      "average_return": 2.1
+    },
+    {
+      "category": "Poor",
+      "count": 12,
+      "percentage": 20.3,
+      "win_rate": 45.7,
+      "average_return": -0.8
+    },
+    {
+      "category": "Failed",
+      "count": 11,
+      "percentage": 18.4,
+      "win_rate": 22.1,
+      "average_return": -3.5
+    }
+  ],
+  "theme": {
+    "mode": "light",
+    "template": "sensylate_light",
+    "high_dpi": false,
+    "dashboard_optimized": false,
+    "colors": {
+      "primary": "#3179f5",
+      "secondary": "#26c6da",
+      "background": "#fff",
+      "text": "#121212",
+      "borders": "#eaeaea"
+    },
+    "typography": {
+      "font_family": "Heebo, -apple-system, BlinkMacSystemFont, sans-serif",
+      "font_sizes": {
+        "title": 20,
+        "subtitle": 16,
+        "body": 12,
+        "axis_labels": 10
+      }
+    }
+  },
+  "layout": {
+    "width": 800,
+    "height": 600,
+    "title": "Enhanced Donut Chart Analysis",
+    "responsive": true,
+    "show_center_text": true,
+    "show_legend": true,
+    "donut_hole_size": 0.4
+  },
+  "styling": {
+    "opacity": 0.8,
+    "border_width": 2,
+    "pull_effect": 0.05,
+    "text_font_size": 12,
+    "hover_effect": true
+  },
+  "export": {
+    "formats": [
+      "png"
+    ],
+    "quality": {
+      "width": 1600,
+      "height": 1200,
+      "scale": 2,
+      "dpi_equivalent": 192
+    },
+    "output": {
+      "directory": "data/outputs/charts",
+      "filename_pattern": "{chart_type}_{timestamp}",
+      "include_timestamp": true
+    }
+  },
+  "metadata": {
+    "generated_at": "2025-06-27 12:06:31",
+    "schema_version": "1.0.0",
+    "chart_engine": "plotly",
+    "export_format": "frontend_config",
+    "compatible_frameworks": [
+      "react",
+      "vue",
+      "angular"
+    ],
+    "plotly_version": "5.24.1"
+  }
+}

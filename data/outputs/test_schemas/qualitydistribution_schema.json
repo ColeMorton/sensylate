@@ -1,0 +1,47 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Quality Distribution Data",
+  "type": "object",
+  "properties": {
+    "quality": {
+      "type": "string",
+      "enum": [
+        "Excellent",
+        "Good",
+        "Poor",
+        "Failed",
+        "Poor Setup"
+      ],
+      "description": "Trade quality category"
+    },
+    "count": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Number of trades in this quality category"
+    },
+    "percentage": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100,
+      "description": "Percentage of total trades"
+    },
+    "win_rate": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100,
+      "description": "Win rate for this quality category"
+    },
+    "avg_return": {
+      "type": "number",
+      "description": "Average return for this quality category"
+    }
+  },
+  "required": [
+    "quality",
+    "count",
+    "percentage",
+    "win_rate",
+    "avg_return"
+  ],
+  "additionalProperties": false
+}

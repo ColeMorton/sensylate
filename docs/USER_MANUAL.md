@@ -206,7 +206,7 @@ make generate-report
 make prod-pipeline
 ```
 
-**What it does**: Creates comprehensive analysis reports, visualizations, and performance summaries.
+**What it does**: Creates comprehensive analysis reports with interactive Plotly visualizations, multi-format dashboard exports, and performance summaries.
 
 ### Configuration Files
 
@@ -237,7 +237,9 @@ All analysis outputs are organized in `outputs/`:
 ```
 outputs/
 ├── reports/           # Analysis reports (HTML, PDF, Markdown)
-├── visualizations/    # Charts and plots (PNG, SVG)
+├── visualizations/    # Interactive Plotly charts (PNG, PDF, SVG, HTML)
+├── dashboards/        # Performance dashboards with multi-format export
+├── frontend_configs/  # JSON configurations for React integration
 ├── exports/          # Data exports (CSV, JSON, Parquet)
 └── logs/            # Execution logs
 ```
@@ -328,9 +330,11 @@ yarn pre-commit
 The frontend automatically integrates with your trading analysis:
 
 1. **Analysis Reports**: Automatically displayed in blog format
-2. **Data Visualizations**: Charts embedded in posts
-3. **Performance Updates**: AI-generated content from trading results
-4. **Social Media**: Auto-generated posts about trading performance
+2. **Interactive Visualizations**: Plotly charts with hover, zoom, and pan capabilities
+3. **Dashboard Integration**: Performance dashboards exported in multiple formats
+4. **Frontend Components**: JSON schema configurations for React chart components
+5. **Performance Updates**: AI-generated content from trading results
+6. **Social Media**: Auto-generated posts about trading performance
 
 ### Configuration Files
 

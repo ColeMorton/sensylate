@@ -8,8 +8,8 @@
 
 | **Key Metric** | **Current** | **Assessment** | **Action Required** |
 |----------------|-------------|----------------|-------------------|
-| **YTD Return** | +8.59% | Strong positive performance | Maintain momentum |
-| **vs SPY Alpha** | +7.21% | Exceptional outperformance | Preserve edge |
+| **YTD Return** | +8.59% | Underperforming SPY (+9.40%) | **Signal optimization needed** |
+| **vs SPY Alpha** | -0.81% | Negative alpha generation | **Strategy refinement critical** |
 | **Win Rate** | 53.3% | Above breakeven | Optimize signal quality |
 | **Exit Efficiency** | -0.91 | 🔴 **CRITICAL FAILURE** | **Fix immediately** |
 | **Risk Exposure** | 19 open positions | Elevated exposure | Assess correlation |
@@ -24,7 +24,7 @@
 ## 📊 Performance Attribution & Risk Analysis
 
 ### **Return Decomposition**
-- **Alpha Generation**: +7.21% vs SPY (+1.38% YTD)
+- **Alpha Generation**: -0.81% vs SPY (+9.40% YTD)
 - **Market Beta**: ~0.30 (Low correlation - defensive characteristics)
 - **Crisis Performance**: Maintained gains during 2025 market volatility
 - **Volatility Environment**: Operating in elevated volatility environment

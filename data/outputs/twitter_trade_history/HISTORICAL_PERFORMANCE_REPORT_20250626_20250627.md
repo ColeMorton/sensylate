@@ -7,28 +7,22 @@
 
 ## Twitter Post Content
 
-📊 YTD Trading Performance Update:
+📊 Trading Performance Update:
+
+🥇 Top performer: $TSLA +16.58% (41 days)
+⚠️ Biggest lesson: $UHS -15.02% (19 days)
+
+🎯 Beating 48.5% breakeven threshold ✅
+
+📋 Full analysis: https://www.colemorton.com/blog/trading-performance-historical-20250626/
 
 • Total Trades: 15 completed signals
 • Win Rate: 53.33% (8 wins, 7 losses)
-• YTD Return: +8.59% on closed positions
+• Return (since April): +8.59% on closed positions
 • Profit Factor: 1.21
 • Avg Trade Duration: 26.8 days
 
-Strategy: SMA-based signals with EMA validation
-
-Top performer: $TSLA +16.58% (41 days)
-Biggest lesson: $UHS -15.02% (19 days)
-
-Beating 48.5% breakeven threshold ✅
-
-Market context: SPY near highs at 611.87
-
-📋 Full analysis: https://www.colemorton.com/blog/historical-performance-report-20250626/
-
-#TradingResults #PortfolioUpdate #TradingStrategy
-
----
+🔥 19 positions under active monitoring; stay tuned for results!
 
 **Character Count:** 276 characters (within 280 limit)
 

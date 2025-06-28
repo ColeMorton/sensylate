@@ -103,27 +103,12 @@ const { title, meta_title, description, image, noindex, canonical } =
     <meta name="generator" content={Astro.generator} />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
-    <!-- google font css -->
+    <!-- local heebo font css -->
+    <link rel="stylesheet" href="/fonts/heebo/heebo.css" />
+
+    <!-- google font css for brand font only -->
     <AstroFont
       config={[
-        {
-          src: [],
-          preload: false,
-          display: "swap",
-          name: fontPrimary!,
-          fallback: "sans-serif",
-          cssVariable: "font-primary",
-          googleFontsURL: `https://fonts.googleapis.com/css2?family=${pf}&display=swap`,
-        },
-        {
-          src: [],
-          preload: false,
-          display: "swap",
-          name: fontSecondary!,
-          fallback: "sans-serif",
-          cssVariable: "font-secondary",
-          googleFontsURL: `https://fonts.googleapis.com/css2?family=${sf}&display=swap`,
-        },
         {
           src: [],
           preload: false,
@@ -153,15 +138,20 @@ const { title, meta_title, description, image, noindex, canonical } =
 
     <!-- Resource preload hints for critical assets -->
     <link rel="preload" href="/styles/main.css" as="style" />
+    <link rel="preload" href="/fonts/heebo/heebo.css" as="style" />
     <link
       rel="preload"
-      href={`https://fonts.googleapis.com/css2?family=${pf}&display=swap`}
-      as="style"
+      href="/fonts/heebo/heebo-400.ttf"
+      as="font"
+      type="font/ttf"
+      crossorigin
     />
     <link
       rel="preload"
-      href={`https://fonts.googleapis.com/css2?family=${sf}&display=swap`}
-      as="style"
+      href="/fonts/heebo/heebo-600.ttf"
+      as="font"
+      type="font/ttf"
+      crossorigin
     />
     <link
       rel="preload"

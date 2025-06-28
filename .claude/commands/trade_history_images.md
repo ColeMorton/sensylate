@@ -1,14 +1,16 @@
 # Trade History Images Command
 
-Generate visualization images for trade history reports with automated chart selection and Sensylate design system compliance.
+Generate interactive Plotly dashboard visualizations for trade history reports with automated chart selection, multi-format export, and Sensylate design system compliance.
 
 ## Core Capabilities
 
 This command automatically:
 1. Scans trade history reports for the specified date
 2. Identifies appropriate visualizations based on report content
-3. Generates high-quality images following Sensylate design standards
-4. Exports images with matching filenames in the same directory
+3. Generates interactive Plotly dashboard images with multi-format export capabilities
+4. Exports high-DPI images (PNG, PDF, SVG, HTML) with matching filenames in the same directory
+5. Generates frontend-ready JSON configurations for React component integration
+6. Applies production optimization including template caching and data sampling
 
 ## Usage
 
@@ -30,16 +32,25 @@ This command automatically:
 
 ### 2. Visualization Selection
 **Report Type Mapping:**
-- `HISTORICAL_PERFORMANCE_REPORT_*.md` → Performance dashboard (dual-mode)
-- `LIVE_SIGNALS_MONITOR_*.md` → Signal status charts
-- `TRADE_ANALYSIS_*.md` → Trade distribution visualizations
-- `PORTFOLIO_SUMMARY_*.md` → Portfolio composition charts
+- `HISTORICAL_PERFORMANCE_REPORT_*.md` → 2x2 grid performance dashboard (dual-mode PNG)
+  - **Top Left**: Bar chart showing All Trade Performance (sorted by return, highest to lowest)
+  - **Top Right**: 2x2 gauge grid (Win Rate, Total Return, Profit Factor, Total Trades)
+  - **Bottom Left**: Scatter plot Return vs Duration with trend line
+  - **Bottom Right**: Weekly Performance bars based on entry dates
+- `LIVE_SIGNALS_MONITOR_*.md` → Signal status charts (disabled)
+- `TRADE_ANALYSIS_*.md` → Trade distribution visualizations (disabled)
+- `PORTFOLIO_SUMMARY_*.md` → Portfolio composition charts (disabled)
 
-### 3. Image Generation Pipeline
-1. **Parse Report Data**: Extract structured data from markdown
-2. **Apply Scalability Logic**: Select appropriate chart types based on data volume
-3. **Generate Visualizations**: Create charts using Sensylate design system
-4. **Export Images**: Save as high-quality PNG with matching filenames
+### 3. Interactive Dashboard Generation Pipeline
+1. **Parse Report Data**: Extract structured data from markdown with validation
+2. **Apply Scalability Logic**: Select appropriate Plotly chart types based on data volume
+3. **Generate 2x2 Grid Visualizations**: Create bar chart dashboard using Plotly with Sensylate design system
+   - **Purple Box Prevention**: Uses individual bar charts instead of waterfall to eliminate purple box anomaly
+   - **Equal Grid Sections**: 2x2 layout with inter-chart spacing for visual clarity
+   - **Heebo Fonts**: Consistent typography throughout all dashboard elements
+4. **High-DPI PNG Export**: Save as PNG-only with 2x scale for high-resolution output
+5. **Frontend Configuration Export**: Generate JSON schemas and React component configurations
+6. **Production Optimization**: Apply template caching, data sampling, and performance enhancements
 
 ## Implementation Details
 
@@ -62,26 +73,38 @@ data_extractors = {
 }
 ```
 
-### Visualization Generation
+### Interactive Plotly Visualization Generation
 ```python
-# Leverage existing dashboard generation infrastructure
+# Leverage Plotly-powered dashboard generation infrastructure
 from scripts.dashboard_generator import DashboardGenerator
 from scripts.utils.theme_manager import create_theme_manager
 from scripts.utils.scalability_manager import create_scalability_manager
+from scripts.utils.json_schema_generator import JSONSchemaGenerator
+from scripts.utils.frontend_config_exporter import FrontendConfigExporter
+from scripts.utils.production_optimizer import ChartGenerationOptimizer
 
-# Generate appropriate visualizations
+# Generate Plotly-powered interactive visualizations
 visualizers = {
-    'performance_dashboard': generate_performance_dashboard,
-    'signal_charts': generate_signal_charts,
-    'trade_distribution': generate_trade_distribution_charts,
-    'portfolio_composition': generate_portfolio_charts
+    'performance_dashboard': generate_plotly_performance_dashboard,
+    'signal_charts': generate_plotly_signal_charts,
+    'trade_distribution': generate_plotly_trade_distribution_charts,
+    'portfolio_composition': generate_plotly_portfolio_charts
 }
+
+# Export configurations for frontend integration
+frontend_exporter = FrontendConfigExporter()
+schema_generator = JSONSchemaGenerator()
+production_optimizer = ChartGenerationOptimizer()
 ```
 
 ### Error Handling
 - **Missing Reports**: Log warning and continue with available reports
 - **Parsing Errors**: Generate fallback visualization with error message
-- **Generation Failures**: Provide detailed error diagnostics
+- **Chart Generation Failures**: Detailed error diagnostics with template fallback
+- **PNG Export Issues**: Retry with different scale and log specific format failures
+- **Purple Box Detection**: Automatic bar chart fallback for waterfall anomalies
+- **Grid Layout Issues**: Dynamic spacing adjustment for chart overlap prevention
+- **Font Loading Failures**: Fallback to Arial with Heebo preference maintained
 - **File Access Issues**: Check permissions and provide guidance
 
 ## Configuration
@@ -93,27 +116,53 @@ design_system:
     primary_data: "#26c6da"
     secondary_data: "#7e57c2"
     tertiary_data: "#3179f5"
-  
+
 output:
-  format: "png"
-  dpi: 300
+  formats: ["png"]  # PNG-only export (high-DPI)
+  scale: 2  # High-DPI export (2x scale)
   dual_mode: true  # Generate both light and dark variants
+  dimensions: "1600x1600"  # Square format for 2x2 grid layout
+
+plotly:
+  template: "sensylate_light"  # Plotly template integration
+  high_dpi: true
+  frontend_export: true  # Generate React component configs
+
+production:
+  enable_caching: true
+  sample_large_datasets: true
+  batch_processing: true
 ```
 
-### Report-Specific Settings
+### Report-Specific Plotly Settings
 ```yaml
 report_visualizations:
   historical_performance:
-    charts: ["metrics_summary", "monthly_bars", "quality_donut", "waterfall"]
+    charts: ["gauge_grid_2x2", "bar_chart_sorted", "scatter_with_trend", "weekly_performance_bars"]
     layout: "2x2_grid"
-    
+    positions:
+      top_left: "bar_chart_sorted"  # All Trade Performance (sorted by return)
+      top_right: "gauge_grid_2x2"   # 2x2 gauge grid (Win Rate, Total Return, Profit Factor, Total Trades)
+      bottom_left: "scatter_with_trend"  # Return vs Duration with trend line
+      bottom_right: "weekly_performance_bars"  # Weekly Performance based on entry dates
+    plotly_template: "sensylate_dashboard"
+    export_formats: ["png"]  # PNG-only export as specified
+    dual_mode: true  # Light and dark mode variants
+    frontend_config: true
+
   live_signals:
     charts: ["signal_status", "alert_timeline", "performance_gauge"]
     layout: "vertical_stack"
-    
+    plotly_template: "sensylate_light"
+    export_formats: ["png", "html"]
+    interactive_features: ["hover", "zoom", "pan"]
+
   trade_analysis:
     charts: ["distribution_histogram", "duration_scatter", "quality_bands"]
     layout: "flexible_grid"
+    plotly_template: "sensylate_light_hd"
+    export_formats: ["png", "pdf", "svg"]
+    density_optimization: true
 ```
 
 ## Quality Assurance
@@ -134,69 +183,87 @@ report_visualizations:
    - Verify file permissions
    - Log generation summary
 
-### Performance Optimization
-- **Parallel Processing**: Generate multiple charts concurrently
-- **Caching**: Reuse parsed data across visualizations
-- **Memory Management**: Stream large datasets
-- **Batch Operations**: Process multiple reports efficiently
+### Production Performance Optimization
+- **Parallel Processing**: Generate multiple Plotly charts concurrently with WebGL acceleration
+- **Template Caching**: Reuse Plotly templates and theme configurations across visualizations
+- **Intelligent Data Sampling**: Sample large datasets while preserving statistical significance
+- **Memory Management**: Stream large datasets with chunked processing
+- **Batch Operations**: Process multiple reports efficiently with shared optimization context
+- **Multi-Format Streaming**: Generate all export formats in single pass
+- **Frontend Config Caching**: Reuse JSON schemas and component configurations
 
 ## Integration Points
 
-### Existing Infrastructure
-- Leverages `dashboard_generator.py` for chart generation
-- Uses `theme_manager.py` for consistent styling
-- Integrates with `scalability_manager.py` for adaptive visualizations
-- Follows existing configuration patterns
+### Plotly Infrastructure Integration
+- Leverages `dashboard_generator.py` for Plotly chart generation with fallback support
+- Uses `theme_manager.py` for consistent Plotly template styling
+- Integrates with `scalability_manager.py` for adaptive Plotly visualizations
+- Utilizes `json_schema_generator.py` for frontend schema generation
+- Employs `frontend_config_exporter.py` for React component configuration export
+- Applies `production_optimizer.py` for performance enhancement
+- Follows existing configuration patterns with Plotly-specific extensions
 
 ### Workflow Integration
 ```bash
-# Standalone usage
+# Standalone usage with multi-format export
 /trade_history_images 20250626
 
-# Pipeline integration
-make generate-report && /trade_history_images $(date +%Y%m%d)
+# Pipeline integration with dashboard generation
+make generate-report-integrated && /trade_history_images $(date +%Y%m%d)
 
-# Batch processing
+# Batch processing with production optimization
 for date in 20250624 20250625 20250626; do
-    /trade_history_images $date
+    /trade_history_images $date --optimize-production
 done
+
+# Frontend development workflow
+/trade_history_images 20250626 --export-frontend-configs
+cp data/outputs/frontend_configs/*.json frontend/src/config/charts/
+
+# Multi-format export for documentation
+/trade_history_images 20250626 --formats png,pdf,svg,html --high-dpi
 ```
 
 ## Success Metrics
 
 ### Quantitative Metrics
-- **Coverage Rate**: % of reports with generated images (target: 100%)
-- **Generation Speed**: Average time per report (target: <10s)
-- **Error Rate**: Failed generations per run (target: <5%)
-- **Image Quality**: DPI and color accuracy compliance (target: 100%)
+- **Coverage Rate**: % of reports with generated Plotly dashboards (target: 100%)
+- **Generation Speed**: Average time per interactive dashboard (target: <15s with optimization)
+- **Multi-Format Success Rate**: Successful exports across all formats (target: >95%)
+- **Frontend Config Accuracy**: Valid JSON schema generation (target: 100%)
+- **Error Rate**: Failed generations per run (target: <3%)
+- **Image Quality**: High-DPI (300+ DPI) and color accuracy compliance (target: 100%)
+- **Production Optimization Effectiveness**: Performance improvement vs baseline (target: >20%)
 
 ### Qualitative Metrics
-- **Visual Consistency**: Adherence to Sensylate design system
-- **Information Clarity**: Effectiveness of data visualization
-- **User Satisfaction**: Ease of use and output quality
-- **Maintainability**: Code clarity and extensibility
+- **Interactive Visual Consistency**: Adherence to Plotly-enhanced Sensylate design system
+- **Information Clarity**: Effectiveness of interactive data visualization with hover, zoom, pan
+- **Frontend Integration Quality**: Seamless React component integration
+- **User Satisfaction**: Ease of use, interactive features, and multi-format output quality
+- **Developer Experience**: Frontend configuration usability and schema accuracy
+- **Maintainability**: Code clarity, Plotly integration patterns, and extensibility
 
 ## Common Patterns
 
 ### Daily Report Generation
 ```bash
-# Generate images for today's reports
+# Generate interactive dashboards for today's reports
 /trade_history_images $(date +%Y%m%d)
 ```
 
 ### Historical Batch Processing
 ```bash
-# Generate images for last 7 days
+# Generate interactive dashboards for last 7 days with frontend configs
 for i in {0..6}; do
     date=$(date -d "$i days ago" +%Y%m%d)
-    /trade_history_images $date
+    /trade_history_images $date --export-frontend-configs
 done
 ```
 
 ### Selective Regeneration
 ```bash
-# Regenerate specific report type
-/trade_history_images 20250626 --report-type HISTORICAL_PERFORMANCE
+# Regenerate specific report type with multi-format export
+/trade_history_images 20250626 --report-type HISTORICAL_PERFORMANCE --formats png,pdf,svg,html
 ```
 
 ## Troubleshooting
@@ -207,45 +274,64 @@ done
    - Check report directory exists
    - Ensure reports exist for specified date
 
-2. **Image Generation Fails**
-   - Check Python dependencies installed
-   - Verify Sensylate configuration present
-   - Review error logs for specific issues
+2. **Interactive Dashboard Generation Fails**
+   - Check Plotly and Kaleido dependencies installed (`pip install plotly kaleido`)
+   - Verify Sensylate Plotly templates available
+   - Check for WebGL acceleration support
+   - Review error logs for Plotly-specific issues
+   - Test fallback to matplotlib if Plotly unavailable
 
 3. **Performance Issues**
-   - Consider reducing DPI for faster generation
-   - Use --light-mode-only for single variant
-   - Process dates individually vs batch
+   - Enable production optimization with `--optimize-production`
+   - Consider reducing export scale (DPI) for faster generation
+   - Use `--light-mode-only` for single variant
+   - Enable data sampling for large datasets
+   - Use template caching for batch processing
+   - Process dates individually vs batch for memory constraints
 
 ### Debug Mode
 ```bash
-# Enable detailed logging
-/trade_history_images 20250626 --debug
+# Enable detailed logging with Plotly debug info
+/trade_history_images 20250626 --debug --plotly-debug
 
 # Validate without generation
 /trade_history_images 20250626 --validate-only
+
+# Test individual format exports
+/trade_history_images 20250626 --format png --debug
+/trade_history_images 20250626 --format html --debug
+
+# Performance profiling
+/trade_history_images 20250626 --profile --optimize-production
 ```
 
 ## Future Enhancements
 
 ### Planned Features
-1. **Interactive Mode**: Preview before saving
-2. **Custom Templates**: User-defined visualization layouts
-3. **Export Formats**: SVG, PDF support
-4. **Scheduling**: Automated daily generation
-5. **Web Dashboard**: Browser-based preview interface
+1. **Real-time Interactive Preview**: Live Plotly dashboard preview in browser
+2. **Custom Plotly Templates**: User-defined interactive visualization layouts
+3. **Enhanced Export Formats**: WebP, interactive HTML with embedded data
+4. **Automated Scheduling**: Daily generation with frontend config sync
+5. **Web Dashboard Integration**: Direct integration with Astro frontend
+6. **Advanced Interactivity**: Custom hover templates, click events, brush selection
 
 ### Extension Points
-- Plugin system for custom chart types
-- Template marketplace for sharing layouts
-- API endpoint for programmatic access
-- Real-time generation triggers
+- Plotly plugin system for custom interactive chart types
+- Interactive template marketplace for sharing Plotly layouts
+- REST API endpoint for programmatic dashboard generation
+- WebSocket real-time generation triggers
+- Frontend component library with pre-built Plotly integrations
+- Advanced analytics integration (Google Analytics events on chart interactions)
+- Custom Plotly extensions and widgets
 
 ## Command Metadata
 
-- **Version**: 1.0.0
+- **Version**: 2.1.0
 - **Author**: Command Management Specialist
-- **Created**: 2025-06-26
-- **Dependencies**: dashboard_generator, matplotlib, sensylate-config
-- **Category**: Visualization, Reporting
-- **Lifecycle Stage**: Production-Ready
+- **Updated**: 2025-06-28 (2x2 Grid Layout Implementation Complete)
+- **Dependencies**: dashboard_generator, plotly, kaleido, json-schema-generator, frontend-config-exporter
+- **Chart Engine**: Plotly with bar chart approach (purple box prevention)
+- **Export Capabilities**: High-DPI PNG (dual-mode), Frontend JSON configs, React components
+- **Layout**: 2x2 grid with equal quadrants and inter-chart spacing
+- **Category**: Dashboard Visualization, Frontend Integration, Trading Reports
+- **Lifecycle Stage**: Production-Ready with Template-Based Architecture

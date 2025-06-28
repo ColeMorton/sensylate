@@ -1,0 +1,156 @@
+{
+  "timestamp": "2025-06-27 12:06:31",
+  "total_tests": 5,
+  "passed_tests": 5,
+  "pass_rate": 100.0,
+  "total_time": 0.4811058044433594,
+  "status": "COMPLETE",
+  "detailed_results": {
+    "json_schema_system": {
+      "json_schema_system": {
+        "status": "\u2705 PASS",
+        "schemas_generated": 10,
+        "files_exported": 10,
+        "examples_created": 4,
+        "all_schemas": [
+          "MonthlyPerformance",
+          "QualityDistribution",
+          "TradeData",
+          "EnhancedMonthlyBars",
+          "EnhancedDonutChart",
+          "WaterfallChart",
+          "EnhancedScatter",
+          "DashboardLayout",
+          "ThemeConfiguration",
+          "ExportConfiguration"
+        ]
+      }
+    },
+    "frontend_config_export": {
+      "frontend_config_export": {
+        "status": "\u2705 PASS",
+        "chart_configs_exported": 4,
+        "files_exported": 4,
+        "react_props_generated": 4,
+        "dashboard_config_created": true,
+        "config_validations": {
+          "monthly_bars": {
+            "required_fields_present": true,
+            "schema_valid": false,
+            "errors": [
+              "'trades' is a required property\n\nFailed validating 'required' in schema['properties']['data']['items']:\n    {'$schema': 'http://json-schema.org/draft-07/schema#',\n     'title': 'Monthly Performance Data',\n     'type': 'object',\n     'properties': {'month': {'type': 'string',\n                              'description': 'Month name (e.g., '\n                                             \"'January')\"},\n                    'year': {'type': 'integer',\n                             'description': 'Year (e.g., 2024)'},\n                    'trades': {'type': 'integer',\n                               'minimum': 0,\n                               'description': 'Number of trades in the '\n                                              'month'},\n                    'win_rate': {'type': 'number',\n                                 'minimum': 0,\n                                 'maximum': 100,\n                                 'description': 'Win rate percentage '\n                                                '(0-100)'},\n                    'return_pct': {'type': 'number',\n                                   'description': 'Monthly return '\n                                                  'percentage'},\n                    'market_condition': {'type': 'string',\n                                         'enum': ['Bullish',\n                                                  'Bearish',\n                                                  'Sideways',\n                                                  'Volatile'],\n                                         'description': 'Market condition '\n                                                        'assessment'}},\n     'required': ['month',\n                  'year',\n                  'trades',\n                  'win_rate',\n                  'return_pct',\n                  'market_condition'],\n     'additionalProperties': False}\n\nOn instance['data'][5]:\n    {'month': 'June',\n     'year': 2024,\n     'trades_closed': 9,\n     'win_rate': 55.7,\n     'average_return': -1.1,\n     'market_context': 'Bearish'}"
+            ]
+          },
+          "donut_chart": {
+            "required_fields_present": true,
+            "schema_valid": false,
+            "errors": [
+              "'quality' is a required property\n\nFailed validating 'required' in schema['properties']['data']['items']:\n    {'$schema': 'http://json-schema.org/draft-07/schema#',\n     'title': 'Quality Distribution Data',\n     'type': 'object',\n     'properties': {'quality': {'type': 'string',\n                                'enum': ['Excellent',\n                                         'Good',\n                                         'Poor',\n                                         'Failed',\n                                         'Poor Setup'],\n                                'description': 'Trade quality category'},\n                    'count': {'type': 'integer',\n                              'minimum': 0,\n                              'description': 'Number of trades in this '\n                                             'quality category'},\n                    'percentage': {'type': 'number',\n                                   'minimum': 0,\n                                   'maximum': 100,\n                                   'description': 'Percentage of total '\n                                                  'trades'},\n                    'win_rate': {'type': 'number',\n                                 'minimum': 0,\n                                 'maximum': 100,\n                                 'description': 'Win rate for this quality '\n                                                'category'},\n                    'avg_return': {'type': 'number',\n                                   'description': 'Average return for this '\n                                                  'quality category'}},\n     'required': ['quality',\n                  'count',\n                  'percentage',\n                  'win_rate',\n                  'avg_return'],\n     'additionalProperties': False}\n\nOn instance['data'][3]:\n    {'category': 'Failed',\n     'count': 11,\n     'percentage': 18.4,\n     'win_rate': 22.1,\n     'average_return': -3.5}"
+            ]
+          },
+          "waterfall": {
+            "required_fields_present": true,
+            "schema_valid": false,
+            "errors": [
+              "'duration' is a required property\n\nFailed validating 'required' in schema['properties']['data']['items']:\n    {'$schema': 'http://json-schema.org/draft-07/schema#',\n     'title': 'Trade Data',\n     'type': 'object',\n     'properties': {'ticker': {'type': 'string',\n                               'description': 'Stock ticker symbol'},\n                    'entry_date': {'type': 'string',\n                                   'format': 'date',\n                                   'description': 'Trade entry date '\n                                                  '(YYYY-MM-DD)'},\n                    'exit_date': {'type': 'string',\n                                  'format': 'date',\n                                  'description': 'Trade exit date '\n                                                 '(YYYY-MM-DD)'},\n                    'duration': {'type': 'integer',\n                                 'minimum': 0,\n                                 'description': 'Trade duration in days'},\n                    'return_pct': {'type': 'number',\n                                   'description': 'Trade return '\n                                                  'percentage'},\n                    'quality': {'type': 'string',\n                                'enum': ['Excellent',\n                                         'Good',\n                                         'Poor',\n                                         'Failed',\n                                         'Poor Setup'],\n                                'description': 'Trade quality assessment'},\n                    'entry_price': {'type': 'number',\n                                    'minimum': 0,\n                                    'description': 'Entry price per share'},\n                    'exit_price': {'type': 'number',\n                                   'minimum': 0,\n                                   'description': 'Exit price per share'},\n                    'position_size': {'type': 'number',\n                                      'minimum': 0,\n                                      'description': 'Position size in '\n                                                     'dollars'}},\n     'required': ['ticker',\n                  'entry_date',\n                  'exit_date',\n                  'duration',\n                  'return_pct',\n                  'quality'],\n     'additionalProperties': False}\n\nOn instance['data'][19]:\n    {'rank': 20,\n     'ticker': 'PYPL_19',\n     'strategy': 'Test Strategy',\n     'entry_date': '2024-01-01',\n     'exit_date': '2024-01-15',\n     'return_pct': -2.01,\n     'duration_days': 8,\n     'quality': 'Poor'}"
+            ]
+          },
+          "scatter": {
+            "required_fields_present": true,
+            "schema_valid": false,
+            "errors": [
+              "'duration' is a required property\n\nFailed validating 'required' in schema['properties']['data']['items']:\n    {'$schema': 'http://json-schema.org/draft-07/schema#',\n     'title': 'Trade Data',\n     'type': 'object',\n     'properties': {'ticker': {'type': 'string',\n                               'description': 'Stock ticker symbol'},\n                    'entry_date': {'type': 'string',\n                                   'format': 'date',\n                                   'description': 'Trade entry date '\n                                                  '(YYYY-MM-DD)'},\n                    'exit_date': {'type': 'string',\n                                  'format': 'date',\n                                  'description': 'Trade exit date '\n                                                 '(YYYY-MM-DD)'},\n                    'duration': {'type': 'integer',\n                                 'minimum': 0,\n                                 'description': 'Trade duration in days'},\n                    'return_pct': {'type': 'number',\n                                   'description': 'Trade return '\n                                                  'percentage'},\n                    'quality': {'type': 'string',\n                                'enum': ['Excellent',\n                                         'Good',\n                                         'Poor',\n                                         'Failed',\n                                         'Poor Setup'],\n                                'description': 'Trade quality assessment'},\n                    'entry_price': {'type': 'number',\n                                    'minimum': 0,\n                                    'description': 'Entry price per share'},\n                    'exit_price': {'type': 'number',\n                                   'minimum': 0,\n                                   'description': 'Exit price per share'},\n                    'position_size': {'type': 'number',\n                                      'minimum': 0,\n                                      'description': 'Position size in '\n                                                     'dollars'}},\n     'required': ['ticker',\n                  'entry_date',\n                  'exit_date',\n                  'duration',\n                  'return_pct',\n                  'quality'],\n     'additionalProperties': False}\n\nOn instance['data'][49]:\n    {'rank': 50,\n     'ticker': 'AAPL_49',\n     'strategy': 'Test Strategy',\n     'entry_date': '2024-01-01',\n     'exit_date': '2024-01-15',\n     'return_pct': 3.37,\n     'duration_days': 21,\n     'quality': 'Good'}"
+            ]
+          }
+        }
+      }
+    },
+    "production_optimization": {
+      "production_optimization": {
+        "status": "\u2705 PASS",
+        "template_caching": true,
+        "data_sampling": true,
+        "chart_optimization": true,
+        "batch_processing": true,
+        "performance_reporting": true,
+        "export_optimization": true,
+        "charts_processed": 2
+      }
+    },
+    "feature_flag_system": {
+      "feature_flag_system": {
+        "status": "\u2705 PASS",
+        "enabled_features": 19,
+        "critical_flags_enabled": true,
+        "rollout_percentage_test": "74.0%",
+        "conditional_flags": true,
+        "cache_functionality": true,
+        "total_flags": 22
+      }
+    },
+    "comprehensive_regression": {
+      "comprehensive_regression": {
+        "status": "\u2705 PASS",
+        "chart_tests": {
+          "monthly_bars": {
+            "generation_successful": true,
+            "trace_count": 1
+          },
+          "donut_chart": {
+            "generation_successful": true,
+            "trace_count": 1
+          },
+          "waterfall_chart": {
+            "generation_successful": true,
+            "trace_count": 21
+          },
+          "scatter_plot": {
+            "generation_successful": true,
+            "trace_count": 6
+          }
+        },
+        "theme_tests": {
+          "light_mode": {
+            "colors_available": false,
+            "background_set": true
+          },
+          "dark_mode": {
+            "colors_available": false,
+            "background_set": true
+          }
+        },
+        "export_tests": {
+          "export_config": {
+            "config_generated": true,
+            "scale_correct": true
+          }
+        },
+        "integration_tests": {
+          "monthly_bars": {
+            "flag_enabled": true,
+            "flag_exists": true
+          },
+          "donut_charts": {
+            "flag_enabled": true,
+            "flag_exists": true
+          },
+          "waterfall": {
+            "flag_enabled": true,
+            "flag_exists": true
+          },
+          "scatter": {
+            "flag_enabled": true,
+            "flag_exists": true
+          }
+        },
+        "success_rates": {
+          "chart_generation": "100.0%",
+          "theme_system": "100.0%",
+          "export_system": "100.0%",
+          "integration": "100.0%",
+          "overall": "100.0%"
+        }
+      }
+    }
+  }
+}
