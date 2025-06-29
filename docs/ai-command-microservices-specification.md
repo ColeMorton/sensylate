@@ -7,6 +7,8 @@ This specification defines the **AI Command Microservices Architecture** - a sys
 
 **Key Innovation**: Transform large, monolithic commands into focused microservices that can be independently optimized, composed into workflows, and systematically validated while maintaining the collaborative intelligence principles of the Sensylate ecosystem.
 
+**Team-Workspace Enhancement**: The microservice architecture supports flexible **role-to-command relationships** where each role can map to one or many commands. A role like `fundamental_analyst` can generate multiple specialized commands (e.g., `fundamental_analyst_discover`, `fundamental_analyst_analyze`, etc.), creating a more granular and flexible command ecosystem.
+
 ## Core Architecture Principles
 
 ### 1. **Atomic Responsibility Principle**
@@ -342,13 +344,18 @@ operations:
 
 ## Implementation Roadmap
 
-### Phase 1: Fundamental Analyst Migration
+### Phase 1: Fundamental Analyst Implementation
 ```yaml
 fundamental_analyst:
-  - fundamental_analyst_discover
-  - fundamental_analyst_analyze
-  - fundamental_analyst_synthesize
-  - fundamental_analyst_validate
+  - fundamental_analyst_discover    # DASV Phase 1: Data acquisition and context gathering
+  - fundamental_analyst_analyze     # DASV Phase 2: Systematic analysis and evaluation
+  - fundamental_analyst_synthesize  # DASV Phase 3: Integration and recommendation generation
+  - fundamental_analyst_validate    # DASV Phase 4: Quality assurance and confidence verification
+
+scope:
+  - Only fundamental_analyst role decomposed into microservices
+  - All other existing commands remain unchanged
+  - Team-workspace enhanced to support both patterns
 ```
 
 
@@ -390,31 +397,218 @@ health_checks:
     - Framework compliance verification
 ```
 
-## Migration Strategy
+## Team-Workspace Integration
 
-### From Monolithic to Microservices
+### Role-to-Command Mapping
+
+The team-workspace supports flexible role-to-command relationships where each role maps to one or many commands:
+
 ```yaml
-migration_approach:
-  analysis_phase:
-    - Map existing commands to framework phases
-    - Identify natural decomposition boundaries
-    - Assess dependencies and data flows
+# Phase 1: Fundamental Analyst Implementation
+microservice_mapping:
+  fundamental_analyst:    # One role, multiple microservices
+    - fundamental_analyst_discover
+    - fundamental_analyst_analyze
+    - fundamental_analyst_synthesize
+    - fundamental_analyst_validate
 
-  decomposition_phase:
-    - Extract core logic into service templates
-    - Implement service interfaces
-    - Create composition workflows
-
-  validation_phase:
-    - Test individual service functionality
-    - Validate composed workflow performance
-    - Compare outputs with monolithic versions
-
-  deployment_phase:
-    - Gradual rollout with fallback capability
-    - Performance monitoring and optimization
-    - User feedback integration and refinement
+  # All other commands continue functioning as-is
+  # No changes to existing commands outside fundamental_analyst role
 ```
+
+### Team-Workspace Registry Enhancement
+
+The team-workspace registry supports microservice discovery and composition:
+
+```yaml
+# Registry Structure for Phase 1
+registry:
+  # Role Definitions
+  roles:
+    fundamental_analyst:
+      classification: "domain_expert"
+      maps_to: "core_product"
+      description: "Financial analysis and valuation expert"
+      microservices: ["discover", "analyze", "synthesize", "validate"]
+
+  # Microservice Registry (Phase 1: fundamental_analyst only)
+  microservices:
+    fundamental_analyst_discover:
+      role: "fundamental_analyst"
+      action: "discover"
+      framework: "DASV"
+      location: "/team-workspace/microservices/fundamental_analyst/discover.md"
+      manifest: "/team-workspace/microservices/fundamental_analyst/discover.yaml"
+
+    fundamental_analyst_analyze:
+      role: "fundamental_analyst"
+      action: "analyze"
+      framework: "DASV"
+      location: "/team-workspace/microservices/fundamental_analyst/analyze.md"
+      manifest: "/team-workspace/microservices/fundamental_analyst/analyze.yaml"
+
+    fundamental_analyst_synthesize:
+      role: "fundamental_analyst"
+      action: "synthesize"
+      framework: "DASV"
+      location: "/team-workspace/microservices/fundamental_analyst/synthesize.md"
+      manifest: "/team-workspace/microservices/fundamental_analyst/synthesize.yaml"
+
+    fundamental_analyst_validate:
+      role: "fundamental_analyst"
+      action: "validate"
+      framework: "DASV"
+      location: "/team-workspace/microservices/fundamental_analyst/validate.md"
+      manifest: "/team-workspace/microservices/fundamental_analyst/validate.yaml"
+
+  # Workflow Compositions
+  workflow_compositions:
+    fundamental_analysis_full:
+      description: "Complete fundamental analysis workflow"
+      microservices:
+        - fundamental_analyst_discover
+        - fundamental_analyst_analyze
+        - fundamental_analyst_synthesize
+        - fundamental_analyst_validate
+```
+
+### Knowledge Structure for Fundamental Analyst
+
+The knowledge base supports microservice-level ownership for the fundamental_analyst role:
+
+```yaml
+# Knowledge Structure (Phase 1: fundamental_analyst only)
+knowledge_structure:
+  market-analysis:
+    primary_owner: "fundamental_analyst"  # Role level
+    microservice_owners:
+      data_discovery: "fundamental_analyst_discover"
+      financial_analysis: "fundamental_analyst_analyze"
+      investment_thesis: "fundamental_analyst_synthesize"
+      confidence_validation: "fundamental_analyst_validate"
+
+  # All other knowledge topics remain unchanged
+  # Existing topic ownership continues as-is for other roles
+```
+
+### Collaboration Engine Updates
+
+The collaboration engine supports flexible role-to-command mapping:
+
+```python
+# Collaboration Engine Enhancement for Phase 1
+class CollaborationEngine:
+    def resolve_command(self, command_request):
+        """Resolve command request to appropriate execution strategy."""
+
+        # Check if it's a fundamental_analyst role request
+        if command_request.startswith("fundamental_analyst"):
+            return self.handle_fundamental_analyst_request(command_request)
+
+        # All other commands continue as existing monolithic commands
+        return self.execute_existing_command(command_request)
+
+    def handle_fundamental_analyst_request(self, request):
+        """Handle fundamental_analyst microservice requests."""
+        if "_" in request:
+            # Specific microservice request (e.g., "fundamental_analyst_discover")
+            return self.execute_microservice(request)
+        else:
+            # Role-based request - compose full workflow
+            workflow = [
+                "fundamental_analyst_discover",
+                "fundamental_analyst_analyze",
+                "fundamental_analyst_synthesize",
+                "fundamental_analyst_validate"
+            ]
+            return self.execute_microservice_workflow(workflow)
+```
+
+### Role-to-Command Relationship Benefits
+
+The fundamental_analyst role demonstrates flexible role-to-command mapping:
+
+```yaml
+fundamental_analyst_implementation:
+  role: "fundamental_analyst"
+  generates_commands: 4  # discover, analyze, synthesize, validate
+  phases: ["discover", "analyze", "synthesize", "validate"]
+  framework: "DASV"
+
+benefits:
+  - Granular optimization per phase
+  - Selective workflow composition
+  - Specialized implementations per analysis phase
+  - Independent scaling and caching
+  - Precise dependency management
+
+implementation_advantages:
+  - Each microservice can be optimized for its specific task
+  - Phases can be executed independently or as complete workflow
+  - Clear separation of concerns within financial analysis
+  - Flexible composition based on analysis requirements
+```
+
+### Team-Workspace Structure for Phase 1
+
+The team-workspace adds microservice support for fundamental_analyst:
+
+```yaml
+workspace_structure:
+  commands/             # Existing commands continue unchanged
+    architect/
+    code-owner/
+    product-owner/
+    business-analyst/
+    twitter-post/
+    # ... all other existing commands
+
+  microservices/        # New microservice organization (Phase 1 only)
+    fundamental_analyst/
+      discover/
+        manifest.yaml
+        outputs/
+        cache/
+      analyze/
+        manifest.yaml
+        outputs/
+        cache/
+      synthesize/
+        manifest.yaml
+        outputs/
+        cache/
+      validate/
+        manifest.yaml
+        outputs/
+        cache/
+
+  workflows/            # Workflow definitions
+    fundamental_analysis_full.yaml
+```
+
+## Implementation Approach
+
+### Phase 1: Fundamental Analyst Microservices
+```yaml
+implementation_focus:
+  scope: "fundamental_analyst role only"
+  approach: "additive - existing commands unchanged"
+
+  fundamental_analyst_decomposition:
+    - Create fundamental_analyst_discover microservice
+    - Create fundamental_analyst_analyze microservice
+    - Create fundamental_analyst_synthesize microservice
+    - Create fundamental_analyst_validate microservice
+
+  team_workspace_updates:
+    - Add microservices/ directory structure
+    - Update registry for fundamental_analyst role
+    - Add workflow composition support
+    - Enhance collaboration engine for role routing
+
+  existing_commands:
+    status: "unchanged - continue functioning as-is"
+    scope: "all commands except fundamental_analyst related"
 
 
 ## Success Metrics
