@@ -346,16 +346,38 @@ operations:
 
 ### Phase 1: Fundamental Analyst Implementation
 ```yaml
-fundamental_analyst:
-  - fundamental_analyst_discover    # DASV Phase 1: Data acquisition and context gathering
-  - fundamental_analyst_analyze     # DASV Phase 2: Systematic analysis and evaluation
-  - fundamental_analyst_synthesize  # DASV Phase 3: Integration and recommendation generation
-  - fundamental_analyst_validate    # DASV Phase 4: Quality assurance and confidence verification
+fundamental_analyst_decomposition:
+  source_command: "fundamental_analysis.md"
+  target_output: "./data/outputs/fundamental_analysis/{TICKER}_{YYYYMMDD}.md"
 
-scope:
-  - Only fundamental_analyst role decomposed into microservices
-  - All other existing commands remain unchanged
-  - Team-workspace enhanced to support both patterns
+  microservices:
+    fundamental_analyst_discover:
+      purpose: "Data acquisition and context gathering"
+      extraction_source: "fundamental_analysis.md data collection logic"
+      output: "Structured market data and company information"
+
+    fundamental_analyst_analyze:
+      purpose: "Systematic analysis and evaluation"
+      extraction_source: "fundamental_analysis.md analysis logic"
+      output: "Financial metrics, ratios, and analytical insights"
+
+    fundamental_analyst_synthesize:
+      purpose: "Integration and recommendation generation"
+      extraction_source: "fundamental_analysis.md synthesis logic"
+      output: "Complete fundamental analysis document (same format as current)"
+      target_file: "./data/outputs/fundamental_analysis/{TICKER}_{YYYYMMDD}.md"
+
+    fundamental_analyst_validate:
+      purpose: "Quality assurance and confidence verification"
+      source_command: "content_evaluator.md (cloned and specialized)"
+      specialization: "Fundamental analysis validation criteria"
+      output: "Validation report and confidence scores"
+
+acceptance_criteria:
+  - Sequential DASV execution produces identical output to current fundamental_analysis.md
+  - fundamental_analyst_synthesize generates exact same ./data/outputs/fundamental_analysis/ files
+  - No functional regression in analysis quality or format
+  - All existing features preserved across the four microservices
 ```
 
 
@@ -586,19 +608,79 @@ workspace_structure:
     fundamental_analysis_full.yaml
 ```
 
+## Decomposition Methodology
+
+### Extraction Strategy from fundamental_analysis.md
+
+The Phase 1 implementation follows a precise extraction methodology to ensure zero functional regression:
+
+```yaml
+extraction_approach:
+  source_analysis:
+    target_command: "fundamental_analysis.md"
+    current_output: "./data/outputs/fundamental_analysis/{TICKER}_{YYYYMMDD}.md"
+    example_files: ["META_20250626.md", "AAPL_20250626.md"]
+
+  microservice_extraction:
+    fundamental_analyst_discover:
+      extract_from: "Data collection and acquisition sections"
+      includes: ["Market data fetching", "Company information gathering", "Financial statement retrieval"]
+      output_format: "Structured data for analysis phase"
+
+    fundamental_analyst_analyze:
+      extract_from: "Analysis and calculation sections"
+      includes: ["Financial ratios", "Valuation metrics", "Performance analysis", "Risk assessment"]
+      output_format: "Analyzed metrics and insights for synthesis"
+
+    fundamental_analyst_synthesize:
+      extract_from: "Document generation and synthesis sections"
+      includes: ["Investment thesis", "Recommendation logic", "Report formatting"]
+      output_format: "Complete fundamental analysis document (identical to current)"
+      critical_requirement: "Produces exact same ./data/outputs/fundamental_analysis/ files"
+
+    fundamental_analyst_validate:
+      source_command: "content_evaluator.md (cloned)"
+      specialization: "Fundamental analysis specific validation criteria"
+      includes: ["Confidence scoring", "Quality gates", "Business rule compliance"]
+      output_format: "Validation report and approval/rejection"
+
+validation_requirements:
+  functional_equivalence: "DASV workflow produces identical results to current fundamental_analysis.md"
+  output_preservation: "All current output files and formats maintained exactly"
+  feature_completeness: "No loss of existing functionality across decomposition"
+  performance_parity: "Comparable or better execution time for complete workflow"
+```
+
 ## Implementation Approach
 
 ### Phase 1: Fundamental Analyst Microservices
 ```yaml
 implementation_focus:
   scope: "fundamental_analyst role only"
-  approach: "additive - existing commands unchanged"
+  approach: "decompose existing fundamental_analysis.md command"
 
-  fundamental_analyst_decomposition:
-    - Create fundamental_analyst_discover microservice
-    - Create fundamental_analyst_analyze microservice
-    - Create fundamental_analyst_synthesize microservice
-    - Create fundamental_analyst_validate microservice
+  decomposition_strategy:
+    fundamental_analyst_discover:
+      extraction: "Extract data collection logic from fundamental_analysis.md"
+      responsibility: "Gather market data, company information, financial statements"
+
+    fundamental_analyst_analyze:
+      extraction: "Extract analysis logic from fundamental_analysis.md"
+      responsibility: "Calculate ratios, perform valuation analysis, assess metrics"
+
+    fundamental_analyst_synthesize:
+      extraction: "Extract synthesis logic from fundamental_analysis.md"
+      responsibility: "Generate complete fundamental analysis document"
+      output_requirement: "Must produce identical ./data/outputs/fundamental_analysis/{TICKER}_{YYYYMMDD}.md files"
+
+    fundamental_analyst_validate:
+      source: "Clone content_evaluator.md and specialize for fundamental analysis"
+      responsibility: "Validate analysis quality, confidence scoring, compliance checks"
+
+  quality_assurance:
+    acceptance_test: "Sequential DASV workflow produces identical output to current fundamental_analysis.md"
+    output_verification: "Exact same file format and content in ./data/outputs/fundamental_analysis/"
+    regression_prevention: "All existing features preserved across microservices"
 
   team_workspace_updates:
     - Add microservices/ directory structure
@@ -608,7 +690,7 @@ implementation_focus:
 
   existing_commands:
     status: "unchanged - continue functioning as-is"
-    scope: "all commands except fundamental_analyst related"
+    scope: "all commands except fundamental_analysis related"
 
 
 ## Success Metrics
