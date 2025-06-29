@@ -659,7 +659,8 @@ Key variables impact on fair value:
 - [Limitations or caveats]
 - [Areas requiring follow-up research]
 
-**Investment Recommendation Summary**:
+## Investment Recommendation Summary
+
 [Comprehensive 150-200 word summary synthesizing the entire analysis into institutional-quality investment decision framework. Include: (1) Core investment thesis with quantified risk-adjusted returns, (2) Key confidence drivers and methodology validation, (3) Balance sheet strength and downside protection, (4) Scenario analysis results with probability-weighted outcomes, (5) Position sizing recommendation within portfolio context, (6) Specific catalysts with impact quantification, (7) Stress-tested bear case limitations, (8) Monte Carlo/sensitivity analysis validation of fair value range, (9) Overall conviction level with supporting evidence, (10) Clear articulation of why this represents exceptional/adequate/poor risk-adjusted value at current levels. This summary should stand alone as complete investment recommendation suitable for institutional decision-making.]
 ```
 
