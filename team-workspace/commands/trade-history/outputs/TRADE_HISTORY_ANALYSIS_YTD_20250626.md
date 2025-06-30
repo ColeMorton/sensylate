@@ -202,7 +202,7 @@
 
 **Data Sources**:
 - Trade History: /data/raw/trade_history/20250626.csv (Ultimate Truth)
-- Fundamental Analysis: 5 matching tickers from /data/outputs/analysis_fundamental/
+- Fundamental Analysis: 5 matching tickers from /data/outputs/fundamental_analysis/
 - Market Data: Real-time SPY, VIX, economic indicators
 - Benchmark Data: SPY YTD performance, sector rotation analysis
 

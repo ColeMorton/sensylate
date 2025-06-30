@@ -63,7 +63,7 @@ Analysis files in `@data/outputs/` requiring review and publication:
 ### Phase 1: Content Assessment
 ```bash
 # Review pending content
-ls @data/outputs/analysis_fundamental/
+ls @data/outputs/fundamental_analysis/
 ```
 
 ### Phase 2: Content-Image Mapping

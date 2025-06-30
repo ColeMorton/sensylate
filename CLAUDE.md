@@ -197,10 +197,10 @@ Use these by asking Claude to execute them (e.g., "run the architect command" or
   - **Collaboration**: Reads trading analysis data from outputs/exports/markdown/
   - **Usage**: Financial strategy content for social media
 
-- **`/fundamental_analysis`** - Comprehensive fundamental analysis for trading strategies
-  - **Location**: `.claude/commands/fundamental_analysis.md` (project scope)
-  - **Collaboration**: Enhanced with team collaboration context
-  - **Usage**: Market analysis and trading insights
+- **`/fundamental_analysis_full`** - Complete DASV workflow for institutional-quality fundamental analysis
+  - **Location**: `.claude/commands/fundamental_analysis_full.md` (project scope)
+  - **Collaboration**: Orchestrates four specialized microservices through DASV framework
+  - **Usage**: Comprehensive market analysis and trading insights via microservice architecture
 
 #### **Collaboration Infrastructure Commands** (Enable product development)
 
