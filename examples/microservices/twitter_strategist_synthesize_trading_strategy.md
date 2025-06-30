@@ -40,7 +40,7 @@ outputs:
 - **External APIs**: None required
 - **Shared Resources**:
   - Team workspace: `/team-workspace/knowledge/trading-strategies/`
-  - Analysis outputs: `/data/outputs/analysis_fundamental/`
+  - Analysis outputs: `/data/outputs/fundamental_analysis/`
   - Content templates: `/team-workspace/templates/social_media/`
 
 ## Data/File Dependencies
@@ -49,7 +49,7 @@ outputs:
 ```yaml
 input_dependencies:
   required_files:
-    - path: "/data/outputs/analysis_fundamental/{TICKER}_{YYYYMMDD}.md"
+    - path: "/data/outputs/fundamental_analysis/{TICKER}_{YYYYMMDD}.md"
       type: "markdown"
       freshness_requirement: "24h"
       fallback_strategy: "cache"
@@ -181,7 +181,7 @@ Not financial advice. DYOR. #trading #{TICKER} #stocks
 | **Overall Quality** | **{X.X}/1.0** | **{X.X}/1.0** | Weighted average |
 
 ### Data Dependencies
-- **Source Analysis**: `/data/outputs/analysis_fundamental/{TICKER}_{YYYYMMDD}.md`
+- **Source Analysis**: `/data/outputs/fundamental_analysis/{TICKER}_{YYYYMMDD}.md`
 - **Template Used**: `trading_strategy_template_v{X.X}`
 - **Context Sources**: `team-workspace/knowledge/trading-strategies/`
 - **Validation Status**: All dependencies current and validated

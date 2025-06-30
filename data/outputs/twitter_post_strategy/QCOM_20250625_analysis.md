@@ -20,7 +20,7 @@
    - Confirmed metrics align with TrendSpider display
 
 3. **Fundamental Analysis** (Investment Context)
-   - File: `/data/outputs/analysis_fundamental/QCOM_20250625.md`
+   - File: `/data/outputs/fundamental_analysis/QCOM_20250625.md`
    - Fair Value: $186 vs current $155.71
    - Key Catalysts: 61% automotive growth, $1.3B patent revenue
    - Rating: BUY with 25% expected return

@@ -116,7 +116,7 @@ High-quality trading strategy content with excellent source data integration, ac
 - Content claims "62% win rate" for July - needs verification
 
 ### Fundamental Analysis Integration (High Confidence)
-**Source**: `/data/outputs/analysis_fundamental/DOV_20250627.md`
+**Source**: `/data/outputs/fundamental_analysis/DOV_20250627.md`
 **Cross-Referenced Claims**:
 - BUY Recommendation: ✓ (0.9/1.0 conviction matches)
 - Fair Value: $195-210 ✓ (Current $183.04 matches)

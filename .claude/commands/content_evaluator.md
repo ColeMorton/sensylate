@@ -230,7 +230,7 @@ When evaluating financial content, ALWAYS use the Yahoo Finance Bridge script fo
 ## Usage
 
 ```
-filename: /data/outputs/analysis_fundamental/COMPANY_DATE.md
+filename: /data/outputs/fundamental_analysis/COMPANY_DATE.md
 ```
 
 Analyzes the specified file and generates comprehensive accuracy evaluation report.
