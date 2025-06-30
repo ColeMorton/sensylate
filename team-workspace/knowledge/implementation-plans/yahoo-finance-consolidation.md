@@ -136,11 +136,11 @@ The technical health assessment identifies this as **P0 Critical** with specific
 ```xml
 <phase number="2" estimated_effort="2 days">
   <objective>Update AI command integrations to use new YahooFinanceService</objective>
-  <scope>Modify fundamental_analysis.md and twitter_post_strategy.md command definitions</scope>
+  <scope>Modify fundamental_analysis_full.md and twitter_post_strategy.md command definitions</scope>
   <dependencies>Phase 1 YahooFinanceService must be complete and tested</dependencies>
 
   <implementation>
-    <step>Update fundamental_analysis.md lines 132-164 to reference new service class instead of bridge script</step>
+    <step>Update fundamental_analysis_full.md microservice components to reference new service class instead of bridge script</step>
     <step>Update twitter_post_strategy.md lines 24, 76-77 to use service class integration</step>
     <step>Create service class wrapper functions for command-line compatibility</step>
     <step>Implement consistent error reporting for AI commands (structured error responses)</step>
@@ -150,7 +150,7 @@ The technical health assessment identifies this as **P0 Critical** with specific
   </implementation>
 
   <deliverables>
-    <deliverable>Updated fundamental_analysis.md with new service integration</deliverable>
+    <deliverable>Updated fundamental_analysis_full.md microservices with new service integration</deliverable>
     <deliverable>Updated twitter_post_strategy.md with new service integration</deliverable>
     <deliverable>Command compatibility wrapper for CLI usage</deliverable>
   </deliverables>
@@ -283,7 +283,7 @@ class APITimeoutError(YahooFinanceError): pass
 ### Command Integration Pattern
 
 ```markdown
-# Updated Command Pattern (fundamental_analysis.md)
+# Updated Command Pattern (fundamental_analysis_full.md microservices)
 **Yahoo Finance Data Collection - Production Service:**
 Use the Yahoo Finance service class for reliable financial data:
 

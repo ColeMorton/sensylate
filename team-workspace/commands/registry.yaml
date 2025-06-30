@@ -8,7 +8,7 @@ metadata:
   microservices_enabled: true
 
 # Command Classifications:
-# - core_product: User-facing AI commands that ARE the product (twitter-post, fundamental-analysis, etc.)
+# - core_product: User-facing AI commands that ARE the product (twitter-post, fundamental-analysis-full, etc.)
 # - collaboration_infrastructure: Commands that enable team collaboration and product development
 
 # Command search paths (in order of precedence)
@@ -146,21 +146,6 @@ commands:
       success_rate: 0.93
       last_execution: null
 
-  fundamental-analysis:
-    location: "/Users/colemorton/Projects/sensylate/.claude/commands/fundamental_analysis.md"
-    scope: "project"
-    manifest: "/Users/colemorton/Projects/sensylate/team-workspace/commands/fundamental-analysis/manifest.yaml"
-    type: "product"
-    classification: "core_product"
-    status: "active"
-    description: "Comprehensive fundamental analysis for trading strategies and market insights"
-    capabilities:
-      reads: ["market_data", "financial_statements", "economic_indicators", "trading_context"]
-      produces: ["fundamental_analysis_reports", "market_insights", "trading_recommendations"]
-    performance_metrics:
-      avg_execution_time: "120s"
-      success_rate: 0.92
-      last_execution: null
 
   fundamental-analyst-discover:
     location: "/Users/colemorton/Projects/sensylate/.claude/commands/fundamental_analyst_discover.md"

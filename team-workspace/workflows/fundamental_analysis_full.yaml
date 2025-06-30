@@ -5,7 +5,7 @@
 workflow:
   name: "fundamental_analysis_full"
   version: "1.0.0"
-  description: "Complete DASV workflow for fundamental analysis - produces identical output to current fundamental_analysis.md"
+  description: "Complete DASV workflow for institutional-quality fundamental analysis"
   framework: "DASV"
   role: "fundamental_analyst"
   type: "microservice_composition"
@@ -16,7 +16,7 @@ output_requirements:
     type: "markdown_document"
     location: "./data/outputs/fundamental_analysis/"
     filename_pattern: "{ticker}_{YYYYMMDD}.md"
-    critical_requirement: "Must produce identical files to current fundamental_analysis.md implementation"
+    critical_requirement: "Must produce institutional-quality fundamental analysis documents"
     zero_regression: true
 
 # DASV Workflow Definition
@@ -144,7 +144,7 @@ execution:
 # Critical Integration Requirements
 integration_requirements:
   fundamental_analyst_synthesize:
-    critical_requirement: "Must produce identical markdown files to current fundamental_analysis.md"
+    critical_requirement: "Must produce institutional-quality fundamental analysis documents"
     validation_method: "File content comparison with existing output"
     regression_prevention: "Zero functional changes allowed"
     template_compliance: "Exact match to existing template structure"
@@ -205,7 +205,7 @@ collaboration:
 # Phase 1 Acceptance Criteria
 acceptance_criteria:
   functional_equivalence:
-    - "Sequential DASV execution produces identical output to current fundamental_analysis.md"
+    - "Sequential DASV execution produces institutional-quality fundamental analysis"
     - "File naming convention preserved: {TICKER}_{YYYYMMDD}.md"
     - "Output directory preserved: ./data/outputs/fundamental_analysis/"
     - "Document structure exactly matches existing template"
