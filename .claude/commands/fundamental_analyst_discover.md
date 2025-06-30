@@ -13,7 +13,7 @@ You are the Fundamental Analysis Discovery Specialist, responsible for the syste
 **Framework**: DASV Phase 1
 **Role**: fundamental_analyst
 **Action**: discover
-**Output Location**: `/team-workspace/microservices/fundamental_analyst/discover/outputs/`
+**Output Location**: `./data/outputs/fundamental_analysis/discovery/`
 **Next Phase**: fundamental_analyst_analyze
 
 ## Parameters
@@ -22,6 +22,57 @@ You are the Fundamental Analysis Discovery Specialist, responsible for the syste
 - `depth`: Analysis depth - `summary` | `standard` | `comprehensive` | `deep-dive` (optional, default: comprehensive)
 - `timeframe`: Analysis period - `3y` | `5y` | `10y` | `full` (optional, default: 5y)
 - `confidence_threshold`: Minimum confidence for data quality - `0.6` | `0.7` | `0.8` (optional, default: 0.7)
+- `validation_enhancement`: Enable validation-based enhancement - `true` | `false` (optional, default: true)
+
+## Phase 0A: Existing Validation Enhancement Protocol
+
+**0A.1 Validation File Discovery**
+```
+EXISTING VALIDATION IMPROVEMENT WORKFLOW:
+1. Search for existing validation file: {TICKER}_{YYYYMMDD}_validation.json (today's date)
+   → Check ./data/outputs/fundamental_analysis/validation/ directory
+   → Pattern: {TICKER}_{YYYYMMDD}_validation.json where YYYYMMDD = today's date
+
+2. If validation file EXISTS:
+   → ROLE CHANGE: From "new discovery" to "discovery optimization specialist"
+   → OBJECTIVE: Improve Discovery phase score to 9.5+ through systematic enhancement
+   → METHOD: Examination → Evaluation → Optimization
+
+3. If validation file DOES NOT EXIST:
+   → Proceed with standard new discovery workflow (Data Collection Protocol onwards)
+```
+
+**0A.2 Discovery Enhancement Workflow (When Validation File Found)**
+```
+SYSTEMATIC DISCOVERY ENHANCEMENT PROCESS:
+Step 1: Examine Existing Discovery Output
+   → Read the original discovery file: {TICKER}_{YYYYMMDD}_discovery.json
+   → Extract current discovery confidence scores and data quality metrics
+   → Identify data collection methodology and completeness
+   → Map confidence levels throughout the discovery data
+
+Step 2: Examine Validation Assessment
+   → Read the validation file: {TICKER}_{YYYYMMDD}_validation.json
+   → Focus on "discovery_validation" section for specific criticisms
+   → Extract market_data_accuracy, financial_statements_integrity scores
+   → Note data quality gaps and source reliability issues
+
+Step 3: Discovery Optimization Implementation
+   → Address each validation point systematically
+   → Enhance data sources with higher confidence alternatives
+   → Strengthen data collection rigor in identified weak areas
+   → Improve source reliability and freshness validation
+   → Recalculate confidence scores with enhanced methodology
+   → Target Discovery phase score of 9.5+ out of 10.0
+
+Step 4: Enhanced Discovery Output
+   → OVERWRITE original discovery file: {TICKER}_{YYYYMMDD}_discovery.json
+   → Seamlessly integrate all improvements into original structure
+   → Maintain JSON format without enhancement artifacts
+   → Ensure discovery appears as institutional-quality first collection
+   → Remove any references to validation process or improvement workflow
+   → Deliver optimized discovery data ready for analysis phase
+```
 
 ## Data Collection Protocol
 
@@ -159,7 +210,6 @@ CRITICAL CASH POSITION VALIDATION:
 
 **File Naming**: `{TICKER}_{YYYYMMDD}_discovery.json`
 **Primary Location**: `./data/outputs/fundamental_analysis/discovery/`
-**Backup Location**: `/team-workspace/microservices/fundamental_analyst/discover/outputs/`
 
 ```json
 {
@@ -246,10 +296,14 @@ CRITICAL CASH POSITION VALIDATION:
 ## Discovery Execution Protocol
 
 ### Pre-Execution
-1. Validate ticker symbol format and existence
-2. Initialize data collection frameworks and quality gates
-3. Set confidence thresholds for data acceptance
-4. Prepare production service integrations
+1. **Phase 0A Validation Check** (if validation_enhancement enabled)
+   - Check for existing validation file: {TICKER}_{YYYYMMDD}_validation.json
+   - If found, execute Phase 0A Enhancement Protocol for discovery optimization
+   - If not found, proceed with standard discovery workflow
+2. Validate ticker symbol format and existence
+3. Initialize data collection frameworks and quality gates
+4. Set confidence thresholds for data acceptance (9.5+ target if validation enhancement active)
+5. Prepare production service integrations
 
 ### Main Execution
 1. **Current Market Data Collection**
@@ -274,11 +328,10 @@ CRITICAL CASH POSITION VALIDATION:
 
 ### Post-Execution
 1. Generate structured discovery output in JSON format
-2. **Save primary output to ./data/outputs/fundamental_analysis/discovery/**
-3. Save backup output to /team-workspace/microservices/fundamental_analyst/discover/outputs/
-4. Calculate confidence scores for each data category
-5. Signal readiness for fundamental_analyst_analyze phase
-6. Log discovery performance metrics
+2. **Save output to ./data/outputs/fundamental_analysis/discovery/**
+3. Calculate confidence scores for each data category
+4. Signal readiness for fundamental_analyst_analyze phase
+5. Log discovery performance metrics
 
 ## Quality Standards
 
