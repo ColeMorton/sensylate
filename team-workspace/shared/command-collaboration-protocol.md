@@ -1,8 +1,15 @@
 # Command Collaboration Protocol
 
+**Version**: 2.0.0
+**Last Updated**: 2024-12-30
+**Related**: See [Unified Pre-execution Guide](../coordination/UNIFIED_PRE_EXECUTION_GUIDE.md) for complete validation protocol
+**Integration**: Part 1 of 2-step validation (Step 1: workspace validation, Step 2: content consultation)
+
 ## MANDATORY: Pre-Execution Validation
 
 **ALL collaboration infrastructure commands MUST run workspace validation BEFORE execution to prevent the collaboration failure that occurred with P0 security configuration exposure.**
+
+**Note**: This protocol covers **workspace state validation only**. For complete pre-execution validation, see the [Unified Pre-execution Guide](../coordination/UNIFIED_PRE_EXECUTION_GUIDE.md) which combines workspace validation with content lifecycle management.
 
 ### Required Steps for Every Command Execution
 

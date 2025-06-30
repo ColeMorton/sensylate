@@ -1,8 +1,15 @@
 # Team-Workspace Content Lifecycle Management Integration Guide
 
+**Version**: 2.0.0
+**Last Updated**: 2024-12-30
+**Related**: See [Unified Pre-execution Guide](./UNIFIED_PRE_EXECUTION_GUIDE.md) for complete validation protocol
+**Integration**: Part 2 of 2-step validation (Step 1: workspace validation, Step 2: content consultation)
+
 ## Overview
 
 The Team-Workspace Content Lifecycle Management system provides comprehensive coordination tools to prevent duplicate analyses, establish clear content authority, and maintain knowledge freshness. This guide explains how AI commands can integrate with the system.
+
+**Note**: This guide covers **content lifecycle management only**. For complete pre-execution validation, see the [Unified Pre-execution Guide](./UNIFIED_PRE_EXECUTION_GUIDE.md) which combines workspace validation with content consultation.
 
 ## Quick Start for AI Commands
 

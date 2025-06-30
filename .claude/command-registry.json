@@ -1,0 +1,231 @@
+{
+  "version": "1.0.0",
+  "last_updated": "2024-12-30",
+  "registry": {
+    "collaboration_infrastructure": {
+      "description": "Commands that enable product development and maintain system architecture",
+      "lifecycle_management_required": true,
+      "knowledge_authority": true,
+      "pre_execution_mandatory": true,
+      "commands": {
+        "architect": {
+          "location": ".claude/commands/architect.md",
+          "classification": "infrastructure",
+          "knowledge_domain": "implementation-plans",
+          "summary": "Technical planning & implementation framework with research-driven methodology",
+          "collaboration": "Reads code-owner health metrics, business-analyst requirements",
+          "outputs_to": "./team-workspace/commands/architect/outputs/"
+        },
+        "code-owner": {
+          "location": ".claude/commands/code-owner.md",
+          "classification": "infrastructure",
+          "knowledge_domain": "technical-health",
+          "summary": "Comprehensive codebase health analysis and strategic technical reviews",
+          "collaboration": "Provides technical health data to architect and product-owner",
+          "outputs_to": "./team-workspace/commands/code-owner/outputs/"
+        },
+        "product_owner": {
+          "location": ".claude/commands/product_owner.md",
+          "classification": "infrastructure",
+          "knowledge_domain": "product-strategy",
+          "summary": "Transform technical findings into prioritized product decisions",
+          "collaboration": "Consumes architect plans and code-owner assessments",
+          "outputs_to": "./team-workspace/commands/product-owner/outputs/"
+        },
+        "business_analyst": {
+          "location": ".claude/commands/business_analyst.md",
+          "classification": "infrastructure",
+          "knowledge_domain": "requirements",
+          "summary": "Requirements gathering, process optimization, and stakeholder alignment",
+          "collaboration": "Provides requirements to architect and product-owner",
+          "outputs_to": "./team-workspace/commands/business-analyst/outputs/"
+        },
+        "command": {
+          "location": ".claude/commands/command.md",
+          "classification": "infrastructure",
+          "knowledge_domain": "command-management",
+          "summary": "Comprehensive command lifecycle management specialist",
+          "collaboration": "Manages creation, optimization, alignment, analysis, and maintenance",
+          "outputs_to": "./team-workspace/commands/command/outputs/"
+        },
+        "documentation_owner": {
+          "location": ".claude/commands/documentation_owner.md",
+          "classification": "infrastructure",
+          "knowledge_domain": "documentation-quality",
+          "framework": "DQEM",
+          "summary": "Documentation lifecycle & quality management with institutional standards",
+          "collaboration": "Ensures documentation quality across all commands and maintains consistency",
+          "outputs_to": "./team-workspace/commands/documentation-owner/outputs/"
+        }
+      }
+    },
+    "core_product": {
+      "description": "User-facing AI functionality for content generation and analysis",
+      "lifecycle_management_required": true,
+      "knowledge_authority": false,
+      "pre_execution_mandatory": true,
+      "conflict_prevention": "Cannot create documentation that conflicts with infrastructure commands",
+      "commands": {
+        "twitter_post": {
+          "location": ".claude/commands/twitter_post.md",
+          "classification": "product",
+          "knowledge_domain": "social-media-content",
+          "summary": "Expert social media content optimization for X/Twitter engagement",
+          "collaboration": "Uses team workspace data for context-aware content",
+          "outputs_to": "./outputs/social-media/"
+        },
+        "twitter_post_strategy": {
+          "location": ".claude/commands/twitter_post_strategy.md",
+          "classification": "product",
+          "knowledge_domain": "trading-social-content",
+          "summary": "Trading strategy analysis and social media post generation",
+          "collaboration": "Reads trading analysis data from outputs/exports/markdown/",
+          "outputs_to": "./outputs/social-media/"
+        },
+        "twitter_fundamental_analysis": {
+          "location": ".claude/commands/twitter_fundamental_analysis.md",
+          "classification": "product",
+          "knowledge_domain": "fundamental-social-content",
+          "summary": "Fundamental analysis social media content generation",
+          "collaboration": "Uses fundamental analysis outputs for social content",
+          "outputs_to": "./outputs/social-media/"
+        },
+        "fundamental_analysis_full": {
+          "location": ".claude/commands/fundamental_analysis_full.md",
+          "classification": "product",
+          "knowledge_domain": "fundamental-analysis",
+          "summary": "Complete DASV workflow for institutional-quality fundamental analysis",
+          "collaboration": "Orchestrates four specialized microservices through DASV framework",
+          "outputs_to": "./data/outputs/fundamental_analysis/"
+        },
+        "content_publisher": {
+          "location": ".claude/commands/content_publisher.md",
+          "classification": "product",
+          "knowledge_domain": "content-publishing",
+          "summary": "Content publication pipeline management",
+          "collaboration": "Publishes content generated by other commands",
+          "outputs_to": "./outputs/published/"
+        },
+        "content_evaluator": {
+          "location": ".claude/commands/content_evaluator.md",
+          "classification": "product",
+          "knowledge_domain": "content-quality",
+          "summary": "Content quality evaluation and assessment",
+          "collaboration": "Evaluates content generated by other commands",
+          "outputs_to": "./outputs/evaluations/"
+        },
+        "social_media_strategist": {
+          "location": ".claude/commands/social_media_strategist.md",
+          "classification": "product",
+          "knowledge_domain": "social-strategy",
+          "summary": "Social media strategy development and optimization",
+          "collaboration": "Provides strategic guidance for social content commands",
+          "outputs_to": "./outputs/social-strategy/"
+        },
+        "trade_history": {
+          "location": ".claude/commands/trade_history.md",
+          "classification": "product",
+          "knowledge_domain": "trading-history",
+          "summary": "Trading history analysis and reporting",
+          "collaboration": "Provides historical context for trading strategies",
+          "outputs_to": "./outputs/trading/"
+        },
+        "trade_history_images": {
+          "location": ".claude/commands/trade_history_images.md",
+          "classification": "product",
+          "knowledge_domain": "trading-visualization",
+          "summary": "Trading visualization and image generation",
+          "collaboration": "Creates visual content for trading analysis",
+          "outputs_to": "./outputs/trading/images/"
+        },
+        "twitter_trade_history": {
+          "location": ".claude/commands/twitter_trade_history.md",
+          "classification": "product",
+          "knowledge_domain": "trading-social-content",
+          "summary": "Trade history social content generation",
+          "collaboration": "Combines trade history with social media optimization",
+          "outputs_to": "./outputs/social-media/"
+        }
+      }
+    },
+    "microservices": {
+      "description": "Atomic microservice implementations following DASV framework",
+      "lifecycle_management_required": true,
+      "knowledge_authority": false,
+      "pre_execution_mandatory": true,
+      "framework": "DASV",
+      "commands": {
+        "fundamental_analyst_discover": {
+          "location": ".claude/commands/fundamental_analyst_discover.md",
+          "classification": "microservice",
+          "framework_phase": "discover",
+          "parent_role": "fundamental_analyst",
+          "summary": "Discovery phase implementation for fundamental analysis",
+          "collaboration": "First phase of DASV workflow",
+          "outputs_to": "./data/outputs/fundamental_analysis/discovery/"
+        },
+        "fundamental_analyst_analyze": {
+          "location": ".claude/commands/fundamental_analyst_analyze.md",
+          "classification": "microservice",
+          "framework_phase": "analyze",
+          "parent_role": "fundamental_analyst",
+          "summary": "Analysis phase implementation for fundamental analysis",
+          "collaboration": "Second phase of DASV workflow, uses discover outputs",
+          "outputs_to": "./data/outputs/fundamental_analysis/analysis/"
+        },
+        "fundamental_analyst_synthesize": {
+          "location": ".claude/commands/fundamental_analyst_synthesize.md",
+          "classification": "microservice",
+          "framework_phase": "synthesize",
+          "parent_role": "fundamental_analyst",
+          "summary": "Synthesis phase implementation for fundamental analysis",
+          "collaboration": "Third phase of DASV workflow, uses analyze outputs",
+          "outputs_to": "./data/outputs/fundamental_analysis/"
+        },
+        "fundamental_analyst_validate": {
+          "location": ".claude/commands/fundamental_analyst_validate.md",
+          "classification": "microservice",
+          "framework_phase": "validate",
+          "parent_role": "fundamental_analyst",
+          "summary": "Validation phase implementation for fundamental analysis",
+          "collaboration": "Final phase of DASV workflow, validates all outputs",
+          "outputs_to": "./data/outputs/fundamental_analysis/validation/"
+        }
+      }
+    },
+    "utilities": {
+      "description": "Supporting commands for development workflow",
+      "lifecycle_management_required": false,
+      "knowledge_authority": false,
+      "pre_execution_mandatory": false,
+      "note": "Only utilities can skip pre-execution validation",
+      "commands": {
+        "commit_push": {
+          "location": ".claude/commands/commit_push.md",
+          "classification": "utility",
+          "summary": "Automated git workflow (stage all changes, generate commit message, push to remote)",
+          "collaboration": "Can be triggered after architect implementation phases",
+          "outputs_to": "git repository",
+          "pre_execution_required": "optional"
+        }
+      }
+    }
+  },
+  "validation": {
+    "total_commands": 21,
+    "infrastructure_commands": 6,
+    "product_commands": 11,
+    "microservice_commands": 4,
+    "utility_commands": 1,
+    "pre_execution_enforcement": "All commands except utilities require pre-execution validation"
+  },
+  "documentation_hierarchy": {
+    "precedence_order": [
+      "Individual command files (authoritative)",
+      "Framework documentation (methodology definitions)",
+      "Integration guides (operational procedures)",
+      "CLAUDE.md (project overview)",
+      "README files (introductory material)"
+    ]
+  }
+}
