@@ -25,7 +25,7 @@ This document describes the migration from fragmented Yahoo Finance integration 
 - ✅ `tests/test_yahoo_finance_service.py` - Comprehensive test suite
 
 ### Files Updated
-- ✅ `.claude/commands/fundamental_analysis.md` - Updated to use new service
+- ✅ `.claude/commands/fundamental_analysis_full.md` - Updated microservices to use new service
 - ✅ `.claude/commands/twitter_post_strategy.md` - Updated to use new service
 - ✅ `.claude/commands/twitter_fundamental_analysis.md` - Updated to use new service
 - ✅ `.claude/commands/content_evaluator.md` - Updated to use new service

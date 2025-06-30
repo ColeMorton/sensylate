@@ -2,12 +2,13 @@
 # Auto-generated and maintained by Command Collaboration Framework
 
 metadata:
-  version: "1.0.0"
-  last_updated: "2025-01-07T15:30:00Z"
-  framework_version: "1.0.0"
+  version: "2.0.0"
+  last_updated: "2025-06-29T17:15:00Z"
+  framework_version: "2.0.0"
+  microservices_enabled: true
 
 # Command Classifications:
-# - core_product: User-facing AI commands that ARE the product (twitter-post, fundamental-analysis, etc.)
+# - core_product: User-facing AI commands that ARE the product (twitter-post, fundamental-analysis-full, etc.)
 # - collaboration_infrastructure: Commands that enable team collaboration and product development
 
 # Command search paths (in order of precedence)
@@ -145,20 +146,104 @@ commands:
       success_rate: 0.93
       last_execution: null
 
-  fundamental-analysis:
-    location: "/Users/colemorton/Projects/sensylate/.claude/commands/fundamental_analysis.md"
+
+  fundamental-analyst-discover:
+    location: "/Users/colemorton/Projects/sensylate/.claude/commands/fundamental_analyst_discover.md"
     scope: "project"
-    manifest: "/Users/colemorton/Projects/sensylate/team-workspace/commands/fundamental-analysis/manifest.yaml"
-    type: "product"
+    manifest: "/Users/colemorton/Projects/sensylate/team-workspace/microservices/fundamental_analyst/discover/manifest.yaml"
+    type: "microservice"
     classification: "core_product"
     status: "active"
-    description: "Comprehensive fundamental analysis for trading strategies and market insights"
+    description: "DASV Phase 1: Data collection and context gathering for fundamental analysis"
+    microservice_role: "fundamental_analyst"
+    microservice_action: "discover"
+    framework: "DASV"
+    capabilities:
+      reads: ["market_data", "company_information", "financial_statements"]
+      produces: ["structured_data", "data_quality_metrics", "discovery_report"]
+    performance_metrics:
+      avg_execution_time: "20s"
+      success_rate: null
+      last_execution: null
+
+  fundamental-analyst-analyze:
+    location: "/Users/colemorton/Projects/sensylate/.claude/commands/fundamental_analyst_analyze.md"
+    scope: "project"
+    manifest: "/Users/colemorton/Projects/sensylate/team-workspace/microservices/fundamental_analyst/analyze/manifest.yaml"
+    type: "microservice"
+    classification: "core_product"
+    status: "active"
+    description: "DASV Phase 2: Systematic analysis and evaluation of financial data"
+    microservice_role: "fundamental_analyst"
+    microservice_action: "analyze"
+    framework: "DASV"
+    capabilities:
+      reads: ["structured_data", "discovery_report", "financial_metrics"]
+      produces: ["financial_analysis", "analytical_insights", "risk_assessment"]
+    performance_metrics:
+      avg_execution_time: "40s"
+      success_rate: null
+      last_execution: null
+
+  fundamental-analyst-synthesize:
+    location: "/Users/colemorton/Projects/sensylate/.claude/commands/fundamental_analyst_synthesize.md"
+    scope: "project"
+    manifest: "/Users/colemorton/Projects/sensylate/team-workspace/microservices/fundamental_analyst/synthesize/manifest.yaml"
+    type: "microservice"
+    classification: "core_product"
+    status: "active"
+    description: "DASV Phase 3: Integration and recommendation generation - produces final analysis document"
+    microservice_role: "fundamental_analyst"
+    microservice_action: "synthesize"
+    framework: "DASV"
+    output_requirement: "Institutional-quality ./data/outputs/fundamental_analysis/{TICKER}_{YYYYMMDD}.md files"
+    capabilities:
+      reads: ["financial_analysis", "analytical_insights", "risk_assessment"]
+      produces: ["fundamental_analysis_document", "investment_thesis", "recommendation"]
+    performance_metrics:
+      avg_execution_time: "30s"
+      success_rate: null
+      last_execution: null
+
+  fundamental-analyst-validate:
+    location: "/Users/colemorton/Projects/sensylate/.claude/commands/fundamental_analyst_validate.md"
+    scope: "project"
+    manifest: "/Users/colemorton/Projects/sensylate/team-workspace/microservices/fundamental_analyst/validate/manifest.yaml"
+    type: "microservice"
+    classification: "core_product"
+    status: "active"
+    description: "DASV Phase 4: Quality assurance and confidence verification for fundamental analysis"
+    microservice_role: "fundamental_analyst"
+    microservice_action: "validate"
+    framework: "DASV"
+    validation_approach: "institutional_quality_standards"
+    capabilities:
+      reads: ["fundamental_analysis_document", "investment_thesis", "recommendation"]
+      produces: ["validation_report", "confidence_scores", "quality_assessment"]
+    performance_metrics:
+      avg_execution_time: "25s"
+      success_rate: null
+      last_execution: null
+
+  fundamental-analysis-full:
+    location: "/Users/colemorton/Projects/sensylate/.claude/commands/fundamental_analysis_full.md"
+    scope: "project"
+    manifest: "/Users/colemorton/Projects/sensylate/team-workspace/workflows/fundamental_analysis_full.yaml"
+    type: "workflow_orchestrator"
+    classification: "core_product"
+    status: "active"
+    description: "Complete DASV workflow orchestrator for institutional-quality fundamental analysis"
+    workflow_composition: "fundamental_analysis_full"
+    workflow_type: "complete_analysis"
+    framework: "DASV"
+    quality_requirement: "Institutional-grade fundamental analysis with 8.5+ reliability score"
+    microservices_orchestrated: ["fundamental_analyst_discover", "fundamental_analyst_analyze", "fundamental_analyst_synthesize", "fundamental_analyst_validate"]
     capabilities:
       reads: ["market_data", "financial_statements", "economic_indicators", "trading_context"]
-      produces: ["fundamental_analysis_reports", "market_insights", "trading_recommendations"]
+      produces: ["fundamental_analysis_reports", "market_insights", "trading_recommendations", "validation_reports"]
     performance_metrics:
-      avg_execution_time: "120s"
-      success_rate: 0.92
+      avg_execution_time: "115s"
+      success_rate: null
       last_execution: null
 
 # Workflow patterns discovered from command analysis
@@ -188,6 +273,109 @@ workflow_patterns:
     description: "Create new command then plan its integration"
     success_rate: 0.90
     avg_total_duration: "70s"
+
+# Role Definitions (Phase 1: fundamental_analyst)
+roles:
+  fundamental_analyst:
+    classification: "domain_expert"
+    maps_to: "core_product"
+    description: "Financial analysis and valuation expert"
+    microservices: ["discover", "analyze", "synthesize", "validate"]
+    framework: "DASV"
+    status: "active"
+
+# Microservice Registry (Phase 1: fundamental_analyst only)
+microservices:
+  fundamental_analyst_discover:
+    role: "fundamental_analyst"
+    action: "discover"
+    framework: "DASV"
+    location: "/Users/colemorton/Projects/sensylate/team-workspace/microservices/fundamental_analyst/discover.md"
+    manifest: "/Users/colemorton/Projects/sensylate/team-workspace/microservices/fundamental_analyst/discover/manifest.yaml"
+    type: "product"
+    classification: "core_product"
+    status: "active"
+    description: "Data acquisition and context gathering for fundamental analysis"
+    capabilities:
+      reads: ["market_data", "company_information", "financial_statements"]
+      produces: ["structured_data", "data_quality_metrics", "discovery_report"]
+    performance_metrics:
+      avg_execution_time: "30s"
+      success_rate: null
+      last_execution: null
+
+  fundamental_analyst_analyze:
+    role: "fundamental_analyst"
+    action: "analyze"
+    framework: "DASV"
+    location: "/Users/colemorton/Projects/sensylate/team-workspace/microservices/fundamental_analyst/analyze.md"
+    manifest: "/Users/colemorton/Projects/sensylate/team-workspace/microservices/fundamental_analyst/analyze/manifest.yaml"
+    type: "product"
+    classification: "core_product"
+    status: "active"
+    description: "Systematic analysis and evaluation of financial data"
+    capabilities:
+      reads: ["structured_data", "discovery_report", "financial_metrics"]
+      produces: ["financial_analysis", "analytical_insights", "risk_assessment"]
+    performance_metrics:
+      avg_execution_time: "40s"
+      success_rate: null
+      last_execution: null
+
+  fundamental_analyst_synthesize:
+    role: "fundamental_analyst"
+    action: "synthesize"
+    framework: "DASV"
+    location: "/Users/colemorton/Projects/sensylate/team-workspace/microservices/fundamental_analyst/synthesize.md"
+    manifest: "/Users/colemorton/Projects/sensylate/team-workspace/microservices/fundamental_analyst/synthesize/manifest.yaml"
+    type: "product"
+    classification: "core_product"
+    status: "active"
+    description: "Integration and recommendation generation - produces final analysis document"
+    capabilities:
+      reads: ["financial_analysis", "analytical_insights", "risk_assessment"]
+      produces: ["fundamental_analysis_document", "investment_thesis", "recommendation"]
+    output_requirement: "Institutional-quality ./data/outputs/fundamental_analysis/{TICKER}_{YYYYMMDD}.md files"
+    performance_metrics:
+      avg_execution_time: "30s"
+      success_rate: null
+      last_execution: null
+
+  fundamental_analyst_validate:
+    role: "fundamental_analyst"
+    action: "validate"
+    framework: "DASV"
+    location: "/Users/colemorton/Projects/sensylate/team-workspace/microservices/fundamental_analyst/validate.md"
+    manifest: "/Users/colemorton/Projects/sensylate/team-workspace/microservices/fundamental_analyst/validate/manifest.yaml"
+    type: "product"
+    classification: "core_product"
+    status: "active"
+    description: "Quality assurance and confidence verification for fundamental analysis"
+    validation_approach: "institutional_quality_standards"
+    capabilities:
+      reads: ["fundamental_analysis_document", "investment_thesis", "recommendation"]
+      produces: ["validation_report", "confidence_scores", "quality_assessment"]
+    performance_metrics:
+      avg_execution_time: "20s"
+      success_rate: null
+      last_execution: null
+
+# Workflow Compositions
+workflow_compositions:
+  fundamental_analysis_full:
+    description: "Complete fundamental analysis workflow (DASV)"
+    microservices:
+      - fundamental_analyst_discover
+      - fundamental_analyst_analyze
+      - fundamental_analyst_synthesize
+      - fundamental_analyst_validate
+    workflow_type: "complete_analysis"
+    framework: "DASV"
+    estimated_duration: "115s"
+    success_rate: null
+    workflow_file: "/Users/colemorton/Projects/sensylate/team-workspace/workflows/fundamental_analysis_full.yaml"
+    quality_requirement: "Institutional-grade fundamental analysis with 8.5+ reliability score"
+    acceptance_criteria: "Sequential DASV execution produces institutional-quality analysis with 8.5+ reliability score"
 
 # Cross-command collaboration metrics
 collaboration_metrics:

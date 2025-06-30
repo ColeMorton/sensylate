@@ -25,7 +25,7 @@
    - `.env.example` - Template format, no actual secrets
 
 3. **Public Analysis Outputs** (MEDIUM RISK)
-   - `data/outputs/analysis_fundamental/*.md` - Contains company analysis but no API keys
+   - `data/outputs/fundamental_analysis/*.md` - Contains company analysis but no API keys
    - **Assessment**: Trading analysis content, not sensitive credentials
    - **Action**: Review for any embedded contact information
 

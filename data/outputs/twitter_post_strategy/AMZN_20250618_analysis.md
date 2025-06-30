@@ -11,7 +11,7 @@
    - Strategy Type: SMA, Short Window: 51, Long Window: 69
    - Formatted as: dual SMA (51/69) cross
 
-3. **Fundamental Analysis**: /Users/colemorton/Projects/sensylate/data/outputs/analysis_fundamental/AMZN_20250618.md
+3. **Fundamental Analysis**: /Users/colemorton/Projects/sensylate/data/outputs/fundamental_analysis/AMZN_20250618.md
    - BUY rating with $242 fair value target
    - Key catalysts: AWS AI expansion, advertising acceleration, margin expansion
    - Current price ~$185 vs $220-265 fair value range

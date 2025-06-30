@@ -38,7 +38,7 @@ python team-workspace/coordination/pre-execution-consultation.py trade-history p
    - Strategy parameters: SMA/EMA crossover signals and window configurations
    - **Data Integrity**: CSV represents pure signal effectiveness without risk management interference
 
-2. **Fundamental Analysis Integration**: `/data/outputs/analysis_fundamental/`
+2. **Fundamental Analysis Integration**: `/data/outputs/fundamental_analysis/`
    - Comprehensive fundamental analysis for traded stocks/tickers
    - Investment thesis, valuation metrics, and business intelligence
    - Risk factors, competitive positioning, and growth catalysts
@@ -91,7 +91,7 @@ DATA_COLLECTION_PROCESS:
 1. Load latest trade history CSV from /data/raw/trade_history/ (most recent file)
 2. Accept all trade data as 100% accurate and authoritative
 3. Filter by timeframe, strategy, and status parameters as requested
-4. Cross-reference traded tickers with fundamental analysis files in /data/outputs/analysis_fundamental/
+4. Cross-reference traded tickers with fundamental analysis files in /data/outputs/fundamental_analysis/
 5. Enrich with Yahoo Finance market context and benchmark data
 6. Supplement with web research for economic/market context
 7. Calculate performance attribution and risk-adjusted metrics
@@ -101,7 +101,7 @@ DATA_COLLECTION_PROCESS:
 **1.2 Supplemental Data Enhancement**
 ```
 ENHANCEMENT_FRAMEWORK:
-- Fundamental Analysis Integration: Cross-reference tickers with /data/outputs/analysis_fundamental/ for investment thesis context
+- Fundamental Analysis Integration: Cross-reference tickers with /data/outputs/fundamental_analysis/ for investment thesis context
 - Market Context Integration: Yahoo Finance service for benchmark/sector data
 - Economic Research: Web search for relevant economic developments during analysis period
 - Industry Analysis: Online research for sector trends affecting portfolio

@@ -25,7 +25,7 @@
 ### ✅ Phase 2: Command Integration Updates
 **Status**: Complete
 **Files Updated**:
-- ✅ `.claude/commands/fundamental_analysis.md` - Service class integration
+- ✅ `.claude/commands/fundamental_analysis_full.md` - Service class integration via microservices
 - ✅ `.claude/commands/twitter_post_strategy.md` - Service class integration
 - ✅ `.claude/commands/twitter_fundamental_analysis.md` - Service class integration
 - ✅ `.claude/commands/content_evaluator.md` - Service class integration
@@ -107,7 +107,7 @@ Service Health Check:   <1s response time
 ### Command Compatibility Testing
 ```bash
 # All commands successfully reference new service:
-✅ fundamental_analysis.md → scripts/yahoo_finance_service.py
+✅ fundamental_analysis_full.md (microservices) → scripts/yahoo_finance_service.py
 ✅ twitter_post_strategy.md → scripts/yahoo_finance_service.py
 ✅ twitter_fundamental_analysis.md → scripts/yahoo_finance_service.py
 ✅ content_evaluator.md → scripts/yahoo_finance_service.py

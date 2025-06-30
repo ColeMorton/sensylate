@@ -59,6 +59,9 @@ class CollaborationEngine:
         self.metadata_schema = self._load_metadata_schema()
         self.project_context = self._load_project_context()
 
+        # Microservices support
+        self.microservices_path = self.workspace_path / "microservices"
+
         # Initialize session
         self.session_id = self._generate_session_id()
         self.session_path = self.sessions_path / self.session_id
@@ -118,6 +121,11 @@ class CollaborationEngine:
 
     def discover_command(self, command_name: str) -> Optional[Dict[str, Any]]:
         """Discover command information and capabilities with scope awareness"""
+        # Check for microservice commands first
+        microservice_info = self._discover_microservice(command_name)
+        if microservice_info:
+            return microservice_info
+
         if command_name in self.registry.get("commands", {}):
             command_info = self.registry["commands"][command_name].copy()
 
@@ -145,6 +153,39 @@ class CollaborationEngine:
         # Ensure log is flushed to file
         for handler in self.logger.handlers:
             handler.flush()
+        return None
+
+    def _discover_microservice(self, command_name: str) -> Optional[Dict[str, Any]]:
+        """Discover microservice commands with DASV framework support"""
+        # Check if this is a microservice command (pattern: role_action)
+        if "_" not in command_name:
+            return None
+
+        role, action = command_name.rsplit("_", 1)
+
+        # Check for microservice in registry
+        microservices = self.registry.get("microservices", {})
+        if command_name in microservices:
+            microservice_info = microservices[command_name].copy()
+
+            # Resolve microservice file location
+            microservice_path = self.microservices_path / role / f"{action}.md"
+            if microservice_path.exists():
+                microservice_info["resolved_location"] = str(microservice_path)
+
+                # Load microservice manifest
+                manifest_path = self.microservices_path / role / action / "manifest.yaml"
+                if manifest_path.exists():
+                    with open(manifest_path, 'r') as f:
+                        manifest = yaml.safe_load(f)
+                    microservice_info["manifest_data"] = manifest
+                    microservice_info["type"] = "microservice"
+                    microservice_info["role"] = role
+                    microservice_info["action"] = action
+
+                    self.logger.info(f"Discovered microservice: {command_name} (role: {role}, action: {action})")
+                    return microservice_info
+
         return None
 
     def _resolve_command_location(self, command_name: str, command_info: Dict[str, Any]) -> Optional[Path]:
@@ -208,12 +249,22 @@ class CollaborationEngine:
         # Check required dependencies
         missing_deps = []
         for dep in dependencies.get("required", []):
-            dep_data = self._find_dependency_data(dep)
-            if dep_data:
-                execution_context["available_data"][dep] = dep_data
+            # Handle both string and dict dependency formats
+            if isinstance(dep, dict):
+                dep_command = dep.get("command")
+                dep_output_type = dep.get("output_type")
+                dep_name = dep_command
             else:
-                missing_deps.append(dep)
-                self.logger.warning(f"Missing required dependency: {dep}")
+                dep_command = dep
+                dep_output_type = None
+                dep_name = dep
+
+            dep_data = self._find_dependency_data(dep_command, dep_output_type)
+            if dep_data:
+                execution_context["available_data"][dep_name] = dep_data
+            else:
+                missing_deps.append(dep_name)
+                self.logger.warning(f"Missing required dependency: {dep_name}")
 
         # Gather optional dependencies for optimization
         for dep in dependencies.get("optional", []):
@@ -598,6 +649,98 @@ class CollaborationEngine:
 
         return deps
 
+    def execute_dasv_workflow(self, role: str, ticker: str = None, **kwargs) -> Dict[str, Any]:
+        """Execute a complete DASV workflow for a given role"""
+        dasv_phases = ["discover", "analyze", "synthesize", "validate"]
+        results = {
+            "role": role,
+            "workflow": "DASV",
+            "phases": {},
+            "status": "starting",
+            "ticker": ticker
+        }
+
+        self.logger.info(f"Starting DASV workflow for role: {role}")
+
+        try:
+            for phase in dasv_phases:
+                command_name = f"{role}_{phase}"
+                self.logger.info(f"Executing DASV phase: {phase} ({command_name})")
+
+                # Discover microservice
+                microservice_info = self._discover_microservice(command_name)
+                if not microservice_info:
+                    raise ValueError(f"Microservice not found: {command_name}")
+
+                # Resolve dependencies for this phase
+                context, missing_deps = self.resolve_dependencies(command_name)
+
+                if missing_deps and phase != "discover":
+                    self.logger.warning(f"Missing dependencies for {command_name}: {missing_deps}")
+
+                # Store phase results
+                results["phases"][phase] = {
+                    "command": command_name,
+                    "status": "ready",
+                    "context": context,
+                    "missing_dependencies": missing_deps,
+                    "microservice_info": microservice_info
+                }
+
+                self.logger.info(f"DASV phase {phase} prepared successfully")
+
+            results["status"] = "ready_for_execution"
+            self.logger.info(f"DASV workflow for {role} prepared successfully")
+
+        except Exception as e:
+            results["status"] = "failed"
+            results["error"] = str(e)
+            self.logger.error(f"DASV workflow preparation failed: {e}")
+
+        return results
+
+    def get_workflow_composition(self, workflow_name: str) -> Optional[Dict[str, Any]]:
+        """Get workflow composition definition from registry"""
+        workflow_compositions = self.registry.get("workflow_compositions", {})
+        return workflow_compositions.get(workflow_name)
+
+    def store_microservice_output(self, role: str, action: str, output_content: str,
+                                output_type: str, metadata: Dict[str, Any]) -> Tuple[str, str]:
+        """Store microservice output with role/action structure"""
+        # Create microservice output directory
+        output_dir = self.microservices_path / role / action / "outputs"
+        output_dir.mkdir(parents=True, exist_ok=True)
+
+        # Generate filename based on microservice patterns
+        timestamp = datetime.now().strftime("%Y%m%d")
+        ticker = metadata.get("ticker", "")
+
+        if ticker:
+            output_file = output_dir / f"{ticker}_{timestamp}_{action}.json"
+            meta_file = output_dir / f".{ticker}_{timestamp}_{action}.meta.yaml"
+        else:
+            output_file = output_dir / f"{action}_{timestamp}.json"
+            meta_file = output_dir / f".{action}_{timestamp}.meta.yaml"
+
+        # Add microservice-specific metadata
+        enhanced_metadata = metadata.copy()
+        enhanced_metadata.setdefault("microservice", {}).update({
+            "role": role,
+            "action": action,
+            "framework": "DASV",
+            "timestamp": datetime.now().isoformat()
+        })
+
+        # Write output and metadata
+        with open(output_file, 'w') as f:
+            f.write(output_content)
+
+        with open(meta_file, 'w') as f:
+            yaml.dump(enhanced_metadata, f, default_flow_style=False)
+
+        self.logger.info(f"Stored microservice output: {output_file}")
+        return str(output_file), str(meta_file)
+
 
 def main():
     """Example usage of the Collaboration Engine"""
@@ -627,6 +770,24 @@ def main():
     print(f"\n=== Command Resolution Paths ===")
     print(f"User commands: {engine.user_commands_path}")
     print(f"Project commands: {engine.project_commands_path}")
+    print(f"Microservices: {engine.microservices_path}")
+
+    # Example: Microservice discovery
+    print(f"\n=== Microservice Discovery Example ===")
+    fundamental_discover = engine._discover_microservice("fundamental_analyst_discover")
+    if fundamental_discover:
+        print(f"Found microservice: fundamental_analyst_discover")
+        print(f"Role: {fundamental_discover.get('role')}")
+        print(f"Action: {fundamental_discover.get('action')}")
+        print(f"Type: {fundamental_discover.get('type')}")
+    else:
+        print("Microservice fundamental_analyst_discover not found")
+
+    # Example: DASV workflow preparation
+    print(f"\n=== DASV Workflow Example ===")
+    dasv_result = engine.execute_dasv_workflow("fundamental_analyst", ticker="AAPL")
+    print(f"DASV Status: {dasv_result['status']}")
+    print(f"DASV Phases: {list(dasv_result['phases'].keys())}")
 
     # Example usage for different projects
     print(f"\n=== Multi-Project Usage ===")

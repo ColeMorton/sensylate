@@ -397,7 +397,7 @@ def find_related_trading_analysis(stock_symbol):
 
     # Check for fundamental analysis
     analysis_paths = [
-        f"data/outputs/analysis_fundamental/{stock_symbol}_*.md",
+        f"data/outputs/fundamental_analysis/{stock_symbol}_*.md",
         f"team-workspace/knowledge/*/fundamental-analysis-{stock_symbol}.md"
     ]
 

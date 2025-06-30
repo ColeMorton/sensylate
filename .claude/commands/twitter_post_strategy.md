@@ -12,7 +12,7 @@ You are an expert financial content analyzer and social media strategist. Your s
    - Win/loss streaks, reward/risk ratios, exposure levels
    - Tabular performance data takes precedence over CSV files
 
-2. **Fundamental Analysis**: `@data/outputs/analysis_fundamental/`
+2. **Fundamental Analysis**: `@data/outputs/fundamental_analysis/`
    - Comprehensive markdown investment analysis files
    - Company financials, business model, competitive positioning
    - Investment thesis, valuation metrics, risk factors
@@ -156,7 +156,7 @@ TRANSPARENCY ENHANCEMENT REQUIREMENTS:
   - Best/worst performing months identification
   - **MANDATORY**: Cross-reference bar heights with percentage labels if visible
 
-**Step 2: Fundamental Analysis Integration** (`@data/outputs/analysis_fundamental/{TICKER}_{YYYYMMDD}.md`)
+**Step 2: Fundamental Analysis Integration** (`@data/outputs/fundamental_analysis/{TICKER}_{YYYYMMDD}.md`)
 - Extract investment thesis and key business drivers
 - Identify valuation metrics (P/E, PEG, enterprise value ratios)
 - Note growth catalysts and risk factors
@@ -403,7 +403,7 @@ Deliver comprehensive analysis featuring:
 
 **Data will be automatically sourced from matching UID files:**
 - `@data/images/trendspider_tabular/{TICKER}_{YYYYMMDD}.png` (PRIMARY)
-- `@data/outputs/analysis_fundamental/{TICKER}_{YYYYMMDD}.md`
+- `@data/outputs/fundamental_analysis/{TICKER}_{YYYYMMDD}.md`
 - `@data/raw/analysis_misc/{TICKER}_{YYYYMMDD}.md`
 - `@data/raw/analysis_strategy/{TICKER}_{YYYYMMDD}.csv` (FALLBACK)
 
