@@ -1,0 +1,218 @@
+# Fundamental Analyst Synthesize Manifest
+# DASV Phase 3: Integration and Recommendation Generation
+
+command:
+  name: "fundamental_analyst_synthesize"
+  version: "1.0.0"
+  type: "microservice"
+  role: "fundamental_analyst"
+  action: "synthesize"
+  framework: "DASV"
+  description: "Integration and recommendation generation - produces final analysis document"
+  command_file: "/Users/colemorton/Projects/sensylate/team-workspace/microservices/fundamental_analyst/synthesize.md"
+
+capabilities:
+  reads:
+    - discovery_data
+    - analysis_data
+    - financial_health_analysis
+    - competitive_position_assessment
+    - growth_analysis
+    - risk_assessment
+    - valuation_model_inputs
+
+  produces:
+    - fundamental_analysis_document
+    - investment_thesis
+    - recommendation
+    - valuation_synthesis
+    - risk_integration
+    - institutional_quality_report
+
+dependencies:
+  required:
+    - command: "fundamental_analyst_discover"
+      output_type: "discovery_data"
+      enhancement: "Provides foundational data for synthesis"
+    - command: "fundamental_analyst_analyze"
+      output_type: "analysis_data"
+      enhancement: "Provides analytical insights for integration"
+  optional: []
+  external_apis: []
+  conflicts: []
+
+data_schema:
+  inputs:
+    discovery_data:
+      type: "json"
+      required: true
+      source: "fundamental_analyst_discover"
+      validation: "discovery_schema_v1"
+    analysis_data:
+      type: "json"
+      required: true
+      source: "fundamental_analyst_analyze"
+      validation: "analysis_schema_v1"
+    ticker:
+      type: "string"
+      required: true
+      validation: "uppercase_stock_symbol"
+    confidence_threshold:
+      type: "float"
+      required: false
+      default: 0.7
+      range: [0.6, 0.8]
+    depth:
+      type: "string"
+      required: false
+      default: "comprehensive"
+      options: ["summary", "standard", "comprehensive", "deep-dive"]
+    scenario_count:
+      type: "integer"
+      required: false
+      default: 3
+      range: [3, 7]
+
+  outputs:
+    fundamental_analysis_document:
+      type: "markdown"
+      location: "./data/outputs/fundamental_analysis/"
+      filename_pattern: "{ticker}_{YYYYMMDD}.md"
+      template: "fundamental_analysis_template_v1"
+      metadata_required: true
+      critical_requirement: "Must produce identical files to current fundamental_analysis.md implementation"
+
+collaboration:
+  consumption_pattern: "synthesis_driven"
+  pre_execution_behavior:
+    - "Load and validate discovery data"
+    - "Load and validate analysis data"
+    - "Initialize synthesis frameworks"
+    - "Prepare institutional quality templates"
+
+  output_sharing: "immediate"
+  post_execution_behavior:
+    - "Save fundamental analysis document to required location"
+    - "Validate output format and structure"
+    - "Signal fundamental_analyst_validate readiness"
+    - "Log synthesis performance metrics"
+
+  cache_strategy: "output_caching"
+  cache_duration: "24h"
+
+  notification_events:
+    - event: "synthesis_completed"
+      notify: ["fundamental_analyst_validate"]
+      payload: ["document_location", "confidence_metrics"]
+    - event: "document_generated"
+      notify: ["team_workspace"]
+      payload: ["file_path", "analysis_summary"]
+    - event: "quality_validation_required"
+      notify: ["fundamental_analyst_validate"]
+      payload: ["validation_checklist", "quality_gates"]
+
+quality_standards:
+  validation_criteria:
+    - "Investment thesis construction complete"
+    - "Multi-method valuation synthesis executed"
+    - "Risk integration and quantification complete"
+    - "Document format exactly matches template"
+    - "All confidence scores in 0.0-1.0 format"
+    - "File saved to correct location with proper naming"
+
+  output_requirements:
+    - "Complete markdown document with institutional quality"
+    - "Exact template compliance and formatting"
+    - "Consistent author attribution (Cole Morton)"
+    - "Professional presentation suitable for publication"
+    - "Single file output with no additional files"
+    - "Zero functional regression from current implementation"
+
+performance_characteristics:
+  typical_execution_time: "30s"
+  complexity_factors:
+    - "Amount of discovery and analysis data"
+    - "Number of valuation scenarios"
+    - "Depth of synthesis required"
+    - "Template validation complexity"
+
+  optimization_strategies:
+    - "Parallel synthesis of independent sections"
+    - "Template-driven document generation"
+    - "Efficient data structure processing"
+    - "Optimized markdown formatting algorithms"
+
+integration_patterns:
+  workflow_chains:
+    - name: "fundamental_analysis_full"
+      position: "third"
+      previous_service: "fundamental_analyst_analyze"
+      next_service: "fundamental_analyst_validate"
+      trigger: "analysis_completed"
+
+  data_flow:
+    incoming:
+      - "Discovery data from fundamental_analyst_discover"
+      - "Analysis data from fundamental_analyst_analyze"
+      - "Template configurations from team workspace"
+    outgoing:
+      - "Fundamental analysis document to file system"
+      - "Document metadata to validate phase"
+      - "Analysis summary to team workspace"
+
+# Synthesis Frameworks
+synthesis_frameworks:
+  investment_thesis:
+    core_thesis_construction:
+      - "value_driver_identification"
+      - "risk_adjusted_return_calculation"
+      - "conviction_scoring"
+    recommendation_generation:
+      - "buy_hold_sell_decision"
+      - "position_sizing_recommendation"
+      - "catalyst_identification"
+
+  valuation_synthesis:
+    multi_method_triangulation:
+      - "dcf_analysis"
+      - "relative_valuation"
+      - "sum_of_parts"
+    scenario_analysis:
+      - "bear_base_bull_scenarios"
+      - "probability_weighting"
+      - "expected_value_calculation"
+
+  document_generation:
+    template_compliance:
+      - "exact_structure_adherence"
+      - "consistent_formatting"
+      - "mandatory_metadata_inclusion"
+    quality_validation:
+      - "confidence_score_formatting"
+      - "author_attribution_consistency"
+      - "professional_presentation"
+
+# Critical Output Requirements
+output_requirements:
+  file_location: "./data/outputs/fundamental_analysis/"
+  file_naming: "{TICKER}_{YYYYMMDD}.md"
+  template_compliance: "exact_match_to_current_implementation"
+  quality_standard: "institutional_grade"
+  regression_prevention: "zero_functional_regression"
+
+# Topic Ownership Configuration
+topic_ownership:
+  primary_topics:
+    - "investment-thesis-synthesis"
+    - "valuation-integration"
+    - "document-generation"
+    - "institutional-quality-output"
+
+  secondary_topics:
+    - "risk-integration"
+    - "competitive-position-synthesis"
+
+  collaboration_permissions:
+    read_access: ["fundamental_analyst_validate"]
+    write_access: ["fundamental_analyst_synthesize"]
+    coordination_required: ["fundamental_analyst_discover", "fundamental_analyst_analyze"]

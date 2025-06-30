@@ -1,0 +1,204 @@
+# Fundamental Analyst Analyze Manifest
+# DASV Phase 2: Systematic Analysis and Evaluation
+
+command:
+  name: "fundamental_analyst_analyze"
+  version: "1.0.0"
+  type: "microservice"
+  role: "fundamental_analyst"
+  action: "analyze"
+  framework: "DASV"
+  description: "Systematic analysis and evaluation of financial data"
+  command_file: "/Users/colemorton/Projects/sensylate/team-workspace/microservices/fundamental_analyst/analyze.md"
+
+capabilities:
+  reads:
+    - discovery_data
+    - structured_financial_data
+    - peer_group_data
+    - industry_benchmarks
+    - historical_performance
+    - risk_indicators
+
+  produces:
+    - financial_health_analysis
+    - competitive_position_assessment
+    - growth_analysis
+    - risk_assessment
+    - valuation_model_inputs
+    - analytical_insights
+
+dependencies:
+  required:
+    - command: "fundamental_analyst_discover"
+      output_type: "discovery_data"
+      enhancement: "Provides foundational data for systematic analysis"
+  optional: []
+  external_apis: []
+  conflicts: []
+
+data_schema:
+  inputs:
+    discovery_data:
+      type: "json"
+      required: true
+      source: "fundamental_analyst_discover"
+      validation: "discovery_schema_v1"
+    ticker:
+      type: "string"
+      required: true
+      validation: "uppercase_stock_symbol"
+    confidence_threshold:
+      type: "float"
+      required: false
+      default: 0.7
+      range: [0.6, 0.8]
+    peer_comparison:
+      type: "boolean"
+      required: false
+      default: true
+    risk_analysis:
+      type: "boolean"
+      required: false
+      default: true
+    scenario_count:
+      type: "integer"
+      required: false
+      default: 3
+      range: [3, 7]
+
+  outputs:
+    analysis_data:
+      type: "json"
+      location: "/team-workspace/microservices/fundamental_analyst/analyze/outputs/"
+      filename_pattern: "{ticker}_{YYYYMMDD}_analysis.json"
+      schema: "analysis_data_schema_v1"
+      metadata_required: true
+
+collaboration:
+  consumption_pattern: "data_driven"
+  pre_execution_behavior:
+    - "Load and validate discovery data"
+    - "Initialize analytical frameworks"
+    - "Load peer group and industry benchmarks"
+    - "Set confidence thresholds for analysis"
+
+  output_sharing: "immediate"
+  post_execution_behavior:
+    - "Store analysis data with full metadata"
+    - "Validate internal consistency of metrics"
+    - "Signal fundamental_analyst_synthesize readiness"
+    - "Log analytical performance metrics"
+
+  cache_strategy: "analysis_caching"
+  cache_duration: "24h"
+
+  notification_events:
+    - event: "analysis_completed"
+      notify: ["fundamental_analyst_synthesize"]
+      payload: ["analysis_data", "confidence_metrics"]
+    - event: "risk_threshold_exceeded"
+      notify: ["fundamental_analyst_validate"]
+      payload: ["risk_assessment", "threshold_violations"]
+    - event: "consistency_warning"
+      notify: ["fundamental_analyst_validate"]
+      payload: ["consistency_issues", "validation_required"]
+
+quality_standards:
+  validation_criteria:
+    - "All financial metrics calculated and validated"
+    - "Competitive position assessment complete"
+    - "Risk assessment across all categories"
+    - "Internal consistency of analytical results"
+    - "Confidence scores meet minimum thresholds"
+
+  output_requirements:
+    - "Structured JSON with comprehensive analysis"
+    - "Confidence scores for each analysis section"
+    - "Cross-validated financial metrics"
+    - "Evidence-based competitive assessment"
+    - "Quantified risk factors with probabilities"
+
+performance_characteristics:
+  typical_execution_time: "40s"
+  complexity_factors:
+    - "Number of financial metrics calculated"
+    - "Peer group size for comparisons"
+    - "Risk assessment depth"
+    - "Scenario modeling complexity"
+
+  optimization_strategies:
+    - "Parallel calculation of independent metrics"
+    - "Cached peer group data reuse"
+    - "Incremental analysis updates"
+    - "Optimized ratio calculation algorithms"
+
+integration_patterns:
+  workflow_chains:
+    - name: "fundamental_analysis_full"
+      position: "second"
+      previous_service: "fundamental_analyst_discover"
+      next_service: "fundamental_analyst_synthesize"
+      trigger: "discovery_completed"
+
+  data_flow:
+    incoming:
+      - "Discovery data from fundamental_analyst_discover"
+      - "Peer group data from cache"
+      - "Industry benchmarks from team workspace"
+    outgoing:
+      - "Financial analysis to synthesize phase"
+      - "Risk assessment to validate phase"
+      - "Analytical insights to team workspace"
+
+# Analysis Frameworks
+analysis_frameworks:
+  financial_health:
+    profitability_analysis:
+      - "gross_margins"
+      - "operating_leverage"
+      - "ebitda_quality"
+      - "free_cash_flow_conversion"
+    balance_sheet_strength:
+      - "liquidity_analysis"
+      - "leverage_metrics"
+      - "working_capital_efficiency"
+      - "off_balance_sheet_obligations"
+    capital_efficiency:
+      - "roic_vs_wacc_spread"
+      - "asset_turnover_trends"
+      - "capital_allocation_record"
+      - "reinvestment_opportunities"
+
+  competitive_position:
+    market_position:
+      - "market_share_trends"
+      - "pricing_power_indicators"
+      - "customer_concentration"
+    competitive_advantages:
+      - "network_effects"
+      - "switching_costs"
+      - "brand_value"
+      - "scale_advantages"
+    innovation_disruption:
+      - "rd_efficiency"
+      - "patent_portfolio"
+      - "digital_transformation"
+      - "disruption_vulnerability"
+
+# Topic Ownership Configuration
+topic_ownership:
+  primary_topics:
+    - "financial-health-analysis"
+    - "competitive-position-assessment"
+    - "growth-driver-analysis"
+    - "risk-quantification"
+
+  secondary_topics:
+    - "valuation-model-inputs"
+    - "analytical-insights"
+
+  collaboration_permissions:
+    read_access: ["fundamental_analyst_synthesize", "fundamental_analyst_validate"]
+    write_access: ["fundamental_analyst_analyze"]
+    coordination_required: ["fundamental_analyst_discover"]
