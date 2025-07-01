@@ -246,6 +246,22 @@ commands:
       success_rate: null
       last_execution: null
 
+  trade-history:
+    location: "/Users/colemorton/Projects/sensylate/.claude/commands/trade_history.md"
+    scope: "project"
+    manifest: "/Users/colemorton/Projects/sensylate/team-workspace/commands/trade-history/manifest.yaml"
+    type: "product"
+    classification: "core_product"
+    status: "active"
+    description: "Comprehensive trading performance analysis with historical reporting and live monitoring"
+    capabilities:
+      reads: ["trading_data", "portfolio_data", "performance_metrics", "market_data"]
+      produces: ["performance_reports", "historical_analysis", "live_monitoring", "trading_insights"]
+    performance_metrics:
+      avg_execution_time: "60s"
+      success_rate: null
+      last_execution: "2025-07-01"
+
 # Workflow patterns discovered from command analysis
 workflow_patterns:
   analysis_chain:

@@ -1,0 +1,404 @@
+{
+  "data_summary": {
+    "total_records": 35,
+    "date_range": {
+      "earliest_entry": "2025-04-01",
+      "latest_entry": "2025-06-26"
+    },
+    "unique_tickers": 32,
+    "strategies_used": [
+      "SMA",
+      "EMA"
+    ]
+  },
+  "portfolio_performance": {
+    "total_trades": 35,
+    "closed_trades": 15,
+    "open_trades": 20,
+    "win_rate": 53.333333333333336,
+    "avg_winning_return": 6.091455765644977,
+    "avg_losing_return": -5.734627304176578,
+    "avg_return": 0.5726169997282506,
+    "profit_factor": 1.1885727874604044,
+    "sharpe_ratio": 1.1315682443751605,
+    "max_drawdown": -24.069596896653234,
+    "current_exposure": 20,
+    "avg_days_open": 34.75,
+    "current_unrealized_pnl": 0.0,
+    "avg_mfe_open": 10.962925594022835,
+    "avg_mae_open": 3.551889704799293
+  },
+  "strategy_breakdown": {
+    "SMA": {
+      "total_trades": 28,
+      "closed_trades": 15,
+      "open_trades": 13,
+      "win_rate": 53.333333333333336,
+      "avg_winning_return": 6.091455765644977,
+      "avg_losing_return": -5.734627304176578,
+      "avg_return": 0.5726169997282506,
+      "profit_factor": 1.1885727874604044,
+      "sharpe_ratio": 1.1315682443751605,
+      "max_drawdown": -24.069596896653234,
+      "current_exposure": 13,
+      "avg_days_open": 27.23076923076923,
+      "current_unrealized_pnl": 0.0,
+      "avg_mfe_open": 8.449291188774257,
+      "avg_mae_open": 3.412503703566441,
+      "avg_duration": 26.8,
+      "total_pnl": 15.404507871282725
+    },
+    "EMA": {
+      "total_trades": 7,
+      "closed_trades": 0,
+      "open_trades": 7,
+      "win_rate": 0,
+      "avg_winning_return": 0,
+      "avg_losing_return": 0,
+      "avg_return": 0,
+      "profit_factor": 0,
+      "sharpe_ratio": 0,
+      "max_drawdown": 0,
+      "current_exposure": 7,
+      "avg_days_open": 48.714285714285715,
+      "current_unrealized_pnl": 0.0,
+      "avg_mfe_open": 15.631103775198765,
+      "avg_mae_open": 3.810749421374588
+    }
+  },
+  "position_sizing": {
+    "unique_position_sizes": 1,
+    "position_size_distribution": {
+      "1.0": 35
+    },
+    "avg_position_size": 1.0,
+    "position_sizing_strategy": "Variable"
+  },
+  "statistical_analysis": {
+    "return_mean": 0.5726169997282506,
+    "return_std": 8.033110783903938,
+    "return_skew": 0.04971608914339257,
+    "return_kurtosis": 0.3076803972368092,
+    "return_min": -15.02082943214945,
+    "return_max": 16.57797267640927,
+    "return_median": 0.55627864160577,
+    "return_25th_percentile": -3.3957278321085997,
+    "return_75th_percentile": 4.870976486652625,
+    "positive_returns": "8",
+    "negative_returns": "7",
+    "avg_win_loss_ratio": 1.0622234789710776,
+    "trade_quality_distribution": {
+      "Excellent": 5,
+      "Poor": 4,
+      "Failed to Capture Upside": 4,
+      "Good": 1,
+      "Poor Setup - High Risk, Low Reward": 1
+    }
+  },
+  "spy_benchmark": {
+    "strategy_annualized_return": 5.515694578883479,
+    "spy_typical_annual_return": 10.0,
+    "return_vs_spy": -4.484305421116522,
+    "spy_typical_sharpe": 0.629940788348712,
+    "avg_trade_duration_days": 26.8,
+    "trades_per_year": 9.402985074626866
+  },
+  "top_performers": {
+    "winners": [
+      {
+        "Ticker": "TSLA",
+        "Strategy_Type": "SMA",
+        "Entry_Timestamp": "2025-05-01 00:00:00",
+        "Exit_Timestamp": "2025-06-11 00:00:00",
+        "Return": 0.1657797267640927,
+        "PnL": 46.41998291015625,
+        "Duration_Days": 41.0
+      },
+      {
+        "Ticker": "LYV",
+        "Strategy_Type": "SMA",
+        "Entry_Timestamp": "2025-04-14 00:00:00",
+        "Exit_Timestamp": "2025-06-17 00:00:00",
+        "Return": 0.1087502783093479,
+        "PnL": 14.279998779296877,
+        "Duration_Days": 64.0
+      },
+      {
+        "Ticker": "SHOP",
+        "Strategy_Type": "SMA",
+        "Entry_Timestamp": "2025-06-02 00:00:00",
+        "Exit_Timestamp": "2025-06-11 00:00:00",
+        "Return": 0.0741141612494529,
+        "PnL": 7.875,
+        "Duration_Days": 9.0
+      },
+      {
+        "Ticker": "EQT",
+        "Strategy_Type": "SMA",
+        "Entry_Timestamp": "2025-05-05 00:00:00",
+        "Exit_Timestamp": "2025-05-29 00:00:00",
+        "Return": 0.0689924731364303,
+        "PnL": 3.5735641362038777,
+        "Duration_Days": 24.0
+      },
+      {
+        "Ticker": "MCO",
+        "Strategy_Type": "SMA",
+        "Entry_Timestamp": "2025-04-29 00:00:00",
+        "Exit_Timestamp": "2025-05-01 00:00:00",
+        "Return": 0.0284270565966222,
+        "PnL": 12.46590390963945,
+        "Duration_Days": 2.0
+      }
+    ],
+    "losers": [
+      {
+        "Ticker": "MA",
+        "Strategy_Type": "SMA",
+        "Entry_Timestamp": "2025-04-02 00:00:00",
+        "Exit_Timestamp": "2025-04-03 00:00:00",
+        "Return": -0.022676192555658,
+        "PnL": -12.30999755859375,
+        "Duration_Days": 1.0
+      },
+      {
+        "Ticker": "AAPL",
+        "Strategy_Type": "SMA",
+        "Entry_Timestamp": "2025-05-14 00:00:00",
+        "Exit_Timestamp": "2025-06-04 00:00:00",
+        "Return": -0.045238364086514,
+        "PnL": -9.6099853515625,
+        "Duration_Days": 21.0
+      },
+      {
+        "Ticker": "VTR",
+        "Strategy_Type": "SMA",
+        "Entry_Timestamp": "2025-04-01 00:00:00",
+        "Exit_Timestamp": "2025-06-11 00:00:00",
+        "Return": -0.0811476904139717,
+        "PnL": -5.600002288818359,
+        "Duration_Days": 71.0
+      },
+      {
+        "Ticker": "TSLA",
+        "Strategy_Type": "SMA",
+        "Entry_Timestamp": "2025-04-03 00:00:00",
+        "Exit_Timestamp": "2025-04-16 00:00:00",
+        "Return": -0.0894869943401737,
+        "PnL": -23.740005493164062,
+        "Duration_Days": 13.0
+      },
+      {
+        "Ticker": "UHS",
+        "Strategy_Type": "SMA",
+        "Entry_Timestamp": "2025-04-02 00:00:00",
+        "Exit_Timestamp": "2025-04-21 00:00:00",
+        "Return": -0.1502082943214945,
+        "PnL": -27.759994506835938,
+        "Duration_Days": 19.0
+      }
+    ]
+  },
+  "current_open_positions": [
+    {
+      "Ticker": "CRWD",
+      "Strategy_Type": "EMA",
+      "Entry_Timestamp": "2025-04-14 00:00:00",
+      "Avg_Entry_Price": 386.9549865722656,
+      "Days_Since_Entry": 72.0,
+      "Current_MFE%": 27.740953068363126,
+      "Current_MAE%": 8.08749957905291,
+      "MFE_MAE_Ratio": 3.4301025672030674
+    },
+    {
+      "Ticker": "NFLX",
+      "Strategy_Type": "EMA",
+      "Entry_Timestamp": "2025-04-14 00:00:00",
+      "Avg_Entry_Price": 932.7000122070312,
+      "Days_Since_Entry": 72.0,
+      "Current_MFE%": 37.51163591034487,
+      "Current_MAE%": 1.41524735008808,
+      "MFE_MAE_Ratio": 26.50535675478224
+    },
+    {
+      "Ticker": "COST",
+      "Strategy_Type": "EMA",
+      "Entry_Timestamp": "2025-04-30 00:00:00",
+      "Avg_Entry_Price": 990.0,
+      "Days_Since_Entry": 56.0,
+      "Current_MFE%": 7.78585414693813,
+      "Current_MAE%": 1.62626016019571,
+      "MFE_MAE_Ratio": 4.7875821701252965
+    },
+    {
+      "Ticker": "INTU",
+      "Strategy_Type": "SMA",
+      "Entry_Timestamp": "2025-04-30 00:00:00",
+      "Avg_Entry_Price": 614.0900268554688,
+      "Days_Since_Entry": 56.0,
+      "Current_MFE%": 25.95059004094023,
+      "Current_MAE%": 0.63020990133334,
+      "MFE_MAE_Ratio": 41.17769331461825
+    },
+    {
+      "Ticker": "GOOGL",
+      "Strategy_Type": "SMA",
+      "Entry_Timestamp": "2025-05-05 00:00:00",
+      "Avg_Entry_Price": 163.0,
+      "Days_Since_Entry": 51.0,
+      "Current_MFE%": 11.110429822301569,
+      "Current_MAE%": 9.30061574362538,
+      "MFE_MAE_Ratio": 1.1945907807143448
+    },
+    {
+      "Ticker": "AMD",
+      "Strategy_Type": "SMA",
+      "Entry_Timestamp": "2025-05-08 00:00:00",
+      "Avg_Entry_Price": 101.91999816894533,
+      "Days_Since_Entry": 48.0,
+      "Current_MFE%": 36.17542757023091,
+      "Current_MAE%": 0.35321881556043,
+      "MFE_MAE_Ratio": 102.41647946424784
+    },
+    {
+      "Ticker": "AMZN",
+      "Strategy_Type": "SMA",
+      "Entry_Timestamp": "2025-05-09 00:00:00",
+      "Avg_Entry_Price": 193.3800048828125,
+      "Days_Since_Entry": 47.0,
+      "Current_MFE%": 12.93825027506536,
+      "Current_MAE%": 1.14799936117928,
+      "MFE_MAE_Ratio": 11.27025912433831
+    },
+    {
+      "Ticker": "FFIV",
+      "Strategy_Type": "SMA",
+      "Entry_Timestamp": "2025-05-09 00:00:00",
+      "Avg_Entry_Price": 273.989990234375,
+      "Days_Since_Entry": 47.0,
+      "Current_MFE%": 9.01858566129329,
+      "Current_MAE%": 2.23730979280257,
+      "MFE_MAE_Ratio": 4.030995479618456
+    },
+    {
+      "Ticker": "RTX",
+      "Strategy_Type": "EMA",
+      "Entry_Timestamp": "2025-05-13 00:00:00",
+      "Avg_Entry_Price": 131.0,
+      "Days_Since_Entry": 43.0,
+      "Current_MFE%": 13.93892710445491,
+      "Current_MAE%": 1.44274762568583,
+      "MFE_MAE_Ratio": 9.661375874958624
+    },
+    {
+      "Ticker": "GOOGL",
+      "Strategy_Type": "EMA",
+      "Entry_Timestamp": "2025-05-16 00:00:00",
+      "Avg_Entry_Price": 167.72999572753906,
+      "Days_Since_Entry": 40.0,
+      "Current_MFE%": 7.97710917762557,
+      "Current_MAE%": 3.4162021543522103,
+      "MFE_MAE_Ratio": 2.3350811272871557
+    },
+    {
+      "Ticker": "GD",
+      "Strategy_Type": "SMA",
+      "Entry_Timestamp": "2025-05-16 00:00:00",
+      "Avg_Entry_Price": 280.1600036621094,
+      "Days_Since_Entry": 40.0,
+      "Current_MFE%": 2.3700685479957397,
+      "Current_MAE%": 4.30468211056238,
+      "MFE_MAE_Ratio": 0.5505792267866452
+    },
+    {
+      "Ticker": "LMT",
+      "Strategy_Type": "EMA",
+      "Entry_Timestamp": "2025-05-21 00:00:00",
+      "Avg_Entry_Price": 477.5505304056367,
+      "Days_Since_Entry": 35.0,
+      "Current_MFE%": 2.2509570616959103,
+      "Current_MAE%": 7.149091995464429,
+      "MFE_MAE_Ratio": 0.3148591545785082
+    },
+    {
+      "Ticker": "ILMN",
+      "Strategy_Type": "EMA",
+      "Entry_Timestamp": "2025-06-02 00:00:00",
+      "Avg_Entry_Price": 81.68000030517578,
+      "Days_Since_Entry": 23.0,
+      "Current_MFE%": 12.21228995696883,
+      "Current_MAE%": 3.53819708478295,
+      "MFE_MAE_Ratio": 3.451557294389094
+    },
+    {
+      "Ticker": "PWR",
+      "Strategy_Type": "SMA",
+      "Entry_Timestamp": "2025-06-03 00:00:00",
+      "Avg_Entry_Price": 347.57000732421875,
+      "Days_Since_Entry": 22.0,
+      "Current_MFE%": 7.40281955478069,
+      "Current_MAE%": 1.62269888931365,
+      "MFE_MAE_Ratio": 4.562041425881426
+    },
+    {
+      "Ticker": "PGR",
+      "Strategy_Type": "SMA",
+      "Entry_Timestamp": "2025-06-03 00:00:00",
+      "Avg_Entry_Price": 287.8399963378906,
+      "Days_Since_Entry": 22.0,
+      "Current_MFE%": 0.73651860205656,
+      "Current_MAE%": 10.50236637400509,
+      "MFE_MAE_Ratio": 0.070128823907682
+    },
+    {
+      "Ticker": "COR",
+      "Strategy_Type": "SMA",
+      "Entry_Timestamp": "2025-06-16 00:00:00",
+      "Avg_Entry_Price": 294.54998779296875,
+      "Days_Since_Entry": 9.0,
+      "Current_MFE%": 1.21881751969111,
+      "Current_MAE%": 2.4172450898867304,
+      "MFE_MAE_Ratio": 0.5042176007680834
+    },
+    {
+      "Ticker": "AMZN",
+      "Strategy_Type": "SMA",
+      "Entry_Timestamp": "2025-06-18 00:00:00",
+      "Avg_Entry_Price": 215.08999633789065,
+      "Days_Since_Entry": 7.0,
+      "Current_MFE%": 1.33433001294395,
+      "Current_MAE%": 3.61709001430038,
+      "MFE_MAE_Ratio": 0.3688959930962744
+    },
+    {
+      "Ticker": "SMCI",
+      "Strategy_Type": "SMA",
+      "Entry_Timestamp": "2025-06-23 00:00:00",
+      "Avg_Entry_Price": 43.470001220703125,
+      "Days_Since_Entry": 2.0,
+      "Current_MFE%": 0.299050494059,
+      "Current_MAE%": 6.18818119592116,
+      "MFE_MAE_Ratio": 0.0483260726521906
+    },
+    {
+      "Ticker": "DOV",
+      "Strategy_Type": "SMA",
+      "Entry_Timestamp": "2025-06-26 00:00:00",
+      "Avg_Entry_Price": 183.0399932861328,
+      "Days_Since_Entry": 2.0,
+      "Current_MFE%": 0.75939654754879,
+      "Current_MAE%": 1.32211443275257,
+      "MFE_MAE_Ratio": 0.5743803476736634
+    },
+    {
+      "Ticker": "QCOM",
+      "Strategy_Type": "SMA",
+      "Entry_Timestamp": "2025-06-24 00:00:00",
+      "Avg_Entry_Price": 155.7100067138672,
+      "Days_Since_Entry": 1.0,
+      "Current_MFE%": 0.52650080515813,
+      "Current_MAE%": 0.71881642512077,
+      "MFE_MAE_Ratio": 0.7325411331717194
+    }
+  ]
+}
