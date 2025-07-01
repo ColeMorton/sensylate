@@ -425,7 +425,7 @@ STATISTICAL_VALIDATION:
 The command generates **three distinct documents** tailored for different audiences:
 
 ### Document 1: Internal Trading Report
-**File Name**: `{PORTFOLIO}_{YYYYMMDD}.md`
+**File Name**: `{PORTFOLIO}_INTERNAL_TRADING_REPORT_{TIMEFRAME}_{YYYYMMDD}.md`
 **Output Path**: `/data/outputs/analysis_trade_history/internal/`
 **Audience**: Trading Team, Risk Management, Senior Leadership
 **Purpose**: Comprehensive operational analysis with action plans
@@ -649,7 +649,7 @@ Note: Actions should be tailored to specific findings from the portfolio analysi
 ```
 
 ### Document 2: Live Signals Monitor
-**File Name**: `{PORTFOLIO}_{YYYYMMDD}.md`
+**File Name**: `{PORTFOLIO}_LIVE_SIGNALS_MONITOR_{YYYYMMDD}.md`
 **Output Path**: `/data/outputs/analysis_trade_history/live/`
 **Audience**: Daily followers tracking open positions
 **Purpose**: Real-time performance monitoring and position tracking
@@ -802,7 +802,7 @@ Note: Actions should be tailored to specific findings from the portfolio analysi
 ```
 
 ### Document 3: Historical Performance Report
-**File Name**: `{PORTFOLIO}_{YYYYMMDD}.md`
+**File Name**: `{PORTFOLIO}_HISTORICAL_PERFORMANCE_REPORT_{YYYYMMDD}.md`
 **Output Path**: `/data/outputs/analysis_trade_history/historical/`
 **Audience**: Performance analysts and historical trend followers
 **Purpose**: Closed positions analysis and pattern identification
