@@ -328,12 +328,42 @@ team-workspace/knowledge/
 
 **Failure to integrate with lifecycle management will result in content conflicts and degraded team-workspace effectiveness.**
 
+### Command Output Location Standards
+
+**CRITICAL**: Command output locations are strictly defined by classification:
+
+**Infrastructure Commands** (Collaboration enabling):
+- **Architect**: `./team-workspace/commands/architect/outputs/`
+- **Code Owner**: `./team-workspace/commands/code-owner/outputs/`
+- **Product Owner**: `./team-workspace/commands/product-owner/outputs/`
+- **Business Analyst**: `./team-workspace/commands/business-analyst/outputs/`
+- **Command Management**: `./team-workspace/commands/command/outputs/`
+- **Documentation Owner**: `./team-workspace/commands/documentation-owner/outputs/`
+
+**Product Commands** (User-facing functionality):
+- **Social Media**: `./outputs/social-media/` (twitter_post, twitter_post_strategy, twitter_fundamental_analysis, twitter_trade_history)
+- **Trading**: `./outputs/trading/` (trade_history), `./outputs/trading/images/` (trade_history_images)
+- **Content**: `./outputs/published/` (content_publisher), `./outputs/evaluations/` (content_evaluator)
+- **Strategy**: `./outputs/social-strategy/` (social_media_strategist)
+- **Analysis**: `./data/outputs/fundamental_analysis/` (fundamental_analysis_full)
+
+**Microservices** (DASV Framework):
+- **Discovery**: `./data/outputs/fundamental_analysis/discovery/`
+- **Analysis**: `./data/outputs/fundamental_analysis/analysis/`
+- **Synthesis**: `./data/outputs/fundamental_analysis/`
+- **Validation**: `./data/outputs/fundamental_analysis/validation/`
+
+### Command Framework Standards
+
+**LEGITIMATE Frameworks Only**:
+- **DASV** (Discover-Analyze-Synthesize-Validate) - Microservices only
+- **RPIV** (Research-Plan-Implement-Validate) - Architect command
+- **DQEM** (Document-Quality-Enforce-Maintain) - Documentation Owner
+- **COALA** (Command-Optimization-Alignment-Lifecycle-Analysis) - Command Management
+
+**PROHIBITED**: Any fictional or invented framework acronyms not documented in the command registry.
+
 ### Memory Notes
-- **Collaboration Infrastructure Command Outputs**: All outputs from collaboration infrastructure commands must be saved to their respective team-workspace directories:
-  - **Architect**: `./team-workspace/commands/architect/outputs/`
-  - **Code Owner**: `./team-workspace/commands/code-owner/outputs/`
-  - **Product Owner**: `./team-workspace/commands/product-owner/outputs/`
-  - **Business Analyst**: `./team-workspace/commands/business-analyst/outputs/`
 
 ### Memory Guidance
 - **Always refer to the current date and year to ensure the latest up-to-date data**
@@ -343,3 +373,6 @@ team-workspace/knowledge/
 
 ### Memory Rules
 - Do not include author in markdown files unless specifically asked
+- Never invent fictional framework acronyms - only use documented frameworks
+- Strictly enforce output location standards based on command classification
+- All commands must maintain pre-execution coordination integration

@@ -1,8 +1,35 @@
-# Fundamental Analyst Analyze
+# Fundamental Analyst Analyze: DASV Phase 2 Systematic Analysis
+
+**Command Classification**: 🔧 **Microservice Command**
+**Framework**: DASV Phase 2 (Analyze)
+**Outputs To**: `./data/outputs/fundamental_analysis/analysis/`
 
 **DASV Phase 2: Systematic Analysis and Evaluation**
 
 Generate comprehensive systematic analysis and evaluation of financial data using advanced analytical frameworks and multi-dimensional assessment methodologies.
+
+## MANDATORY: Pre-Execution Coordination
+
+**CRITICAL**: Before any fundamental analysis activities, integrate with Content Lifecycle Management system:
+
+### Step 1: Pre-Execution Consultation
+```bash
+python team-workspace/coordination/pre-execution-consultation.py fundamental-analyst-analyze fundamental-analysis "{analysis-scope}"
+```
+
+### Step 2: Handle Consultation Results
+Based on consultation response:
+- **proceed**: Continue with fundamental analysis
+- **coordinate_required**: Contact relevant command owners for collaboration
+- **avoid_duplication**: Reference existing fundamental analysis instead of creating new
+- **update_existing**: Use superseding workflow to update existing analysis authority
+
+### Step 3: Workspace Validation
+```bash
+python3 team-workspace/shared/validate-before-execution.py fundamental-analyst-analyze
+```
+
+**Only proceed with analysis if consultation and validation are successful.**
 
 ## Purpose
 

@@ -49,6 +49,10 @@ command_ownership:
     primary_topics: []
     secondary_topics: []
     total_topics: 1
+  fundamental-analysis:
+    primary_topics:
+    - fundamental-analysis
+    secondary_topics: []
   product-owner:
     primary_topics:
     - product-strategy
@@ -329,6 +333,7 @@ topics:
   product-strategy:
     archived_files:
     - team-workspace/archive/2025-06-20/product-owner/strategic-product-decisions-20250619.md
+    - team-workspace/archive/2025-07-01/product-owner/product-strategy/supersede_product-strategy_20250701_095415/current-decisions.md
     collaboration_permissions:
       coordination_required:
       - business-analyst
@@ -341,13 +346,13 @@ topics:
       - product-owner
     conflict_details: 'RESOLVED: Sequential decisions archived, latest authority established'
     conflicts_detected: false
-    current_authority: team-workspace/knowledge/product-strategy/current-decisions.md
+    current_authority: /Users/colemorton/Projects/sensylate/team-workspace/commands/product-owner/outputs/product-owner-dqem-implementation-summary.md
     description: Strategic product decisions and business prioritization
     freshness_threshold_days: 7
-    last_updated: '2025-06-20'
+    last_updated: '2025-07-01'
     primary_owner: product-owner
     related_files:
-    - team-workspace/knowledge/product-strategy/current-decisions.md
+    - /Users/colemorton/Projects/sensylate/team-workspace/commands/product-owner/outputs/product-owner-dqem-implementation-summary.md
     secondary_owners:
     - business-analyst
     - architect

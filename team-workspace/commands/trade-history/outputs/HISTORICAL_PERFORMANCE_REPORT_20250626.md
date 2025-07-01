@@ -143,7 +143,6 @@
 - **Total Contribution**: +8.59%
 - **Average Duration**: 26.8 days
 
-
 ---
 
 ## 🎯 Key Learnings from Closed Positions

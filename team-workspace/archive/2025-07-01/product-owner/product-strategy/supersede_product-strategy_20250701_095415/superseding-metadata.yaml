@@ -1,0 +1,11 @@
+event_id: supersede_product-strategy_20250701_095415
+new_authority: /Users/colemorton/Projects/sensylate/team-workspace/commands/product-owner/outputs/product-owner-dqem-implementation-summary.md
+reason: Added DQEM framework implementation to product strategy authority
+recovery_instructions:
+  manual_recovery: Copy files from team-workspace/archive/2025-07-01/product-owner/product-strategy/supersede_product-strategy_20250701_095415
+    back to original locations
+  rollback_command: python coordination/superseding-workflow.py rollback supersede_product-strategy_20250701_095415
+superseded_files:
+- team-workspace/knowledge/product-strategy/current-decisions.md
+superseding_timestamp: '2025-07-01T09:54:15.767412'
+topic: product-strategy

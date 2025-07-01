@@ -1,8 +1,35 @@
-# Fundamental Analyst Synthesize
+# Fundamental Analyst Synthesize: DASV Phase 3 Integration
+
+**Command Classification**: 🔧 **Microservice Command**
+**Framework**: DASV Phase 3 (Synthesize)
+**Outputs To**: `./data/outputs/fundamental_analysis/`
 
 **DASV Phase 3: Integration and Recommendation Generation**
 
 Generate institutional-quality fundamental analysis documents with comprehensive investment recommendations, multi-method valuation analysis, and professional presentation suitable for sophisticated investment decision-making.
+
+## MANDATORY: Pre-Execution Coordination
+
+**CRITICAL**: Before any synthesis activities, integrate with Content Lifecycle Management system:
+
+### Step 1: Pre-Execution Consultation
+```bash
+python team-workspace/coordination/pre-execution-consultation.py fundamental-analyst-synthesize fundamental-analysis "{synthesis-scope}"
+```
+
+### Step 2: Handle Consultation Results
+Based on consultation response:
+- **proceed**: Continue with synthesis activities
+- **coordinate_required**: Contact relevant command owners for collaboration
+- **avoid_duplication**: Reference existing synthesis instead of creating new
+- **update_existing**: Use superseding workflow to update existing synthesis authority
+
+### Step 3: Workspace Validation
+```bash
+python3 team-workspace/shared/validate-before-execution.py fundamental-analyst-synthesize
+```
+
+**Only proceed with synthesis if consultation and validation are successful.**
 
 ## Purpose
 

@@ -1,8 +1,8 @@
 # Documentation Hierarchy Guide
 
-**Version**: 1.0.0
-**Last Updated**: 2024-12-30
-**Purpose**: Establish clear precedence order for documentation conflicts
+**Version**: 1.1.0
+**Last Updated**: 2025-07-01
+**Purpose**: Establish clear precedence order for documentation conflicts and framework legitimacy standards
 
 ## Documentation Precedence Order
 
@@ -16,11 +16,12 @@ When documentation conflicts arise, follow this hierarchy (highest to lowest aut
 - **Update Frequency**: When command logic changes
 
 ### 2. **Framework Documentation** (Methodology Definitions)
-- **Location**: `docs/ai-command-microservices-specification.md`, `docs/claude-command-development-framework.md`
-- **Authority**: Framework patterns, methodologies (RPIV, DASV, TCEM), and architectural principles
-- **Scope**: Cross-command standards and patterns
-- **Examples**: DASV framework definition, microservice templates, quality standards
+- **Location**: `docs/ai-command-microservices-specification.md`, `.claude/command-registry.json`
+- **Authority**: Framework patterns, methodologies (**LEGITIMATE ONLY**: DASV, RPIV, DQEM, COALA), and architectural principles
+- **Scope**: Cross-command standards, patterns, and framework legitimacy validation
+- **Examples**: DASV framework definition, microservice templates, quality standards, output location specifications
 - **Update Frequency**: When framework evolves
+- **⚠️ CRITICAL**: Only frameworks documented in command registry are legitimate. Fictional frameworks are prohibited.
 
 ### 3. **Integration Guides** (Operational Procedures)
 - **Location**: `team-workspace/coordination/*.md`, `team-workspace/shared/*.md`
@@ -93,11 +94,12 @@ Individual command files have complete authority over:
 
 ### Framework Authority
 Framework documentation has complete authority over:
-- Methodology definitions (RPIV, DASV, TCEM)
-- Cross-command standards
-- Quality requirements
-- Template structures
-- Naming conventions
+- **Legitimate methodology definitions** (DASV, RPIV, DQEM, COALA only)
+- Cross-command standards and template compliance
+- Quality requirements and institutional standards
+- Template structures and header formatting
+- Naming conventions and output location specifications
+- **Framework legitimacy validation** (prevents fictional frameworks)
 
 ### Integration Authority
 Integration guides have complete authority over:
@@ -109,12 +111,20 @@ Integration guides have complete authority over:
 
 ## Documentation Quality Standards
 
+### Template Standardization (2025-07-01)
+**ACHIEVEMENT**: 100% template compliance across all 21 commands
+- **Master Template Applied**: Uniform header structure with Command Classification, Knowledge Domain, Framework, Outputs To
+- **Framework Legitimacy Validated**: Removed fictional frameworks, retained only documented ones (DASV, RPIV, DQEM, COALA)
+- **Output Location Enforcement**: Product commands route to `./outputs/`, Infrastructure to `./team-workspace/`
+- **Pre-execution Integration**: 100% lifecycle management integration for content authority control
+
 ### Consistency Requirements
-- Follow established terminology
-- Use consistent formatting
-- Maintain version headers
-- Include clear scope definitions
-- Reference authoritative sources
+- Follow established terminology from command registry
+- Use master template formatting for all command headers
+- Maintain version headers with clear change tracking
+- Include clear scope definitions and knowledge domain specifications
+- Reference only legitimate frameworks documented in registry
+- Enforce strict output location compliance by command classification
 
 ### Update Responsibilities
 - **Command Authors**: Keep command files current

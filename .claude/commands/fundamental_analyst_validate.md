@@ -1,8 +1,35 @@
-# Fundamental Analyst Validate
+# Fundamental Analyst Validate: DASV Phase 4 Quality Assurance
+
+**Command Classification**: 🔧 **Microservice Command**
+**Framework**: DASV Phase 4 (Validate)
+**Outputs To**: `./data/outputs/fundamental_analysis/validation/`
 
 **DASV Phase 4: Comprehensive DASV Workflow Validation**
 
 Execute comprehensive validation and quality assurance for the complete fundamental analysis DASV workflow using systematic verification methodologies and institutional quality standards targeting >9.5/10 confidence levels.
+
+## MANDATORY: Pre-Execution Coordination
+
+**CRITICAL**: Before any validation activities, integrate with Content Lifecycle Management system:
+
+### Step 1: Pre-Execution Consultation
+```bash
+python team-workspace/coordination/pre-execution-consultation.py fundamental-analyst-validate fundamental-analysis "{validation-scope}"
+```
+
+### Step 2: Handle Consultation Results
+Based on consultation response:
+- **proceed**: Continue with validation activities
+- **coordinate_required**: Contact relevant command owners for collaboration
+- **avoid_duplication**: Reference existing validation instead of creating new
+- **update_existing**: Use superseding workflow to update existing validation authority
+
+### Step 3: Workspace Validation
+```bash
+python3 team-workspace/shared/validate-before-execution.py fundamental-analyst-validate
+```
+
+**Only proceed with validation if consultation and validation are successful.**
 
 ## Purpose
 

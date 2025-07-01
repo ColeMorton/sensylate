@@ -1,9 +1,9 @@
 # AI Command Microservices Specification
 
-**Version**: 3.1.0
-**Last Updated**: 2024-12-30
-**Breaking Changes**: Enhanced output standards and dependency tracking
-**Status**: OPERATIONAL (Phase 1 Complete)
+**Version**: 3.2.0
+**Last Updated**: 2025-07-01
+**Breaking Changes**: Framework legitimacy validation, output location enforcement, template standardization
+**Status**: OPERATIONAL (Template Standardization Complete)
 
 *Atomic command architecture for sophisticated AI collaboration*
 
@@ -30,10 +30,22 @@ Commands are organized by functional role within the AI collaboration ecosystem:
 - **Workflow Coordinators**: `command_*`, `workflow_*`, `orchestrator_*`
 
 ### 3. **Framework Alignment Principle**
-Command structure directly maps to established methodologies:
-- **DASV Framework**: Discover → Analyze → Synthesize → Validate
-- **RPIV Framework**: Research → Plan → Implement → Validate
-- **TCEM Framework**: Trigger → Coordinate → Execute → Monitor
+Command structure directly maps to **LEGITIMATE, DOCUMENTED** methodologies only:
+
+**Verified Legitimate Frameworks**:
+- **DASV Framework**: Discover → Analyze → Synthesize → Validate (Microservices)
+- **RPIV Framework**: Research → Plan → Implement → Validate (Architect)
+- **DQEM Framework**: Document → Quality → Enforce → Maintain (Documentation Owner)
+- **COALA Framework**: Command → Optimization → Alignment → Lifecycle → Analysis (Command Management)
+
+**PROHIBITED**: Fictional or invented framework acronyms not documented in the command registry.
+
+### 4. **Output Location Enforcement Principle**
+Strict output location compliance based on command classification:
+- **Infrastructure Commands**: `./team-workspace/commands/{command-name}/outputs/`
+- **Product Commands**: `./outputs/{domain}/` or `./data/outputs/{domain}/`
+- **Microservices**: `./data/outputs/{domain}/{phase}/`
+- **Utilities**: Domain-specific (e.g., git repository for commit_push)
 
 ## Naming Convention Standard
 

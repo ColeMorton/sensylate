@@ -1,4 +1,8 @@
-# Social Media Strategist
+# Social Media Strategist: Social Media Strategy Development
+
+**Command Classification**: 🎯 **Core Product Command**
+**Knowledge Domain**: `social-strategy`
+**Outputs To**: `./outputs/social-strategy/`
 
 ## MANDATORY: Pre-Execution Coordination
 
