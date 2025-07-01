@@ -73,6 +73,10 @@ command_ownership:
     - requirements
     - product-strategy
     total_topics: 6
+  trade-history:
+    primary_topics:
+    - trading-performance
+    secondary_topics: []
 coordination_rules:
   conflict_resolution_required: true
   cross_command_coordination: true
@@ -512,5 +516,31 @@ topics:
     - architect
     - product-owner
     status: active
-updated: '2025-06-20T12:30:00Z'
+  trading-performance:
+    collaboration_permissions:
+      coordination_required:
+      - architect
+      - product-owner
+      read_access:
+      - architect
+      - product-owner
+      - business-analyst
+      - twitter-post-strategy
+      write_access:
+      - trade-history
+    conflict_details: No conflicts - new topic
+    conflicts_detected: false
+    current_authority: team-workspace/knowledge/trading-performance/
+    description: Historical and live trading performance analysis with comprehensive reporting
+    freshness_threshold_days: 7
+    last_updated: '2025-07-01'
+    primary_owner: trade-history
+    related_files:
+    - team-workspace/knowledge/trading-performance/trading-performance-analysis-2025.md
+    - team-workspace/commands/trade-history/outputs/HISTORICAL_PERFORMANCE_REPORT_20250701.md
+    - team-workspace/commands/trade-history/outputs/INTERNAL_TRADING_REPORT_YTD_20250701.md
+    - team-workspace/commands/trade-history/outputs/LIVE_SIGNALS_MONITOR_20250701.md
+    secondary_owners: []
+    status: active
+updated: '2025-07-01T12:30:00Z'
 version: '2.0'
