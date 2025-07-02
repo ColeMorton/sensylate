@@ -1,8 +1,34 @@
-# Fundamental Analysis Full
+# Fundamental Analysis Full: Complete DASV Workflow
 
-**Complete DASV Workflow for Fundamental Analysis**
+**Command Classification**: 📊 **Core Product Command**
+**Knowledge Domain**: `trading-analysis`
+**Framework**: DASV (Discover-Analyze-Synthesize-Validate)
+**Outputs To**: `./data/outputs/fundamental_analysis/` *(Core Product Command - outputs to product directories)*
 
 Execute the complete DASV (Discover → Analyze → Synthesize → Validate) microservice workflow by invoking each phase command sequentially to produce institutional-quality fundamental analysis with comprehensive investment recommendations.
+
+## MANDATORY: Pre-Execution Coordination
+
+**CRITICAL**: Before any fundamental analysis workflow, integrate with Content Lifecycle Management system:
+
+### Step 1: Pre-Execution Consultation
+```bash
+python team-workspace/coordination/pre-execution-consultation.py fundamental-analysis-full trading-analysis "complete DASV workflow for {ticker}"
+```
+
+### Step 2: Handle Consultation Results
+Based on consultation response:
+- **proceed**: Continue with fundamental analysis workflow
+- **coordinate_required**: Contact relevant command owners for collaboration
+- **avoid_duplication**: Reference existing analysis instead of creating new
+- **update_existing**: Use superseding workflow to update existing analysis
+
+### Step 3: Workspace Validation
+```bash
+python3 team-workspace/shared/validate-before-execution.py fundamental-analysis-full
+```
+
+**Only proceed with analysis workflow if consultation and validation are successful.**
 
 ## Purpose
 
@@ -152,6 +178,35 @@ Verify proper data flow between phases by confirming each expected output file e
 
 ### Quality Maintenance
 Each individual command maintains its own quality standards and confidence scoring, ensuring institutional-grade output throughout the complete workflow.
+
+## Post-Execution Protocol
+
+### Required Actions
+1. **Generate Output Metadata**: Include collaboration metadata for outputs
+2. **Store Outputs**: Save to `./data/outputs/fundamental_analysis/` directories
+3. **Quality Validation**: Ensure all DASV phases completed successfully
+4. **Performance Tracking**: Record execution metrics for optimization
+
+### Output Metadata Template
+```yaml
+metadata:
+  generated_by: "fundamental-analysis-full"
+  timestamp: "{ISO-8601-timestamp}"
+  ticker: "{TICKER}"
+  workflow_type: "DASV Complete"
+
+workflow_execution:
+  discover_completed: true
+  analyze_completed: true
+  synthesize_completed: true
+  validate_completed: true
+  total_duration: "{execution-time}"
+
+quality_metrics:
+  confidence_level: "{final-confidence-score}"
+  validation_passed: true
+  institutional_grade: true
+```
 
 **This command executes the complete DASV microservice workflow by invoking each individual phase command sequentially, maintaining the same output quality and file structure as manual execution.**
 

@@ -1,5 +1,32 @@
 # Trading Performance X Post Generator
 
+**Command Classification**: 📊 **Core Product Command**
+**Knowledge Domain**: `social-media-strategy`
+**Outputs To**: `./data/outputs/twitter_trade_history/` *(Core Product Command - outputs to product directories)*
+
+## MANDATORY: Pre-Execution Coordination
+
+**CRITICAL**: Before any trading performance content generation, integrate with Content Lifecycle Management system:
+
+### Step 1: Pre-Execution Consultation
+```bash
+python team-workspace/coordination/pre-execution-consultation.py twitter-trade-history social-media-strategy "trading performance social post for {analysis}"
+```
+
+### Step 2: Handle Consultation Results
+Based on consultation response:
+- **proceed**: Continue with trading performance content generation
+- **coordinate_required**: Contact relevant command owners for collaboration
+- **avoid_duplication**: Reference existing content instead of creating new
+- **update_existing**: Use superseding workflow to update existing content
+
+### Step 3: Workspace Validation
+```bash
+python3 team-workspace/shared/validate-before-execution.py twitter-trade-history
+```
+
+**Only proceed with content generation if consultation and validation are successful.**
+
 You are an expert trading performance analyst and social media strategist. Your specialty is transforming comprehensive trade history analysis into engaging X posts that showcase trading strategy results, market insights, and portfolio performance with credible data storytelling.
 
 ## Data Sources & Integration
@@ -326,14 +353,42 @@ Full analysis link: https://www.colemorton.com/blog/[analysis-name-yyyymmdd]/
 
 ## MANDATORY WORKFLOW REMINDER
 
-⚠️ **CRITICAL FIRST STEP**: Before processing any analysis, ALWAYS validate current market context using Yahoo Finance bridge system. Example:
+⚠️ **CRITICAL FIRST STEP**: Before processing any analysis, ALWAYS validate current market context using Yahoo Finance service system. Example:
 ```
-Use: python scripts/yahoo_finance_bridge.py market_overview
+Use: python scripts/yahoo_finance_service.py market_overview
 Extract: market sentiment, major index performance, sector rotation
 Validate: current trading environment context
 ```
 
 **Always provide current market context to make historical trading performance relevant to today's conditions.**
+
+## Post-Execution Protocol
+
+### Required Actions
+1. **Generate Output Metadata**: Include collaboration metadata for social content
+2. **Store Outputs**: Save to `./data/outputs/twitter_trade_history/` directories
+3. **Quality Validation**: Ensure content accuracy and market context relevance
+4. **Content Tracking**: Record content performance metrics
+
+### Output Metadata Template
+```yaml
+metadata:
+  generated_by: "twitter-trade-history"
+  timestamp: "{ISO-8601-timestamp}"
+  analysis_source: "{source-file}"
+  content_type: "trading_performance_post"
+
+content_metrics:
+  character_count: "{post-length}"
+  engagement_optimized: true
+  performance_data_verified: true
+  market_context_current: true
+
+quality_assurance:
+  data_accuracy_verified: true
+  transparency_maintained: true
+  educational_value: true
+```
 
 ---
 

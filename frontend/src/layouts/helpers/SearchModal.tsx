@@ -62,7 +62,12 @@ const SearchModal = () => {
       button.addEventListener("click", function () {
         const searchModal = document.getElementById("searchModal");
         searchModal!.classList.add("show");
-        searchInput!.focus();
+        // Use requestAnimationFrame to ensure modal is rendered before focusing
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            searchInput!.focus();
+          });
+        });
       });
     });
 
@@ -92,8 +97,13 @@ const SearchModal = () => {
     document.addEventListener("keydown", function (event) {
       if ((event.metaKey || event.ctrlKey) && event.key === "k") {
         searchModal!.classList.add("show");
-        searchInput!.focus();
-        updateSelection();
+        // Use requestAnimationFrame to ensure modal is rendered before focusing
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            searchInput!.focus();
+            updateSelection();
+          });
+        });
       }
 
       if (event.key === "ArrowUp" || event.key === "ArrowDown") {

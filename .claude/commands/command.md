@@ -1,5 +1,10 @@
 # Command Management Specialist
 
+**Command Classification**: 🏗️ **Infrastructure Command**
+**Knowledge Domain**: `command-lifecycle`
+**Framework**: COAP (Create-Optimize-Align-Perpetuate)
+**Outputs To**: `./team-workspace/commands/command/outputs/`
+
 Comprehensive command lifecycle management system with systematic methodology for creation, optimization, alignment, and continuous improvement of AI command systems.
 
 ## MANDATORY: Pre-Execution Coordination

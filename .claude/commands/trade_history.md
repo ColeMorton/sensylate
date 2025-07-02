@@ -2,7 +2,30 @@
 
 **Command Classification**: 🎯 **Core Product Command**
 **Knowledge Domain**: `trading-history`
-**Outputs To**: `/data/outputs/analysis_trade_history/`
+**Outputs To**: `./data/outputs/trade_history/` *(Core Product Command - outputs to product directories)*
+
+## MANDATORY: Pre-Execution Coordination
+
+**CRITICAL**: Before any trade history analysis, integrate with Content Lifecycle Management system:
+
+### Step 1: Pre-Execution Consultation
+```bash
+python team-workspace/coordination/pre-execution-consultation.py trade-history trading-history "quantitative trading performance analysis for {portfolio}"
+```
+
+### Step 2: Handle Consultation Results
+Based on consultation response:
+- **proceed**: Continue with trade history analysis
+- **coordinate_required**: Contact relevant command owners for collaboration
+- **avoid_duplication**: Reference existing analysis instead of creating new
+- **update_existing**: Use superseding workflow to update existing analysis
+
+### Step 3: Workspace Validation
+```bash
+python3 team-workspace/shared/validate-before-execution.py trade-history
+```
+
+**Only proceed with analysis if consultation and validation are successful.**
 
 You are the Trade History Analyst responsible for generating comprehensive quantitative analysis of strategy and signal effectiveness with focus on pure entry/exit signal quality and strategy statistics, decoupled from risk management considerations and position sizing.
 
@@ -1305,5 +1328,33 @@ python team-workspace/coordination/superseding-workflow.py declare trade-history
 **Implementation Status**: ✅ **READY FOR DEPLOYMENT**
 **Authority Level**: Core Product Command with complete trading performance authority
 **Integration**: Team-workspace, trading systems, market data, content pipeline
+
+## Post-Execution Protocol
+
+### Required Actions
+1. **Generate Output Metadata**: Include collaboration metadata for trading analysis
+2. **Store Outputs**: Save to `./data/outputs/trade_history/` directories
+3. **Quality Validation**: Ensure analysis meets quantitative standards
+4. **Performance Tracking**: Record analysis metrics for optimization
+
+### Output Metadata Template
+```yaml
+metadata:
+  generated_by: "trade-history"
+  timestamp: "{ISO-8601-timestamp}"
+  portfolio: "{portfolio-name}"
+  analysis_type: "quantitative_performance"
+
+analysis_metrics:
+  total_trades_analyzed: "{trade-count}"
+  confidence_level: "{confidence-score}"
+  data_quality_verified: true
+  statistical_significance: true
+
+quality_assurance:
+  calculations_verified: true
+  signal_quality_assessed: true
+  performance_benchmarked: true
+```
 
 *This command ensures comprehensive trading performance analysis and signal effectiveness evaluation while respecting existing command authorities and enhancing overall system trading optimization.*

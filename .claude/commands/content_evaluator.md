@@ -179,19 +179,19 @@ When evaluating financial content, ALWAYS use the Yahoo Finance Bridge script fo
 
 1. **Stock Information Validation**:
    ```bash
-   python scripts/yahoo_finance_bridge.py info [SYMBOL]
+   python scripts/yahoo_finance_service.py info [SYMBOL]
    ```
    **Validates**: Current price, market cap, P/E ratio, 52-week range, volume, sector/industry, analyst recommendations
 
 2. **Financial Statements Verification**:
    ```bash
-   python scripts/yahoo_finance_bridge.py financials [SYMBOL]
+   python scripts/yahoo_finance_service.py financials [SYMBOL]
    ```
    **Validates**: Income statement metrics, balance sheet data, cash flow statements
 
 3. **Historical Performance Check**:
    ```bash
-   python scripts/yahoo_finance_bridge.py history [SYMBOL] [PERIOD]
+   python scripts/yahoo_finance_service.py history [SYMBOL] [PERIOD]
    ```
    **Validates**: Historical price movements, growth calculations, trend analysis
    **Periods**: 1d, 5d, 1mo, 3mo, 6mo, 1y, 2y, 5y, 10y, ytd, max
