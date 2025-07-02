@@ -2,8 +2,31 @@
 
 **Command Classification**: 🎯 **Core Product Command**
 **Knowledge Domain**: `trading-history`
-**Outputs To**: `/data/outputs/analysis_trade_history/`
-**Architecture**: DASV Microservices Orchestrator
+**Framework**: DASV (Discover-Analyze-Synthesize-Validate)
+**Outputs To**: `./data/outputs/trade_history/` *(Core Product Command - outputs to product directories)*
+
+## MANDATORY: Pre-Execution Coordination
+
+**CRITICAL**: Before any trade history workflow, integrate with Content Lifecycle Management system:
+
+### Step 1: Pre-Execution Consultation
+```bash
+python team-workspace/coordination/pre-execution-consultation.py trade-history-full trading-history "complete DASV workflow for trade history"
+```
+
+### Step 2: Handle Consultation Results
+Based on consultation response:
+- **proceed**: Continue with trade history analysis workflow
+- **coordinate_required**: Contact relevant command owners for collaboration
+- **avoid_duplication**: Reference existing analysis instead of creating new
+- **update_existing**: Use superseding workflow to update existing analysis
+
+### Step 3: Workspace Validation
+```bash
+python3 team-workspace/shared/validate-before-execution.py trade-history-full
+```
+
+**Only proceed with analysis workflow if consultation and validation are successful.**
 
 Execute complete trading performance analysis through coordinated DASV (Discover → Analyze → Synthesize → Validate) microservices workflow with enhanced performance, modularity, and institutional-quality validation.
 
@@ -534,5 +557,33 @@ orchestration_implementation:
 ```
 
 ---
+
+## Post-Execution Protocol
+
+### Required Actions
+1. **Generate Output Metadata**: Include collaboration metadata for trade analysis
+2. **Store Outputs**: Save to `./data/outputs/trade_history/` directories
+3. **Quality Validation**: Ensure all DASV phases completed successfully
+4. **Performance Tracking**: Record execution metrics for optimization
+
+### Output Metadata Template
+```yaml
+metadata:
+  generated_by: "trade-history-full"
+  timestamp: "{ISO-8601-timestamp}"
+  workflow_type: "DASV Complete"
+
+workflow_execution:
+  discover_completed: true
+  analyze_completed: true
+  synthesize_completed: true
+  validate_completed: true
+  total_duration: "{execution-time}"
+
+quality_metrics:
+  confidence_level: "{final-confidence-score}"
+  validation_passed: true
+  institutional_grade: true
+```
 
 *This orchestrator command provides comprehensive DASV workflow coordination with enhanced performance, institutional-quality validation, and seamless integration with the broader collaboration framework.*

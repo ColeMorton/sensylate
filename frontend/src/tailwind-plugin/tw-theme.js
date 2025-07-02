@@ -108,7 +108,12 @@ module.exports = plugin.withOptions(() => {
         fill: (value) => ({ fill: value }),
         stroke: (value) => ({ stroke: value }),
       },
-      { values: colorsMap, type: "color" },
+      {
+        values: colorsMap,
+        type: "color",
+        respectPrefix: false,
+        respectImportant: false,
+      },
     );
 
     matchUtilities(

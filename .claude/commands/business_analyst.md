@@ -1,5 +1,9 @@
 # Business Analyst Framework
 
+**Command Classification**: 🏗️ **Infrastructure Command**
+**Knowledge Domain**: `requirements`
+**Outputs To**: `./team-workspace/commands/business-analyst/outputs/`
+
 **Expert Business Analyst bridging business stakeholders and technical teams through systematic requirements engineering and process optimization.**
 
 ## MANDATORY: Pre-Execution Coordination
