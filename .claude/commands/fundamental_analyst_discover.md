@@ -130,24 +130,28 @@ SYSTEMATIC DATA GATHERING USING PRODUCTION SERVICE:
    → Extract market cap, shares outstanding, trading volume
    → Calculate 52-week high/low positioning
    → Assess liquidity via average volume comparison
+   → FORMAT: Ensure precise decimal formatting for validation compatibility
 
 2. Historical Performance Analysis
    → Use service class for historical performance data
    → Calculate relative performance vs benchmarks
    → Extract volatility metrics and beta calculations
    → Analyze price momentum and trend strength
+   → FORMAT: Standardize percentage and ratio formats (XX.X% for percentages, X.XX for ratios)
 
 3. Financial Statements & Ratios
    → Use service class for latest financial statements
    → Extract key valuation multiples and ratios
    → Calculate P/E, P/B, EV/EBITDA, P/S, P/FCF ratios
    → Compare metrics to sector medians and historical averages
+   → FORMAT: Use exact Yahoo Finance values with proper precision (2 decimal places for ratios)
 
 4. Forward-Looking Data
    → Use available analyst consensus estimates
    → Extract earnings growth projections and guidance
    → Calculate PEG ratios with forward growth estimates
    → Analyze estimate revisions and trends
+   → FORMAT: Consistent decimal precision across all forward metrics
 ```
 
 **Company Intelligence Gathering**
@@ -195,8 +199,16 @@ FOR EACH DATA POINT:
 - Completeness: [Complete/Partial/Missing]
 - **Calculation Verification**: Cross-validate all ratios and percentages with raw data
 - **Precision Standards**: Use exact figures from financial statements, not rounded approximations
+- **Validation Compatibility**: Ensure format consistency for institutional validation (9.5/10.0 target)
 - Consistency check across sources
 - Overall data confidence: [0.0-1.0]
+
+CRITICAL FORMATTING STANDARDS FOR VALIDATION COMPATIBILITY:
+- Market Cap: Use exact integer values from Yahoo Finance
+- P/E Ratio: Preserve 2-decimal precision (e.g., 39.57 not 40)
+- Profit Margins: Use decimal format (0.4521 not 45.21% for internal calculations)
+- Financial Metrics: Maintain source precision to avoid validation format mismatches
+- Currency Values: Preserve full precision for large numbers (billions)
 
 CRITICAL CASH POSITION VALIDATION:
 - Yahoo Finance "Cash And Cash Equivalents": Base cash position
@@ -221,24 +233,26 @@ CRITICAL CASH POSITION VALIDATION:
     "data_collection_methodology": "systematic_discovery_protocol"
   },
   "market_data": {
-    "current_price_data": {
-      "price": "current_stock_price",
-      "volume": "current_volume",
-      "market_cap": "current_market_cap",
-      "confidence": "0.0-1.0"
-    },
-    "historical_performance": {
-      "performance_metrics": "object",
-      "volatility_analysis": "object",
-      "trend_analysis": "object",
-      "confidence": "0.0-1.0"
-    },
-    "trading_context": {
-      "liquidity_assessment": "object",
-      "price_positioning": "object",
-      "volume_patterns": "object",
-      "confidence": "0.0-1.0"
-    }
+    "current_price": "decimal_value_with_precision",
+    "market_cap": "exact_integer_from_yahoo_finance",
+    "enterprise_value": "exact_integer_value",
+    "shares_outstanding": "exact_share_count",
+    "volume": "current_trading_volume",
+    "beta": "decimal_value_2_places",
+    "52_week_high": "exact_decimal_value",
+    "52_week_low": "exact_decimal_value",
+    "confidence": "0.0-1.0"
+  },
+  "financial_metrics": {
+    "revenue_ttm": "exact_integer_value",
+    "net_income": "exact_integer_value",
+    "earnings_per_share": "decimal_value_2_places",
+    "pe_ratio": "decimal_value_2_places_exact",
+    "profit_margin": "decimal_format_for_validation_0_to_1",
+    "return_on_equity": "decimal_format_for_validation_0_to_1",
+    "free_cash_flow": "exact_integer_value",
+    "revenue_growth": "decimal_format_for_validation",
+    "confidence": "0.0-1.0"
   },
   "company_intelligence": {
     "business_model": {
@@ -328,10 +342,16 @@ CRITICAL CASH POSITION VALIDATION:
 
 ### Post-Execution
 1. Generate structured discovery output in JSON format
-2. **Save output to ./data/outputs/fundamental_analysis/discovery/**
-3. Calculate confidence scores for each data category
-4. Signal readiness for fundamental_analyst_analyze phase
-5. Log discovery performance metrics
+2. **Apply Validation Format Optimization**:
+   - Verify market_cap as exact integer (e.g., 512700000000, not 512.7B)
+   - Verify pe_ratio as 2-decimal precision (e.g., 39.57, not 39.6 or 40)
+   - Verify profit_margin in decimal format (e.g., 0.4521, not 45.21%)
+   - Verify free_cash_flow as exact integer (e.g., 13600000000)
+   - Ensure all metrics match Yahoo Finance source format exactly
+3. **Save output to ./data/outputs/fundamental_analysis/discovery/**
+4. Calculate confidence scores for each data category (targeting 9.5/10.0)
+5. Signal readiness for fundamental_analyst_analyze phase
+6. Log discovery performance metrics
 
 ## Quality Standards
 
@@ -340,12 +360,17 @@ CRITICAL CASH POSITION VALIDATION:
 - Financial statements must be most recent available
 - Peer group must include 3-5 relevant companies
 - Data sources must have reliability scores ≥ confidence_threshold
+- **Validation Format Compliance**: All metrics must preserve exact Yahoo Finance precision
+- **Institutional Quality Target**: 9.5/10.0 discovery validation score
 
 ### Output Requirements
-- Complete JSON structure with all required sections
+- Complete JSON structure with all required sections (market_data, financial_metrics, etc.)
 - Confidence scores for each major data category
 - Data quality assessment with specific flags
 - Clear documentation of data sources and collection methodology
+- **Format Validation**: Exact numeric precision matching source data
+- **Market Data Accuracy**: Target 9.5/10.0 through precise value formatting
+- **Financial Statements Integrity**: Target 9.5/10.0 through comprehensive data collection
 
 **Integration with DASV Framework**: This microservice provides the foundational data required for the subsequent analyze phase, ensuring high-quality input for systematic financial analysis.
 

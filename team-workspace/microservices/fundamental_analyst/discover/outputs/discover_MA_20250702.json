@@ -1,6 +1,13 @@
 {
+  "metadata": {
+    "command_name": "fundamental_analyst_discover",
+    "execution_timestamp": "2025-07-02T13:42:18.453367",
+    "framework_phase": "discover",
+    "ticker": "MA",
+    "data_collection_methodology": "systematic_discovery_protocol"
+  },
   "ticker": "MA",
-  "timestamp": "2025-07-02T13:16:07.489860",
+  "timestamp": "2025-07-02T13:42:18.453380",
   "company_info": {
     "name": "Mastercard Incorporated",
     "sector": "Financial Services",
@@ -26,34 +33,35 @@
   },
   "financial_metrics": {
     "revenue_ttm": 29069000704,
+    "net_income": 13143000064,
+    "earnings_per_share": 14.27,
+    "pe_ratio": 39.56622,
+    "profit_margin": 0.45213002,
+    "return_on_equity": 1.8770399,
+    "free_cash_flow": 14451000320,
+    "revenue_growth": 0.142,
     "revenue_per_share": 31.605,
     "gross_profit": 29069000704,
     "ebitda": 17977999360,
-    "net_income": 13143000064,
-    "earnings_per_share": 14.27,
     "forward_eps": 16.38,
-    "pe_ratio": 39.56622,
     "forward_pe": 34.469475,
     "peg_ratio": 0,
     "price_to_book": 77.01678,
     "price_to_sales": 17.637764,
     "ev_to_revenue": 17.93,
     "ev_to_ebitda": 28.991,
-    "profit_margin": 0.45213002,
     "operating_margin": 0.5931,
     "gross_margin": 1.0,
     "ebitda_margin": 0.61846,
     "return_on_assets": 0.23363,
-    "return_on_equity": 1.8770399,
-    "revenue_growth": 0.142,
     "earnings_growth": 0.115,
-    "free_cash_flow": 14451000320,
     "operating_cash_flow": 15488000000,
     "total_cash": 7894000128,
     "total_debt": 18801999872,
     "current_ratio": 1.111,
     "quick_ratio": 0.665,
-    "debt_to_equity": 280.795
+    "debt_to_equity": 280.795,
+    "confidence": 1.0
   },
   "analyst_data": {
     "recommendation": "buy",
@@ -153,6 +161,27 @@
         "2022",
         "2021"
       ]
+    }
+  },
+  "company_intelligence": {
+    "business_model": {
+      "company_name": "Mastercard Incorporated",
+      "sector": "Financial Services",
+      "business_summary": "Mastercard Incorporated, a technology company, provides transaction processing and other payment-related products and services in the United States and internationally. The company offers integrated products and value-added services for account holders, merchants, financial institutions, digital partners, businesses, governments, and other organizations, such as programs that enable issuers to provide consumers with credits to defer payments; payment products and solutions that allow its customers to access funds in deposit and other accounts; prepaid programs services; consumer bill payment services; and commercial credit, debit, and prepaid payment products and solutions. It also provides solutions that enable businesses or governments to make payments to businesses, including Virtual Card Number, which is generated dynamically from a physical card and leverages the credit limit of the funding account; and a platform to optimize supplier payment enablement campaigns for financial institutions. In addition, the company offers Mastercard Move, which partners with digital messaging and payment platforms to enable consumers to send money directly within applications to other consumers; and partners with central banks, fintechs and financial institutions to help governments and nonprofits, as well as enables various cross-border payment flows. Further, it provides security solutions; personalization, issuer and merchant loyalty, and marketing services; advanced analytics, business intelligence, economic and location-based insights, payments consulting, and operational insights services; processing and gateway solutions; and open banking services. The company offers payment solutions and services under the MasterCard, Maestro, and Cirrus names. Mastercard Incorporated was founded in 1966 and is headquartered in Purchase, New York.",
+      "revenue_streams": [
+        "Payment Processing",
+        "Cross-Border Transactions",
+        "Value-Added Services"
+      ],
+      "confidence": 0.9
+    },
+    "financial_statements": {
+      "total_revenue": 29069000704,
+      "net_income": 13143000064,
+      "total_assets": 0,
+      "cash_and_equivalents": 7894000128,
+      "total_debt": 18801999872,
+      "confidence": 0.95
     }
   },
   "peer_comparison": {

@@ -34,7 +34,7 @@ You are the Trading Performance Synthesis Specialist, responsible for the system
 ```yaml
 report_generation_architecture:
   internal_trading_report:
-    file_pattern: "{PORTFOLIO}_INTERNAL_TRADING_REPORT_{TIMEFRAME}_{YYYYMMDD}.md"
+    file_pattern: "{PORTFOLIO}_{YYYYMMDD}.md"
     output_path: "/data/outputs/analysis_trade_history/internal/"
     audience: "Trading Team, Risk Management, Senior Leadership"
     purpose: "Comprehensive operational analysis with action plans"
@@ -50,7 +50,7 @@ report_generation_architecture:
       - strategic_optimization_roadmap: "Priority improvements with expected impact"
 
   live_signals_monitor:
-    file_pattern: "{PORTFOLIO}_LIVE_SIGNALS_MONITOR_{YYYYMMDD}.md"
+    file_pattern: "{PORTFOLIO}_{YYYYMMDD}.md"
     output_path: "/data/outputs/analysis_trade_history/live/"
     audience: "Daily followers tracking open positions"
     purpose: "Real-time performance monitoring and position tracking"
@@ -65,7 +65,7 @@ report_generation_architecture:
       - signals_to_watch: "High priority monitoring and strategic considerations"
 
   historical_performance_report:
-    file_pattern: "{PORTFOLIO}_HISTORICAL_PERFORMANCE_REPORT_{YYYYMMDD}.md"
+    file_pattern: "{PORTFOLIO}_{YYYYMMDD}.md"
     output_path: "/data/outputs/analysis_trade_history/historical/"
     audience: "Performance analysts and historical trend followers"
     purpose: "Closed positions analysis and pattern identification"
@@ -305,21 +305,21 @@ runtime_monitoring:
 output_specification:
   file_generation:
     internal_report:
-      - path_pattern: "/data/outputs/analysis_trade_history/internal/{PORTFOLIO}_INTERNAL_TRADING_REPORT_{TIMEFRAME}_{YYYYMMDD}.md"
+      - path_pattern: "/data/outputs/analysis_trade_history/internal/{PORTFOLIO}_{YYYYMMDD}.md"
       - naming_convention: "portfolio_type_timeframe_timestamp"
       - format_requirements: "markdown_with_tables_and_formatting"
       - content_validation: "executive_dashboard_completeness_check"
       - audience_targeting: "trading_team_risk_management_leadership"
 
     live_monitor:
-      - path_pattern: "/data/outputs/analysis_trade_history/live/{PORTFOLIO}_LIVE_SIGNALS_MONITOR_{YYYYMMDD}.md"
+      - path_pattern: "/data/outputs/analysis_trade_history/live/{PORTFOLIO}_{YYYYMMDD}.md"
       - naming_convention: "portfolio_type_timestamp"
       - format_requirements: "markdown_with_position_tables"
       - content_validation: "active_position_tracking_completeness"
       - audience_targeting: "daily_followers_position_tracking"
 
     historical_report:
-      - path_pattern: "/data/outputs/analysis_trade_history/historical/{PORTFOLIO}_HISTORICAL_PERFORMANCE_REPORT_{YYYYMMDD}.md"
+      - path_pattern: "/data/outputs/analysis_trade_history/historical/{PORTFOLIO}_{YYYYMMDD}.md"
       - naming_convention: "portfolio_type_timestamp"
       - format_requirements: "markdown_with_comprehensive_analysis"
       - content_validation: "historical_analysis_completeness"

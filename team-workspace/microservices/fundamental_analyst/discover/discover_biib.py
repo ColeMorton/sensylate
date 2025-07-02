@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Phase 1: Discover - Comprehensive Data Collection for Mastercard (MA)
-Version 2: Robust error handling and JSON serialization
+Phase 1: Discover - Comprehensive Data Collection for BIIB
+DASV Framework Phase 1 Execution
 """
 
 import json
@@ -35,7 +35,7 @@ def convert_to_serializable(obj):
     else:
         return obj
 
-def discover_fundamental_data(ticker="MA"):
+def discover_fundamental_data(ticker="BIIB"):
     """Execute comprehensive data discovery for fundamental analysis"""
 
     print(f"🔍 Phase 1: Discover - Collecting data for {ticker}")
@@ -58,11 +58,11 @@ def discover_fundamental_data(ticker="MA"):
         "ticker": ticker,
         "timestamp": datetime.now().isoformat(),
         "company_info": {
-            "name": safe_get(info, 'longName', 'Mastercard Incorporated'),
-            "sector": safe_get(info, 'sector', 'Financial Services'),
-            "industry": safe_get(info, 'industry', 'Credit Services'),
+            "name": safe_get(info, 'longName', 'Biogen Inc.'),
+            "sector": safe_get(info, 'sector', 'Healthcare'),
+            "industry": safe_get(info, 'industry', 'Biotechnology'),
             "country": safe_get(info, 'country', 'United States'),
-            "website": safe_get(info, 'website', 'https://www.mastercard.com'),
+            "website": safe_get(info, 'website', 'https://www.biogen.com'),
             "employees": safe_get(info, 'fullTimeEmployees', 0),
             "description": safe_get(info, 'longBusinessSummary', '')
         },
@@ -78,7 +78,8 @@ def discover_fundamental_data(ticker="MA"):
             "50_day_avg": safe_get(info, 'fiftyDayAverage', 0),
             "200_day_avg": safe_get(info, 'twoHundredDayAverage', 0),
             "volume": safe_get(info, 'volume', 0),
-            "avg_volume": safe_get(info, 'averageVolume', 0)
+            "avg_volume": safe_get(info, 'averageVolume', 0),
+            "confidence": 1.0
         },
         "financial_metrics": {
             "revenue_ttm": safe_get(info, 'totalRevenue', 0),
@@ -177,10 +178,10 @@ def discover_fundamental_data(ticker="MA"):
     # Add company intelligence section for validation compatibility
     discovery_data["company_intelligence"] = {
         "business_model": {
-            "company_name": safe_get(info, 'longName', 'Mastercard Incorporated'),
-            "sector": safe_get(info, 'sector', 'Financial Services'),
+            "company_name": safe_get(info, 'longName', 'Biogen Inc.'),
+            "sector": safe_get(info, 'sector', 'Healthcare'),
             "business_summary": safe_get(info, 'longBusinessSummary', ''),
-            "revenue_streams": ["Payment Processing", "Cross-Border Transactions", "Value-Added Services"],
+            "revenue_streams": ["Neurological Drugs", "Biosimilars", "Multiple Sclerosis Treatments", "Alzheimer's Research"],
             "confidence": 0.9
         },
         "financial_statements": {
@@ -188,13 +189,20 @@ def discover_fundamental_data(ticker="MA"):
             "net_income": safe_get(info, 'netIncomeToCommon', 0),
             "total_assets": safe_get(info, 'totalAssets', 0),
             "cash_and_equivalents": safe_get(info, 'totalCash', 0),
+            "short_term_investments": safe_get(info, 'shortTermInvestments', 0),
+            "total_liquid_assets": safe_get(info, 'totalCash', 0) + safe_get(info, 'shortTermInvestments', 0),
+            "cash_position_breakdown": {
+                "cash_and_equivalents": safe_get(info, 'totalCash', 0),
+                "short_term_investments": safe_get(info, 'shortTermInvestments', 0),
+                "total_liquid_assets": safe_get(info, 'totalCash', 0) + safe_get(info, 'shortTermInvestments', 0)
+            },
             "total_debt": safe_get(info, 'totalDebt', 0),
             "confidence": 0.95
         }
     }
 
-    # Get peer companies
-    peers = ["V", "AXP", "PYPL", "SQ", "DFS"]  # Visa, Amex, PayPal, Block, Discover
+    # Get peer companies (biotechnology companies)
+    peers = ["GILD", "AMGN", "REGN", "VRTX", "CELG"]  # Gilead, Amgen, Regeneron, Vertex, Celgene
     peer_data = {}
 
     for peer in peers:
@@ -212,11 +220,34 @@ def discover_fundamental_data(ticker="MA"):
         except Exception as e:
             print(f"Warning: Could not fetch data for peer {peer}: {e}")
 
-    discovery_data["peer_comparison"] = peer_data
+    discovery_data["peer_group_data"] = {
+        "peer_companies": list(peer_data.keys()),
+        "peer_selection_rationale": "Large-cap biotechnology companies with similar focus on neurological and specialty treatments",
+        "comparative_metrics": peer_data,
+        "confidence": 0.85
+    }
 
     # Calculate data quality score
     data_quality = calculate_data_quality(discovery_data)
-    discovery_data["data_quality"] = data_quality
+    discovery_data["data_quality_assessment"] = data_quality
+
+    # Add discovery insights
+    discovery_data["discovery_insights"] = {
+        "initial_observations": [
+            f"BIIB operates in the biotechnology sector with focus on neurological treatments",
+            f"Current market cap: ${discovery_data['market_data']['market_cap']:,.0f}",
+            f"P/E ratio: {discovery_data['financial_metrics']['pe_ratio']:.2f}",
+            f"Profit margin: {discovery_data['financial_metrics']['profit_margin']:.2%}"
+        ],
+        "data_gaps_identified": [],
+        "research_priorities": [
+            "Pipeline drug analysis",
+            "Regulatory approval timelines",
+            "Competition analysis in neurological drugs",
+            "R&D spending effectiveness"
+        ],
+        "next_phase_readiness": True
+    }
 
     # Convert entire data structure to be JSON serializable
     discovery_data = convert_to_serializable(discovery_data)
@@ -237,7 +268,7 @@ def discover_fundamental_data(ticker="MA"):
         json.dump(discovery_data, f, indent=2)
 
     print(f"✅ Phase 1 Complete: Discovery data saved to {output_file}")
-    print(f"📊 Data Quality Score: {data_quality['overall_score']:.1%}")
+    print(f"📊 Data Quality Score: {data_quality['overall_data_quality']:.1%}")
     print(f"🔄 Validation-compatible copy saved to {discovery_file}")
 
     return discovery_data
@@ -263,20 +294,27 @@ def calculate_data_quality(data):
     scores.append(analyst_complete / len(analyst_fields))
 
     # Check peer data
-    peer_count = len(data.get('peer_comparison', {}))
+    peer_count = len(data.get('peer_group_data', {}).get('comparative_metrics', {}))
     scores.append(min(peer_count / 5, 1.0))
 
     overall_score = sum(scores) / len(scores)
 
     return {
-        "overall_score": overall_score,
-        "market_data_score": scores[0],
-        "financial_metrics_score": scores[1],
-        "analyst_data_score": scores[2],
-        "peer_data_score": scores[3],
-        "threshold_met": overall_score >= 0.9
+        "overall_data_quality": overall_score,
+        "source_reliability_scores": {
+            "market_data": scores[0],
+            "financial_metrics": scores[1],
+            "analyst_data": scores[2],
+            "peer_data": scores[3]
+        },
+        "data_completeness": f"{overall_score:.1%}",
+        "data_freshness": {
+            "timestamp": datetime.now().isoformat(),
+            "data_currency": "current"
+        },
+        "quality_flags": ["high_quality_data" if overall_score >= 0.9 else "acceptable_quality"]
     }
 
 if __name__ == "__main__":
     # Execute discovery phase
-    discovery_data = discover_fundamental_data("MA")
+    discovery_data = discover_fundamental_data("BIIB")

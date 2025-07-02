@@ -68,6 +68,8 @@ data/outputs/analysis_trade_history/live/*
 !data/outputs/analysis_trade_history/live/.gitkeep
 data/outputs/analysis_trade_history/internal/*
 !data/outputs/analysis_trade_history/internal/.gitkeep
+data/outputs/twitter_post_strategy_live/*
+!data/outputs/twitter_post_strategy_live/.gitkeep
 
 # Temporary files
 *.tmp
