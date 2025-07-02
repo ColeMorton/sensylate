@@ -1,0 +1,48 @@
+name: fundamental_analyst_validate
+version: 1.0.0
+description: Phase 4 of DASV - Quality assurance and confidence verification
+phase: validate
+phase_number: 4
+
+inputs:
+  ticker:
+    type: string
+    required: true
+    description: Stock symbol to analyze
+  discovery_data:
+    type: json
+    required: true
+    source: discover/outputs/discover_{ticker}_{date}.json
+  analysis_data:
+    type: json
+    required: true
+    source: analyze/outputs/analyze_{ticker}_{date}.json
+  synthesis_data:
+    type: json
+    required: true
+    source: synthesize/outputs/synthesize_{ticker}_{date}.json
+  final_document:
+    type: markdown
+    required: true
+    source: ../../data/outputs/fundamental_analysis/{ticker}_{date}.md
+
+outputs:
+  validation_report:
+    type: json
+    location: outputs/validate_{ticker}_{date}.json
+    schema:
+      - validation_results
+      - content_evaluation
+      - overall_status
+      - key_findings
+
+dependencies:
+  - all previous phases
+
+validation:
+  content_evaluator_threshold: 8.5
+  required_validations:
+    - financial_metrics_accuracy
+    - investment_thesis_coherence
+    - confidence_score_compliance
+    - institutional_quality_standards

@@ -1,0 +1,109 @@
+# Trade History Analyze Microservice Manifest
+# DASV Phase 2: Statistical Analysis and Performance Measurement
+
+microservice:
+  name: "trade_history_analyze"
+  role: "trade_history"
+  action: "analyze"
+  framework: "DASV"
+  phase: 2
+  version: "1.0.0"
+  status: "ready"
+
+metadata:
+  created: "2025-07-02T08:45:00Z"
+  last_updated: "2025-07-02T12:45:00Z"
+  last_execution: "2025-07-02T12:45:00Z"
+  confidence_score: 0.89
+  author: "Claude Code (Architect)"
+  description: "Statistical analysis and performance measurement for trading data"
+
+inputs:
+  required:
+    - discovery_data: "Output from trade_history_discover phase (JSON)"
+  optional:
+    - analysis_depth: "Analysis detail level (summary|standard|comprehensive|deep-dive)"
+    - confidence_threshold: "Minimum confidence for calculations (0.6-0.8)"
+    - benchmark_focus: "Primary benchmark for analysis (SPY|QQQ|VTI)"
+    - statistical_rigor: "Statistical testing level (basic|standard|institutional)"
+
+outputs:
+  primary:
+    path: "/data/outputs/analysis_trade_history/analysis/{portfolio}_{YYYYMMDD}.json"
+    format: "json"
+    schema: "trading_analysis_schema_v1"
+    confidence_scoring: true
+
+  workspace:
+    path: "./team-workspace/microservices/trade_history/analyze/outputs/"
+    backup: true
+    versioning: true
+
+dependencies:
+  upstream: ["trade_history_discover"]
+  downstream: ["trade_history_synthesize"]
+  external_services: []
+  data_sources:
+    - "discovery_phase_output"
+
+performance:
+  target_duration: "25s"
+  cache_strategy:
+    - "calculation_results_cache"
+    - "statistical_validation_cache"
+  parallel_execution: true
+
+quality_gates:
+  min_confidence: 0.7
+  required_statistical_significance: 0.8
+  min_sample_size: 10
+  calculation_accuracy: 0.99
+
+analysis_components:
+  signal_effectiveness:
+    - "entry_signal_analysis"
+    - "exit_signal_analysis"
+    - "signal_timing_effectiveness"
+
+  performance_measurement:
+    - "statistical_analysis"
+    - "risk_adjusted_metrics"
+    - "benchmark_comparison"
+    - "trade_quality_classification"
+
+  pattern_recognition:
+    - "signal_temporal_patterns"
+    - "market_regime_performance"
+    - "volatility_environment_analysis"
+
+  optimization_opportunities:
+    - "entry_signal_enhancements"
+    - "exit_signal_refinements"
+    - "strategy_parameter_optimization"
+
+  risk_assessment:
+    - "portfolio_risk_metrics"
+    - "market_context_risk"
+    - "correlation_analysis"
+
+error_handling:
+  insufficient_sample_size: "graceful_degradation_with_warning"
+  calculation_failures: "retry_with_alternative_methods"
+  confidence_threshold_not_met: "warning_with_reduced_confidence"
+  data_quality_issues: "robust_calculation_with_quality_flags"
+
+monitoring:
+  metrics_tracked:
+    - "calculation_accuracy"
+    - "statistical_significance_rate"
+    - "confidence_score"
+    - "analysis_completeness"
+    - "optimization_opportunity_count"
+
+  alerts:
+    - condition: "confidence < 0.6"
+      severity: "warning"
+    - condition: "sample_size < 10"
+      severity: "warning"
+    - condition: "calculation_failure"
+      severity: "critical"

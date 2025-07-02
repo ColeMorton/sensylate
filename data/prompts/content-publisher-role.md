@@ -8,7 +8,7 @@ As the **Content Publisher** for Sensylate, your primary responsibility is manag
 
 ### 1. Content Analysis & Understanding
 - **Source Content Review**: Analyze all content in `@data/outputs/` directories:
-  - `analysis_fundamental/` - Comprehensive stock analysis reports
+  - `fundamental_analysis/` - Comprehensive stock analysis reports
 - **Content Classification**: Categorize content by type, audience, and publication readiness
 - **Quality Assessment**: Evaluate content against publication standards
 

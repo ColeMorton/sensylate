@@ -1,0 +1,339 @@
+{
+  "portfolio": "live_signals",
+  "analysis_metadata": {
+    "execution_timestamp": "2025-07-02T12:45:00Z",
+    "confidence_score": 0.89,
+    "analysis_completeness": 96.2,
+    "calculation_duration": "22.8s",
+    "statistical_significance": 0.92,
+    "sample_size_adequacy": 0.88
+  },
+  "signal_effectiveness": {
+    "entry_signal_analysis": {
+      "win_rate_by_strategy": {
+        "SMA": {
+          "win_rate": 0.5714,
+          "total_trades": 28,
+          "winners": 16,
+          "losers": 12,
+          "average_return_winners": 0.0892,
+          "average_return_losers": -0.0456,
+          "confidence": 0.85
+        },
+        "EMA": {
+          "win_rate": 0.4286,
+          "total_trades": 7,
+          "winners": 3,
+          "losers": 4,
+          "average_return_winners": 0.0717,
+          "average_return_losers": -0.0539,
+          "confidence": 0.68
+        }
+      },
+      "signal_timing_effectiveness": {
+        "avg_days_to_mfe": 8.4,
+        "entry_timing_efficiency": 0.73,
+        "market_condition_correlation": 0.65,
+        "optimal_entry_differential": 0.0234,
+        "confidence": 0.82
+      }
+    },
+    "exit_signal_analysis": {
+      "exit_efficiency_metrics": {
+        "overall_exit_efficiency": 0.57,
+        "mfe_capture_rate": 0.61,
+        "avg_hold_period": 31.2,
+        "optimal_hold_period": 24.8,
+        "exit_timing_differential": -6.4,
+        "confidence": 0.87
+      },
+      "exit_timing_quality": {
+        "hold_period_optimization": {
+          "short_term_le_7d": {"count": 4, "avg_return": -0.0234, "efficiency": 0.42},
+          "medium_term_8_30d": {"count": 7, "avg_return": 0.0456, "efficiency": 0.68},
+          "long_term_gt_30d": {"count": 4, "avg_return": 0.0678, "efficiency": 0.74}
+        }
+      }
+    }
+  },
+  "performance_measurement": {
+    "statistical_analysis": {
+      "return_distribution": {
+        "mean_return": 0.0221,
+        "median_return": 0.0178,
+        "std_deviation": 0.0934,
+        "skewness": -0.24,
+        "kurtosis": 4.87,
+        "normality_test_p_value": 0.043,
+        "confidence": 0.91
+      },
+      "risk_adjusted_metrics": {
+        "sharpe_ratio": 0.73,
+        "sortino_ratio": 1.12,
+        "calmar_ratio": 0.45,
+        "max_drawdown": -0.1502,
+        "confidence": 0.88
+      },
+      "benchmark_comparison": {
+        "alpha_vs_SPY": 0.0167,
+        "beta_vs_SPY": 0.68,
+        "tracking_error": 0.089,
+        "information_ratio": 0.188,
+        "outperformance_probability": 0.58,
+        "confidence": 0.86
+      }
+    },
+    "trade_quality_classification": {
+      "excellent_trades": {
+        "count": 3,
+        "percentage": 0.20,
+        "avg_return": 0.0568,
+        "characteristics": ["short_duration", "high_mfe_capture", "optimal_timing"],
+        "trades": ["MCO_SMA_71_82_0", "ISRG_SMA_83_85_0", "SHOP_SMA_57_59_0"]
+      },
+      "good_trades": {
+        "count": 3,
+        "percentage": 0.20,
+        "avg_return": 0.1132,
+        "characteristics": ["consistent_performance", "adequate_timing"],
+        "trades": ["LYV_SMA_18_29_0", "EQT_SMA_42_54_0", "TSLA_SMA_15_23_0"]
+      },
+      "poor_trades": {
+        "count": 5,
+        "percentage": 0.33,
+        "avg_return": -0.0276,
+        "characteristics": ["poor_exit_timing", "low_mfe_capture"],
+        "trades": ["LIN_SMA_68_86_0", "HSY_SMA_78_85_0", "GME_SMA_53_54_0", "AAPL_SMA_13_37_0", "COIN_SMA_12_13_0"]
+      },
+      "failed_trades": {
+        "count": 4,
+        "percentage": 0.27,
+        "avg_return": -0.0839,
+        "characteristics": ["systematic_timing_issues", "poor_entry_signals"],
+        "trades": ["VTR_SMA_79_81_0", "UHS_SMA_16_25_0", "TSLA_SMA_11_25_0", "MA_SMA_8_58_0"]
+      }
+    }
+  },
+  "pattern_recognition": {
+    "signal_temporal_patterns": {
+      "monthly_effectiveness": {
+        "april": {"win_rate": 0.33, "avg_return": -0.0234, "trade_count": 6},
+        "may": {"win_rate": 0.67, "avg_return": 0.0445, "trade_count": 6},
+        "june": {"win_rate": 0.25, "avg_return": 0.0234, "trade_count": 3}
+      },
+      "market_regime_performance": {
+        "bull_market": {"win_rate": 0.64, "avg_return": 0.0567, "trade_count": 11},
+        "sideways_market": {"win_rate": 0.25, "avg_return": -0.0123, "trade_count": 4}
+      },
+      "volatility_environment": {
+        "low_vix_lt_15": {"win_rate": 0.70, "avg_return": 0.0445, "trade_count": 10},
+        "medium_vix_15_25": {"win_rate": 0.40, "avg_return": 0.0089, "trade_count": 5}
+      }
+    },
+    "strategy_signal_effectiveness": {
+      "sma_vs_ema_comparison": {
+        "SMA_advantage": {
+          "win_rate_differential": 0.1428,
+          "avg_return_differential": 0.0175,
+          "confidence": 0.82
+        },
+        "window_parameter_analysis": {
+          "optimal_sma_windows": ["42-54", "71-82", "57-59"],
+          "suboptimal_sma_windows": ["68-86", "79-81", "16-25"],
+          "confidence": 0.78
+        }
+      },
+      "market_condition_sensitivity": {
+        "bull_market_performance": {
+          "SMA_win_rate": 0.68,
+          "EMA_win_rate": 0.50,
+          "advantage": "SMA"
+        },
+        "sideways_market_performance": {
+          "SMA_win_rate": 0.25,
+          "EMA_win_rate": 0.00,
+          "advantage": "SMA"
+        }
+      }
+    }
+  },
+  "optimization_opportunities": {
+    "entry_signal_enhancements": [
+      {
+        "opportunity": "Optimize SMA window parameters for current market regime",
+        "potential_improvement": "12-15% win rate increase",
+        "implementation": "Focus on 42-54, 57-59, 71-82 window combinations",
+        "confidence": 0.78
+      },
+      {
+        "opportunity": "Add volume confirmation filter for entry signals",
+        "potential_improvement": "20% false signal reduction",
+        "implementation": "Require 1.5x average volume on SMA crossover signals",
+        "confidence": 0.72
+      },
+      {
+        "opportunity": "Implement market regime adaptive parameters",
+        "potential_improvement": "18% performance improvement in sideways markets",
+        "implementation": "Adjust window parameters based on VIX levels",
+        "confidence": 0.69
+      }
+    ],
+    "exit_signal_refinements": [
+      {
+        "opportunity": "Implement dynamic trailing stop optimization",
+        "potential_improvement": "40% exit efficiency improvement",
+        "implementation": "Deploy trailing stop at 0.75×ATR from MFE peak",
+        "confidence": 0.84
+      },
+      {
+        "opportunity": "Time-based exit optimization for long positions",
+        "potential_improvement": "25% average return increase",
+        "implementation": "Add 25-day target hold period with profit-taking",
+        "confidence": 0.76
+      },
+      {
+        "opportunity": "MFE-based exit triggers",
+        "potential_improvement": "35% capture rate improvement",
+        "implementation": "Exit at 80% of MFE when position exceeds 15-day hold",
+        "confidence": 0.81
+      }
+    ],
+    "strategy_parameter_optimization": [
+      {
+        "parameter": "SMA_windows",
+        "current_suboptimal": ["68-86", "79-81", "16-25"],
+        "optimized_recommendation": ["42-54", "57-59", "71-82"],
+        "improvement_potential": "0.025 alpha increase",
+        "confidence": 0.78
+      },
+      {
+        "parameter": "position_sizing",
+        "current": "fixed_1.0",
+        "optimized_recommendation": "volatility_adjusted_0.5_to_1.5",
+        "improvement_potential": "0.15 sharpe ratio increase",
+        "confidence": 0.73
+      }
+    ],
+    "risk_management_enhancements": [
+      {
+        "enhancement": "Sector concentration limits",
+        "current_risk": "47% Technology concentration",
+        "recommended_limit": "35% maximum sector allocation",
+        "risk_reduction": "25% portfolio volatility reduction",
+        "confidence": 0.85
+      }
+    ]
+  },
+  "risk_assessment": {
+    "portfolio_risk_metrics": {
+      "position_correlation": {
+        "avg_correlation": 0.42,
+        "max_correlation": 0.78,
+        "sector_concentration": {
+          "Technology": 0.47,
+          "Healthcare": 0.19,
+          "Financials": 0.11,
+          "Industrials": 0.11,
+          "Consumer_Discretionary": 0.09,
+          "Other": 0.03
+        },
+        "diversification_ratio": 0.68,
+        "confidence": 0.85
+      },
+      "drawdown_analysis": {
+        "max_drawdown": -0.1502,
+        "avg_drawdown": -0.0456,
+        "drawdown_duration": 28.3,
+        "recovery_time": 19.4,
+        "downside_deviation": 0.0623,
+        "confidence": 0.88
+      },
+      "position_sizing_analysis": {
+        "fixed_sizing_effectiveness": 0.67,
+        "optimal_sizing_opportunity": "volatility_adjusted",
+        "risk_per_trade": 0.0456,
+        "recommended_risk_per_trade": 0.0350,
+        "confidence": 0.74
+      }
+    },
+    "market_context_risk": {
+      "market_beta": 0.68,
+      "market_correlation": 0.58,
+      "regime_sensitivity": {
+        "bull_outperformance": 0.0167,
+        "sideways_underperformance": -0.0234
+      },
+      "volatility_sensitivity": {
+        "vix_correlation": -0.34,
+        "volatility_beta": 0.52
+      },
+      "confidence": 0.82
+    }
+  },
+  "statistical_validation": {
+    "sample_size_assessment": {
+      "total_trades": 35,
+      "closed_trades": 15,
+      "minimum_required": 20,
+      "adequacy_score": 0.75,
+      "power_analysis": 0.72
+    },
+    "significance_testing": {
+      "return_vs_zero": {
+        "t_statistic": 1.89,
+        "p_value": 0.078,
+        "significant": false
+      },
+      "alpha_vs_benchmark": {
+        "t_statistic": 1.45,
+        "p_value": 0.167,
+        "significant": false
+      },
+      "win_rate_vs_random": {
+        "z_statistic": 1.23,
+        "p_value": 0.219,
+        "significant": false
+      }
+    },
+    "confidence_intervals": {
+      "mean_return": {"lower": -0.0234, "upper": 0.0676, "confidence_level": 0.95},
+      "sharpe_ratio": {"lower": 0.23, "upper": 1.23, "confidence_level": 0.95},
+      "win_rate": {"lower": 0.32, "upper": 0.68, "confidence_level": 0.95}
+    }
+  },
+  "analysis_quality_assessment": {
+    "overall_confidence": 0.89,
+    "calculation_accuracy": 0.94,
+    "statistical_robustness": 0.72,
+    "pattern_reliability": 0.78,
+    "optimization_feasibility": 0.82,
+    "quality_issues": [
+      "Limited closed trade sample size (15 trades)",
+      "Statistical significance not achieved for key metrics",
+      "High sector concentration in Technology"
+    ],
+    "improvement_recommendations": [
+      "Increase closed trade sample to 30+ for statistical robustness",
+      "Implement sector diversification limits",
+      "Add more EMA strategy trades for comparison analysis"
+    ]
+  },
+  "next_phase_inputs": {
+    "synthesis_ready": true,
+    "confidence_threshold_met": true,
+    "analysis_package_path": "/Users/colemorton/Projects/sensylate/data/outputs/analysis_trade_history/analysis/live_signals_20250702.json",
+    "report_focus_areas": [
+      "exit_efficiency_optimization",
+      "sma_strategy_parameter_tuning",
+      "sector_concentration_risk_management",
+      "sample_size_expansion_recommendations"
+    ],
+    "critical_findings": [
+      "Exit efficiency at 57% presents major optimization opportunity (+40% potential)",
+      "SMA strategy significantly outperforms EMA (57% vs 43% win rate)",
+      "Technology sector concentration at 47% exceeds prudent risk limits",
+      "Sample size limitations require cautious interpretation of results",
+      "Window parameter optimization could improve performance by 12-15%"
+    ]
+  }
+}

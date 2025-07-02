@@ -63,6 +63,12 @@ outputs/exports/*
 outputs/logs/*
 !outputs/logs/.gitkeep
 
+# Analysis trade history outputs (live and internal)
+data/outputs/analysis_trade_history/live/*
+!data/outputs/analysis_trade_history/live/.gitkeep
+data/outputs/analysis_trade_history/internal/*
+!data/outputs/analysis_trade_history/internal/.gitkeep
+
 # Temporary files
 *.tmp
 *.temp
