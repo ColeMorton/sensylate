@@ -94,16 +94,24 @@ const SearchModal = () => {
       });
     };
 
-    document.addEventListener("keydown", function (event) {
+    const handleKeydown = (event: KeyboardEvent) => {
       if ((event.metaKey || event.ctrlKey) && event.key === "k") {
-        searchModal!.classList.add("show");
-        // Use requestAnimationFrame to ensure modal is rendered before focusing
-        requestAnimationFrame(() => {
+        event.preventDefault();
+        event.stopPropagation();
+        // Toggle modal: close if open, open if closed
+        if (searchModal!.classList.contains("show")) {
+          searchModal!.classList.remove("show");
+        } else {
+          searchModal!.classList.add("show");
+          // Use requestAnimationFrame to ensure modal is rendered before focusing
           requestAnimationFrame(() => {
-            searchInput!.focus();
-            updateSelection();
+            requestAnimationFrame(() => {
+              searchInput!.focus();
+              updateSelection();
+            });
           });
-        });
+        }
+        return;
       }
 
       if (event.key === "ArrowUp" || event.key === "ArrowDown") {
@@ -131,7 +139,14 @@ const SearchModal = () => {
       }
 
       updateSelection();
-    });
+    };
+
+    document.addEventListener("keydown", handleKeydown);
+
+    // Cleanup event listeners
+    return () => {
+      document.removeEventListener("keydown", handleKeydown);
+    };
   }, [searchString]);
 
   // Don't render if search feature is disabled
@@ -229,6 +244,10 @@ const SearchModal = () => {
               </svg>
             </kbd>
             to select
+          </span>
+          <span className="flex items-center">
+            <kbd>⌘</kbd>
+            <kbd>K</kbd> to toggle
           </span>
           {searchString && (
             <span>
