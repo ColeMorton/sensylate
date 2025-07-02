@@ -2,16 +2,16 @@
 
 **Complete DASV Workflow for Fundamental Analysis**
 
-Execute the complete DASV (Discover → Analyze → Synthesize → Validate) microservice workflow for comprehensive fundamental analysis with institutional-quality investment recommendations.
+Execute the complete DASV (Discover → Analyze → Synthesize → Validate) microservice workflow by invoking each phase command sequentially to produce institutional-quality fundamental analysis with comprehensive investment recommendations.
 
 ## Purpose
 
-This command orchestrates the complete fundamental analysis microservice workflow, executing all four DASV phases sequentially to produce institutional-quality fundamental analysis with comprehensive investment recommendations.
+This command orchestrates the complete fundamental analysis microservice workflow by executing all four individual DASV phase commands in sequence, ensuring proper data flow and maintaining institutional-quality standards throughout.
 
 ## Workflow Integration
 
 **Framework**: DASV Complete Workflow
-**Microservices**: 4 sequential phases
+**Microservices**: 4 sequential command invocations
 **Output Location**: `./data/outputs/fundamental_analysis/`
 **Quality Standard**: Institutional-grade fundamental analysis
 
@@ -25,151 +25,92 @@ This command orchestrates the complete fundamental analysis microservice workflo
 
 ## DASV Workflow Execution
 
-### Phase 1: Discover (fundamental_analyst_discover)
-**Data Collection and Context Gathering**
+Execute each microservice command sequentially, waiting for completion before proceeding to the next phase.
 
-Execute comprehensive data collection and foundational research:
-- Current market data via Yahoo Finance service
-- Financial statements and key metrics
-- Business model and competitive landscape
-- Peer group establishment and benchmarking
+### Phase 1: Execute Discovery Command
+```
+/fundamental_analyst_discover {ticker} depth={depth} timeframe={timeframe} confidence_threshold={confidence_threshold}
+```
 
-**Output**: Structured discovery data in JSON format
+**Expected Output**: `./data/outputs/fundamental_analysis/discovery/{TICKER}_{YYYYMMDD}_discovery.json`
 **Duration**: ~20s
-**Next Phase**: Analyze
+**Verification**: Confirm discovery file exists before proceeding
 
-### Phase 2: Analyze (fundamental_analyst_analyze)
-**Systematic Analysis and Evaluation**
+### Phase 2: Execute Analysis Command
+```
+/fundamental_analyst_analyze {ticker} confidence_threshold={confidence_threshold} peer_comparison=true risk_analysis=true scenario_count={scenario_count}
+```
 
-Execute comprehensive systematic analysis:
-- Financial health assessment (4-dimensional scorecard)
-- Competitive position and moat analysis
-- Growth driver identification and risk quantification
-- Valuation model input preparation
-
-**Input**: Discovery data from Phase 1
-**Output**: Comprehensive analysis data in JSON format
+**Expected Output**: `./data/outputs/fundamental_analysis/analysis/{TICKER}_{YYYYMMDD}_analysis.json`
 **Duration**: ~40s
-**Next Phase**: Synthesize
+**Verification**: Confirm analysis file exists before proceeding
 
-### Phase 3: Synthesize (fundamental_analyst_synthesize)
-**Integration and Recommendation Generation**
+### Phase 3: Execute Synthesis Command
+```
+/fundamental_analyst_synthesize {ticker} confidence_threshold={confidence_threshold} scenario_count={scenario_count}
+```
 
-**CRITICAL PHASE**: Generate institutional-quality investment analysis:
-- Investment thesis construction and recommendation
-- Multi-method valuation synthesis and scenario analysis
-- Risk integration and sensitivity analysis
-- Professional document generation
-
-**Input**: Discovery and analysis data from Phases 1-2
-**Output**: `./data/outputs/fundamental_analysis/{TICKER}_{YYYYMMDD}.md`
+**Expected Output**: `./data/outputs/fundamental_analysis/{TICKER}_{YYYYMMDD}.md`
 **Duration**: ~30s
-**Next Phase**: Validate
-**Quality Requirement**: Institutional-grade fundamental analysis with professional presentation
+**Verification**: Confirm markdown analysis document exists before proceeding
 
-### Phase 4: Validate (fundamental_analyst_validate)
-**Quality Assurance and Confidence Verification**
+### Phase 4: Execute Validation Command
+```
+/fundamental_analyst_validate {ticker} confidence_threshold={confidence_threshold}
+```
 
-Execute comprehensive validation and quality assurance:
-- Financial metrics cross-validation with primary sources
-- Investment thesis coherence and logic verification
-- Confidence score format compliance and methodology assessment
-- Institutional quality standards verification
-
-**Input**: Generated analysis document from Phase 3
-**Output**: Validation report in JSON format
+**Expected Output**: `./data/outputs/fundamental_analysis/validation/{TICKER}_{YYYYMMDD}_validation.json`
 **Duration**: ~25s
-**Final Phase**: Complete workflow
+**Final Verification**: Confirm all four output files exist
 
 ## Execution Protocol
 
-### Pre-Execution Validation
-```python
-# Load collaboration engine and validate microservice availability
-from team_workspace.shared.collaboration_engine import CollaborationEngine
+### Sequential Command Invocation
+Execute each command individually in order, ensuring each phase completes successfully before proceeding:
 
-engine = CollaborationEngine()
-dasv_workflow = engine.execute_dasv_workflow("fundamental_analyst", ticker=ticker)
+1. **Invoke Discovery**: Execute fundamental_analyst_discover command
+2. **Wait for Completion**: Verify discovery output file exists
+3. **Invoke Analysis**: Execute fundamental_analyst_analyze command
+4. **Wait for Completion**: Verify analysis output file exists
+5. **Invoke Synthesis**: Execute fundamental_analyst_synthesize command
+6. **Wait for Completion**: Verify synthesis output file exists
+7. **Invoke Validation**: Execute fundamental_analyst_validate command
+8. **Final Verification**: Confirm all expected outputs generated
 
-if dasv_workflow["status"] != "ready_for_execution":
-    raise RuntimeError(f"DASV workflow not ready: {dasv_workflow.get('error', 'Unknown error')}")
-```
+### Error Handling
+- **Phase Failure**: Stop execution if any command fails
+- **Missing Output**: Stop execution if expected output file not generated
+- **Quality Gate**: Stop execution if confidence thresholds not met
+- **File Verification**: Verify each output exists before proceeding to next phase
 
-### Sequential Execution
-```python
-# Execute DASV phases sequentially
-phases = ["discover", "analyze", "synthesize", "validate"]
-results = {}
+## Output Requirements
 
-for phase in phases:
-    command_name = f"fundamental_analyst_{phase}"
+### Complete File Set
+After successful execution, the following files must exist:
+- **Discovery**: `./data/outputs/fundamental_analysis/discovery/{TICKER}_{YYYYMMDD}_discovery.json`
+- **Analysis**: `./data/outputs/fundamental_analysis/analysis/{TICKER}_{YYYYMMDD}_analysis.json`
+- **Synthesis**: `./data/outputs/fundamental_analysis/{TICKER}_{YYYYMMDD}.md`
+- **Validation**: `./data/outputs/fundamental_analysis/validation/{TICKER}_{YYYYMMDD}_validation.json`
 
-    # Load microservice
-    microservice_info = engine.discover_command(command_name)
-    if not microservice_info:
-        raise RuntimeError(f"Microservice not found: {command_name}")
-
-    # Execute phase with dependency data
-    context, missing_deps = engine.resolve_dependencies(command_name)
-
-    # Execute microservice logic
-    # [Phase-specific execution logic would go here]
-
-    # Store phase results
-    results[phase] = {
-        "status": "completed",
-        "output_location": f"/team-workspace/microservices/fundamental_analyst/{phase}/outputs/",
-        "confidence": "calculated_confidence_score",
-        "next_phase_ready": True
-    }
-
-# Validate final output
-final_file = f"./data/outputs/fundamental_analysis/{ticker}_{datetime.now().strftime('%Y%m%d')}.md"
-if not os.path.exists(final_file):
-    raise RuntimeError(f"Final analysis document not generated: {final_file}")
-```
-
-### Post-Execution Validation
-```python
-# Verify output requirements
-validation_checks = [
-    f"File exists: {final_file}",
-    f"File location correct: ./data/outputs/fundamental_analysis/",
-    f"File naming correct: {ticker}_YYYYMMDD.md",
-    f"All DASV phases completed successfully",
-    f"Validation report generated"
-]
-
-for check in validation_checks:
-    # Perform validation
-    pass
-
-print(f"✅ DASV workflow completed successfully")
-print(f"📄 Analysis document: {final_file}")
-print(f"🔍 Validation report: {results['validate']['output_location']}")
-```
-
-## Quality Standards
-
-### Output Requirements
-- **File Output**: `./data/outputs/fundamental_analysis/{TICKER}_{YYYYMMDD}.md`
+### Quality Standards
 - **Content Quality**: Institutional-grade investment analysis
 - **Format Compliance**: Professional presentation with 0.0-1.0 confidence scoring
 - **Author Attribution**: Consistent "Cole Morton" attribution
+- **Data Accuracy**: All financial calculations verified against Yahoo Finance
 
-### Success Criteria
+## Success Criteria
+
 ```
 QUALITY ASSURANCE CHECKLIST:
-□ All four DASV phases execute successfully
-□ Comprehensive discovery data collection with 90%+ completeness
-□ **CRITICAL: All financial calculations verified against Yahoo Finance exactly**
-□ Rigorous financial analysis with institutional-grade methodology and enhanced risk assessment
-□ Professional synthesis with consistent financial data usage and actionable investment recommendations
-□ **CRITICAL: DAS output identical to fundamental_analysis.md command**
+□ All four DASV phase commands execute successfully
+□ Discovery JSON file generated in correct location
+□ Analysis JSON file generated in correct location
+□ Synthesis markdown document generated in correct location
+□ Validation JSON file generated in correct location
+□ All financial calculations verified against Yahoo Finance exactly
 □ Content evaluator score 8.5+ minimum target
-□ Complete audit trail with all phase outputs in ./data directory
-□ Institutional-quality analysis maintained
-□ All validation checks pass
+□ Complete audit trail with all phase outputs accessible
+□ Institutional-quality analysis maintained throughout
 □ Professional presentation standards met
 ```
 
@@ -182,31 +123,10 @@ QUALITY ASSURANCE CHECKLIST:
 - Synthesize: 30s (document generation)
 - Validate: 25s (quality assurance)
 
-**Optimization Strategies**:
-- Parallel data validation in discover phase
-- Cached peer group data reuse
-- Template-driven document generation
-- Efficient microservice data passing
-
-## Error Handling
-
-### Fail-Fast Approach
-- **Discovery Failure**: Stop execution if data quality below threshold
-- **Analysis Failure**: Stop execution if confidence thresholds not met
-- **Synthesis Failure**: Stop execution if document generation fails
-- **Validation Failure**: Report issues but preserve generated document
-
-### Enhanced Quality Gates
-- **Pre-Phase**: Validate inputs and dependencies with data consistency checks
-- **Critical Calculation Gate**: All margins/ratios must match Yahoo Finance exactly before proceeding
-- **Inter-Phase**: Verify data flow, financial data consistency, and confidence maintenance
-- **Critical Error Detection**: Flag calculation errors (e.g. 11.9% vs 10.3%) as blocking errors
-- **Post-Phase**: Confirm expected outputs generated with quality score ≥8.5
-
 ## Usage Examples
 
 ```bash
-# Standard comprehensive analysis (produces TICKER_YYYYMMDD.md)
+# Standard comprehensive analysis
 /fundamental_analysis_full AAPL
 
 # Deep dive with high confidence requirement
@@ -221,27 +141,20 @@ QUALITY ASSURANCE CHECKLIST:
 
 ## Integration Notes
 
-### Microservice Discovery
-The workflow automatically discovers and validates all required microservices:
-- `fundamental_analyst_discover`
-- `fundamental_analyst_analyze`
-- `fundamental_analyst_synthesize`
-- `fundamental_analyst_validate`
+### Command Dependency Chain
+Each command builds on the previous phase's output:
+- **Discover → Analyze**: Discovery data feeds into analysis
+- **Analyze → Synthesize**: Combined discovery and analysis data feeds into synthesis
+- **Synthesize → Validate**: Generated document feeds into validation
 
-### Data Flow Management
-- **Phase 1 → 2**: Discovery data feeds into analysis
-- **Phases 1,2 → 3**: Combined data feeds into synthesis
-- **Phase 3 → 4**: Generated document feeds into validation
-- **All Phases**: Confidence and quality metrics maintained throughout
+### Data Flow Verification
+Verify proper data flow between phases by confirming each expected output file exists before invoking the next command.
 
-### Collaboration Integration
-- Uses enhanced collaboration engine for microservice orchestration
-- Integrates with team workspace for output management
-- Provides systematic DASV workflow execution
-- Delivers institutional-quality investment analysis
+### Quality Maintenance
+Each individual command maintains its own quality standards and confidence scoring, ensuring institutional-grade output throughout the complete workflow.
 
-**This command represents the complete microservice implementation of fundamental analysis, delivering sophisticated investment research through the systematic DASV methodology.**
+**This command executes the complete DASV microservice workflow by invoking each individual phase command sequentially, maintaining the same output quality and file structure as manual execution.**
 
 **Author**: Cole Morton
-**Confidence**: [Workflow confidence based on successful DASV execution]
-**Data Quality**: [Data quality maintained across all microservice phases]
+**Confidence**: [Based on successful sequential command execution]
+**Data Quality**: [Maintained across all microservice phases]

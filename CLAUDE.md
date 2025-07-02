@@ -165,11 +165,11 @@ Sensylate features an advanced **Command Collaboration Framework** with **Conten
 
 ### Command Locations
 
+**All commands are project-scoped** and located in:
 - **Project Commands**: `/Users/colemorton/Projects/sensylate/.claude/commands/` (sensylate-specific)
-- **User Commands**: `/Users/colemorton/.claude/commands/` (global, cross-project)
 - **Team Workspace**: `/team-workspace/` (collaboration data and outputs)
 
-**Note**: All current commands are project-scoped and located in `.claude/commands/` within this project.
+This ensures consistent command behavior and project-specific optimization.
 
 ### Collaboration Benefits
 
@@ -231,11 +231,16 @@ Use these by asking Claude to execute them (e.g., "run the architect command" or
   - **Collaboration**: Provides requirements to architect and product-owner
   - **Usage**: Process analysis and requirements documentation
 
-##### Utilities
+##### Command Management
 - **`/command`** - Comprehensive command lifecycle management specialist with systematic methodology
   - **Location**: `.claude/commands/command.md` (project scope)
   - **Collaboration**: Full command management including creation, optimization, alignment, analysis, and maintenance
   - **Usage**: Complete command lifecycle management (create, optimize, align, analyze, maintain)
+
+- **`/documentation_owner`** - Documentation lifecycle & quality management with institutional standards
+  - **Location**: `.claude/commands/documentation_owner.md` (project scope)
+  - **Collaboration**: Ensures documentation quality across all commands and maintains consistency
+  - **Usage**: Documentation quality audits, template standardization, content lifecycle management
 
 ### Workflow Examples
 
@@ -262,6 +267,8 @@ Use these by asking Claude to execute them (e.g., "run the architect command" or
 ## Content Lifecycle Management Integration
 
 All AI commands **MUST** integrate with the Content Lifecycle Management system to prevent duplication and maintain knowledge integrity:
+
+**Mandatory Pre-execution Requirements**: All commands must complete both workspace validation and content consultation before execution.
 
 ### Before Creating Any Analysis
 

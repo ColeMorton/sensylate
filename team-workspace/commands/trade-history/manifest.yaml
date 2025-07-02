@@ -1,0 +1,66 @@
+# Command Manifest: trade-history
+# Generated: 2025-07-01
+# Purpose: Comprehensive trading performance analysis with historical reporting and live monitoring
+
+metadata:
+  name: "trade-history"
+  version: "1.0.0"
+  description: "Comprehensive trading performance analysis with historical reporting and live monitoring"
+  type: "product"
+  classification: "core_product"
+  status: "active"
+  created: "2025-07-01"
+  last_updated: "2025-07-01"
+
+collaboration:
+  primary_topics:
+    - trading-performance
+  secondary_topics: []
+  reads_from:
+    - trading_data
+    - portfolio_data
+    - performance_metrics
+    - market_data
+  produces:
+    - performance_reports
+    - historical_analysis
+    - live_monitoring
+    - trading_insights
+  team_integration:
+    shares_context_with:
+      - twitter-post-strategy
+      - fundamental-analysis-full
+    provides_data_to:
+      - social-media-strategist
+      - product-owner
+
+capabilities:
+  analysis_types:
+    - historical_performance
+    - ytd_reporting
+    - live_signal_monitoring
+    - portfolio_tracking
+  output_formats:
+    - markdown_reports
+    - dashboard_visualizations
+    - performance_metrics
+  data_sources:
+    - trading_history
+    - portfolio_data
+    - market_feeds
+
+performance:
+  avg_execution_time: "60s"
+  success_rate: null
+  last_execution: "2025-07-01"
+  cache_enabled: true
+  dependencies: []
+
+outputs:
+  primary_location: "team-workspace/commands/trade-history/outputs/"
+  authority_location: "team-workspace/knowledge/trading-performance/"
+  report_types:
+    - HISTORICAL_PERFORMANCE_REPORT
+    - INTERNAL_TRADING_REPORT_YTD
+    - LIVE_SIGNALS_MONITOR
+  naming_convention: "{REPORT_TYPE}_{YYYYMMDD}.md"

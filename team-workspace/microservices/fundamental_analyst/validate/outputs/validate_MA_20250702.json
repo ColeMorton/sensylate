@@ -1,0 +1,198 @@
+{
+  "ticker": "MA",
+  "timestamp": "2025-07-02T13:38:27.086723",
+  "validation_results": {
+    "financial_validation": {
+      "validation_results": [
+        {
+          "metric": "current_price",
+          "source_value": 564.61,
+          "status": "PASS",
+          "message": "Metric correctly reflected in document"
+        },
+        {
+          "metric": "market_cap",
+          "source_value": 512712146944,
+          "status": "WARNING",
+          "message": "Metric value 512,712,146,944 not found in exact format"
+        },
+        {
+          "metric": "pe_ratio",
+          "source_value": 39.56622,
+          "status": "WARNING",
+          "message": "Metric value 39.6 not found in exact format"
+        },
+        {
+          "metric": "profit_margin",
+          "source_value": 0.45213002,
+          "status": "WARNING",
+          "message": "Metric value 45.2% not found in exact format"
+        },
+        {
+          "metric": "roe",
+          "source_value": 1.8770399,
+          "status": "PASS",
+          "message": "Metric correctly reflected in document"
+        },
+        {
+          "metric": "revenue_growth",
+          "source_value": 0.142,
+          "status": "PASS",
+          "message": "Metric correctly reflected in document"
+        },
+        {
+          "metric": "free_cash_flow",
+          "source_value": 14451000320,
+          "status": "WARNING",
+          "message": "Metric value 14,451,000,320 not found in exact format"
+        }
+      ],
+      "validation_score": 0.42857142857142855,
+      "passed": 3,
+      "total": 7
+    },
+    "thesis_coherence": {
+      "thesis_checks": [
+        {
+          "check": "Recommendation Logic",
+          "status": "PASS",
+          "message": "SELL recommendation consistent with >10% downside"
+        },
+        {
+          "check": "Thesis Completeness",
+          "status": "PASS",
+          "message": "Comprehensive thesis with 3 components"
+        },
+        {
+          "check": "Scenario Analysis",
+          "status": "PASS",
+          "message": "Complete bull/base/bear scenario analysis"
+        }
+      ],
+      "thesis_score": 1.0,
+      "passed": 3,
+      "total": 3
+    },
+    "confidence_methodology": {
+      "confidence_checks": [
+        {
+          "check": "Analysis Confidence Range",
+          "status": "PASS",
+          "value": 0.844,
+          "message": "Confidence score within valid range"
+        },
+        {
+          "check": "Synthesis Confidence Range",
+          "status": "PASS",
+          "value": 0.85,
+          "message": "Confidence score within valid range"
+        },
+        {
+          "check": "Thesis Confidence Range",
+          "status": "PASS",
+          "value": 0.85,
+          "message": "Confidence score within valid range"
+        },
+        {
+          "check": "Overall Confidence Level",
+          "status": "PASS",
+          "value": 0.848,
+          "message": "High confidence analysis"
+        }
+      ],
+      "methodology_score": 1.0,
+      "passed": 4,
+      "total": 4,
+      "average_confidence": 0.848
+    },
+    "quality_standards": {
+      "quality_checks": [
+        {
+          "check": "Executive Summary Section",
+          "status": "FAIL",
+          "message": "Required section missing"
+        },
+        {
+          "check": "Company Overview Section",
+          "status": "FAIL",
+          "message": "Required section missing"
+        },
+        {
+          "check": "Financial Analysis Section",
+          "status": "FAIL",
+          "message": "Required section missing"
+        },
+        {
+          "check": "Competitive Position Section",
+          "status": "FAIL",
+          "message": "Required section missing"
+        },
+        {
+          "check": "Growth Drivers Section",
+          "status": "FAIL",
+          "message": "Required section missing"
+        },
+        {
+          "check": "Valuation Analysis Section",
+          "status": "FAIL",
+          "message": "Required section missing"
+        },
+        {
+          "check": "Investment Thesis Section",
+          "status": "FAIL",
+          "message": "Required section missing"
+        },
+        {
+          "check": "Scenario Analysis Section",
+          "status": "PASS",
+          "message": "Required section present"
+        },
+        {
+          "check": "Risk Assessment Section",
+          "status": "FAIL",
+          "message": "Required section missing"
+        },
+        {
+          "check": "Investment Recommendation Section",
+          "status": "PASS",
+          "message": "Required section present"
+        },
+        {
+          "check": "Author Attribution",
+          "status": "FAIL",
+          "message": "Missing or incorrect author attribution"
+        },
+        {
+          "check": "Table Formatting",
+          "status": "PASS",
+          "message": "Professional table formatting present"
+        },
+        {
+          "check": "Document Completeness",
+          "status": "PASS",
+          "message": "Comprehensive analysis (7,081 characters)"
+        }
+      ],
+      "quality_score": 0.3076923076923077,
+      "passed": 4,
+      "total": 13,
+      "document_length": 7081
+    }
+  },
+  "content_evaluation": {
+    "content_evaluator_score": 6.6,
+    "target_score": 8.5,
+    "meets_target": false,
+    "component_scores": {
+      "financial_accuracy": 4.3,
+      "thesis_quality": 10.0,
+      "confidence_compliance": 10.0,
+      "institutional_quality": 3.1
+    }
+  },
+  "overall_status": "NEEDS_IMPROVEMENT",
+  "key_findings": [
+    "Some financial metrics need verification",
+    "Document structure or formatting needs improvement"
+  ]
+}

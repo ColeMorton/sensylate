@@ -1,5 +1,9 @@
 # Commit and Push
 
+**Command Classification**: 🛠️ **Utility Command**
+**Pre-execution Required**: Optional (basic operational checks only)
+**Outputs To**: Git repository
+
 Generate a meaningful commit title, create the commit, and push to remote.
 
 ## MANDATORY: Pre-Execution Coordination

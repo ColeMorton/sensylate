@@ -1,0 +1,206 @@
+{
+  "portfolio": "live_signals",
+  "analysis_metadata": {
+    "execution_timestamp": "2025-07-02T03:35:41.249414+00:00",
+    "confidence_score": 0.85,
+    "analysis_completeness": 50.0,
+    "calculation_duration": "0.0s",
+    "statistical_significance": 0.85,
+    "sample_size_adequacy": 0.6
+  },
+  "signal_effectiveness": {
+    "entry_signal_analysis": {
+      "win_rate_by_strategy": {
+        "SMA": {
+          "win_rate": 0.5333333333333333,
+          "total_trades": 15,
+          "winners": 8,
+          "losers": 7,
+          "average_return_winners": 0.060914557656449764,
+          "average_return_losers": -0.05734627304176578,
+          "overall_return": 0.005726169997282506,
+          "confidence": 0.8
+        }
+      },
+      "signal_timing_effectiveness": {
+        "avg_hold_period": 26.8,
+        "median_hold_period": 21.0,
+        "confidence": 0.8
+      }
+    },
+    "exit_signal_analysis": {
+      "exit_efficiency_metrics": {
+        "overall_exit_efficiency": -0.9080882823839559,
+        "median_exit_efficiency": 0.0644329719531342,
+        "exit_efficiency_std": 2.197103080463357,
+        "positive_efficiency_rate": 0.5333333333333333,
+        "confidence": 0.85,
+        "avg_mfe": 0.07894727093777386,
+        "avg_mae": 0.06809270936145934,
+        "mfe_mae_ratio": 7.067689606536898,
+        "mfe_capture_rate": -0.9080882823839559
+      },
+      "exit_timing_quality": {
+        "hold_period_optimization": {
+          "short_term_le_7d": {
+            "count": 4,
+            "avg_return": 0.004428279656169374
+          },
+          "medium_term_8_30d": {
+            "count": 6,
+            "avg_return": -0.020666950989084092
+          },
+          "long_term_gt_30d": {
+            "count": 5,
+            "avg_return": 0.038436227453812935
+          }
+        }
+      }
+    }
+  },
+  "performance_measurement": {
+    "statistical_analysis": {
+      "return_distribution": {
+        "mean_return": 0.005726169997282506,
+        "median_return": 0.0055627864160577,
+        "std_deviation": 0.08033110783903938,
+        "skewness": 0.044599569121964396,
+        "kurtosis": -0.16072258049579435,
+        "min_return": -0.1502082943214945,
+        "max_return": 0.1657797267640927,
+        "confidence": 0.9,
+        "normality_test_p_value": 0.9963147372221121
+      },
+      "risk_adjusted_metrics": {
+        "sharpe_ratio": 0.07128209919320566,
+        "sortino_ratio": 0.10829006044707029,
+        "max_drawdown": -0.1502082943214945,
+        "confidence": 0.85
+      }
+    },
+    "trade_quality_classification": {
+      "poor": {
+        "count": 4,
+        "percentage": 0.26666666666666666,
+        "avg_return": 0.002680430817325875,
+        "characteristics": []
+      },
+      "failed_to_capture_upside": {
+        "count": 4,
+        "percentage": 0.26666666666666666,
+        "avg_return": -0.08587979290782448,
+        "characteristics": []
+      },
+      "excellent": {
+        "count": 4,
+        "percentage": 0.26666666666666666,
+        "avg_return": 0.047349589333576345,
+        "characteristics": []
+      },
+      "good": {
+        "count": 2,
+        "percentage": 0.13333333333333333,
+        "avg_return": 0.1372650025367203,
+        "characteristics": []
+      },
+      "poor_setup_-_high_risk,_low_reward": {
+        "count": 1,
+        "percentage": 0.06666666666666667,
+        "avg_return": -0.045238364086514,
+        "characteristics": []
+      }
+    }
+  },
+  "pattern_recognition": {
+    "signal_temporal_patterns": {
+      "monthly_effectiveness": {
+        "month_4": {
+          "trade_count": 7,
+          "win_rate": 0.42857142857142855,
+          "avg_return": -0.028682721472752866
+        },
+        "month_5": {
+          "trade_count": 6,
+          "win_rate": 0.6666666666666666,
+          "avg_return": 0.03640997513119026
+        },
+        "month_6": {
+          "trade_count": 2,
+          "win_rate": 0.5,
+          "avg_return": 0.0341058747406831
+        }
+      },
+      "strategy_parameter_analysis": {
+        "SMA": {
+          "best_window_combo": "15,23",
+          "best_avg_return": 0.1658,
+          "trade_count": 1.0,
+          "total_combinations_tested": 15
+        }
+      }
+    }
+  },
+  "optimization_opportunities": [
+    {
+      "category": "exit_signal_refinement",
+      "opportunity": "Improve exit timing efficiency",
+      "current_performance": -0.9080882823839559,
+      "target_improvement": "15-25% efficiency gain",
+      "implementation": "Implement trailing stop or time-based exit rules",
+      "confidence": 0.75
+    }
+  ],
+  "risk_assessment": {
+    "portfolio_risk_metrics": {
+      "concentration_analysis": {
+        "max_ticker_concentration": 0.05714285714285714,
+        "top_5_ticker_concentration": 0.22857142857142856,
+        "sector_concentration": {
+          "Technology": 9,
+          "Financials": 3,
+          "Healthcare": 3,
+          "Other": 17
+        },
+        "diversification_score": 1.0,
+        "confidence": 0.85
+      }
+    }
+  },
+  "statistical_validation": {
+    "sample_size_assessment": {
+      "total_trades": 35,
+      "closed_trades": 15,
+      "minimum_required": 15,
+      "adequacy_score": 0.6,
+      "power_analysis": 0.6
+    }
+  },
+  "analysis_quality_assessment": {
+    "overall_confidence": 0.85,
+    "calculation_accuracy": 0.95,
+    "statistical_robustness": 0.85,
+    "pattern_reliability": 0.75,
+    "optimization_feasibility": 0.8,
+    "quality_issues": [],
+    "improvement_recommendations": [
+      "Increase closed trades sample size (current: 15, target: 25+)",
+      "Add benchmark comparison data for relative performance analysis"
+    ]
+  },
+  "next_phase_inputs": {
+    "synthesis_ready": true,
+    "confidence_threshold_met": true,
+    "analysis_package_path": "data/outputs/analysis_trade_history/analysis/live_signals_20250702.json",
+    "report_focus_areas": [
+      "signal_effectiveness",
+      "exit_efficiency_optimization",
+      "strategy_parameter_tuning",
+      "risk_management_enhancement"
+    ],
+    "critical_findings": [
+      "Exit efficiency below 60% - major optimization opportunity identified",
+      "Sample size limited (15 closed trades) - statistical significance reduced",
+      "SMA strategy outperforming with 53.3% win rate"
+    ]
+  }
+}

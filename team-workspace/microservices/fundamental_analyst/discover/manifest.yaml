@@ -1,0 +1,39 @@
+name: fundamental_analyst_discover
+version: 1.0.0
+description: Phase 1 of DASV - Comprehensive data collection for fundamental analysis
+phase: discover
+phase_number: 1
+
+inputs:
+  ticker:
+    type: string
+    required: true
+    description: Stock symbol to analyze
+
+outputs:
+  discovery_data:
+    type: json
+    location: outputs/discover_{ticker}_{date}.json
+    schema:
+      - company_info
+      - market_data
+      - financial_metrics
+      - analyst_data
+      - dividend_data
+      - financial_statements
+      - peer_comparison
+      - data_quality
+
+dependencies:
+  - yfinance
+  - numpy
+  - pandas
+
+validation:
+  data_quality_threshold: 0.9
+  required_fields:
+    - current_price
+    - market_cap
+    - revenue_ttm
+    - pe_ratio
+    - profit_margin

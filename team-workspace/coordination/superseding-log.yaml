@@ -123,6 +123,20 @@ superseding_events:
   event_type: topic_claimed
   timestamp: '2025-06-28T11:43:53.451770'
   topic: plotly-dash-frontend-integration
+- command: trade-history
+  details: Historical and live trading performance analysis with comprehensive reporting
+    capabilities
+  event_id: ownership_topic_claimed_20250702_072603
+  event_type: topic_claimed
+  timestamp: '2025-07-02T07:26:03.419245'
+  topic: trading-performance
+- command: architect
+  details: DASV microservices architecture implementation plan for trade_history command
+    conversion
+  event_id: ownership_topic_claimed_20250702_084227
+  event_type: topic_claimed
+  timestamp: '2025-07-02T08:42:27.902187'
+  topic: trade-history-dasv-microservices
 superseding_policies:
   automatic_superseding:
     enabled: true

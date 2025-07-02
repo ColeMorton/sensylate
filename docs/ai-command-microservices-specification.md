@@ -1,4 +1,10 @@
 # AI Command Microservices Specification
+
+**Version**: 3.1.0
+**Last Updated**: 2024-12-30
+**Breaking Changes**: Enhanced output standards and dependency tracking
+**Status**: OPERATIONAL (Phase 1 Complete)
+
 *Atomic command architecture for sophisticated AI collaboration*
 
 ## Executive Summary

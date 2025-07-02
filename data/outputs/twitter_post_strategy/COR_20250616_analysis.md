@@ -44,7 +44,7 @@
 - December: 53% positive
 
 ### SECONDARY: Fundamental Analysis Integration
-**Source**: `/data/raw/analysis_fundamental/COR_20250516.md`
+**Source**: `/data/raw/fundamental_analysis/COR_20250516.md`
 
 **Key Investment Insights**:
 - **Rating**: BUY

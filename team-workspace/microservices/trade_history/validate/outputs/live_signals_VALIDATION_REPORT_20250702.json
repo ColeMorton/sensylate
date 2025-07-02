@@ -1,0 +1,85 @@
+{
+  "portfolio": "live_signals",
+  "validation_metadata": {
+    "execution_timestamp": "2025-07-02T03:41:56.560285+00:00",
+    "validation_duration": "0.0s",
+    "phases_validated": [
+      "discovery",
+      "analysis"
+    ],
+    "synthesis_available": false,
+    "validation_depth": "standard"
+  },
+  "validation_results": {
+    "statistical_validation": {
+      "win_rate_accuracy": {
+        "actual_win_rate": 0.5333,
+        "reported_win_rate": 0.5333,
+        "variance": 0.0,
+        "tolerance_met": true,
+        "confidence": 0.95
+      },
+      "sample_size_adequacy": {
+        "closed_trades": 15,
+        "minimum_required": 15,
+        "adequacy_met": true,
+        "adequacy_score": 0.6,
+        "confidence": 0.85
+      }
+    },
+    "data_integrity_validation": {
+      "trade_count_consistency": {
+        "total_trades_match": true,
+        "closed_trades_match": true,
+        "csv_discovery_match": true,
+        "csv_analysis_match": true,
+        "confidence": 1.0
+      },
+      "confidence_progression": {
+        "discovery_confidence": 0.303,
+        "analysis_confidence": 0.85,
+        "improvement": 0.5469999999999999,
+        "logical_progression": true,
+        "confidence": 0.9
+      }
+    },
+    "business_logic_validation": {
+      "exit_efficiency_validation": {
+        "efficiency_in_bounds": true,
+        "mfe_mae_relationship": true,
+        "confidence": 0.85
+      },
+      "strategy_logic_validation": {
+        "win_rate_bounds": true,
+        "return_consistency": true,
+        "confidence": 0.9
+      }
+    },
+    "confidence_assessment": {
+      "component_confidences": {
+        "statistical_validation": 0.8999999999999999,
+        "data_integrity": 0.95,
+        "business_logic": 0.875
+      },
+      "weighted_overall_confidence": 0.9062499999999998,
+      "quality_grade": "institutional_grade",
+      "grade_description": "Highest quality, ready for external presentation",
+      "threshold_met": true,
+      "recommendations": []
+    }
+  },
+  "quality_certification": {
+    "overall_pass": true,
+    "confidence_score": 0.906,
+    "quality_grade": "institutional_grade",
+    "certification_level": "validated",
+    "operational_readiness": true
+  },
+  "improvement_recommendations": [],
+  "validation_summary": {
+    "total_checks_performed": 8,
+    "checks_passed": 3,
+    "critical_issues": 0,
+    "minor_issues": 0
+  }
+}

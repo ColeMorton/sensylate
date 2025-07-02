@@ -1,0 +1,624 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Trading Synthesis Schema v1",
+  "description": "Schema for trade_history_synthesize microservice output - multi-audience report generation",
+  "type": "object",
+  "required": [
+    "portfolio",
+    "synthesis_metadata",
+    "report_generation_status",
+    "executive_dashboard",
+    "internal_trading_report",
+    "live_signals_monitor",
+    "historical_performance_report",
+    "content_validation",
+    "next_phase_inputs"
+  ],
+  "properties": {
+    "portfolio": {
+      "type": "object",
+      "required": ["name", "data_source", "report_timestamp"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Portfolio identifier"
+        },
+        "data_source": {
+          "type": "string",
+          "description": "Source CSV file path"
+        },
+        "report_timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Report generation timestamp"
+        },
+        "timeframe_focus": {
+          "type": "string",
+          "enum": ["1m", "3m", "6m", "1y", "ytd", "all"],
+          "description": "Primary analysis timeframe"
+        }
+      }
+    },
+    "synthesis_metadata": {
+      "type": "object",
+      "required": ["version", "confidence_score", "generation_time", "reports_generated"],
+      "properties": {
+        "version": {
+          "type": "string",
+          "description": "Schema version"
+        },
+        "confidence_score": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Overall synthesis confidence"
+        },
+        "generation_time": {
+          "type": "number",
+          "description": "Report generation duration in seconds"
+        },
+        "reports_generated": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["internal", "live", "historical"]
+          },
+          "description": "Successfully generated report types"
+        },
+        "audience_targeting": {
+          "type": "object",
+          "properties": {
+            "internal_depth": {
+              "type": "string",
+              "enum": ["executive", "operational", "detailed"]
+            },
+            "live_focus": {
+              "type": "string",
+              "enum": ["positions", "signals", "comprehensive"]
+            },
+            "historical_scope": {
+              "type": "string",
+              "enum": ["summary", "detailed", "comprehensive"]
+            }
+          }
+        }
+      }
+    },
+    "report_generation_status": {
+      "type": "object",
+      "required": ["overall_success", "individual_reports"],
+      "properties": {
+        "overall_success": {
+          "type": "boolean",
+          "description": "All reports generated successfully"
+        },
+        "individual_reports": {
+          "type": "object",
+          "properties": {
+            "internal_report": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "enum": ["success", "partial", "failed"]
+                },
+                "file_path": {
+                  "type": "string",
+                  "description": "Generated file location"
+                },
+                "content_sections": {
+                  "type": "number",
+                  "description": "Number of sections completed"
+                },
+                "quality_score": {
+                  "type": "number",
+                  "minimum": 0.0,
+                  "maximum": 1.0
+                }
+              }
+            },
+            "live_monitor": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "enum": ["success", "partial", "failed"]
+                },
+                "file_path": {
+                  "type": "string"
+                },
+                "positions_tracked": {
+                  "type": "number",
+                  "description": "Number of active positions included"
+                },
+                "market_context_included": {
+                  "type": "boolean"
+                }
+              }
+            },
+            "historical_report": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "enum": ["success", "partial", "failed"]
+                },
+                "file_path": {
+                  "type": "string"
+                },
+                "trades_analyzed": {
+                  "type": "number",
+                  "description": "Number of historical trades included"
+                },
+                "pattern_insights": {
+                  "type": "number",
+                  "description": "Number of key insights identified"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "executive_dashboard": {
+      "type": "object",
+      "required": ["thirty_second_brief", "critical_issues", "action_requirements"],
+      "properties": {
+        "thirty_second_brief": {
+          "type": "object",
+          "properties": {
+            "key_metrics": {
+              "type": "object",
+              "properties": {
+                "portfolio_health_score": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100,
+                  "description": "Composite health score"
+                },
+                "ytd_return": {
+                  "type": "number",
+                  "description": "Year-to-date return percentage"
+                },
+                "sharpe_ratio": {
+                  "type": "number",
+                  "description": "Risk-adjusted performance"
+                },
+                "max_drawdown": {
+                  "type": "number",
+                  "description": "Maximum drawdown percentage"
+                },
+                "win_rate": {
+                  "type": "number",
+                  "minimum": 0.0,
+                  "maximum": 1.0,
+                  "description": "Trading success rate"
+                },
+                "open_positions": {
+                  "type": "number",
+                  "description": "Current position count"
+                }
+              }
+            },
+            "trend_indicators": {
+              "type": "object",
+              "properties": {
+                "performance_trend": {
+                  "type": "string",
+                  "enum": ["improving", "stable", "deteriorating"]
+                },
+                "risk_trend": {
+                  "type": "string",
+                  "enum": ["improving", "stable", "deteriorating"]
+                },
+                "signal_quality_trend": {
+                  "type": "string",
+                  "enum": ["improving", "stable", "deteriorating"]
+                }
+              }
+            }
+          }
+        },
+        "critical_issues": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "priority": {
+                "type": "string",
+                "enum": ["p1_critical", "p2_priority", "p3_monitor"]
+              },
+              "issue": {
+                "type": "string",
+                "description": "Specific problem identification"
+              },
+              "impact": {
+                "type": "string",
+                "description": "Quantified impact assessment"
+              },
+              "resolution": {
+                "type": "string",
+                "description": "Concrete implementation steps"
+              },
+              "deadline": {
+                "type": "string",
+                "description": "Clear completion timeline"
+              }
+            }
+          }
+        },
+        "action_requirements": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string",
+                "description": "Specific technical implementation"
+              },
+              "impact": {
+                "type": "string",
+                "description": "Expected improvement or fix"
+              },
+              "deadline": {
+                "type": "string",
+                "description": "Implementation deadline"
+              },
+              "confidence": {
+                "type": "number",
+                "minimum": 0.0,
+                "maximum": 1.0
+              }
+            }
+          }
+        }
+      }
+    },
+    "internal_trading_report": {
+      "type": "object",
+      "required": ["file_metadata", "content_sections", "optimization_roadmap"],
+      "properties": {
+        "file_metadata": {
+          "type": "object",
+          "properties": {
+            "file_path": {
+              "type": "string"
+            },
+            "section_count": {
+              "type": "number"
+            },
+            "word_count": {
+              "type": "number"
+            },
+            "generation_confidence": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0
+            }
+          }
+        },
+        "content_sections": {
+          "type": "object",
+          "properties": {
+            "executive_dashboard": {
+              "type": "boolean",
+              "description": "Section completed successfully"
+            },
+            "portfolio_health_score": {
+              "type": "boolean"
+            },
+            "performance_attribution": {
+              "type": "boolean"
+            },
+            "critical_execution_issues": {
+              "type": "boolean"
+            },
+            "strategy_performance_breakdown": {
+              "type": "boolean"
+            },
+            "risk_factors_identification": {
+              "type": "boolean"
+            },
+            "statistical_validation": {
+              "type": "boolean"
+            },
+            "fundamental_integration_status": {
+              "type": "boolean"
+            },
+            "strategic_optimization_roadmap": {
+              "type": "boolean"
+            }
+          }
+        },
+        "optimization_roadmap": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "priority": {
+                "type": "string",
+                "enum": ["high", "medium", "low"]
+              },
+              "area": {
+                "type": "string",
+                "description": "Optimization category"
+              },
+              "opportunity": {
+                "type": "string",
+                "description": "Specific improvement"
+              },
+              "expected_impact": {
+                "type": "string",
+                "description": "Quantified benefit"
+              },
+              "implementation_confidence": {
+                "type": "number",
+                "minimum": 0.0,
+                "maximum": 1.0
+              }
+            }
+          }
+        }
+      }
+    },
+    "live_signals_monitor": {
+      "type": "object",
+      "required": ["file_metadata", "position_tracking", "signal_analysis"],
+      "properties": {
+        "file_metadata": {
+          "type": "object",
+          "properties": {
+            "file_path": {
+              "type": "string"
+            },
+            "positions_count": {
+              "type": "number"
+            },
+            "market_context_updated": {
+              "type": "boolean"
+            },
+            "generation_confidence": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0
+            }
+          }
+        },
+        "position_tracking": {
+          "type": "object",
+          "properties": {
+            "active_positions": {
+              "type": "number",
+              "description": "Total open positions"
+            },
+            "top_performers": {
+              "type": "number",
+              "description": "Number of top performing positions highlighted"
+            },
+            "watch_list": {
+              "type": "number",
+              "description": "Positions requiring monitoring"
+            },
+            "risk_alerts": {
+              "type": "number",
+              "description": "High-risk positions identified"
+            }
+          }
+        },
+        "signal_analysis": {
+          "type": "object",
+          "properties": {
+            "strong_momentum": {
+              "type": "number",
+              "description": "Positions with strong momentum"
+            },
+            "developing_positions": {
+              "type": "number",
+              "description": "Early-stage developing signals"
+            },
+            "market_context_quality": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "description": "Market analysis quality score"
+            }
+          }
+        }
+      }
+    },
+    "historical_performance_report": {
+      "type": "object",
+      "required": ["file_metadata", "analysis_coverage", "pattern_insights"],
+      "properties": {
+        "file_metadata": {
+          "type": "object",
+          "properties": {
+            "file_path": {
+              "type": "string"
+            },
+            "trades_analyzed": {
+              "type": "number"
+            },
+            "time_period": {
+              "type": "string"
+            },
+            "generation_confidence": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0
+            }
+          }
+        },
+        "analysis_coverage": {
+          "type": "object",
+          "properties": {
+            "performance_summary": {
+              "type": "boolean"
+            },
+            "quality_distribution": {
+              "type": "boolean"
+            },
+            "temporal_patterns": {
+              "type": "boolean"
+            },
+            "sector_analysis": {
+              "type": "boolean"
+            },
+            "duration_analysis": {
+              "type": "boolean"
+            }
+          }
+        },
+        "pattern_insights": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "pattern_type": {
+                "type": "string",
+                "enum": ["temporal", "sector", "strategy", "duration", "quality"]
+              },
+              "insight": {
+                "type": "string",
+                "description": "Key pattern identified"
+              },
+              "confidence": {
+                "type": "number",
+                "minimum": 0.0,
+                "maximum": 1.0
+              },
+              "actionable": {
+                "type": "boolean",
+                "description": "Can be acted upon for improvement"
+              }
+            }
+          }
+        }
+      }
+    },
+    "content_validation": {
+      "type": "object",
+      "required": ["accuracy_verification", "template_compliance", "audience_appropriateness"],
+      "properties": {
+        "accuracy_verification": {
+          "type": "object",
+          "properties": {
+            "source_data_consistency": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "description": "Metrics match input data"
+            },
+            "calculation_verification": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "description": "Computed values accuracy"
+            },
+            "trend_analysis_accuracy": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "description": "Trend indicators reflect data"
+            }
+          }
+        },
+        "template_compliance": {
+          "type": "object",
+          "properties": {
+            "section_completeness": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "description": "All sections present"
+            },
+            "formatting_consistency": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "description": "Uniform styling across reports"
+            },
+            "action_specificity": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "description": "Concrete actionable recommendations"
+            }
+          }
+        },
+        "audience_appropriateness": {
+          "type": "object",
+          "properties": {
+            "internal_report_depth": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "description": "Content depth matches audience"
+            },
+            "live_monitor_focus": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "description": "Real-time focus maintained"
+            },
+            "historical_comprehensiveness": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "description": "Analysis depth appropriate"
+            }
+          }
+        }
+      }
+    },
+    "next_phase_inputs": {
+      "type": "object",
+      "required": ["validation_ready", "report_paths", "quality_metrics"],
+      "properties": {
+        "validation_ready": {
+          "type": "boolean",
+          "description": "Ready for validation phase"
+        },
+        "report_paths": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Generated report file paths for validation"
+        },
+        "quality_metrics": {
+          "type": "object",
+          "properties": {
+            "overall_quality_score": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0
+            },
+            "content_accuracy": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0
+            },
+            "template_compliance": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0
+            },
+            "audience_targeting": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0
+            }
+          }
+        },
+        "critical_findings_summary": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Key findings for validation focus"
+        }
+      }
+    }
+  }
+}
