@@ -67,14 +67,102 @@ FRONTEND INTEGRATION:
 6. Validate SEO metadata and social sharing
 ```
 
+## Fundamental Analysis Standard Template
+
+### MANDATORY FRONTMATTER TEMPLATE
+
+All fundamental analysis posts MUST use this exact template with NO deviations:
+
+```yaml
+---
+title: "{Company Name} ({TICKER}) - Fundamental Analysis"
+meta_title: "{Company Name} ({TICKER}) Fundamental Analysis - {RATING} Rating"
+description: "Comprehensive fundamental analysis of {Company Name} ({TICKER}) with {RATING} recommendation. Fair value ${LOW}-${HIGH} vs current ${CURRENT}. {Brief investment thesis 1-2 sentences}."
+date: {YYYY-MM-DD}T{HH:MM:SS}Z
+image: "/images/tradingview/{TICKER}_{YYYYMMDD}.png"
+authors: ["Cole Morton", "Claude"]
+categories: ["Investing", "Analysis", "Fundamental Analysis", "{Sector}", "{Industry}"]
+tags: ["{ticker-lowercase}", "fundamental-analysis", "{rating-lowercase}", "{sector-tag}", "{key-theme-1}", "{key-theme-2}"]
+draft: false
+---
+```
+
+### STRICT STANDARDIZATION RULES
+
+#### Title Standards
+- **Format**: `{Company Name} ({TICKER}) - Fundamental Analysis`
+- **Remove**: ALL ratings, returns, and specific themes from title
+- **Example**: `"Amazon.com Inc. (AMZN) - Fundamental Analysis"`
+
+#### Meta_title Standards
+- **Always include** for SEO optimization
+- **Format**: `{Company Name} ({TICKER}) Fundamental Analysis - {RATING} Rating`
+- **Example**: `"Amazon (AMZN) Fundamental Analysis - BUY Rating"`
+
+#### Description Standards
+- **Length**: 150-200 characters
+- **Include**: Rating, fair value range, current price, key thesis
+- **Template**: `"Comprehensive fundamental analysis of {Company} ({TICKER}) with {RATING} recommendation. Fair value ${LOW}-${HIGH} vs current ${CURRENT}. {Investment thesis}."`
+
+#### Date Standards
+- **Format**: ISO 8601 with timezone `YYYY-MM-DDTHH:MM:SSZ`
+- **Example**: `2025-07-02T10:00:00Z`
+- **Required**: Must include timezone Z suffix
+
+#### Authors Standards
+- **Field**: Use `authors` (NOT `author`)
+- **Value**: `["Cole Morton", "Claude"]` (EXACT format)
+- **Required**: Present in ALL posts
+
+#### Categories Standards
+- **Order**: `["Investing", "Analysis", "Fundamental Analysis", "{Sector}", "{Industry}"]`
+- **Count**: Exactly 5 categories
+- **Sectors**: Technology, Healthcare, Financial Services, Consumer Discretionary, Industrials, etc.
+- **Industries**: Specific industry within sector
+
+#### Tags Standards
+- **Ticker**: ALWAYS lowercase (`amzn`, NOT `AMZN`)
+- **Required**: `"fundamental-analysis"` in ALL posts
+- **Rating**: Include rating tag (`"buy"`, `"hold"`, `"sell"`)
+- **Count**: 5-7 tags maximum
+- **Format**: Lowercase with hyphens
+
+#### Image Standards
+- **Path**: `/images/tradingview/{TICKER}_{YYYYMMDD}.png`
+- **Ticker**: Uppercase in filename
+- **Date**: Match publication date exactly
+
+### STANDARDIZATION VALIDATION PROTOCOL
+
+**MANDATORY PRE-PUBLICATION CHECKS**: Every fundamental analysis post MUST pass ALL validation checks before publication:
+
+```
+FRONTMATTER COMPLIANCE VALIDATION:
+□ **TITLE FORMAT**: Exact format "{Company Name} ({TICKER}) - Fundamental Analysis"
+□ **META_TITLE PRESENCE**: Must exist with rating information
+□ **DESCRIPTION LENGTH**: 150-200 characters with required elements
+□ **DATE FORMAT**: ISO 8601 with timezone (YYYY-MM-DDTHH:MM:SSZ)
+□ **AUTHORS FORMAT**: Exact format ["Cole Morton", "Claude"]
+□ **CATEGORIES STRUCTURE**: Exact format ["Investing", "Analysis", "Fundamental Analysis", "{Sector}", "{Industry}"]
+□ **TAGS COMPLIANCE**: Lowercase ticker + "fundamental-analysis" + rating + themes
+□ **IMAGE PATH**: Correct format with uppercase ticker and matching date
+□ **DRAFT STATUS**: Set to false for publication
+```
+
+**AUTOMATIC REJECTION**: Any post that fails validation MUST be corrected before publication. No exceptions.
+
+**STANDARDIZATION ENFORCEMENT**: The content_publisher command will automatically verify and correct any frontmatter issues to ensure 100% compliance with the standard template.
+
+**CRITICAL COMPLIANCE NOTE**: All existing fundamental analysis posts have been standardized to this template. The content_publisher command MUST maintain this standardization for all future publications and validate existing content against these rules.
+
 ## Content Standards & Quality Gates
 
 ### Publication Requirements
 
 #### Fundamental Analysis Content
 - **Naming Convention**: `[ticker]-fundamental-analysis-[YYYYMMDD].md`
-- **Frontmatter Schema**: Company-focused blog post structure
-- **Tag Taxonomy**: Use categories (fundamental-analysis, trading, stocks, [ticker])
+- **Frontmatter Schema**: MANDATORY compliance with Fundamental Analysis Standard Template
+- **Tag Taxonomy**: STRICT adherence to standardized tag structure (see Standard Template below)
 
 #### Trade History Reports
 - **Naming Convention**: `trading-performance-[report-type]-[YYYYMMDD].md`
@@ -84,6 +172,7 @@ FRONTEND INTEGRATION:
 #### Universal Requirements
 - **Image Integration**: Consistent paths to `/images/tradingview/` or `/images/trendspider_full/`
 - **SEO Optimization**: Complete titles, descriptions, tags, and metadata
+- **MANDATORY COMPLIANCE**: All frontmatter MUST follow Fundamental Analysis Standard Template
 
 ### Quality Assurance Checklist
 ```
@@ -95,6 +184,13 @@ PRE-PUBLICATION VALIDATION - CONTENT FIDELITY ENFORCEMENT:
 □ **PERFORMANCE DATA INTEGRITY**: Win rates, profit factors, trade durations, and statistical analysis preserved exactly
 □ **FORMATTING PRESERVATION**: Tables, bullet points, section structure, and emphasis maintained exactly
 □ **NO EDITORIAL CHANGES**: Zero summarization, optimization, or content modifications applied
+□ **FRONTMATTER COMPLIANCE**: MANDATORY adherence to Fundamental Analysis Standard Template
+□ **AUTHOR STANDARDIZATION**: Must use authors: ["Cole Morton", "Claude"]
+□ **CATEGORY STANDARDIZATION**: Must use ["Investing", "Analysis", "Fundamental Analysis", "{Sector}", "{Industry}"]
+□ **TAG STANDARDIZATION**: Must use lowercase ticker + standardized tag structure
+□ **DATE STANDARDIZATION**: Must use ISO 8601 with timezone format
+□ **TITLE STANDARDIZATION**: Must use clean format without ratings/returns
+□ **META_TITLE STANDARDIZATION**: Must include rating information in standardized format
 □ All referenced images properly linked and accessible
 □ SEO metadata complete and optimized (frontmatter only)
 □ Proper categorization and tagging applied (frontmatter only)

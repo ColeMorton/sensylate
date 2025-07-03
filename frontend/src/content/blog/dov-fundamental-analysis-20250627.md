@@ -1,21 +1,12 @@
 ---
 title: "Dover Corporation (DOV) - Fundamental Analysis"
 description: "Comprehensive fundamental analysis of Dover Corporation (DOV) featuring operational excellence, AI data center opportunities, and clean energy positioning. Investment recommendation with quantified risk assessment."
-date: 2025-06-27
+date: 2025-06-27T10:00:00Z
+meta_title: "Dover Corporation (DOV) Fundamental Analysis - BUY Rating"
 image: "/images/tradingview/DOV_20250627.png"
-categories:
-  ["Trading", "Analysis", "Fundamental Analysis", "Industrials", "Manufacturing", "Conglomerates"]
-tags:
-  [
-    "DOV",
-    "stocks",
-    "trading",
-    "fundamental-analysis",
-    "industrials",
-    "manufacturing",
-    "data-centers",
-    "clean-energy",
-  ]
+categories: ["Investing", "Analysis", "Fundamental Analysis", "Industrials", "Manufacturing"]
+tags: ["dov", "fundamental-analysis", "buy", "industrials", "manufacturing", "ai-data-center"]
+authors: ["Cole Morton", "Claude"]
 draft: false
 ---
 

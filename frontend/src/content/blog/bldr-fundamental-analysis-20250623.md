@@ -1,11 +1,12 @@
 ---
 title: "Builders FirstSource, Inc. (BLDR) - Fundamental Analysis"
-meta_title: "Builders FirstSource (BLDR) Fundamental Analysis"
+meta_title: "Builders FirstSource (BLDR) Fundamental Analysis - BUY Rating"
 description: "BLDR is the dominant market leader in structural building products distribution with compelling valuation despite cyclical headwinds. The company offers defensive growth through market consolidation, superior customer relationships, and value-added manufacturing capabilities while trading at significant discount to intrinsic value."
 date: 2025-06-23T05:00:00Z
 image: "/images/tradingview/BLDR_20250623.png"
-categories: ["Analysis", "Fundamental Analysis"]
-tags: ["BLDR", "fundamental-analysis", "building-materials"]
+categories: ["Investing", "Analysis", "Fundamental Analysis", "Industrials", "Construction"]
+tags: ["bldr", "fundamental-analysis", "buy", "construction", "building-materials"]
+authors: ["Cole Morton", "Claude"]
 draft: false
 ---
 

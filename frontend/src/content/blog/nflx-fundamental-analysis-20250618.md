@@ -1,12 +1,12 @@
 ---
-title: "Netflix Inc. (NFLX) - Fundamental Analysis: HOLD Rating Despite Premium Valuation"
-meta_title: "Netflix (NFLX) Fundamental Analysis - HOLD Rating Premium Valuation"
+title: "Netflix Inc. (NFLX) - Fundamental Analysis"
+meta_title: "Netflix Inc. (NFLX) Fundamental Analysis - HOLD Rating"
 description: "Comprehensive fundamental analysis of Netflix reveals strong operational execution but overvaluation at 56x P/E. Fair value $850-1,050 vs current $1,241 suggests 25% downside risk."
 date: 2025-06-18T05:00:00Z
 image: "/images/tradingview/NFLX_20250618.png"
-author: "Cole Morton"
-categories: ["Analysis", "Fundamental Analysis", "Technology", "Entertainment", "Streaming"]
-tags: ["nflx", "fundamental-analysis", "hold-rating", "streaming", "entertainment", "valuation"]
+authors: ["Cole Morton", "Claude"]
+categories: ["Investing", "Analysis", "Fundamental Analysis", "Technology", "Entertainment"]
+tags: ["nflx", "fundamental-analysis", "hold", "streaming", "entertainment"]
 draft: false
 ---
 

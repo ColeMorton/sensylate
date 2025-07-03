@@ -1,21 +1,11 @@
 ---
 title: "Ralph Lauren Corporation (RL) - Fundamental Analysis"
+meta_title: "Ralph Lauren Corporation (RL) Fundamental Analysis - BUY Rating"
 description: "Comprehensive fundamental analysis of Ralph Lauren Corporation revealing BUY recommendation with 24% expected returns. Strong brand moat, Asia growth catalysts, and exceptional financial health drive investment thesis."
-author: "Cole Morton"
-authorImage: "@/images/avatar.png"
-authorImageAlt: "Avatar Description"
-date: 2025-06-30
-categories: ["Trading", "Analysis", "Fundamental Analysis", "stocks", "RL"]
-tags:
-  [
-    "Ralph Lauren",
-    "luxury retail",
-    "brand analysis",
-    "Asia growth",
-    "digital commerce",
-    "valuation analysis",
-    "investment recommendation",
-  ]
+authors: ["Cole Morton", "Claude"]
+date: 2025-06-30T00:00:00Z
+categories: ["Investing", "Analysis", "Fundamental Analysis", "Consumer Discretionary", "Retail"]
+tags: ["rl", "fundamental-analysis", "buy", "luxury-retail", "brand-analysis"]
 featured: true
 draft: false
 language: "en"

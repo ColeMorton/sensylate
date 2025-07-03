@@ -1,12 +1,12 @@
 ---
-title: "Iron Mountain Inc. (IRM) - Fundamental Analysis: HOLD Rating with Data Center Growth Potential"
-meta_title: "Iron Mountain (IRM) Fundamental Analysis - HOLD Rating Data Center Growth"
+title: "Iron Mountain Inc. (IRM) - Fundamental Analysis"
+meta_title: "Iron Mountain Inc. (IRM) Fundamental Analysis - HOLD Rating"
 description: "Comprehensive fundamental analysis of Iron Mountain reveals strong competitive moats with 98% customer retention but elevated debt concerns. Fair value $85-110 vs current $100.61 suggests modest downside risk."
 date: 2025-06-18T05:00:00Z
 image: "/images/tradingview/IRM_20250618.png"
-author: "Cole Morton"
-categories: ["Analysis", "Fundamental Analysis", "Real Estate", "Data Centers", "Storage"]
-tags: ["irm", "fundamental-analysis", "hold-rating", "data-centers", "reit", "storage", "defensive"]
+authors: ["Cole Morton", "Claude"]
+categories: ["Investing", "Analysis", "Fundamental Analysis", "Real Estate", "Technology"]
+tags: ["irm", "fundamental-analysis", "hold", "data-centers", "reit"]
 draft: false
 ---
 

@@ -1,12 +1,12 @@
 ---
 title: "Biogen Inc. (BIIB) - Fundamental Analysis"
-meta_title: "BIIB Stock Analysis: Alzheimer's Transformation at 36% Discount | July 2025"
+meta_title: "Biogen (BIIB) Fundamental Analysis - BUY Rating"
 description: "Comprehensive fundamental analysis of Biogen Inc. (BIIB) showing 54% expected return potential as company pivots from MS to Alzheimer's leadership with Leqembi. Fair value $203 vs current $130."
 date: 2025-07-02T08:00:00Z
 image: "/images/tradingview/BIIB_20250702.png"
-categories: ["Trading", "Analysis", "Fundamental Analysis", "Stocks"]
-author: "Cole Morton"
-tags: ["BIIB", "healthcare", "biotech", "alzheimers", "stock-analysis"]
+categories: ["Investing", "Analysis", "Fundamental Analysis", "Healthcare", "Biotechnology"]
+authors: ["Cole Morton", "Claude"]
+tags: ["biib", "fundamental-analysis", "buy", "healthcare", "biotechnology", "alzheimers"]
 draft: false
 ---
 

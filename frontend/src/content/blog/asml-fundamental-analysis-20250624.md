@@ -1,11 +1,12 @@
 ---
 title: "ASML Holding N.V. (ASML) - Fundamental Analysis"
 description: "Comprehensive fundamental analysis of ASML with investment thesis, competitive position assessment, and valuation analysis"
-meta_title: "ASML Fundamental Analysis - Investment Thesis & Valuation"
+meta_title: "ASML Fundamental Analysis - BUY Rating"
 date: 2025-06-24T10:00:00Z
 image: "/images/tradingview/ASML_20250624.png"
-categories: ["Analysis", "Fundamental Analysis", "Technology"]
+categories: ["Investing", "Analysis", "Fundamental Analysis", "Technology", "Semiconductors"]
 tags: ["asml", "semiconductor", "fundamental-analysis", "stocks", "euv-lithography", "technology"]
+authors: ["Cole Morton", "Claude"]
 draft: false
 ---
 

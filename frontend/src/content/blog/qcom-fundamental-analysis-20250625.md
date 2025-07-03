@@ -1,13 +1,12 @@
 ---
-title: "QUALCOMM Incorporated (QCOM) - Fundamental Analysis: BUY Rating with 25% Expected Return"
-meta_title: "QUALCOMM (QCOM) Fundamental Analysis - BUY Rating 25% Return"
+title: "QUALCOMM Incorporated (QCOM) - Fundamental Analysis"
+meta_title: "QUALCOMM Incorporated (QCOM) Fundamental Analysis - BUY Rating"
 description: "Comprehensive fundamental analysis of QUALCOMM reveals premium mobile processor leadership with accelerated diversification into automotive and IoT segments. Fair value $175-195 vs current $155.71."
 date: 2025-06-25T05:00:00Z
 image: "/images/tradingview/QCOM_20250625.png"
-author: "Cole Morton"
-categories:
-  ["Trading", "Analysis", "Fundamental Analysis", "Technology", "Semiconductors", "Mobile"]
-tags: ["qcom", "fundamental-analysis", "buy-rating", "semiconductors", "automotive", "ai", "iot"]
+authors: ["Cole Morton", "Claude"]
+categories: ["Investing", "Analysis", "Fundamental Analysis", "Technology", "Semiconductors"]
+tags: ["qcom", "fundamental-analysis", "buy", "semiconductors", "automotive"]
 draft: false
 ---
 

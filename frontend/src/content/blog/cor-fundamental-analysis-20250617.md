@@ -1,11 +1,11 @@
 ---
-title: "Cencora Inc. (COR) - Comprehensive Fundamental Analysis: BUY Rating with 11.7% Expected Return"
-meta_title: "Cencora Inc. (COR) Fundamental Analysis - BUY Rating 11.7% Return"
+title: "Cencora Inc. (COR) - Fundamental Analysis"
+meta_title: "Cencora Inc. (COR) Fundamental Analysis - BUY Rating"
 description: "Deep fundamental analysis of Cencora Inc. (COR) reveals compelling defensive growth play with GLP-1 catalyst, specialty service expansion, and oligopoly positioning. Fair value $315-324 vs current ~$290."
 date: 2025-06-17T05:00:00Z
 image: "/images/tradingview/COR_20250617.png"
-author: "Cole Morton"
-categories: ["Analysis", "Fundamental Analysis", "Healthcare", "Pharma Distribution"]
+authors: ["Cole Morton", "Claude"]
+categories: ["Investing", "Analysis", "Fundamental Analysis", "Healthcare", "Distribution"]
 tags: ["cor", "fundamental-analysis", "buy-rating", "glp-1", "healthcare-distribution"]
 draft: false
 ---

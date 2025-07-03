@@ -1,11 +1,11 @@
 ---
-title: "Amazon.com Inc. (AMZN) - Fundamental Analysis: BUY Rating with 31% Expected Return"
-meta_title: "Amazon (AMZN) Fundamental Analysis - BUY Rating 31% Return"
+title: "Amazon.com Inc. (AMZN) - Fundamental Analysis"
+meta_title: "Amazon (AMZN) Fundamental Analysis - BUY Rating"
 description: "Comprehensive fundamental analysis of Amazon reveals compelling multi-business value creation with AWS leadership, advertising growth, and AI catalyst positioning. Fair value $220-265 vs current ~$185."
 date: 2025-06-18T05:00:00Z
 image: "/images/tradingview/AMZN_20250618.png"
-author: "Cole Morton"
-categories: ["Analysis", "Fundamental Analysis", "Technology", "Cloud Computing", "E-commerce"]
+authors: ["Cole Morton", "Claude"]
+categories: ["Investing", "Analysis", "Fundamental Analysis", "Technology", "E-commerce"]
 tags: ["amzn", "fundamental-analysis", "buy-rating", "aws", "cloud-computing", "ai", "advertising"]
 draft: false
 ---

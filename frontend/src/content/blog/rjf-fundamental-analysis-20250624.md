@@ -1,11 +1,13 @@
 ---
-title: "Raymond James Financial (RJF) - Fundamental Analysis"
-meta_title: "RJF Stock Analysis | Raymond James Financial Investment Research"
+title: "Raymond James Financial Inc. (RJF) - Fundamental Analysis"
+meta_title: "Raymond James Financial Inc. (RJF) Fundamental Analysis - BUY Rating"
 description: "Comprehensive fundamental analysis of Raymond James Financial (RJF) stock. Premium wealth management franchise with 20.4% ROE, $1.56T client assets, and 23.1% pre-tax margins."
 date: 2025-06-24T10:00:00Z
 image: "/images/tradingview/RJF_20250624.png"
-categories: ["Trading", "Analysis", "Fundamental Analysis"]
-tags: ["fundamental-analysis", "stocks", "RJF", "wealth-management", "financial-services"]
+categories:
+  ["Investing", "Analysis", "Fundamental Analysis", "Financial Services", "Wealth Management"]
+authors: ["Cole Morton", "Claude"]
+tags: ["rjf", "fundamental-analysis", "buy", "wealth-management", "financial-services"]
 draft: false
 ---
 

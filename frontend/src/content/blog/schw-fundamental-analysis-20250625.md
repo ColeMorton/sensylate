@@ -1,28 +1,12 @@
 ---
-title: "The Charles Schwab Corporation (SCHW) - Fundamental Analysis: BUY Rating with 6% Expected Return"
-meta_title: "Charles Schwab (SCHW) Fundamental Analysis - BUY Rating 6% Return"
+title: "The Charles Schwab Corporation (SCHW) - Fundamental Analysis"
+meta_title: "The Charles Schwab Corporation (SCHW) Fundamental Analysis - BUY Rating"
 description: "Comprehensive fundamental analysis of Charles Schwab reveals dominant market position in discount brokerage with successful TD Ameritrade integration and record $5.6B Q1 revenue. Fair value $90-98 vs current $89.32."
 date: 2025-06-25T05:00:00Z
 image: "/images/tradingview/SCHW_20250625.png"
-author: "Cole Morton"
-categories:
-  [
-    "Trading",
-    "Analysis",
-    "Fundamental Analysis",
-    "Financial Services",
-    "Brokerage",
-    "Wealth Management",
-  ]
-tags:
-  [
-    "schw",
-    "fundamental-analysis",
-    "buy-rating",
-    "brokerage",
-    "wealth-management",
-    "financial-services",
-  ]
+authors: ["Cole Morton", "Claude"]
+categories: ["Investing", "Analysis", "Fundamental Analysis", "Financial Services", "Brokerage"]
+tags: ["schw", "fundamental-analysis", "buy", "brokerage", "wealth-management"]
 draft: false
 ---
 
