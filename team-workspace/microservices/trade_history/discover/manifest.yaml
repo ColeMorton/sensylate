@@ -1,7 +1,7 @@
 microservice: trade_history_discover
 version: "1.0"
-last_execution: "2025-07-03T04:54:00Z"
-confidence_score: 0.78
+last_execution: "2025-07-03T06:30:00Z"
+confidence_score: 0.80
 portfolio: "live_signals"
 output_file: "live_signals_20250703.json"
 status: "completed"
@@ -13,10 +13,20 @@ data_sources:
   - web_search_research
 execution_metrics:
   duration: "45.2s"
-  data_completeness: 92.3
-  cache_hit_ratio: 0.85
+  data_completeness: 94.5
+  cache_hit_ratio: 0.65
 quality_gates_passed:
   - csv_ingestion_complete
   - market_data_collected
   - fundamental_discovery_complete
   - confidence_threshold_met
+discovery_summary:
+  total_trades: 36
+  closed_trades: 15
+  active_trades: 21
+  fundamental_coverage: 28.12
+  market_regime: "low_volatility"
+  key_findings:
+    - "58.3% of trades still active with avg 40.7 days held"
+    - "Current market rotation away from tech may impact portfolio"
+    - "Mixed quality in closed trades (4 excellent, 4 failed)"

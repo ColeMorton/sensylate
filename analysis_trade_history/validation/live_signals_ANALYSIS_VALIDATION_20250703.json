@@ -1,0 +1,155 @@
+{
+  "validation_metadata": {
+    "validation_timestamp": "2025-07-03T07:45:50Z",
+    "validator_version": "1.0",
+    "validation_scope": "discovery_phase_only",
+    "confidence_threshold": 0.7
+  },
+  "statistical_validation": {
+    "sample_adequacy": {
+      "total_trades": 0,
+      "minimum_threshold": 10,
+      "adequate_sample": false,
+      "closed_positions": 0,
+      "open_positions": 0,
+      "trade_sum_accuracy": true
+    },
+    "temporal_validation": {
+      "earliest_entry": null,
+      "latest_entry": null,
+      "latest_exit": null,
+      "date_format_valid": true
+    },
+    "strategy_distribution_validation": {
+      "SMA_count": 0,
+      "EMA_count": 0,
+      "total_matches_trades": true,
+      "distribution_logical": false
+    }
+  },
+  "data_integrity_validation": {
+    "structural_completeness": {
+      "portfolio": true,
+      "discovery_metadata": true,
+      "authoritative_trade_data": true,
+      "market_context": true,
+      "fundamental_integration": true,
+      "research_enhancement": true,
+      "data_quality_assessment": true,
+      "next_phase_inputs": true
+    },
+    "all_sections_present": true,
+    "market_data_validation": {
+      "SPY_present": true,
+      "QQQ_present": true,
+      "VTI_present": true,
+      "volatility_data": true,
+      "economic_context": true
+    },
+    "fundamental_validation": {
+      "coverage_percentage": 28.125,
+      "adequate_coverage": true,
+      "analysis_files_present": true,
+      "recommendation_distribution": {
+        "BUY": 4,
+        "HOLD": 3,
+        "SELL": 1
+      }
+    },
+    "ticker_validation": {
+      "total_tickers": 0,
+      "unique_tickers_count": 32,
+      "ticker_count_consistent": false,
+      "sector_distribution": {
+        "all_trades": {
+          "Other": 7,
+          "Technology": 9,
+          "Consumer": 2,
+          "Industrials": 5,
+          "Healthcare": 2,
+          "Financials": 4,
+          "Materials": 1,
+          "REITs": 1,
+          "Energy": 1
+        }
+      }
+    }
+  },
+  "business_logic_validation": {
+    "position_sizing_validation": {
+      "type": "fixed",
+      "value": 1.0,
+      "confidence": 1.0,
+      "fixed_sizing_logical": true
+    },
+    "market_regime_validation": {
+      "VIX_current": 16.649999618530273,
+      "market_regime": "low_volatility",
+      "regime_logical": true,
+      "confidence": 0.9
+    },
+    "fundamental_coherence": {
+      "files_vs_recommendations": false,
+      "no_sell_recommendations": false,
+      "buy_recommendations": 4,
+      "hold_recommendations": 3
+    },
+    "readiness_validation": {
+      "analysis_ready": true,
+      "confidence_met": true,
+      "threshold": 0,
+      "actual_confidence": 0,
+      "threshold_exceeded": false
+    }
+  },
+  "confidence_scoring": {
+    "component_confidence": {
+      "data_completeness": {
+        "weight": 0.3,
+        "score": 0.945,
+        "source": "CSV completeness and data availability"
+      },
+      "fundamental_integration": {
+        "weight": 0.2,
+        "score": 0.002390625,
+        "source": "Fundamental analysis coverage and quality"
+      },
+      "market_context_quality": {
+        "weight": 0.25,
+        "score": 0.92,
+        "source": "Benchmark and economic data quality"
+      },
+      "portfolio_metadata": {
+        "weight": 0.25,
+        "score": 0.7,
+        "source": "Trade count adequacy and timeframe coverage"
+      }
+    },
+    "calculated_confidence": 0.688978125,
+    "reported_confidence": 0.79625,
+    "confidence_variance": 0.10727187500000002,
+    "confidence_calibrated": false,
+    "quality_band": "developmental_grade",
+    "threshold_compliance": false
+  },
+  "overall_assessment": {
+    "validation_passed": true,
+    "overall_validation_score": 0.725,
+    "component_scores": {
+      "statistical_validation": 0.6,
+      "data_integrity": 1.0,
+      "business_logic": 1.0,
+      "confidence_calibration": 0.3
+    },
+    "issues_identified": [
+      "Insufficient sample size for robust analysis",
+      "Confidence score below minimum threshold"
+    ],
+    "improvement_recommendations": [
+      "Expand fundamental analysis coverage to >50% for enhanced insights",
+      "Improve data collection and validation processes"
+    ],
+    "discovery_phase_certified": false,
+    "next_phase_approved": true
+  }
+}

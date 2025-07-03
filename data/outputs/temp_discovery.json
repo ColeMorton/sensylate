@@ -1,0 +1,85 @@
+{
+  "portfolio": "live_signals",
+  "discovery_metadata": {
+    "execution_timestamp": "2025-07-03T06:12:30Z",
+    "csv_file_path": "/data/raw/trade_history/live_signals.csv",
+    "data_completeness": 1.0
+  },
+  "comprehensive_trade_summary": {
+    "total_trades": 36,
+    "closed_positions": 15,
+    "active_positions": 21,
+    "data_completeness": 1.0,
+    "categorization_accuracy": 1.0
+  },
+  "closed_trades_analysis": {
+    "count": 15,
+    "percentage_of_total": 0.4166666666666667,
+    "strategy_distribution": {
+      "SMA": 15
+    },
+    "date_range": {
+      "earliest_entry": "2025-04-01",
+      "latest_entry": "2025-06-04",
+      "earliest_exit": "2025-04-03",
+      "latest_exit": "2025-06-17"
+    },
+    "performance_data_available": true,
+    "quality_distribution": {
+      "Poor": 4,
+      "Failed to Capture Upside": 4,
+      "Excellent": 4,
+      "Good": 2,
+      "Poor Setup - High Risk, Low Reward": 1
+    }
+  },
+  "active_trades_analysis": {
+    "count": 21,
+    "percentage_of_total": 0.5833333333333334,
+    "strategy_distribution": {
+      "SMA": 14,
+      "EMA": 7
+    },
+    "entry_date_range": {
+      "earliest_entry": "2025-04-14",
+      "latest_entry": "2025-07-01"
+    },
+    "average_days_held": 40.666666666666664,
+    "unrealized_performance_tracking": true,
+    "portfolio_exposure": {
+      "total_unrealized_value": 2.0791612457882955
+    }
+  },
+  "position_sizing_methodology": {
+    "type": "fixed",
+    "value": 1.0,
+    "confidence": 1.0
+  },
+  "ticker_universe": {
+    "total_unique_tickers": 32,
+    "closed_trades_tickers": 14,
+    "active_trades_tickers": 19,
+    "unique_tickers": [
+      "AAPL",
+      "AMD",
+      "AMZN",
+      "COIN",
+      "COR",
+      "COST",
+      "CRWD",
+      "DOV",
+      "EQT",
+      "FFIV",
+      "GD",
+      "GME",
+      "GOOGL",
+      "HSY",
+      "ILMN",
+      "INTU",
+      "ISRG",
+      "LIN",
+      "LMT",
+      "LYV"
+    ]
+  }
+}

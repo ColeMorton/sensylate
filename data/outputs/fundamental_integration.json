@@ -1,0 +1,52 @@
+{
+  "total_tickers": 32,
+  "covered_tickers": 9,
+  "coverage_percentage": 28.125,
+  "analysis_files": {
+    "AMZN": {
+      "file": "AMZN_20250618.md",
+      "date": "20250618",
+      "path": "fundamental_analysis/AMZN_20250618.md"
+    },
+    "COR": {
+      "file": "COR_20250617_evaluation.md",
+      "date": "20250617",
+      "path": "fundamental_analysis/COR_20250617_evaluation.md"
+    },
+    "DOV": {
+      "file": "DOV_20250627.md",
+      "date": "20250627",
+      "path": "fundamental_analysis/DOV_20250627.md"
+    },
+    "GME": {
+      "file": "GME_20250630.md",
+      "date": "20250630",
+      "path": "fundamental_analysis/GME_20250630.md"
+    },
+    "LYV": {
+      "file": "LYV_20250702.md",
+      "date": "20250702",
+      "path": "fundamental_analysis/LYV_20250702.md"
+    },
+    "MA": {
+      "file": "MA_20250702.md",
+      "date": "20250702",
+      "path": "fundamental_analysis/MA_20250702.md"
+    },
+    "NFLX": {
+      "file": "NFLX_20250618.md",
+      "date": "20250618",
+      "path": "fundamental_analysis/NFLX_20250618.md"
+    },
+    "QCOM": {
+      "file": "QCOM_20250625.md",
+      "date": "20250625",
+      "path": "fundamental_analysis/QCOM_20250625.md"
+    },
+    "SMCI": {
+      "file": "SMCI_20250623.md",
+      "date": "20250623",
+      "path": "fundamental_analysis/SMCI_20250623.md"
+    }
+  }
+}
