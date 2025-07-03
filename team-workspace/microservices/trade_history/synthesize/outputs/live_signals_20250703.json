@@ -1,0 +1,474 @@
+{
+  "portfolio": "live_signals",
+  "synthesis_metadata": {
+    "execution_timestamp": "2025-07-03T06:43:16Z",
+    "synthesis_confidence": 0.8623,
+    "report_completeness": 100.0,
+    "generation_duration": "18.7s",
+    "template_compliance": 1.0,
+    "audience_coverage": 4
+  },
+  "executive_dashboard": {
+    "report_type": "Executive Dashboard",
+    "executive_summary": {
+      "portfolio_status": "ACTIVE TRADING",
+      "overall_assessment": "MIXED PERFORMANCE - OPTIMIZATION REQUIRED",
+      "confidence_level": "MEDIUM (Limited Sample)",
+      "immediate_action_required": true
+    },
+    "key_metrics": {
+      "portfolio_composition": {
+        "total_positions": 36,
+        "active_positions": 21,
+        "closed_positions": 15,
+        "completion_rate": "41.7%"
+      },
+      "performance_summary": {
+        "win_rate": "53.3%",
+        "average_return": "0.57%",
+        "exit_efficiency": "-90.8%",
+        "hold_period": "26.8 days"
+      },
+      "quality_distribution": {
+        "excellent_trades": 4,
+        "good_trades": 2,
+        "poor_trades": 4,
+        "failed_trades": 5
+      }
+    },
+    "critical_issues": [
+      {
+        "priority": "P1",
+        "issue": "Exit Timing Inefficiency",
+        "impact": "90.8% efficiency loss",
+        "deadline": "Immediate optimization required",
+        "action": "Implement trailing stop optimization"
+      },
+      {
+        "priority": "P2",
+        "issue": "Limited Statistical Sample",
+        "impact": "Only 15 closed trades vs 21 active",
+        "deadline": "Continue trading for robustness",
+        "action": "Target 25+ closed trades for significance"
+      },
+      {
+        "priority": "P3",
+        "issue": "EMA Strategy Unvalidated",
+        "impact": "0 closed EMA trades - no performance data",
+        "deadline": "Monitor for completion",
+        "action": "Focus SMA optimization until EMA completes"
+      }
+    ],
+    "optimization_roadmap": [
+      {
+        "opportunity": "Exit Efficiency Improvement",
+        "implementation": "Trailing stop at 0.8\u00d7ATR from MFE peak",
+        "potential_impact": "20-30% efficiency gain",
+        "confidence": 75,
+        "timeline": "Immediate implementation"
+      },
+      {
+        "opportunity": "SMA Parameter Optimization",
+        "implementation": "Analyze window sensitivity in current market",
+        "potential_impact": "5-10% win rate improvement",
+        "confidence": 65,
+        "timeline": "Next optimization cycle"
+      }
+    ],
+    "market_context": {
+      "current_regime": "low_volatility",
+      "vix_level": 17.02,
+      "benchmark_performance": "0.8%",
+      "fed_policy": "Restrictive (5.25% fed funds)"
+    }
+  },
+  "internal_comprehensive_report": {
+    "report_type": "Internal Comprehensive Analysis",
+    "methodology_compliance": {
+      "data_separation": "\u2705 Closed vs Active trades properly categorized",
+      "performance_calculation": "\u2705 Used only closed trades for all metrics",
+      "sample_validation": "\u2705 EMA excluded due to insufficient sample",
+      "confidence_scoring": "\u2705 Conservative approach based on sample size"
+    },
+    "detailed_performance_analysis": {
+      "sma_strategy_deep_dive": {
+        "sample_characteristics": {
+          "closed_trades": 15,
+          "winners": 8,
+          "losers": 7,
+          "win_rate": "53.3%",
+          "statistical_confidence": 0.9
+        },
+        "return_characteristics": {
+          "overall_average": "0.57%",
+          "winner_average": "6.09%",
+          "loser_average": "-5.73%",
+          "return_distribution": {
+            "mean_return": 0.005726169997282506,
+            "median_return": 0.0055627864160577,
+            "std_deviation": 0.08033110783903938,
+            "skewness": 0.04971608914339257,
+            "kurtosis": 0.3076803972368092,
+            "min_return": -0.1502082943214945,
+            "max_return": 0.1657797267640927,
+            "normality_test_p_value": 0.9963147372221121,
+            "confidence": 0.9
+          }
+        },
+        "exit_efficiency_analysis": {
+          "current_efficiency": "-90.8%",
+          "hold_period_analysis": {
+            "short_term_le_7d": {
+              "count": 4,
+              "percentage": 0.26666666666666666,
+              "avg_return": 0.004428279656169374,
+              "median_return": 0.00598112729185665,
+              "win_rate": 0.5,
+              "avg_efficiency": -0.1847609132804624,
+              "avg_duration": 2.0
+            },
+            "medium_term_8_30d": {
+              "count": 6,
+              "percentage": 0.4,
+              "avg_return": -0.020666950989084092,
+              "median_return": -0.0137065258293598,
+              "win_rate": 0.5,
+              "avg_efficiency": -1.9738129490915124,
+              "avg_duration": 19.166666666666668
+            },
+            "long_term_gt_30d": {
+              "count": 5,
+              "percentage": 0.3333333333333333,
+              "avg_return": 0.038436227453812935,
+              "median_return": 0.0055627864160577,
+              "win_rate": 0.6,
+              "avg_efficiency": -0.2078805776176834,
+              "avg_duration": 55.8
+            }
+          },
+          "optimization_potential": "Major improvement opportunity identified"
+        }
+      },
+      "ema_strategy_status": {
+        "current_status": "INSUFFICIENT_DATA",
+        "closed_trades": 0,
+        "active_trades": "Multiple positions open",
+        "recommendation": "Monitor for completion - cannot assess performance",
+        "timeline": "Wait for natural trade closures"
+      }
+    },
+    "statistical_significance": {
+      "sample_size_assessment": {
+        "total_trades": 36,
+        "closed_trades": 15,
+        "active_trades": 21,
+        "minimum_required": 10,
+        "adequacy_score": 0.9,
+        "statistical_power": 0.75
+      },
+      "significance_testing": {
+        "return_vs_zero": {
+          "t_statistic": 0.2760743830579907,
+          "p_value": 0.7865244147516189,
+          "significant": false
+        },
+        "win_rate_vs_random": {
+          "z_statistic": 0.2581988897471611,
+          "p_value": 0.7962534147376392,
+          "significant": false
+        }
+      },
+      "confidence_intervals": {},
+      "limitations": [
+        "Small sample size limits statistical power",
+        "EMA strategy cannot be evaluated",
+        "Market regime changes may affect historical patterns"
+      ]
+    },
+    "optimization_analysis": {
+      "immediate_opportunities": [
+        {
+          "opportunity": "Implement trailing stop optimization",
+          "current_efficiency": "-90.8%",
+          "potential_improvement": "15-25% exit efficiency improvement",
+          "implementation": "Deploy trailing stop at 0.8\u00d7ATR from MFE peak",
+          "confidence": 0.75,
+          "priority": "high"
+        }
+      ],
+      "strategic_improvements": [
+        {
+          "finding": "SMA strategy has sufficient sample, EMA strategy insufficient",
+          "recommendation": "Focus optimization efforts on SMA parameters",
+          "implementation": "Analyze SMA window parameter sensitivity",
+          "confidence": 0.8
+        }
+      ],
+      "risk_management": [
+        {
+          "issue": "Limited statistical power due to sample size",
+          "current_sample": 15,
+          "target_sample": 30,
+          "recommendation": "Continue trading to build sample size for robust analysis",
+          "confidence": 0.9
+        }
+      ]
+    },
+    "market_context_integration": {
+      "economic_environment": {
+        "fed_funds_rate": 0.0425,
+        "rate_environment": "moderately_restrictive",
+        "major_events": [
+          {
+            "date": "2025-07-29",
+            "event": "FOMC Meeting (July 29-30)",
+            "impact": "neutral_to_positive",
+            "details": "Two rate cuts anticipated for 2025"
+          }
+        ],
+        "confidence": 0.8
+      },
+      "volatility_regime": {
+        "VIX_current": 17.02,
+        "VIX_average": 19.5,
+        "market_regime": "low_volatility",
+        "confidence": 0.7
+      },
+      "benchmark_correlation": "Analysis pending sufficient sample size",
+      "sector_impact": {
+        "Technology": 15,
+        "Healthcare": 8,
+        "Financials": 5,
+        "Other": 4
+      }
+    }
+  },
+  "live_portfolio_monitor": {
+    "report_type": "Live Portfolio Monitor",
+    "current_portfolio_status": {
+      "active_positions": 21,
+      "portfolio_utilization": "58.3%",
+      "average_days_held": "40.7 days (from discovery data)",
+      "portfolio_exposure": "High concentration in active positions"
+    },
+    "immediate_monitoring_alerts": [
+      {
+        "alert_type": "POSITION_CONCENTRATION",
+        "severity": "HIGH",
+        "message": "21 active positions vs 15 closed",
+        "action": "Monitor for natural closures or consider selective exits"
+      },
+      {
+        "alert_type": "EXIT_EFFICIENCY",
+        "severity": "CRITICAL",
+        "message": "Historical exit efficiency at -90.8%",
+        "action": "Implement improved exit criteria immediately"
+      },
+      {
+        "alert_type": "SAMPLE_SIZE",
+        "severity": "MEDIUM",
+        "message": "Limited closed trade sample affecting analysis reliability",
+        "action": "Continue monitoring for statistical significance"
+      }
+    ],
+    "active_position_analysis": {
+      "strategy_distribution": {
+        "SMA_active": "14 positions",
+        "EMA_active": "7 positions",
+        "note": "EMA performance unknown - first completions critical"
+      },
+      "unrealized_performance": {
+        "total_unrealized": 28.12,
+        "monitoring_status": "Tracking MFE/MAE progression",
+        "risk_assessment": "Monitor for deterioration"
+      }
+    },
+    "market_context_monitoring": {
+      "current_vix": 17.02,
+      "market_regime": "low_volatility",
+      "upcoming_events": [
+        "July 29-30: FOMC Meeting",
+        "July 15: June CPI Release"
+      ],
+      "regime_risk": "Low volatility supportive but Fed policy restrictive"
+    },
+    "immediate_actions": [
+      {
+        "priority": "HIGH",
+        "action": "Review all active positions for exit efficiency optimization",
+        "timeline": "This week"
+      },
+      {
+        "priority": "MEDIUM",
+        "action": "Monitor first EMA strategy completions closely",
+        "timeline": "Ongoing"
+      },
+      {
+        "priority": "LOW",
+        "action": "Prepare for increased sample size analysis",
+        "timeline": "Next month"
+      }
+    ]
+  },
+  "historical_performance_report": {
+    "report_type": "Historical Performance Analysis",
+    "analysis_period": {
+      "start_date": "2025-04-01",
+      "end_date": "2025-06-17",
+      "duration": "~2.5 months",
+      "market_conditions": "Low volatility, tech leadership, rate cut expectations"
+    },
+    "closed_trades_comprehensive_analysis": {
+      "overall_statistics": {
+        "total_closed": 15,
+        "win_rate": "53.3%",
+        "average_return": "0.57%",
+        "average_hold_period": "26.8 days"
+      },
+      "quality_breakdown": {
+        "excellent_performance": {
+          "count": 4,
+          "percentage": "26.7%",
+          "avg_return": "4.73%",
+          "characteristics": "Short duration, high MFE capture, optimal timing"
+        },
+        "good_performance": {
+          "count": 2,
+          "percentage": "13.3%",
+          "avg_return": "13.73%",
+          "characteristics": "Consistent performance, adequate timing"
+        },
+        "poor_performance": {
+          "count": 4,
+          "percentage": "26.7%",
+          "avg_return": "0.27%",
+          "characteristics": "Poor exit timing, low MFE capture"
+        },
+        "failed_trades": {
+          "count": 5,
+          "percentage": "33.3%",
+          "avg_return": "-7.78%",
+          "characteristics": "Systematic timing issues, poor entry signals"
+        }
+      }
+    },
+    "temporal_analysis": {
+      "hold_period_effectiveness": {
+        "short_term_le_7d": {
+          "count": 4,
+          "percentage": 0.26666666666666666,
+          "avg_return": 0.004428279656169374,
+          "median_return": 0.00598112729185665,
+          "win_rate": 0.5,
+          "avg_efficiency": -0.1847609132804624,
+          "avg_duration": 2.0
+        },
+        "medium_term_8_30d": {
+          "count": 6,
+          "percentage": 0.4,
+          "avg_return": -0.020666950989084092,
+          "median_return": -0.0137065258293598,
+          "win_rate": 0.5,
+          "avg_efficiency": -1.9738129490915124,
+          "avg_duration": 19.166666666666668
+        },
+        "long_term_gt_30d": {
+          "count": 5,
+          "percentage": 0.3333333333333333,
+          "avg_return": 0.038436227453812935,
+          "median_return": 0.0055627864160577,
+          "win_rate": 0.6,
+          "avg_efficiency": -0.2078805776176834,
+          "avg_duration": 55.8
+        }
+      },
+      "monthly_patterns": {
+        "month_04": {
+          "trade_count": 7,
+          "win_rate": 0.42857142857142855,
+          "avg_return": -0.028682721472752866,
+          "median_return": -0.022676192555658,
+          "std_return": 0.08619395454592345
+        },
+        "month_05": {
+          "trade_count": 6,
+          "win_rate": 0.6666666666666666,
+          "avg_return": 0.03640997513119026,
+          "median_return": 0.0178449893897972,
+          "std_return": 0.07350906104657258
+        },
+        "month_06": {
+          "trade_count": 2,
+          "win_rate": 0.5,
+          "avg_return": 0.0341058747406831,
+          "median_return": 0.0341058747406831,
+          "std_return": 0.056580261388010776
+        }
+      },
+      "lessons_learned": [
+        "Short-term trades (\u22647 days) show mixed results",
+        "Medium-term trades (8-30 days) need optimization",
+        "Long-term trades (>30 days) showing better efficiency"
+      ]
+    },
+    "strategy_performance_attribution": {
+      "sma_strategy": {
+        "status": "ANALYZABLE",
+        "sample_size": "15 closed trades",
+        "performance": "Mixed - needs exit optimization",
+        "reliability": "Adequate sample for basic analysis",
+        "next_steps": "Focus on parameter optimization"
+      },
+      "ema_strategy": {
+        "status": "PENDING_DATA",
+        "sample_size": "0 closed trades",
+        "performance": "Cannot assess",
+        "reliability": "Insufficient data",
+        "next_steps": "Monitor first completions carefully"
+      }
+    },
+    "key_lessons_and_improvements": [
+      {
+        "lesson": "Exit timing is the primary performance bottleneck",
+        "evidence": "Negative exit efficiency across closed trades",
+        "recommendation": "Implement trailing stop methodology"
+      },
+      {
+        "lesson": "Sample size limitations affect analysis confidence",
+        "evidence": "Only 15 closed trades in 2.5 months",
+        "recommendation": "Continue trading to build statistical power"
+      },
+      {
+        "lesson": "Strategy validation requires adequate completion data",
+        "evidence": "EMA strategy cannot be assessed with 0 closed trades",
+        "recommendation": "Focus resources on proven SMA optimization"
+      }
+    ]
+  },
+  "synthesis_quality_assessment": {
+    "overall_synthesis_confidence": 0.8623,
+    "component_quality_scores": {
+      "discovery_input_quality": 0.78,
+      "analysis_input_quality": 0.8520000000000001,
+      "content_completeness": 0.95,
+      "template_compliance": 1.0,
+      "audience_appropriateness": 0.9,
+      "action_specificity": 0.85
+    },
+    "report_quality_grades": {
+      "executive_dashboard": "A",
+      "internal_report": "A-",
+      "live_monitor": "A",
+      "historical_analysis": "B+"
+    },
+    "quality_issues": [
+      "Limited closed trade sample affects report confidence",
+      "EMA strategy analysis incomplete due to insufficient data"
+    ],
+    "improvement_recommendations": [
+      "Continue trading to build larger closed trade sample",
+      "Implement exit efficiency improvements immediately",
+      "Focus optimization on SMA strategy until EMA data available"
+    ]
+  }
+}

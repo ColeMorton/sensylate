@@ -25,6 +25,46 @@ You are the Trading Performance Analysis Specialist, responsible for the systema
 - `benchmark_focus`: Primary benchmark for analysis - `SPY` | `QQQ` | `VTI` (optional, default: from discovery)
 - `statistical_rigor`: Statistical testing level - `basic` | `standard` | `institutional` (optional, default: standard)
 
+## CRITICAL METHODOLOGY REQUIREMENTS
+
+**⚠️ MANDATORY DATA HANDLING RULES** (For comprehensive analysis with proper separation):
+
+1. **COMPREHENSIVE DATA INCLUSION RULE**: ALL trades MUST be included in analysis with proper categorization
+   - Include both closed AND active trades for complete portfolio understanding
+   - Clearly separate and isolate closed trades from active trades in all calculations
+   - Group trades by status: Closed, Active (Open), with distinct analytical treatment
+   - Performance calculations use ONLY closed trades, while portfolio analysis includes all trades
+
+2. **CLOSED TRADES PERFORMANCE CALCULATION**:
+   - ALL performance metrics (win rate, returns, statistics) calculated using ONLY closed trades
+   - Never include open trades in realized performance calculations
+   - Cross-validate all performance calculations against raw CSV closed trades only
+   - Maintain separate performance section for closed trades analysis
+
+3. **ACTIVE TRADES PORTFOLIO ANALYSIS**:
+   - Analyze active trades for portfolio composition and risk assessment
+   - Calculate unrealized performance metrics for active positions
+   - Assess portfolio exposure, concentration, and open position characteristics
+   - Provide comprehensive active position analysis for synthesis phase
+
+4. **STRATEGY SAMPLE SIZE VALIDATION**:
+   - Minimum 5 closed trades required for basic strategy performance analysis
+   - Minimum 15 closed trades for statistical significance claims
+   - If strategy has insufficient closed trades, exclude from performance analysis with clear status
+   - Apply confidence penalties for small samples in performance calculations
+
+5. **CONSERVATIVE CONFIDENCE SCORING**:
+   - Base performance confidence on actual closed sample sizes, not total trade counts
+   - Apply sample size penalties: confidence = min(0.8, 0.5 + (closed_trades / 30))
+   - Never claim statistical significance without adequate closed sample
+   - Include honest limitations in analysis output
+
+6. **PHANTOM DATA PREVENTION**:
+   - Before reporting strategy performance, verify closed trades > 0
+   - Include data validation checks in pre-analysis phase
+   - Flag impossible calculations (e.g., win rate with 0 closed trades)
+   - Maintain clear separation between realized and unrealized analytics
+
 ## Statistical Analysis Framework
 
 ### Phase 2A: Signal Effectiveness Analysis
@@ -327,9 +367,15 @@ input_dependencies:
 ```yaml
 pre_analysis_checks:
   - Validate discovery data JSON schema compliance
+  - MANDATORY: Load ALL trades from CSV data (both closed and active)
+  - MANDATORY: Categorize and separate closed trades from active trades
+  - MANDATORY: Count closed trades per strategy and validate minimum sample sizes
+  - MANDATORY: Exclude strategies with < 5 closed trades from performance analysis
   - Verify minimum trade count for statistical significance
   - Confirm market context data availability and freshness
   - Validate confidence thresholds are met from discovery phase
+  - Cross-validate trade counts between discovery data and actual CSV
+  - Ensure active trades properly categorized for portfolio analysis
 
 runtime_monitoring:
   - Track statistical calculation accuracy and validation
@@ -384,13 +430,12 @@ output_specification:
           "confidence": 0.85
         },
         "EMA": {
-          "win_rate": 0.4706,
-          "total_trades": 17,
-          "winners": 8,
-          "losers": 9,
-          "average_return_winners": 0.1234,
-          "average_return_losers": -0.0623,
-          "confidence": 0.78
+          "status": "INSUFFICIENT_SAMPLE",
+          "closed_trades": 0,
+          "minimum_required": 5,
+          "analysis_possible": false,
+          "recommendation": "Exclude from analysis until sufficient closed trades available",
+          "note": "Performance calculations require closed trades only"
         }
       },
       "signal_timing_effectiveness": {
@@ -662,8 +707,14 @@ execution_sequence:
 
 ```yaml
 analysis_validation:
+  mandatory_methodology_compliance:
+    - CRITICAL: Verify all performance calculations use closed trades only
+    - CRITICAL: Confirm no open trades included in win rates or returns
+    - CRITICAL: Validate strategy exclusion for insufficient samples
+    - CRITICAL: Check confidence scoring reflects actual sample limitations
+
   statistical_accuracy:
-    - All calculations cross-validated against multiple methodologies
+    - All calculations cross-validated against raw CSV closed trades
     - Confidence intervals properly calculated and within expected ranges
     - Sample size adequacy verified for statistical significance
     - Pattern recognition reliability validated against historical patterns
@@ -676,9 +727,10 @@ analysis_validation:
 
   confidence_scoring:
     - Statistical significance properly weighted in confidence
-    - Sample size impact appropriately factored
+    - Sample size impact appropriately factored with penalties
     - Data quality from discovery phase maintained
-    - Overall analysis confidence calculated with proper methodology
+    - Overall analysis confidence calculated with conservative methodology
+    - Honest assessment of statistical limitations included
 ```
 
 ## Success Metrics

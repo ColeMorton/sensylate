@@ -51,35 +51,120 @@ PORTFOLIO_RESOLUTION_PROTOCOL:
    → Focus on data structure parsing, not data validation
 ```
 
-**CSV DATA STRUCTURE ANALYSIS**:
+**COMPREHENSIVE CSV DATA STRUCTURE ANALYSIS**:
 ```yaml
 csv_columns_expected:
-  - Position_UUID: Unique identifier for each trade
-  - Ticker: Stock symbol
-  - Strategy_Type: SMA or EMA strategy
-  - Short_Window: Short moving average window
-  - Long_Window: Long moving average window
-  - Signal_Window: Signal detection window
-  - Entry_Timestamp: Trade entry date/time
-  - Exit_Timestamp: Trade exit date/time (null for open positions)
-  - Avg_Entry_Price: Average entry price
-  - Avg_Exit_Price: Average exit price (null for open positions)
-  - Position_Size: Position sizing (1.0 for fixed, varies for calculated)
-  - Direction: Long/Short
-  - PnL: Profit/Loss for closed positions
-  - Return: Return percentage
-  - Duration_Days: Trade duration in days
-  - Trade_Type: Trade classification
-  - Status: Open or Closed
-  - Max_Favourable_Excursion: MFE value
-  - Max_Adverse_Excursion: MAE value
-  - MFE_MAE_Ratio: Ratio calculation
-  - Exit_Efficiency: Exit timing efficiency
-  - Days_Since_Entry: Days since entry for open positions
-  - Current_Unrealized_PnL: Current PnL for open positions
-  - Current_Excursion_Status: Current excursion status
-  - Exit_Efficiency_Fixed: Fixed exit efficiency calculation
-  - Trade_Quality: Quality classification (Excellent, Good, Poor, Failed)
+  core_identifiers:
+    - Position_UUID: Unique identifier for each trade
+    - Ticker: Stock symbol
+    - Status: Open or Closed (CRITICAL for categorization)
+
+  strategy_parameters:
+    - Strategy_Type: SMA or EMA strategy
+    - Short_Window: Short moving average window
+    - Long_Window: Long moving average window
+    - Signal_Window: Signal detection window
+
+  timing_data:
+    - Entry_Timestamp: Trade entry date/time
+    - Exit_Timestamp: Trade exit date/time (null for open positions)
+    - Duration_Days: Trade duration in days
+    - Days_Since_Entry: Days since entry for open positions
+
+  pricing_data:
+    - Avg_Entry_Price: Average entry price
+    - Avg_Exit_Price: Average exit price (null for open positions)
+    - Position_Size: Position sizing (1.0 for fixed, varies for calculated)
+    - Direction: Long/Short
+
+  performance_metrics:
+    closed_trades_only:
+      - PnL: Profit/Loss for closed positions only
+      - Return: Return percentage for closed positions only
+      - Trade_Quality: Quality classification (Excellent, Good, Poor, Failed)
+
+    active_trades_only:
+      - Current_Unrealized_PnL: Current PnL for open positions
+      - Current_Excursion_Status: Current excursion status
+
+    universal_metrics:
+      - Max_Favourable_Excursion: MFE value (both closed and active)
+      - Max_Adverse_Excursion: MAE value (both closed and active)
+      - MFE_MAE_Ratio: Ratio calculation
+      - Exit_Efficiency: Exit timing efficiency
+      - Exit_Efficiency_Fixed: Fixed exit efficiency calculation
+
+  categorization_fields:
+    - Trade_Type: Trade classification
+    - Status: Open or Closed (KEY SEPARATION FIELD)
+```
+
+**CRITICAL DATA ENHANCEMENT REQUIREMENTS**:
+```yaml
+mandatory_data_calculations:
+  principle: "NEVER output null for derivable data"
+  enforcement: "All calculable fields MUST be populated"
+
+  missing_data_calculations:
+    duration_days_active_trades:
+      requirement: "MUST calculate for all active trades"
+      formula: "(current_date - entry_timestamp).days"
+      source: "Entry_Timestamp + current execution date"
+      output_format: "float (days)"
+
+    trade_type_derivation:
+      requirement: "MUST derive for ALL trades (never null)"
+      business_logic:
+        - "Excellent quality → Momentum_Winner"
+        - "Good quality → Trend_Follower"
+        - "Failed quality → Failed_Breakout"
+        - "Poor Setup quality → High_Risk_Entry"
+        - "Active trades → derive from Current_Unrealized_PnL thresholds"
+      fallback: "Standard_Signal (never null)"
+
+    current_unrealized_pnl_validation:
+      requirement: "Validate all active trades have values"
+      missing_data_action: "Flag as data quality issue requiring current price data"
+      temporary_fallback: "0.0 with warning logged"
+
+  data_quality_enforcement:
+    fail_fast_principle: "Throw meaningful exceptions for uncalculable required data"
+    no_fallback_nulls: "Never output null for any derivable field"
+    validation_logging: "Log all data enhancement calculations performed"
+    confidence_impact: "Reduce confidence score for any missing derivable data"
+```
+
+**DATA CATEGORIZATION REQUIREMENTS**:
+```yaml
+data_separation_protocol:
+  mandatory_categorization:
+    closed_trades:
+      filter_criteria: "Status = 'Closed'"
+      data_completeness: "ALL fields populated (no nulls for available data)"
+      analysis_purpose: "Realized performance calculation, historical analysis"
+      key_metrics: "PnL, Return, Trade_Quality, Exit_Efficiency, Trade_Type"
+
+    active_trades:
+      filter_criteria: "Status = 'Open' OR Status = 'Active'"
+      data_completeness: "Exit fields null, ALL OTHER fields calculated"
+      analysis_purpose: "Portfolio composition, risk assessment, monitoring"
+      key_metrics: "Current_Unrealized_PnL, Days_Since_Entry, Duration_Days, Trade_Type"
+
+  quality_assurance:
+    data_validation:
+      - Verify status field accuracy and consistency
+      - Ensure closed trades have complete exit data
+      - Confirm active trades have null exit timestamps only
+      - Calculate ALL derivable fields (Duration_Days, Trade_Type)
+      - Validate unrealized P&L calculations for active trades
+
+    comprehensive_coverage:
+      - Include ALL trades in discovery output
+      - Calculate ALL missing but derivable data
+      - Maintain clear categorization in data structure
+      - Provide both closed and active trade counts
+      - Calculate coverage percentages for each category
+      - Log all data enhancement operations performed
 ```
 
 ### Phase 2: Market Context Data Collection
@@ -267,31 +352,85 @@ output_specification:
   },
   "authoritative_trade_data": {
     "csv_file_path": "/data/raw/trade_history/live_signals_20250626.csv",
-    "total_trades": 45,
-    "open_positions": 12,
-    "closed_positions": 33,
-    "date_range": {
-      "earliest_entry": "2025-04-01",
-      "latest_entry": "2025-06-15",
-      "latest_exit": "2025-06-17"
+    "comprehensive_trade_summary": {
+      "total_trades": 45,
+      "closed_positions": 33,
+      "active_positions": 12,
+      "data_completeness": 1.0,
+      "categorization_accuracy": 1.0
+    },
+    "closed_trades_analysis": {
+      "count": 33,
+      "percentage_of_total": 0.733,
+      "strategy_distribution": {
+        "SMA": {"count": 21, "percentage": 0.636},
+        "EMA": {"count": 12, "percentage": 0.364}
+      },
+      "date_range": {
+        "earliest_entry": "2025-04-01",
+        "latest_entry": "2025-06-10",
+        "earliest_exit": "2025-04-08",
+        "latest_exit": "2025-06-17"
+      },
+      "performance_data_available": true,
+      "quality_distribution": {
+        "Excellent": 8,
+        "Good": 12,
+        "Poor": 9,
+        "Failed": 4
+      }
+    },
+    "active_trades_analysis": {
+      "count": 12,
+      "percentage_of_total": 0.267,
+      "strategy_distribution": {
+        "SMA": {"count": 7, "percentage": 0.583},
+        "EMA": {"count": 5, "percentage": 0.417}
+      },
+      "entry_date_range": {
+        "earliest_entry": "2025-05-15",
+        "latest_entry": "2025-06-15"
+      },
+      "average_days_held": 18.7,
+      "unrealized_performance_tracking": true,
+      "portfolio_exposure": {
+        "total_unrealized_value": 12000.00,
+        "average_position_size": 1000.00
+      }
     },
     "position_sizing_methodology": {
       "type": "fixed",
       "value": 1.0,
       "confidence": 1.0
     },
-    "strategy_distribution": {
-      "SMA": 28,
-      "EMA": 17
-    },
     "ticker_universe": {
-      "total_tickers": 32,
-      "unique_tickers": ["AAPL", "MSFT", "GOOGL", "..."],
+      "total_unique_tickers": 32,
+      "closed_trades_tickers": 25,
+      "active_trades_tickers": 12,
+      "overlap_tickers": 5,
+      "unique_tickers": ["AAPL", "MSFT", "GOOGL", "NVDA", "AMZN", "META", "TSLA", "..."],
       "sector_distribution": {
-        "Technology": 15,
-        "Healthcare": 8,
-        "Financials": 5,
-        "Other": 4
+        "all_trades": {
+          "Technology": 15,
+          "Healthcare": 8,
+          "Financials": 5,
+          "Consumer": 3,
+          "Other": 1
+        },
+        "closed_trades_only": {
+          "Technology": 11,
+          "Healthcare": 6,
+          "Financials": 4,
+          "Consumer": 2,
+          "Other": 2
+        },
+        "active_trades_only": {
+          "Technology": 4,
+          "Healthcare": 2,
+          "Financials": 3,
+          "Consumer": 2,
+          "Other": 1
+        }
       }
     },
     "data_confidence": 1.0
@@ -438,6 +577,20 @@ data_validation:
     - Trade data covers expected date ranges
     - Position sizing methodology clearly identified
     - Ticker universe extraction successful
+    - Status field validation and categorization accuracy
+
+  trade_categorization_validation:
+    - Closed trades have complete exit data (timestamps, prices, P&L)
+    - Active trades have null exit fields but populated unrealized metrics
+    - Status field consistency across all trades
+    - MFE/MAE data available for both closed and active trades
+    - Proper separation of realized vs unrealized performance data
+
+  comprehensive_data_coverage:
+    - All trades included in analysis (no filtering out of data)
+    - Clear distinction between closed and active trade analytics
+    - Portfolio composition accurately represents active positions
+    - Historical performance accurately represents closed positions only
 
   market_data_validation:
     - Benchmark data successfully retrieved and current

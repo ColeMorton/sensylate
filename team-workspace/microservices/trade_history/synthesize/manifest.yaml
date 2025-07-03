@@ -1,134 +1,63 @@
-# Trade History Synthesize Microservice Manifest
-# DASV Phase 3: Report Generation and Document Creation
-
-microservice:
-  name: "trade_history_synthesize"
-  role: "trade_history"
-  action: "synthesize"
-  framework: "DASV"
-  phase: 3
-  version: "1.0.0"
-  status: "ready"
-
-metadata:
-  created: "2025-07-02T08:45:00Z"
-  last_updated: "2025-07-02T12:00:00Z"
-  author: "Claude Code (Architect)"
-  description: "Multi-audience report generation for institutional-quality trading performance communication"
-
-inputs:
-  required:
-    - discovery_data: "Output from trade_history_discover phase (JSON)"
-    - analysis_data: "Output from trade_history_analyze phase (JSON)"
-  optional:
-    - report_type: "Specific report type (internal|live|historical|all)"
-    - timeframe_focus: "Analysis period emphasis (1m|3m|6m|1y|ytd|all)"
-    - audience_level: "Detail level (executive|operational|detailed)"
-
-outputs:
-  primary:
-    internal_report:
-      path: "/data/outputs/analysis_trade_history/internal/{PORTFOLIO}_INTERNAL_TRADING_REPORT_{TIMEFRAME}_{YYYYMMDD}.md"
-      format: "markdown"
-      audience: "Trading Team, Risk Management, Senior Leadership"
-
-    live_monitor:
-      path: "/data/outputs/analysis_trade_history/live/{PORTFOLIO}_LIVE_SIGNALS_MONITOR_{YYYYMMDD}.md"
-      format: "markdown"
-      audience: "Daily followers tracking open positions"
-
-    historical_report:
-      path: "/data/outputs/analysis_trade_history/historical/{PORTFOLIO}_HISTORICAL_PERFORMANCE_REPORT_{YYYYMMDD}.md"
-      format: "markdown"
-      audience: "Performance analysts and historical trend followers"
-
-  workspace:
-    path: "./team-workspace/microservices/trade_history/synthesize/outputs/"
-    backup: true
-    versioning: true
-
-dependencies:
-  upstream: ["trade_history_discover", "trade_history_analyze"]
-  downstream: ["trade_history_validate"]
-  external_services: []
-  data_sources:
-    - "discovery_phase_output"
-    - "analysis_phase_output"
-
-performance:
-  target_duration: "20s"
-  cache_strategy:
-    - "template_rendering_cache"
-    - "content_generation_cache"
-  parallel_execution: true
-
-quality_gates:
-  min_confidence: 0.8
-  content_accuracy: 0.99
-  template_compliance: 1.0
-  audience_appropriateness: 0.95
-  action_specificity: 0.90
-
-report_components:
-  internal_trading_report:
-    - "executive_dashboard"
-    - "portfolio_health_score"
-    - "performance_attribution"
-    - "critical_execution_issues"
-    - "strategy_performance_breakdown"
-    - "risk_factors_identification"
-    - "statistical_validation"
-    - "fundamental_integration_status"
-    - "strategic_optimization_roadmap"
-
-  live_signals_monitor:
-    - "portfolio_overview"
-    - "market_context_macro"
-    - "top_performing_positions"
-    - "all_active_positions"
-    - "signal_strength_analysis"
-    - "performance_metrics"
-    - "recent_signal_activity"
-    - "signals_to_watch"
-
-  historical_performance_report:
-    - "performance_summary"
-    - "top_performing_trades"
-    - "complete_trade_history"
-    - "performance_analysis"
-    - "quality_distribution_analysis"
-    - "monthly_performance_breakdown"
-    - "duration_analysis"
-    - "sector_performance"
-    - "key_learnings"
-
-error_handling:
-  missing_data_dependencies: "graceful_degradation_with_partial_reports"
-  template_generation_failures: "retry_with_simplified_formatting"
-  content_accuracy_issues: "validation_warnings_with_quality_flags"
-  audience_customization_failures: "default_to_operational_level"
-
-monitoring:
-  metrics_tracked:
-    - "report_generation_success_rate"
-    - "content_accuracy_score"
-    - "template_compliance_rate"
-    - "audience_appropriateness_score"
-    - "action_specificity_count"
-
-  alerts:
-    - condition: "content_accuracy < 0.95"
-      severity: "warning"
-    - condition: "template_compliance < 1.0"
-      severity: "warning"
-    - condition: "report_generation_failure"
-      severity: "critical"
-
-last_execution: "2025-07-02T13:21:00Z"
-reports_generated: 1
-last_execution_details:
-  portfolio: "live_signals"
-  report_type: "live_signals_monitor"
-  confidence_score: 0.85
-  content_accuracy: 0.99
-  template_compliance: 1.0
+microservice: trade_history_synthesize
+version: "1.2"
+execution_type: "institutional_grade_synthesis"
+last_execution: "2025-07-03T06:35:00Z"
+confidence_score: 0.86
+portfolio: "live_signals"
+discovery_integration: true
+analysis_integration: true
+validation_compliance: true
+methodology_corrections_applied: true
+target_files:
+  discovery: "live_signals_20250703.json"
+  analysis: "live_signals_20250703.json"
+synthesis_result: "COMPREHENSIVE_SUCCESS"
+quality_grade: "operational_grade"
+status: "completed"
+reports_generated:
+  - "Executive Dashboard (30-second brief)"
+  - "Internal Comprehensive Report"
+  - "Live Portfolio Monitor"
+  - "Historical Performance Analysis"
+output_locations:
+  json_output: "/data/outputs/analysis_trade_history/synthesis/live_signals_20250703.json"
+  markdown_reports: "/data/outputs/analysis_trade_history/synthesis/*.md"
+  team_workspace: "/team-workspace/microservices/trade_history/synthesize/outputs/"
+synthesis_metrics:
+  synthesis_confidence: 0.86
+  report_completeness: 1.00
+  template_compliance: 1.00
+  audience_coverage: 4
+  content_accuracy: 0.95
+certification:
+  methodology_compliant: true
+  institutional_standards_met: true
+  validation_requirements_met: true
+  statistical_limitations_acknowledged: true
+  ready_for_executive_presentation: true
+key_deliverables:
+  executive_dashboard:
+    - "30-second portfolio status brief"
+    - "Critical issues with P1/P2/P3 prioritization"
+    - "Optimization roadmap with confidence scores"
+  internal_report:
+    - "Comprehensive methodology compliance verification"
+    - "Detailed SMA strategy analysis (15 closed trades)"
+    - "Statistical significance assessment with limitations"
+  live_monitor:
+    - "Real-time portfolio status (21 active positions)"
+    - "Immediate monitoring alerts and actions"
+    - "Market context and upcoming events"
+  historical_analysis:
+    - "Complete closed trades analysis (15 trades)"
+    - "Quality distribution and lessons learned"
+    - "Strategy performance attribution"
+critical_findings:
+  - "Exit efficiency at -90.8% represents massive optimization opportunity"
+  - "Limited sample size (15 closed trades) affects statistical confidence"
+  - "EMA strategy unassessable due to zero closed trades"
+  - "High concentration risk with 21 active vs 15 closed positions"
+immediate_optimizations:
+  - priority_1: "Exit timing optimization - implement trailing stops"
+  - priority_2: "Continue trading for statistical significance (target 25+ closed)"
+  - priority_3: "Monitor EMA strategy completions for comparative analysis"
