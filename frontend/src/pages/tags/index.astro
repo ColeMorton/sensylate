@@ -22,10 +22,10 @@ const allTags = await getAllTaxonomy(BLOG_FOLDER, "tags");
               <li class="m-3 inline-block">
                 <a
                   href={`/tags/${tag}`}
-                  class="bg-light text-text-dark dark:bg-darkmode-light dark:text-darkmode-text-dark hover:bg-primary dark:hover:bg-darkmode-primary block rounded px-4 py-2 text-xl transition-colors duration-200 hover:text-white dark:hover:text-white"
+                  class="group bg-light text-text-dark dark:bg-darkmode-light dark:text-darkmode-text-dark hover:bg-primary dark:hover:bg-darkmode-primary hover:text-text-light dark:hover:text-text block rounded px-4 py-2 text-xl transition-colors duration-200"
                 >
                   {humanize(tag)}{" "}
-                  <span class="bg-body dark:bg-darkmode-body ml-2 rounded px-2">
+                  <span class="bg-body dark:bg-darkmode-body ml-2 rounded px-2 transition-colors duration-200 group-hover:bg-white group-hover:text-black">
                     {count}
                   </span>
                 </a>
