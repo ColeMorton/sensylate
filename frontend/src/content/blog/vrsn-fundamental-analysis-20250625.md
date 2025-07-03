@@ -1,21 +1,12 @@
 ---
-title: "VeriSign, Inc. (VRSN) - Fundamental Analysis: BUY Rating with 12.8% Expected Return"
-meta_title: "VeriSign (VRSN) Fundamental Analysis - BUY Rating 12.8% Return"
+title: "VeriSign Inc. (VRSN) - Fundamental Analysis"
+meta_title: "VeriSign Inc. (VRSN) Fundamental Analysis - BUY Rating"
 description: "Comprehensive fundamental analysis of VeriSign reveals critical internet infrastructure monopoly with predictable cash flows through .com and .net domain registry. Fair value $290-335 vs current $285.03."
 date: 2025-06-25T05:00:00Z
 image: "/images/tradingview/VRSN_20250625.png"
-author: "Cole Morton"
-categories:
-  ["Trading", "Analysis", "Fundamental Analysis", "Technology", "Infrastructure", "Internet"]
-tags:
-  [
-    "vrsn",
-    "fundamental-analysis",
-    "buy-rating",
-    "domain-registry",
-    "internet-infrastructure",
-    "monopoly",
-  ]
+authors: ["Cole Morton", "Claude"]
+categories: ["Investing", "Analysis", "Fundamental Analysis", "Technology", "Internet"]
+tags: ["vrsn", "fundamental-analysis", "buy", "domain-registry", "internet-infrastructure"]
 draft: false
 ---
 

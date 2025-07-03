@@ -1,28 +1,12 @@
 ---
 title: "Mettler-Toledo International Inc. (MTD) - Fundamental Analysis"
+meta_title: "Mettler-Toledo International Inc. (MTD) Fundamental Analysis - BUY Rating"
 description: "Comprehensive fundamental analysis of Mettler-Toledo (MTD) featuring precision instruments market leadership, exceptional cash generation, and resilient service revenue growth. Investment recommendation with quantified risk assessment."
-date: 2025-06-26
+date: 2025-06-26T00:00:00Z
 image: "/images/tradingview/MTD_20250627.png"
-categories:
-  [
-    "Trading",
-    "Analysis",
-    "Fundamental Analysis",
-    "Healthcare",
-    "Industrial",
-    "Precision Instruments",
-  ]
-tags:
-  [
-    "MTD",
-    "stocks",
-    "trading",
-    "fundamental-analysis",
-    "healthcare",
-    "industrial",
-    "laboratory-equipment",
-    "precision-instruments",
-  ]
+categories: ["Investing", "Analysis", "Fundamental Analysis", "Healthcare", "Industrial"]
+authors: ["Cole Morton", "Claude"]
+tags: ["mtd", "fundamental-analysis", "buy", "precision-instruments", "laboratory-equipment"]
 draft: false
 ---
 

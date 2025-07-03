@@ -1,21 +1,12 @@
 ---
-title: "Welltower Inc. (WELL) - Fundamental Analysis: Healthcare REIT with Strong Demographics"
-meta_title: "WELL Stock Analysis - Healthcare REIT Investment Opportunity | Sensylate"
+title: "Welltower Inc. (WELL) - Fundamental Analysis"
+meta_title: "Welltower Inc. (WELL) Fundamental Analysis - BUY Rating"
 description: "Comprehensive fundamental analysis of Welltower Inc. (WELL) - A premier healthcare REIT with compelling demographics, $2.8B development pipeline, and BUY rating with $170 fair value target."
 date: 2025-06-20T12:00:00Z
 image: "/images/tradingview/WELL_20250620.png"
-categories: ["Analysis", "Fundamental Analysis", "REITs", "Healthcare"]
-author: "Cole Morton"
-tags:
-  [
-    "WELL",
-    "Welltower",
-    "Healthcare REIT",
-    "Real Estate",
-    "Demographics",
-    "Fundamental Analysis",
-    "Investment Research",
-  ]
+categories: ["Investing", "Analysis", "Fundamental Analysis", "REITs", "Healthcare"]
+authors: ["Cole Morton", "Claude"]
+tags: ["well", "fundamental-analysis", "buy", "healthcare-reit", "real-estate"]
 draft: false
 ---
 

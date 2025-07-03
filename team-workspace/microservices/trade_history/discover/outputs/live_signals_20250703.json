@@ -1,0 +1,236 @@
+{
+  "portfolio": "live_signals",
+  "discovery_metadata": {
+    "execution_timestamp": "2025-07-03T04:54:00Z",
+    "confidence_score": 0.78,
+    "data_completeness": 92.3,
+    "collection_duration": "45.2s",
+    "data_sources_used": ["csv", "yahoo_finance", "fundamental_analysis", "web_search"],
+    "cache_hit_ratio": 0.85
+  },
+  "authoritative_trade_data": {
+    "csv_file_path": "/Users/colemorton/Projects/sensylate/data/raw/trade_history/live_signals.csv",
+    "total_trades": 36,
+    "open_positions": 21,
+    "closed_positions": 15,
+    "date_range": {
+      "earliest_entry": "2025-04-01",
+      "latest_entry": "2025-07-01",
+      "latest_exit": "2025-06-17"
+    },
+    "position_sizing_methodology": {
+      "type": "fixed",
+      "value": 1.0,
+      "confidence": 1.0
+    },
+    "strategy_distribution": {
+      "SMA": 29,
+      "EMA": 7
+    },
+    "ticker_universe": {
+      "total_tickers": 32,
+      "unique_tickers": [
+        "AAPL", "AMD", "AMZN", "COIN", "COR", "COST", "CRWD", "DOV", "EQT", "FFIV",
+        "GD", "GME", "GOOGL", "HSY", "ILMN", "INTU", "ISRG", "LIN", "LMT", "LYV",
+        "MA", "MCO", "NFLX", "PGR", "PWR", "QCOM", "RTX", "SHOP", "SMCI", "TSLA",
+        "UHS", "VTR"
+      ],
+      "sector_distribution": {
+        "Technology": 15,
+        "Healthcare": 8,
+        "Financials": 5,
+        "Other": 4
+      }
+    },
+    "data_confidence": 1.0
+  },
+  "market_context": {
+    "benchmark_data": {
+      "SPY": {
+        "current_price": 442.50,
+        "ytd_return": 0.0075,
+        "volatility": 0.18,
+        "confidence": 0.85
+      },
+      "QQQ": {
+        "current_price": 385.20,
+        "ytd_return": 0.012,
+        "volatility": 0.22,
+        "confidence": 0.85
+      },
+      "VTI": {
+        "current_price": 275.30,
+        "ytd_return": 0.008,
+        "volatility": 0.17,
+        "confidence": 0.85
+      }
+    },
+    "volatility_environment": {
+      "VIX_current": 17.02,
+      "VIX_average": 19.5,
+      "market_regime": "low_volatility",
+      "confidence": 0.70
+    },
+    "economic_context": {
+      "fed_funds_rate": 0.0425,
+      "rate_environment": "moderately_restrictive",
+      "major_events": [
+        {
+          "date": "2025-07-29",
+          "event": "FOMC Meeting (July 29-30)",
+          "impact": "neutral_to_positive",
+          "details": "Two rate cuts anticipated for 2025"
+        }
+      ],
+      "confidence": 0.80
+    }
+  },
+  "fundamental_integration": {
+    "analysis_coverage": {
+      "tickers_with_analysis": 9,
+      "total_tickers": 32,
+      "coverage_percentage": 28.12,
+      "confidence": 0.85
+    },
+    "analysis_files": {
+      "AMZN": {
+        "file": "AMZN_20250618.md",
+        "recommendation": "BUY",
+        "price_target": 195.0,
+        "confidence": 0.88
+      },
+      "COR": {
+        "file": "COR_20250617.md",
+        "recommendation": "HOLD",
+        "price_target": 300.0,
+        "confidence": 0.85
+      },
+      "DOV": {
+        "file": "DOV_20250627.md",
+        "recommendation": "BUY",
+        "price_target": 190.0,
+        "confidence": 0.90
+      },
+      "GME": {
+        "file": "GME_20250630.md",
+        "recommendation": "HOLD",
+        "price_target": 30.0,
+        "confidence": 0.75
+      },
+      "LYV": {
+        "file": "LYV_20250702.md",
+        "recommendation": "BUY",
+        "price_target": 150.0,
+        "confidence": 0.88
+      },
+      "MA": {
+        "file": "MA_20250702.md",
+        "recommendation": "BUY",
+        "price_target": 580.0,
+        "confidence": 0.92
+      },
+      "NFLX": {
+        "file": "NFLX_20250618.md",
+        "recommendation": "HOLD",
+        "price_target": 950.0,
+        "confidence": 0.80
+      },
+      "QCOM": {
+        "file": "QCOM_20250625.md",
+        "recommendation": "BUY",
+        "price_target": 170.0,
+        "confidence": 0.87
+      },
+      "SMCI": {
+        "file": "SMCI_20250623.md",
+        "recommendation": "HOLD",
+        "price_target": 50.0,
+        "confidence": 0.70
+      }
+    },
+    "integration_quality": {
+      "avg_analysis_age": 8.4,
+      "recommendation_distribution": {
+        "BUY": 5,
+        "HOLD": 4,
+        "SELL": 0
+      }
+    }
+  },
+  "research_enhancement": {
+    "economic_calendar": {
+      "key_events_identified": 3,
+      "market_moving_events": 1,
+      "next_fomc_meeting": "2025-07-29",
+      "rate_cut_expectations": "Two 25bp cuts anticipated in 2025",
+      "confidence": 0.80
+    },
+    "sector_analysis": {
+      "primary_sectors": ["Technology", "Healthcare"],
+      "sector_performance": {
+        "Technology": "outperforming_strongly",
+        "Healthcare": "underperforming_significantly"
+      },
+      "technology_trends": [
+        "AI-driven rally continues",
+        "NASDAQ up 20%+ YTD",
+        "Rate cut expectations supportive"
+      ],
+      "healthcare_trends": [
+        "Sector down 4.1% YTD",
+        "Valuations at attractive levels",
+        "Policy uncertainty headwinds"
+      ],
+      "confidence": 0.75
+    },
+    "market_sentiment": {
+      "overall_sentiment": "cautiously_optimistic",
+      "key_themes": [
+        "AI adoption acceleration",
+        "Fed rate cut expectations",
+        "Tech leadership continues",
+        "Healthcare sector undervaluation"
+      ],
+      "volatility_regime": "low_volatility_supportive",
+      "confidence": 0.70
+    }
+  },
+  "data_quality_assessment": {
+    "overall_confidence": 0.78,
+    "completeness_score": 0.923,
+    "freshness_score": 0.88,
+    "source_reliability": 0.85,
+    "cross_validation_score": 0.75,
+    "quality_issues": [
+      "VIX data unavailable through Yahoo Finance",
+      "Limited fundamental analysis coverage (28.12%)",
+      "Some Yahoo Finance price data defaulting to zero"
+    ],
+    "improvement_recommendations": [
+      "Expand fundamental analysis coverage to 60%+ for better insights",
+      "Implement alternative VIX data source",
+      "Add sector-specific economic indicators tracking",
+      "Enhance real-time market sentiment monitoring"
+    ]
+  },
+  "next_phase_inputs": {
+    "analysis_ready": true,
+    "required_confidence_met": true,
+    "confidence_threshold": 0.70,
+    "actual_confidence": 0.78,
+    "data_package_path": "/data/outputs/analysis_trade_history/discovery/live_signals_20250703.json",
+    "analysis_focus_areas": [
+      "signal_effectiveness_across_strategies",
+      "market_context_correlation_analysis",
+      "fundamental_alignment_assessment",
+      "sector_rotation_impact_analysis",
+      "risk_adjusted_performance_metrics"
+    ],
+    "handoff_metadata": {
+      "next_microservice": "trade_history_analyze",
+      "priority_tickers": ["MA", "LYV", "DOV", "QCOM", "AMZN"],
+      "sector_focus": ["Technology", "Healthcare"],
+      "time_period_analysis": "2025-04-01 to 2025-07-03"
+    }
+  }
+}

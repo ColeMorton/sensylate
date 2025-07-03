@@ -1,11 +1,11 @@
 ---
-title: "Intel Corporation (INTC) - Fundamental Analysis: BUY Rating with 44% Expected Return"
-meta_title: "Intel (INTC) Fundamental Analysis - BUY Rating 44% Return"
+title: "Intel Corporation (INTC) - Fundamental Analysis"
+meta_title: "Intel (INTC) Fundamental Analysis - BUY Rating"
 description: "Comprehensive fundamental analysis of Intel reveals a contrarian value opportunity with foundry transformation, AI pivot, and 18A process leadership. Fair value $28-35 vs current $21.49. High-conviction turnaround play."
 date: 2025-06-19T16:00:00Z
 image: "/images/tradingview/INTC_20250619.png"
-author: "Cole Morton"
-categories: ["Analysis", "Fundamental Analysis", "Technology", "Semiconductors", "Contrarian"]
+authors: ["Cole Morton", "Claude"]
+categories: ["Investing", "Analysis", "Fundamental Analysis", "Technology", "Semiconductors"]
 tags:
   [
     "intc",
