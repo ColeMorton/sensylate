@@ -1,7 +1,7 @@
 microservice: trade_history_discover
 version: "1.0"
-last_execution: "2025-07-03T06:30:00Z"
-confidence_score: 0.80
+last_execution: "2025-07-03T18:15:54Z"
+confidence_score: 0.865
 portfolio: "live_signals"
 output_file: "live_signals_20250703.json"
 status: "completed"
@@ -12,9 +12,9 @@ data_sources:
   - fundamental_analysis_files
   - web_search_research
 execution_metrics:
-  duration: "45.2s"
+  duration: "22.8s"
   data_completeness: 94.5
-  cache_hit_ratio: 0.65
+  cache_hit_ratio: 0.0
 quality_gates_passed:
   - csv_ingestion_complete
   - market_data_collected
@@ -28,5 +28,7 @@ discovery_summary:
   market_regime: "low_volatility"
   key_findings:
     - "58.3% of trades still active with avg 40.7 days held"
-    - "Current market rotation away from tech may impact portfolio"
+    - "VIX at 16.65 indicates low volatility environment"
     - "Mixed quality in closed trades (4 excellent, 4 failed)"
+    - "SMA strategy dominates portfolio (29 of 36 trades)"
+    - "Total unrealized P&L: $2.08 across 21 active positions"

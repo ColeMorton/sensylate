@@ -2,7 +2,20 @@
   "mcpServers": {
     "fetch": {
       "command": "/Users/colemorton/.pyenv/shims/mcp-server-fetch",
-      "args": []
+      "args": [],
+      "description": "Web content fetching and processing"
+    },
+    "mcp-server-assistant": {
+      "command": "python",
+      "args": ["mcp_server_assistant.py"],
+      "description": "MCP server management and optimization assistant",
+      "transport": "stdio"
+    },
+    "sensylate-trading": {
+      "command": "python",
+      "args": ["mcp_servers/sensylate_trading_server.py"],
+      "description": "Sensylate trading analysis and content generation tools",
+      "transport": "stdio"
     }
   }
 }
