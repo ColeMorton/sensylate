@@ -115,3 +115,6 @@ yarn-error.log*
 .next/
 out/
 dist/
+
+# cache
+scripts/data/cache/*
