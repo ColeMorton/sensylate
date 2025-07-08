@@ -140,6 +140,6 @@ Key variables impact on fair value:
 - Industrial gas turbine exposure quantification and growth prospects
 - ESG initiatives impact on aerospace OEM supplier selection criteria
 
-## Investment Recommendation Summary
+## 🏁 Investment Recommendation Summary
 
 Howmet Aerospace presents exceptional risk-adjusted value with 18.4% expected returns driven by operational excellence, aerospace super-cycle tailwinds, and industry-leading profitability metrics. The investment thesis combines defensive competitive moats through proprietary manufacturing processes, validated customer switching costs via multi-year OEM relationships, and accelerating free cash flow generation demonstrated by Q1 2025 record performance (28.8% EBITDA margin, $134M FCF). Current 47.8x P/E valuation reflects temporary earnings suppression with normalized 20x multiple supporting $206 fair value representing 19% upside. Enhanced confidence (0.92/1.0) stems from transparent methodology incorporating Q1 2025 actuals, validated peer comparisons (ATI, CRS benchmarks), and probabilistic catalyst assessments based on aerospace production forecasts. Balance sheet strength (1.4x net debt/EBITDA at record low) provides downside protection with stress-tested bear case limited to $165 (-4.8%). Monte Carlo analysis supports 89% confidence in fair value range $195-$215, with position sizing recommended at 3-5% reflecting high-conviction aerospace exposure within diversified portfolio allocation.

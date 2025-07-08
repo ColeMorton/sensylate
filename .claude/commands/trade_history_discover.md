@@ -194,14 +194,14 @@ market_data_collection:
       - Sector rotation trends
       - Economic calendar events during analysis period
 
-  yahoo_finance_service:
-    service_class: "scripts/yahoo_finance_service.py"
-    methods:
-      - info: Current market data and company information
-      - history: Historical price and volume data
-      - dividends: Dividend information if relevant
-    caching: 15-minute cache for real-time data, 1-hour for historical
-    retry_logic: Exponential backoff with 3 attempts
+  yahoo_finance_mcp_server:
+    mcp_server: "yahoo-finance"
+    mcp_tools:
+      - get_stock_fundamentals: Current market data and company information
+      - get_market_data_summary: Historical price and volume performance
+      - get_financial_statements: Financial data if relevant for context
+    caching: 15-minute TTL via MCP server infrastructure
+    error_handling: MCP protocol retry logic and standardized responses
 ```
 
 ### Phase 3: Fundamental Analysis Discovery
@@ -285,10 +285,10 @@ input_dependencies:
       confidence_impact: 0.2
 
   required_services:
-    - source: "yahoo_finance_service"
-      endpoints: ["info", "history"]
+    - source: "yahoo_finance_mcp_server"
+      mcp_tools: ["get_stock_fundamentals", "get_market_data_summary"]
       cache_duration: "15m"
-      retry_policy: {attempts: 3, backoff: "exponential"}
+      retry_policy: {mcp_protocol: "built-in", error_handling: "standardized"}
       confidence_impact: 0.3
 
   optional_services:

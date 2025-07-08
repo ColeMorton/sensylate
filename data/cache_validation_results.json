@@ -1,0 +1,350 @@
+{
+  "timestamp": 1751942075.390356,
+  "individual_services": {
+    "yahoo_finance": {
+      "service_name": "yahoo_finance",
+      "cache_manager_works": true,
+      "cache_set_works": true,
+      "cache_get_works": true,
+      "cache_expiry_works": false,
+      "ttl_configured": true,
+      "ttl_seconds": 900,
+      "errors": [],
+      "stats_available": true,
+      "current_stats": {
+        "service_name": "yahoo_finance",
+        "ttl_seconds": 900,
+        "cache_size_mb": 0.00016689300537109375,
+        "cache_entries": 1,
+        "hits": 1,
+        "misses": 0,
+        "evictions": 0,
+        "errors": 0,
+        "hit_ratio": 1.0,
+        "total_requests": 1,
+        "uptime_seconds": 0.0004630088806152344
+      }
+    },
+    "alpha_vantage": {
+      "service_name": "alpha_vantage",
+      "cache_manager_works": true,
+      "cache_set_works": true,
+      "cache_get_works": true,
+      "cache_expiry_works": false,
+      "ttl_configured": true,
+      "ttl_seconds": 900,
+      "errors": [],
+      "stats_available": true,
+      "current_stats": {
+        "service_name": "alpha_vantage",
+        "ttl_seconds": 900,
+        "cache_size_mb": 0.00016689300537109375,
+        "cache_entries": 1,
+        "hits": 1,
+        "misses": 0,
+        "evictions": 0,
+        "errors": 0,
+        "hit_ratio": 1.0,
+        "total_requests": 1,
+        "uptime_seconds": 0.0002570152282714844
+      }
+    },
+    "fmp": {
+      "service_name": "fmp",
+      "cache_manager_works": true,
+      "cache_set_works": true,
+      "cache_get_works": true,
+      "cache_expiry_works": false,
+      "ttl_configured": true,
+      "ttl_seconds": 900,
+      "errors": [],
+      "stats_available": true,
+      "current_stats": {
+        "service_name": "fmp",
+        "ttl_seconds": 900,
+        "cache_size_mb": 0.000148773193359375,
+        "cache_entries": 1,
+        "hits": 1,
+        "misses": 0,
+        "evictions": 0,
+        "errors": 0,
+        "hit_ratio": 1.0,
+        "total_requests": 1,
+        "uptime_seconds": 0.00022411346435546875
+      }
+    },
+    "fred_economic": {
+      "service_name": "fred_economic",
+      "cache_manager_works": true,
+      "cache_set_works": true,
+      "cache_get_works": true,
+      "cache_expiry_works": false,
+      "ttl_configured": true,
+      "ttl_seconds": 7200,
+      "errors": [],
+      "stats_available": true,
+      "current_stats": {
+        "service_name": "fred_economic",
+        "ttl_seconds": 7200,
+        "cache_size_mb": 0.00016689300537109375,
+        "cache_entries": 1,
+        "hits": 1,
+        "misses": 0,
+        "evictions": 0,
+        "errors": 0,
+        "hit_ratio": 1.0,
+        "total_requests": 1,
+        "uptime_seconds": 0.00023126602172851562
+      }
+    },
+    "coingecko": {
+      "service_name": "coingecko",
+      "cache_manager_works": true,
+      "cache_set_works": true,
+      "cache_get_works": true,
+      "cache_expiry_works": false,
+      "ttl_configured": true,
+      "ttl_seconds": 900,
+      "errors": [],
+      "stats_available": true,
+      "current_stats": {
+        "service_name": "coingecko",
+        "ttl_seconds": 900,
+        "cache_size_mb": 0.00015926361083984375,
+        "cache_entries": 1,
+        "hits": 1,
+        "misses": 0,
+        "evictions": 0,
+        "errors": 0,
+        "hit_ratio": 1.0,
+        "total_requests": 1,
+        "uptime_seconds": 0.0002372264862060547
+      }
+    },
+    "sec_edgar": {
+      "service_name": "sec_edgar",
+      "cache_manager_works": true,
+      "cache_set_works": true,
+      "cache_get_works": true,
+      "cache_expiry_works": false,
+      "ttl_configured": true,
+      "ttl_seconds": 3600,
+      "errors": [],
+      "stats_available": true,
+      "current_stats": {
+        "service_name": "sec_edgar",
+        "ttl_seconds": 3600,
+        "cache_size_mb": 0.00016021728515625,
+        "cache_entries": 1,
+        "hits": 1,
+        "misses": 0,
+        "evictions": 0,
+        "errors": 0,
+        "hit_ratio": 1.0,
+        "total_requests": 1,
+        "uptime_seconds": 0.0002319812774658203
+      }
+    },
+    "imf_data": {
+      "service_name": "imf_data",
+      "cache_manager_works": true,
+      "cache_set_works": true,
+      "cache_get_works": true,
+      "cache_expiry_works": false,
+      "ttl_configured": true,
+      "ttl_seconds": 900,
+      "errors": [],
+      "stats_available": true,
+      "current_stats": {
+        "service_name": "imf_data",
+        "ttl_seconds": 900,
+        "cache_size_mb": 0.00015735626220703125,
+        "cache_entries": 1,
+        "hits": 1,
+        "misses": 0,
+        "evictions": 0,
+        "errors": 0,
+        "hit_ratio": 1.0,
+        "total_requests": 1,
+        "uptime_seconds": 0.00021314620971679688
+      }
+    }
+  },
+  "cli_integration": {
+    "cli_scripts_found": 7,
+    "scripts_with_caching": 7,
+    "scripts": [
+      {
+        "script_name": "sec_edgar_cli",
+        "uses_service_layer": true,
+        "has_cache_config": true
+      },
+      {
+        "script_name": "fred_economic_cli",
+        "uses_service_layer": true,
+        "has_cache_config": true
+      },
+      {
+        "script_name": "alpha_vantage_cli",
+        "uses_service_layer": true,
+        "has_cache_config": true
+      },
+      {
+        "script_name": "imf_cli",
+        "uses_service_layer": true,
+        "has_cache_config": true
+      },
+      {
+        "script_name": "fmp_cli",
+        "uses_service_layer": true,
+        "has_cache_config": true
+      },
+      {
+        "script_name": "coingecko_cli",
+        "uses_service_layer": true,
+        "has_cache_config": true
+      },
+      {
+        "script_name": "yahoo_finance_cli",
+        "uses_service_layer": true,
+        "has_cache_config": true
+      }
+    ]
+  },
+  "cache_directories": {
+    "cache_root_exists": true,
+    "service_directories": [
+      {
+        "service_name": "fred",
+        "cache_files": 0,
+        "size_mb": 0.0,
+        "oldest_file": null,
+        "newest_file": null
+      },
+      {
+        "service_name": "coingecko",
+        "cache_files": 1,
+        "size_mb": 0.00015926361083984375,
+        "oldest_file": "Tue Jul  8 12:34:35 2025",
+        "newest_file": "Tue Jul  8 12:34:35 2025"
+      },
+      {
+        "service_name": "alpha_vantage",
+        "cache_files": 1,
+        "size_mb": 0.00016689300537109375,
+        "oldest_file": "Tue Jul  8 12:34:35 2025",
+        "newest_file": "Tue Jul  8 12:34:35 2025"
+      },
+      {
+        "service_name": "yahoo_finance",
+        "cache_files": 1,
+        "size_mb": 0.00016689300537109375,
+        "oldest_file": "Tue Jul  8 12:34:35 2025",
+        "newest_file": "Tue Jul  8 12:34:35 2025"
+      },
+      {
+        "service_name": "sec_edgar",
+        "cache_files": 1,
+        "size_mb": 0.00016021728515625,
+        "oldest_file": "Tue Jul  8 12:34:35 2025",
+        "newest_file": "Tue Jul  8 12:34:35 2025"
+      },
+      {
+        "service_name": "file_cache",
+        "cache_files": 0,
+        "size_mb": 0.0,
+        "oldest_file": null,
+        "newest_file": null
+      },
+      {
+        "service_name": "imf_data",
+        "cache_files": 1,
+        "size_mb": 0.00015735626220703125,
+        "oldest_file": "Tue Jul  8 12:34:35 2025",
+        "newest_file": "Tue Jul  8 12:34:35 2025"
+      },
+      {
+        "service_name": "fmp",
+        "cache_files": 1,
+        "size_mb": 0.000148773193359375,
+        "oldest_file": "Tue Jul  8 12:34:35 2025",
+        "newest_file": "Tue Jul  8 12:34:35 2025"
+      },
+      {
+        "service_name": "fred_economic",
+        "cache_files": 1,
+        "size_mb": 0.00016689300537109375,
+        "oldest_file": "Tue Jul  8 12:34:35 2025",
+        "newest_file": "Tue Jul  8 12:34:35 2025"
+      }
+    ],
+    "total_cache_size_mb": 0.0011262893676757812,
+    "total_files": 7
+  },
+  "ttl_analysis": {
+    "services_analyzed": 7,
+    "consistent_ttls": 5,
+    "standard_ttl": 900,
+    "services": [
+      {
+        "service_name": "yahoo_finance",
+        "ttl_seconds": 900,
+        "ttl_minutes": 15.0,
+        "is_standard": true,
+        "category": "standard (\u226415 min)"
+      },
+      {
+        "service_name": "alpha_vantage",
+        "ttl_seconds": 900,
+        "ttl_minutes": 15.0,
+        "is_standard": true,
+        "category": "standard (\u226415 min)"
+      },
+      {
+        "service_name": "fmp",
+        "ttl_seconds": 900,
+        "ttl_minutes": 15.0,
+        "is_standard": true,
+        "category": "standard (\u226415 min)"
+      },
+      {
+        "service_name": "fred_economic",
+        "ttl_seconds": 7200,
+        "ttl_minutes": 120.0,
+        "is_standard": false,
+        "category": "long (>1 hour)"
+      },
+      {
+        "service_name": "coingecko",
+        "ttl_seconds": 900,
+        "ttl_minutes": 15.0,
+        "is_standard": true,
+        "category": "standard (\u226415 min)"
+      },
+      {
+        "service_name": "sec_edgar",
+        "ttl_seconds": 3600,
+        "ttl_minutes": 60.0,
+        "is_standard": false,
+        "category": "medium (\u22641 hour)"
+      },
+      {
+        "service_name": "imf_data",
+        "ttl_seconds": 900,
+        "ttl_minutes": 15.0,
+        "is_standard": true,
+        "category": "standard (\u226415 min)"
+      }
+    ],
+    "recommendations": [
+      "Consider standardizing TTL for 2 services to 15 minutes"
+    ]
+  },
+  "summary": {
+    "total_services_tested": 7,
+    "services_with_working_cache": 7,
+    "cache_success_rate": 1.0,
+    "critical_issues": [],
+    "recommendations": []
+  }
+}

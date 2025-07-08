@@ -1,0 +1,321 @@
+{
+  "metadata": {
+    "command_name": "enhanced_fundamental_analyst_discover",
+    "execution_timestamp": "2025-07-07T16:20:43.100147",
+    "framework_phase": "enhanced_discover_7_source",
+    "ticker": "TECH",
+    "data_collection_methodology": "multi_source_institutional_validation",
+    "data_sources_utilized": [
+      "yahoo_finance",
+      "alpha_vantage",
+      "sec_edgar",
+      "fred",
+      "imf",
+      "coingecko",
+      "fmp"
+    ],
+    "execution_duration": "7.89s"
+  },
+  "enhanced_market_data": {
+    "multi_source_validation": {
+      "sources": {
+        "yahoo": 53.14,
+        "alpha_vantage": 53.14,
+        "fmp": 53.14
+      },
+      "price_consistency": true,
+      "confidence_score": 1.0,
+      "validated_price": 53.14000000000001
+    },
+    "yahoo_finance_data": {
+      "ticker": "TECH",
+      "company_name": "Bio-Techne Corporation",
+      "current_price": 53.14,
+      "market_cap": 8330598912,
+      "enterprise_value": 8348506112,
+      "pe_ratio": 64.02409,
+      "forward_pe": 24.26484,
+      "peg_ratio": null,
+      "price_to_book": 4.12802,
+      "price_to_sales": 6.891798,
+      "dividend_yield": 0.62,
+      "beta": 1.381,
+      "52_week_high": 83.62,
+      "52_week_low": 46.01,
+      "sector": "Healthcare",
+      "industry": "Biotechnology",
+      "country": "United States",
+      "employees": 3100,
+      "recommendation": "buy",
+      "analyst_target": 67.28,
+      "analyst_count": 13,
+      "volume": 843085,
+      "avg_volume": 2411805,
+      "revenue": 1208770048,
+      "gross_profit": 801673024,
+      "operating_margin": 0.141,
+      "profit_margin": 0.10893,
+      "return_on_equity": 0.0653,
+      "return_on_assets": 0.05235,
+      "debt_to_equity": 20.986,
+      "current_ratio": 3.707,
+      "quick_ratio": 2.233,
+      "source": "yahoo_finance",
+      "timestamp": "2025-07-07T16:20:36.935386"
+    },
+    "alpha_vantage_quote": {
+      "ticker": "TECH",
+      "price": 53.14,
+      "change": -0.04,
+      "change_percent": "-0.0752%",
+      "volume": 843085,
+      "previous_close": 53.18,
+      "open": 53.31,
+      "high": 53.62,
+      "low": 52.6978,
+      "latest_trading_day": "2025-07-03",
+      "source": "alpha_vantage",
+      "timestamp": "2025-07-07T16:20:37.278893"
+    },
+    "fmp_profile_data": {
+      "ticker": "TECH",
+      "company_name": "Bio-Techne Corporation",
+      "description": "Bio-Techne Corporation, together with its subsidiaries, develops, manufactures, and sells life science reagents, instruments, and services for the research and clinical diagnostic markets worldwide. The company operates through two segments, Protein Sciences, and Diagnostics and Genomics. The Protein Sciences segment develops and manufactures biological reagents used in various aspects of life science research, diagnostics, and cell and gene therapy, such as cytokines and growth factors, antibodies, small molecules, tissue culture sera, and cell selection technologies. This segment also offers proteomic analytical tools for automated western blot and multiplexed ELISA workflow consists of manual and automated protein analysis instruments and immunoassays for use in quantifying proteins in various biological fluids. The Diagnostics and Genomics segment develops and manufactures diagnostic products, including controls, calibrators, and diagnostic assays for regulated diagnostics market, exosome-based molecular diagnostic assays, advanced tissue-based in-situ hybridization assays for spatial genomic and tissue biopsy analysis, and genetic and oncology kits for research and clinical applications; and sells products for genetic carrier screening, oncology diagnostics, molecular controls, and research, as well as instruments and process control products for hematology, blood chemistry and gases, and coagulation controls and reagents used in various diagnostic applications. It offers its products under R&D Systems, Tocris Biosciences, Novus Biologicals, ProteinSimple, Advanced Cell Diagnostics, Exosome Diagnostics, and Asuragen brands. The company was formerly known as Techne Corporation and changed its name to Bio-Techne Corporation in November 2014. Bio-Techne Corporation was founded in 1976 and is headquartered in Minneapolis, Minnesota.",
+      "ceo": "Kim Kelderman",
+      "industry": "Biotechnology",
+      "sector": "Healthcare",
+      "country": "US",
+      "website": "https://www.bio-techne.com",
+      "market_cap": 8330598380,
+      "price": 53.14,
+      "beta": 1.381,
+      "volume_avg": 2469063,
+      "last_div": 0.32,
+      "range": "46.01-83.62",
+      "changes": -0.04,
+      "currency": "USD",
+      "exchange": "NASDAQ Global Select",
+      "exchange_short": "NASDAQ",
+      "source": "fmp_profile",
+      "timestamp": "2025-07-07T16:20:39.258131"
+    },
+    "sentiment_analysis": {
+      "error": "'str' object has no attribute 'get'",
+      "source": "alpha_vantage_sentiment"
+    }
+  },
+  "market_data": {
+    "current_price": 53.14000000000001,
+    "market_cap": 8330598912,
+    "enterprise_value": 8348506112,
+    "shares_outstanding": null,
+    "volume": 843085,
+    "beta": 1.381,
+    "52_week_high": 83.62,
+    "52_week_low": 46.01,
+    "confidence": 1.0
+  },
+  "financial_metrics": {
+    "revenue_ttm": 1208770048,
+    "net_income": 801673024,
+    "earnings_per_share": 64.02409,
+    "pe_ratio": 64.02409,
+    "profit_margin": 0.10893,
+    "return_on_equity": 0.0653,
+    "return_on_assets": 0.05235,
+    "confidence": 0.9
+  },
+  "company_intelligence": {
+    "basic_profile": {
+      "company_name": "Bio-Techne Corporation",
+      "sector": "Healthcare",
+      "industry": "Biotechnology",
+      "country": "United States",
+      "description": "Bio-Techne Corporation, together with its subsidiaries, develops, manufactures, and sells life science reagents, instruments, and services for the research and clinical diagnostic markets worldwide. The company operates through two segments, Protein Sciences, and Diagnostics and Genomics. The Protein Sciences segment develops and manufactures biological reagents used in various aspects of life science research, diagnostics, and cell and gene therapy, such as cytokines and growth factors, antibodies, small molecules, tissue culture sera, and cell selection technologies. This segment also offers proteomic analytical tools for automated western blot and multiplexed ELISA workflow consists of manual and automated protein analysis instruments and immunoassays for use in quantifying proteins in various biological fluids. The Diagnostics and Genomics segment develops and manufactures diagnostic products, including controls, calibrators, and diagnostic assays for regulated diagnostics market, exosome-based molecular diagnostic assays, advanced tissue-based in-situ hybridization assays for spatial genomic and tissue biopsy analysis, and genetic and oncology kits for research and clinical applications; and sells products for genetic carrier screening, oncology diagnostics, molecular controls, and research, as well as instruments and process control products for hematology, blood chemistry and gases, and coagulation controls and reagents used in various diagnostic applications. It offers its products under R&D Systems, Tocris Biosciences, Novus Biologicals, ProteinSimple, Advanced Cell Diagnostics, Exosome Diagnostics, and Asuragen brands. The company was formerly known as Techne Corporation and changed its name to Bio-Techne Corporation in November 2014. Bio-Techne Corporation was founded in 1976 and is headquartered in Minneapolis, Minnesota.",
+      "ceo": "Kim Kelderman",
+      "website": "https://www.bio-techne.com"
+    },
+    "confidence": 0.9
+  },
+  "regulatory_intelligence": {
+    "insider_trading_data": {
+      "error": "No insider trading data available",
+      "ticker": "TECH"
+    },
+    "sec_edgar_integration": {
+      "status": "framework_ready",
+      "capabilities": [
+        "10-K filings",
+        "10-Q reports",
+        "8-K events",
+        "insider forms"
+      ],
+      "implementation_note": "SEC EDGAR service integrated in finance server"
+    },
+    "regulatory_analysis": {
+      "insider_activity_summary": {
+        "status": "no_data",
+        "summary": "No insider trading data available"
+      },
+      "regulatory_risk_assessment": "framework_ready"
+    }
+  },
+  "economic_context": {
+    "fred_indicators": {
+      "source": "fred_economic",
+      "indicators": {
+        "GDP": {
+          "description": "Gross Domestic Product",
+          "latest_value": "29962.047",
+          "latest_date": "2025-01-01",
+          "units": "Index"
+        },
+        "CPIAUCSL": {
+          "description": "Consumer Price Index",
+          "latest_value": "320.580",
+          "latest_date": "2025-05-01",
+          "units": "Index"
+        },
+        "FEDFUNDS": {
+          "description": "Federal Funds Rate",
+          "latest_value": "4.33",
+          "latest_date": "2025-06-01",
+          "units": "Percent"
+        },
+        "UNRATE": {
+          "description": "Unemployment Rate",
+          "latest_value": "4.1",
+          "latest_date": "2025-06-01",
+          "units": "Percent"
+        },
+        "DEXUSEU": {
+          "description": "US/Euro Exchange Rate",
+          "latest_value": "1.1724",
+          "latest_date": "2025-06-27",
+          "units": "Index"
+        },
+        "DGS10": {
+          "description": "10-Year Treasury Rate",
+          "latest_value": "4.3",
+          "latest_date": "2025-07-02",
+          "units": "Index"
+        },
+        "DGS2": {
+          "description": "2-Year Treasury Rate",
+          "latest_value": "3.78",
+          "latest_date": "2025-07-02",
+          "units": "Index"
+        }
+      },
+      "timestamp": "2025-07-07T16:20:42.950142"
+    },
+    "imf_integration": {
+      "status": "framework_ready",
+      "capabilities": [
+        "Global GDP data",
+        "Country risk assessment",
+        "Currency analysis"
+      ],
+      "implementation_note": "IMF service framework integrated for global context"
+    },
+    "economic_analysis": {
+      "interest_rate_environment": "restrictive",
+      "economic_growth_phase": "moderate_growth",
+      "yield_curve_signal": "normal",
+      "policy_implications": [
+        "High rates may pressure valuations"
+      ],
+      "yield_curve_spread": 0.52
+    },
+    "sector_implications": {
+      "interest_rate_sensitivity": "moderate",
+      "economic_cycle_sensitivity": "low",
+      "sector_specific_factors": [
+        "R&D investment levels affected by interest rates",
+        "Healthcare spending relatively recession-resistant",
+        "Biotech funding environment sensitive to risk appetite",
+        "Global demand for life sciences tools remains strong"
+      ]
+    }
+  },
+  "alternative_data": {
+    "cryptocurrency_context": {
+      "crypto_prices": {
+        "binancecoin": {
+          "usd": 661.47,
+          "usd_market_cap": 96505459804.27097,
+          "usd_24h_vol": 622654307.205185,
+          "usd_24h_change": 0.9660227969870921
+        },
+        "bitcoin": {
+          "usd": 109136,
+          "usd_market_cap": 2170529260692.8245,
+          "usd_24h_vol": 18421721833.161556,
+          "usd_24h_change": 0.907541429623558
+        },
+        "cardano": {
+          "usd": 0.586128,
+          "usd_market_cap": 21175874784.66364,
+          "usd_24h_vol": 438718104.0013533,
+          "usd_24h_change": 1.787418713600258
+        },
+        "ethereum": {
+          "usd": 2570.5,
+          "usd_market_cap": 310215087758.3662,
+          "usd_24h_vol": 12396692398.46427,
+          "usd_24h_change": 2.0147917637566035
+        },
+        "solana": {
+          "usd": 151.62,
+          "usd_market_cap": 81192986921.04015,
+          "usd_24h_vol": 3858241476.2863603,
+          "usd_24h_change": 2.4587587468509913
+        }
+      },
+      "source": "coingecko",
+      "timestamp": "2025-07-07T16:20:43.099578"
+    },
+    "crypto_market_analysis": {
+      "bitcoin_price": 109136,
+      "bitcoin_24h_change": 0.907541429623558,
+      "market_sentiment": "neutral"
+    },
+    "digital_asset_implications": {
+      "market_risk_sentiment": "neutral",
+      "correlation_implications": "Crypto volatility may indicate broader risk appetite"
+    }
+  },
+  "enhanced_data_quality": {
+    "overall_data_quality": 0.75,
+    "source_reliability_scores": {
+      "yahoo_finance": 0.95,
+      "alpha_vantage_quote": 0.9,
+      "fmp_profile": 0.88
+    },
+    "data_completeness": 75.0,
+    "multi_source_validation": {
+      "sources": {
+        "yahoo": 53.14,
+        "alpha_vantage": 53.14,
+        "fmp": 53.14
+      },
+      "price_consistency": true,
+      "confidence_score": 1.0,
+      "validated_price": 53.14000000000001
+    },
+    "institutional_grade": false,
+    "data_freshness": {
+      "collection_timestamp": "2025-07-07T16:20:43.100189",
+      "cache_utilization": "optimized_15min_ttl"
+    }
+  },
+  "enhanced_insights": {
+    "multi_source_observations": [
+      "High price validation confidence (1.000) across multiple sources",
+      "Operating in restrictive interest rate environment"
+    ],
+    "risk_assessment": {},
+    "opportunity_identification": {},
+    "data_driven_priorities": []
+  }
+}

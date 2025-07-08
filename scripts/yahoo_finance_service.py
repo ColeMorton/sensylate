@@ -354,10 +354,13 @@ class YahooFinanceService:
                     f"(period: {period})"
                 )
 
+            # Reset index to make Date a column, then convert to records
+            hist_reset = hist.reset_index()
+
             return {
                 "symbol": symbol,
                 "period": period,
-                "data": hist.to_dict(orient="records"),
+                "data": hist_reset.to_dict(orient="records"),
                 "timestamp": datetime.now().isoformat(),
             }
 

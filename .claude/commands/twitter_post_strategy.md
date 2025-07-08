@@ -47,9 +47,15 @@ python3 team-workspace/shared/validate-before-execution.py twitter-post-strategy
 3. **Technical & Market Context**: `@data/raw/analysis_misc/`
    - Chart patterns, technical signals, relative performance notes
    - Current market context and positioning insights
-   - **Enhanced with Yahoo Finance service class** for real-time market data
 
-4. **Strategy Backtesting Data** (FALLBACK): `@data/raw/analysis_strategy/`
+4. **Enhanced Multi-Source Data Integration**:
+   - **Yahoo Finance MCP Server**: Real-time market data, fundamentals, financial statements
+   - **SEC EDGAR MCP Server**: Regulatory filings and compliance context
+   - **FRED Economic MCP Server**: Macroeconomic indicators and sector analysis
+   - **Content Automation MCP Server**: Automated post generation with SEO optimization
+   - **Sensylate Trading MCP Server**: Historical analysis integration and performance context
+
+5. **Strategy Backtesting Data** (FALLBACK): `@data/raw/analysis_strategy/`
    - CSV files as backup when TrendSpider data unavailable
    - Historical metrics for context only
 
@@ -60,11 +66,37 @@ python3 team-workspace/shared/validate-before-execution.py twitter-post-strategy
 **Before creating content, systematically assess:**
 
 1. **SIGNAL URGENCY**: This strategy triggered an entry signal TODAY - lead with this
-2. **Data Completeness**: Cross-reference all four data sources for consistency
+2. **Data Completeness**: Cross-reference all MCP data sources for multi-source consistency
 3. **Strategy Validation**: Use historical performance to justify today's signal
-4. **Timing Context**: Combine current seasonality + technical setup + fundamental thesis
+4. **Timing Context**: Combine current seasonality + technical setup + fundamental thesis + economic context
 5. **Audience Value**: Provide actionable intelligence for immediate positioning
 6. **Engagement Potential**: Create urgency around live trading opportunity
+
+## Enhanced Content Generation Method
+
+**Comprehensive MCP Integration for Content Creation:**
+
+Use the following MCP tools directly for enhanced content generation:
+
+**Market Data Collection:**
+- `mcp__yahoo-finance__get_stock_fundamentals` - Get comprehensive fundamental metrics
+- `mcp__yahoo-finance__get_market_data_summary` - Get historical performance context
+- `mcp__fred-economic__get_sector_indicators` - Get sector economic indicators
+
+**Regulatory and Analysis Context:**
+- `mcp__sec-edgar__get_company_filings` - Get "10-K" filings for regulatory context
+- `mcp__sensylate-trading__get_fundamental_analysis` - Get existing historical analysis
+
+**Automated Content Generation:**
+- `mcp__content-automation__create_social_content` - Generate trading strategy social posts
+- `mcp__content-automation__optimize_seo_content` - SEO optimize content with keywords
+- `mcp__content-automation__generate_blog_post` - Create comprehensive blog content
+
+**Enhanced Data Integration Benefits:**
+- **Multi-Source Validation**: Cross-reference market data with regulatory filings
+- **Economic Context**: Sector indicators and macroeconomic environment assessment
+- **Automated Content Generation**: SEO-optimized posts with compliance validation
+- **Historical Integration**: Leverage existing analysis for consistency and depth
 
 ## Pre-Analysis Evaluation Check
 
@@ -203,11 +235,11 @@ TRANSPARENCY ENHANCEMENT REQUIREMENTS:
 - Extract current chart patterns and technical signals
 - Note relative performance vs benchmarks
 - Identify support/resistance levels or trend analysis
-- **Supplement with Yahoo Finance service class**:
-  - Use `python scripts/yahoo_finance_service.py info TICKER` for current price/volume
-  - Use `python scripts/yahoo_finance_service.py history TICKER` for recent performance
+- **Supplement with Yahoo Finance MCP server**:
+  - Use MCP tool `get_stock_fundamentals(ticker)` for current price/volume/metrics
+  - Use MCP tool `get_market_data_summary(ticker, period)` for recent performance
   - Cross-reference with real-time market data for validation
-  - Benefit from automatic caching, retry logic, and error handling
+  - Benefit from MCP caching (15-min TTL), retry logic, and standardized error handling
 
 **Step 4: Strategy Parameters from CSV** (`@data/raw/analysis_strategy/{TICKER}_{YYYYMMDD}.csv`)
 - **REQUIRED**: Extract strategy type and window parameters regardless of TrendSpider availability
@@ -466,7 +498,7 @@ Deliver comprehensive analysis featuring:
 
 **Phase 1+ (New Post Creation):**
 1. **EXTRACT STRATEGY PARAMETERS**: Parse CSV file for Strategy Type, Short Window, Long Window
-2. **GET REAL-TIME MARKET DATA**: Use Yahoo Finance service class (`python scripts/yahoo_finance_service.py info TICKER`) for current price/volume
+2. **GET REAL-TIME MARKET DATA**: Use Yahoo Finance MCP server (`get_stock_fundamentals(ticker)`) for current price/volume
 3. **DATA SOURCE CONFLICT RESOLUTION**: If TrendSpider vs CSV discrepancies exist, re-analyze TrendSpider data as authoritative source
 4. Extract all metrics from TrendSpider tabular image (left panel) with precision
 5. **CRITICAL**: Extract seasonality data from TrendSpider chart (right panel) with extreme care

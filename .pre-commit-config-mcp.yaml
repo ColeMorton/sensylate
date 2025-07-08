@@ -1,0 +1,124 @@
+# Pre-commit Configuration for MCP Compliance
+# This configuration adds MCP compliance checking to the existing pre-commit hooks
+
+repos:
+  # Existing hooks (keep all current hooks)
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-json
+      - id: check-merge-conflict
+      - id: check-added-large-files
+
+  # Python quality hooks (existing)
+  - repo: https://github.com/psf/black
+    rev: 23.3.0
+    hooks:
+      - id: black
+        args: [--line-length=88]
+        files: ^scripts/
+
+  - repo: https://github.com/pycqa/isort
+    rev: 5.12.0
+    hooks:
+      - id: isort
+        args: [--profile=black]
+        files: ^scripts/
+
+  - repo: https://github.com/pycqa/flake8
+    rev: 6.0.0
+    hooks:
+      - id: flake8
+        files: ^scripts/
+
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.3.0
+    hooks:
+      - id: mypy
+        files: ^scripts/
+        additional_dependencies: [types-requests, types-PyYAML]
+
+  # ENHANCED: MCP Compliance Checking with Context Decoupling
+  - repo: local
+    hooks:
+      # Main MCP compliance check
+      - id: mcp-compliance
+        name: MCP Compliance Check
+        entry: python scripts/check_mcp_compliance.py
+        language: python
+        files: '\.(py|md)$'
+        pass_filenames: true
+        args: ['--verbose']
+        description: 'Check for MCP-first development pattern violations and context coupling'
+
+      # Context coupling check for commands
+      - id: context-coupling-check
+        name: Context Coupling Check
+        entry: python scripts/check_mcp_compliance.py
+        language: python
+        files: '\.claude/commands/.*\.md$'
+        args: ['--verbose', '--exclude', '__pycache__', '.git']
+        description: 'Check commands for hardcoded paths and context coupling'
+
+      # Financial code context injection check
+      - id: financial-context-check
+        name: Financial Code Context Check
+        entry: python scripts/check_mcp_compliance.py
+        language: python
+        files: '(fundamental|trading|yahoo|finance).*\.py$'
+        args: ['--verbose']
+        description: 'Ensure financial code uses context injection patterns'
+
+      # MCP compliance report generation (manual)
+      - id: mcp-compliance-report
+        name: MCP Compliance Report
+        entry: python scripts/check_mcp_compliance.py
+        language: python
+        args: ['--report', '--json']
+        pass_filenames: false
+        description: 'Generate comprehensive MCP compliance report'
+        stages: [manual]
+
+# Additional configuration
+default_language_version:
+  python: python3
+
+ci:
+  autofix_prs: false
+  autoupdate_schedule: monthly
+
+# MCP Compliance Rules Documentation
+#
+# The hooks in this configuration enforce the following MCP compliance rules:
+#
+# 1. MCP-First Development:
+#    - No direct service imports (yahoo_finance_service, etc.)
+#    - Use MCPContextProvider instead of direct service access
+#    - Proper MCP error handling with try/except blocks
+#
+# 2. Context Decoupling:
+#    - No hardcoded paths in commands or scripts
+#    - Use context.data.get_output_path() instead of "./data/outputs/"
+#    - Commands should use {{context}} placeholders
+#
+# 3. Financial Code Standards:
+#    - All financial/trading code must use context injection
+#    - No yahoo finance calls without MCP wrapper
+#    - Proper validation using ValidationContextProvider
+#
+# 4. Architecture Consistency:
+#    - Context providers used for all external dependencies
+#    - Command executors extend CommandExecutor base class
+#    - MCP bridge used for tool discovery and mapping
+#
+# Usage:
+#   pre-commit run --all-files                    # Run all hooks
+#   pre-commit run mcp-compliance --all-files     # Run only MCP compliance
+#   pre-commit run mcp-compliance-report --all-files  # Generate report (manual)
+#
+# Installation:
+#   pre-commit install --config .pre-commit-config-mcp.yaml
+#   pre-commit install --hook-type pre-push --config .pre-commit-config-mcp.yaml

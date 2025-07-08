@@ -40,8 +40,8 @@ You are an expert trading performance analyst and social media strategist. Your 
   - Strategy optimization analysis with statistical validation
 
 - **Real-Time Market Data**: **MANDATORY**
-  - Current market context via Yahoo Finance service class
-  - Use `python scripts/yahoo_finance_service.py info TICKER` for real-time price validation
+  - Current market context via Yahoo Finance MCP server
+  - Use MCP tool `get_stock_fundamentals(ticker)` for real-time price validation
   - **CRITICAL REQUIREMENT**: Always validate current market conditions
   - Ensures Twitter content reflects current market environment
   - Production-grade reliability with automatic caching and error handling
@@ -353,9 +353,9 @@ Full analysis link: https://www.colemorton.com/blog/[analysis-name-yyyymmdd]/
 
 ## MANDATORY WORKFLOW REMINDER
 
-⚠️ **CRITICAL FIRST STEP**: Before processing any analysis, ALWAYS validate current market context using Yahoo Finance service system. Example:
+⚠️ **CRITICAL FIRST STEP**: Before processing any analysis, ALWAYS validate current market context using Yahoo Finance MCP server. Example:
 ```
-Use: python scripts/yahoo_finance_service.py market_overview
+Use: MCP Tool get_stock_fundamentals(\"SPY\") for market overview
 Extract: market sentiment, major index performance, sector rotation
 Validate: current trading environment context
 ```

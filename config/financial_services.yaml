@@ -1,0 +1,143 @@
+# Financial Services Configuration
+# Central configuration for all financial data services
+
+# Global defaults
+global:
+  cache:
+    enabled: true
+    ttl_seconds: 900  # 15 minutes
+    cache_dir: ${base_paths.data_root}/cache
+    max_size_mb: 100
+
+  rate_limiting:
+    enabled: true
+    default_requests_per_minute: 60
+    burst_limit: 10
+
+  request:
+    timeout_seconds: 30
+    max_retries: 3
+    retry_backoff_factor: 2
+
+  logging:
+    level: INFO
+    format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+
+# Service-specific configurations
+services:
+  yahoo_finance:
+    name: "yahoo_finance"
+    base_url: "https://query1.finance.yahoo.com"
+    api_key: null  # No API key required
+    rate_limit:
+      requests_per_minute: 100
+    cache:
+      ttl_seconds: 900  # 15 minutes (standardized)
+    headers:
+      User-Agent: "Sensylate/1.0 (https://sensylate.com)"
+
+  alpha_vantage:
+    name: "alpha_vantage"
+    base_url: "https://www.alphavantage.co/query"
+    api_key: "Q4206ZINHPUCHHKM"
+    rate_limit:
+      requests_per_minute: 5  # Free tier limit
+    cache:
+      ttl_seconds: 900  # 15 minutes (standardized)
+    headers:
+      Accept: "application/json"
+
+  fred:
+    name: "fred"
+    base_url: "https://api.stlouisfed.org/fred"
+    api_key: "8e5ae1273bd7a0307a0323ff1ed6ce73"
+    rate_limit:
+      requests_per_minute: 120
+    cache:
+      ttl_seconds: 7200  # 2 hours for economic data
+    headers:
+      Accept: "application/json"
+
+  sec_edgar:
+    name: "sec_edgar"
+    base_url: "https://www.sec.gov"
+    api_key: "adf9715a6970ae8a72cb83119284516557c2ea0820c92e33b13689ef0cfa1926"
+    rate_limit:
+      requests_per_minute: 10
+    cache:
+      ttl_seconds: 3600  # 1 hour
+    headers:
+      User-Agent: "Sensylate Trading Analysis Platform (contact@sensylate.com)"
+      Accept: "application/json"
+
+  fmp:
+    name: "fmp"
+    base_url: "https://financialmodelingprep.com/api/v3"
+    api_key: "I5GuqxrurLHLHjurnpFrSVXFsoXb1bfe"
+    rate_limit:
+      requests_per_minute: 250
+    cache:
+      ttl_seconds: 900  # 15 minutes (standardized)
+    headers:
+      Accept: "application/json"
+
+  coingecko:
+    name: "coingecko"
+    base_url: "https://api.coingecko.com/api/v3"
+    api_key: ${COINGECKO_API_KEY}  # Optional for free tier
+    rate_limit:
+      requests_per_minute: 50
+    cache:
+      ttl_seconds: 900  # 15 minutes (standardized)
+    headers:
+      Accept: "application/json"
+
+  imf:
+    name: "imf"
+    base_url: "https://www.imf.org/external/datamapper/api/v1"
+    api_key: null
+    rate_limit:
+      requests_per_minute: 60
+    cache:
+      ttl_seconds: 1800  # 30 minutes
+    headers:
+      Accept: "application/json"
+
+# Data orchestration configuration
+orchestration:
+  cross_validation:
+    enabled: true
+    price_tolerance_percent: 1.0  # Max 1% deviation for consistent prices
+    min_sources_for_validation: 2
+    confidence_thresholds:
+      excellent: 0.95
+      good: 0.8
+      acceptable: 0.7
+      poor: 0.4
+
+  fallback_strategies:
+    enabled: true
+    primary_sources:
+      stock_data: ["yahoo_finance", "alpha_vantage", "fmp"]
+      economic_data: ["fred", "imf"]
+      regulatory_data: ["sec_edgar"]
+      crypto_data: ["coingecko"]
+
+  data_quality:
+    min_success_rate: 0.6  # 60% minimum success rate
+    health_check_interval: 300  # 5 minutes
+
+# CLI configuration
+cli:
+  default_output_format: "json"
+  output_formats: ["json", "yaml", "table", "csv"]
+  default_ticker_validation: true
+  auto_cache_cleanup: true
+  verbose_logging: false
+
+# Path configuration
+paths:
+  data_root: "./data"
+  cache_root: "./data/cache"
+  outputs_root: "./data/outputs"
+  logs_root: "./logs"

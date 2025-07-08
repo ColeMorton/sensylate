@@ -1,0 +1,84 @@
+# Unified Cache Configuration
+# Centralized caching settings for all financial services
+
+# Global cache defaults
+global_cache:
+  enabled: true
+  directory: "data/cache"
+  max_size_mb: 500
+  cleanup_interval_seconds: 3600  # 1 hour
+  compression_enabled: false
+
+# Service-specific TTL settings based on data volatility
+service_ttl_settings:
+  # Stock market data - 15 minutes (moderate volatility)
+  yahoo_finance: 900
+  alpha_vantage: 900
+  fmp: 900
+
+  # Cryptocurrency data - 15 minutes (high volatility but API costs)
+  coingecko: 900
+
+  # Economic data - 2 hours (low volatility, official data)
+  fred_economic: 7200
+  imf_data: 900  # Could be longer but standardized for now
+
+  # Regulatory/filing data - 1 hour (very low volatility)
+  sec_edgar: 3600
+
+  # Default for any new services
+  default: 900
+
+# Performance optimization settings
+cache_optimization:
+  # Proactive cache warming for high-traffic symbols
+  warm_cache_symbols: ["AAPL", "MSFT", "GOOGL", "AMZN", "TSLA", "NVDA", "META"]
+  warm_cache_enabled: false  # Enable in production
+
+  # Cache hit ratio monitoring
+  monitoring_enabled: true
+  log_cache_stats: true
+  stats_interval_seconds: 300  # 5 minutes
+
+  # Memory management
+  max_memory_usage_mb: 100
+  eviction_policy: "lru"  # Least Recently Used
+
+# Environment-specific overrides
+environments:
+  dev:
+    max_size_mb: 100
+    cleanup_interval_seconds: 1800  # 30 minutes
+
+  test:
+    enabled: true
+    ttl_multiplier: 0.1  # Shorter TTLs for testing
+    max_size_mb: 50
+
+  prod:
+    max_size_mb: 1000
+    compression_enabled: true
+    warm_cache_enabled: true
+    monitoring_enabled: true
+
+# Data type specific settings
+data_type_configs:
+  market_data:
+    ttl_seconds: 900
+    priority: "high"
+    compression: false
+
+  financial_statements:
+    ttl_seconds: 3600  # 1 hour - quarterly data
+    priority: "medium"
+    compression: true
+
+  economic_indicators:
+    ttl_seconds: 7200  # 2 hours - monthly/quarterly data
+    priority: "low"
+    compression: true
+
+  regulatory_filings:
+    ttl_seconds: 86400  # 24 hours - rarely change
+    priority: "low"
+    compression: true
