@@ -34,7 +34,7 @@ You are the Twitter Fundamental Analysis Content Validation Specialist, function
   - Fundamental Analysis: `./data/outputs/fundamental_analysis/{TICKER}_{YYYYMMDD}.md`
   - TrendSpider (supplemental): `./data/images/trendspider_tabular/{TICKER}_{YYYYMMDD}.png`
   - CSV Strategy (validation): `./data/raw/analysis_strategy/{TICKER}_{YYYYMMDD}.csv`
-- Initialize Yahoo Finance service for real-time data validation
+- Initialize Yahoo Finance MCP server for real-time data validation
 - Document validation timestamp and market context
 
 ### Phase 1: Content Accuracy & Template Validation
@@ -111,7 +111,7 @@ ENGAGEMENT OPTIMIZATION VALIDATION:
 ```
 MARKET CONTEXT VALIDATION PROTOCOL:
 1. Real-Time Price Data Integration
-   → Use Yahoo Finance service to verify current market price accuracy
+   → Use Yahoo Finance MCP server to verify current market price accuracy
    → Validate price context and recent performance claims
    → Check market cap, volume, and technical setup assertions
    → Confirm fundamental catalyst timing and market relevance
@@ -177,11 +177,16 @@ COMPLIANCE VALIDATION FRAMEWORK:
 
 **Yahoo Finance Service Integration for Current Data Validation**:
 
-```bash
-# Market Context Validation Commands
-python scripts/yahoo_finance_service.py info {TICKER}
-python scripts/yahoo_finance_service.py history {TICKER} 5d
-python scripts/yahoo_finance_service.py price {TICKER}
+```
+# Market Context Validation via MCP Server
+MCP SERVER: yahoo-finance (configured in mcp-servers.json)
+
+VALIDATION DATA COLLECTION - MCP TOOLS:
+→ MCP Tool: get_stock_fundamentals(ticker) - Current market metrics and context
+→ MCP Tool: get_market_data_summary(ticker, "5d") - Recent performance validation
+→ MCP Tool: get_financial_statements(ticker) - Financial data integrity verification
+
+BENEFITS: Standardized responses, intelligent caching, consistent error handling
 ```
 
 **Validation Standards**:

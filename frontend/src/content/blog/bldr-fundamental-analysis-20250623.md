@@ -187,6 +187,6 @@ Key variables impact on fair value ($139 base case):
 - Management guidance from Q1 2025 earnings call
 - Historical cycle analysis from NAHB research
 
-## Investment Recommendation Summary
+## 🏁 Investment Recommendation Summary
 
 Builders FirstSource offers compelling risk-adjusted value with 19-21% expected returns aligned with analyst consensus. The investment thesis combines defensive market leadership, conservative balance sheet management, and proven acquisition execution within a probabilistically-modeled recovery scenario. Current 14.7x P/E valuation provides 15% discount to historical norms with downside protection via strong balance sheet (1.5x net debt/EBITDA). Monte Carlo analysis supports 83% confidence in fair value range $130-$150, with stress-tested downside limited to $108 in severe housing downturn scenarios. Position sizing recommended at 2-4% reflects appropriate risk-adjusted allocation for cyclical equity exposure.

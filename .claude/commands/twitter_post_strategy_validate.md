@@ -35,7 +35,7 @@ You are the Twitter Strategy Content Validation Specialist, functioning as the q
   - Fundamental: `./data/outputs/fundamental_analysis/{TICKER}_{YYYYMMDD}.md`
   - Technical: `./data/raw/analysis_misc/{TICKER}_{YYYYMMDD}.md`
   - Strategy: `./data/raw/analysis_strategy/{TICKER}_{YYYYMMDD}.csv`
-- Initialize Yahoo Finance service for real-time data validation
+- Initialize Yahoo Finance MCP server for real-time data validation
 - Document validation timestamp and market context
 
 ### Phase 1: Data Extraction Accuracy Validation
@@ -65,7 +65,7 @@ DATA EXTRACTION VALIDATION PROTOCOL:
    → Confidence threshold: 9.5/10 (strategy identification critical)
 
 4. Real-Time Market Data Validation
-   → Use Yahoo Finance service to verify current price context
+   → Use Yahoo Finance MCP server to verify current price context
    → Validate market cap, volume, and recent performance claims
    → Cross-check technical setup assertions with current data
    → Verify fundamental catalyst timing and relevance
@@ -146,9 +146,9 @@ SIGNAL VALIDATION PROTOCOL:
 
 ```bash
 # Market Context Validation Commands
-python scripts/yahoo_finance_service.py info {TICKER}
-python scripts/yahoo_finance_service.py history {TICKER} 5d
-python scripts/yahoo_finance_service.py price {TICKER}
+MCP Tool: get_stock_fundamentals(ticker) - Current market metrics via MCP server
+MCP Tool: get_market_data_summary({TICKER}, "5d") - Recent performance
+MCP Tool: get_stock_fundamentals({TICKER}) - Current price metrics
 ```
 
 **Validation Standards**:

@@ -1,0 +1,103 @@
+# Local Development Context Configuration for Sensylate
+# This configuration provides the default context for all commands in local development
+
+execution:
+  environment: local
+  working_directory: /Users/colemorton/Projects/sensylate
+  timeout: 300
+  session_management: true
+
+data:
+  base_output_path: ./data/outputs
+  cache_enabled: true
+  backup_enabled: true
+  temp_cleanup: true
+  file_permissions: 0o644
+
+  # Category organization
+  categories:
+    fundamental_analysis:
+      subcategories: [discovery, analyze, synthesize, validate]
+    trading_analysis:
+      subcategories: [signals, performance, risk]
+    content_generation:
+      subcategories: [blog, social, reports]
+
+mcp:
+  config_path: ./mcp-servers.json
+  health_check_enabled: true
+  health_check_interval: 300
+  retry_policy: exponential
+  retry_attempts: 3
+  timeout: 60
+  cache_responses: true
+
+  # Server priorities for tool discovery
+  server_priorities:
+    - yahoo-finance
+    - sensylate-trading
+    - sec-edgar
+    - fred-economic
+    - content-automation
+    - fundamental-analysis
+
+validation:
+  confidence_threshold: 0.8
+  quality_gates: standard
+  format_validation: true
+  institutional_target: 9.5
+  strict_formatting: true
+
+  # Quality gate definitions
+  quality_requirements:
+    minimal:
+      confidence_min: 0.6
+      allow_errors: true
+      allow_warnings: true
+    standard:
+      confidence_min: 0.8
+      max_errors: 3
+      allow_warnings: true
+    strict:
+      confidence_min: 0.9
+      max_errors: 1
+      max_warnings: 5
+    institutional:
+      confidence_min: 0.95
+      max_errors: 0
+      max_warnings: 2
+
+# Command-specific overrides
+command_overrides:
+  fundamental_analyst_discover:
+    validation:
+      quality_gates: institutional
+      institutional_target: 9.5
+    data:
+      backup_enabled: true
+      category: fundamental_analysis
+      subcategory: discovery
+
+  fundamental_analyst_validate:
+    validation:
+      quality_gates: institutional
+      strict_formatting: true
+    data:
+      category: fundamental_analysis
+      subcategory: validation
+
+  trade_history_analyze:
+    execution:
+      timeout: 600  # Longer timeout for analysis
+    validation:
+      quality_gates: strict
+    data:
+      category: trading_analysis
+      subcategory: performance
+
+# Development settings
+development:
+  debug_mode: true
+  verbose_logging: true
+  cache_debug: false
+  validation_debug: false

@@ -1,0 +1,44 @@
+# Development Environment Configuration
+
+global:
+  cache:
+    ttl_seconds: 300  # 5 minutes for faster development
+
+  rate_limiting:
+    enabled: false  # Disable for development
+
+  logging:
+    level: DEBUG
+
+services:
+  yahoo_finance:
+    cache:
+      ttl_seconds: 300
+
+  alpha_vantage:
+    rate_limit:
+      requests_per_minute: 5  # Respect free tier limits
+
+  fred:
+    cache:
+      ttl_seconds: 1800  # 30 minutes for dev
+
+  sec_edgar:
+    rate_limit:
+      requests_per_minute: 5  # Conservative for dev
+
+  fmp:
+    rate_limit:
+      requests_per_minute: 250
+
+  coingecko:
+    rate_limit:
+      requests_per_minute: 50
+
+  imf:
+    cache:
+      ttl_seconds: 900  # 15 minutes for dev
+
+cli:
+  verbose_logging: true
+  auto_cache_cleanup: false  # Manual cleanup in dev

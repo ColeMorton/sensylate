@@ -123,12 +123,13 @@ VALIDATION-DRIVEN SUCCESS CRITERIA:
    - Risk assessments, catalysts, and price targets
    - Business-specific KPIs and financial health scorecards
 
-3. **Real-Time Market Data**: **MANDATORY**
-   - Current stock price via Yahoo Finance service class
-   - Use `python scripts/yahoo_finance_service.py info TICKER` for real-time price, volume, and market data
-   - **CRITICAL REQUIREMENT**: Always use current market price, never analysis price
-   - Ensures Twitter content reflects real-time market conditions
-   - Production-grade reliability with automatic caching and error handling
+3. **Real-Time Market Data - MCP Standardized**: **MANDATORY**
+   - Current stock price via standardized Yahoo Finance MCP server
+   - Use MCP Tool: `get_stock_fundamentals(ticker)` for comprehensive real-time data
+   - **CRITICAL REQUIREMENT**: Always use current market price from MCP response, never analysis price
+   - Access current_price from fundamental_metrics.current_price in standardized format
+   - Ensures Twitter content reflects real-time market conditions via MCP data_quality.timestamp
+   - Production-grade reliability with intelligent caching, retry logic, and health monitoring
 
 4. **CSV Strategy Data** (VALIDATION ONLY): `@data/raw/analysis_strategy/`
    - Used for cross-validation and backup metrics only
@@ -445,7 +446,7 @@ Full analysis link: https://www.colemorton.com/blog/[ticker-lowercase]-fundament
 - `/twitter_fundamental_analysis AMZN_20250618`
 
 **Processing Steps:**
-1. **CRITICAL: Get real-time stock price** - Use Yahoo Finance service system (`python scripts/yahoo_finance_service.py info TICKER`) to get current market price
+1. **CRITICAL: Get real-time stock price** - Use Yahoo Finance MCP server (`get_stock_fundamentals(ticker)`) to get current market price from standardized response
 2. **Load and validate data sources** - Check for TrendSpider tabular data first, then fundamental analysis
 3. **Data source conflict resolution** - If TrendSpider vs CSV discrepancies exist, re-analyze TrendSpider data as authoritative source
 4. Load fundamental analysis from `@data/outputs/fundamental_analysis/{TICKER}_{YYYYMMDD}.md`
@@ -464,14 +465,14 @@ Full analysis link: https://www.colemorton.com/blog/[ticker-lowercase]-fundament
 
 ## MANDATORY WORKFLOW REMINDER
 
-⚠️ **CRITICAL FIRST STEP**: Before processing any analysis, ALWAYS get current stock price using Yahoo Finance bridge system. Example:
+⚠️ **CRITICAL FIRST STEP**: Before processing any analysis, ALWAYS get current stock price using the standardized Yahoo Finance MCP server. Example:
 ```
-Use: python scripts/yahoo_finance_service.py info TICKER
-Extract: current price, price change, volume, market cap
-Validate data freshness and market hours context
+Use: MCP Tool yahoo-finance/get_stock_fundamentals(ticker)
+Extract: fundamental_metrics.current_price, trading_metrics.volume, fundamental_metrics.market_cap
+Validate data freshness via data_quality.timestamp and cache_status
 ```
 
-**Never use the price from the fundamental analysis file - it may be outdated. Always use real-time market data from Yahoo Finance service system.**
+**Never use the price from the fundamental analysis file - it may be outdated. Always use real-time market data from the Yahoo Finance MCP server with standardized data quality indicators.**
 
 ## Post-Execution Protocol
 

@@ -29,6 +29,37 @@ python3 team-workspace/shared/validate-before-execution.py trade-history
 
 You are the Trade History Analyst responsible for generating comprehensive quantitative analysis of strategy and signal effectiveness with focus on pure entry/exit signal quality and strategy statistics, decoupled from risk management considerations and position sizing.
 
+## Enhanced Data Access via MCP Infrastructure
+
+**Multi-Source Trading Analysis Integration:**
+- **Sensylate Trading MCP**: Access to existing trading performance data and historical analysis
+- **Yahoo Finance MCP**: Real-time market data for context validation and performance benchmarking
+- **FRED Economic MCP**: Economic indicators for market environment assessment and performance correlation
+- **Content Automation MCP**: Professional report generation and analysis documentation with SEO optimization
+
+**Enhanced Analysis Method:**
+Use the following MCP tools directly for comprehensive trading analysis:
+
+**Trading Performance Data:**
+- `mcp__sensylate-trading__get_trading_performance` - Get comprehensive trading data
+- `mcp__sensylate-trading__run_analysis_script` - Execute specific trading analysis
+
+**Market Context and Economic Data:**
+- `mcp__fred-economic__get_economic_indicator` - Get GDP and economic indicators
+- `mcp__fred-economic__get_sector_indicators` - Get technology sector performance
+- `mcp__yahoo-finance__get_market_data_summary` - Get market context validation
+
+**Professional Report Generation:**
+- `mcp__content-automation__generate_blog_post` - Generate trade analysis blog content
+- `mcp__content-automation__create_social_content` - Create social media posts
+- `mcp__content-automation__optimize_seo_content` - Optimize content for SEO
+
+**Enhanced Integration Benefits:**
+- **Multi-Source Validation**: Cross-reference trading data with market conditions
+- **Economic Context**: Correlate performance with macroeconomic indicators
+- **Automated Reporting**: Professional analysis documentation with consistent formatting
+- **Content Generation**: SEO-optimized blog posts and social media content from trading analysis
+
 ## Command Parameters
 
 ### Required Parameter
@@ -277,7 +308,7 @@ DATA_PROCESSING_PROTOCOL = {
     },
     "supplemental_data_enhancement": {
         "fundamental_integration": "Match trade tickers with analysis_fundamental files for investment context",
-        "market_context": "Yahoo Finance service for benchmark and sector data",
+        "market_context": "Yahoo Finance MCP server for benchmark and sector data",
         "economic_context": "Web search for relevant economic developments",
         "industry_analysis": "Online research for sector-specific insights",
         "real_time_validation": "Current market data for positioning context"
@@ -318,7 +349,7 @@ DATA_COLLECTION_PROCESS:
 ```
 ENHANCEMENT_FRAMEWORK:
 - Fundamental Analysis Integration: Cross-reference tickers with /data/outputs/fundamental_analysis/ for investment thesis context
-- Market Context Integration: Yahoo Finance service for benchmark/sector data
+- Market Context Integration: Yahoo Finance MCP server for benchmark/sector data
 - Economic Research: Web search for relevant economic developments during analysis period
 - Industry Analysis: Online research for sector trends affecting portfolio
 - Real-Time Context: Current market conditions for positioning relevance
@@ -1032,7 +1063,7 @@ The historical performance of {X} closed trades reveals a **{profitability asses
    - Confirm requested timeframe and filter parameters
 
 2. **Supplemental Data Preparation**
-   - Prepare Yahoo Finance service access for market context
+   - Prepare Yahoo Finance MCP server access for market context
    - Plan web search strategy for economic/industry research
    - Ensure real-time data availability for current market context
 

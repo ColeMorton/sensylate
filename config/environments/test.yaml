@@ -1,0 +1,67 @@
+# Test Environment Configuration
+
+global:
+  cache:
+    enabled: false  # Disable caching for testing
+
+  rate_limiting:
+    enabled: false  # Disable for testing
+
+  request:
+    timeout_seconds: 10  # Short timeout for tests
+    max_retries: 1  # Minimal retries for fast tests
+
+  logging:
+    level: WARNING  # Minimal logging for tests
+
+services:
+  yahoo_finance:
+    cache:
+      enabled: false
+
+  alpha_vantage:
+    cache:
+      enabled: false
+    rate_limit:
+      enabled: false
+
+  fred:
+    cache:
+      enabled: false
+    rate_limit:
+      enabled: false
+
+  sec_edgar:
+    cache:
+      enabled: false
+    rate_limit:
+      enabled: false
+
+  fmp:
+    cache:
+      enabled: false
+    rate_limit:
+      enabled: false
+
+  coingecko:
+    cache:
+      enabled: false
+    rate_limit:
+      enabled: false
+
+  imf:
+    cache:
+      enabled: false
+    rate_limit:
+      enabled: false
+
+orchestration:
+  cross_validation:
+    enabled: false  # Disable for unit tests
+
+  fallback_strategies:
+    enabled: false  # Disable for predictable testing
+
+cli:
+  verbose_logging: false
+  auto_cache_cleanup: false
