@@ -363,9 +363,9 @@ class AnalysisValidator:
             refinement_needed.append("Consider peer comparison validation")
 
         return {
-            "thesis_breaking_issues": thesis_breaking_issues
-            if thesis_breaking_issues
-            else "none",
+            "thesis_breaking_issues": (
+                thesis_breaking_issues if thesis_breaking_issues else "none"
+            ),
             "material_concerns": material_concerns,
             "refinement_needed": refinement_needed,
         }

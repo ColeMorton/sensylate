@@ -370,9 +370,9 @@ class FundamentalAnalyzer:
             }
 
             # Calculate overall analysis confidence
-            analysis_result[
-                "analysis_confidence"
-            ] = self._calculate_analysis_confidence(analysis_result)
+            analysis_result["analysis_confidence"] = (
+                self._calculate_analysis_confidence(analysis_result)
+            )
 
             # Save analysis results
             self._save_analysis_results(analysis_result)
@@ -491,11 +491,11 @@ class FundamentalAnalyzer:
         return {
             "strength_score": round(strength_score, 3),
             "moat_sources": moat_indicators,
-            "assessment": "Strong"
-            if strength_score > 0.7
-            else "Moderate"
-            if strength_score > 0.4
-            else "Weak",
+            "assessment": (
+                "Strong"
+                if strength_score > 0.7
+                else "Moderate" if strength_score > 0.4 else "Weak"
+            ),
         }
 
     def _analyze_industry_dynamics(
@@ -607,11 +607,11 @@ class FundamentalAnalyzer:
         risk_score = min(risk_score, 1.0)
 
         return {
-            "financial_stability": "Low"
-            if risk_score > 0.7
-            else "Moderate"
-            if risk_score > 0.4
-            else "High",
+            "financial_stability": (
+                "Low"
+                if risk_score > 0.7
+                else "Moderate" if risk_score > 0.4 else "High"
+            ),
             "risk_score": round(risk_score, 3),
             "risk_factors": risk_factors,
         }

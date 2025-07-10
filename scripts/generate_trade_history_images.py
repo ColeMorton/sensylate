@@ -562,9 +562,11 @@ class TemplateBasedDashboardGenerator:
                     ),
                     marker=dict(
                         color=[
-                            colors["sensylate_palette"]["positive"]
-                            if v >= 0
-                            else colors["sensylate_palette"]["negative"]
+                            (
+                                colors["sensylate_palette"]["positive"]
+                                if v >= 0
+                                else colors["sensylate_palette"]["negative"]
+                            )
                             for v in values
                         ],
                         line=dict(
@@ -592,9 +594,11 @@ class TemplateBasedDashboardGenerator:
 
             # Color by profit/loss using template colors
             marker_colors = [
-                colors["sensylate_palette"]["positive"]
-                if r > 0
-                else colors["sensylate_palette"]["negative"]
+                (
+                    colors["sensylate_palette"]["positive"]
+                    if r > 0
+                    else colors["sensylate_palette"]["negative"]
+                )
                 for r in returns
             ]
 
@@ -697,9 +701,11 @@ class TemplateBasedDashboardGenerator:
             weeks = [d["week"] for d in data["weekly_data"]]
             returns = [d["return"] for d in data["weekly_data"]]
             bar_colors = [
-                colors["sensylate_palette"]["positive"]
-                if r > 0
-                else colors["sensylate_palette"]["negative"]
+                (
+                    colors["sensylate_palette"]["positive"]
+                    if r > 0
+                    else colors["sensylate_palette"]["negative"]
+                )
                 for r in returns
             ]
 

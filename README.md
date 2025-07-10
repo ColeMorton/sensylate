@@ -47,7 +47,9 @@ sensylate/                           # Root: Institutional-grade platform
 │   ├── outputs/fundamental_analysis/ # Institutional-quality analysis reports
 │   ├── images/tradingview/         # Financial visualization assets
 │   └── raw/financial_data/         # Market data with validation
-├── configs/                        # Advanced Configuration Management
+├── config/                         # Advanced Configuration Management
+│   ├── services/                  # Service-specific configurations
+│   ├── pipelines/                 # Data pipeline configurations
 │   ├── environments/              # Environment-specific configurations
 │   └── shared/                    # Cross-environment shared settings
 └── tests/                         # Comprehensive Testing Infrastructure (10 files, 7.8/10)
@@ -97,7 +99,7 @@ pip install -r requirements.txt        # Core data science stack
 pip install -r requirements-dev.txt    # Development & testing tools
 
 # Execute sophisticated analysis pipelines
-python scripts/comprehensive_trade_analysis.py --config configs/prod.yaml
+python scripts/comprehensive_trade_analysis.py --config config/environments/prod.yaml
 python scripts/dashboard_generator.py --mode plotly --theme institutional
 
 # Quality validation (pre-commit pipeline)

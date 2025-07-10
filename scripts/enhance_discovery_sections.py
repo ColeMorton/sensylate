@@ -128,17 +128,17 @@ def generate_discovery_insights(
         growth_status = (
             "growth"
             if revenue_growth > 0.05
-            else "slow growth"
-            if revenue_growth > 0
-            else "declining"
+            else "slow growth" if revenue_growth > 0 else "declining"
         )
 
         insights["initial_observations"] = [
             f"Company shows {growth_status} with {revenue_growth:.1%} revenue growth",
             f"Financial performance indicates {profit_status} operations",
-            f"ROE of {roe:.1%} reflects capital efficiency"
-            if roe
-            else "ROE calculation requires additional analysis",
+            (
+                f"ROE of {roe:.1%} reflects capital efficiency"
+                if roe
+                else "ROE calculation requires additional analysis"
+            ),
         ]
 
         insights["data_gaps_identified"] = [
@@ -157,7 +157,7 @@ def generate_discovery_insights(
 
 
 def calculate_source_reliability_scores(
-    cli_service_health: Dict[str, Any]
+    cli_service_health: Dict[str, Any],
 ) -> Dict[str, float]:
     """
     Calculate source reliability scores for each CLI service

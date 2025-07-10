@@ -3,9 +3,9 @@
 Feature engineering script with comprehensive configuration support.
 
 Usage:
-    python scripts/feature_engineering.py --config configs/feature_engineering.yaml
+    python scripts/feature_engineering.py --config config/pipelines/feature_engineering.yaml
     python scripts/feature_engineering.py \\
-        --config configs/feature_engineering.yaml --env prod
+        --config config/pipelines/feature_engineering.yaml --env prod
 """
 
 import argparse

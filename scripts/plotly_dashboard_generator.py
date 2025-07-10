@@ -180,9 +180,9 @@ class PlotlyDashboardGenerator:
                 "x": 0.375,
                 "title": "Total Return",
                 "value": f"{getattr(metrics, 'total_return', 0):+.1f}%",
-                "color": "#26c6da"
-                if getattr(metrics, "total_return", 0) >= 0
-                else "#ff7043",
+                "color": (
+                    "#26c6da" if getattr(metrics, "total_return", 0) >= 0 else "#ff7043"
+                ),
             },
             {
                 "x": 0.625,
@@ -392,9 +392,11 @@ class PlotlyDashboardGenerator:
 
         performance_colors = self.theme_mapper.get_performance_colors_mapping()
         colors = [
-            performance_colors["positive"]
-            if ret >= 0
-            else performance_colors["negative"]
+            (
+                performance_colors["positive"]
+                if ret >= 0
+                else performance_colors["negative"]
+            )
             for ret in returns
         ]
 
@@ -495,9 +497,11 @@ class PlotlyDashboardGenerator:
         # Color by performance
         performance_colors = self.theme_mapper.get_performance_colors_mapping()
         colors = [
-            performance_colors["positive"]
-            if ret >= 0
-            else performance_colors["negative"]
+            (
+                performance_colors["positive"]
+                if ret >= 0
+                else performance_colors["negative"]
+            )
             for ret in returns
         ]
 
@@ -632,7 +636,7 @@ if __name__ == "__main__":
     parser.add_argument("--input", required=True, help="Path to input markdown file")
     parser.add_argument(
         "--config",
-        default="configs/dashboard_generation.yaml",
+        default="config/pipelines/dashboard_generation.yaml",
         help="Configuration file",
     )
     parser.add_argument(

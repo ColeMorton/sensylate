@@ -261,11 +261,11 @@ class SECEDGARCLl(BaseFinancialCLI):
                 # Gather comprehensive data
                 analysis = {
                     "ticker": ticker,
-                    "analysis_timestamp": service.search_company_by_ticker(ticker).get(
-                        "timestamp"
-                    )
-                    if service.search_company_by_ticker(ticker)
-                    else None,
+                    "analysis_timestamp": (
+                        service.search_company_by_ticker(ticker).get("timestamp")
+                        if service.search_company_by_ticker(ticker)
+                        else None
+                    ),
                     "company_info": service.search_company_by_ticker(ticker),
                     "financial_statements": service.get_financial_statements(ticker),
                     "sec_metrics": service.get_sec_metrics(ticker),
@@ -277,9 +277,9 @@ class SECEDGARCLl(BaseFinancialCLI):
                     for filing_type in filing_types.split(","):
                         filing_type = filing_type.strip()
                         try:
-                            analysis["filings"][
-                                filing_type
-                            ] = service.get_company_filings(ticker, filing_type)
+                            analysis["filings"][filing_type] = (
+                                service.get_company_filings(ticker, filing_type)
+                            )
                         except Exception as e:
                             analysis["filings"][filing_type] = {"error": str(e)}
 

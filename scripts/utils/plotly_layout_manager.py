@@ -231,9 +231,11 @@ class PlotlyLayoutManager:
         # Apply global theme
         fig.update_layout(
             title={
-                "text": f"<b>{title}</b><br><sub>{subtitle}</sub>"
-                if subtitle
-                else f"<b>{title}</b>",
+                "text": (
+                    f"<b>{title}</b><br><sub>{subtitle}</sub>"
+                    if subtitle
+                    else f"<b>{title}</b>"
+                ),
                 "x": 0.5,
                 "xanchor": "center",
                 "font": {

@@ -4,185 +4,223 @@ Comprehensive Trade History Analysis Generator
 
 Generates all three required trade analysis reports:
 1. Internal Trading Report (YTD performance analysis)
-2. Live Signals Monitor (current open positions)  
+2. Live Signals Monitor (current open positions)
 3. Historical Performance Report (closed positions analysis)
 
 Usage:
     python scripts/comprehensive_trade_analysis.py --date YYYYMMDD
 """
 
-import pandas as pd
-import numpy as np
+import argparse
 import json
+import logging
 from datetime import datetime, timedelta
 from pathlib import Path
-import argparse
-import logging
-from typing import Dict, List, Any, Tuple
+from typing import Any, Dict, List, Tuple
+
+import numpy as np
+import pandas as pd
 from scipy import stats
 
 # Configure logging
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+)
 logger = logging.getLogger(__name__)
 
 
 class ComprehensiveTradeAnalyzer:
     """Comprehensive analyzer for trade history data."""
-    
+
     def __init__(self, csv_path: str, output_dir: str):
         """Initialize analyzer with data path and output directory."""
         self.csv_path = Path(csv_path)
         self.output_dir = Path(output_dir)
         self.output_dir.mkdir(parents=True, exist_ok=True)
-        
+
         # Load and validate data
         self.df = pd.read_csv(self.csv_path)
         self._validate_data()
         self._prepare_analysis_data()
-        
+
     def _validate_data(self):
         """Validate the loaded trade data."""
         required_columns = [
-            'Position_UUID', 'Ticker', 'Strategy_Type', 'Entry_Timestamp', 
-            'Direction', 'Status', 'Return', 'Duration_Days', 'Trade_Quality',
-            'Exit_Efficiency_Fixed', 'Max_Favourable_Excursion', 'Max_Adverse_Excursion'
+            "Position_UUID",
+            "Ticker",
+            "Strategy_Type",
+            "Entry_Timestamp",
+            "Direction",
+            "Status",
+            "Return",
+            "Duration_Days",
+            "Trade_Quality",
+            "Exit_Efficiency_Fixed",
+            "Max_Favourable_Excursion",
+            "Max_Adverse_Excursion",
         ]
-        
+
         missing_cols = [col for col in required_columns if col not in self.df.columns]
         if missing_cols:
             raise ValueError(f"Missing required columns: {missing_cols}")
-            
+
         logger.info(f"Data validation passed. {len(self.df)} total trades loaded.")
-        
+
     def _prepare_analysis_data(self):
         """Prepare data splits for analysis."""
-        self.closed_df = self.df[self.df['Status'] == 'Closed'].copy()
-        self.open_df = self.df[self.df['Status'] == 'Open'].copy()
-        
+        self.closed_df = self.df[self.df["Status"] == "Closed"].copy()
+        self.open_df = self.df[self.df["Status"] == "Open"].copy()
+
         # Convert timestamps
-        self.df['Entry_Date'] = pd.to_datetime(self.df['Entry_Timestamp']).dt.date
-        self.closed_df['Entry_Date'] = pd.to_datetime(self.closed_df['Entry_Timestamp']).dt.date
-        self.open_df['Entry_Date'] = pd.to_datetime(self.open_df['Entry_Timestamp']).dt.date
-        
-        logger.info(f"Data prepared: {len(self.closed_df)} closed, {len(self.open_df)} open trades")
-        
+        self.df["Entry_Date"] = pd.to_datetime(self.df["Entry_Timestamp"]).dt.date
+        self.closed_df["Entry_Date"] = pd.to_datetime(
+            self.closed_df["Entry_Timestamp"]
+        ).dt.date
+        self.open_df["Entry_Date"] = pd.to_datetime(
+            self.open_df["Entry_Timestamp"]
+        ).dt.date
+
+        logger.info(
+            f"Data prepared: {len(self.closed_df)} closed, {len(self.open_df)} open trades"
+        )
+
     def calculate_performance_metrics(self) -> Dict[str, Any]:
         """Calculate comprehensive performance metrics."""
         metrics = {}
-        
+
         # Basic performance
         if len(self.closed_df) > 0:
-            metrics['total_trades'] = len(self.closed_df)
-            metrics['win_rate'] = (self.closed_df['Return'] > 0).mean()
-            metrics['total_return'] = self.closed_df['Return'].sum()
-            metrics['avg_return'] = self.closed_df['Return'].mean()
-            metrics['best_trade'] = self.closed_df['Return'].max()
-            metrics['worst_trade'] = self.closed_df['Return'].min()
-            
+            metrics["total_trades"] = len(self.closed_df)
+            metrics["win_rate"] = (self.closed_df["Return"] > 0).mean()
+            metrics["total_return"] = self.closed_df["Return"].sum()
+            metrics["avg_return"] = self.closed_df["Return"].mean()
+            metrics["best_trade"] = self.closed_df["Return"].max()
+            metrics["worst_trade"] = self.closed_df["Return"].min()
+
             # Win/loss analysis
-            winners = self.closed_df[self.closed_df['Return'] > 0]
-            losers = self.closed_df[self.closed_df['Return'] <= 0]
-            
-            metrics['avg_winner'] = winners['Return'].mean() if len(winners) > 0 else 0
-            metrics['avg_loser'] = losers['Return'].mean() if len(losers) > 0 else 0
-            metrics['profit_factor'] = abs(winners['Return'].sum() / losers['Return'].sum()) if len(losers) > 0 and losers['Return'].sum() != 0 else float('inf')
-            
+            winners = self.closed_df[self.closed_df["Return"] > 0]
+            losers = self.closed_df[self.closed_df["Return"] <= 0]
+
+            metrics["avg_winner"] = winners["Return"].mean() if len(winners) > 0 else 0
+            metrics["avg_loser"] = losers["Return"].mean() if len(losers) > 0 else 0
+            metrics["profit_factor"] = (
+                abs(winners["Return"].sum() / losers["Return"].sum())
+                if len(losers) > 0 and losers["Return"].sum() != 0
+                else float("inf")
+            )
+
             # Duration analysis
-            metrics['avg_duration'] = self.closed_df['Duration_Days'].mean()
-            
+            metrics["avg_duration"] = self.closed_df["Duration_Days"].mean()
+
             # Exit efficiency
-            metrics['avg_exit_efficiency'] = self.closed_df['Exit_Efficiency_Fixed'].mean()
-            metrics['poor_exits'] = (self.closed_df['Exit_Efficiency_Fixed'] < 0).sum()
-            
+            metrics["avg_exit_efficiency"] = self.closed_df[
+                "Exit_Efficiency_Fixed"
+            ].mean()
+            metrics["poor_exits"] = (self.closed_df["Exit_Efficiency_Fixed"] < 0).sum()
+
             # Statistical significance
-            metrics['win_rate_ci'] = self._calculate_confidence_interval(metrics['win_rate'], len(self.closed_df))
-            
+            metrics["win_rate_ci"] = self._calculate_confidence_interval(
+                metrics["win_rate"], len(self.closed_df)
+            )
+
         # Open positions
-        metrics['open_positions'] = len(self.open_df)
+        metrics["open_positions"] = len(self.open_df)
         if len(self.open_df) > 0:
-            metrics['avg_days_held'] = self.open_df['Days_Since_Entry'].mean()
-            metrics['best_mfe'] = self.open_df['Max_Favourable_Excursion'].max()
-        
+            metrics["avg_days_held"] = self.open_df["Days_Since_Entry"].mean()
+            metrics["best_mfe"] = self.open_df["Max_Favourable_Excursion"].max()
+
         return metrics
-        
-    def _calculate_confidence_interval(self, proportion: float, n: int, confidence: float = 0.95) -> Tuple[float, float]:
+
+    def _calculate_confidence_interval(
+        self, proportion: float, n: int, confidence: float = 0.95
+    ) -> Tuple[float, float]:
         """Calculate confidence interval for proportion."""
         z_score = stats.norm.ppf((1 + confidence) / 2)
         margin_error = z_score * np.sqrt((proportion * (1 - proportion)) / n)
         return (max(0, proportion - margin_error), min(1, proportion + margin_error))
-        
+
     def analyze_quality_distribution(self) -> Dict[str, Any]:
         """Analyze trade quality distribution."""
         if len(self.closed_df) == 0:
             return {}
-            
+
         quality_analysis = {}
-        
-        for quality in self.closed_df['Trade_Quality'].unique():
-            quality_trades = self.closed_df[self.closed_df['Trade_Quality'] == quality]
+
+        for quality in self.closed_df["Trade_Quality"].unique():
+            quality_trades = self.closed_df[self.closed_df["Trade_Quality"] == quality]
             quality_analysis[quality] = {
-                'count': len(quality_trades),
-                'percentage': len(quality_trades) / len(self.closed_df) * 100,
-                'win_rate': (quality_trades['Return'] > 0).mean() if len(quality_trades) > 0 else 0,
-                'avg_return': quality_trades['Return'].mean() if len(quality_trades) > 0 else 0,
-                'total_return': quality_trades['Return'].sum() if len(quality_trades) > 0 else 0
+                "count": len(quality_trades),
+                "percentage": len(quality_trades) / len(self.closed_df) * 100,
+                "win_rate": (
+                    (quality_trades["Return"] > 0).mean()
+                    if len(quality_trades) > 0
+                    else 0
+                ),
+                "avg_return": (
+                    quality_trades["Return"].mean() if len(quality_trades) > 0 else 0
+                ),
+                "total_return": (
+                    quality_trades["Return"].sum() if len(quality_trades) > 0 else 0
+                ),
             }
-            
+
         return quality_analysis
-        
+
     def analyze_strategy_performance(self) -> Dict[str, Any]:
         """Analyze performance by strategy type."""
         if len(self.closed_df) == 0:
             return {}
-            
+
         strategy_analysis = {}
-        
-        for strategy in self.closed_df['Strategy_Type'].unique():
-            strategy_trades = self.closed_df[self.closed_df['Strategy_Type'] == strategy]
+
+        for strategy in self.closed_df["Strategy_Type"].unique():
+            strategy_trades = self.closed_df[
+                self.closed_df["Strategy_Type"] == strategy
+            ]
             strategy_analysis[strategy] = {
-                'count': len(strategy_trades),
-                'win_rate': (strategy_trades['Return'] > 0).mean(),
-                'avg_return': strategy_trades['Return'].mean(),
-                'total_return': strategy_trades['Return'].sum(),
-                'avg_duration': strategy_trades['Duration_Days'].mean()
+                "count": len(strategy_trades),
+                "win_rate": (strategy_trades["Return"] > 0).mean(),
+                "avg_return": strategy_trades["Return"].mean(),
+                "total_return": strategy_trades["Return"].sum(),
+                "avg_duration": strategy_trades["Duration_Days"].mean(),
             }
-            
+
         return strategy_analysis
-        
+
     def analyze_open_positions(self) -> List[Dict[str, Any]]:
         """Analyze current open positions."""
         if len(self.open_df) == 0:
             return []
-            
+
         positions = []
-        
+
         for _, row in self.open_df.iterrows():
             position = {
-                'ticker': row['Ticker'],
-                'strategy': f"{row['Strategy_Type']} {row['Short_Window']}-{row['Long_Window']}",
-                'entry_date': row['Entry_Timestamp'][:10],  # YYYY-MM-DD
-                'days_held': row['Days_Since_Entry'],
-                'mfe': row['Max_Favourable_Excursion'],
-                'mae': row['Max_Adverse_Excursion'],
-                'mfe_mae_ratio': row.get('MFE_MAE_Ratio', 0),
-                'entry_price': row.get('Avg_Entry_Price', 0)
+                "ticker": row["Ticker"],
+                "strategy": f"{row['Strategy_Type']} {row['Short_Window']}-{row['Long_Window']}",
+                "entry_date": row["Entry_Timestamp"][:10],  # YYYY-MM-DD
+                "days_held": row["Days_Since_Entry"],
+                "mfe": row["Max_Favourable_Excursion"],
+                "mae": row["Max_Adverse_Excursion"],
+                "mfe_mae_ratio": row.get("MFE_MAE_Ratio", 0),
+                "entry_price": row.get("Avg_Entry_Price", 0),
             }
             positions.append(position)
-            
+
         # Sort by MFE descending
-        positions.sort(key=lambda x: x['mfe'], reverse=True)
+        positions.sort(key=lambda x: x["mfe"], reverse=True)
         return positions
-        
+
     def generate_internal_trading_report(self, date_str: str) -> str:
         """Generate the Internal Trading Report."""
         metrics = self.calculate_performance_metrics()
         quality_analysis = self.analyze_quality_distribution()
         strategy_analysis = self.analyze_strategy_performance()
-        
+
         # Calculate YTD performance vs SPY (using approximate market performance)
         spy_ytd_return = 0.0138  # 1.38% as market benchmark
-        alpha = metrics.get('total_return', 0) - spy_ytd_return
-        
+        alpha = metrics.get("total_return", 0) - spy_ytd_return
+
         report = f"""# Internal Trading System Analysis - YTD 2025
 **For: Trading Team & Internal Operations | Classification: Internal Use Only**
 *Generated: {datetime.now().strftime('%B %d, %Y')} | Next Review: {(datetime.now() + timedelta(days=19)).strftime('%B %d, %Y')}*
@@ -306,15 +344,17 @@ class ComprehensiveTradeAnalyzer:
 **Distribution: Trading Team, Risk Management, Senior Leadership**
 """
         return report
-        
+
     def generate_live_signals_monitor(self, date_str: str) -> str:
         """Generate the Live Signals Monitor report."""
         metrics = self.calculate_performance_metrics()
         open_positions = self.analyze_open_positions()
-        
+
         # Get top performers
-        top_performers = open_positions[:3] if len(open_positions) >= 3 else open_positions
-        
+        top_performers = (
+            open_positions[:3] if len(open_positions) >= 3 else open_positions
+        )
+
         report = f"""# Live Signals Monitor - Active Positions
 **Real-Time Performance Tracking | Updated: {datetime.now().strftime('%B %d, %Y')}**
 
@@ -350,7 +390,7 @@ class ComprehensiveTradeAnalyzer:
 
         # Add top performers
         for i, position in enumerate(top_performers, 1):
-            medal = ["🥇", "🥈", "🥉"][i-1] if i <= 3 else f"{i}."
+            medal = ["🥇", "🥈", "🥉"][i - 1] if i <= 3 else f"{i}."
             report += f"""
 ### {medal} {position['ticker']} - **+{position['mfe']:.1%} Unrealized MFE**
 - **Signal Type**: {position['strategy']} crossover
@@ -371,10 +411,22 @@ class ComprehensiveTradeAnalyzer:
 
         # Add all positions
         for position in open_positions:
-            status_icon = "🟢" if position['mfe'] > 0.10 else "🟡" if position['mfe'] > 0.05 else "🔴"
-            status_text = "Strong" if position['mfe'] > 0.10 else "Developing" if position['mfe'] > 0.05 else "Watch"
-            watch_level = "🔥 Excellent" if position['mfe'] > 0.15 else "📊 Developing" if position['mfe'] > 0.05 else "⚠️ Monitor"
-            
+            status_icon = (
+                "🟢"
+                if position["mfe"] > 0.10
+                else "🟡" if position["mfe"] > 0.05 else "🔴"
+            )
+            status_text = (
+                "Strong"
+                if position["mfe"] > 0.10
+                else "Developing" if position["mfe"] > 0.05 else "Watch"
+            )
+            watch_level = (
+                "🔥 Excellent"
+                if position["mfe"] > 0.15
+                else "📊 Developing" if position["mfe"] > 0.05 else "⚠️ Monitor"
+            )
+
             report += f"\n| **{position['ticker']}** | {position['strategy']} | {position['entry_date']} | {position['days_held']}d | {status_icon} {status_text} | +{position['mfe']:.1%} | -{position['mae']:.1%} | {watch_level} |"
 
         report += f"""
@@ -388,9 +440,9 @@ class ComprehensiveTradeAnalyzer:
 
         # Add strong momentum signals
         for p in open_positions:
-            if p['mfe'] > 0.10:
+            if p["mfe"] > 0.10:
                 report += f"- **{p['ticker']}**: {p['mfe']:.1%} MFE - Strong momentum signal with sustained performance\n"
-        
+
         report += """
 
 ### Developing Positions ({len([p for p in open_positions if 0.05 <= p['mfe'] <= 0.10])} positions)
@@ -402,9 +454,9 @@ class ComprehensiveTradeAnalyzer:
 
         # Add watch list positions
         for p in open_positions:
-            if p['mfe'] < 0.05:
+            if p["mfe"] < 0.05:
                 report += f"- **{p['ticker']}**: {p['mfe']:+.1%} MFE - Requires monitoring for risk management\n"
-        
+
         report += """
 
 ---
@@ -430,10 +482,12 @@ class ComprehensiveTradeAnalyzer:
 """
 
         # Add high priority monitoring positions
-        priority_positions = [p for p in open_positions if p['mfe'] < 0 or p['mae'] > 0.08][:3]
+        priority_positions = [
+            p for p in open_positions if p["mfe"] < 0 or p["mae"] > 0.08
+        ][:3]
         for i, p in enumerate(priority_positions):
             report += f"{i+1}. **{p['ticker']}**: {p['mfe']:+.1%} MFE - Requires defensive evaluation\n"
-        
+
         report += """
 
 ### Medium Priority
@@ -455,24 +509,24 @@ class ComprehensiveTradeAnalyzer:
 *This monitor tracks live signal performance for active positions. Focus on risk management and systematic position evaluation for optimal outcomes. For historical analysis and pattern recognition, see our Historical Performance Report.*
 """
         return report
-        
+
     def generate_historical_performance_report(self, date_str: str) -> str:
         """Generate the Historical Performance Report."""
         metrics = self.calculate_performance_metrics()
         quality_analysis = self.analyze_quality_distribution()
         strategy_analysis = self.analyze_strategy_performance()
-        
+
         # Get best and worst trades
         if len(self.closed_df) > 0:
-            best_trade = self.closed_df.loc[self.closed_df['Return'].idxmax()]
-            worst_trade = self.closed_df.loc[self.closed_df['Return'].idxmin()]
-            
+            best_trade = self.closed_df.loc[self.closed_df["Return"].idxmax()]
+            worst_trade = self.closed_df.loc[self.closed_df["Return"].idxmin()]
+
             # Sort trades by return for ranking
-            ranked_trades = self.closed_df.sort_values('Return', ascending=False)
+            ranked_trades = self.closed_df.sort_values("Return", ascending=False)
         else:
             best_trade = worst_trade = None
             ranked_trades = pd.DataFrame()
-        
+
         report = f"""# Historical Trading Performance - Closed Positions
 **Completed Signals Analysis | Year-to-Date 2025**
 
@@ -508,7 +562,7 @@ class ComprehensiveTradeAnalyzer:
         # Add top 3 trades
         if len(ranked_trades) > 0:
             for i, (_, trade) in enumerate(ranked_trades.head(3).iterrows(), 1):
-                medal = ["🥇", "🥈", "🥉"][i-1]
+                medal = ["🥇", "🥈", "🥉"][i - 1]
                 report += f"""
 ### {medal} {trade['Ticker']} - **{trade['Return']:+.2%}**
 - **Strategy**: {trade['Strategy_Type']} {trade['Short_Window']}-{trade['Long_Window']} crossover
@@ -530,11 +584,19 @@ class ComprehensiveTradeAnalyzer:
         # Add all trades ranked by performance
         if len(ranked_trades) > 0:
             for i, (_, trade) in enumerate(ranked_trades.iterrows(), 1):
-                entry_date = trade['Entry_Timestamp'][:10]
-                exit_date = trade['Exit_Timestamp'][:10] if pd.notna(trade['Exit_Timestamp']) else 'Open'
+                entry_date = trade["Entry_Timestamp"][:10]
+                exit_date = (
+                    trade["Exit_Timestamp"][:10]
+                    if pd.notna(trade["Exit_Timestamp"])
+                    else "Open"
+                )
                 strategy = f"{trade['Strategy_Type']} {trade['Short_Window']}-{trade['Long_Window']}"
-                return_str = f"**{trade['Return']:+.2%}**" if i <= 3 else f"{trade['Return']:+.2%}"
-                
+                return_str = (
+                    f"**{trade['Return']:+.2%}**"
+                    if i <= 3
+                    else f"{trade['Return']:+.2%}"
+                )
+
                 report += f"\n| {i} | **{trade['Ticker']}** | {strategy} | {entry_date} | {exit_date} | {return_str} | {trade['Duration_Days']:.0f}d | {trade['Trade_Quality']} |"
 
         report += f"""
@@ -562,9 +624,11 @@ class ComprehensiveTradeAnalyzer:
 
         # Add quality analysis
         for quality, data in quality_analysis.items():
-            win_rate_display = f"{data['win_rate']:.1%}" if data['count'] > 0 else "N/A"
-            avg_return_display = f"{data['avg_return']:+.2%}" if data['count'] > 0 else "N/A"
-            
+            win_rate_display = f"{data['win_rate']:.1%}" if data["count"] > 0 else "N/A"
+            avg_return_display = (
+                f"{data['avg_return']:+.2%}" if data["count"] > 0 else "N/A"
+            )
+
             report += f"""
 ### {quality} ({data['count']} trades - {data['percentage']:.1f}%)
 - **Win Rate**: {win_rate_display}
@@ -585,7 +649,7 @@ class ComprehensiveTradeAnalyzer:
 
 ### Strategy Performance
 """
-        
+
         # Add strategy performance details
         for strategy, data in strategy_analysis.items():
             report += f"""
@@ -596,7 +660,7 @@ class ComprehensiveTradeAnalyzer:
 - **Total Contribution**: {data['total_return']:+.2%}
 - **Average Duration**: {data['avg_duration']:.1f} days
 """
-        
+
         report += """
 
 ---
@@ -633,34 +697,34 @@ The historical performance of {metrics.get('total_trades', 0)} closed trades rev
 *This historical analysis provides foundation for systematic improvements to signal generation and execution. The patterns identified here guide optimization of the complete trading system.*
 """
         return report
-        
+
     def generate_all_reports(self, date_str: str) -> Dict[str, str]:
         """Generate all three reports and save to files."""
         reports = {}
-        
+
         # Generate reports
-        reports['internal'] = self.generate_internal_trading_report(date_str)
-        reports['live'] = self.generate_live_signals_monitor(date_str)
-        reports['historical'] = self.generate_historical_performance_report(date_str)
-        
+        reports["internal"] = self.generate_internal_trading_report(date_str)
+        reports["live"] = self.generate_live_signals_monitor(date_str)
+        reports["historical"] = self.generate_historical_performance_report(date_str)
+
         # Save reports
         filenames = {
-            'internal': f'INTERNAL_TRADING_REPORT_YTD_{date_str}.md',
-            'live': f'LIVE_SIGNALS_MONITOR_{date_str}.md',
-            'historical': f'HISTORICAL_PERFORMANCE_REPORT_{date_str}.md'
+            "internal": f"INTERNAL_TRADING_REPORT_YTD_{date_str}.md",
+            "live": f"LIVE_SIGNALS_MONITOR_{date_str}.md",
+            "historical": f"HISTORICAL_PERFORMANCE_REPORT_{date_str}.md",
         }
-        
+
         saved_files = {}
         for report_type, content in reports.items():
             filename = filenames[report_type]
             filepath = self.output_dir / filename
-            
-            with open(filepath, 'w', encoding='utf-8') as f:
+
+            with open(filepath, "w", encoding="utf-8") as f:
                 f.write(content)
-                
+
             saved_files[report_type] = filepath
             logger.info(f"Generated {report_type} report: {filepath}")
-            
+
         return saved_files
 
 
@@ -668,47 +732,51 @@ def main():
     """Main execution function."""
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
-        '--date',
-        default=datetime.now().strftime('%Y%m%d'),
-        help='Date in YYYYMMDD format (default: today)'
+        "--date",
+        default=datetime.now().strftime("%Y%m%d"),
+        help="Date in YYYYMMDD format (default: today)",
     )
     parser.add_argument(
-        '--csv-path',
-        default='data/raw/trade_history/20250626.csv',
-        help='Path to trade history CSV file'
+        "--csv-path",
+        default="data/raw/trade_history/20250626.csv",
+        help="Path to trade history CSV file",
     )
     parser.add_argument(
-        '--output-dir',
-        default='data/outputs/analysis_trade_history',
-        help='Output directory for reports'
+        "--output-dir",
+        default="data/outputs/analysis_trade_history",
+        help="Output directory for reports",
     )
-    
+
     args = parser.parse_args()
-    
+
     try:
         # Initialize analyzer
         analyzer = ComprehensiveTradeAnalyzer(args.csv_path, args.output_dir)
-        
+
         # Generate all reports
         saved_files = analyzer.generate_all_reports(args.date)
-        
-        print(f"✅ Successfully generated {len(saved_files)} comprehensive trade analysis reports:")
+
+        print(
+            f"✅ Successfully generated {len(saved_files)} comprehensive trade analysis reports:"
+        )
         for report_type, filepath in saved_files.items():
             print(f"   {report_type.title()}: {filepath}")
-            
+
         # Generate summary statistics
         metrics = analyzer.calculate_performance_metrics()
         print(f"\n📊 Key Metrics Summary:")
-        print(f"   Total Trades: {metrics.get('total_trades', 0)} closed, {metrics.get('open_positions', 0)} open")
+        print(
+            f"   Total Trades: {metrics.get('total_trades', 0)} closed, {metrics.get('open_positions', 0)} open"
+        )
         print(f"   Win Rate: {metrics.get('win_rate', 0):.1%}")
         print(f"   Total Return: {metrics.get('total_return', 0):.2%}")
         print(f"   Profit Factor: {metrics.get('profit_factor', 0):.2f}")
         print(f"   Exit Efficiency: {metrics.get('avg_exit_efficiency', 0):.2f}")
-        
+
     except Exception as e:
         logger.error(f"Analysis failed: {e}")
         raise
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

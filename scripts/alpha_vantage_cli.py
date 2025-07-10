@@ -323,9 +323,9 @@ class AlphaVantageCLI(BaseFinancialCLI):
                     for indicator in technical_indicators.split(","):
                         indicator = indicator.strip().upper()
                         try:
-                            analysis["technical_indicators"][
-                                indicator
-                            ] = service.get_technical_indicator(ticker, indicator)
+                            analysis["technical_indicators"][indicator] = (
+                                service.get_technical_indicator(ticker, indicator)
+                            )
                         except Exception as e:
                             analysis["technical_indicators"][indicator] = {
                                 "error": str(e)
