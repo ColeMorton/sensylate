@@ -1,5 +1,1 @@
-<<<<<<< HEAD
-{"timestamp": "2025-07-08T17:07:30.911738", "data": {"bitcoin": {"usd": 108316, "usd_market_cap": 2154611433310.6343, "usd_24h_vol": 26183886849.09355, "usd_24h_change": -0.4260557652343351}, "timestamp": "2025-07-08T17:07:30.911704"}}
-=======
-{"timestamp": "2025-07-09T16:03:07.338432", "data": {"bitcoin": {"usd": 108794, "usd_market_cap": 2163787479370.159, "usd_24h_vol": 19801151747.529224, "usd_24h_change": 0.5384698849661327}, "timestamp": "2025-07-09T16:03:07.338395"}}
->>>>>>> 2945f18 (Add PLTR fundamental analysis and enhance platform with MCP integration)
+{"timestamp": "2025-07-10T20:04:14.908088", "data": {"bitcoin": {"usd": 111078, "usd_market_cap": 2209597603552.1753, "usd_24h_vol": 40067844998.74142, "usd_24h_change": 2.141189817112648}, "timestamp": "2025-07-10T20:04:14.908054"}}
