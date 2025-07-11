@@ -128,7 +128,9 @@ def generate_discovery_insights(
         growth_status = (
             "growth"
             if revenue_growth > 0.05
-            else "slow growth" if revenue_growth > 0 else "declining"
+            else "slow growth"
+            if revenue_growth > 0
+            else "declining"
         )
 
         insights["initial_observations"] = [

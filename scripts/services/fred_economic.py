@@ -273,7 +273,9 @@ class FREDEconomicService(BaseFinancialService):
                 trend = (
                     "increasing"
                     if slope > 0
-                    else "decreasing" if slope < 0 else "stable"
+                    else "decreasing"
+                    if slope < 0
+                    else "stable"
                 )
             else:
                 trend = "insufficient_data"

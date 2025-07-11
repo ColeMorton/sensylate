@@ -73,7 +73,7 @@ class CacheManager:
     def _get_cache_key(self, server_name: str, tool_name: str, **kwargs) -> str:
         """Generate a unique cache key for the request"""
         key_data = f"{server_name}_{tool_name}_{json.dumps(kwargs, sort_keys=True)}"
-        return hashlib.md5(key_data.encode()).hexdigest()
+        return hashlib.md5(key_data.encode(), usedforsecurity=False).hexdigest()
 
     def _get_file_cache_path(self, cache_key: str) -> Path:
         """Get file cache path for the given key"""
@@ -526,9 +526,9 @@ class MCPDataAccess:
             analysis["yahoo_finance"]["market_data"] = self.get_market_data(
                 ticker, "1y"
             )
-            analysis["yahoo_finance"]["financial_statements"] = (
-                self.get_financial_statements(ticker)
-            )
+            analysis["yahoo_finance"][
+                "financial_statements"
+            ] = self.get_financial_statements(ticker)
             analysis["data_sources"].append("yahoo_finance")
             logger.info(f"Yahoo Finance data retrieved for {ticker}")
         except Exception as e:
@@ -538,9 +538,9 @@ class MCPDataAccess:
         # SEC EDGAR Data
         try:
             analysis["sec_edgar"]["filings"] = self.get_company_filings(ticker, "10-K")
-            analysis["sec_edgar"]["financial_statements"] = (
-                self.get_edgar_financial_statements(ticker)
-            )
+            analysis["sec_edgar"][
+                "financial_statements"
+            ] = self.get_edgar_financial_statements(ticker)
             analysis["sec_edgar"]["metrics"] = self.get_sec_metrics(ticker)
             analysis["data_sources"].append("sec_edgar")
             logger.info(f"SEC EDGAR data retrieved for {ticker}")
@@ -562,9 +562,9 @@ class MCPDataAccess:
 
         # Existing Analysis
         try:
-            analysis["existing_analysis"]["fundamental"] = (
-                self.get_fundamental_analysis(ticker)
-            )
+            analysis["existing_analysis"][
+                "fundamental"
+            ] = self.get_fundamental_analysis(ticker)
             analysis["data_sources"].append("existing_analysis")
             logger.info(f"Existing analysis retrieved for {ticker}")
         except Exception as e:

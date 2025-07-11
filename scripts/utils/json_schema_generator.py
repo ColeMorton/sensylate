@@ -37,15 +37,15 @@ class JSONSchemaGenerator:
         """Generate all JSON schemas for chart types and data structures."""
         # Data structure schemas
         self.schemas["MonthlyPerformance"] = self._generate_monthly_performance_schema()
-        self.schemas["QualityDistribution"] = (
-            self._generate_quality_distribution_schema()
-        )
+        self.schemas[
+            "QualityDistribution"
+        ] = self._generate_quality_distribution_schema()
         self.schemas["TradeData"] = self._generate_trade_data_schema()
 
         # Chart configuration schemas
-        self.schemas["EnhancedMonthlyBars"] = (
-            self._generate_monthly_bars_config_schema()
-        )
+        self.schemas[
+            "EnhancedMonthlyBars"
+        ] = self._generate_monthly_bars_config_schema()
         self.schemas["EnhancedDonutChart"] = self._generate_donut_chart_config_schema()
         self.schemas["WaterfallChart"] = self._generate_waterfall_chart_config_schema()
         self.schemas["EnhancedScatter"] = self._generate_scatter_chart_config_schema()

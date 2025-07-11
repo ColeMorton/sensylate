@@ -370,9 +370,9 @@ class FundamentalAnalyzer:
             }
 
             # Calculate overall analysis confidence
-            analysis_result["analysis_confidence"] = (
-                self._calculate_analysis_confidence(analysis_result)
-            )
+            analysis_result[
+                "analysis_confidence"
+            ] = self._calculate_analysis_confidence(analysis_result)
 
             # Save analysis results
             self._save_analysis_results(analysis_result)
@@ -494,7 +494,9 @@ class FundamentalAnalyzer:
             "assessment": (
                 "Strong"
                 if strength_score > 0.7
-                else "Moderate" if strength_score > 0.4 else "Weak"
+                else "Moderate"
+                if strength_score > 0.4
+                else "Weak"
             ),
         }
 
@@ -610,7 +612,9 @@ class FundamentalAnalyzer:
             "financial_stability": (
                 "Low"
                 if risk_score > 0.7
-                else "Moderate" if risk_score > 0.4 else "High"
+                else "Moderate"
+                if risk_score > 0.4
+                else "High"
             ),
             "risk_score": round(risk_score, 3),
             "risk_factors": risk_factors,
