@@ -43,6 +43,8 @@ Use production CLI financial services for comprehensive multi-company sector val
 
 **Multi-Company Sector Validation:**
 - Multi-service CLI integration with price validation across all sector companies
+- **MANDATORY ETF Price Validation**: Current ETF prices must be collected and validated
+- **BLOCKING ETF Price Consistency**: ETF price vs fair value vs recommendation validation
 - Automatic cross-validation with confidence scoring and institutional-grade data quality assessment
 - Sector ETF composition and performance correlation verification
 
@@ -59,6 +61,8 @@ Use production CLI financial services for comprehensive multi-company sector val
 **CLI Validation Benefits:**
 - **Robust Multi-Company CLI Access**: Direct access to all 7 data sources across multiple sector companies
 - **Sector ETF Validation**: Automatic ETF composition and performance correlation verification
+- **MANDATORY ETF Price Validation**: Current ETF prices validated for accuracy and consistency
+- **BLOCKING Recommendation Consistency**: ETF price vs fair value vs recommendation validation
 - **GDP/Employment Validation**: Real-time macroeconomic data validation with sector correlation analysis
 - **Institutional-Grade Quality**: Advanced sector validation, caching optimization, and quality scoring (targeting >97%)
 - **Error Resilience**: Comprehensive error handling with graceful degradation and sector-wide reliability scoring
@@ -90,11 +94,14 @@ CLI-ENHANCED SECTOR DISCOVERY VALIDATION PROTOCOL:
    → **MANDATORY: Sector aggregates must be consistent across all synthesis references**
 
 2. Sector ETF Validation
+   → **MANDATORY ETF Price Validation**: Verify current ETF price is collected and accurate
+   → **BLOCKING ETF Price Consistency**: ETF price must be validated across all synthesis references
    → Verify sector ETF composition via FMP CLI: python fmp_cli.py etf {SECTOR_ETF} --env prod --output-format json
    → Validate ETF holdings match stated sector companies and weightings
    → Cross-check ETF performance correlation with individual sector companies
    → Verify sector ETF flows and sentiment consistency
    → Confidence threshold: 9.8/10 (allow ≤1% variance for ETF composition data)
+   → **BLOCKING**: Missing ETF prices prevent institutional certification
 
 3. GDP/Employment Data Integration Validation
    → Validate GDP indicators (GDP, GDPC1, A191RL1Q225SBEA) via FRED CLI
@@ -151,6 +158,8 @@ SECTOR ANALYSIS VALIDATION FRAMEWORK:
 ```
 SECTOR SYNTHESIS VALIDATION PROTOCOL:
 1. Investment Thesis Coherence
+   → **MANDATORY ETF Price vs Fair Value Validation**: Verify current ETF price positioning
+   → **BLOCKING Recommendation Consistency**: Validate BUY/SELL/HOLD aligns with price gap analysis
    → Validate sector thesis integration with GDP/employment context
    → Cross-check economic context consistency (GDP elasticity, employment β)
    → Verify risk-adjusted return calculations with economic cycle weighting
@@ -177,6 +186,13 @@ SECTOR SYNTHESIS VALIDATION PROTOCOL:
    → Verify VIX correlation and risk-on/off behavior analysis
    → Validate economic sensitivity comparison across sectors
    → Confidence threshold: 9.8/10 with multi-sector data consistency
+
+5. ETF Price vs Fair Value Recommendation Validation
+   → **CRITICAL**: Validate current ETF price accuracy and consistency
+   → **BLOCKING**: Verify recommendation aligns with ETF price vs fair value gap
+   → Cross-check fair value range calculations and methodology
+   → Validate price positioning logic and investment thesis consistency
+   → Confidence threshold: 9.8/10 with price-recommendation alignment validation
 ```
 
 ### Phase 4: Real-Time Data Consistency Validation
@@ -289,6 +305,9 @@ GATE 6 VALIDATION REQUIREMENTS:
       "confidence": "0.0-1.0"
     },
     "sector_etf_integrity": {
+      "etf_price_validation": "current_etf_price_accuracy_and_consistency_validation",
+      "etf_price_vs_fair_value_consistency": "etf_price_positioning_validation",
+      "recommendation_consistency": "buy_sell_hold_vs_price_gap_validation",
       "etf_composition_accuracy": "holdings_verification_score",
       "performance_correlation": "etf_vs_companies_correlation_validation",
       "flow_analysis_consistency": "etf_sentiment_data_validation",
@@ -367,6 +386,14 @@ GATE 6 VALIDATION REQUIREMENTS:
       "correlation_matrix_validation": "sector_correlation_accuracy",
       "vix_correlation_accuracy": "volatility_relationship_validation",
       "economic_sensitivity_comparison": "cross_sector_sensitivity_validation",
+      "confidence": "0.0-1.0"
+    },
+    "etf_price_recommendation_validation": {
+      "etf_price_accuracy": "current_etf_price_validation_score",
+      "etf_price_consistency": "cross_reference_etf_price_validation",
+      "fair_value_range_validation": "fair_value_calculation_accuracy",
+      "recommendation_alignment": "buy_sell_hold_vs_price_gap_consistency",
+      "price_positioning_logic": "etf_price_within_fair_value_range_validation",
       "confidence": "0.0-1.0"
     }
   },
@@ -452,9 +479,11 @@ GATE 6 VALIDATION REQUIREMENTS:
     "gdp_employment_integration_quality": "macroeconomic_integration_assessment",
     "multi_company_validation_success": "sector_wide_validation_score",
     "etf_consistency_validation": "etf_benchmark_validation_score",
+    "etf_price_validation_success": "current_etf_price_accuracy_and_consistency_score",
+    "recommendation_consistency_validation": "buy_sell_hold_vs_price_gap_alignment_score",
     "real_time_data_quality": "current_market_data_validation_score",
     "usage_safety_assessment": "decision_making_reliability_for_portfolio_allocation",
-    "blocking_issues": "array_of_critical_validation_failures",
+    "blocking_issues": "array_of_critical_validation_failures_including_etf_price_issues",
     "recommendations": "array_of_validation_improvement_recommendations"
   },
   "validation_metadata": {
@@ -509,6 +538,8 @@ GATE 6 VALIDATION REQUIREMENTS:
 
 4. **Phase 4: Real-Time Data Consistency**
    - Execute real-time validation across all sector companies
+   - **MANDATORY ETF Price Validation**: Verify current ETF price accuracy and consistency
+   - **BLOCKING Recommendation Consistency**: Validate BUY/SELL/HOLD aligns with price gaps
    - Verify current GDP/employment data accuracy
    - Validate economic indicators currency
    - Cross-check sector ETF real-time consistency
@@ -534,7 +565,7 @@ GATE 6 VALIDATION REQUIREMENTS:
 - **Error Handling**: Graceful degradation for individual company validation failures
 - **Quality Monitoring**: Real-time health assessment across sector and ETF validation
 
-**Integration with Sector DASV Framework**: This validation command serves as the final quality assurance checkpoint for the entire sector analysis ecosystem, ensuring institutional-quality reliability for sector allocation strategies through comprehensive multi-company validation, ETF consistency verification, and GDP/employment integration validation. Validates compliance with `/docs/sector_analysis_template.md` specification.
+**Integration with Sector DASV Framework**: This validation command serves as the final quality assurance checkpoint for the entire sector analysis ecosystem, ensuring institutional-quality reliability for sector allocation strategies through comprehensive multi-company validation, ETF consistency verification, and GDP/employment integration validation. Validates compliance with `./templates/analysis/sector_analysis_template.md` specification.
 
 **Author**: Cole Morton
 **Confidence**: [Validation confidence reflects comprehensive sector framework verification and institutional-quality standards]

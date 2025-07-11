@@ -12,7 +12,6 @@ Usage:
 """
 
 import argparse
-import json
 import logging
 from datetime import datetime, timedelta
 from pathlib import Path
@@ -401,7 +400,7 @@ class ComprehensiveTradeAnalyzer:
 - **MFE/MAE Ratio**: {position['mfe_mae_ratio']:.2f}
 """
 
-        report += f"""
+        report += """
 ---
 
 ## 📈 All Active Positions
@@ -414,17 +413,23 @@ class ComprehensiveTradeAnalyzer:
             status_icon = (
                 "🟢"
                 if position["mfe"] > 0.10
-                else "🟡" if position["mfe"] > 0.05 else "🔴"
+                else "🟡"
+                if position["mfe"] > 0.05
+                else "🔴"
             )
             status_text = (
                 "Strong"
                 if position["mfe"] > 0.10
-                else "Developing" if position["mfe"] > 0.05 else "Watch"
+                else "Developing"
+                if position["mfe"] > 0.05
+                else "Watch"
             )
             watch_level = (
                 "🔥 Excellent"
                 if position["mfe"] > 0.15
-                else "📊 Developing" if position["mfe"] > 0.05 else "⚠️ Monitor"
+                else "📊 Developing"
+                if position["mfe"] > 0.05
+                else "⚠️ Monitor"
             )
 
             report += f"\n| **{position['ticker']}** | {position['strategy']} | {position['entry_date']} | {position['days_held']}d | {status_icon} {status_text} | +{position['mfe']:.1%} | -{position['mae']:.1%} | {watch_level} |"
@@ -573,7 +578,7 @@ class ComprehensiveTradeAnalyzer:
 - **Analysis**: {"Excellent momentum capture" if trade['Trade_Quality'] == 'Excellent' else "Strong performance with good execution"}
 """
 
-        report += f"""
+        report += """
 ---
 
 ## 📈 Complete Trade History
@@ -764,7 +769,7 @@ def main():
 
         # Generate summary statistics
         metrics = analyzer.calculate_performance_metrics()
-        print(f"\n📊 Key Metrics Summary:")
+        print("\n📊 Key Metrics Summary:")
         print(
             f"   Total Trades: {metrics.get('total_trades', 0)} closed, {metrics.get('open_positions', 0)} open"
         )

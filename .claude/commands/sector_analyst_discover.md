@@ -98,6 +98,7 @@ Use the production CLI financial services for comprehensive multi-company sector
 
 **Comprehensive Sector Analysis:**
 - Multi-company CLI integration with price validation across all sector constituents
+- **MANDATORY: Current sector ETF price collection and validation**
 - Sector ETF composition analysis and performance correlation validation
 - Automatic cross-validation with confidence scoring across multiple companies
 - Integrated competitive intelligence, sector valuation metrics, and industry sentiment analysis
@@ -116,6 +117,7 @@ Use the production CLI financial services for comprehensive multi-company sector
 **Enhanced Sector Discovery Benefits:**
 - **Robust Multi-Company CLI Access**: Direct access to all 7 data sources across multiple sector companies
 - **Sector-Wide Price Validation**: Automatic cross-validation across all sector companies with aggregated confidence scoring
+- **MANDATORY ETF Price Collection**: Current sector ETF prices collected and validated for all analyses
 - **Sector Economic Context**: Real-time Fed policy impact on specific sectors and industry cyclical analysis
 - **Institutional-Grade Sector Quality**: Advanced sector validation, caching optimization, and sector-wide quality scoring (targeting >90%)
 - **Multi-Company Performance Optimization**: Production-grade caching and rate limiting optimized for sector analysis
@@ -156,7 +158,8 @@ Environment Configuration:
    → FOR EACH company in selected_sector_companies:
       → Yahoo Finance CLI: python yahoo_finance_cli.py analyze {company_ticker} --env prod --output-format json
       → Yahoo Finance CLI: python yahoo_finance_cli.py financials {company_ticker} --env prod --output-format json
-   → Sector ETF Analysis: python yahoo_finance_cli.py analyze {sector_etf} --env prod --output-format json
+   → **MANDATORY Sector ETF Price Collection**: python yahoo_finance_cli.py analyze {sector_etf} --env prod --output-format json
+   → **CRITICAL: ETF Price Validation**: Verify current ETF price is collected and accurate
    → Cross-Sector ETF Analysis: python yahoo_finance_cli.py analyze SPY XLK XLF XLI XLP XLU XLB XLE XLY XLV XLRE --env prod --output-format json
    → Historical Cross-Sector Data: python yahoo_finance_cli.py history SPY XLK XLF XLI XLP XLU XLB XLE XLY XLV XLRE --period 1y --env prod --output-format json
    → Multi-company integration: Sector overview, comparative financial metrics, and market data
@@ -411,6 +414,13 @@ CRITICAL MULTI-SOURCE VALIDATION PROTOCOL:
   },
   "sector_etf_data": {
     "primary_etf": "main_sector_etf_data_object",
+    "etf_current_price": "MANDATORY_current_etf_price_from_yahoo_finance",
+    "etf_price_validation": {
+      "price_collected": "boolean_etf_price_successfully_collected",
+      "price_accuracy": "confidence_score_0.0-1.0",
+      "data_freshness": "real_time_current_recent_dated",
+      "blocking_issues": "array_of_etf_price_collection_failures"
+    },
     "secondary_etfs": "array_of_additional_sector_etfs",
     "etf_composition": "holdings_and_weightings_analysis",
     "etf_performance": "performance_correlation_with_individual_companies",
@@ -672,7 +682,14 @@ CRITICAL MULTI-SOURCE VALIDATION PROTOCOL:
     "sector_data_completeness": "0.0-1.0_overall_sector_completeness_score",
     "sector_data_freshness": "object_data_recency_assessment_across_sector",
     "sector_quality_flags": "array_sector_data_quality_observations",
-    "etf_data_quality": "assessment_of_etf_data_reliability_and_freshness"
+    "etf_data_quality": "assessment_of_etf_data_reliability_and_freshness",
+    "etf_price_validation": {
+      "etf_price_collected": "boolean_mandatory_etf_price_collection_success",
+      "etf_price_accuracy": "confidence_score_0.0-1.0",
+      "etf_price_variance": "percentage_variance_across_sources",
+      "etf_price_blocking_issues": "array_of_etf_price_collection_failures",
+      "institutional_grade_certification": "boolean_etf_price_requirements_met"
+    }
   }
 }
 ```
@@ -693,6 +710,8 @@ CRITICAL MULTI-SOURCE VALIDATION PROTOCOL:
 1. **Comprehensive Multi-Source Analysis**
    - Execute `python yahoo_finance_cli.py analyze {ticker} --env prod --output-format json` for core market data
    - Execute `python yahoo_finance_cli.py financials {ticker} --env prod --output-format json` for financial statements
+   - **MANDATORY ETF Price Collection**: Execute `python yahoo_finance_cli.py analyze {sector_etf} --env prod --output-format json` for current ETF price
+   - **CRITICAL: ETF Price Validation**: Verify ETF price is collected successfully and within acceptable range
    - Execute `python yahoo_finance_cli.py history {sector_etf} --period 10y --env prod --output-format json` for seasonality analysis
    - Execute `python yahoo_finance_cli.py history {sector_etf} --period max --env prod --output-format json` for maximum historical data
    - Execute `python yahoo_finance_cli.py analyze SPY XLK XLF XLI XLP XLU XLB XLE XLY XLV XLRE --env prod --output-format json` for cross-sector analysis
@@ -762,7 +781,9 @@ CRITICAL MULTI-SOURCE VALIDATION PROTOCOL:
 
 6. **Multi-Source Data Quality Assessment**
    - Automatic cross-validation of key metrics across multiple CLI sources
+   - **MANDATORY ETF Price Validation**: Current ETF price must be collected with <2% variance
    - Price consistency verification targeting 1.000 confidence score
+   - **ETF Price Quality Gates**: Missing ETF prices are blocking for institutional analysis
    - Institutional-grade confidence scoring based on multi-source validation
    - Economic context freshness validation and cryptocurrency sentiment analysis
 
@@ -775,12 +796,14 @@ CRITICAL MULTI-SOURCE VALIDATION PROTOCOL:
    - Verify cryptocurrency sentiment data currency from CoinGecko CLI integration
    - Cross-validate company profile data between Yahoo Finance basics and FMP detailed descriptions
 3. **Apply Enhanced Financial Metrics Protocol**:
+   - **MANDATORY ETF Price Validation**: Verify current ETF price is collected and accurate before proceeding
    - **Calculate Missing EPS**: Use FMP CLI actual EPS data if available, or calculate using Net Income ÷ Shares Outstanding
    - **Calculate Missing ROE**: Net Income ÷ Stockholders Equity for return on equity calculation
    - **Calculate Revenue Growth**: (Current Year Revenue - Previous Year Revenue) ÷ Previous Year Revenue
    - **Integrate Cash Flow Data**: Use FMP CLI cash flow statement for operating, investing, financing, and free cash flow
    - **Handle Null Values Appropriately**: P/E ratio remains null for negative earnings, insider trading marked as unavailable for German ADRs
    - **Fallback Logic**: Use historical data (current year → previous 3 years) for missing current-year values only when calculation not possible
+   - **ETF Price Blocking**: Missing ETF prices prevent institutional-grade certification
    - Update confidence scores to reflect enhanced metric completeness (target 95%+ for financial statements)
 4. **Generate Comprehensive Analysis Sections**:
    - Add peer group analysis with industry-specific competitor identification
@@ -811,7 +834,9 @@ CRITICAL MULTI-SOURCE VALIDATION PROTOCOL:
 
 ### CLI-Enhanced Data Collection Standards
 - All data accessed exclusively through production-grade CLI financial services
+- **MANDATORY: Current sector ETF price collection and validation**
 - Multi-source price validation targeting 1.000 confidence across 3 sources (Yahoo Finance, Alpha Vantage, FMP)
+- **ETF Price Validation**: Current ETF prices must be collected with <2% variance threshold
 - Real-time economic data integration from FRED CLI with automatic freshness validation
 - Cryptocurrency sentiment analysis from CoinGecko CLI for broader market context
 - SEC EDGAR and IMF CLI framework integration ready for regulatory and global context
@@ -822,6 +847,8 @@ CRITICAL MULTI-SOURCE VALIDATION PROTOCOL:
 - **Discovery Insights**: Research priorities and data gap identification
 - **CLI Service Health**: All 7 data sources operational with >80% health score
 - **Enhanced Quality Targets**: >97% overall data quality, >92% data completeness, >95% financial statement confidence, >90% investment recommendation readiness
+- **MANDATORY ETF Price Quality**: 100% ETF price collection success rate with <2% variance validation
+- **ETF Price Blocking**: Missing ETF prices are blocking for institutional-grade analysis
 - **Cross-Sector Analysis Quality**: >90% confidence in all 11 sector ETF correlations and relative performance metrics
 - **Economic Sensitivity Quality**: >95% confidence in yield curve, dollar strength, and liquidity condition indicators
 - **GDP Analysis Quality**: >90% confidence in GDP growth correlation and sector economic sensitivity assessment
@@ -853,7 +880,7 @@ CRITICAL MULTI-SOURCE VALIDATION PROTOCOL:
 - **Macroeconomic Integration Validation**: GDP and employment correlations calculated using minimum 5 years of historical data
 - **Seasonality Data Validation**: Minimum 10 years of historical data for statistical significance
 
-**Integration with DASV Framework**: This microservice provides the foundational data required for the subsequent analyze phase, ensuring high-quality input for systematic financial analysis and template-driven synthesis with Investment Recommendation Summary following `/docs/sector_analysis_template.md`.
+**Integration with DASV Framework**: This microservice provides the foundational data required for the subsequent analyze phase, ensuring high-quality input for systematic financial analysis and template-driven synthesis with Investment Recommendation Summary following `./templates/analysis/sector_analysis_template.md`.
 
 **Author**: Cole Morton
 **Confidence**: [Discovery confidence will be calculated based on data quality and completeness]

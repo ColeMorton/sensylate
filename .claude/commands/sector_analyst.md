@@ -14,7 +14,7 @@ You are the Master Sector Analysis Expert, possessing comprehensive knowledge of
 **Complete 4-Phase Sector Workflow Expertise**:
 - **Phase 1 (Discover)**: Multi-company data collection via 7 CLI financial services + sector ETF analysis + GDP/employment integration
 - **Phase 2 (Analyze)**: Sector-wide analytical intelligence with competitive landscape assessment + macroeconomic risk scoring
-- **Phase 3 (Synthesize)**: Institutional-quality sector allocation with comprehensive Investment Recommendation Summary following `/docs/sector_analysis_template.md` specification
+- **Phase 3 (Synthesize)**: Institutional-quality sector allocation with comprehensive Investment Recommendation Summary following `./templates/analysis/sector_analysis_template.md` specification
 - **Phase 4 (Validate)**: Comprehensive sector validation with ETF consistency verification + real-time data validation
 
 ### 2. CLI Financial Services Integration for Sector Analysis
@@ -42,6 +42,8 @@ You are the Master Sector Analysis Expert, possessing comprehensive knowledge of
 - **Allocation Strategies**: Portfolio-level sector weighting with risk-adjusted returns and cross-sector correlation analysis
 - **Macroeconomic Integration**: GDP elasticity calculations, employment sensitivity analysis, and economic stress testing
 - **Real-Time Validation**: Multi-source data consistency with institutional-grade quality controls
+- **MANDATORY ETF Price Validation**: Current ETF prices collected and validated across all phases
+- **Recommendation Consistency Framework**: BUY/SELL/HOLD validation against ETF price vs fair value gaps
 
 ## Parameters
 
@@ -87,6 +89,8 @@ Execute systematic multi-company and sector ETF data collection using production
 **Quality Gates**:
 - CLI service health: 80%+ operational across all companies
 - Price consistency: ≤2% variance across sources per company
+- **MANDATORY ETF Price Collection**: 100% ETF price collection success rate
+- **BLOCKING ETF Price Validation**: Missing ETF prices prevent institutional certification
 - Sector data completeness: 90%+ coverage across companies
 - Overall sector confidence: 9.0+ baseline
 
@@ -107,6 +111,8 @@ Transform discovery data into comprehensive sector insights with competitive dyn
 - Competitive analysis completeness: All major companies assessed
 - Rotation analysis validity: Economic correlations validated
 - Allocation strategy coherence: Risk-adjusted metrics calculated
+- **ETF Price vs Fair Value Analysis**: Current ETF price positioning validated
+- **Recommendation Logic Validation**: BUY/SELL/HOLD aligned with price gaps
 
 ### Action: `synthesize`
 **Phase 3: Sector Allocation Strategy Documents**
@@ -127,6 +133,8 @@ Create publication-ready sector analysis documents with allocation recommendatio
 - Economic positioning accuracy: Historical correlation analysis validated
 - Investment recommendation quality: Comprehensive investment conclusion with institutional standards
 - Professional presentation: Publication-ready quality with no inconsistencies
+- **MANDATORY ETF Price Validation Gates**: Current ETF prices validated before synthesis
+- **BLOCKING Recommendation Consistency**: BUY/SELL/HOLD must align with price positioning
 
 ### Action: `validate`
 **Phase 4: Comprehensive Sector Quality Assurance**
@@ -144,6 +152,8 @@ Execute systematic validation of complete sector DASV workflow outputs using rea
 **Quality Gates**:
 - Overall sector reliability: 9.0+ minimum across all companies
 - ETF consistency: ≤3% deviation from stated composition
+- **MANDATORY ETF Price Validation**: Current ETF prices accurate and consistent
+- **BLOCKING Recommendation Consistency**: BUY/SELL/HOLD vs price gap alignment validated
 - Allocation strategy validity: Risk metrics within acceptable ranges
 - Investment recommendation quality: Gate 6 validation for institutional investment conclusions
 - Institutional certification: Publication-ready quality across all components
@@ -163,6 +173,8 @@ Execute the entire Discover → Analyze → Synthesize → Validate workflow for
 **Quality Gates**:
 - Each phase meets minimum confidence thresholds for sector analysis
 - Multi-company data architecture ensures completeness without duplication
+- **MANDATORY ETF Price Validation**: All phases validate current ETF prices
+- **BLOCKING Recommendation Consistency**: Final recommendation aligns with price analysis
 - Final validation achieves institutional certification for portfolio allocation
 - Complete audit trail with sector-specific performance metrics
 
@@ -280,7 +292,7 @@ PREVENTION:
 **Issue Category 4: Template Compliance and Quality Issues**
 ```
 SYMPTOMS:
-- Synthesis output not matching /docs/sector_analysis_template.md specification
+- Synthesis output not matching ./templates/analysis/sector_analysis_template.md specification
 - Confidence scores below institutional thresholds (< 9.0/10)
 - Missing required sections or formatting inconsistencies
 - Template structure violations in generated documents
@@ -347,6 +359,8 @@ Sector CLI Service Configuration:
 - **Baseline Quality**: 9.0/10 minimum across all sector companies
 - **Enhanced Quality**: 9.5/10 target for validation-optimized sector analysis
 - **ETF Consistency**: ≤3% deviation from stated composition
+- **MANDATORY ETF Price Quality**: 100% ETF price collection with <2% variance
+- **BLOCKING Recommendation Consistency**: BUY/SELL/HOLD must align with price gaps
 - **Allocation Validity**: Risk-adjusted returns within confidence intervals
 
 ### Sector Validation Protocols
@@ -354,6 +368,8 @@ Sector CLI Service Configuration:
 - **Price Consistency**: ≤2% variance across sources per company
 - **Sector Data Integrity**: Comprehensive coverage across major sector players
 - **ETF Composition Accuracy**: Real-time holdings verification
+- **MANDATORY ETF Price Validation**: Current ETF prices collected and validated
+- **BLOCKING Recommendation Validation**: BUY/SELL/HOLD vs price gap consistency
 - **Economic Sensitivity**: Validated correlations with economic indicators
 
 ## Sector Risk Quantification Framework
@@ -381,13 +397,13 @@ Sector CLI Service Configuration:
 ./data/outputs/sector_analysis/
 ├── discovery/{SECTOR}_{YYYYMMDD}_discovery.json
 ├── analysis/{SECTOR}_{YYYYMMDD}_analysis.json
-├── {SECTOR}_{YYYYMMDD}.md (synthesis following /docs/sector_analysis_template.md)
+├── {SECTOR}_{YYYYMMDD}.md (synthesis following ./templates/analysis/sector_analysis_template.md)
 └── validation/{SECTOR}_{YYYYMMDD}_validation.json
 ```
 
 ### Template Integration
 **Centralized Template Specification**:
-- **Template Location**: `/docs/sector_analysis_template.md`
+- **Template Location**: `./templates/analysis/sector_analysis_template.md`
 - **Template Usage**: All synthesis outputs must follow this specification exactly
 - **Template Features**: Institutional-quality structure, cross-sector analysis, economic sensitivity matrix, comprehensive Investment Recommendation Summary
 - **Quality Standards**: 0.9+ confidence baseline, comprehensive data validation, real-time economic context
@@ -467,7 +483,7 @@ Sector CLI Service Configuration:
 ### Workflow Optimization
 1. **Full workflow execution** recommended for complete sector analysis
 2. **Phase-by-phase execution** useful for iterative development and debugging
-3. **Template compliance** mandatory - all outputs must follow `/docs/sector_analysis_template.md` including Investment Recommendation Summary
+3. **Template compliance** mandatory - all outputs must follow `./templates/analysis/sector_analysis_template.md` including Investment Recommendation Summary
 4. **Cross-sector consistency** - maintain consistent methodologies across sector analyses
 5. **Economic context integration** - always include GDP/employment correlation analysis
 
@@ -484,7 +500,7 @@ Sector CLI Service Configuration:
 **Master Command Integration Patterns**:
 - **Phase Dependencies**: Discover → Analyze → Synthesize → Validate with data inheritance
 - **Quality Gates**: Confidence thresholds enforced at each phase transition
-- **Template Compliance**: Synthesis phase must follow `/docs/sector_analysis_template.md` exactly including Investment Recommendation Summary
+- **Template Compliance**: Synthesis phase must follow `./templates/analysis/sector_analysis_template.md` exactly including Investment Recommendation Summary
 - **Validation Enhancement**: Optimization protocols for 9.5+ confidence achievement
 - **Economic Context**: Real-time FRED/CoinGecko integration throughout workflow
 
@@ -520,7 +536,7 @@ Sector CLI Service Configuration:
 **Integration with Sector DASV Framework**: This master command serves as the comprehensive authority and orchestrator for the entire sector analysis ecosystem, combining sector-specific expertise with practical multi-company workflow management, template-driven output generation with Investment Recommendation Summary, and institutional-quality sector allocation strategies.
 
 **Framework Dependencies**:
-- **Template Specification**: `/docs/sector_analysis_template.md` (centralized standard)
+- **Template Specification**: `./templates/analysis/sector_analysis_template.md` (centralized standard)
 - **CLI Configuration**: `./config/financial_services.yaml` (production API keys)
 - **Output Structure**: `./data/outputs/sector_analysis/` (standardized file organization)
 - **Quality Standards**: 9.0-9.5/10 confidence targets with comprehensive validation
@@ -539,7 +555,7 @@ Sector CLI Service Configuration:
    - Verify template gap coverage completeness from analysis phase
    - Validate business cycle and liquidity cycle positioning confidence
    - Confirm industry dynamics scorecard and risk quantification quality
-   - Ensure `/docs/sector_analysis_template.md` compatibility
+   - Ensure `./templates/analysis/sector_analysis_template.md` compatibility
 
 3. **Synthesis → Validation Transition**
    - Validate template compliance and institutional presentation quality
@@ -569,7 +585,7 @@ Sector CLI Service Configuration:
    - GDP/employment integration statistical significance
 
 3. **Synthesis Quality Gates**
-   - Template compliance with `/docs/sector_analysis_template.md`
+   - Template compliance with `./templates/analysis/sector_analysis_template.md`
    - Confidence score ≥9.0/10 institutional baseline
    - Cross-sector analysis integration completeness
    - Economic context and policy implications inclusion

@@ -20,7 +20,7 @@ You are the Sector Analysis Synthesis Specialist, responsible for transforming v
 
 ## Output Requirements
 
-**Professional Standard**: Generate institutional-quality sector analysis documents following `/docs/sector_analysis_template.md` specification exactly, suitable for sophisticated sector allocation decision-making, combining rigorous multi-company analytical methodology with clear, actionable sector recommendations.
+**Professional Standard**: Generate institutional-quality sector analysis documents following `./templates/analysis/sector_analysis_template.md` specification exactly, suitable for sophisticated sector allocation decision-making, combining rigorous multi-company analytical methodology with clear, actionable sector recommendations.
 
 ## Parameters
 
@@ -137,6 +137,13 @@ SECTOR DECISION FRAMEWORK:
    → Monetary policy implications for sector performance
    → Yield curve considerations for sector sustainability
    → Cross-sector rotation probability and timing assessment
+
+6. ETF Price vs Fair Value Recommendation Framework
+   → Current ETF price validation and accuracy verification
+   → ETF price positioning within fair value range assessment
+   → BUY/SELL/HOLD recommendation validation logic
+   → Price gap analysis impact on sector investment thesis
+   → ETF price consistency validation across all synthesis references
 ```
 
 ### Sector Valuation Framework
@@ -233,6 +240,8 @@ INVESTMENT RECOMMENDATION SYNTHESIS REQUIREMENTS:
 □ Author attribution: "Cole Morton" (consistent across all posts)
 □ Risk probabilities in decimal format (0.0-1.0) from sector risk matrices
 □ **CRITICAL: SECTOR ETF PRICE ACCURACY** - use validated sector ETF current price throughout document
+□ **CRITICAL: ETF PRICE VALIDATION GATE** - verify ETF price is collected before synthesis generation
+□ **CRITICAL: RECOMMENDATION CONSISTENCY** - validate BUY/SELL/HOLD aligns with ETF price vs fair value gap
 □ **CRITICAL: Cross-sector consistency validation** - all 11 sector comparisons accurate
 □ **CRITICAL: Multi-company data consistency** - use exact sector aggregates from discovery
 □ **Sector health grades integration** - prominently display A-F grades with trends
@@ -253,11 +262,12 @@ INVESTMENT RECOMMENDATION SYNTHESIS REQUIREMENTS:
 □ **Investment Recommendation Summary** - comprehensive investment conclusion with portfolio allocation guidance
 □ **Portfolio allocation framework** - growth/balanced/conservative guidance with economic cycle timing
 □ **Confidence-weighted investment language** - alignment between confidence scores and conclusion strength
+□ **ETF Price vs Fair Value Consistency** - ensure recommendation aligns with current price positioning
 ```
 
 ## Sector Output Structure Reference
 
-**Template Specification**: All sector analysis outputs must follow `/docs/sector_analysis_template.md` exactly
+**Template Specification**: All sector analysis outputs must follow `./templates/analysis/sector_analysis_template.md` exactly
 
 **File Naming**: `{SECTOR}_{YYYYMMDD}.md` (e.g., `technology_20250710.md`)
 **Directory**: `./data/outputs/sector_analysis/`
@@ -277,6 +287,7 @@ INVESTMENT RECOMMENDATION SYNTHESIS REQUIREMENTS:
 1. **Discovery Data Loading**
    - Load sector discovery JSON file from parameter
    - Extract sector and date for synthesis file naming
+   - **MANDATORY ETF Price Validation**: Verify current ETF price is present and accurate
    - Validate multi-company sector data quality and completeness
    - Confirm discovery confidence scores (target: 0.9+ inherited)
 
@@ -284,6 +295,7 @@ INVESTMENT RECOMMENDATION SYNTHESIS REQUIREMENTS:
    - Load sector analysis JSON with business cycle and liquidity cycle data
    - Extract industry dynamics scorecard with A-F grades
    - Import multi-method valuation and quantified risk assessment
+   - **ETF Price vs Fair Value Validation**: Verify fair value range and price gap analysis
    - Load economic sensitivity analysis and cross-sector correlations
 
 3. **Cross-Sector Data Extraction**
@@ -303,8 +315,16 @@ INVESTMENT RECOMMENDATION SYNTHESIS REQUIREMENTS:
    - If found: Apply validation-driven enhancements targeting 9.5+ synthesis scores
    - If not found: Proceed with institutional-quality baseline using data
 
+6. **ETF Price Validation Gate**
+   - **CRITICAL**: Validate current ETF price is collected and accurate
+   - **BLOCKING**: Missing ETF prices prevent synthesis generation
+   - Verify ETF price vs fair value range positioning
+   - Validate recommendation consistency with price gap analysis
+
 ### Main Execution: Sector Synthesis Framework
 1. **Sector Investment Thesis Construction**
+   - **ETF Price Validation Gate**: Verify current ETF price is collected and accurate
+   - **Recommendation Consistency Validation**: Ensure BUY/SELL/HOLD aligns with ETF price vs fair value gap
    - Synthesize sector thesis integrating multi-company analysis and cross-sector positioning
    - Calculate sector risk-adjusted returns using quantified risk matrices
    - Generate sector recommendation with confidence scores and economic policy impact
@@ -386,6 +406,8 @@ INVESTMENT RECOMMENDATION SYNTHESIS REQUIREMENTS:
 **Pre-Output Validation:**
 ```
 □ **CRITICAL: Sector ETF price accuracy verified and consistent throughout**
+□ **CRITICAL: ETF Price vs Fair Value Consistency Validated** - recommendation aligns with price gap analysis
+□ **CRITICAL: BUY/SELL/HOLD Recommendation Logic Validated** - recommendation supported by current price positioning
 □ **CRITICAL: All 11 sector cross-comparisons accurate and up-to-date**
 □ **CRITICAL: Multi-company sector aggregates match discovery data exactly**
 □ All sector metrics have confidence scores ≥ 0.9 (institutional baseline)
@@ -405,6 +427,7 @@ INVESTMENT RECOMMENDATION SYNTHESIS REQUIREMENTS:
 □ **Investment Recommendation Summary included** - comprehensive investment conclusion with portfolio allocation guidance
 □ **Portfolio allocation context** - growth/balanced/conservative allocation guidance integrated
 □ **Economic cycle timing** - sector rotation and investment timing considerations included
+□ **ETF Price Validation Gate Passed** - current ETF price collected and validated before synthesis
 □ Output internally consistent with sector-wide evidence backing
 ```
 
@@ -414,7 +437,7 @@ INVESTMENT RECOMMENDATION SYNTHESIS REQUIREMENTS:
 □ Saved to: ./data/outputs/sector_analysis/
 □ Analysis focused solely on requested sector with cross-sector context
 □ No additional files generated
-□ **CRITICAL: Follows /docs/sector_analysis_template.md specification exactly including Investment Recommendation Summary**
+□ **CRITICAL: Follows ./templates/analysis/sector_analysis_template.md specification exactly including Investment Recommendation Summary**
 □ **CRITICAL: Sector ETF prices must be validated and accurate**
 □ **CRITICAL: All cross-sector references must use validated data consistently**
 □ **All sector financial metrics must match discovery aggregates exactly**

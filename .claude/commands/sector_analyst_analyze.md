@@ -6,7 +6,7 @@ Generate additional analytical intelligence required by the sector analysis temp
 
 ## Purpose
 
-You are the Sector Template Gap Analysis Specialist, responsible for generating the specific analytical components required by `/docs/sector_analysis_template.md` that are missing from the discovery phase output, including investment recommendation preparatory analysis. This microservice fills analytical gaps to enable the synthesis phase to generate complete sector analysis documents with comprehensive Investment Recommendation Summary.
+You are the Sector Template Gap Analysis Specialist, responsible for generating the specific analytical components required by `./templates/analysis/sector_analysis_template.md` that are missing from the discovery phase output, including investment recommendation preparatory analysis. This microservice fills analytical gaps to enable the synthesis phase to generate complete sector analysis documents with comprehensive Investment Recommendation Summary.
 
 ## Microservice Integration
 
@@ -42,7 +42,7 @@ DISCOVERY DATA INTEGRATION:
    → Reference existing data - do not duplicate
 
 2. Identify Template Gaps
-   → Compare discovery data against /docs/sector_analysis_template.md requirements
+   → Compare discovery data against ./templates/analysis/sector_analysis_template.md requirements
    → Focus only on missing analytical components
    → Build upon existing economic context and sector intelligence
 ```
@@ -172,6 +172,13 @@ VALUATION FRAMEWORK:
    → Blended fair value range determination
    → Probability-weighted scenario analysis
    → Risk-adjusted return expectations
+
+5. ETF Price vs Fair Value Analysis
+   → Current ETF price validation from discovery data
+   → ETF price vs fair value range gap analysis
+   → Recommendation validation logic (BUY/SELL/HOLD)
+   → Price positioning within fair value range assessment
+   → ETF price consistency validation across sources
 ```
 
 ### Phase 5: Quantified Risk Assessment Matrix
@@ -306,6 +313,13 @@ INVESTMENT RECOMMENDATION GAP ANALYSIS FRAMEWORK:
    → Interest rate sensitivity for investment timing
    → Economic sensitivity profile for allocation decisions
    → Sector-specific investment risks and opportunities
+
+6. ETF Price vs Fair Value Recommendation Framework
+   → Current ETF price validation and accuracy assessment
+   → ETF price positioning within fair value range analysis
+   → BUY/SELL/HOLD recommendation validation logic
+   → Price gap analysis for recommendation consistency
+   → ETF price-based risk assessment and opportunity identification
 ```
 
 ## Output Structure
@@ -432,6 +446,14 @@ INVESTMENT RECOMMENDATION GAP ANALYSIS FRAMEWORK:
       "confidence_intervals": "valuation_range_estimates",
       "scenario_weighting": "bull_base_bear_probabilities"
     },
+    "etf_price_vs_fair_value_analysis": {
+      "current_etf_price": "current_etf_price_from_discovery_data",
+      "fair_value_range": "calculated_fair_value_range",
+      "price_gap_analysis": "current_price_vs_fair_value_gap_percentage",
+      "recommendation_validation": "buy_sell_hold_logic_validation",
+      "price_positioning": "within_below_above_fair_value_range",
+      "etf_price_consistency": "cross_source_price_validation_score"
+    },
     "confidence": "0.0-1.0"
   },
   "quantified_risk_assessment": {
@@ -530,6 +552,14 @@ INVESTMENT RECOMMENDATION GAP ANALYSIS FRAMEWORK:
       "economic_sensitivity_profile": "sector_economic_cycle_sensitivity_analysis",
       "investment_risk_opportunities": "sector_specific_investment_risk_reward_analysis",
       "confidence": "0.0-1.0"
+    },
+    "etf_price_recommendation_framework": {
+      "etf_price_validation": "current_etf_price_accuracy_and_consistency_validation",
+      "fair_value_positioning": "etf_price_position_within_calculated_fair_value_range",
+      "recommendation_logic": "buy_sell_hold_recommendation_validation_framework",
+      "price_gap_assessment": "quantified_price_vs_fair_value_gap_analysis",
+      "etf_price_risk_assessment": "etf_price_based_risk_and_opportunity_identification",
+      "confidence": "0.0-1.0"
     }
   },
   "analysis_quality_metrics": {
@@ -598,6 +628,13 @@ INVESTMENT RECOMMENDATION GAP ANALYSIS FRAMEWORK:
    - Calculate GDP growth correlation and employment sensitivity coefficients
    - Generate macroeconomic risk scoring using GDP/employment composite indicators
 
+8. **ETF Price vs Fair Value Recommendation Analysis**
+   - Validate current ETF price from discovery data
+   - Calculate ETF price vs fair value range gap analysis
+   - Apply BUY/SELL/HOLD recommendation validation logic
+   - Assess ETF price positioning and recommendation consistency
+   - Generate ETF price-based risk assessment and opportunity identification
+
 8. **Investment Recommendation Gap Analysis**
    - Develop portfolio allocation context and sector weighting recommendations
    - Analyze economic cycle investment positioning and rotation probabilities
@@ -647,7 +684,7 @@ INVESTMENT RECOMMENDATION GAP ANALYSIS FRAMEWORK:
 - Quality metrics that inform synthesis confidence
 - Clear analytical handoff for document generation
 
-**Integration with DASV Framework**: This microservice fills specific analytical gaps required by `/docs/sector_analysis_template.md`, including investment recommendation preparatory analysis, enabling the synthesis phase to generate complete sector analysis documents with comprehensive Investment Recommendation Summary without additional data collection.
+**Integration with DASV Framework**: This microservice fills specific analytical gaps required by `./templates/analysis/sector_analysis_template.md`, including investment recommendation preparatory analysis, enabling the synthesis phase to generate complete sector analysis documents with comprehensive Investment Recommendation Summary without additional data collection.
 
 **Author**: Cole Morton
 **Confidence**: [Gap analysis confidence based on discovery data quality and analytical methodology rigor]

@@ -19,8 +19,8 @@ import typer
 # Add utils to path
 sys.path.insert(0, str(Path(__file__).parent))
 
-from services.alpha_vantage import create_alpha_vantage_service
-from utils.cli_base import BaseFinancialCLI, OutputFormat, ValidationError
+from services.alpha_vantage import create_alpha_vantage_service  # noqa: E402
+from utils.cli_base import BaseFinancialCLI, OutputFormat, ValidationError  # noqa: E402
 
 
 class AlphaVantageCLI(BaseFinancialCLI):
@@ -323,9 +323,9 @@ class AlphaVantageCLI(BaseFinancialCLI):
                     for indicator in technical_indicators.split(","):
                         indicator = indicator.strip().upper()
                         try:
-                            analysis["technical_indicators"][indicator] = (
-                                service.get_technical_indicator(ticker, indicator)
-                            )
+                            analysis["technical_indicators"][
+                                indicator
+                            ] = service.get_technical_indicator(ticker, indicator)
                         except Exception as e:
                             analysis["technical_indicators"][indicator] = {
                                 "error": str(e)
