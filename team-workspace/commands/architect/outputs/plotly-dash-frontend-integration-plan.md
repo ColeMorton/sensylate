@@ -19,7 +19,7 @@
 
 **Existing Infrastructure (✅ Available):**
 - Plotly migration completed with 99.9-100% visual fidelity
-- Template-based dashboard system in `/data/raw/dashboard-templates/`
+- Template-based dashboard system in `/templates/dashboards/`
 - Frontend theme authority in `/frontend/src/config/theme.json`
 - TailwindCSS integration via `/frontend/src/tailwind-plugin/tw-theme.js`
 - 2x2 grid layout with purple box prevention (bar chart approach)

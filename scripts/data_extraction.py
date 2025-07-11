@@ -3,8 +3,8 @@
 Data extraction script with comprehensive configuration support.
 
 Usage:
-    python scripts/data_extraction.py --config configs/data_extraction.yaml
-    python scripts/data_extraction.py --config configs/data_extraction.yaml --env prod
+    python scripts/data_extraction.py --config config/pipelines/data_extraction.yaml
+    python scripts/data_extraction.py --config config/pipelines/data_extraction.yaml --env prod
 """
 
 import argparse

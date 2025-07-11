@@ -659,9 +659,9 @@ class PlotlyChartGenerator(AbstractChartGenerator):
                     marker=dict(
                         size=group["sizes"],
                         color=group["color"],
-                        opacity=group["alphas"][0]
-                        if group["alphas"]
-                        else base_alpha,  # Use first alpha as representative
+                        opacity=(
+                            group["alphas"][0] if group["alphas"] else base_alpha
+                        ),  # Use first alpha as representative
                         line=dict(color=theme.borders, width=0.8),
                     ),
                     name=quality,

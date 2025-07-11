@@ -220,117 +220,14 @@ VALUATION SYNTHESIS:
 □ Management execution assessment with credibility scores
 ```
 
-## Exact Output Structure
+## Output Structure
 
+**Template Reference**: `./templates/analysis/fundamental_analysis_template.md`
 **File Naming**: `TICKER_YYYYMMDD.md` (e.g., `AAPL_20250629.md`)
 **Directory**: `./data/outputs/fundamental_analysis/`
 **Data Sources**: analysis with multi-source validation
 
-```markdown
-# [COMPANY NAME] (TICKER) - Fundamental Analysis
-*Generated: [DATE] | Confidence: [X.X/1.0] | Data Quality: [X.X/1.0] | Economic Context: Current*
-<!-- Author: Cole Morton (MANDATORY - ensure consistency) -->
-
-## 🎯 Investment Thesis & Recommendation
-
-### Core Thesis
-[2-3 sentence thesis with key value drivers]
-
-### Recommendation: [BUY/HOLD/SELL] | Conviction: [X.X/1.0]
-- **Fair Value Range**: $[XXX] - $[XXX] (Current: $[XXX]) | Confidence: [X.X/1.0]
-- **Expected Return**: [XX]% ([X]Y horizon) | Economic-Adjusted: [XX]%
-- **Risk-Adjusted Return**: [XX]% (Sharpe: [X.X]) | Interest Rate Impact: [X.X]%
-- **Position Size**: [X-X]% of portfolio | Economic Environment: [Restrictive/Neutral/Supportive]
-- **Financial Health Grade**: [A-F] Overall | Trend: [Improving/Stable/Declining]
-
-### Key Quantified Catalysts (Next 12-24 Months)
-1. [Catalyst 1] - Probability: [0.XX] | Impact: $[XX]/share | Timeline: [X]mo | Economic Sensitivity: [High/Med/Low]
-2. [Catalyst 2] - Probability: [0.XX] | Impact: $[XX]/share | Timeline: [X]mo | Economic Sensitivity: [High/Med/Low]
-3. [Catalyst 3] - Probability: [0.XX] | Impact: $[XX]/share | Timeline: [X]mo | Economic Sensitivity: [High/Med/Low]
-
-### Economic Context Impact
-- **Interest Rate Environment**: [Restrictive/Neutral/Supportive] | Fed Funds: [X.XX]% | Impact: [Positive/Negative/Neutral]
-- **Monetary Policy Implications**: [Sector-specific policy impact assessment]
-- **Yield Curve Considerations**: [Long-term sustainability implications]
-
-## 📊 Business Intelligence Dashboard
-
-### Business-Specific KPIs
-| Metric | Current | 3Y Avg | 5Y Trend | vs Peers | Confidence | Insight |
-|--------|---------|---------|-----------|----------|------------|---------|
-| [Key business metrics with relevance scores and confidence levels] |
-
-### Financial Health Scorecard
-| Category | Score | Trend | Key Metrics | Red Flags |
-|----------|-------|-------|-------------|-----------|
-| Profitability | [A-F] | [↑→↓] | [Details] | [If any] |
-| Balance Sheet | [A-F] | [↑→↓] | [Details] | [If any] |
-| Cash Flow | [A-F] | [↑→↓] | [Details] | [If any] |
-| Capital Efficiency | [A-F] | [↑→↓] | [Details] | [If any] |
-
-## 🏆 Competitive Position Analysis
-
-### Moat Assessment
-| Competitive Advantage | Strength | Durability | Evidence | Confidence |
-|----------------------|----------|------------|----------|------------|
-| [Competitive advantages with quantified strength and supporting data] |
-
-### Industry Dynamics
-- **Market Growth**: [XX]% CAGR | TAM: $[XXX]B
-- **Competitive Intensity**: [Low/Medium/High] | HHI: [XXXX]
-- **Disruption Risk**: [Low/Medium/High] | Key Threats: [List]
-- **Regulatory Outlook**: [Favorable/Neutral/Challenging]
-
-## 📈 Valuation Analysis
-
-### Multi-Method Valuation
-| Method | Fair Value | Weight | Confidence | Key Assumptions |
-|--------|-----------|---------|------------|-----------------|
-| DCF | $[XXX] | [XX]% | 0.X | [List] |
-| Comps | $[XXX] | [XX]% | 0.X | [List] |
-| Other | $[XXX] | [XX]% | 0.X | [List] |
-| **Weighted Average** | **$[XXX]** | 100% | **0.X** | - |
-
-### Scenario Analysis
-| Scenario | Probability | Price Target | Return | Key Drivers |
-|----------|------------|--------------|---------|-------------|
-| Bear | [XX]% | $[XXX] | [XX]% | [Assumptions] |
-| Base | [XX]% | $[XXX] | [XX]% | [Assumptions] |
-| Bull | [XX]% | $[XXX] | [XX]% | [Assumptions] |
-| **Expected Value** | 100% | **$[XXX]** | **[XX]%** | - |
-
-## ⚠️ Risk Matrix
-
-### Quantified Risk Assessment
-| Risk Factor | Probability | Impact | Risk Score | Mitigation | Monitoring |
-|-------------|------------|---------|------------|------------|------------|
-| [Risk Name] | 0.X | [1-5] | [Score] | [Strategy] | [Metrics] |
-<!-- MANDATORY: Use 0.0-1.0 decimal format for probability column -->
-
-### Sensitivity Analysis
-Key variables impact on fair value:
-- [Variable 1]: ±10% change = ±$[XX] ([XX]%)
-- [Variable 2]: ±10% change = ±$[XX] ([XX]%)
-- [Variable 3]: ±10% change = ±$[XX] ([XX]%)
-
-## 📋 Analysis Metadata
-
-**Data Sources & Quality**:
-- Primary Sources: [Source Name] (0.X), [Source Name] (0.X), [Source Name] (0.X)
-- Data Completeness: [XX]%
-- Latest Data Point: [Date]
-- Data Freshness: All sources current as of analysis date
-<!-- MANDATORY: Use 0.0-1.0 format for all source confidence scores -->
-
-**Methodology Notes**:
-- [Any specific adjustments or assumptions]
-- [Limitations or caveats]
-- [Areas requiring follow-up research]
-
-## 🏁 Investment Recommendation Summary
-
-[Comprehensive 150-200 word summary synthesizing the entire analysis into institutional-quality investment decision framework. Include: (1) Core investment thesis with quantified risk-adjusted returns, (2) Key confidence drivers and methodology validation, (3) Balance sheet strength and downside protection, (4) Scenario analysis results with probability-weighted outcomes, (5) Position sizing recommendation within portfolio context, (6) Specific catalysts with impact quantification, (7) Stress-tested bear case limitations, (8) Monte Carlo/sensitivity analysis validation of fair value range, (9) Overall conviction level with supporting evidence, (10) Clear articulation of why this represents exceptional/adequate/poor risk-adjusted value at current levels. This summary should stand alone as complete investment recommendation suitable for institutional decision-making.]
-```
+The synthesis command generates fundamental analysis documents following the exact structure defined in the fundamental analysis template. All outputs must adhere to the template specification for institutional-quality consistency and professional presentation standards.
 
 ## Synthesis Execution Protocol
 
@@ -469,14 +366,16 @@ Key variables impact on fair value:
 □ Saved to: ./data/outputs/fundamental_analysis/
 □ Analysis focused solely on requested ticker
 □ No additional files generated
-□ **CRITICAL: Identical quality to fundamental_analysis.md command**
+□ **CRITICAL: Follows ./templates/analysis/fundamental_analysis_template.md specification exactly including Investment Recommendation Summary**
 □ **CRITICAL: Current price must be CLI-validated and accurate (tolerance: ≤2%)**
 □ **CRITICAL: All price references must use validated current_price consistently**
-□ **All financial metrics must match Yahoo Finance exactly to one decimal point precision**
+□ **All financial metrics must match analysis data exactly**
+□ **CRITICAL: Template structure compliance required - exact section headers and organization**
+□ **CRITICAL: Investment Recommendation Summary must be 150-200 words synthesizing complete analysis**
 □ Professional presentation meeting institutional standards
-□ Professional presentation suitable for publication
 □ All confidence scores in 0.0-1.0 format throughout
 □ Author attribution: Cole Morton (consistent)
+□ Risk probabilities in 0.0-1.0 decimal format (not percentages)
 ```
 
 ## Quality Assurance Protocol

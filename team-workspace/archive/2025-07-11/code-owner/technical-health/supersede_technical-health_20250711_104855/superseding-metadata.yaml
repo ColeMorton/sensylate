@@ -1,0 +1,12 @@
+event_id: supersede_technical-health_20250711_104855
+new_authority: team-workspace/commands/code-owner/outputs/comprehensive-technical-health-assessment-20250711.md
+reason: Updated comprehensive technical health assessment with institutional-grade
+  analysis framework
+recovery_instructions:
+  manual_recovery: Copy files from team-workspace/archive/2025-07-11/code-owner/technical-health/supersede_technical-health_20250711_104855
+    back to original locations
+  rollback_command: python coordination/superseding-workflow.py rollback supersede_technical-health_20250711_104855
+superseded_files:
+- team-workspace/knowledge/technical-health/sensylate-platform-assessment-20250706.md
+superseding_timestamp: '2025-07-11T10:48:55.335920'
+topic: technical-health

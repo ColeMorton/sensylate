@@ -261,11 +261,11 @@ class SECEDGARCLl(BaseFinancialCLI):
                 # Gather comprehensive data
                 analysis = {
                     "ticker": ticker,
-                    "analysis_timestamp": service.search_company_by_ticker(ticker).get(
-                        "timestamp"
-                    )
-                    if service.search_company_by_ticker(ticker)
-                    else None,
+                    "analysis_timestamp": (
+                        service.search_company_by_ticker(ticker).get("timestamp")
+                        if service.search_company_by_ticker(ticker)
+                        else None
+                    ),
                     "company_info": service.search_company_by_ticker(ticker),
                     "financial_statements": service.get_financial_statements(ticker),
                     "sec_metrics": service.get_sec_metrics(ticker),

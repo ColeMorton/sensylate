@@ -65,9 +65,11 @@ class EnhancedFundamentalAnalyzer:
                 "fundamentals": fundamentals,
                 "market_data": market_data,
                 "financial_statements": financial_statements,
-                "data_quality": "high"
-                if all([fundamentals, market_data, financial_statements])
-                else "partial",
+                "data_quality": (
+                    "high"
+                    if all([fundamentals, market_data, financial_statements])
+                    else "partial"
+                ),
             }
             analysis["data_sources"].append("yahoo_finance")
 
@@ -94,9 +96,9 @@ class EnhancedFundamentalAnalyzer:
                 "recent_filings": filings,
                 "financial_statements": sec_financial,
                 "metrics": sec_metrics,
-                "compliance_status": "current"
-                if filings and not filings.get("error")
-                else "unknown",
+                "compliance_status": (
+                    "current" if filings and not filings.get("error") else "unknown"
+                ),
             }
             analysis["data_sources"].append("sec_edgar")
 

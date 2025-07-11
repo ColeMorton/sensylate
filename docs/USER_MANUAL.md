@@ -212,21 +212,21 @@ make prod-pipeline
 
 All trading analysis is configuration-driven:
 
-#### Data Sources (`configs/data_extraction.yaml`)
+#### Data Sources (`config/pipelines/data_extraction.yaml`)
 ```yaml
 symbols: ["AAPL", "GOOGL", "TSLA"]
 timeframe: "1d"
 indicators: ["SMA", "EMA", "RSI", "MACD"]
 ```
 
-#### Strategy Parameters (`configs/model_training.yaml`)
+#### Strategy Parameters (`config/pipelines/model_training.yaml`)
 ```yaml
 strategy_type: "momentum"
 lookback_period: 20
 risk_tolerance: 0.02
 ```
 
-#### Environment Settings (`configs/environments/`)
+#### Environment Settings (`config/environments/`)
 - `dev.yaml` - Development settings
 - `staging.yaml` - Testing environment
 - `prod.yaml` - Production parameters
@@ -460,7 +460,7 @@ LOG_LEVEL=info
 
 ### Trading Analysis Configuration
 
-#### Data Sources (`configs/data_extraction.yaml`)
+#### Data Sources (`config/pipelines/data_extraction.yaml`)
 ```yaml
 metadata:
   name: "Market Data Pipeline"
@@ -481,7 +481,7 @@ processing:
   validation: true
 ```
 
-#### Strategy Parameters (`configs/model_training.yaml`)
+#### Strategy Parameters (`config/pipelines/model_training.yaml`)
 ```yaml
 strategy:
   type: "momentum"
@@ -669,7 +669,7 @@ make -j4 full-pipeline
 time make extract-data
 
 # Optimize data processing
-# Edit configs/feature_engineering.yaml to reduce indicators
+# Edit config/pipelines/feature_engineering.yaml to reduce indicators
 ```
 
 #### Team Collaboration Performance

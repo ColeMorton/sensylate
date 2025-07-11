@@ -73,7 +73,7 @@ class CacheManager:
     def _get_cache_key(self, server_name: str, tool_name: str, **kwargs) -> str:
         """Generate a unique cache key for the request"""
         key_data = f"{server_name}_{tool_name}_{json.dumps(kwargs, sort_keys=True)}"
-        return hashlib.md5(key_data.encode()).hexdigest()
+        return hashlib.md5(key_data.encode(), usedforsecurity=False).hexdigest()
 
     def _get_file_cache_path(self, cache_key: str) -> Path:
         """Get file cache path for the given key"""
@@ -216,9 +216,9 @@ class CacheManager:
 
         return {
             "cache_stats": self.cache_stats,
-            "hit_ratio": (total_hits / total_requests * 100)
-            if total_requests > 0
-            else 0,
+            "hit_ratio": (
+                (total_hits / total_requests * 100) if total_requests > 0 else 0
+            ),
             "session_cache_size": len(self.session_cache),
             "file_cache_size": len(list(self.file_cache_dir.glob("*.pkl"))),
             "cache_directory": str(self.cache_dir),

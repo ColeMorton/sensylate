@@ -19,8 +19,8 @@ import typer
 # Add utils to path
 sys.path.insert(0, str(Path(__file__).parent))
 
-from services.alpha_vantage import create_alpha_vantage_service
-from utils.cli_base import BaseFinancialCLI, OutputFormat, ValidationError
+from services.alpha_vantage import create_alpha_vantage_service  # noqa: E402
+from utils.cli_base import BaseFinancialCLI, OutputFormat, ValidationError  # noqa: E402
 
 
 class AlphaVantageCLI(BaseFinancialCLI):

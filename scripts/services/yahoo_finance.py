@@ -224,9 +224,11 @@ class YahooFinanceAPIService(BaseFinancialService):
                     "source": "yahoo_finance",
                     "timestamp": datetime.now().isoformat(),
                     "period_requested": period,
-                    "completeness": len([d for d in data if d.get("Close")]) / len(data)
-                    if data
-                    else 0,
+                    "completeness": (
+                        len([d for d in data if d.get("Close")]) / len(data)
+                        if data
+                        else 0
+                    ),
                 },
             }
 

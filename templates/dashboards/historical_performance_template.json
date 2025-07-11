@@ -1,0 +1,272 @@
+{
+  "template_name": "historical_performance_dashboard",
+  "version": "1.0.0",
+  "description": "Reusable template for historical trading performance dashboards with Plotly visualizations",
+
+  "_documentation": {
+    "_note": "This section provides comprehensive inline documentation for manual editing",
+    "layout": "Defines 2x2 grid structure: top-left waterfall (50%), top-right 2x2 gauge grid (50%), bottom-left scatter (50%), bottom-right bar chart (50%)",
+    "color_scheme": "Sensylate brand colors: #26c6da (cyan/positive), #7e57c2 (purple/negative), #3179f5 (blue/neutral). NO red/green colors",
+    "chart_definitions": "Individual chart configurations with data sources, positioning, colors, and behavior settings",
+    "styling": "Visual parameters: Heebo fonts, 1600x1000 canvas, 140-180px margins, precise spacing ratios",
+    "waterfall_prevention": "CRITICAL: prevent_totals=true prevents purple box anomaly in waterfall charts"
+  },
+
+  "layout": {
+    "type": "2x2_grid",
+    "structure": {
+      "top_left": {
+        "position": "top_left",
+        "height": 0.2,
+        "width": 0.2,
+        "chart_type": "waterfall",
+        "title": "Trade Performance Waterfall",
+        "sort_order": "return_descending",
+        "vertical_range": [0.20, 0.20],
+        "horizontal_range": [0.20, 0.20],
+        "_doc": "TOP LEFT: Waterfall chart, 50% height x 50% width, upper left quadrant"
+      },
+      "top_right": {
+        "position": "top_right",
+        "height": 0.50,
+        "width": 0.50,
+        "chart_type": "gauge_grid",
+        "columns": 2,
+        "rows": 2,
+        "spacing": 0.05,
+        "vertical_range": [0.50, 1.0],
+        "horizontal_range": [0.50, 1.0],
+        "_doc": "TOP RIGHT: 2x2 gauge grid, 50% height x 50% width, upper right quadrant"
+      },
+      "bottom_left": {
+        "position": "bottom_left",
+        "height": 0.50,
+        "width": 0.50,
+        "chart_type": "scatter",
+        "title": "Return vs Duration",
+        "vertical_range": [0.0, 0.50],
+        "horizontal_range": [0.0, 0.50],
+        "_doc": "BOTTOM LEFT: Scatter plot, 50% height x 50% width, lower left quadrant"
+      },
+      "bottom_right": {
+        "position": "bottom_right",
+        "height": 0.50,
+        "width": 0.50,
+        "chart_type": "bar",
+        "title": "Weekly Performance",
+        "vertical_range": [0.0, 0.50],
+        "horizontal_range": [0.50, 1.0],
+        "_doc": "BOTTOM RIGHT: Bar chart, 50% height x 50% width, lower right quadrant"
+      }
+    }
+  },
+
+  "color_scheme": {
+    "sensylate_palette": {
+      "primary_data": "#26c6da",
+      "secondary_data": "#7e57c2",
+      "tertiary_data": "#3179f5",
+      "positive": "#26c6da",
+      "negative": "#7e57c2",
+      "neutral": "#3179f5",
+      "_doc": "Sensylate brand colors only - NO red/green allowed"
+    },
+    "backgrounds": {
+      "light": "#ffffff",
+      "dark": "#1a1a1a"
+    },
+    "text": {
+      "light_mode": "#333333",
+      "dark_mode": "#e0e0e0"
+    },
+    "grids": {
+      "light_mode": "#e0e0e0",
+      "dark_mode": "#404040"
+    }
+  },
+
+  "chart_definitions": {
+    "metrics_cards": {
+      "type": "gauge_grid_2x2",
+      "count": 4,
+      "layout": "2x2_grid",
+      "position": "top_right",
+      "equal_sizing": true,
+      "metrics": [
+        {
+          "key": "win_rate",
+          "title": "Win Rate",
+          "format": "percentage",
+          "color": "primary_data",
+          "range": [0, 100],
+          "threshold": 50,
+          "gauge_colors": {
+            "low": "neutral",
+            "high": "primary_data"
+          },
+          "_doc": "Win rate gauge: 0-100% range, 50% threshold, cyan/blue colors only"
+        },
+        {
+          "key": "total_return",
+          "title": "Total Return",
+          "format": "percentage",
+          "color": "primary_data",
+          "range": [-20, 20],
+          "threshold": 0,
+          "gauge_colors": {
+            "low": "neutral",
+            "high": "primary_data"
+          },
+          "_doc": "Total return gauge: -20% to +20% range, 0% break-even threshold"
+        },
+        {
+          "key": "profit_factor",
+          "title": "Profit Factor",
+          "format": "decimal",
+          "color": "primary_data",
+          "range": [0, 3],
+          "threshold": 1,
+          "gauge_colors": {
+            "low": "neutral",
+            "high": "primary_data"
+          },
+          "_doc": "Profit factor gauge: 0-3 range, 1.0 break-even, purple/blue colors"
+        },
+        {
+          "key": "trade_count",
+          "title": "Total Trades",
+          "format": "integer",
+          "color": "tertiary_data",
+          "range": [0, 50],
+          "threshold": 25,
+          "gauge_colors": {
+            "low": "neutral",
+            "high": "tertiary_data"
+          },
+          "_doc": "Trade count gauge: 0-50 range, 25 mid-point, blue colors"
+        }
+      ]
+    },
+
+    "waterfall_chart": {
+      "type": "waterfall",
+      "position": "top_left",
+      "title": "All Trade Performance",
+      "data_source": "all_trades",
+      "sort_by": "return_magnitude",
+      "prevent_totals": true,
+      "colors": {
+        "positive": "positive",
+        "negative": "negative",
+        "connector": "grid_color"
+      },
+      "_doc": "CRITICAL: prevent_totals=true stops purple box bug. Sorts by return magnitude, uses cyan/purple. Now positioned in top-left quadrant"
+    },
+
+    "scatter_plot": {
+      "type": "scatter",
+      "position": "bottom_left",
+      "title": "Return vs Duration",
+      "x_axis": "duration_days",
+      "y_axis": "return_percentage",
+      "color_by": "profit_loss",
+      "include_trendline": true,
+      "colors": {
+        "positive": "positive",
+        "negative": "negative"
+      },
+      "_doc": "Scatter plot with trend line, colored by profit/loss, increased size in bottom row"
+    },
+
+    "weekly_performance_bar": {
+      "type": "bar",
+      "position": "bottom_right",
+      "title": "Weekly Performance",
+      "x_axis": "week",
+      "y_axis": "return_percentage",
+      "color_by": "performance",
+      "data_source": "entry_dates",
+      "colors": {
+        "positive": "positive",
+        "negative": "negative"
+      },
+      "_doc": "Weekly bar chart based on entry dates, increased size in bottom row"
+    }
+  },
+
+  "styling": {
+    "fonts": {
+      "family": "Heebo, Arial, sans-serif",
+      "title_size": 34,
+      "subtitle_size": 22,
+      "text_size": 24,
+      "chart_text_size": 16,
+      "small_text_size": 12,
+      "_doc": "PRIMARY: Heebo font family. Larger sizes for better readability and no text clipping"
+    },
+    "dimensions": {
+      "width": 1600,
+      "height": 1600,
+      "dpi_scale": 2,
+      "_doc": "Large canvas (1600x1000) with 3x DPI scale for high-resolution export"
+    },
+    "margins": {
+      "top": 120,
+      "bottom": 100,
+      "left": 120,
+      "right": 120,
+      "_doc": "Large margins to prevent any text clipping, especially increased top margin"
+    },
+    "spacing": {
+      "vertical": 0.2,
+      "horizontal": 0.08,
+      "chart_padding": 40,
+      "text_offset": 25,
+      "inter_chart": 0.055,
+      "_doc": "Vertical spacing (10%), horizontal spacing (12%), inter-chart spacing (2%) between 2x2 grid quadrants"
+    },
+    "gauges": {
+      "no_red_green": true,
+      "bar_thickness": 0.85,
+      "border_width": 2,
+      "background_opacity": 0.15,
+      "steps_opacity": 0.08,
+      "_doc": "NO red/green flag enforced. Thick bars with subtle backgrounds"
+    },
+    "waterfall": {
+      "text_positioning": {
+        "large_threshold": 8.0,
+        "small_threshold": 2.0,
+        "outside_offset": 15,
+        "inside_safe_zone": 8
+      },
+      "connector_width": 2.5,
+      "bar_gap": 0.25,
+      "prevent_totals": true,
+      "_doc": "CRITICAL: prevent_totals=true prevents purple boxes. Smart text positioning based on value magnitude"
+    },
+    "scatter": {
+      "marker_size": 14,
+      "text_offset": 18,
+      "trend_line_width": 4,
+      "trend_line_opacity": 0.85,
+      "_doc": "Larger markers and trend line for better visibility in increased chart size"
+    },
+    "bar_chart": {
+      "text_positioning": {
+        "threshold": 4.5,
+        "outside_offset": 12
+      },
+      "bar_width": 0.75,
+      "_doc": "Smart text positioning with larger offsets to prevent clipping"
+    }
+  },
+
+  "export_settings": {
+    "formats": ["png"],
+    "dual_mode": true,
+    "filename_pattern": "{report_name}_dashboard_{theme_mode}",
+    "config_export": true,
+    "_doc": "PNG-only export with light/dark dual mode generation"
+  }
+}

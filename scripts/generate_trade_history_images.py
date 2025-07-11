@@ -6,12 +6,11 @@ Web developer approach: analyze, iterate, improve.
 
 import json
 import logging
-import os
 import re
 import sys
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List
 
 # Configure logging
 logging.basicConfig(
@@ -20,11 +19,8 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 try:
-    import pandas as pd
-    import plotly.express as px
     import plotly.graph_objects as go
     import plotly.io as pio
-    from plotly.subplots import make_subplots
 
     PLOTLY_AVAILABLE = True
 except ImportError:
@@ -44,7 +40,7 @@ class TemplateBasedDashboardGenerator:
             "/Users/colemorton/Projects/sensylate/data/outputs/analysis_trade_history"
         )
         self.template_dir = Path(
-            "/Users/colemorton/Projects/sensylate/data/raw/dashboard-templates"
+            "/Users/colemorton/Projects/sensylate/templates/dashboards"
         )
 
         # Load template
@@ -303,8 +299,7 @@ class TemplateBasedDashboardGenerator:
         self, trades: List[Dict[str, Any]]
     ) -> List[Dict[str, Any]]:
         """Generate weekly performance data based on entry dates."""
-        import calendar
-        from datetime import datetime, timedelta
+        from datetime import datetime
 
         weekly_data = {}
 
@@ -532,7 +527,6 @@ class TemplateBasedDashboardGenerator:
             symbols = [t["symbol"] for t in trades]
             values = [t["return"] for t in trades]
             waterfall_config = styling["waterfall"]
-            layout_config = self.template["layout"]["structure"]["top_left"]
 
             # Enhanced text positioning with template thresholds
             text_positions = []
@@ -562,9 +556,11 @@ class TemplateBasedDashboardGenerator:
                     ),
                     marker=dict(
                         color=[
-                            colors["sensylate_palette"]["positive"]
-                            if v >= 0
-                            else colors["sensylate_palette"]["negative"]
+                            (
+                                colors["sensylate_palette"]["positive"]
+                                if v >= 0
+                                else colors["sensylate_palette"]["negative"]
+                            )
                             for v in values
                         ],
                         line=dict(
@@ -592,9 +588,11 @@ class TemplateBasedDashboardGenerator:
 
             # Color by profit/loss using template colors
             marker_colors = [
-                colors["sensylate_palette"]["positive"]
-                if r > 0
-                else colors["sensylate_palette"]["negative"]
+                (
+                    colors["sensylate_palette"]["positive"]
+                    if r > 0
+                    else colors["sensylate_palette"]["negative"]
+                )
                 for r in returns
             ]
 
@@ -697,9 +695,11 @@ class TemplateBasedDashboardGenerator:
             weeks = [d["week"] for d in data["weekly_data"]]
             returns = [d["return"] for d in data["weekly_data"]]
             bar_colors = [
-                colors["sensylate_palette"]["positive"]
-                if r > 0
-                else colors["sensylate_palette"]["negative"]
+                (
+                    colors["sensylate_palette"]["positive"]
+                    if r > 0
+                    else colors["sensylate_palette"]["negative"]
+                )
                 for r in returns
             ]
 
@@ -735,8 +735,6 @@ class TemplateBasedDashboardGenerator:
             )
 
         # CYCLE 10: Calculate 2x2 grid positioning with equal quadrants
-        layout_structure = self.template["layout"]["structure"]
-        spacing = styling["spacing"]
 
         # 2x2 Grid positioning with chart spacing from template
         chart_spacing = styling["spacing"][

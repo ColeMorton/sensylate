@@ -3,8 +3,8 @@
 Model training script with comprehensive configuration support.
 
 Usage:
-    python scripts/model_training.py --config configs/model_training.yaml
-    python scripts/model_training.py --config configs/model_training.yaml --env prod
+    python scripts/model_training.py --config config/pipelines/model_training.yaml
+    python scripts/model_training.py --config config/pipelines/model_training.yaml --env prod
 """
 
 import argparse

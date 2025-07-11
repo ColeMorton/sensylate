@@ -3,9 +3,9 @@
 Report generation script with comprehensive configuration support.
 
 Usage:
-    python scripts/report_generation.py --config configs/report_generation.yaml
+    python scripts/report_generation.py --config config/pipelines/report_generation.yaml
     python scripts/report_generation.py \\
-        --config configs/report_generation.yaml --env prod
+        --config config/pipelines/report_generation.yaml --env prod
 """
 
 import argparse

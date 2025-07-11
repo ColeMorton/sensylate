@@ -467,9 +467,11 @@ class FREDEconomicService(BaseFinancialService):
                         "latest_value": latest_value,
                         "latest_date": valid_observations[-1]["date"],
                         "yoy_change": round(yoy_change, 2) if yoy_change else None,
-                        "recent_trend": "increasing"
-                        if len(values) >= 3 and values[-1] > values[-3]
-                        else "decreasing",
+                        "recent_trend": (
+                            "increasing"
+                            if len(values) >= 3 and values[-1] > values[-3]
+                            else "decreasing"
+                        ),
                     }
 
             except Exception as e:

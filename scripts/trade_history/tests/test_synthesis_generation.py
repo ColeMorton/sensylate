@@ -328,9 +328,9 @@ def test_live_monitor_generation():
                         "company": pos["company"],
                         "return": pos["current_return"],
                         "strategy": pos["strategy"],
-                        "momentum": "strong"
-                        if pos["current_return"] > 0.10
-                        else "moderate",
+                        "momentum": (
+                            "strong" if pos["current_return"] > 0.10 else "moderate"
+                        ),
                     }
                 )
 
@@ -362,16 +362,16 @@ def test_live_monitor_generation():
         strong_momentum = len([p for p in positions if p["current_return"] > 0.10])
 
         return {
-            "positive_rate": positive_positions / total_positions
-            if total_positions > 0
-            else 0,
+            "positive_rate": (
+                positive_positions / total_positions if total_positions > 0 else 0
+            ),
             "strong_momentum_count": strong_momentum,
             "developing_positions": total_positions
             - positive_positions
             - strong_momentum,
-            "overall_strength": "strong"
-            if positive_positions / total_positions > 0.6
-            else "moderate",
+            "overall_strength": (
+                "strong" if positive_positions / total_positions > 0.6 else "moderate"
+            ),
         }
 
     # Test live monitor generation

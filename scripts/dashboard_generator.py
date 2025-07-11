@@ -574,7 +574,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "--config",
-        default="configs/dashboard_generation.yaml",
+        default="config/pipelines/dashboard_generation.yaml",
         help="Path to YAML configuration file",
     )
     parser.add_argument(

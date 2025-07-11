@@ -115,12 +115,10 @@ class InvestmentSynthesizer:
             if os.path.exists(discovery_file_path):
                 with open(discovery_file_path, "r") as f:
                     self.discovery_data = json.load(f)
-                print(f"📂 Loaded discovery data for context")
+                print("📂 Loaded discovery data for context")
                 return True
             else:
-                print(
-                    f"⚠️ Discovery data not found, proceeding with analysis data only"
-                )
+                print("⚠️ Discovery data not found, proceeding with analysis data only")
                 return False
         except Exception as e:
             print(f"⚠️ Could not load discovery data: {str(e)}")
@@ -284,7 +282,7 @@ class InvestmentSynthesizer:
         """Generate comprehensive markdown investment report"""
         executive_summary = synthesis_data["executive_summary"]
         investment_thesis = synthesis_data["investment_thesis"]
-        valuation_analysis = synthesis_data["valuation_analysis"]
+        # valuation_analysis = synthesis_data["valuation_analysis"]  # Unused variable
         investment_framework = synthesis_data["investment_framework"]
         supporting_evidence = synthesis_data["supporting_evidence"]
 
@@ -292,52 +290,26 @@ class InvestmentSynthesizer:
         recommendation = executive_summary["investment_recommendation"]
         confidence = executive_summary["confidence_level"]
 
-        markdown_content = f"""# Investment Analysis: {company_name} ({self.ticker})
+        # Generate comprehensive synthesis JSON for Claude command consumption
+        # This script focuses on data processing; document structure is defined in template
+        markdown_content = f"""# Investment Synthesis Data for {company_name} ({self.ticker})
 
-**Date:** {self.timestamp.strftime("%B %d, %Y")}
-**Analyst:** Fundamental Analysis Engine
-**Recommendation:** {recommendation}
-**Confidence Level:** {confidence}
+**Generated**: {self.timestamp.strftime("%B %d, %Y")}
+**Framework**: Python Data Processing → Claude Template Synthesis
+**Template**: fundamental_analysis_template.md
 
-## Executive Summary
+## Data Summary
+- **Investment Thesis**: {investment_thesis['thesis_statement'][:100]}...
+- **Recommendation**: {recommendation}
+- **Confidence**: {confidence}
 
-{self._format_executive_summary(executive_summary)}
+## Note
+This is intermediate synthesis data. Final fundamental analysis document should be generated
+using the fundamental_analyst_synthesize Claude command which follows the template specification
+at ./templates/analysis/fundamental_analysis_template.md
 
-## Investment Thesis
-
-### Core Investment Proposition
-{investment_thesis['thesis_statement']}
-
-### Key Investment Themes
-{self._format_key_themes(investment_thesis['key_themes'])}
-
-### Value Proposition
-{investment_thesis['value_proposition']}
-
-## Financial Analysis
-
-### Financial Health Assessment
-{self._format_financial_health()}
-
-### Competitive Position
-{self._format_competitive_position()}
-
-## Valuation Analysis
-
-{self._format_valuation_analysis(valuation_analysis)}
-
-## Risk Assessment
-
-### Primary Risk Factors
-{self._format_risk_factors(executive_summary['primary_risks'])}
-
-### Risk Mitigation Strategies
-{self._format_risk_mitigation()}
-
-## Investment Framework
-
-### Recommended Approach
-{investment_framework['investment_approach']}
+## Synthesis Data Structure
+All analysis components have been processed and structured for template-compliant document generation.
 
 ### Position Sizing & Entry Strategy
 {self._format_investment_strategy(investment_framework)}
@@ -676,11 +648,13 @@ class InvestmentSynthesizer:
 
         return {
             "overall_assessment": assessment,
-            "pe_assessment": "Reasonable"
-            if 15 <= pe_ratio <= 25
-            else "Extended"
-            if pe_ratio > 25
-            else "Attractive",
+            "pe_assessment": (
+                "Reasonable"
+                if 15 <= pe_ratio <= 25
+                else "Extended"
+                if pe_ratio > 25
+                else "Attractive"
+            ),
             "valuation_metrics_summary": {
                 "pe_ratio": pe_ratio,
                 "pb_ratio": pb_ratio,
@@ -1090,7 +1064,7 @@ The investment thesis is supported by quantitative analysis and qualitative asse
         with open(md_filepath, "w") as f:
             f.write(markdown_content)
 
-        print(f"💾 Synthesis results saved:")
+        print("💾 Synthesis results saved:")
         print(f"   JSON: {json_filepath}")
         print(f"   Markdown: {md_filepath}")
 

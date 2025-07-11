@@ -40,6 +40,55 @@ class ConfigLoader:
     def load_config(self, config_path: str) -> Dict[str, Any]:
         """Load a single YAML configuration file."""
         path = Path(config_path)
+
+        # Backward compatibility: check old configs/ path if new path doesn't exist
+        if not path.exists() and "configs/" in str(config_path):
+            # Map old paths to new structure
+            path_str = str(config_path)
+            if "configs/dashboard_generation.yaml" in path_str:
+                new_path = Path(
+                    path_str.replace(
+                        "configs/dashboard_generation.yaml",
+                        "config/pipelines/dashboard_generation.yaml",
+                    )
+                )
+            elif "configs/data_extraction.yaml" in path_str:
+                new_path = Path(
+                    path_str.replace(
+                        "configs/data_extraction.yaml",
+                        "config/pipelines/data_extraction.yaml",
+                    )
+                )
+            elif "configs/feature_engineering.yaml" in path_str:
+                new_path = Path(
+                    path_str.replace(
+                        "configs/feature_engineering.yaml",
+                        "config/pipelines/feature_engineering.yaml",
+                    )
+                )
+            elif "configs/model_training.yaml" in path_str:
+                new_path = Path(
+                    path_str.replace(
+                        "configs/model_training.yaml",
+                        "config/pipelines/model_training.yaml",
+                    )
+                )
+            elif "configs/report_generation.yaml" in path_str:
+                new_path = Path(
+                    path_str.replace(
+                        "configs/report_generation.yaml",
+                        "config/pipelines/report_generation.yaml",
+                    )
+                )
+            else:
+                new_path = Path(path_str.replace("configs/", "config/"))
+
+            if new_path.exists():
+                print(
+                    f"WARNING: Using deprecated path {config_path}. Please update to {new_path}"
+                )
+                path = new_path
+
         if not path.exists():
             raise FileNotFoundError(f"Configuration file not found: {config_path}")
 
@@ -135,11 +184,15 @@ class ConfigLoader:
         Returns:
             Complete financial services configuration
         """
-        config_file = self.config_dir / "financial_services.yaml"
+        # Check new location first
+        config_file = self.config_dir / "services" / "financial_services.yaml"
         if not config_file.exists():
-            raise FileNotFoundError(
-                f"Financial services config not found: {config_file}"
-            )
+            # Try old location for backward compatibility
+            config_file = self.config_dir / "financial_services.yaml"
+            if not config_file.exists():
+                raise FileNotFoundError(
+                    f"Financial services config not found: {config_file}"
+                )
 
         return self.load_with_environment(str(config_file), env)
 
