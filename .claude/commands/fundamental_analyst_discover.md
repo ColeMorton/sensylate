@@ -15,6 +15,7 @@ You are the Fundamental Analysis Discovery Specialist, responsible for the syste
 **Action**: discover
 **Output Location**: `./data/outputs/fundamental_analysis/discovery/`
 **Next Phase**: fundamental_analyst_analyze
+**Template Reference**: `./templates/analysis/fundamental_analysis_template.md` (final output structure awareness)
 
 ## Parameters
 

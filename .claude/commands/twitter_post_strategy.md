@@ -74,6 +74,11 @@ python3 team-workspace/shared/validate-before-execution.py twitter-post-strategy
 
 ## Enhanced Content Generation Method
 
+**TEMPLATE REFERENCE**: All content generation MUST follow the structure and standards defined in:
+```
+./templates/social-media/twitter_post_strategy_template.md
+```
+
 **Comprehensive MCP Integration for Content Creation:**
 
 Use the following MCP tools directly for enhanced content generation:
@@ -207,206 +212,423 @@ TRANSPARENCY ENHANCEMENT REQUIREMENTS:
 
 ### Multi-Source Analysis Protocol
 
-**Step 1: PRIMARY - TrendSpider Tabular Analysis** (`@data/images/trendspider_tabular/{TICKER}_{YYYYMMDD}.png`)
-- **Tabular Data Extraction** (LEFT PANEL):
-  - Market, Data Analyzed period, Net/Asset Performance %
-  - Beta, Positions, Wins %, Losses %, Max DD %
-  - Average Win/Loss %, Average Return %, Rew/Risk Ratio
-  - Expectancy, Exposure %, Avg. Length, Sharpe, Sortino
-  - Win Streak max/avg, Loss Streak max/avg
-  - Net Perf 1y, Trades/Month, R. vol
+## Simplified Data Validation Protocol (ROBUST & RELIABLE)
 
-- **Seasonality Chart Extraction** (RIGHT PANEL):
-  - **CRITICAL**: Extract each month's percentage with extreme precision
-  - Monthly performance percentages (Jan-Dec bars) - VALIDATE EACH BAR HEIGHT
-  - Current month timing and historical strength - DOUBLE-CHECK CURRENT MONTH
-  - Positive/negative period patterns
-  - Mean change % trend line
-  - Best/worst performing months identification
-  - **MANDATORY**: Cross-reference bar heights with percentage labels if visible
+### Seasonality Data Extraction (Primary: TrendSpider)
+**Robust Visual Analysis with Graceful Degradation:**
 
-**Step 2: Fundamental Analysis Integration** (`@data/outputs/fundamental_analysis/{TICKER}_{YYYYMMDD}.md`)
+```python
+def extract_seasonality_data(trendspider_image_path):
+    try:
+        # Primary Method: TrendSpider Visual Analysis
+        monthly_data = analyze_seasonality_chart(trendspider_image_path)
+
+        # Confidence Assessment
+        confidence_score = assess_extraction_confidence(monthly_data)
+
+        if confidence_score >= 0.95:
+            return {
+                'method': 'trendspider_visual',
+                'confidence': confidence_score,
+                'monthly_performance': monthly_data,
+                'current_month': monthly_data[current_month],
+                'best_months': get_top_months(monthly_data, top=3),
+                'worst_months': get_bottom_months(monthly_data, bottom=3)
+            }
+        elif confidence_score >= 0.80:
+            # Flag for manual review but proceed
+            return extract_with_uncertainty_flags(monthly_data, confidence_score)
+        else:
+            # Fall back to CSV data
+            return fallback_to_csv_data()
+
+    except ExtractionError:
+        return fallback_to_csv_data()
+
+def assess_extraction_confidence(monthly_data):
+    confidence_factors = {
+        'no_outliers': all(-50 <= perf <= 100 for perf in monthly_data.values()),
+        'data_completeness': len(monthly_data) == 12,
+        'logical_consistency': validate_seasonal_patterns(monthly_data),
+        'visual_clarity': assess_chart_clarity(trendspider_image_path)
+    }
+    return sum(confidence_factors.values()) / len(confidence_factors)
+```
+
+**Fallback Method: CSV Data Validation**
+```python
+def fallback_to_csv_data():
+    csv_data = load_csv_strategy_data()
+    return {
+        'method': 'csv_fallback',
+        'confidence': 0.75,  # Lower confidence for fallback
+        'note': 'TrendSpider extraction failed, using CSV historical data',
+        'monthly_performance': csv_data.monthly_averages,
+        'current_month': csv_data.monthly_averages[current_month],
+        'limitation': 'General historical patterns, not strategy-specific'
+    }
+```
+
+**Error Handling: Graceful Degradation**
+```python
+def handle_seasonality_extraction_failure():
+    return {
+        'method': 'conservative_approach',
+        'confidence': 0.60,
+        'seasonal_language': 'general_timing',  # Use non-specific language
+        'monthly_performance': None,
+        'current_month_note': 'Historical timing analysis inconclusive',
+        'recommendation': 'Focus on performance metrics and fundamental analysis'
+    }
+```
+
+### Data Source Conflict Resolution (Automated)
+```python
+def resolve_trendspider_csv_conflicts(trendspider_data, csv_data):
+    if trendspider_data and csv_data:
+        variance_threshold = 0.15  # 15% variance tolerance
+
+        conflicts = detect_metric_conflicts(trendspider_data, csv_data, variance_threshold)
+
+        if conflicts:
+            # Apply TrendSpider Authority Protocol
+            resolution = {
+                'authority_source': 'trendspider',
+                'authoritative_data': trendspider_data,
+                'conflicts_detected': conflicts,
+                'variance_levels': calculate_variances(conflicts),
+                'confidence_adjustment': -0.05,  # Reduce confidence due to conflicts
+                'metadata_note': f'Data conflicts resolved using TrendSpider authority: {conflicts}'
+            }
+            return resolution
+        else:
+            # No conflicts, high confidence
+            return {
+                'authority_source': 'trendspider',
+                'authoritative_data': trendspider_data,
+                'validation_status': 'cross_validated',
+                'confidence_boost': +0.05
+            }
+    else:
+        # Single source available
+        return use_available_source(trendspider_data or csv_data)
+```
+
+## Data Authority Protocol (STANDARDIZED IMPLEMENTATION)
+
+### Authority Hierarchy (Non-Negotiable)
+```python
+DATA_AUTHORITY_HIERARCHY = {
+    'PRIMARY': {
+        'source': 'TrendSpider Tabular Data',
+        'authority_level': 1.0,
+        'data_types': [
+            'net_performance', 'win_rate', 'avg_win', 'avg_loss',
+            'reward_risk_ratio', 'max_drawdown', 'sharpe_ratio',
+            'sortino_ratio', 'expectancy', 'exposure_percentage',
+            'avg_trade_length', 'total_trades'
+        ],
+        'confidence_multiplier': 1.0
+    },
+    'SECONDARY': {
+        'source': 'TrendSpider Seasonality Chart',
+        'authority_level': 0.95,
+        'data_types': [
+            'monthly_performance', 'current_month_timing',
+            'best_months', 'worst_months', 'seasonal_patterns'
+        ],
+        'confidence_multiplier': 0.95
+    },
+    'VALIDATION_ONLY': {
+        'source': 'CSV Strategy Data',
+        'authority_level': 0.75,
+        'data_types': [
+            'strategy_type', 'short_window', 'long_window',
+            'backup_metrics', 'historical_validation'
+        ],
+        'confidence_multiplier': 0.75,
+        'usage': 'Cross-validation and parameter extraction only'
+    }
+}
+```
+
+### Conflict Resolution Protocol (Automated)
+```python
+def resolve_data_conflicts(trendspider_data, csv_data, conflict_threshold=0.10):
+    """
+    Automatically resolve conflicts using standardized authority protocol
+    """
+    conflicts = []
+    resolutions = {}
+
+    for metric in ['net_performance', 'win_rate', 'avg_win', 'avg_loss']:
+        if metric in trendspider_data and metric in csv_data:
+            ts_value = trendspider_data[metric]
+            csv_value = csv_data[metric]
+
+            variance = abs(ts_value - csv_value) / max(ts_value, csv_value)
+
+            if variance > conflict_threshold:
+                conflicts.append({
+                    'metric': metric,
+                    'trendspider_value': ts_value,
+                    'csv_value': csv_value,
+                    'variance': variance,
+                    'resolution': 'trendspider_authority'
+                })
+
+                # Apply TrendSpider Authority
+                resolutions[metric] = {
+                    'authoritative_value': ts_value,
+                    'source': 'trendspider',
+                    'confidence': DATA_AUTHORITY_HIERARCHY['PRIMARY']['confidence_multiplier'],
+                    'conflict_noted': True,
+                    'variance_percentage': variance * 100
+                }
+            else:
+                # No conflict, use TrendSpider as primary
+                resolutions[metric] = {
+                    'authoritative_value': ts_value,
+                    'source': 'trendspider',
+                    'confidence': 1.0,
+                    'cross_validated': True
+                }
+
+    return {
+        'conflicts_detected': len(conflicts),
+        'conflict_details': conflicts,
+        'authoritative_resolutions': resolutions,
+        'overall_confidence': calculate_overall_confidence(resolutions)
+    }
+```
+
+### Data Source Selection Logic (Implemented)
+```python
+def select_authoritative_data(available_sources):
+    """
+    Select most authoritative data source based on availability and hierarchy
+    """
+    if 'trendspider_tabular' in available_sources:
+        return {
+            'primary_source': 'trendspider_tabular',
+            'authority_level': DATA_AUTHORITY_HIERARCHY['PRIMARY']['authority_level'],
+            'data_confidence': 1.0,
+            'validation_sources': ['trendspider_seasonality', 'csv_strategy'],
+            'recommended_usage': 'Use TrendSpider as authoritative, CSV for validation only'
+        }
+    elif 'csv_strategy' in available_sources:
+        return {
+            'primary_source': 'csv_strategy',
+            'authority_level': DATA_AUTHORITY_HIERARCHY['VALIDATION_ONLY']['authority_level'],
+            'data_confidence': 0.75,
+            'validation_sources': [],
+            'recommended_usage': 'Use CSV as primary, note limitations in metadata',
+            'limitation_note': 'TrendSpider data unavailable, using CSV fallback'
+        }
+    else:
+        raise DataUnavailableError("No authoritative data sources available")
+```
+
+### Metadata Documentation Protocol
+```python
+def document_authority_resolution(resolution_results):
+    """
+    Document data authority decisions for transparency and validation
+    """
+    return {
+        'data_authority_protocol': {
+            'primary_source': resolution_results['primary_source'],
+            'authority_hierarchy_applied': True,
+            'conflicts_detected': resolution_results.get('conflicts_detected', 0),
+            'conflict_resolutions': resolution_results.get('conflict_details', []),
+            'confidence_adjustments': resolution_results.get('confidence_adjustments', {}),
+            'data_quality_score': resolution_results.get('overall_confidence', 0.75),
+            'validation_notes': resolution_results.get('validation_notes', [])
+        },
+        'transparency_metrics': {
+            'source_agreement_percentage': calculate_source_agreement(resolution_results),
+            'authority_protocol_version': '2.0',
+            'conflict_resolution_method': 'trendspider_authority_protocol'
+        }
+    }
+```
+
+### Authority Protocol Standards (Operational)
+**Conflict Resolution Rules:**
+- **IF** TrendSpider vs CSV discrepancy > 10% → Use TrendSpider, document conflict
+- **IF** TrendSpider unavailable → Use CSV with limitations noted
+- **IF** Both unavailable → Graceful degradation with conservative language
+
+**Confidence Adjustments:**
+- **TrendSpider + CSV Agreement**: Confidence boost +0.05
+- **TrendSpider Authority (conflict)**: Confidence adjustment -0.05
+- **CSV Fallback Only**: Confidence capped at 0.75
+- **Graceful Degradation**: Confidence capped at 0.60
+
+**Documentation Requirements:**
+- All authority decisions logged in metadata
+- Conflict variance percentages documented
+- Data source limitations clearly stated
+- Confidence level adjustments transparent
+
+### Multi-Source Data Integration (Simplified)
+
+**Step 1: TrendSpider Tabular Analysis** (PRIMARY)
+- **Performance Metrics Extraction**:
+  - Net Performance %, Win Rate %, Avg Win/Loss %
+  - Reward/Risk Ratio, Max Drawdown, Sharpe/Sortino
+  - Expectancy, Exposure %, Average Trade Length
+  - Total Trades, Win/Loss Streaks
+
+**Step 2: Fundamental Analysis Integration**
 - Extract investment thesis and key business drivers
-- Identify valuation metrics (P/E, PEG, enterprise value ratios)
+- Identify valuation metrics and price targets
 - Note growth catalysts and risk factors
-- Extract price targets and analyst sentiment
+- Generate fundamental context for signal timing
 
-**Step 3: Technical Context** (`@data/raw/analysis_misc/{TICKER}_{YYYYMMDD}.md`)
+**Step 3: Technical Context Enhancement**
 - Extract current chart patterns and technical signals
 - Note relative performance vs benchmarks
-- Identify support/resistance levels or trend analysis
-- **Supplement with Yahoo Finance MCP server**:
-  - Use MCP tool `get_stock_fundamentals(ticker)` for current price/volume/metrics
-  - Use MCP tool `get_market_data_summary(ticker, period)` for recent performance
-  - Cross-reference with real-time market data for validation
-  - Benefit from MCP caching (15-min TTL), retry logic, and standardized error handling
+- **Real-time Market Data Integration**:
+  - Use MCP tool `get_stock_fundamentals(ticker)` for current price/volume
+  - Cross-reference with live market data for validation
+  - Benefit from MCP caching and standardized error handling
 
-**Step 4: Strategy Parameters from CSV** (`@data/raw/analysis_strategy/{TICKER}_{YYYYMMDD}.csv`)
-- **REQUIRED**: Extract strategy type and window parameters regardless of TrendSpider availability
+**Step 4: Strategy Parameters Extraction**
 - Parse CSV headers: Strategy Type, Short Window, Long Window
 - Format as: "dual [SMA/EMA] ([short]/[long]) cross strategy"
-- Use for strategy identification in post content
-- Cross-reference performance metrics for validation only
+- Use for strategy identification and validation
 
-**Data Priority Hierarchy:**
-1. TrendSpider tabular metrics override all other performance data
-2. TrendSpider seasonality chart is authoritative for timing analysis
-3. Fundamental analysis provides investment context
-4. Technical misc provides current setup context
-5. CSV data used only for missing metrics validation
+### Validation Quality Gates (Simplified)
+```markdown
+SEASONALITY_VALIDATION_GATES = {
+    'extraction_confidence': 0.80,  # Minimum confidence to proceed
+    'outlier_detection': True,      # Flag values >100% or <-50%
+    'completeness_check': True,     # Ensure 12 months of data
+    'consistency_validation': True,  # Logical seasonal patterns
+    'fallback_protocols': True      # Graceful degradation available
+}
 
-**CRITICAL VALIDATION REQUIREMENTS:**
-1. **Seasonality Accuracy**: Read each monthly bar height with extreme care
-2. **Current Month Verification**: Confirm current month percentage matches visual bar
-3. **Metric Cross-Check**: Validate key metrics against multiple visible sources
-4. **Data Consistency**: Flag any metrics that seem inconsistent or outlying
+ERROR_HANDLING_PROTOCOL = {
+    'high_confidence': 'Use extracted data with full specificity',
+    'medium_confidence': 'Use extracted data with uncertainty qualifiers',
+    'low_confidence': 'Fall back to CSV data with limitations noted',
+    'extraction_failure': 'Use general timing language, focus on performance metrics'
+}
+```
+
+### Data Integration Workflow (Robust)
+**For each ticker analysis:**
+
+1. **Identify Available Data**: Check all data directories for matching files
+2. **Load TrendSpider Data**: Primary source with confidence assessment
+3. **Seasonality Extraction**: Robust validation with fallback protocols
+4. **Cross-Reference Context**: Integrate fundamental and technical analysis
+5. **Conflict Resolution**: Apply TrendSpider authority protocol when needed
+6. **Signal Contextualization**: Frame performance as validation for TODAY'S entry
+7. **Final Validation**: Review data consistency with confidence scoring
 
 ### Bespoke Hook Generation
 
-**CRITICAL FORMATTING REQUIREMENT: NO BOLD FORMATTING ALLOWED**
-- Do not use asterisks (*) for bold text anywhere in the generated content
-- Use plain text throughout all sections
-- Emphasis should be achieved through emojis, structure, and word choice only
+## Embedded Hook Generation Framework (SELF-CONTAINED)
 
-**Hook Creation Protocol (280 character limit):**
+### Hook Creation Logic (Internal Implementation)
 
-**Step 1: Analyze Performance Highlights**
-- Identify the most compelling metric (total return %, reward/risk ratio, win rate, drawdown reduction)
-- Extract strategy parameters: [SMA/EMA] ([short]/[long])
-- Note any standout seasonal strength or technical setup
-
-**Step 2: Generate Unique Hook Based on Data**
-
-**Hook Creation Framework:**
-
-1. **Identify Standout Metrics** (in priority order):
-   - Exceptional total return (>1000%)
-   - High reward/risk ratio (>3.0)
-   - Strong current month seasonality (>65%)
-   - Low win rate with asymmetric returns (<45% win but high R/R)
-   - Significant drawdown reduction vs buy-and-hold
-   - Compelling pattern confluence (technical + fundamental)
-   - Notable streak statistics
-   - Exceptional Sharpe/Sortino ratios
-
-2. **Craft Natural Hook** (280 characters max):
-   - Lead with emoji (📈, 🚨, 🔥, 💎, 🎯)
-   - Include $TICKER and strategy parameters naturally
-   - Highlight 1-2 most compelling metrics
-   - End with implied action or curiosity driver
-
-3. **Hook Writing Guidelines**:
-   - Use active voice and present tense
-   - Include specific numbers, not generalizations
-   - Balance excitement with credibility
-   - Avoid clichés like "This one simple trick"
-   - Make the strategy parameters flow naturally
-   - Create urgency through timing or confluence
-
-**Example Hook Constructions:**
-- "📈 $TICKER dual SMA (X/Y) cross delivered Z% returns with just A% win rate - here's how asymmetric risk/reward creates wealth."
-- "🚨 $TICKER flashed a rare SMA (X/Y) entry signal today with Z% historical returns and perfect seasonal timing in [Month]."
-- "🔥 This $TICKER EMA (X/Y) strategy cuts drawdown by Z% while capturing A% of upside - defensive edge meets growth."
-- "💎 $TICKER SMA (X/Y) cross: Z trades, A% wins, but winners average B% vs C% losses. Math > luck."
-- "🎯 $TICKER dual SMA (X/Y) triggered today as [pattern] completes and [fundamental catalyst] accelerates."
-
-### Universal Template Structure (NO BOLD FORMATTING)
-
+**Step 1: Identify Standout Metrics (Data-Driven)**
+```python
+def identify_standout_metrics(trendspider_data, csv_data):
+    standout_criteria = {
+        'exceptional_return': trendspider_data.net_performance > 1000,
+        'high_reward_risk': trendspider_data.reward_risk_ratio > 3.0,
+        'strong_seasonality': trendspider_data.current_month_performance > 65,
+        'asymmetric_returns': (trendspider_data.win_rate < 45 and trendspider_data.reward_risk_ratio > 2.0)
+    }
+    return max(standout_criteria, key=standout_criteria.get)
 ```
-[BESPOKE HOOK - target 280 characters (NOT MORE!), strategy-specific]
+
+**Step 2: Hook Construction Framework (280 chars max)**
+```python
+def generate_hook(ticker, strategy_params, standout_metric, performance_data):
+    patterns = {
+        'exceptional_return': f"🚨 ${ticker} dual {strategy_params} delivered {performance_data.net_performance}% returns with just {performance_data.win_rate}% win rate - here's how asymmetric risk/reward creates wealth.",
+        'high_reward_risk': f"💎 ${ticker} {strategy_params}: {performance_data.total_trades} trades, {performance_data.win_rate}% wins, but winners average {performance_data.avg_win}% vs {performance_data.avg_loss}% losses. Math > luck.",
+        'strong_seasonality': f"🔥 ${ticker} flashed rare {strategy_params} signal today with {performance_data.net_performance}% historical returns and perfect {current_month} timing ({performance_data.current_month_performance}% win rate).",
+        'asymmetric_returns': f"🎯 ${ticker} {strategy_params} cuts drawdown by {performance_data.drawdown_reduction}% while capturing {performance_data.upside_capture}% of upside - defensive edge meets growth."
+    }
+
+    hook = patterns[standout_metric]
+    return hook[:280]  # Enforce character limit
+```
+
+**Step 3: Complete Post Template Structure (Internal)**
+```markdown
+def generate_post_structure(hook, ticker, strategy_data, fundamental_data, technical_data):
+    return f"""
+{hook}
+
 Here's why this signal matters. 👇
 
-✅ Strategy Performance ( $[TICKER], dual [SMA/EMA] ([short]/[long]) cross, [period])
-• Win Rate: [X]% ([total] trades)
-• Net Performance: +[X]%
-• Avg Win/Loss: +[X]% / -[X]%
-• Reward/Risk Ratio: [X]
-• Max Drawdown: -[X]% (vs B&H: -[X]%)
-• Sharpe: [X] | Sortino: [X]
-• Exposure: [X]% | Avg Trade: [X] days
-• Expectancy: $[X] per $1 risked
+✅ Strategy Performance (${ticker}, dual {strategy_data.type} ({strategy_data.short}/{strategy_data.long}) cross, {strategy_data.period} years)
+• Win Rate: {strategy_data.win_rate}% ({strategy_data.total_trades} trades)
+• Net Performance: +{strategy_data.net_performance}%
+• Avg Win/Loss: +{strategy_data.avg_win}% / -{strategy_data.avg_loss}%
+• Reward/Risk Ratio: {strategy_data.reward_risk}
+• Max Drawdown: -{strategy_data.max_drawdown}% (vs B&H: -{strategy_data.buy_hold_drawdown}%)
+• Sharpe: {strategy_data.sharpe} | Sortino: {strategy_data.sortino}
+• Exposure: {strategy_data.exposure}% | Avg Trade: {strategy_data.avg_trade_length} days
+• Expectancy: ${strategy_data.expectancy} per $1 risked
 
-📅 Seasonality Edge ([X] years)
-[Current month] timing: [Strong/Neutral/Weak based on right panel]
-• [Best months from bars]: [X]% avg performance
-• [Worst months from bars]: [X]% avg performance
-• Current month ([Month]): [X]% historical avg
-• Pattern strength: [Mean change % line observation]
+📅 Seasonality Edge ({strategy_data.period} years)
+{current_month} timing: {seasonality_assessment} ({strategy_data.current_month_performance}% positive periods)
+• Best months: {strategy_data.best_months_list}
+• Worst months: {strategy_data.worst_months_list}
+• Current month ({current_month}): {strategy_data.current_month_avg}% historical avg
+• Pattern strength: {strategy_data.seasonality_strength}
 
 🔍 Why This Signal Triggered TODAY
-• Entry Condition: [SMA/EMA] ([short]/[long]) crossover signal confirmed
-• Technical Setup: [Current chart pattern/confirmation from bridge data]
-• Fundamental Catalyst: [Key business driver supporting timing]
-• Market Context: [Real-time market conditions from Yahoo Finance bridge]
-• Risk Management: [Stop loss level, position sizing considerations]
+• Entry Condition: {strategy_data.type} ({strategy_data.short}/{strategy_data.long}) crossover signal confirmed
+• Technical Setup: {technical_data.current_setup}
+• Fundamental Catalyst: {fundamental_data.key_catalyst}
+• Market Context: Current price ${current_price} vs analyst target ${fundamental_data.price_target}
+• Risk Management: {strategy_data.reward_risk} reward/risk ratio, {strategy_data.exposure}% time in market
 
-📊 $[TICKER] Fundamentals
-[Recent earnings/guidance]
-[Key financial metrics]
-[Sector performance]
+📊 ${ticker} Fundamentals
+{fundamental_data.recent_earnings}
+{fundamental_data.key_metrics}
+{fundamental_data.sector_performance}
 
 📌 Bottom Line
-Strategy with [X]% historical returns just triggered entry signal. [Current seasonality] + [technical setup] + [fundamental catalyst] align for [conviction level] opportunity.
+Strategy with {strategy_data.net_performance}% historical returns just triggered entry signal. {seasonality_assessment} + {technical_data.setup_type} + {fundamental_data.discount_percentage}% fundamental discount align for {conviction_level} opportunity.
 
 Time to act on this live signal. 🎯
 
+Not financial advice. Historical performance doesn't guarantee future results. Trade at your own risk.
+
 #TradingSignals #TradingStrategy #TradingOpportunity #investment
+"""
 ```
 
-## Quality Assurance Checklist
+### Hook Examples Library (Internal Reference)
+```markdown
+PROVEN_HOOK_PATTERNS = {
+    'performance_focus': "📈 ${ticker} dual {strategy} delivered {return}% returns with {win_rate}% win rate - {key_insight}",
+    'timing_focus': "🚨 ${ticker} flashed rare {strategy} signal with {return}% returns + perfect {month} timing",
+    'asymmetric_focus': "💎 ${ticker} {strategy}: {trades} trades, {win_rate}% wins, but winners average {avg_win}% vs {avg_loss}% losses",
+    'defensive_focus': "🔥 ${ticker} {strategy} cuts drawdown by {reduction}% while capturing {upside}% of upside",
+    'confluence_focus': "🎯 ${ticker} {strategy} triggered as {pattern} completes and {catalyst} accelerates"
+}
+```
 
-**CRITICAL DATA VALIDATION:**
+### Hook Requirements (Embedded Standards)
+- **280 Character Limit**: Strictly enforced with automatic truncation
+- **NO BOLD FORMATTING**: Zero asterisks (*) used anywhere in generated content
+- **Strategy Parameters**: Include ticker and strategy parameters naturally
+- **Engagement Emoji**: Lead with compelling emoji (🚨, 💎, 🔥, 🎯, 📈)
+- **Urgency Creation**: Emphasize TODAY'S signal with timing elements
 
-- [ ] STRATEGY PARAMETERS EXTRACTED: Strategy Type, Short Window, Long Window from CSV
-- [ ] STRATEGY FORMATTING: Properly formatted as "dual [SMA/EMA] ([short]/[long]) cross"
-- [ ] BESPOKE HOOK CREATED: 280 character limit, includes ticker and strategy parameters
-- [ ] NO BOLD FORMATTING: Zero asterisks (*) used anywhere in generated content
-- [ ] HOOK TEMPLATE SELECTION: Appropriate template chosen based on performance metrics
-- [ ] SEASONALITY ACCURACY: Each monthly percentage verified against visual bar height
-- [ ] CURRENT MONTH CONFIRMED: Current month (June/July/etc.) percentage double-checked
-- [ ] BAR CHART PRECISION: Visual inspection of each month's bar relative to scale
-- [ ] PERCENTAGE CONSISTENCY: No month shows impossible values (>100% or negative)
-- [ ] PEAK MONTHS IDENTIFIED: Highest/lowest months correctly ranked
+### Content Generation Standards (Embedded)
 
-**Data Integration:**
-
-- [ ] All four data sources successfully accessed and parsed
-- [ ] Cross-source validation completed (ticker, dates, metrics)
-- [ ] Fundamental thesis aligns with technical strategy performance
-- [ ] Current market context incorporated from misc analysis
-
-**Content Accuracy:**
-
-- [ ] Strategy metrics match TrendSpider tabular data exactly
-- [ ] Fundamental insights reflect analysis document
-- [ ] Technical patterns consistent with misc notes
-- [ ] Visual data correlates with quantitative metrics
-- [ ] **NO CRITICAL EXTRACTION ERRORS** in seasonality or performance metrics
-
-**Engagement Optimization:**
-
-- [ ] LIVE SIGNAL URGENCY: Post leads with TODAY'S entry signal trigger
-- [ ] BESPOKE HOOK: Tailored hook under 280 characters with ticker and strategy details
-- [ ] HOOK EFFECTIVENESS: Uses proven patterns from hook_examples.md analysis
-- [ ] NO BOLD FORMATTING: Plain text throughout entire post for clean readability
-- [ ] Strategy performance validates today's signal opportunity
-- [ ] Current timing relevance clearly established (based on ACCURATE seasonality)
-- [ ] Content creates actionable urgency for immediate positioning
-- [ ] Call-to-action reflects live trading opportunity
-
-**Risk Management & Disclaimer Requirements:**
-
-- [ ] **Explicit Disclaimer**: Include clear investment disclaimer in post content
-- [ ] **Data Source Attribution**: Specify data sources and potential limitations
-- [ ] **Performance Disclaimers**: Historical performance disclaimers for strategy data
-- [ ] **Uncertainty Acknowledged**: Confidence levels and risks explicitly mentioned
-- [ ] **No Guarantees**: Language avoids promises of returns
-- [ ] **TrendSpider Authority**: When conflicts exist, TrendSpider data takes precedence over CSV
-- [ ] **Signal Risk Warning**: Appropriate risk warnings for live trading signals
-- [ ] **Opinion Framework**: Clearly frame analysis as research opinion, not investment advice
-
-## Data Integration Workflow
-
+#### Data Integration Workflow (Self-Contained)
 **For each ticker analysis:**
 
 1. **Identify Available Data**: Check all four directories for matching ticker/date files
@@ -421,8 +643,7 @@ Time to act on this live signal. 🎯
 6. **Synthesize Narrative**: Lead with live signal urgency, support with comprehensive analysis
 7. **FINAL VALIDATION**: Review seasonality data for logical consistency and accuracy
 
-## Common Integration Challenges
-
+#### Common Integration Challenges (Self-Contained Solutions)
 **Handle systematically:**
 
 - **SEASONALITY EXTRACTION ERRORS**:
@@ -435,34 +656,56 @@ Time to act on this live signal. 🎯
 - **Complex Fundamentals**: Extract 2-3 key investment themes maximum
 - **Visual Ambiguity**: If chart is unclear, note uncertainty rather than guess
 
-## Output Requirements
+## Quality Assurance Framework (Embedded)
 
-Deliver comprehensive analysis featuring:
+### Critical Data Validation (Self-Contained)
+- [ ] **STRATEGY PARAMETERS EXTRACTED**: Strategy Type, Short Window, Long Window from CSV
+- [ ] **STRATEGY FORMATTING**: Properly formatted as "dual [SMA/EMA] ([short]/[long]) cross"
+- [ ] **BESPOKE HOOK CREATED**: 280 character limit, includes ticker and strategy parameters
+- [ ] **NO BOLD FORMATTING**: Zero asterisks (*) used anywhere in generated content
+- [ ] **HOOK TEMPLATE SELECTION**: Appropriate template chosen based on performance metrics
+- [ ] **SEASONALITY ACCURACY**: Each monthly percentage verified against visual bar height
+- [ ] **CURRENT MONTH CONFIRMED**: Current month (June/July/etc.) percentage double-checked
+- [ ] **BAR CHART PRECISION**: Visual inspection of each month's bar relative to scale
+- [ ] **PERCENTAGE CONSISTENCY**: No month shows impossible values (>100% or negative)
+- [ ] **PEAK MONTHS IDENTIFIED**: Highest/lowest months correctly ranked
 
-1. **Multi-source data integration** with clear source attribution
-2. **Quantitative strategy performance** from TrendSpider tabular data
-3. **Fundamental investment context** from analysis documents
-4. **Current technical setup** from misc and visual sources
-5. **Cohesive narrative** linking all data points
-6. **Data confidence assessment** noting any limitations
+### Engagement Optimization Standards (Self-Contained)
+- [ ] **LIVE SIGNAL URGENCY**: Post leads with TODAY'S entry signal trigger
+- [ ] **BESPOKE HOOK**: Tailored hook under 280 characters with ticker and strategy details
+- [ ] **HOOK EFFECTIVENESS**: Uses proven patterns from hook examples analysis
+- [ ] **NO BOLD FORMATTING**: Plain text throughout entire post for clean readability
+- [ ] Strategy performance validates today's signal opportunity
+- [ ] Current timing relevance clearly established (based on ACCURATE seasonality)
+- [ ] Content creates actionable urgency for immediate positioning
+- [ ] Call-to-action reflects live trading opportunity
 
-## Export Protocol
+### Risk Management & Disclaimer Requirements (Self-Contained)
+- [ ] **Explicit Disclaimer**: Include clear investment disclaimer in post content
+- [ ] **Data Source Attribution**: Specify data sources and potential limitations
+- [ ] **Performance Disclaimers**: Historical performance disclaimers for strategy data
+- [ ] **Uncertainty Acknowledged**: Confidence levels and risks explicitly mentioned
+- [ ] **No Guarantees**: Language avoids promises of returns
+- [ ] **TrendSpider Authority**: When conflicts exist, TrendSpider data takes precedence over CSV
+- [ ] **Signal Risk Warning**: Appropriate risk warnings for live trading signals
+- [ ] **Opinion Framework**: Clearly frame analysis as research opinion, not investment advice
 
-**REQUIRED: Save Twitter-ready content to:**
+## Export Protocol (Self-Contained)
+
+### File Output Requirements
+**Primary Output File:**
 ```
 ./data/outputs/twitter_post_strategy/{TICKER}_{YYYYMMDD}.md
 ```
 
 **File contains ONLY the generated X post content for direct copy/paste to Twitter.**
 
-**Additional analysis documentation saved to:**
-```
-./data/outputs/twitter_post_strategy/{TICKER}_{YYYYMMDD}_analysis.md
-```
-
+### Output Standards (Embedded)
 **Export includes:**
 - Main file: Clean X post content only
 - Analysis file: Data source attribution, methodology, quality assurance
+- Content ready for immediate publication without modification
+- Complete audit trail for validation and compliance
 
 ## Command Usage
 

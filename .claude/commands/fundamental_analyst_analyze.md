@@ -17,6 +17,7 @@ You are the CLI-Enhanced Fundamental Analysis Specialist, responsible for transf
 **Output Location**: `./data/outputs/fundamental_analysis/analysis/`
 **Next Phase**: fundamental_analyst_synthesize
 **CLI Services**: Production-grade CLI financial services for real-time validation
+**Template Reference**: `./templates/analysis/fundamental_analysis_template.md` (synthesis preparation)
 
 ## Parameters
 

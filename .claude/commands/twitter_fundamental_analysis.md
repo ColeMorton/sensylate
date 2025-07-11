@@ -131,6 +131,68 @@ VALIDATION-DRIVEN SUCCESS CRITERIA:
    - Ensures Twitter content reflects real-time market conditions via MCP data_quality.timestamp
    - Production-grade reliability with intelligent caching, retry logic, and health monitoring
 
+## Enhanced Data Integration Protocol
+
+### Phase 1: Multi-Source Price Validation (MANDATORY)
+**Execute all three validation sources in parallel:**
+
+1. **Yahoo Finance MCP Server** (Primary)
+   - Use MCP Tool: `get_stock_fundamentals(ticker)`
+   - Extract: fundamental_metrics.current_price
+   - Validate: data_quality.timestamp and cache_status
+
+2. **Alpha Vantage CLI Validation** (Secondary)
+   - Execute: `python alpha_vantage_cli.py quote {ticker} --env prod --output-format json`
+   - Extract: current_price and last_updated
+   - Cross-validate with Yahoo Finance price
+
+3. **FMP CLI Validation** (Tertiary)
+   - Execute: `python fmp_cli.py profile {ticker} --env prod --output-format json`
+   - Extract: price and priceChange
+   - Final cross-validation check
+
+**CRITICAL VALIDATION REQUIREMENTS:**
+- Price variance ≤2% across all three sources
+- If variance >2%: FAIL-FAST with explicit error message
+- Document price source confidence in metadata
+- Use most recent timestamp as authoritative
+
+### Phase 2: Fundamental Analysis Cross-Validation
+**Source Analysis Confidence Extraction:**
+
+1. **Load Source Analysis Confidence**
+   - Extract overall confidence from {TICKER}_{YYYYMMDD}.md header
+   - Validate confidence ≥ 0.9 for institutional baseline
+   - Extract data quality scores from analysis metadata
+
+2. **Key Metrics Consistency Validation**
+   - Cross-validate fair value ranges between analysis and real-time data
+   - Verify catalyst probabilities and impact estimates
+   - Validate financial health grades and trend assessments
+
+3. **Confidence Propagation Protocol**
+   - Apply 0.9+ institutional baseline requirement
+   - Adjust confidence based on data source agreement
+   - Document confidence adjustments in post metadata
+
+### Phase 3: Economic Context Integration
+**Enhanced Market Context Analysis:**
+
+1. **FRED Economic Indicators**
+   - Fed Funds Rate impact on sector positioning
+   - GDP growth correlation with investment thesis
+   - Employment trends affecting company fundamentals
+
+2. **CoinGecko Sentiment Correlation**
+   - Bitcoin price trend as risk appetite indicator
+   - Cryptocurrency market sentiment correlation
+   - Alternative investment flow implications
+
+3. **Interest Rate Environment Assessment**
+   - Current rate environment impact on valuation
+   - Monetary policy implications for sector/company
+   - Yield curve considerations for investment timeline
+
 4. **CSV Strategy Data** (VALIDATION ONLY): `@data/raw/analysis_strategy/`
    - Used for cross-validation and backup metrics only
    - **SUBORDINATE TO TRENDSPIDER**: When conflicts arise, defer to TrendSpider authority
@@ -225,7 +287,7 @@ VALIDATION-DRIVEN SUCCESS CRITERIA:
 
 **VALIDATION CHECKPOINT**: Before export, every post MUST pass disclaimer compliance check.
 
-## Short-Form Templates
+## Content Optimization Framework (EMBEDDED)
 
 ### Template A: Valuation Disconnect
 ```
@@ -249,7 +311,7 @@ Key assumption: [CRITICAL DRIVER]
 #[TICKER] #StockAnalysis #Valuation
 ```
 
-### Template B: Catalyst Catalyst
+### Template B: Catalyst Focus
 ```
 📈 $[TICKER] has 3 major catalysts brewing:
 
@@ -343,64 +405,133 @@ Bottom line: [INVESTMENT IMPLICATION]
 #[TICKER] #FinancialAnalysis #StockAnalysis
 ```
 
-## Content Optimization Guidelines
+### Template Selection Logic
+**Automated Template Selection Framework:**
+- **IF** (price vs fair value gap > 15%) → **Template A: Valuation Disconnect**
+- **IF** (high-probability catalysts > 2 AND catalyst probabilities > 70%) → **Template B: Catalyst Focus**
+- **IF** (moat strength > 7/10 AND competitive advantages > 3) → **Template C: Moat Analysis**
+- **IF** (contrarian insight available AND market misconception identified) → **Template D: Contrarian Take**
+- **ELSE** → **Template E: Financial Health Check**
 
-### Engagement Mechanics
+### Content Optimization Standards (Embedded)
+
+#### Engagement Mechanics
 1. **Lead with Numbers**: Specific percentages, dollar amounts, ratios
-2. **Use Emojis Strategically**: 1-2 relevant emojis max for visual appeal
+2. **Strategic Emoji Usage**: 1-2 relevant emojis max for visual appeal
 3. **Create Curiosity Gaps**: Tease insights before revealing
 4. **Include Contrarian Elements**: Challenge conventional wisdom
 5. **End with Clear Stakes**: What happens if thesis plays out
 
-### Writing Style Requirements
+#### Writing Style Requirements
 - **Plain Language**: No jargon without explanation
 - **Active Voice**: "Tesla dominates" not "Tesla is dominated by"
 - **Specific Claims**: "$45/share impact" not "significant impact"
 - **Present Tense**: Create immediacy and urgency
 - **Confident Tone**: Back analysis with conviction scores
 
-### Character Count Optimization
+#### Character Count Optimization
 - **Target Length**: 280 characters per tweet (can thread if needed)
 - **Tweet 1**: Hook + core insight
 - **Tweet 2** (if needed): Supporting data
 - **Tweet 3** (if needed): Risk/timeline/action
 
-## Quality Assurance Protocol
+## Institutional Quality Framework
 
-### Content Validation
-- [ ] **Real-Time Price**: Current market price used (NEVER analysis price)
-- [ ] **Accuracy**: All numbers match source analysis exactly (except price)
-- [ ] **Attribution**: Analysis confidence scores included
-- [ ] **Blog Link Generated**: URL follows pattern https://www.colemorton.com/blog/[ticker-lowercase]-fundamental-analysis-[yyyymmdd]/
-- [ ] **Link Included**: Full analysis link added to selected template
-- [ ] **Completeness**: Key insight fully explained
-- [ ] **Accessibility**: No unexplained financial jargon
-- [ ] **Engagement**: Hook creates curiosity/discussion potential
+### Pre-Generation Quality Gates (MANDATORY VALIDATION)
+**Execute before any content generation:**
 
-### Risk Management & Disclaimer Requirements (MANDATORY)
-- [x] **MANDATORY: Investment Disclaimer**: All templates MUST include investment disclaimer before blog link
-- [x] **REQUIRED: Risk Warning**: Every post MUST contain risk warning language
-- [ ] **Data Source Attribution**: Specify data sources and potential limitations
-- [ ] **Uncertainty Acknowledged**: Confidence levels and risks explicitly mentioned
-- [ ] **No Guarantees**: Language avoids promises of returns
-- [ ] **Balanced View**: Both upside and downside considerations
-- [ ] **Performance Disclaimers**: Historical performance disclaimers for strategy data
-- [ ] **Opinion Framework**: Clearly frame analysis as research opinion, not investment advice
+□ **Source Analysis Confidence Validation**
+  - Fundamental analysis confidence ≥ 0.9 (institutional baseline)
+  - Data quality scores ≥ 0.95 for multi-source validation
+  - Economic context integration confidence ≥ 0.9
 
-**COMPLIANCE ENFORCEMENT**:
-- ALL templates automatically include disclaimer text
-- Content generation WILL FAIL if disclaimer is omitted
-- No exceptions - regulatory compliance is non-negotiable
+□ **Multi-Source Price Validation**
+  - Yahoo Finance MCP price obtained and validated
+  - Alpha Vantage CLI cross-validation completed
+  - FMP CLI tertiary validation completed
+  - Price variance ≤2% across all sources (BLOCKING if exceeded)
 
-### Output Verification
-- [ ] **Character Count**: Within Twitter limits
-- [ ] **Hashtag Strategy**: 2-3 relevant hashtags maximum
-- [ ] **Call to Action**: Clear next step for reader
-- [ ] **Thread Cohesion**: If multi-tweet, logical flow maintained
+□ **Economic Context Integration Validated**
+  - FRED economic indicators current (≤24 hours)
+  - Interest rate environment assessment completed
+  - Sector correlation analysis validated
 
-## Export Protocol
+□ **Template Selection Logic Executed**
+  - All template selection criteria evaluated
+  - Optimal template selected based on analysis content
+  - Template placeholder mapping prepared
 
-**REQUIRED: Save Twitter-ready content to:**
+### Content Quality Standards (INSTITUTIONAL GRADE)
+**Apply during content generation:**
+
+□ **Evidence-Backed Claims**
+  - All quantitative claims backed by specific confidence scores
+  - Investment thesis directly aligned with source analysis
+  - Risk assessments include probability quantification
+  - Catalyst impacts include timeline and probability estimates
+
+□ **Professional Presentation Standards**
+  - Institutional-grade formatting and structure
+  - Confidence scores in 0.0-1.0 format throughout
+  - Monetary values with $ formatting and precision
+  - Risk probabilities in decimal format (not percentages)
+
+□ **Data Source Attribution**
+  - Multi-source validation results documented
+  - Confidence level adjustments clearly noted
+  - Economic context integration explicitly referenced
+  - Analysis methodology transparency maintained
+
+### Post-Generation Validation (COMPREHENSIVE REVIEW)
+**Execute after content generation:**
+
+□ **Character Count Optimization**
+  - Twitter character limit (280) strictly enforced
+  - Threading strategy implemented if content exceeds limit
+  - Optimal hashtag strategy applied (2-3 relevant hashtags)
+
+□ **Regulatory Compliance Verification**
+  - Investment disclaimer present and compliant
+  - Risk warning language appropriate and clear
+  - Data source limitations acknowledged
+  - Opinion framework explicitly established
+
+□ **Blog Link Generation Accuracy**
+  - URL pattern correctly applied: /blog/[ticker-lowercase]-fundamental-analysis-[yyyymmdd]/
+  - Link functionality verified (pattern validation)
+  - Analysis attribution metadata included
+
+□ **Final Institutional Standards Review**
+  - Content meets publication-ready quality standards
+  - Professional tone and presentation maintained
+  - All claims verifiable against source analysis
+  - Confidence levels appropriate for institutional usage
+
+### Quality Assurance Metadata Generation
+**Include in all outputs:**
+
+```yaml
+quality_assurance:
+  pre_generation_gates_passed: true
+  multi_source_price_validation: {yahoo_finance: $X.XX, alpha_vantage: $X.XX, fmp: $X.XX, variance: X.XX%}
+  source_analysis_confidence: X.XX
+  economic_context_integration: true
+  template_selection: {selected: "Template X", rationale: "reason"}
+  content_quality_standards: {evidence_backed: true, professional_presentation: true, attribution_complete: true}
+  post_generation_validation: {character_count: XXX, compliance_verified: true, blog_link_accurate: true}
+  institutional_standards: {publication_ready: true, confidence_appropriate: true}
+```
+
+## Export Protocol (Embedded)
+
+### Blog Post URL Generation
+**URL Pattern Specifications:**
+- **Input format:** `{TICKER}_{YYYYMMDD}` (e.g., `AMZN_20250618`)
+- **Output format:** `https://www.colemorton.com/blog/[ticker-lowercase]-fundamental-analysis-[yyyymmdd]/`
+- **Example conversion:** `AMZN_20250618` → `https://www.colemorton.com/blog/amzn-fundamental-analysis-20250618/`
+
+### File Output Requirements
+**Primary Output File:**
 ```
 ./data/outputs/twitter_fundamental_analysis/{TICKER}_{YYYYMMDD}.md
 ```
@@ -411,27 +542,6 @@ Bottom line: [INVESTMENT IMPLICATION]
 - Selected template rationale
 - Key insights extracted from source analysis
 - Generated blog post URL for full analysis access
-
-### Blog Post URL Generation
-
-**URL Pattern:** Convert analysis file identifier to blog post URL
-- **Input format:** `{TICKER}_{YYYYMMDD}` (e.g., `AMZN_20250618`)
-- **Output format:** `https://www.colemorton.com/blog/[ticker-lowercase]-fundamental-analysis-[yyyymmdd]/`
-- **Example conversion:** `AMZN_20250618` → `https://www.colemorton.com/blog/amzn-fundamental-analysis-20250618/`
-
-**Conversion Rules:**
-1. Convert ticker to lowercase
-2. Keep date format as YYYYMMDD
-3. Use hyphen separators in URL path
-4. Include trailing slash
-
-**Analysis attribution note:**
-```
-Based on comprehensive fundamental analysis: {TICKER}_{YYYYMMDD}.md
-Full analysis includes: DCF valuation, competitive analysis, risk assessment
-Confidence level: [X.X/1.0] | Data quality: [X.X/1.0]
-Full analysis link: https://www.colemorton.com/blog/[ticker-lowercase]-fundamental-analysis-[yyyymmdd]/
-```
 
 ## Command Usage
 
@@ -446,61 +556,45 @@ Full analysis link: https://www.colemorton.com/blog/[ticker-lowercase]-fundament
 - `/twitter_fundamental_analysis AMZN_20250618`
 
 **Processing Steps:**
-1. **CRITICAL: Get real-time stock price** - Use Yahoo Finance MCP server (`get_stock_fundamentals(ticker)`) to get current market price from standardized response
+1. **CRITICAL: Get real-time stock price** - Use Yahoo Finance MCP server (`get_stock_fundamentals(ticker)`)
 2. **Load and validate data sources** - Check for TrendSpider tabular data first, then fundamental analysis
 3. **Data source conflict resolution** - If TrendSpider vs CSV discrepancies exist, re-analyze TrendSpider data as authoritative source
 4. Load fundamental analysis from `@data/outputs/fundamental_analysis/{TICKER}_{YYYYMMDD}.md`
-5. **Generate blog post URL** - Convert {TICKER}_{YYYYMMDD} to https://www.colemorton.com/blog/[ticker-lowercase]-fundamental-analysis-[yyyymmdd]/
+5. **Apply template framework** - Use template specifications for URL generation, content structure, and compliance
 6. **Update all price references** - Replace analysis price with current market price throughout content
 7. Extract 2-3 most compelling insights with data source attribution
 8. Select optimal template based on insight type (templates automatically include mandatory disclaimers)
-9. Craft engaging hook with specific data points and confidence levels
+9. **Reference template standards** - Follow all template requirements for engagement, compliance, and quality
 10. **MANDATORY COMPLIANCE CHECK** - Verify disclaimer text is present (automatic in templates)
 11. **Include full analysis link** - Add generated URL to selected template
-12. Optimize for Twitter engagement and accessibility with professional presentation standards
-13. **FINAL COMPLIANCE VALIDATION** - Ensure disclaimer, risk warnings, and character limits are met
-14. Export clean, copy-paste ready content with institutional quality standards and regulatory compliance
+12. **FINAL COMPLIANCE VALIDATION** - Ensure disclaimer, risk warnings, and character limits are met
+13. Export clean, copy-paste ready content with institutional quality standards and regulatory compliance
 
 ---
 
 ## MANDATORY WORKFLOW REMINDER
 
-⚠️ **CRITICAL FIRST STEP**: Before processing any analysis, ALWAYS get current stock price using the standardized Yahoo Finance MCP server. Example:
+⚠️ **CRITICAL FIRST STEP**: Before processing any analysis, ALWAYS get current stock price using the standardized Yahoo Finance MCP server.
+
+**Real-time Data Requirements:** Reference template specifications for complete MCP integration requirements:
 ```
-Use: MCP Tool yahoo-finance/get_stock_fundamentals(ticker)
-Extract: fundamental_metrics.current_price, trading_metrics.volume, fundamental_metrics.market_cap
-Validate data freshness via data_quality.timestamp and cache_status
+./templates/social-media/twitter_fundamental_analysis_template.md
 ```
 
 **Never use the price from the fundamental analysis file - it may be outdated. Always use real-time market data from the Yahoo Finance MCP server with standardized data quality indicators.**
 
 ## Post-Execution Protocol
 
-### Required Actions
-1. **Generate Output Metadata**: Include collaboration metadata for social content
-2. **Store Outputs**: Save to `./data/outputs/twitter_fundamental_analysis/` directories
-3. **Quality Validation**: Ensure content accuracy and engagement optimization
-4. **Content Tracking**: Record content performance metrics
-
-### Output Metadata Template
-```yaml
-metadata:
-  generated_by: "twitter-fundamental-analysis"
-  timestamp: "{ISO-8601-timestamp}"
-  ticker: "{TICKER}"
-  content_type: "fundamental_analysis_post"
-
-content_metrics:
-  character_count: "{post-length}"
-  engagement_optimized: true
-  accuracy_verified: true
-  price_data_current: true
-
-quality_assurance:
-  fundamental_analysis_source: "{source-file}"
-  market_data_current: true
-  twitter_best_practices: true
+**CRITICAL**: Post-execution requirements and metadata templates are defined in:
 ```
+./templates/social-media/twitter_fundamental_analysis_template.md
+```
+
+**Key Post-Execution Areas from Template:**
+- **Output Metadata Generation**: Complete collaboration metadata for social content
+- **Quality Validation**: Content accuracy and engagement optimization verification
+- **Content Tracking**: Performance metrics and institutional quality standards
+- **Template Compliance**: Verification of all template specifications
 
 ---
 
