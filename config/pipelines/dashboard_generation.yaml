@@ -46,8 +46,8 @@ output:
 
 # Sensylate Design System Integration
 design_system:
-  color_palette_path: "team-workspace/knowledge/design-system/sensylate-color-palette.md"
-  specification_path: "team-workspace/knowledge/design-system/historical-performance-dashboard-specification.md"
+  # color_palette_path: Colors defined directly in this configuration
+  # specification_path: Configuration defined directly in this file
 
   # Chart colors from Sensylate palette
   colors:

@@ -95,10 +95,10 @@ Instead of isolated command execution, your AI commands now:
 
 ### Quick Start (2 Minutes)
 
-1. **Check if Active**:
+1. **Check Core Data Pipeline**:
    ```bash
-   ls team-workspace/
-   # Should show: commands/ shared/ sessions/
+   ls data/outputs/
+   # Should show analysis outputs: fundamental_analysis/ sector_analysis/ etc.
    ```
 
 2. **Try Collaborative Commands**:
@@ -544,13 +544,13 @@ backtesting:
 
 ### Team Collaboration Configuration
 
-#### Command Registry (`team-workspace/commands/registry.yaml`)
+#### Data Output Structure (`data/outputs/`)
 ```yaml
 commands:
   architect:
     location: "/Users/colemorton/.claude/commands/architect.md"
     scope: "user"
-    manifest: "./team-workspace/commands/architect/manifest.yaml"
+    # Simplified architecture - no manifests needed
     status: "active"
 
 workflow_patterns:
@@ -622,12 +622,12 @@ make train-model
 
 **Issue**: Commands not collaborating
 ```bash
-# Check workspace structure
-ls team-workspace/
-ls team-workspace/commands/*/outputs/
+# Check data pipeline structure
+ls data/outputs/
+ls data/outputs/*/
 
 # Verify recent activity
-tail team-workspace/sessions/*/collaboration-engine.log
+# Check Python script logs for any issues
 
 # Test with simple workflow
 > "/code-owner - quick project health check"

@@ -32,12 +32,12 @@ class TradingPerformanceSynthesizer:
         """Load discovery and analysis phase outputs"""
         try:
             # Load discovery data
-            discovery_path = f"team-workspace/microservices/trade_history/discover/outputs/live_signals_20250703.json"
+            discovery_path = f"data/outputs/analysis_trade_history/discovery/live_signals_20250703.json"
             with open(discovery_path, 'r') as f:
                 self.discovery_data = json.load(f)
 
             # Load analysis data
-            analysis_path = f"team-workspace/microservices/trade_history/analyze/outputs/live_signals_20250703.json"
+            analysis_path = f"data/outputs/analysis_trade_history/analysis/live_signals_20250703.json"
             with open(analysis_path, 'r') as f:
                 self.analysis_data = json.load(f)
 

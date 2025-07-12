@@ -21,7 +21,7 @@ class AnalysisValidator:
         synthesis_file_path: str,
         confidence_threshold: float = 9.0,
         validation_depth: str = "institutional",
-        output_dir: str = "./team-workspace/data/outputs/fundamental_analysis/validation",
+        output_dir: str = "./data/outputs/fundamental_analysis/validation",
     ):
         """
         Initialize validator with configurable parameters
@@ -90,7 +90,7 @@ class AnalysisValidator:
         success_count = 0
 
         # Load discovery data
-        discovery_path = f"./team-workspace/data/outputs/fundamental_analysis/discovery/{self.ticker}_{date_part}_discovery.json"
+        discovery_path = f"./data/outputs/fundamental_analysis/discovery/{self.ticker}_{date_part}_discovery.json"
         if os.path.exists(discovery_path):
             try:
                 with open(discovery_path, "r") as f:
@@ -103,7 +103,7 @@ class AnalysisValidator:
             print(f"⚠️ Discovery data not found: {discovery_path}")
 
         # Load analysis data
-        analysis_path = f"./team-workspace/data/outputs/fundamental_analysis/analysis/{self.ticker}_{date_part}_analysis.json"
+        analysis_path = f"./data/outputs/fundamental_analysis/analysis/{self.ticker}_{date_part}_analysis.json"
         if os.path.exists(analysis_path):
             try:
                 with open(analysis_path, "r") as f:
@@ -929,7 +929,7 @@ def main():
     )
     parser.add_argument(
         "--output-dir",
-        default="./team-workspace/data/outputs/fundamental_analysis/validation",
+        default="./data/outputs/fundamental_analysis/validation",
         help="Output directory for validation results",
     )
 

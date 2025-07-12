@@ -19,7 +19,7 @@ class InvestmentSynthesizer:
         self,
         ticker: str,
         analysis_data: Optional[Dict[str, Any]] = None,
-        output_dir: str = "./team-workspace/data/outputs/fundamental_analysis",
+        output_dir: str = "./data/outputs/fundamental_analysis",
     ):
         """
         Initialize synthesizer with configurable parameters
@@ -83,7 +83,7 @@ class InvestmentSynthesizer:
         if analysis_file_path is None:
             # Try to find analysis file with today's date
             today = self.timestamp.strftime("%Y%m%d")
-            analysis_dir = "./team-workspace/data/outputs/fundamental_analysis/analysis"
+            analysis_dir = "./data/outputs/fundamental_analysis/analysis"
             analysis_file_path = os.path.join(
                 analysis_dir, f"{self.ticker}_{today}_analysis.json"
             )
@@ -105,9 +105,7 @@ class InvestmentSynthesizer:
         """Load discovery data for additional context"""
         try:
             today = self.timestamp.strftime("%Y%m%d")
-            discovery_dir = (
-                "./team-workspace/data/outputs/fundamental_analysis/discovery"
-            )
+            discovery_dir = "./data/outputs/fundamental_analysis/discovery"
             discovery_file_path = os.path.join(
                 discovery_dir, f"{self.ticker}_{today}_discovery.json"
             )
@@ -1080,7 +1078,7 @@ def main():
     parser.add_argument("--analysis-file", help="Path to analysis data file")
     parser.add_argument(
         "--output-dir",
-        default="./team-workspace/data/outputs/fundamental_analysis",
+        default="./data/outputs/fundamental_analysis",
         help="Output directory for synthesis results",
     )
 

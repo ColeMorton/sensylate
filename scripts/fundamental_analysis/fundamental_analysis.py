@@ -21,7 +21,7 @@ class FundamentalAnalyzer:
         self,
         ticker: str,
         discovery_data: Optional[Dict[str, Any]] = None,
-        output_dir: str = "./team-workspace/data/outputs/fundamental_analysis/analysis",
+        output_dir: str = "./data/outputs/fundamental_analysis/analysis",
     ):
         """
         Initialize analyzer with configurable parameters
@@ -57,9 +57,7 @@ class FundamentalAnalyzer:
         if discovery_file_path is None:
             # Try to find discovery file with today's date
             today = self.timestamp.strftime("%Y%m%d")
-            discovery_dir = (
-                "./team-workspace/data/outputs/fundamental_analysis/discovery"
-            )
+            discovery_dir = "./data/outputs/fundamental_analysis/discovery"
             discovery_file_path = os.path.join(
                 discovery_dir, f"{self.ticker}_{today}_discovery.json"
             )
@@ -830,7 +828,7 @@ def main():
     parser.add_argument("--discovery-file", help="Path to discovery data file")
     parser.add_argument(
         "--output-dir",
-        default="./team-workspace/data/outputs/fundamental_analysis/analysis",
+        default="./data/outputs/fundamental_analysis/analysis",
         help="Output directory for analysis results",
     )
 
