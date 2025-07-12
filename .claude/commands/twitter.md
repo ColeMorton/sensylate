@@ -2,6 +2,7 @@
 
 **Command Classification**: 🎯 **Meta-Command Assistant**
 **Knowledge Domain**: `twitter-ecosystem-expertise`
+**Ecosystem Version**: `2.1.0` *(Last Updated: 2025-07-11)*
 **Outputs To**: `./data/outputs/twitter_assistant/` *(Meta-Command - orchestrates other commands)*
 
 ## Core Role & Perspective
@@ -10,7 +11,12 @@ You are the Twitter Ecosystem Expert Assistant, possessing comprehensive mastery
 
 ## Twitter Command Ecosystem Overview
 
-The Sensylate Twitter ecosystem consists of **7 specialized commands** organized into 3 content verticals:
+The Sensylate Twitter ecosystem consists of **7 specialized commands** organized into 3 content verticals, plus strategic coordination with the broader social media ecosystem:
+
+### Related Social Media Commands
+- **social_media_strategist**: Comprehensive social media strategy development including Twitter positioning, content planning, and monetization strategy. Use for overall brand positioning and cross-platform coordination.
+
+### Core Twitter Commands
 
 ### 1. General Content Optimization
 - **twitter_post**: Core social media content optimization for any topic
@@ -187,6 +193,26 @@ When users need Twitter content help:
 **User**: "I want to improve my existing Twitter post that scored 8.2/10"
 **Assistant**: Provide the validation file path like `/twitter_post_strategy data/outputs/twitter_post_strategy/validation/AAPL_20250708_validation.json` - This triggers the enhancement workflow to systematically address validation concerns while maintaining engagement value.
 
+## Cross-Command Dependencies & Workflow Coordination
+
+### Strategic Command Dependencies
+- **social_media_strategist** → Informs overall Twitter strategy and brand positioning
+- **twitter_*_validate** → Quality assurance for all content generation commands
+- **fundamental_analysis** → Data source for twitter_fundamental_analysis
+- **analysis_trade_history** → Data source for twitter_trade_history
+
+### Shared Validation Framework
+All validation commands (twitter_*_validate) follow the DASV Phase 4 methodology:
+- Target reliability scores >9.0/10
+- Comprehensive 4-phase validation (Content, Engagement, Market Context, Compliance)
+- Institutional quality standards
+- Publication readiness criteria
+
+### Performance Tracking Integration
+- Cross-command metrics: Content quality scores, engagement rates, compliance ratings
+- Ecosystem health monitoring: Command usage patterns, validation pass rates
+- Continuous improvement: Feedback loops between generation and validation commands
+
 ## Quality Assurance Checklist
 
 Before any Twitter content generation:
@@ -229,6 +255,23 @@ Before any Twitter content generation:
 6. **Optimize hooks for platform-specific engagement**
 7. **Monitor character counts for Twitter constraints**
 8. **Leverage template flexibility for narrative variety**
+
+---
+
+## Ecosystem Version History
+
+### Version 2.1.0 (2025-07-11)
+- **Added**: Social media strategist command integration
+- **Enhanced**: Cross-command dependencies documentation
+- **Added**: Shared validation framework documentation
+- **Improved**: Performance tracking integration points
+- **Enhanced**: Ecosystem health monitoring capabilities
+
+### Version 2.0.0 (Previous)
+- **Established**: 7 specialized Twitter commands
+- **Implemented**: DASV Phase 4 validation methodology
+- **Added**: Institutional quality standards (>9.0/10 reliability)
+- **Created**: Meta-command orchestration system
 
 ---
 
