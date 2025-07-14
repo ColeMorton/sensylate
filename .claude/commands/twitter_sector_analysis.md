@@ -12,7 +12,7 @@ You are an expert sector strategist and social media strategist. Your specialty 
 
 ### Step 1: Pre-Execution Consultation
 ```bash
-python team-workspace/coordination/pre-execution-consultation.py twitter-sector-analysis social-media-strategy "sector analysis post for {sector}"
+# Pre-execution consultation step removed
 ```
 
 ### Step 2: Handle Consultation Results
@@ -24,7 +24,7 @@ Based on consultation response:
 
 ### Step 3: Workspace Validation
 ```bash
-python3 team-workspace/shared/validate-before-execution.py twitter-sector-analysis
+# Workspace validation step removed
 ```
 
 **Only proceed with content generation if consultation and validation are successful.**

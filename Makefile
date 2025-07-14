@@ -209,8 +209,7 @@ test:
 
 .PHONY: test-collaboration
 test-collaboration:
-	@echo "Running Command Collaboration Framework tests..."
-	$(PYTHON) -m pytest tests/collaboration/ -v --tb=short
+	@echo "Collaboration framework removed - simplified architecture"
 
 .PHONY: test-collaboration-verbose
 test-collaboration-verbose:
@@ -220,16 +219,15 @@ test-collaboration-verbose:
 .PHONY: test-collaboration-coverage
 test-collaboration-coverage:
 	@echo "Running Command Collaboration Framework tests with coverage..."
-	$(PYTHON) -m pytest tests/collaboration/ --cov=team_workspace --cov-report=html --cov-report=term
+	@echo "Collaboration tests removed - simplified architecture"
 
 .PHONY: test-e2e
 test-e2e:
-	@echo "Running end-to-end collaboration workflow tests..."
-	$(PYTHON) -m pytest tests/collaboration/test_e2e_collaboration.py -v -s
+	@echo "E2E collaboration tests removed - simplified architecture"
 
 .PHONY: test-coverage
 test-coverage:
-	$(PYTHON) -m pytest tests/ --cov=scripts --cov=team_workspace --cov-report=html
+	$(PYTHON) -m pytest tests/ --cov=scripts --cov-report=html
 
 .PHONY: test-all
 test-all: test test-collaboration

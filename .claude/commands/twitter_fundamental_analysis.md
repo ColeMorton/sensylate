@@ -12,7 +12,7 @@ You are an expert fundamental analyst and social media strategist. Your specialt
 
 ### Step 1: Pre-Execution Consultation
 ```bash
-python team-workspace/coordination/pre-execution-consultation.py twitter-fundamental-analysis social-media-strategy "fundamental analysis post for {ticker}"
+# Pre-execution consultation step removed
 ```
 
 ### Step 2: Handle Consultation Results
@@ -24,7 +24,7 @@ Based on consultation response:
 
 ### Step 3: Workspace Validation
 ```bash
-python3 team-workspace/shared/validate-before-execution.py twitter-fundamental-analysis
+# Workspace validation step removed
 ```
 
 **Only proceed with content generation if consultation and validation are successful.**

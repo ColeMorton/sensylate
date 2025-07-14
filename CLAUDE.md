@@ -4,12 +4,12 @@ This file provides critical guidance to Claude Code when working with this repos
 
 ## Project Overview
 
-Sensylate is a multi-modal platform combining **Python data processing**, **Astro frontend**, and **AI command collaboration** for trading strategy analysis and content generation.
+Sensylate is a multi-modal platform combining **Python data processing** and **Astro frontend** for trading strategy analysis and content generation.
 
 **Tech Stack**:
 - **Frontend**: Astro 5.7+ with TailwindCSS 4+, TypeScript, React, MDX
 - **Backend**: Python with black, mypy, flake8 quality gates
-- **Commands**: Project-scoped AI commands in `.claude/commands/`
+- **Data Pipeline**: Python scripts generate analysis outputs for frontend consumption
 
 ## Essential Commands
 
@@ -41,7 +41,7 @@ pre-commit run --all-files    # Run all quality checks
 - `frontend/src/config/` - JSON configuration files
 - `frontend/src/layouts/` - Astro components and templates
 - `scripts/` - Python data processing
-- `team-workspace/` - AI command collaboration data
+- `data/outputs/` - Analysis outputs and generated content
 
 **Path Aliases**:
 - `@/components/*` → `./src/layouts/components/*`
@@ -58,16 +58,17 @@ pre-commit run --all-files    # Run all quality checks
 
 All quality checks run on every commit. Failed checks prevent commits.
 
-## AI Command Integration
+## Data Processing Pipeline
 
-**Command Locations**: `.claude/commands/` (project-scoped)
+**Core Scripts**: Located in `scripts/` directory
 
-**Key Commands**:
-- `/architect` - Technical planning and implementation
-- `/code-owner` - Codebase health analysis
-- `/twitter_post` - Social media content optimization
+**Key Capabilities**:
+- Fundamental analysis generation
+- Trading strategy analysis
+- Social media content optimization
+- Market data processing
 
-**Team Workspace**: Commands share context via `team-workspace/` for enhanced collaboration.
+**Data Flow**: Python scripts → `data/outputs/` → Frontend display
 
 ## Code Quality Principles
 
@@ -85,4 +86,4 @@ ALWAYS prefer editing an existing file to creating a new one.
 
 **Timezone**: Brisbane, Australia (default)
 **Memory Rules**: No author attribution in markdown unless requested
-**Output Directories**: Command outputs saved to `team-workspace/commands/{command}/outputs/`
+**Output Directories**: Analysis outputs saved to `data/outputs/{analysis_type}/`

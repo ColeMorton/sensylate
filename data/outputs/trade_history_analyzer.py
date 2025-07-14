@@ -606,7 +606,7 @@ class TradingPerformanceAnalyzer:
 
 def main():
     # Initialize analyzer
-    discovery_file = "/Users/colemorton/Projects/sensylate/team-workspace/microservices/trade_history/discover/outputs/live_signals_20250703.json"
+    discovery_file = "/Users/colemorton/Projects/sensylate/data/outputs/analysis_trade_history/discovery/live_signals_20250703.json"
     analyzer = TradingPerformanceAnalyzer(discovery_file)
 
     # Load discovery data

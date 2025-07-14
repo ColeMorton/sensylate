@@ -758,16 +758,16 @@ microservice_kpis:
 
 ## Integration Requirements
 
-### Team Workspace Integration
+### Data Pipeline Integration
 
 ```bash
-# Save analysis output to microservice workspace
-mkdir -p ./team-workspace/microservices/trade_history/analyze/outputs/
-cp /data/outputs/analysis_trade_history/analysis/{portfolio}_{YYYYMMDD}.json ./team-workspace/microservices/trade_history/analyze/outputs/
+# Save analysis output to data pipeline
+mkdir -p ./data/outputs/analysis_trade_history/analyze/outputs/
+cp /data/outputs/analysis_trade_history/analysis/{portfolio}_{YYYYMMDD}.json ./data/outputs/analysis_trade_history/analyze/outputs/
 
-# Update microservice manifest
-echo "last_execution: $(date -u +%Y-%m-%dT%H:%M:%SZ)" >> ./team-workspace/microservices/trade_history/analyze/manifest.yaml
-echo "confidence_score: {calculated_score}" >> ./team-workspace/microservices/trade_history/analyze/manifest.yaml
+# Update analysis manifest
+echo "last_execution: $(date -u +%Y-%m-%dT%H:%M:%SZ)" >> ./data/outputs/analysis_trade_history/analyze/manifest.yaml
+echo "confidence_score: {calculated_score}" >> ./data/outputs/analysis_trade_history/analyze/manifest.yaml
 ```
 
 ### Next Phase Preparation

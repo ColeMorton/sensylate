@@ -8,7 +8,7 @@ Automatically transform technical findings into prioritized product decisions us
 
 ### Step 1: Pre-Execution Consultation
 ```bash
-python team-workspace/coordination/pre-execution-consultation.py product-owner {proposed-topic} "{strategic-scope}"
+# Pre-execution consultation step removed
 ```
 
 ### Step 2: Handle Consultation Results
@@ -20,7 +20,7 @@ Based on consultation response:
 
 ### Step 3: Workspace Validation
 ```bash
-python team-workspace/coordination/validate-before-execution.py product-owner
+# Workspace validation step removed
 ```
 
 **Only proceed with decision creation if consultation and validation are successful.**
@@ -239,7 +239,7 @@ After creating any product decisions or strategic analysis, you MUST complete th
 
 ### Step 1: Content Authority Establishment
 ```bash
-python team-workspace/coordination/topic-ownership-manager.py claim product-strategy product-owner "Product strategic decisions for {scope}"
+# Topic ownership manager step removed
 ```
 
 ### Step 2: Registry Update
@@ -256,7 +256,7 @@ Notify dependent commands of new product decisions availability:
 
 ### Step 4: Superseding Workflow (if updating existing decisions)
 ```bash
-python team-workspace/coordination/superseding-workflow.py declare product-owner product-strategy {new-decisions-file} {old-decisions-files} "Updated product decisions: {reason}"
+# Superseding workflow step removed
 ```
 
 ## Output Location

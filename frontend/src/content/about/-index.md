@@ -27,7 +27,7 @@ Explore the framework architecture and methodologies. Experience systematic refi
 
 **Market Data → Human-Ready Insights**: My AI framework systematically processes complex financial information through collaborative intelligence. Raw market data, SEC filings, and technical indicators are processed through multi-stage refinement, emerging as accessible, actionable content optimized for human consumption.
 
-**AI Collaboration Engine**: Specialized AI agents work as a coordinated team - market analyst, content strategist, and technical writer - each contributing expertise while sharing context via the team-workspace directory structure. Multiple perspectives collaborate to refine data until it reaches human-digestible clarity.
+**AI Collaboration Engine**: Specialized AI agents work as a coordinated team - market analyst, content strategist, and technical writer - each contributing expertise while sharing context via the data pipeline structure. Multiple perspectives collaborate to refine data until it reaches human-digestible clarity.
 
 **Content Transformation Pipeline** (4-Stage Process):
 
@@ -40,7 +40,7 @@ Explore the framework architecture and methodologies. Experience systematic refi
 
 ## The Innovation
 
-**Collaborative Intelligence Architecture**: AI agents share outputs and context through the team-workspace directory structure, enabling context-aware decision making across commands. This implements true collaborative processing rather than isolated analysis.
+**Collaborative Intelligence Architecture**: AI agents share outputs and context through the data pipeline structure, enabling context-aware decision making across commands. This implements true collaborative processing rather than isolated analysis.
 
 **Projected Performance Benefits** (Based on Architectural Design):
 
@@ -66,7 +66,7 @@ Explore the framework architecture and methodologies. Experience systematic refi
 
 ## Current Implementation Status
 
-**Architecture & Framework**: Designed and implemented with comprehensive documentation across root, frontend/, and team-workspace directories.
+**Architecture & Framework**: Designed and implemented with comprehensive documentation across root, frontend/, and data/ directories.
 
 **Quality Assurance**: Automated code quality checks via .pre-commit-config.yaml, with Makefile-orchestrated production-ready pipelines.
 

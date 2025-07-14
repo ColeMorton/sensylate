@@ -23,7 +23,7 @@ When documentation conflicts arise, follow this hierarchy (highest to lowest aut
 - **Update Frequency**: When framework evolves
 
 ### 3. **Integration Guides** (Operational Procedures)
-- **Location**: `team-workspace/coordination/*.md`, `team-workspace/shared/*.md`
+- **Location**: `docs/coordination/*.md`, `docs/shared/*.md`
 - **Authority**: Process and integration requirements
 - **Scope**: How commands work together and validation requirements
 - **Examples**: `UNIFIED_PRE_EXECUTION_GUIDE.md`, `INTEGRATION_GUIDE.md`, `command-collaboration-protocol.md`
@@ -37,10 +37,10 @@ When documentation conflicts arise, follow this hierarchy (highest to lowest aut
 - **Update Frequency**: When project structure changes
 
 ### 5. **README Files** (Introductory Material)
-- **Location**: Various directories (`README.md`, `team-workspace/README.md`)
+- **Location**: Various directories (`README.md`, `docs/README.md`)
 - **Authority**: Getting started information and context
 - **Scope**: Introduction to concepts and quick start guides
-- **Examples**: Project overview, team-workspace introduction
+- **Examples**: Project overview, system introduction
 - **Update Frequency**: When onboarding process changes
 
 ## Conflict Resolution Process

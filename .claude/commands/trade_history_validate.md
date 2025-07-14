@@ -444,16 +444,16 @@ validation_kpis:
 
 ## Integration Requirements
 
-### Team Workspace Integration
+### Data Pipeline Integration
 
 ```bash
-# Save all validation outputs to microservice workspace
-mkdir -p ./team-workspace/microservices/trade_history/validate/outputs/
-cp /data/outputs/analysis_trade_history/validation/*.json ./team-workspace/microservices/trade_history/validate/outputs/
+# Save all validation outputs to data pipeline
+mkdir -p ./data/outputs/analysis_trade_history/validate/outputs/
+cp /data/outputs/analysis_trade_history/validation/*.json ./data/outputs/analysis_trade_history/validate/outputs/
 
-# Update microservice manifest
-echo "last_execution: $(date -u +%Y-%m-%dT%H:%M:%SZ)" >> ./team-workspace/microservices/trade_history/validate/manifest.yaml
-echo "validation_completed: true" >> ./team-workspace/microservices/trade_history/validate/manifest.yaml
+# Update validation manifest
+echo "last_execution: $(date -u +%Y-%m-%dT%H:%M:%SZ)" >> ./data/outputs/analysis_trade_history/validate/manifest.yaml
+echo "validation_completed: true" >> ./data/outputs/analysis_trade_history/validate/manifest.yaml
 ```
 
 ### Analysis Pipeline Completion

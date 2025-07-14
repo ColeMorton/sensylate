@@ -370,7 +370,7 @@ def validate_analysis_schema():
     Validate that the analysis JSON schema is properly structured.
     """
 
-    schema_path = "/Users/colemorton/Projects/sensylate/team-workspace/microservices/trade_history/analyze/trading_analysis_schema_v1.json"
+    schema_path = "/Users/colemorton/Projects/sensylate/data/outputs/analysis_trade_history/analyze/trading_analysis_schema_v1.json"
 
     print("=== Analysis Schema Validation ===\n")
 

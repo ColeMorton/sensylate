@@ -489,18 +489,18 @@ def test_quality_assurance_integration():
     print("✅ Quality assurance integration tested\n")
 
 
-def test_team_workspace_integration():
+def test_data_output_integration():
     """
-    Test team workspace integration and collaboration framework.
+    Test data output integration and file management framework.
     """
 
-    print("=== Team Workspace Integration Tests ===\n")
+    print("=== Data Output Integration Tests ===\n")
 
     def test_output_archival():
         """Test output archival and versioning."""
 
         archival_structure = {
-            "base_path": "./team-workspace/microservices/trade_history/",
+            "base_path": "./data/outputs/analysis_trade_history/",
             "phase_outputs": {
                 "discover": "./discover/outputs/",
                 "analyze": "./analyze/outputs/",
@@ -568,7 +568,7 @@ def main():
     test_error_handling_and_recovery()
     test_performance_optimization()
     test_quality_assurance_integration()
-    test_team_workspace_integration()
+    test_data_output_integration()
 
     print("\n" + "=" * 70)
     print("Phase 5 orchestrator validation complete!")
@@ -576,7 +576,7 @@ def main():
     print("⚡ Performance optimization strategies tested")
     print("🛡️ Error handling and recovery validated")
     print("🎖️ Quality assurance integration confirmed")
-    print("🤝 Team workspace collaboration tested")
+    print("🤝 Data output collaboration tested")
 
     # Summary of key metrics
     if workflow_result and workflow_result.get("success"):

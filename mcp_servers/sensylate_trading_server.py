@@ -277,7 +277,7 @@ def get_mcp_integration_status() -> str:
         "data_pipeline_integration": "active",
         "content_generation": "automated",
         "analysis_workflows": "mcp_enabled",
-        "team_workspace_integration": "active",
+        "data_pipeline_status": "active",
         "last_health_check": datetime.now().isoformat()
     }, indent=2)
 

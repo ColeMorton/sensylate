@@ -13,7 +13,7 @@ ERRORS=0
 
 # Check for email patterns (excluding safe files)
 echo "📧 Checking for exposed email addresses..."
-EMAIL_RESULTS=$(grep -r ".*@.*\.com" --exclude-dir=node_modules --exclude-dir=.git --exclude-dir=dist --exclude-dir=.netlify --exclude-dir=htmlcov --exclude="*.log" --exclude="security-check.sh" . | grep -v ".env.example" | grep -v "test" | grep -v "docs" | grep -v "README" | grep -v ".env$" | grep -v "team-workspace" | grep -v "placeholder" | grep -v "example" | grep -v "bibig@me.com")
+EMAIL_RESULTS=$(grep -r ".*@.*\.com" --exclude-dir=node_modules --exclude-dir=.git --exclude-dir=dist --exclude-dir=.netlify --exclude-dir=htmlcov --exclude="*.log" --exclude="security-check.sh" . | grep -v ".env.example" | grep -v "test" | grep -v "docs" | grep -v "README" | grep -v ".env$" | grep -v "placeholder" | grep -v "example" | grep -v "bibig@me.com")
 
 if [ ! -z "$EMAIL_RESULTS" ]; then
     echo -e "${RED}❌ Found exposed email addresses:${NC}"
@@ -25,7 +25,7 @@ fi
 
 # Check for API key patterns (excluding safe files)
 echo "🔑 Checking for exposed API keys/secrets..."
-SECRET_RESULTS=$(grep -ri "api[_-]key\|apikey\|secret.*=\|token.*=\|password.*=" --exclude-dir=node_modules --exclude-dir=.git --exclude-dir=dist --exclude="*.log" --exclude="security-check.sh" . | grep -v ".env.example" | grep -v "test" | grep -v "docs" | grep -v "README" | grep -v ".env$" | grep -v "your_" | grep -v "example" | grep -v "team-workspace" | grep -v "placeholder" | grep -v "Password.*crackdown.*revenue")
+SECRET_RESULTS=$(grep -ri "api[_-]key\|apikey\|secret.*=\|token.*=\|password.*=" --exclude-dir=node_modules --exclude-dir=.git --exclude-dir=dist --exclude="*.log" --exclude="security-check.sh" . | grep -v ".env.example" | grep -v "test" | grep -v "docs" | grep -v "README" | grep -v ".env$" | grep -v "your_" | grep -v "example" | grep -v "placeholder" | grep -v "Password.*crackdown.*revenue")
 
 if [ ! -z "$SECRET_RESULTS" ]; then
     echo -e "${RED}❌ Found potential exposed secrets:${NC}"
@@ -37,7 +37,7 @@ fi
 
 # Check for hardcoded credentials
 echo "🛡️  Checking for hardcoded credentials..."
-CRED_RESULTS=$(grep -ri "username.*=.*[a-zA-Z]\|password.*=.*[a-zA-Z]" --exclude-dir=node_modules --exclude-dir=.git --exclude-dir=dist --exclude="*.log" --exclude="security-check.sh" . | grep -v ".env.example" | grep -v "test" | grep -v "docs" | grep -v "README" | grep -v ".env$" | grep -v "your_" | grep -v "example" | grep -v "placeholder" | grep -v "team-workspace" | grep -v "Password.*crackdown")
+CRED_RESULTS=$(grep -ri "username.*=.*[a-zA-Z]\|password.*=.*[a-zA-Z]" --exclude-dir=node_modules --exclude-dir=.git --exclude-dir=dist --exclude="*.log" --exclude="security-check.sh" . | grep -v ".env.example" | grep -v "test" | grep -v "docs" | grep -v "README" | grep -v ".env$" | grep -v "your_" | grep -v "example" | grep -v "placeholder" | grep -v "Password.*crackdown")
 
 if [ ! -z "$CRED_RESULTS" ]; then
     echo -e "${YELLOW}⚠️  Found potential hardcoded credentials (review needed):${NC}"

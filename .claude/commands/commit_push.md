@@ -12,7 +12,7 @@ Generate a meaningful commit title, create the commit, and push to remote.
 
 ### Step 1: Pre-Execution Consultation
 ```bash
-python team-workspace/coordination/pre-execution-consultation.py commit-push git-operations "{commit-scope}"
+# Pre-execution consultation step removed
 ```
 
 ### Step 2: Handle Consultation Results
@@ -24,7 +24,7 @@ Based on consultation response:
 
 ### Step 3: Workspace Validation
 ```bash
-python team-workspace/coordination/validate-before-execution.py commit-push
+# Workspace validation step removed
 ```
 
 **Only proceed with git operations if consultation and validation are successful.**
@@ -65,7 +65,7 @@ If committing outputs from other commands, notify relevant command owners:
 ### Step 3: Registry Synchronization
 Ensure topic registry reflects current state after commit:
 ```bash
-python team-workspace/coordination/knowledge-dashboard.py validate
+# Knowledge dashboard validation step removed
 ```
 
 ## Notes

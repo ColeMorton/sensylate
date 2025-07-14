@@ -5,7 +5,7 @@
 ## 🎯 Quick Navigation
 
 - [🚀 Getting Started](#-getting-started)
-- [🤝 Team Collaboration Guide](#-team-collaboration-guide)
+- [🤝 AI Command Integration](#-ai-command-integration)
 - [📊 Trading Analysis](#-trading-analysis)
 - [🌐 Frontend Features](#-frontend-features)
 - [🤖 AI Commands](#-ai-commands)
@@ -57,8 +57,8 @@
    # Test Python pipeline
    make test
 
-   # Test collaboration framework
-   make test-collaboration
+   # Test data pipeline
+   make test-pipeline
    ```
 
 ### First Run
@@ -74,61 +74,60 @@
    make dev-pipeline
    ```
 
-3. **Try AI Collaboration**:
+3. **Try AI Commands**:
    ```bash
    > "/code-owner - analyze project health"
    ```
 
 ---
 
-## 🤝 Team Collaboration Guide
+## 🤝 AI Command Integration
 
-> **⭐ NEW FEATURE**: Your AI commands now work as an intelligent team, sharing data and building on each other's work.
+> **⭐ FEATURE**: AI commands integrate with your data pipeline, using analysis outputs to provide contextual insights.
 
-### What is Team Collaboration?
+### What is AI Command Integration?
 
-Instead of isolated command execution, your AI commands now:
-- **Share Context**: Commands read each other's outputs
-- **Build Knowledge**: Insights accumulate over time
-- **Optimize Performance**: 20% faster execution with team data
-- **Improve Quality**: Decisions informed by multiple perspectives
+AI commands work with your data pipeline outputs:
+- **Use Analysis Data**: Commands read from data/outputs/ directories
+- **Contextual Insights**: Analysis results inform AI responses
+- **Data-Driven Decisions**: Commands leverage existing analysis outputs
+- **Integrated Workflow**: Seamless connection between analysis and AI commands
 
 ### Quick Start (2 Minutes)
 
-1. **Check if Active**:
+1. **Check Core Data Pipeline**:
    ```bash
-   ls team-workspace/
-   # Should show: commands/ shared/ sessions/
+   ls data/outputs/
+   # Should show analysis outputs: fundamental_analysis/ sector_analysis/ etc.
    ```
 
-2. **Try Collaborative Commands**:
+2. **Try Data-Integrated Commands**:
    ```bash
    > "/code-owner - analyze current project health"
-   > "/architect - create improvement plan based on health assessment"
+   > "/architect - create improvement plan"
    ```
 
-3. **See the Magic**: Notice how the architect automatically uses the code-owner's assessment!
+3. **See Integration**: Commands automatically reference existing analysis data when available!
 
 ### Best Workflow Patterns
 
 #### Complete Project Analysis
 ```bash
 > "Run comprehensive project analysis"
-# Automatically executes: code-owner → product-owner → architect
-# Each builds on the previous output
+# Executes commands that reference existing data/outputs/ analysis
 ```
 
 #### Feature Development
 ```bash
 > "/code-owner - analyze authentication module"         # Technical assessment
-> "/architect - refactor auth for better security"      # Uses assessment for context
-> "/product-owner - estimate effort for auth refactor"  # Uses implementation plan
+> "/architect - refactor auth for better security"      # References existing analysis
+> "/product-owner - estimate effort for auth refactor"  # Uses available data context
 ```
 
 #### Content Creation
 ```bash
-> "/architect - summarize recent improvements"          # Find latest work
-> "/twitter-post - create content about improvements"   # Auto-uses architect summary
+> "/architect - summarize recent improvements"          # Reviews project data
+> "/twitter-post - create content about improvements"   # Uses available analysis data
 ```
 
 ### Available AI Team Members
@@ -154,7 +153,7 @@ Instead of isolated command execution, your AI commands now:
 | `/commit-push` | Git Workflow | Automated commit and push operations |
 | `/create-command` | Command Creation | Building new AI commands |
 
-📚 **Full Guide**: See [Team Collaboration User Guide](TEAM_COLLABORATION_USER_GUIDE.md) for complete tutorials and examples.
+📚 **Full Guide**: See command documentation in `.claude/commands/` for complete usage examples.
 
 ---
 
@@ -233,15 +232,17 @@ risk_tolerance: 0.02
 
 ### Output Structure
 
-All analysis outputs are organized in `outputs/`:
+All analysis outputs are organized in `data/outputs/`:
 ```
-outputs/
-├── reports/           # Analysis reports (HTML, PDF, Markdown)
-├── visualizations/    # Interactive Plotly charts (PNG, PDF, SVG, HTML)
-├── dashboards/        # Performance dashboards with multi-format export
-├── frontend_configs/  # JSON configurations for React integration
-├── exports/          # Data exports (CSV, JSON, Parquet)
-└── logs/            # Execution logs
+data/outputs/
+├── fundamental_analysis/  # Fundamental analysis results
+├── sector_analysis/      # Sector-specific analysis
+├── reports/             # Analysis reports (HTML, PDF, Markdown)
+├── visualizations/      # Interactive Plotly charts (PNG, PDF, SVG, HTML)
+├── dashboards/          # Performance dashboards with multi-format export
+├── frontend_configs/    # JSON configurations for React integration
+├── exports/            # Data exports (CSV, JSON, Parquet)
+└── logs/              # Execution logs
 ```
 
 ### AI-Enhanced Analysis
@@ -387,25 +388,20 @@ Sensylate includes specialized AI commands for different aspects of your workflo
 
 Commands automatically work together:
 
-#### Automatic Data Sharing
+#### Data Integration
 ```bash
 > "/code-owner - analyze authentication security"
 # Creates technical assessment
 
-> "/architect - improve authentication based on security analysis"
-# Automatically uses code-owner's assessment
-# Result: Security-focused implementation plan
+> "/architect - improve authentication based on analysis"
+# References available analysis data
+# Result: Data-informed implementation plan
 ```
 
-#### Performance Optimization
-- **First Run**: Normal execution speed
-- **With Team Data**: 20% faster execution
-- **Cache Hits**: Up to 89% faster for repeated patterns
-
 #### Quality Enhancement
-- **Context Awareness**: Commands understand project state
-- **Informed Decisions**: Multiple perspectives incorporated
-- **Consistency**: Aligned with overall project direction
+- **Context Awareness**: Commands understand project state from data/outputs/
+- **Informed Decisions**: Analysis results inform AI responses
+- **Consistency**: Aligned with existing analysis and project direction
 
 ### Usage Patterns
 
@@ -418,21 +414,21 @@ Commands automatically work together:
 > "/product-owner - prioritize Q2 features based on latest tech assessment"
 ```
 
-#### Workflow Automation
+#### Workflow Integration
 ```bash
-# Predefined workflows
+# Analysis-informed workflows
 > "Run comprehensive project analysis"
 
-# Custom sequences
-> "/code-owner then /architect then /product-owner"
+# Sequential command execution
+> "/code-owner" followed by "/architect" followed by "/product-owner"
 ```
 
 #### Context-Aware Content
 ```bash
-# Content based on recent work
+# Content based on analysis data
 > "/twitter-post about our latest performance improvements"
 
-# Strategy-driven content series
+# Strategy-driven content using analysis results
 > "/twitter-post-strategy for Q2 feature releases"
 ```
 
@@ -542,21 +538,23 @@ backtesting:
 }
 ```
 
-### Team Collaboration Configuration
+### AI Command Configuration
 
-#### Command Registry (`team-workspace/commands/registry.yaml`)
+#### Data Output Structure (`data/outputs/`)
 ```yaml
-commands:
-  architect:
-    location: "/Users/colemorton/.claude/commands/architect.md"
-    scope: "user"
-    manifest: "./team-workspace/commands/architect/manifest.yaml"
+analysis_outputs:
+  fundamental_analysis:
+    location: "data/outputs/fundamental_analysis/"
+    format: "json, markdown"
+    status: "active"
+  sector_analysis:
+    location: "data/outputs/sector_analysis/"
+    format: "json, markdown"
     status: "active"
 
-workflow_patterns:
-  development_flow:
-    sequence: ["code-owner", "architect", "commit-push"]
-    description: "Standard development workflow"
+command_integration:
+  data_sources: ["data/outputs/fundamental_analysis/", "data/outputs/sector_analysis/"]
+  output_format: "markdown, json"
 ```
 
 ---
@@ -618,32 +616,33 @@ make process-data
 make train-model
 ```
 
-#### Team Collaboration Issues
+#### AI Command Integration Issues
 
-**Issue**: Commands not collaborating
+**Issue**: Commands not accessing data
 ```bash
-# Check workspace structure
-ls team-workspace/
-ls team-workspace/commands/*/outputs/
+# Check data pipeline structure
+ls data/outputs/
+ls data/outputs/*/
 
-# Verify recent activity
-tail team-workspace/sessions/*/collaboration-engine.log
+# Verify recent analysis outputs
+# Check Python script logs for any issues
 
 # Test with simple workflow
 > "/code-owner - quick project health check"
 > "/architect - suggest one improvement"
 ```
 
-**Issue**: Performance not improving
+**Issue**: Missing analysis context
 ```bash
-# Check team knowledge accumulation
-cat team-workspace/shared/team-knowledge.yaml
+# Check analysis data availability
+ls data/outputs/fundamental_analysis/
+ls data/outputs/sector_analysis/
 
-# Verify command outputs exist
-find team-workspace/commands -name "*.md" -mtime -1
+# Verify recent analysis runs
+find data/outputs -name "*.json" -mtime -1
 
-# Clear cache if needed
-rm -rf team-workspace/commands/*/cache/*
+# Run analysis if needed
+make fundamental-analysis
 ```
 
 ### Performance Optimization
@@ -672,21 +671,21 @@ time make extract-data
 # Edit config/pipelines/feature_engineering.yaml to reduce indicators
 ```
 
-#### Team Collaboration Performance
+#### AI Command Performance
 ```bash
-# Check cache effectiveness
-grep "cache hit" team-workspace/sessions/*/collaboration-engine.log
+# Check data access patterns
+ls -la data/outputs/*/
 
-# Monitor session performance
-grep "execution_time" team-workspace/commands/*/outputs/.*.command-meta.yaml
+# Monitor analysis output freshness
+find data/outputs -name "*.json" -mtime -1
 ```
 
 ### Getting Help
 
 #### Log Files
 - **Frontend**: Browser developer tools console
-- **Trading Analysis**: `outputs/logs/`
-- **Team Collaboration**: `team-workspace/sessions/`
+- **Trading Analysis**: `data/outputs/logs/`
+- **AI Commands**: `.claude/commands/` directory
 
 #### Debug Information
 ```bash
@@ -695,9 +694,9 @@ make check-env-vars
 yarn check
 python --version
 
-# Collaboration status
-ls -la team-workspace/commands/*/outputs/
-cat team-workspace/shared/project-context.yaml
+# Analysis data status
+ls -la data/outputs/*/
+cat data/outputs/fundamental_analysis/latest.json
 ```
 
 #### Contact Support
@@ -709,8 +708,8 @@ cat team-workspace/shared/project-context.yaml
 
 ## 📚 Additional Resources
 
-- **[Team Collaboration User Guide](TEAM_COLLABORATION_USER_GUIDE.md)**: Complete guide to AI command collaboration
-- **[Technical Documentation](../team-workspace/README.md)**: Detailed technical implementation
+- **[AI Command Documentation](.claude/commands/)**: Complete guide to AI command usage
+- **[Technical Documentation](../README.md)**: Detailed technical implementation
 - **[API Reference](../docs/API.md)**: Trading analysis API documentation
 - **[Contributing Guide](../CONTRIBUTING.md)**: How to contribute to the project
 

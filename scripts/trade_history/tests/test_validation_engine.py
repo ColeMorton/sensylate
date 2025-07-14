@@ -600,7 +600,7 @@ def validate_validation_schema():
     Validate that the validation JSON schema is properly structured.
     """
 
-    schema_path = "/Users/colemorton/Projects/sensylate/team-workspace/microservices/trade_history/validate/trading_validation_schema_v1.json"
+    schema_path = "/Users/colemorton/Projects/sensylate/data/outputs/analysis_trade_history/validate/trading_validation_schema_v1.json"
 
     print("=== Validation Schema Validation ===\n")
 
