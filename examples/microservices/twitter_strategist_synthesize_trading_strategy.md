@@ -39,9 +39,9 @@ outputs:
 - **Downstream Services**: `twitter_strategist_validate_trading_strategy`
 - **External APIs**: None required
 - **Shared Resources**:
-  - Team workspace: `/team-workspace/knowledge/trading-strategies/`
+  - Data outputs: `/data/outputs/trading-strategies/`
   - Analysis outputs: `/data/outputs/fundamental_analysis/`
-  - Content templates: `/team-workspace/templates/social_media/`
+  - Content templates: `/templates/social_media/`
 
 ## Data/File Dependencies
 
@@ -56,12 +56,12 @@ input_dependencies:
       confidence_impact: 0.3
 
   context_dependencies:
-    - team_workspace_path: "/team-workspace/knowledge/trading-strategies/"
+    - data_path: "/data/outputs/trading-strategies/"
       knowledge_area: "trading_analysis"
       minimum_confidence: 0.7
       superseding_check: true
 
-    - team_workspace_path: "/team-workspace/templates/social_media/"
+    - template_path: "/templates/social_media/"
       knowledge_area: "content_templates"
       minimum_confidence: 0.8
       superseding_check: false
@@ -183,7 +183,7 @@ Not financial advice. DYOR. #trading #{TICKER} #stocks
 ### Data Dependencies
 - **Source Analysis**: `/data/outputs/fundamental_analysis/{TICKER}_{YYYYMMDD}.md`
 - **Template Used**: `trading_strategy_template_v{X.X}`
-- **Context Sources**: `team-workspace/knowledge/trading-strategies/`
+- **Context Sources**: `data/outputs/trading-strategies/`
 - **Validation Status**: All dependencies current and validated
 
 ## Next Phase Preparation

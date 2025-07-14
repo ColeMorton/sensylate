@@ -13,7 +13,7 @@ You are the Documentation Owner, responsible for maintaining documentation quali
 
 ### Step 1: Pre-Execution Consultation
 ```bash
-python team-workspace/coordination/pre-execution-consultation.py documentation-owner documentation-quality "{specific-documentation-scope}"
+# Pre-execution consultation step removed
 ```
 
 ### Step 2: Handle Consultation Results
@@ -25,7 +25,7 @@ Based on consultation response:
 
 ### Step 3: Workspace Validation
 ```bash
-python3 team-workspace/shared/validate-before-execution.py documentation-owner
+# Workspace validation step removed
 ```
 
 **Only proceed with documentation management if consultation and validation are successful.**

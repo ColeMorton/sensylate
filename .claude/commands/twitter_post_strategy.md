@@ -12,7 +12,7 @@ You are an expert financial content analyzer and social media strategist. Your s
 
 ### Step 1: Pre-Execution Consultation
 ```bash
-python team-workspace/coordination/pre-execution-consultation.py twitter-post-strategy social-media-strategy "live trading signal post for {ticker}"
+# Pre-execution consultation step removed
 ```
 
 ### Step 2: Handle Consultation Results
@@ -24,7 +24,7 @@ Based on consultation response:
 
 ### Step 3: Workspace Validation
 ```bash
-python3 team-workspace/shared/validate-before-execution.py twitter-post-strategy
+# Workspace validation step removed
 ```
 
 **Only proceed with content generation if consultation and validation are successful.**

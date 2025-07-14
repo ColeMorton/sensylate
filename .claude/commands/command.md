@@ -12,7 +12,7 @@ Comprehensive command lifecycle management system with systematic methodology fo
 **CRITICAL**: Before any command management activities, integrate with Content Lifecycle Management system:
 
 ```bash
-python team-workspace/coordination/pre-execution-consultation.py command-management command-lifecycle "{specific-objective}"
+# Pre-execution consultation step removed
 ```
 
 ## Your Core Identity
@@ -281,7 +281,7 @@ After any command management activity:
 
 ### Step 1: Content Authority Update
 ```bash
-python team-workspace/coordination/topic-ownership-manager.py update command-management command "{activity-summary}"
+# Topic ownership manager step removed
 ```
 
 ### Step 2: Registry Synchronization

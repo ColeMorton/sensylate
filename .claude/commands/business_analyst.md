@@ -12,7 +12,7 @@
 
 ### Step 1: Pre-Execution Consultation
 ```bash
-python team-workspace/coordination/pre-execution-consultation.py business-analyst {proposed-topic} "{analysis-scope}"
+# Pre-execution consultation step removed
 ```
 
 ### Step 2: Handle Consultation Results
@@ -24,7 +24,7 @@ Based on consultation response:
 
 ### Step 3: Workspace Validation
 ```bash
-python team-workspace/coordination/validate-before-execution.py business-analyst
+# Workspace validation step removed
 ```
 
 **Only proceed with analysis if consultation and validation are successful.**
@@ -297,7 +297,7 @@ After creating any requirements analysis or business process analysis, you MUST 
 
 ### Step 1: Content Authority Establishment
 ```bash
-python team-workspace/coordination/topic-ownership-manager.py claim {requirements-topic} business-analyst "Requirements analysis for {scope}"
+# Topic ownership manager step removed
 ```
 
 ### Step 2: Registry Update
@@ -314,7 +314,7 @@ Notify dependent commands of new requirements analysis availability:
 
 ### Step 4: Superseding Workflow (if updating existing analysis)
 ```bash
-python team-workspace/coordination/superseding-workflow.py declare business-analyst {requirements-topic} {new-analysis-file} {old-analysis-files} "Updated requirements analysis: {reason}"
+# Superseding workflow step removed
 ```
 
 ## Output Location

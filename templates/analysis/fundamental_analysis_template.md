@@ -7,7 +7,7 @@ This template defines the exact structure and content requirements for fundament
 ## Template Usage
 
 - **Source Commands**: fundamental_analyst_synthesize (primary generator)
-- **Referenced By**: fundamental_analyst_discover, fundamental_analyst_analyze, fundamental_analyst_validate
+- **Referenced By**: cli_fundamental_analyst_discover, fundamental_analyst_analyze, fundamental_analyst_validate
 - **Output Location**: `./data/outputs/fundamental_analysis/`
 - **File Naming**: `{TICKER}_{YYYYMMDD}.md`
 
@@ -55,6 +55,85 @@ This template defines the exact structure and content requirements for fundament
 | Cash Flow | [A-F] | [↑→↓] | [Details] | [If any] |
 | Capital Efficiency | [A-F] | [↑→↓] | [Details] | [If any] |
 
+## 📊 Economic Sensitivity & Macro Positioning
+
+### Economic Sensitivity Matrix
+| Indicator | Correlation | Current Level | Impact Score | P-Value | Data Source | Confidence |
+|-----------|-------------|---------------|-------------|---------|-------------|------------|
+| Fed Funds Rate | [±0.XX] | [X.XX]% | [X.X]/5.0 | [0.XXX] | FRED | [0.XX] |
+| GDP Growth Rate | [±0.XX] | [X.X]% | [X.X]/5.0 | [0.XXX] | FRED | [0.XX] |
+| Employment Growth | [±0.XX] | [XXX]k | [X.X]/5.0 | [0.XXX] | FRED | [0.XX] |
+| DXY (Dollar Strength) | [±0.XX] | [XXX.X] | [X.X]/5.0 | [0.XXX] | Alpha Vantage | [0.XX] |
+| Yield Curve (10Y-2Y) | [±0.XX] | [XXX]bps | [X.X]/5.0 | [0.XXX] | FRED | [0.XX] |
+| Crypto Risk Appetite | [±0.XX] | BTC: $[XXX]k | [X.X]/5.0 | [0.XXX] | CoinGecko | [0.XX] |
+| Inflation (CPI YoY) | [±0.XX] | [X.X]% | [X.X]/5.0 | [0.XXX] | FRED | [0.XX] |
+| Consumer Confidence | [±0.XX] | [XXX.X] | [X.X]/5.0 | [0.XXX] | FRED | [0.XX] |
+
+### Business Cycle Positioning
+- **Current Phase**: [Early/Mid/Late] cycle | Recession probability: [XX]%
+- **GDP Growth Correlation**: [±0.XX] coefficient | Elasticity: [X.X]x GDP sensitivity
+- **Economic Expansion Performance**: [±XX]% vs market during GDP growth periods above 2.5%
+- **Recession Vulnerability**: [High/Moderate/Low] based on historical performance during contractions
+- **Interest Rate Sensitivity**: Duration [X.X] years with [±0.XX] Fed correlation
+- **Inflation Hedge**: [Strong/Moderate/Limited] pricing power with [±0.XX] CPI correlation
+
+### Liquidity Cycle Positioning
+- **Fed Policy Stance**: [Restrictive/Neutral/Accommodative] | Impact: [Positive/Negative/Neutral] for fundamentals
+- **Employment Sensitivity**: [±0.XX] payroll correlation | Labor market dependency: [High/Moderate/Low]
+- **Consumer Spending Linkage**: [XX]% sector demand growth per 1% employment growth
+- **Credit Spreads**: [XXX]bps vs treasuries, [XX]bps vs historical average
+- **Money Supply Growth**: M2 correlation [±0.XX] with current implications for asset pricing
+
+## 📊 Cross-Sector Positioning Dashboard
+
+### Cross-Sector Relative Analysis
+
+#### Valuation Metrics Comparison
+| Metric | Current | vs SPY | vs Sector | vs Top 3 Correlated | Confidence |
+|--------|---------|--------|-----------|---------------------|------------|
+| P/E Ratio | [XX.X] | [±XX]% | [±XX]% | [Sector]: [±XX]%, [Sector]: [±XX]%, [Sector]: [±XX]% | [0.XX] |
+| P/B Ratio | [X.X] | [±XX]% | [±XX]% | [Sector]: [±XX]%, [Sector]: [±XX]%, [Sector]: [±XX]% | [0.XX] |
+| EV/EBITDA | [XX.X] | [±XX]% | [±XX]% | [Sector]: [±XX]%, [Sector]: [±XX]%, [Sector]: [±XX]% | [0.XX] |
+| Dividend Yield | [X.X]% | [±XXX]bps | [±XXX]bps | [Sector]: [±XXX]bps, [Sector]: [±XXX]bps, [Sector]: [±XXX]bps | [0.XX] |
+
+#### Sector Relative Positioning
+- **Primary Sector**: [Technology/Healthcare/etc] | **Industry**: [Specific industry classification]
+- **Sector Ranking**: [Top/2nd/3rd/Bottom] Quartile | **Performance Scores**: ROE [XX]th percentile, Margin [XX]th percentile
+- **Relative Strengths**: [List areas of sector outperformance]
+- **Improvement Areas**: [List areas of sector underperformance]
+
+### Sector Rotation Assessment
+- **Sector Rotation Score**: [X.X]/10 | **Current Market Environment**: [Favorable/Neutral/Challenging]
+- **Cycle Preference**: Typically performs best in [Early/Mid/Late] cycle phases
+- **Interest Rate Sensitivity**: [High Negative/Moderate/Low/Positive] | Current environment: [Supportive/Neutral/Headwind]
+- **Economic Sensitivity**: [High/Moderate/Low] with [±0.XX] GDP correlation
+- **Rotation Outlook**: [Favored/Moderately favored/Neutral/Headwinds] for sector rotation
+- **Tactical Considerations**: [List 2-3 key timing factors for sector positioning]
+
+## 🧪 Economic Stress Testing
+
+### Stress Test Scenarios
+| Scenario | Probability | Stock Impact | SPY Impact | Recovery Timeline | Confidence |
+|----------|-------------|--------------|------------|-------------------|------------|
+| GDP Contraction (-2%) | [0.XX] | [±XX]% ([X.X]x elasticity) | [±XX]% to [±XX]% | [X-X] quarters | [0.XX] |
+| Employment Shock (-500k) | [0.XX] | [±XX]% ([X.X]x sensitivity) | Labor-sensitive impact | [X-X] quarters | [0.XX] |
+| Bear Market (-20%) | [0.XX] | [±XX]% to [±XX]% | Baseline | [X-X] quarters | [0.XX] |
+| Interest Rate Shock (+200bp) | [0.XX] | [±XX]% duration impact | Market-wide effects | [X-X] quarters | [0.XX] |
+| Recession | [0.XX] | [±XX]% historical | Recovery context | [XX-XX] months | [0.XX] |
+
+### Stress Test Summary
+- **Worst Case Impact**: [±XX]% in [Scenario Name] | **Average Impact**: [±XX]% across scenarios
+- **Probability-Weighted Impact**: [±XX]% expected downside | **Recovery Timeline**: [X.X] quarters average
+- **Key Vulnerabilities**: [List top 2-3 economic sensitivities creating highest risk]
+- **Stress Test Score**: [XXX]/100 (100 baseline, adjusted for economic sensitivity)
+- **Risk Assessment**: [High/Moderate-High/Moderate/Low-Moderate] Risk - [Brief assessment summary]
+
+### Portfolio Implications from Stress Testing
+- **Position Sizing Guidance**: [Conservative/Moderate/Standard] sizing recommended ([X-X]% max position)
+- **Risk Category**: [High volatility/Moderate vulnerability/Stress resilient] during economic stress
+- **Hedging Strategies**: [List applicable hedging recommendations based on stress test results]
+- **Recovery Outlook**: Average recovery [X.X] quarters with [key recovery factors]
+
 ## 🏆 Competitive Position Analysis
 
 ### Moat Assessment
@@ -86,61 +165,126 @@ This template defines the exact structure and content requirements for fundament
 | Bull | [XX]% | $[XXX] | [XX]% | [Assumptions] |
 | **Expected Value** | 100% | **$[XXX]** | **[XX]%** | - |
 
-## ⚠️ Risk Matrix
+## ⚠️ Quantified Risk Assessment Framework
 
-### Quantified Risk Assessment
-| Risk Factor | Probability | Impact | Risk Score | Mitigation | Monitoring |
-|-------------|------------|---------|------------|------------|------------|
-| [Risk Name] | 0.X | [1-5] | [Score] | [Strategy] | [Metrics] |
+### Risk Matrix (Probability × Impact Methodology)
+| Risk Factor | Probability | Impact (1-5) | Risk Score | Mitigation | Monitoring KPI |
+|-------------|-------------|--------------|------------|------------|----------------|
+| GDP Growth Deceleration | [0.XX] | [X] | [X.XX] | Economic diversification and defensive positioning | GDP growth rate, economic indicators |
+| Employment Deterioration | [0.XX] | [X] | [X.XX] | Labor market hedging and automation | Payroll data, unemployment rate |
+| Interest Rate Shock | [0.XX] | [X] | [X.XX] | Duration management and hedging | Fed policy, yield curve |
+| Competitive Pressure | [0.XX] | [X] | [X.XX] | Innovation and moat strengthening | Market share, pricing power |
+| Regulatory Changes | [0.XX] | [X] | [X.XX] | Compliance readiness and diversification | Policy developments, regulatory filings |
+| Market Volatility | [0.XX] | [X] | [X.XX] | Beta management and hedging | VIX, market correlation |
+| Financial Distress | [0.XX] | [X] | [X.XX] | Balance sheet strengthening | Cash flow, debt ratios |
 <!-- MANDATORY: Use 0.0-1.0 decimal format for probability column -->
+
+**Aggregate Risk Score**: [XX.X]/35.0 | **Normalized Risk Score**: [0.XXX] | **Risk Grade**: [Low/Moderate/High/Very High] Risk
+
+### Economic Risk Assessment
+- **Economic Risk Level**: [High/Moderate/Low] based on cycle position and correlations
+- **Recession Sensitivity**: [XX]% probability with [±XX]% impact based on GDP elasticity [X.X]x
+- **High Sensitivity Indicators**: [List economic factors with correlation >0.5]
+- **Cycle Risk Factors**: Current phase [Early/Mid/Late], GDP trend [Positive/Negative], Yield curve [Normal/Flat/Inverted]
+
+### Risk Monitoring Framework
+| Category | Monitoring KPIs | Alert Thresholds | Review Frequency |
+|----------|-----------------|------------------|------------------|
+| Economic | GDP growth, unemployment, Fed policy | High priority monitoring | Monthly for high risks |
+| Financial | Cash flow, debt ratios, credit spreads | Regular monitoring | Quarterly for others |
+| Competitive | Market share, pricing power | Quarterly review | As needed |
+| Regulatory | Policy developments, compliance costs | Situation monitoring | Ongoing |
 
 ### Sensitivity Analysis
 Key variables impact on fair value:
-- [Variable 1]: ±10% change = ±$[XX] ([XX]%)
-- [Variable 2]: ±10% change = ±$[XX] ([XX]%)
-- [Variable 3]: ±10% change = ±$[XX] ([XX]%)
+- Economic Growth: ±10% GDP change = ±$[XX] ([XX]%) based on [X.X]x elasticity
+- Interest Rates: ±100bp Fed change = ±$[XX] ([XX]%) based on [X.X] year duration
+- Market Conditions: ±10% volatility change = ±$[XX] ([XX]%) based on [X.X] beta
+- Competitive Position: ±10% market share = ±$[XX] ([XX]%) based on moat strength
 
-## 📋 Analysis Metadata
+## 📋 Analysis Metadata & Validation
 
-**Data Sources & Quality**:
-- Primary Sources: [Source Name] (0.X), [Source Name] (0.X), [Source Name] (0.X)
-- Data Completeness: [XX]%
-- Latest Data Point: [Date]
-- Data Freshness: All sources current as of analysis date
+### Multi-Source Validation Results
+- **Price Consistency**: [X.X]% variance across sources (Target: ≤2%) | **Status**: [PASSED/FAILED]
+- **Economic Indicator Freshness**: FRED data within [XX] hours | **Status**: [CURRENT/STALE]
+- **Sector Analysis Cross-Validation**: [Passed/Failed] consistency checks with sector report
+- **CLI Service Health**: [X]/7 services operational ([XX]% uptime) | **Status**: [OPERATIONAL/DEGRADED]
+
+### Institutional Confidence Scoring Framework
+- **Discovery Phase**: [0.XX]/1.0 | **Analysis Phase**: [0.XX]/1.0 | **Economic Integration**: [0.XX]/1.0
+- **Sector Context**: [0.XX]/1.0 | **Stress Testing**: [0.XX]/1.0 | **Risk Assessment**: [0.XX]/1.0
+- **Overall Confidence**: [0.XX]/1.0 | **Institutional Certification**: [Achieved/Not Achieved] (≥0.90 threshold)
+
+### Data Sources & Quality
+- **Primary APIs**: Yahoo Finance ([0.XX]), Alpha Vantage ([0.XX]), FMP ([0.XX]), FRED ([0.XX])
+- **Secondary Sources**: SEC EDGAR ([0.XX]), CoinGecko ([0.XX]), IMF ([0.XX])
+- **Data Completeness**: [XX]% threshold achieved | **Latest Data Point**: [Date] validated
+- **Cross-Validation**: All major price points within 2% variance tolerance
 <!-- MANDATORY: Use 0.0-1.0 format for all source confidence scores -->
 
+### Methodology Framework
+- **Economic Context Integration**: FRED indicators with [0.XX] confidence weighting throughout analysis
+- **Sector Analysis Integration**: Cross-referenced with [Sector Name] sector analysis ([Date])
+- **Stress Testing Methodology**: [X] scenarios tested with [0.XX] average confidence
+- **Risk Quantification**: Probability/impact matrices with institutional monitoring framework
+- **Validation Protocols**: Real-time data validation and multi-source cross-checking
+
+### Quality Assurance Results
+- **Template Compliance**: [FULL/PARTIAL] adherence to institutional template standards
+- **Economic Sensitivity Validation**: [PASSED/FAILED] correlation analysis and cycle positioning
+- **Risk Framework Validation**: [PASSED/FAILED] quantified probability/impact assessment
+- **Confidence Propagation**: [ACHIEVED/NOT ACHIEVED] 0.90+ baseline throughout DASV workflow
+
 **Methodology Notes**:
+- Economic sensitivity analysis integrated throughout with FRED real-time indicators
+- Cross-sector positioning analysis provides relative valuation and timing context
+- Stress testing scenarios calibrated to current economic environment and cycle phase
+- Risk assessment with quantified probability/impact matrices and monitoring KPIs
 - [Any specific adjustments or assumptions]
 - [Limitations or caveats]
 - [Areas requiring follow-up research]
 
 ## 🏁 Investment Recommendation Summary
 
-[Comprehensive 150-200 word summary synthesizing the entire analysis into institutional-quality investment decision framework. Include: (1) Core investment thesis with quantified risk-adjusted returns, (2) Key confidence drivers and methodology validation, (3) Balance sheet strength and downside protection, (4) Scenario analysis results with probability-weighted outcomes, (5) Position sizing recommendation within portfolio context, (6) Specific catalysts with impact quantification, (7) Stress-tested bear case limitations, (8) Monte Carlo/sensitivity analysis validation of fair value range, (9) Overall conviction level with supporting evidence, (10) Clear articulation of why this represents exceptional/adequate/poor risk-adjusted value at current levels. This summary should stand alone as complete investment recommendation suitable for institutional decision-making.]
+[Comprehensive 200-250 word summary integrating sector analysis context and economic intelligence into institutional-quality investment decision framework. Include: 
+
+**Core Investment Framework**: (1) Investment thesis with economic cycle positioning and GDP/employment sensitivity ([±0.XX] correlations), (2) Sector rotation context and relative timing considerations ([X.X]/10 rotation score), (3) Economic stress test results and downside protection ([±XX]% worst case impact), (4) Cross-sector valuation attractiveness and competitive positioning ([Top/Bottom] quartile ranking).
+
+**Risk-Adjusted Analysis**: (5) Quantified risk assessment with probability-weighted scenarios ([XX.X]/35.0 aggregate risk score), (6) Business cycle sensitivity and recession vulnerability ([XX]% probability with [X.X]x GDP elasticity), (7) Interest rate environment impact and duration sensitivity ([X.X] years with [±0.XX] Fed correlation), (8) Position sizing guidance based on stress test vulnerability ([Conservative/Moderate/Standard] sizing).
+
+**Economic Environment Integration**: (9) Current economic environment impact on investment timeline and returns ([Restrictive/Neutral/Supportive] monetary policy), (10) Sector rotation timing considerations for tactical allocation ([Early/Mid/Late] cycle preference), (11) FRED economic indicator freshness and confidence weighting ([0.XX] overall economic confidence).
+
+**Institutional Certification**: (12) Multi-source validation results and institutional confidence level ([0.XX]/1.0 overall confidence with [Achieved/Not Achieved] certification), (13) Clear articulation of why this represents exceptional/adequate/poor risk-adjusted value at current levels within economic and sector context, (14) Complete investment recommendation suitable for institutional decision-making with economic stress testing and sector rotation framework integration.]
 ```
 
 ## Template Requirements
 
 ### Content Standards
-- **Confidence Scores**: All metrics use 0.0-1.0 format (baseline 0.9+)
-- **Risk Probabilities**: Decimal format (0.0-1.0) from quantified risk matrices
+- **Confidence Scores**: All metrics use 0.0-1.0 format (baseline 0.9+, institutional certification ≥0.90)
+- **Risk Probabilities**: Decimal format (0.0-1.0) from quantified probability/impact matrices
+- **Economic Sensitivity**: GDP/employment correlations with FRED integration throughout
+- **Sector Context**: Cross-sector positioning and rotation scoring (0.0-10.0 scale)
+- **Stress Testing**: 5+ economic scenarios with recovery timeline analysis
 - **Author Attribution**: "Cole Morton" consistent across all documents
-- **Economic Context**: FRED/CoinGecko integration throughout analysis
 - **Financial Health Grades**: A-F scoring system with trend analysis
 
 ### Data Quality Standards
 - **Current Price Accuracy**: CLI-validated prices throughout document (≤2% variance)
 - **Financial Data Consistency**: Exact figures from multi-source validation
 - **Economic Indicator Currency**: FRED indicators current within 24 hours
-- **Multi-Source Validation**: Cross-validation across Yahoo Finance, Alpha Vantage, FMP
+- **Sector Analysis Integration**: Cross-validation with relevant sector reports
+- **Multi-Source Validation**: Cross-validation across 7 CLI services (Yahoo Finance, Alpha Vantage, FMP, FRED, SEC EDGAR, CoinGecko, IMF)
+- **Stress Testing Validation**: Economic scenarios calibrated to current cycle phase
 - **Institutional Presentation**: Publication-ready quality with evidence backing
 
 ### Validation Requirements
-- **Template Compliance**: Exact structure adherence required
-- **Confidence Propagation**: 0.9+ baseline from discovery through synthesis
-- **Economic Context Integration**: FRED/CoinGecko insights throughout
-- **Risk Quantification**: Probability/impact matrices with monitoring metrics
-- **Business Intelligence**: Competitive moat assessments and KPI integration
+- **Template Compliance**: Exact structure adherence with sections required
+- **Confidence Propagation**: 0.9+ baseline from discovery through synthesis with institutional certification
+- **Economic Context Integration**: FRED/CoinGecko insights with GDP/employment sensitivity throughout
+- **Sector Positioning Validation**: Cross-sector analysis and rotation timing assessment
+- **Stress Testing Framework**: Quantified scenario analysis with probability-weighted outcomes
+- **Risk Quantification**: Probability/impact matrices with monitoring KPIs
+- **Business Intelligence**: Competitive moat assessments with sector-relative positioning
 
 ## CLI Financial Services Integration
 
@@ -156,7 +300,7 @@ Key variables impact on fair value:
 
 ### Service Integration Benefits
 - **Robust Data Access**: Production-grade API management with rate limiting
-- **Multi-Source Validation**: Cross-validation for enhanced confidence
+- **Multi-Source Validation**: Cross-validation for confidence
 - **Economic Context**: Real-time FRED/CoinGecko integration
 - **Quality Assurance**: Built-in validation and health monitoring
 

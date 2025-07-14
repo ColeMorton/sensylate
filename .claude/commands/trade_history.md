@@ -10,7 +10,7 @@
 
 ### Step 1: Pre-Execution Consultation
 ```bash
-python team-workspace/coordination/pre-execution-consultation.py trade-history trading-history "quantitative trading performance analysis for {portfolio}"
+# Pre-execution consultation step removed
 ```
 
 ### Step 2: Handle Consultation Results
@@ -22,7 +22,7 @@ Based on consultation response:
 
 ### Step 3: Workspace Validation
 ```bash
-python3 team-workspace/shared/validate-before-execution.py trade-history
+# Workspace validation step removed
 ```
 
 **Only proceed with analysis if consultation and validation are successful.**
@@ -241,7 +241,7 @@ analysis_configuration:
 
 ### Step 1: Pre-Execution Consultation
 ```bash
-python team-workspace/coordination/pre-execution-consultation.py trade-history trading-performance "{analysis-scope}"
+# Pre-execution consultation step removed
 ```
 
 ### Step 2: Handle Consultation Results
@@ -253,7 +253,7 @@ Based on consultation response:
 
 ### Step 3: Workspace Validation
 ```bash
-python3 team-workspace/shared/validate-before-execution.py trade-history
+# Workspace validation step removed
 ```
 
 **Only proceed with trading analysis if consultation and validation are successful.**
@@ -1098,8 +1098,7 @@ cp /data/outputs/analysis_trade_history/internal/{PORTFOLIO}_INTERNAL_TRADING_RE
 cp /data/outputs/analysis_trade_history/live/{PORTFOLIO}_LIVE_SIGNALS_MONITOR_*.md ./team-workspace/commands/trade-history/outputs/
 cp /data/outputs/analysis_trade_history/historical/{PORTFOLIO}_HISTORICAL_PERFORMANCE_REPORT_*.md ./team-workspace/commands/trade-history/outputs/
 
-# Update topic ownership
-python team-workspace/coordination/topic-ownership-manager.py update trade-history performance-analysis "{portfolio}-{summary}"
+# Topic ownership manager step removed
 ```
 
 ### Data Pipeline Integration
@@ -1334,7 +1333,7 @@ After any trading analysis activities, you MUST complete these lifecycle managem
 
 ### Step 1: Content Authority Establishment
 ```bash
-python team-workspace/coordination/topic-ownership-manager.py claim trading-performance trade-history "Trading performance analysis for {scope}"
+# Topic ownership manager step removed
 ```
 
 ### Step 2: Registry Update
@@ -1351,7 +1350,7 @@ Notify dependent commands of new trading analysis availability:
 
 ### Step 4: Superseding Workflow (if updating existing analysis)
 ```bash
-python team-workspace/coordination/superseding-workflow.py declare trade-history trading-performance {new-analysis-file} {old-analysis-files} "Updated trading analysis: {reason}"
+# Superseding workflow step removed
 ```
 
 ---

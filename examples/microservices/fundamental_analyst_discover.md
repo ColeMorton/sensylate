@@ -40,7 +40,7 @@ outputs:
 - **Shared Resources**:
   - Cache system: `/data/raw/financial_data/`
   - Yahoo Finance service: `scripts/yahoo_finance_service.py`
-  - Team workspace: `/team-workspace/knowledge/financial-data/`
+  - Data outputs: `/data/outputs/financial-data/`
 
 ## Data/File Dependencies
 

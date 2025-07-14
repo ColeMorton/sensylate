@@ -13,7 +13,7 @@ This specification defines the **AI Command Microservices Architecture** - a sys
 
 **Key Innovation**: Transform large, monolithic commands into focused microservices that can be independently optimized, composed into workflows, and systematically validated while maintaining the collaborative intelligence principles of the Sensylate ecosystem.
 
-**Team-Workspace Enhancement**: The microservice architecture supports flexible **role-to-command relationships** where each role can map to one or many commands. A role like `fundamental_analyst` can generate multiple specialized commands (e.g., `fundamental_analyst_discover`, `fundamental_analyst_analyze`, etc.), creating a more granular and flexible command ecosystem.
+**Data Pipeline Enhancement**: The microservice architecture supports flexible **role-to-command relationships** where each role can map to one or many commands. A role like `fundamental_analyst` can generate multiple specialized commands (e.g., `fundamental_analyst_discover`, `fundamental_analyst_analyze`, etc.), creating a more granular and flexible command ecosystem.
 
 ## Core Architecture Principles
 
@@ -142,7 +142,7 @@ outputs:
 - **Upstream Services**: [List of services this depends on]
 - **Downstream Services**: [List of services that depend on this]
 - **External APIs**: [List of external data sources]
-- **Shared Resources**: [Team workspace, knowledge base, cache]
+- **Shared Resources**: [Data outputs, knowledge base, cache]
 
 ## Framework Implementation
 
@@ -163,7 +163,7 @@ phase_requirements:
   selective_examples:
     twitter_strategist_workflow:
       required: [synthesize, validate]  # Skip discover/analyze for content generation
-      rationale: "Content synthesis can work directly from team workspace context"
+      rationale: "Content synthesis can work directly from existing data outputs"
 
     fundamental_analyst_workflow:
       required: [discover, analyze, synthesize, validate]  # Full DASV cycle
@@ -239,7 +239,7 @@ dependency_specification:
         retry_policy: {attempts: 3, backoff: "exponential"}
 
     context_dependencies:
-      - team_workspace_path: "specific/workspace/location"
+      - data_output_path: "data/outputs/specific/location"
         knowledge_area: "topic_name"
         minimum_confidence: 0.7
         superseding_check: true
@@ -391,7 +391,7 @@ acceptance_criteria:
 ### Service Discovery
 ```yaml
 service_registry:
-  location: ./team-workspace/services/registry.json
+  location: ./data/outputs/services/registry.json
   structure:
     services:
       - name: string
@@ -424,11 +424,11 @@ health_checks:
     - Framework compliance verification
 ```
 
-## Team-Workspace Integration
+## Data Pipeline Integration
 
 ### Role-to-Command Mapping
 
-The team-workspace supports flexible role-to-command relationships where each role maps to one or many commands:
+The data pipeline supports flexible role-to-command relationships where each role maps to one or many commands:
 
 ```yaml
 # Phase 1: Fundamental Analyst Implementation
@@ -443,9 +443,9 @@ microservice_mapping:
   # No changes to existing commands outside fundamental_analyst role
 ```
 
-### Team-Workspace Registry Enhancement
+### Data Pipeline Registry Enhancement
 
-The team-workspace registry supports microservice discovery and composition:
+The data pipeline registry supports microservice discovery and composition:
 
 ```yaml
 # Registry Structure for Phase 1
@@ -464,29 +464,29 @@ registry:
       role: "fundamental_analyst"
       action: "discover"
       framework: "DASV"
-      location: "/team-workspace/microservices/fundamental_analyst/discover.md"
-      manifest: "/team-workspace/microservices/fundamental_analyst/discover.yaml"
+      location: "/data/outputs/microservices/fundamental_analyst/discover.md"
+      manifest: "/data/outputs/microservices/fundamental_analyst/discover.yaml"
 
     fundamental_analyst_analyze:
       role: "fundamental_analyst"
       action: "analyze"
       framework: "DASV"
-      location: "/team-workspace/microservices/fundamental_analyst/analyze.md"
-      manifest: "/team-workspace/microservices/fundamental_analyst/analyze.yaml"
+      location: "/data/outputs/microservices/fundamental_analyst/analyze.md"
+      manifest: "/data/outputs/microservices/fundamental_analyst/analyze.yaml"
 
     fundamental_analyst_synthesize:
       role: "fundamental_analyst"
       action: "synthesize"
       framework: "DASV"
-      location: "/team-workspace/microservices/fundamental_analyst/synthesize.md"
-      manifest: "/team-workspace/microservices/fundamental_analyst/synthesize.yaml"
+      location: "/data/outputs/microservices/fundamental_analyst/synthesize.md"
+      manifest: "/data/outputs/microservices/fundamental_analyst/synthesize.yaml"
 
     fundamental_analyst_validate:
       role: "fundamental_analyst"
       action: "validate"
       framework: "DASV"
-      location: "/team-workspace/microservices/fundamental_analyst/validate.md"
-      manifest: "/team-workspace/microservices/fundamental_analyst/validate.yaml"
+      location: "/data/outputs/microservices/fundamental_analyst/validate.md"
+      manifest: "/data/outputs/microservices/fundamental_analyst/validate.yaml"
 
   # Workflow Compositions
   workflow_compositions:
@@ -576,12 +576,12 @@ implementation_advantages:
   - Flexible composition based on analysis requirements
 ```
 
-### Team-Workspace Structure for Phase 1
+### Data Pipeline Structure for Phase 1
 
-The team-workspace adds microservice support for fundamental_analyst:
+The data pipeline adds microservice support for fundamental_analyst:
 
 ```yaml
-workspace_structure:
+pipeline_structure:
   commands/             # Existing commands continue unchanged
     architect/
     code-owner/
@@ -691,7 +691,7 @@ implementation_results:
     output_verified: "✅ Professional analysis documents in ./data/outputs/fundamental_analysis/"
     enhancement_delivered: "✅ Superior functionality through microservice architecture"
 
-  team_workspace_implementation:
+  data_pipeline_implementation:
     - ✅ Microservices directory structure implemented
     - ✅ Registry updated for fundamental_analyst role
     - ✅ Workflow composition fully operational

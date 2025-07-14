@@ -43,7 +43,7 @@ outputs:
 - **Downstream Services**: Various (depends on created command)
 - **External APIs**: None required
 - **Shared Resources**:
-  - Template library: `/team-workspace/templates/commands/`
+  - Template library: `/templates/commands/`
   - Existing commands: `/.claude/commands/`
   - Framework specifications: `/docs/`
 
@@ -65,7 +65,7 @@ input_dependencies:
       fallback_strategy: "error"
       confidence_impact: 0.4
 
-    - path: "/team-workspace/templates/commands/"
+    - path: "/templates/commands/"
       type: "directory"
       freshness_requirement: "monthly"
       fallback_strategy: "default_templates"
@@ -305,7 +305,7 @@ output_specification:
   supporting_artifacts:
     - test_specification: "/tests/commands/{role}_{action}_{product}_test.md"
     - integration_guide: "/docs/integration/{role}_{action}_{product}_integration.md"
-    - performance_profile: "/team-workspace/performance/{role}_{action}_{product}_profile.json"
+    - performance_profile: "/data/outputs/performance/{role}_{action}_{product}_profile.json"
 ```
 
 ### Quality Metadata

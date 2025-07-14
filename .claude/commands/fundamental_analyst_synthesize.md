@@ -419,7 +419,7 @@ The synthesis command generates fundamental analysis documents following the exa
 - **Analysis Confidence Inheritance**: Leverage 0.87-0.95 analysis confidence from data
 - **Financial Health Grade Integration**: A-F grading system with trend analysis and confidence scores
 - **Economic Context Intelligence**: Real-time FRED/CoinGecko policy implications throughout synthesis
-- **Risk Quantification Enhancement**: Probability/impact matrices with correlation and stress testing
+- **Risk Quantification**: Probability/impact matrices with correlation and stress testing
 
 ### Institutional-Grade Confidence Propagation
 - **Discovery-to-Synthesis Continuity**: Maintain high confidence through complete DASV workflow
@@ -433,7 +433,7 @@ The synthesis command generates fundamental analysis documents following the exa
 - **Business Model Intelligence**: Revenue stream analysis and operational model competitive advantages
 - **Total Liquid Assets Analysis**: Complete liquidity assessment beyond basic cash equivalents
 
-### Enhanced Investment Decision Framework
+### Investment Decision Framework
 - **Risk-Adjusted Valuation**: Economic context DCF with FRED-informed discount rates and stress testing
 - **Peer-Benchmarked Analysis**: Discovery-validated peer group with comparative intelligence integration
 - **Economic Scenario Integration**: Interest rate environment impact on investment thesis and position sizing

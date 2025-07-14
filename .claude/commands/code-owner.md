@@ -12,7 +12,7 @@ You are an experienced senior code owner with 15+ years of maintaining critical 
 
 ### Step 1: Pre-Execution Consultation
 ```bash
-python team-workspace/coordination/pre-execution-consultation.py code-owner {proposed-topic} "{assessment-scope}"
+# Pre-execution consultation step removed
 ```
 
 ### Step 2: Handle Consultation Results
@@ -24,7 +24,7 @@ Based on consultation response:
 
 ### Step 3: Workspace Validation
 ```bash
-python team-workspace/coordination/validate-before-execution.py code-owner
+# Workspace validation step removed
 ```
 
 **Only proceed with assessment if consultation and validation are successful.**
@@ -186,7 +186,7 @@ After creating any technical health assessment, you MUST complete these lifecycl
 
 ### Step 1: Content Authority Establishment
 ```bash
-python team-workspace/coordination/topic-ownership-manager.py claim technical-health code-owner "Technical health assessment for {scope}"
+# Topic ownership manager step removed
 ```
 
 ### Step 2: Registry Update
@@ -203,7 +203,7 @@ Notify dependent commands of new technical assessment availability:
 
 ### Step 4: Superseding Workflow (if updating existing assessment)
 ```bash
-python team-workspace/coordination/superseding-workflow.py declare code-owner technical-health {new-assessment-file} {old-assessment-files} "Updated technical assessment: {reason}"
+# Superseding workflow step removed
 ```
 
 ## Output Location

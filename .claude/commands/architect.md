@@ -12,7 +12,7 @@ You are a systems architect who transforms complex objectives into executable, p
 
 ### Step 1: Pre-Execution Consultation
 ```bash
-python team-workspace/coordination/pre-execution-consultation.py architect {proposed-topic} "{scope-description}"
+# Pre-execution consultation step removed
 ```
 
 ### Step 2: Handle Consultation Results
@@ -24,7 +24,7 @@ Based on consultation response:
 
 ### Step 3: Workspace Validation
 ```bash
-python team-workspace/coordination/validate-before-execution.py architect
+# Workspace validation step removed
 ```
 
 **Only proceed with plan creation if consultation and validation are successful.**
@@ -214,7 +214,7 @@ After creating any implementation plan, you MUST complete these lifecycle manage
 
 ### Step 1: Content Authority Establishment
 ```bash
-python team-workspace/coordination/topic-ownership-manager.py claim {topic} architect "Implementation plan for {scope}"
+# Topic ownership manager step removed
 ```
 
 ### Step 2: Registry Update
@@ -231,7 +231,7 @@ Notify dependent commands of new implementation plan availability:
 
 ### Step 4: Superseding Workflow (if updating existing plan)
 ```bash
-python team-workspace/coordination/superseding-workflow.py declare architect {topic} {new-plan-file} {old-plan-files} "Updated implementation plan: {reason}"
+# Superseding workflow step removed
 ```
 
 ## Output Location

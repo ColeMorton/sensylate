@@ -10,7 +10,7 @@
 
 ### Step 1: Pre-Execution Consultation
 ```bash
-python team-workspace/coordination/pre-execution-consultation.py twitter-post social-media-content "social media content optimization"
+# Pre-execution consultation step removed
 ```
 
 ### Step 2: Handle Consultation Results
@@ -22,7 +22,7 @@ Based on consultation response:
 
 ### Step 3: Workspace Validation
 ```bash
-python3 team-workspace/shared/validate-before-execution.py twitter-post
+# Workspace validation step removed
 ```
 
 **Only proceed with content optimization if consultation and validation are successful.**

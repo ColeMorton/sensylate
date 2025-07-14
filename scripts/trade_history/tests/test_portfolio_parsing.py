@@ -144,7 +144,7 @@ def validate_discovery_schema():
     Validate that the JSON schema file is properly structured.
     """
 
-    schema_path = "/Users/colemorton/Projects/sensylate/team-workspace/microservices/trade_history/discover/trading_discovery_schema_v1.json"
+    schema_path = "/Users/colemorton/Projects/sensylate/data/outputs/analysis_trade_history/discover/trading_discovery_schema_v1.json"
 
     print("=== Discovery Schema Validation ===\n")
 

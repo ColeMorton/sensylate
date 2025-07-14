@@ -11,7 +11,7 @@
 
 ### Step 1: Pre-Execution Consultation
 ```bash
-python team-workspace/coordination/pre-execution-consultation.py trade-history-full trading-history "complete DASV workflow for trade history"
+# Pre-execution consultation step removed
 ```
 
 ### Step 2: Handle Consultation Results
@@ -23,7 +23,7 @@ Based on consultation response:
 
 ### Step 3: Workspace Validation
 ```bash
-python3 team-workspace/shared/validate-before-execution.py trade-history-full
+# Workspace validation step removed
 ```
 
 **Only proceed with analysis workflow if consultation and validation are successful.**

@@ -5,7 +5,7 @@
 **CRITICAL**: Before any strategy development, integrate with Content Lifecycle Management system:
 
 ```bash
-python team-workspace/coordination/pre-execution-consultation.py social-media-strategist social-media-strategy "{specific-objective}"
+# Pre-execution consultation step removed
 ```
 
 **Required Cross-Command Consultation**:
@@ -306,7 +306,7 @@ After strategy development, complete integration workflow:
 
 ### Step 1: Knowledge Authority Update
 ```bash
-python team-workspace/coordination/topic-ownership-manager.py update social-media-strategy social-media-strategist "{strategy-summary}"
+# Topic ownership manager step removed
 ```
 
 ### Step 2: Strategy Registration
