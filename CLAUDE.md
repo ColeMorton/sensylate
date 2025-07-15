@@ -86,4 +86,4 @@ ALWAYS prefer editing an existing file to creating a new one.
 
 **Timezone**: Brisbane, Australia (default)
 **Memory Rules**: No author attribution in markdown unless requested
-**Output Directories**: Analysis outputs saved to `data/outputs/{analysis_type}/`
+**Output Directories**: Outputs saved to `data/outputs/`

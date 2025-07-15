@@ -246,7 +246,7 @@ Key variables impact on fair value:
 
 ## 🏁 Investment Recommendation Summary
 
-[Comprehensive 200-250 word summary integrating sector analysis context and economic intelligence into institutional-quality investment decision framework. Include: 
+[Comprehensive 200-250 word summary integrating sector analysis context and economic intelligence into institutional-quality investment decision framework. Include:
 
 **Core Investment Framework**: (1) Investment thesis with economic cycle positioning and GDP/employment sensitivity ([±0.XX] correlations), (2) Sector rotation context and relative timing considerations ([X.X]/10 rotation score), (3) Economic stress test results and downside protection ([±XX]% worst case impact), (4) Cross-sector valuation attractiveness and competitive positioning ([Top/Bottom] quartile ranking).
 

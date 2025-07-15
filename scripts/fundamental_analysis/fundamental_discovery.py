@@ -20,13 +20,14 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 
 # Import CLI services for enhanced data collection
 try:
-    from services.yahoo_finance import create_yahoo_finance_service
-    from services.alpha_vantage import create_alpha_vantage_service  
+    from services.alpha_vantage import create_alpha_vantage_service
+    from services.coingecko import create_coingecko_service
     from services.fmp import create_fmp_service
     from services.fred_economic import create_fred_economic_service
-    from services.coingecko import create_coingecko_service
-    from services.sec_edgar import create_sec_edgar_service
     from services.imf import create_imf_service
+    from services.sec_edgar import create_sec_edgar_service
+    from services.yahoo_finance import create_yahoo_finance_service
+
     CLI_SERVICES_AVAILABLE = True
 except ImportError as e:
     print(f"⚠️  CLI services not available: {e}")
@@ -35,6 +36,7 @@ except ImportError as e:
 # Import sector cross-reference for sector analysis integration
 try:
     from sector_cross_reference import SectorCrossReference
+
     SECTOR_CROSS_REFERENCE_AVAILABLE = True
 except ImportError as e:
     print(f"⚠️  Sector cross-reference not available: {e}")
@@ -67,11 +69,11 @@ class FundamentalDiscovery:
         self.fundamentals_data = None
         self.market_data = None
         self.financial_statements = None
-        
+
         # Initialize CLI services for enhanced data collection
         self.cli_services = {}
         self.cli_service_health = {}
-        
+
         if CLI_SERVICES_AVAILABLE:
             try:
                 env = "prod"  # Use production environment
@@ -82,21 +84,31 @@ class FundamentalDiscovery:
                     "fred_economic": create_fred_economic_service(env),
                     "coingecko": create_coingecko_service(env),
                     "sec_edgar": create_sec_edgar_service(env),
-                    "imf": create_imf_service(env)
+                    "imf": create_imf_service(env),
                 }
                 print(f"✅ Initialized {len(self.cli_services)} CLI services")
             except Exception as e:
                 print(f"⚠️  Failed to initialize some CLI services: {e}")
                 self.cli_services = {}
-        
+
         # Track service health
-        for service_name in ["yahoo_finance", "alpha_vantage", "fmp", "fred_economic", "coingecko", "sec_edgar", "imf"]:
+        for service_name in [
+            "yahoo_finance",
+            "alpha_vantage",
+            "fmp",
+            "fred_economic",
+            "coingecko",
+            "sec_edgar",
+            "imf",
+        ]:
             self.cli_service_health[service_name] = service_name in self.cli_services
-        
+
         # Initialize sector cross-reference system
         if SECTOR_CROSS_REFERENCE_AVAILABLE:
             try:
-                self.sector_cross_ref = SectorCrossReference("./data/outputs/sector_analysis")
+                self.sector_cross_ref = SectorCrossReference(
+                    "./data/outputs/sector_analysis"
+                )
                 print(f"✅ Initialized sector cross-reference system")
             except Exception as e:
                 print(f"⚠️  Failed to initialize sector cross-reference: {e}")
@@ -142,7 +154,9 @@ class FundamentalDiscovery:
                 try:
                     service = self.cli_services["yahoo_finance"]
                     self.fundamentals_data = service.get_stock_info(self.ticker)
-                    print(f"✅ Retrieved fundamental data for {self.ticker} via Yahoo Finance CLI")
+                    print(
+                        f"✅ Retrieved fundamental data for {self.ticker} via Yahoo Finance CLI"
+                    )
                 except Exception as e:
                     print(f"⚠️  Yahoo Finance CLI error: {e}")
                     # Use fallback data structure
@@ -151,16 +165,16 @@ class FundamentalDiscovery:
                         "longName": f"{self.ticker} Corporation",
                         "sector": "Technology",
                         "industry": "Software",
-                        "currentPrice": 100.0  # Placeholder
+                        "currentPrice": 100.0,  # Placeholder
                     }
             else:
                 # Fallback data structure
                 self.fundamentals_data = {
                     "symbol": self.ticker,
-                    "longName": f"{self.ticker} Corporation", 
+                    "longName": f"{self.ticker} Corporation",
                     "sector": "Technology",
                     "industry": "Software",
-                    "currentPrice": 100.0  # Placeholder
+                    "currentPrice": 100.0,  # Placeholder
                 }
                 print(f"⚠️  Using fallback data structure for {self.ticker}")
 
@@ -170,7 +184,7 @@ class FundamentalDiscovery:
                 return False
 
             return True
-            
+
         except Exception as e:
             print(f"❌ Error initializing data source for {self.ticker}: {str(e)}")
             return False
@@ -334,17 +348,21 @@ class FundamentalDiscovery:
         overall_quality = np.mean(quality_scores)
 
         # Calculate institutional-grade overall confidence (0.90+ standard)
-        source_scores = [0.95, 0.94, 0.88]  # Enhanced reliability scores for institutional standards
+        source_scores = [
+            0.95,
+            0.94,
+            0.88,
+        ]  # Enhanced reliability scores for institutional standards
         confidence_factors = [overall_quality] + source_scores
-        
+
         # Apply institutional quality weighting
         institutional_confidence = (
-            overall_quality * 0.40 +  # Data completeness
-            0.95 * 0.30 +             # Yahoo Finance enhanced
-            0.94 * 0.25 +             # Financial statements enhanced  
-            0.88 * 0.05               # Peer analysis enhanced
+            overall_quality * 0.40
+            + 0.95 * 0.30  # Data completeness
+            + 0.94 * 0.25  # Yahoo Finance enhanced
+            + 0.88 * 0.05  # Financial statements enhanced  # Peer analysis enhanced
         )
-        
+
         # Ensure institutional minimum (0.90+)
         final_confidence = max(0.90, min(0.98, institutional_confidence))
 
@@ -354,7 +372,7 @@ class FundamentalDiscovery:
             "enhanced_financial_metrics_with_calculated_ratios",
             "multi_source_price_validation_achieving_perfect_consistency",
             "real_time_economic_context_integration",
-            "institutional_grade_data_quality_standards_met"
+            "institutional_grade_data_quality_standards_met",
         ]
 
         return {
@@ -365,16 +383,16 @@ class FundamentalDiscovery:
                 "fred": 1.0,
                 "coingecko": 0.98,
                 "sec_edgar": 1.0,
-                "imf": 0.98
+                "imf": 0.98,
             },
             "data_completeness": 0.97,
             "data_freshness": {
                 "stock_data": f"real_time_{datetime.now().strftime('%B_%d_%Y').lower()}",
                 "financial_statements": "latest_annual_2024",
                 "economic_data": f"current_{datetime.now().strftime('%B_%Y').lower()}",
-                "regulatory_data": "current_sec_edgar"
+                "regulatory_data": "current_sec_edgar",
             },
-            "quality_flags": quality_flags
+            "quality_flags": quality_flags,
         }
 
     def execute_discovery(self) -> Dict[str, Any]:
@@ -394,7 +412,11 @@ class FundamentalDiscovery:
                     "ticker": self.ticker,
                     "depth": self.depth,
                     "data_collection_methodology": "production_cli_services_unified_access",
-                    "cli_services_utilized": [name for name, healthy in self.cli_service_health.items() if healthy],
+                    "cli_services_utilized": [
+                        name
+                        for name, healthy in self.cli_service_health.items()
+                        if healthy
+                    ],
                     "api_keys_configured": "production_keys_from_config/financial_services.yaml",
                     "enhanced_features": {
                         "economic_indicator_collection": True,
@@ -565,7 +587,7 @@ class FundamentalDiscovery:
         ]
 
     # Enhanced CLI-style data collection methods
-    
+
     def generate_cli_comprehensive_analysis(self) -> Dict[str, Any]:
         """Generate CLI comprehensive analysis summary"""
         return {
@@ -574,48 +596,48 @@ class FundamentalDiscovery:
             "market_data": "cross_validated_pricing_and_trading_data_from_3_sources",
             "analyst_intelligence": "sentiment_and_recommendations_integrated_across_platforms",
             "data_validation": "multi_source_price_validation_with_1.000_confidence",
-            "quality_metrics": "institutional_grade_assessment_100_percent_health"
+            "quality_metrics": "institutional_grade_assessment_100_percent_health",
         }
-    
+
     def collect_enhanced_market_data(self) -> Dict[str, Any]:
         """Collect enhanced market data using CLI services"""
         market_data = self.collect_market_data()  # Use existing method as base
-        
+
         # Add CLI-style price validation if services available
         price_validation = {
             "yahoo_finance_price": market_data.get("current_price"),
             "alpha_vantage_price": market_data.get("current_price"),
             "fmp_price": market_data.get("current_price"),
             "price_consistency": True,
-            "confidence_score": 1.000
+            "confidence_score": 1.000,
         }
-        
+
         market_data["price_validation"] = price_validation
         market_data["confidence"] = 1.0
-        
+
         return market_data
-    
+
     def collect_enhanced_financial_metrics(self) -> Dict[str, Any]:
         """Collect enhanced financial metrics using CLI services"""
         return self.collect_financial_metrics()  # Use existing method
-    
+
     def collect_enhanced_company_intelligence(self) -> Dict[str, Any]:
         """Collect enhanced company intelligence using CLI services"""
         company_intel = self.collect_company_intelligence()
-        
+
         # Add enhanced financial statements structure
         if "financial_statements" not in company_intel:
             company_intel["financial_statements"] = self.collect_financial_statements()
-        
+
         return company_intel
-    
+
     def collect_cli_market_context(self) -> Dict[str, Any]:
         """Collect market context using CLI services"""
         try:
             # Use FRED service if available
             fred_data = {}
             coingecko_data = {}
-            
+
             if "fred_economic" in self.cli_services:
                 try:
                     # Simulate FRED API call
@@ -623,37 +645,37 @@ class FundamentalDiscovery:
                         "federal_funds_rate": 4.33,
                         "unemployment_rate": 4.1,
                         "ten_year_treasury": 4.38,
-                        "three_month_treasury": 4.42
+                        "three_month_treasury": 4.42,
                     }
                 except Exception as e:
                     print(f"⚠️  FRED service error: {e}")
-            
+
             if "coingecko" in self.cli_services:
                 try:
                     # Simulate CoinGecko API call
                     coingecko_data = {
                         "bitcoin_price": 119142,
                         "price_change_24h": 1968,
-                        "market_sentiment": "slightly_bullish"
+                        "market_sentiment": "slightly_bullish",
                     }
                 except Exception as e:
                     print(f"⚠️  CoinGecko service error: {e}")
-            
+
             return {
                 "metadata": "complete_cli_response_aggregation_from_fred_and_coingecko",
                 "economic_indicators": fred_data,
                 "cryptocurrency_market": coingecko_data,
                 "market_summary": "restrictive_monetary_policy_with_positive_crypto_sentiment",
-                "sector_implications": "technology_sector_faces_higher_borrowing_costs_but_strong_fundamentals"
+                "sector_implications": "technology_sector_faces_higher_borrowing_costs_but_strong_fundamentals",
             }
         except Exception as e:
             return {
                 "metadata": "cli_market_context_error",
                 "error": str(e),
                 "economic_indicators": {},
-                "cryptocurrency_market": {}
+                "cryptocurrency_market": {},
             }
-    
+
     def analyze_economic_environment(self) -> Dict[str, Any]:
         """Analyze current economic environment"""
         return {
@@ -661,84 +683,96 @@ class FundamentalDiscovery:
             "yield_curve_signal": "normal",
             "policy_implications": [
                 "Higher borrowing costs for expansion",
-                "Pressure on high-multiple tech stocks", 
-                "Strong balance sheet provides resilience"
+                "Pressure on high-multiple tech stocks",
+                "Strong balance sheet provides resilience",
             ],
-            "sector_sensitivity": "Technology sector moderately sensitive to rate changes due to growth nature"
+            "sector_sensitivity": "Technology sector moderately sensitive to rate changes due to growth nature",
         }
-    
+
     def collect_regulatory_intelligence(self) -> Dict[str, Any]:
         """Collect regulatory intelligence using CLI services"""
         return {
             "insider_trading_data": f"unavailable_for_{self.ticker.lower()}_per_fmp_cli",
             "sec_edgar_integration": "operational_framework_ready_for_detailed_filings",
-            "regulatory_analysis": "Strong compliance framework with regular SEC filings"
+            "regulatory_analysis": "Strong compliance framework with regular SEC filings",
         }
-    
+
     def validate_cli_services(self) -> Dict[str, Any]:
         """Validate CLI service health"""
         service_health = {}
         for service_name in self.cli_service_health:
-            service_health[service_name] = "100%" if self.cli_service_health[service_name] else "0%"
-        
-        healthy_services = sum(1 for healthy in self.cli_service_health.values() if healthy)
-        
+            service_health[service_name] = (
+                "100%" if self.cli_service_health[service_name] else "0%"
+            )
+
+        healthy_services = sum(
+            1 for healthy in self.cli_service_health.values() if healthy
+        )
+
         return {
             "service_health": service_health,
-            "health_score": 1.0 if healthy_services == len(self.cli_service_health) else healthy_services / len(self.cli_service_health),
+            "health_score": 1.0
+            if healthy_services == len(self.cli_service_health)
+            else healthy_services / len(self.cli_service_health),
             "services_operational": healthy_services,
-            "services_healthy": healthy_services == len(self.cli_service_health)
+            "services_healthy": healthy_services == len(self.cli_service_health),
         }
-    
+
     def assess_cli_data_quality(self) -> Dict[str, Any]:
         """Assess CLI data quality"""
-        healthy_services = sum(1 for healthy in self.cli_service_health.values() if healthy)
-        service_names = [name for name, healthy in self.cli_service_health.items() if healthy]
-        
+        healthy_services = sum(
+            1 for healthy in self.cli_service_health.values() if healthy
+        )
+        service_names = [
+            name for name, healthy in self.cli_service_health.items() if healthy
+        ]
+
         return {
             "overall_data_quality": 0.98,
-            "cli_service_health": 1.0 if healthy_services == len(self.cli_service_health) else healthy_services / len(self.cli_service_health),
+            "cli_service_health": 1.0
+            if healthy_services == len(self.cli_service_health)
+            else healthy_services / len(self.cli_service_health),
             "institutional_grade": True,
             "data_sources_via_cli": service_names,
-            "cli_integration_status": "operational"
+            "cli_integration_status": "operational",
         }
-    
+
     def generate_cli_insights(self) -> Dict[str, Any]:
         """Generate CLI integration insights"""
         return {
             "cli_integration_observations": [
                 "Perfect price consistency across 3 sources",
-                "Complete financial statement availability", 
-                "Real-time economic context integration"
+                "Complete financial statement availability",
+                "Real-time economic context integration",
             ],
             "data_quality_insights": [
                 "100% service health across all 7 CLI sources",
                 "Multi-source validation achieving 1.000 confidence",
-                "Comprehensive data coverage with minimal gaps"
+                "Comprehensive data coverage with minimal gaps",
             ],
             "market_context_insights": [
                 "Restrictive monetary policy environment",
                 "Technology sector facing headwinds from rates",
-                "Strong crypto sentiment indicates risk appetite"
+                "Strong crypto sentiment indicates risk appetite",
             ],
             "service_performance_insights": [
                 "All CLI services responding optimally",
                 "Production-grade caching reducing API calls",
-                "Rate limiting ensuring sustainable data access"
-            ]
+                "Rate limiting ensuring sustainable data access",
+            ],
         }
-    
+
     def establish_enhanced_peer_group(self) -> Dict[str, Any]:
         """Establish enhanced peer group with CLI data"""
         peer_data = self.establish_peer_group()  # Use existing method as base
-        
+
         # Add CLI-style enhancements
         if "peer_companies" in peer_data:
             for peer in peer_data["peer_companies"]:
                 peer["market_cap_range"] = "similar_mega_cap"
-        
+
         return peer_data
-    
+
     def generate_discovery_insights(self) -> Dict[str, Any]:
         """Generate comprehensive discovery insights"""
         return {
@@ -746,23 +780,23 @@ class FundamentalDiscovery:
                 f"{self.ticker} demonstrates exceptional market positioning with comprehensive data coverage",
                 "Strong fundamental metrics indicate robust business model",
                 "Multi-source validation provides high confidence in analysis",
-                "Balanced approach across growth and value characteristics"
+                "Balanced approach across growth and value characteristics",
             ],
             "data_gaps_identified": [
                 "Insider trading data unavailable for detailed management sentiment analysis",
                 "Segment-specific growth rates require deeper analysis phase",
                 "Competitive positioning metrics need industry benchmarking",
-                "Forward guidance and analyst estimates require supplementary research"
+                "Forward guidance and analyst estimates require supplementary research",
             ],
             "research_priorities": [
                 "Sector-specific growth trajectory and market share analysis",
                 "Technology integration impact across product portfolio",
                 "Margin sustainability in competitive environment",
-                "Capital allocation strategy and shareholder returns"
+                "Capital allocation strategy and shareholder returns",
             ],
-            "next_phase_readiness": True
+            "next_phase_readiness": True,
         }
-    
+
     def collect_sector_context(self) -> Dict[str, Any]:
         """Collect sector context and classification data"""
         try:
@@ -770,21 +804,29 @@ class FundamentalDiscovery:
             company_data = self.fundamentals_data or {}
             sector = company_data.get("sector", "Technology")  # Default fallback
             industry = company_data.get("industry", "Software")
-            
+
             # Enhanced sector context with institutional data
             return {
-                "primary_sector": sector.lower().replace(" ", "_") if sector else "technology",
+                "primary_sector": sector.lower().replace(" ", "_")
+                if sector
+                else "technology",
                 "industry_classification": industry,
                 "gics_classification": {
                     "sector": sector,
                     "industry_group": industry,
                     "industry": industry,
-                    "sub_industry": company_data.get("industryDisp", industry)
+                    "sub_industry": company_data.get("industryDisp", industry),
                 },
                 "sector_characteristics": {
-                    "growth_stage": "mature" if sector in ["Technology", "Healthcare"] else "stable",
-                    "cyclicality": "secular" if sector in ["Technology", "Healthcare"] else "cyclical",
-                    "interest_rate_sensitivity": "high" if sector == "Technology" else "moderate"
+                    "growth_stage": "mature"
+                    if sector in ["Technology", "Healthcare"]
+                    else "stable",
+                    "cyclicality": "secular"
+                    if sector in ["Technology", "Healthcare"]
+                    else "cyclical",
+                    "interest_rate_sensitivity": "high"
+                    if sector == "Technology"
+                    else "moderate",
                 },
                 "sector_analysis_available": True,  # We have sector analysis files
                 "confidence_score": 0.92,
@@ -797,15 +839,15 @@ class FundamentalDiscovery:
                 "sector_characteristics": {},
                 "sector_analysis_available": False,
                 "confidence_score": 0.75,
-                "error": str(e)
+                "error": str(e),
             }
-    
+
     def collect_economic_indicators(self) -> Dict[str, Any]:
         """Collect economic indicators from CLI services"""
         try:
             # Get current timestamp
             collection_time = datetime.now().isoformat()
-            
+
             # FRED indicators (simulated with current market data)
             fred_indicators = [
                 {
@@ -814,41 +856,41 @@ class FundamentalDiscovery:
                     "value": 4.33,
                     "unit": "percent",
                     "source": "FRED",
-                    "confidence": 0.99
+                    "confidence": 0.99,
                 },
                 {
                     "indicator": "UNRATE",
-                    "name": "Unemployment Rate", 
+                    "name": "Unemployment Rate",
                     "value": 4.1,
                     "unit": "percent",
                     "source": "FRED",
-                    "confidence": 0.99
+                    "confidence": 0.99,
                 },
                 {
                     "indicator": "DGS10",
                     "name": "10-Year Treasury Rate",
                     "value": 4.38,
-                    "unit": "percent", 
+                    "unit": "percent",
                     "source": "FRED",
-                    "confidence": 0.99
+                    "confidence": 0.99,
                 },
                 {
                     "indicator": "DGS3MO",
                     "name": "3-Month Treasury Rate",
                     "value": 4.42,
                     "unit": "percent",
-                    "source": "FRED", 
-                    "confidence": 0.99
-                }
+                    "source": "FRED",
+                    "confidence": 0.99,
+                },
             ]
-            
+
             return {
                 "fred_indicators": fred_indicators,
                 "economic_environment": "restrictive_monetary_policy",
                 "collection_timestamp": collection_time,
                 "data_freshness": {
                     "fred_data": "current",
-                    "last_updated": collection_time
+                    "last_updated": collection_time,
                 },
                 "confidence_score": 0.96,
             }
@@ -859,43 +901,49 @@ class FundamentalDiscovery:
                 "collection_timestamp": datetime.now().isoformat(),
                 "data_freshness": {},
                 "confidence_score": 0.70,
-                "error": str(e)
+                "error": str(e),
             }
-    
+
     def collect_cross_sector_peers(self) -> Dict[str, Any]:
         """Collect cross-sector peer analysis data"""
         try:
             # Get sector information
             sector_context = self.collect_sector_context()
             primary_sector = sector_context.get("primary_sector", "technology")
-            
+
             # Define sector peer groups based on correlation and market dynamics
             sector_peer_groups = {
                 "technology": ["communication_services", "consumer_discretionary"],
                 "healthcare": ["consumer_staples", "utilities"],
                 "finance": ["real_estate", "materials"],
                 "energy": ["materials", "industrial"],
-                "utilities": ["real_estate", "consumer_staples"]
+                "utilities": ["real_estate", "consumer_staples"],
             }
-            
+
             # Get peer groups for this sector
-            related_sectors = sector_peer_groups.get(primary_sector, ["communication_services"])
-            
+            related_sectors = sector_peer_groups.get(
+                primary_sector, ["communication_services"]
+            )
+
             return {
                 "sector_peer_groups": {
                     "primary_sector": primary_sector,
                     "correlated_sectors": related_sectors,
-                    "correlation_basis": "economic_cycle_and_interest_rate_sensitivity"
+                    "correlation_basis": "economic_cycle_and_interest_rate_sensitivity",
                 },
                 "relative_positioning": {
                     "cycle_position": "mid_cycle",
                     "relative_performance": "outperforming_peers",
-                    "rotation_preference": "neutral_to_positive"
+                    "rotation_preference": "neutral_to_positive",
                 },
                 "sector_rotation_context": {
                     "current_environment": "restrictive_rates",
                     "sector_preference": "quality_growth_over_value",
-                    "timing_factors": ["interest_rate_policy", "economic_growth", "earnings_momentum"]
+                    "timing_factors": [
+                        "interest_rate_policy",
+                        "economic_growth",
+                        "earnings_momentum",
+                    ],
                 },
                 "confidence_score": 0.88,
             }
@@ -905,9 +953,9 @@ class FundamentalDiscovery:
                 "relative_positioning": {},
                 "sector_rotation_context": {},
                 "confidence_score": 0.70,
-                "error": str(e)
+                "error": str(e),
             }
-    
+
     def generate_sector_cross_reference(self) -> Dict[str, Any]:
         """Generate sector cross-reference data linking to sector analysis reports"""
         try:
@@ -915,19 +963,21 @@ class FundamentalDiscovery:
                 return {
                     "integration_status": "sector_cross_reference_not_available",
                     "sector_analysis_available": False,
-                    "confidence_score": 0.0
+                    "confidence_score": 0.0,
                 }
-            
+
             # Get sector for ticker
             sector = self.sector_cross_ref.get_sector_for_ticker(self.ticker)
             if not sector:
                 return {
                     "integration_status": "no_sector_mapping",
                     "ticker": self.ticker,
-                    "available_sectors": list(set(self.sector_cross_ref.sector_mappings.values())),
-                    "confidence_score": 0.0
+                    "available_sectors": list(
+                        set(self.sector_cross_ref.sector_mappings.values())
+                    ),
+                    "confidence_score": 0.0,
                 }
-            
+
             # Find latest sector analysis
             sector_analysis = self.sector_cross_ref.find_latest_sector_analysis(sector)
             if not sector_analysis:
@@ -936,12 +986,14 @@ class FundamentalDiscovery:
                     "ticker": self.ticker,
                     "sector": sector,
                     "search_path": "./data/outputs/sector_analysis",
-                    "confidence_score": 0.0
+                    "confidence_score": 0.0,
                 }
-            
+
             # Extract sector context
-            sector_context = self.sector_cross_ref.extract_sector_context(sector_analysis)
-            
+            sector_context = self.sector_cross_ref.extract_sector_context(
+                sector_analysis
+            )
+
             return {
                 "integration_status": "available",
                 "ticker": self.ticker,
@@ -949,15 +1001,15 @@ class FundamentalDiscovery:
                 "sector_analysis_metadata": sector_analysis,
                 "sector_context": sector_context,
                 "cross_validation_ready": True,
-                "confidence_score": 0.92
+                "confidence_score": 0.92,
             }
-            
+
         except Exception as e:
             return {
                 "integration_status": f"error: {str(e)}",
                 "ticker": self.ticker,
                 "error": str(e),
-                "confidence_score": 0.0
+                "confidence_score": 0.0,
             }
 
     def _identify_quality_issues(self, data: Dict[str, Any]) -> list:
@@ -1050,7 +1102,7 @@ def main():
         default="./data/outputs/fundamental_analysis/discovery",
         help="Output directory for discovery results",
     )
-    
+
     # Enhanced flags for sector analysis integration
     parser.add_argument(
         "--include-economic-data",

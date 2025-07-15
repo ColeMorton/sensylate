@@ -46,7 +46,7 @@ class AnalysisValidator:
         self.discovery_data = None
         self.analysis_data = None
         self.synthesis_data = None
-        
+
         # Initialize sector cross-reference system
         self.sector_cross_ref = SectorCrossReference("./data/outputs/sector_analysis")
 
@@ -434,7 +434,7 @@ class AnalysisValidator:
             "overall_sector_integration_score": 0.0,
             "key_issues": [],
         }
-        
+
         # Check if synthesis has sector analysis sections
         if self.synthesis_data and "sector_positioning" in self.synthesis_data:
             validation_results["sector_context_validation"] = 9.2
@@ -442,12 +442,23 @@ class AnalysisValidator:
             validation_results["sector_rotation_analysis"] = 8.8
             validation_results["sector_analysis_cross_reference"] = 8.5
         else:
-            validation_results["key_issues"].append("Sector analysis integration missing from synthesis")
-        
+            validation_results["key_issues"].append(
+                "Sector analysis integration missing from synthesis"
+            )
+
         # Calculate overall score
-        scores = [v for k, v in validation_results.items() if k.endswith("_validation") or k.endswith("_positioning") or k.endswith("_analysis") or k.endswith("_reference")]
-        validation_results["overall_sector_integration_score"] = round(sum(scores) / len(scores) if scores else 0.0, 2)
-        
+        scores = [
+            v
+            for k, v in validation_results.items()
+            if k.endswith("_validation")
+            or k.endswith("_positioning")
+            or k.endswith("_analysis")
+            or k.endswith("_reference")
+        ]
+        validation_results["overall_sector_integration_score"] = round(
+            sum(scores) / len(scores) if scores else 0.0, 2
+        )
+
         return validation_results
 
     def validate_economic_indicators(self) -> Dict[str, Any]:
@@ -460,24 +471,37 @@ class AnalysisValidator:
             "overall_economic_indicators_score": 0.0,
             "key_issues": [],
         }
-        
+
         # Check for economic indicators in discovery and analysis
         if self.discovery_data and "economic_indicators" in self.discovery_data:
             validation_results["fred_data_freshness"] = 9.5
             validation_results["economic_context_integration"] = 9.2
         else:
-            validation_results["key_issues"].append("Economic indicators missing from discovery phase")
-            
+            validation_results["key_issues"].append(
+                "Economic indicators missing from discovery phase"
+            )
+
         if self.analysis_data and "economic_sensitivity_analysis" in self.analysis_data:
             validation_results["economic_sensitivity_analysis"] = 9.3
             validation_results["business_cycle_positioning"] = 9.0
         else:
-            validation_results["key_issues"].append("Economic sensitivity analysis missing from analysis phase")
-        
+            validation_results["key_issues"].append(
+                "Economic sensitivity analysis missing from analysis phase"
+            )
+
         # Calculate overall score
-        scores = [v for k, v in validation_results.items() if k.endswith("_freshness") or k.endswith("_analysis") or k.endswith("_positioning") or k.endswith("_integration")]
-        validation_results["overall_economic_indicators_score"] = round(sum(scores) / len(scores) if scores else 0.0, 2)
-        
+        scores = [
+            v
+            for k, v in validation_results.items()
+            if k.endswith("_freshness")
+            or k.endswith("_analysis")
+            or k.endswith("_positioning")
+            or k.endswith("_integration")
+        ]
+        validation_results["overall_economic_indicators_score"] = round(
+            sum(scores) / len(scores) if scores else 0.0, 2
+        )
+
         return validation_results
 
     def validate_stress_testing_framework(self) -> Dict[str, Any]:
@@ -490,7 +514,7 @@ class AnalysisValidator:
             "overall_stress_testing_score": 0.0,
             "key_issues": [],
         }
-        
+
         # Check for stress testing in analysis and synthesis
         if self.analysis_data and "economic_stress_testing" in self.analysis_data:
             validation_results["stress_test_scenarios"] = 9.1
@@ -498,17 +522,32 @@ class AnalysisValidator:
             validation_results["impact_assessments"] = 9.0
             validation_results["recovery_timeline_analysis"] = 8.8
         else:
-            validation_results["key_issues"].append("Economic stress testing missing from analysis phase")
-            
+            validation_results["key_issues"].append(
+                "Economic stress testing missing from analysis phase"
+            )
+
         if self.synthesis_data and "stress_testing" in self.synthesis_data:
             # Boost scores if stress testing is also in synthesis
-            validation_results["stress_test_scenarios"] = min(9.5, validation_results["stress_test_scenarios"] + 0.4)
-            validation_results["probability_calculations"] = min(9.5, validation_results["probability_calculations"] + 0.4)
-        
+            validation_results["stress_test_scenarios"] = min(
+                9.5, validation_results["stress_test_scenarios"] + 0.4
+            )
+            validation_results["probability_calculations"] = min(
+                9.5, validation_results["probability_calculations"] + 0.4
+            )
+
         # Calculate overall score
-        scores = [v for k, v in validation_results.items() if k.endswith("_scenarios") or k.endswith("_calculations") or k.endswith("_assessments") or k.endswith("_analysis")]
-        validation_results["overall_stress_testing_score"] = round(sum(scores) / len(scores) if scores else 0.0, 2)
-        
+        scores = [
+            v
+            for k, v in validation_results.items()
+            if k.endswith("_scenarios")
+            or k.endswith("_calculations")
+            or k.endswith("_assessments")
+            or k.endswith("_analysis")
+        ]
+        validation_results["overall_stress_testing_score"] = round(
+            sum(scores) / len(scores) if scores else 0.0, 2
+        )
+
         return validation_results
 
     def validate_institutional_standards(self) -> Dict[str, Any]:
@@ -521,36 +560,50 @@ class AnalysisValidator:
             "overall_institutional_score": 0.0,
             "key_issues": [],
         }
-        
+
         # Check confidence scores throughout DASV workflow
         confidence_scores = []
-        
+
         if self.discovery_data and "data_quality_assessment" in self.discovery_data:
-            discovery_confidence = self.discovery_data["data_quality_assessment"].get("overall_confidence", 0.0)
+            discovery_confidence = self.discovery_data["data_quality_assessment"].get(
+                "overall_confidence", 0.0
+            )
             confidence_scores.append(discovery_confidence)
-            
+
         if self.analysis_data and "analysis_confidence" in self.analysis_data:
             analysis_confidence = self.analysis_data["analysis_confidence"]
             confidence_scores.append(analysis_confidence)
-            
+
         if self.synthesis_data and "synthesis_confidence" in self.synthesis_data:
             synthesis_confidence = self.synthesis_data["synthesis_confidence"]
             confidence_scores.append(synthesis_confidence)
-        
+
         # Evaluate institutional standards
         if confidence_scores:
             avg_confidence = sum(confidence_scores) / len(confidence_scores)
             validation_results["confidence_propagation"] = min(9.5, avg_confidence * 10)
             validation_results["institutional_certification"] = avg_confidence >= 0.90
-            validation_results["multi_source_validation"] = 9.2 if len(confidence_scores) >= 3 else 7.0
-            validation_results["quality_assurance"] = 9.0 if avg_confidence >= 0.90 else 7.5
+            validation_results["multi_source_validation"] = (
+                9.2 if len(confidence_scores) >= 3 else 7.0
+            )
+            validation_results["quality_assurance"] = (
+                9.0 if avg_confidence >= 0.90 else 7.5
+            )
         else:
-            validation_results["key_issues"].append("Insufficient confidence scoring for institutional standards")
-        
+            validation_results["key_issues"].append(
+                "Insufficient confidence scoring for institutional standards"
+            )
+
         # Calculate overall score
-        scores = [v for k, v in validation_results.items() if isinstance(v, (int, float)) and k != "overall_institutional_score"]
-        validation_results["overall_institutional_score"] = round(sum(scores) / len(scores) if scores else 0.0, 2)
-        
+        scores = [
+            v
+            for k, v in validation_results.items()
+            if isinstance(v, (int, float)) and k != "overall_institutional_score"
+        ]
+        validation_results["overall_institutional_score"] = round(
+            sum(scores) / len(scores) if scores else 0.0, 2
+        )
+
         return validation_results
 
     def validate_sector_cross_reference(self) -> Dict[str, Any]:
@@ -563,30 +616,51 @@ class AnalysisValidator:
             "overall_cross_reference_score": 0.0,
             "key_issues": [],
         }
-        
+
         if not self.synthesis_data:
-            validation_results["key_issues"].append("No synthesis data available for cross-reference validation")
+            validation_results["key_issues"].append(
+                "No synthesis data available for cross-reference validation"
+            )
             return validation_results
-        
+
         # Use sector cross-reference system to validate
         cross_ref_validation = self.sector_cross_ref.validate_cross_reference(
             self.ticker, self.synthesis_data
         )
-        
+
         # Map validation results to our scoring system
-        validation_results["cross_reference_availability"] = min(9.5, cross_ref_validation.get("cross_reference_quality", 0.0))
-        validation_results["sector_mapping_accuracy"] = min(9.5, cross_ref_validation.get("sector_integration_completeness", 0.0))
-        validation_results["integration_completeness"] = min(9.5, cross_ref_validation.get("economic_context_alignment", 0.0))
-        validation_results["data_freshness"] = min(9.5, cross_ref_validation.get("data_freshness", 0.0))
-        
+        validation_results["cross_reference_availability"] = min(
+            9.5, cross_ref_validation.get("cross_reference_quality", 0.0)
+        )
+        validation_results["sector_mapping_accuracy"] = min(
+            9.5, cross_ref_validation.get("sector_integration_completeness", 0.0)
+        )
+        validation_results["integration_completeness"] = min(
+            9.5, cross_ref_validation.get("economic_context_alignment", 0.0)
+        )
+        validation_results["data_freshness"] = min(
+            9.5, cross_ref_validation.get("data_freshness", 0.0)
+        )
+
         # Include validation issues from cross-reference system
         if cross_ref_validation.get("validation_issues"):
-            validation_results["key_issues"].extend(cross_ref_validation["validation_issues"])
-        
+            validation_results["key_issues"].extend(
+                cross_ref_validation["validation_issues"]
+            )
+
         # Calculate overall score
-        scores = [v for k, v in validation_results.items() if k.endswith("_availability") or k.endswith("_accuracy") or k.endswith("_completeness") or k.endswith("_freshness")]
-        validation_results["overall_cross_reference_score"] = round(sum(scores) / len(scores) if scores else 0.0, 2)
-        
+        scores = [
+            v
+            for k, v in validation_results.items()
+            if k.endswith("_availability")
+            or k.endswith("_accuracy")
+            or k.endswith("_completeness")
+            or k.endswith("_freshness")
+        ]
+        validation_results["overall_cross_reference_score"] = round(
+            sum(scores) / len(scores) if scores else 0.0, 2
+        )
+
         return validation_results
 
     def execute_validation(self) -> Dict[str, Any]:
@@ -604,7 +678,7 @@ class AnalysisValidator:
             discovery_validation = self.validate_discovery_phase()
             analysis_validation = self.validate_analysis_phase()
             synthesis_validation = self.validate_synthesis_phase()
-            
+
             # Enhanced validation for sector analysis integration
             sector_analysis_validation = self.validate_sector_analysis_integration()
             economic_indicators_validation = self.validate_economic_indicators()
@@ -618,10 +692,12 @@ class AnalysisValidator:
                 analysis_validation.get("overall_analysis_score", 0),
                 synthesis_validation.get("overall_synthesis_score", 0),
             ]
-            
+
             enhanced_scores = [
                 sector_analysis_validation.get("overall_sector_integration_score", 0),
-                economic_indicators_validation.get("overall_economic_indicators_score", 0),
+                economic_indicators_validation.get(
+                    "overall_economic_indicators_score", 0
+                ),
                 stress_testing_validation.get("overall_stress_testing_score", 0),
                 institutional_validation.get("overall_institutional_score", 0),
                 cross_reference_validation.get("overall_cross_reference_score", 0),
@@ -632,8 +708,10 @@ class AnalysisValidator:
                 phase_scores[0] * 0.20 + phase_scores[1] * 0.30 + phase_scores[2] * 0.35
             )
             enhanced_weighted_score = sum(enhanced_scores) / len(enhanced_scores) * 0.15
-            
-            overall_reliability_score = round(core_weighted_score + enhanced_weighted_score, 2)
+
+            overall_reliability_score = round(
+                core_weighted_score + enhanced_weighted_score, 2
+            )
 
             # Determine decision confidence and certification
             decision_confidence = self._determine_decision_confidence(
@@ -1136,7 +1214,7 @@ def main():
         default="./data/outputs/fundamental_analysis/validation",
         help="Output directory for validation results",
     )
-    
+
     # Enhanced flags for sector analysis integration
     parser.add_argument(
         "--validate-sector-context",

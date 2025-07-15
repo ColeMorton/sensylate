@@ -74,27 +74,20 @@ data_extractors = {
 ```
 
 ### Interactive Plotly Visualization Generation
-```python
-# Leverage Plotly-powered dashboard generation infrastructure
-from scripts.dashboard_generator import DashboardGenerator
-from scripts.utils.theme_manager import create_theme_manager
-from scripts.utils.scalability_manager import create_scalability_manager
-from scripts.utils.json_schema_generator import JSONSchemaGenerator
-from scripts.utils.frontend_config_exporter import FrontendConfigExporter
-from scripts.utils.production_optimizer import ChartGenerationOptimizer
+```bash
+# Leverage CLI-based dashboard generation infrastructure
+python dashboard_generator_cli.py generate --input report_file.md --mode both --env prod
 
-# Generate Plotly-powered interactive visualizations
-visualizers = {
-    'performance_dashboard': generate_plotly_performance_dashboard,
-    'signal_charts': generate_plotly_signal_charts,
-    'trade_distribution': generate_plotly_trade_distribution_charts,
-    'portfolio_composition': generate_plotly_portfolio_charts
-}
+# Use trade history CLI for specific report processing
+python trade_history_cli.py generate 20250626 --report-type HISTORICAL_PERFORMANCE_REPORT --env prod
 
-# Export configurations for frontend integration
-frontend_exporter = FrontendConfigExporter()
-schema_generator = JSONSchemaGenerator()
-production_optimizer = ChartGenerationOptimizer()
+# CLI-based theme and scalability management
+python dashboard_generator_cli.py list-themes --env prod
+python trade_history_cli.py validate 20250626 --env prod
+
+# Health checks for visualization infrastructure
+python dashboard_generator_cli.py health --env prod
+python trade_history_cli.py health --env prod
 ```
 
 ### Error Handling
@@ -209,7 +202,7 @@ report_visualizations:
 /trade_history_images 20250626
 
 # Pipeline integration with dashboard generation
-make generate-report-integrated && /trade_history_images $(date +%Y%m%d)
+python trade_history_cli.py generate $(date +%Y%m%d) --env prod
 
 # Batch processing with production optimization
 for date in 20250624 20250625 20250626; do
