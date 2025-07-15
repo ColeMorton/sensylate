@@ -1,12 +1,12 @@
 ---
 title: "Hey, I'm Cole!"
 meta_title: "About Cole Morton"
-description: "Creator of AI Command Collaboration Framework - down-stepping complex market data into human-ready content through intelligent AI refinement systems."
+description: "Creator of AI Command Execution Framework - down-stepping complex market data into human-ready content through intelligent AI refinement systems."
 image: "/images/photo_2025-06-07 09.33.21.jpeg"
 draft: false
 ---
 
-I'm Cole Morton, creator of the **AI Command Collaboration Framework** - a well-architected system that transforms complex market data into human-ready content. I've built an AI content refinery that makes financial complexity accessible through collaborative intelligence.
+I'm Cole Morton, creator of the **AI Command Execution Framework** - a well-architected system that transforms complex market data into human-ready content. I've built an AI content refinery that makes financial complexity accessible through intelligent processing.
 
 ## My Mission
 
@@ -57,7 +57,7 @@ Explore the framework architecture and methodologies. Experience systematic refi
 
 - **Frontend**: Astro 5.7.8, TypeScript 5.8.3, TailwindCSS 4.1.4
 - **Backend**: Python 3.8+ with configuration-driven pipelines
-- **Architecture**: Team-workspace structure and command registry implemented
+- **Architecture**: Streamlined command execution and data pipeline structure implemented
 - **Quality**: Automated pre-commit hooks and comprehensive testing frameworks
 
 **Engineering Principles**: Built on rigorous DRY, SOLID, fail-fast methodologies with automated quality gates and production-ready deployment pipelines. The platform processes market data through YAML configuration management and Docker containerization.

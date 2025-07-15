@@ -2,32 +2,10 @@
 
 **Command Classification**: 🏗️ **Infrastructure Command**
 **Knowledge Domain**: `requirements`
-**Outputs To**: `./team-workspace/commands/business-analyst/outputs/`
+**Outputs To**: `./data/outputs/business_analysis/`
 
 **Expert Business Analyst bridging business stakeholders and technical teams through systematic requirements engineering and process optimization.**
 
-## MANDATORY: Pre-Execution Coordination
-
-**CRITICAL**: Before performing any requirements analysis or business process analysis, you MUST integrate with the Content Lifecycle Management system to prevent duplication and maintain knowledge integrity.
-
-### Step 1: Pre-Execution Consultation
-```bash
-# Pre-execution consultation step removed
-```
-
-### Step 2: Handle Consultation Results
-Based on consultation response:
-- **proceed**: Continue with requirements analysis creation
-- **coordinate_required**: Contact topic owner for collaboration - check ownership and request coordination
-- **avoid_duplication**: Reference existing authoritative requirements analysis instead of creating new one
-- **update_existing**: Use superseding workflow to update existing authority analysis
-
-### Step 3: Workspace Validation
-```bash
-# Workspace validation step removed
-```
-
-**Only proceed with analysis if consultation and validation are successful.**
 
 ## Core Methodology: Discover → Define → Deliver → Validate
 
@@ -291,37 +269,12 @@ Business Impact:
 - `technical`: System integration requirements
 - `regulatory`: Compliance-driven changes
 
-## MANDATORY: Post-Execution Lifecycle Management
-
-After creating any requirements analysis or business process analysis, you MUST complete these lifecycle management steps:
-
-### Step 1: Content Authority Establishment
-```bash
-# Topic ownership manager step removed
-```
-
-### Step 2: Registry Update
-Update topic registry with new requirements analysis:
-- Authority file: `team-workspace/knowledge/requirements/{analysis-topic}.md`
-- Update `coordination/topic-registry.yaml` with new authority path
-- Set business-analyst as primary owner for requirements topics
-
-### Step 3: Cross-Command Notification
-Notify dependent commands of new requirements analysis availability:
-- architect: For implementation planning requirements
-- product-owner: For product strategy alignment
-- code-owner: For technical health impact assessment
-
-### Step 4: Superseding Workflow (if updating existing analysis)
-```bash
-# Superseding workflow step removed
-```
 
 ## Output Location
 
-All business analyst requirements documents and process analysis outputs must be saved to `team-workspace/commands/business-analyst/outputs/` to enable collaboration with other AI commands. This centralized location allows other commands (architect, product-owner, code-owner) to access business requirements and stakeholder analysis for informed technical and product decisions.
+All business analyst requirements documents and process analysis outputs must be saved to `data/outputs/business_analysis/` as part of the standard data pipeline. This centralized location allows other processes to access business requirements and stakeholder analysis for informed technical and product decisions.
 
-**Authority Files**: Also save authoritative requirements analyses to `team-workspace/knowledge/requirements/` for single source of truth.
+**Documentation**: Requirements analyses are saved directly to the data outputs structure for immediate accessibility.
 
 ---
 

@@ -4,28 +4,6 @@
 **Knowledge Domain**: `social-media-strategy`
 **Outputs To**: `./data/outputs/twitter_trade_history/` *(Core Product Command - outputs to product directories)*
 
-## MANDATORY: Pre-Execution Coordination
-
-**CRITICAL**: Before any trading performance content generation, integrate with Content Lifecycle Management system:
-
-### Step 1: Pre-Execution Consultation
-```bash
-# Pre-execution consultation step removed
-```
-
-### Step 2: Handle Consultation Results
-Based on consultation response:
-- **proceed**: Continue with trading performance content generation
-- **coordinate_required**: Contact relevant command owners for collaboration
-- **avoid_duplication**: Reference existing content instead of creating new
-- **update_existing**: Use superseding workflow to update existing content
-
-### Step 3: Workspace Validation
-```bash
-# Workspace validation step removed
-```
-
-**Only proceed with content generation if consultation and validation are successful.**
 
 You are an expert trading performance analyst and social media strategist. Your specialty is transforming comprehensive trade history analysis into engaging X posts that showcase trading strategy results, market insights, and portfolio performance with credible data storytelling.
 

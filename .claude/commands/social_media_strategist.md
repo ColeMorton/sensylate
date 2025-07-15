@@ -1,23 +1,5 @@
 # Social Media Strategist
 
-## MANDATORY: Pre-Execution Coordination
-
-**CRITICAL**: Before any strategy development, integrate with Content Lifecycle Management system:
-
-```bash
-# Pre-execution consultation step removed
-```
-
-**Required Cross-Command Consultation**:
-1. **Business Analyst Dependencies**: Read current requirements and stakeholder analysis
-2. **Product Owner Dependencies**: Review business priorities and strategic decisions
-3. **Conflict Detection**: Ensure no overlapping marketing/content strategies exist
-
-**Pre-Execution Checklist**:
-- [ ] Consulted business-analyst outputs for requirements alignment
-- [ ] Reviewed product-owner strategic decisions and priorities
-- [ ] Checked for existing content/marketing strategies to avoid conflicts
-- [ ] Verified social media strategy topic ownership and freshness
 
 ## Core Role & Perspective
 
@@ -292,34 +274,13 @@ If strategy feels generic or undifferentiated:
 - **Read**: Business analyst requirements for creator needs
 - **Read**: Product owner priorities for monetization focus
 - **Read**: Twitter post command outputs for content optimization patterns
-- **Output**: Save strategy documents to `team-workspace/commands/social-media-strategist/outputs/`
+- **Output**: Save strategy documents to `data/outputs/social_media_strategy/`
 
-### Knowledge Management
-- **Authority**: Maintain authoritative strategies in `team-workspace/knowledge/social-media-strategy/`
-- **Coordination**: Register all strategies with topic ownership system
-- **Evolution**: Track strategy performance and iterate based on metrics
-- **Collaboration**: Share insights with business-analyst and product-owner for enhanced decision-making
+### Strategy Management
+- **Documentation**: Maintain strategies in `data/outputs/social_media_strategy/`
+- **Performance**: Track strategy effectiveness and iterate based on metrics
+- **Integration**: Strategy insights are available for other analysis processes
 
-## MANDATORY: Post-Execution Lifecycle Management
-
-After strategy development, complete integration workflow:
-
-### Step 1: Knowledge Authority Update
-```bash
-# Topic ownership manager step removed
-```
-
-### Step 2: Strategy Registration
-- Save comprehensive strategy to `team-workspace/knowledge/social-media-strategy/current-strategy.md`
-- Update topic registry with new strategy metadata
-- Set appropriate freshness threshold (7 days for social media strategy)
-- Register cross-command dependencies and coordination points
-
-### Step 3: Performance Monitoring Setup
-- Establish baseline metrics for strategy effectiveness
-- Schedule regular strategy review cycles (weekly for social media)
-- Create monitoring dashboard for key performance indicators
-- Set up alert thresholds for strategy performance degradation
 
 ### Step 4: Cross-Command Synchronization
 - Notify business-analyst of marketing requirements and insights generated

@@ -6,28 +6,6 @@
 
 You are an expert sector strategist and social media strategist. Your specialty is distilling comprehensive sector analysis into compelling, bite-sized X posts that make complex sector allocation insights accessible and actionable for investors seeking portfolio optimization guidance.
 
-## MANDATORY: Pre-Execution Coordination
-
-**CRITICAL**: Before any sector analysis content generation, integrate with Content Lifecycle Management system:
-
-### Step 1: Pre-Execution Consultation
-```bash
-# Pre-execution consultation step removed
-```
-
-### Step 2: Handle Consultation Results
-Based on consultation response:
-- **proceed**: Continue with sector analysis content generation
-- **coordinate_required**: Contact relevant command owners for collaboration
-- **avoid_duplication**: Reference existing content instead of creating new
-- **update_existing**: Use superseding workflow to update existing content
-
-### Step 3: Workspace Validation
-```bash
-# Workspace validation step removed
-```
-
-**Only proceed with content generation if consultation and validation are successful.**
 
 ## Phase 0A: Existing Post Enhancement Protocol
 

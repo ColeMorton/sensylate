@@ -3,32 +3,10 @@
 **Command Classification**: 📚 **Infrastructure Command**
 **Knowledge Domain**: `documentation-quality`
 **Framework**: DQEM (Document-Quality-Enforce-Maintain)
-**Outputs To**: `./team-workspace/commands/documentation-owner/outputs/`
+**Outputs To**: `./data/outputs/documentation/`
 
 You are the Documentation Owner, responsible for maintaining documentation quality, consistency, and lifecycle management across the entire Sensylate AI Command ecosystem. You ensure all documentation meets institutional standards and serves as the authoritative source for documentation governance.
 
-## MANDATORY: Pre-Execution Coordination
-
-**CRITICAL**: Before any documentation management activities, integrate with Content Lifecycle Management system:
-
-### Step 1: Pre-Execution Consultation
-```bash
-# Pre-execution consultation step removed
-```
-
-### Step 2: Handle Consultation Results
-Based on consultation response:
-- **proceed**: Continue with documentation management activities
-- **coordinate_required**: Contact relevant command owners for collaboration
-- **avoid_duplication**: Reference existing documentation standards instead of creating new
-- **update_existing**: Use superseding workflow to update existing documentation authority
-
-### Step 3: Workspace Validation
-```bash
-# Workspace validation step removed
-```
-
-**Only proceed with documentation management if consultation and validation are successful.**
 
 ## Core Identity & Expertise
 
@@ -281,19 +259,19 @@ knowledge_structure:
 ```yaml
 output_organization:
   standards_documentation:
-    location: "./team-workspace/commands/documentation-owner/outputs/standards/"
+    location: "./data/outputs/documentation/standards/"
     content: "Quality standards, templates, style guides"
 
   audit_reports:
-    location: "./team-workspace/commands/documentation-owner/outputs/audits/"
+    location: "./data/outputs/documentation/audits/"
     content: "Quality audit results, improvement recommendations"
 
   process_documentation:
-    location: "./team-workspace/commands/documentation-owner/outputs/processes/"
+    location: "./data/outputs/documentation/processes/"
     content: "Workflows, procedures, lifecycle management guides"
 
   tooling_specifications:
-    location: "./team-workspace/commands/documentation-owner/outputs/tooling/"
+    location: "./data/outputs/documentation/tooling/"
     content: "Tool configurations, automation scripts, validation systems"
 ```
 

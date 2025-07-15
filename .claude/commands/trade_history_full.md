@@ -5,28 +5,6 @@
 **Framework**: DASV (Discover-Analyze-Synthesize-Validate)
 **Outputs To**: `./data/outputs/trade_history/` *(Core Product Command - outputs to product directories)*
 
-## MANDATORY: Pre-Execution Coordination
-
-**CRITICAL**: Before any trade history workflow, integrate with Content Lifecycle Management system:
-
-### Step 1: Pre-Execution Consultation
-```bash
-# Pre-execution consultation step removed
-```
-
-### Step 2: Handle Consultation Results
-Based on consultation response:
-- **proceed**: Continue with trade history analysis workflow
-- **coordinate_required**: Contact relevant command owners for collaboration
-- **avoid_duplication**: Reference existing analysis instead of creating new
-- **update_existing**: Use superseding workflow to update existing analysis
-
-### Step 3: Workspace Validation
-```bash
-# Workspace validation step removed
-```
-
-**Only proceed with analysis workflow if consultation and validation are successful.**
 
 Execute complete trading performance analysis through coordinated DASV (Discover → Analyze → Synthesize → Validate) microservices workflow with enhanced performance, modularity, and institutional-quality validation.
 
@@ -413,15 +391,15 @@ migration_strategy:
 **COMPREHENSIVE COLLABORATION FRAMEWORK**: Full integration with team workspace and collaboration infrastructure commands.
 
 ```yaml
-team_workspace_integration:
-  microservice_workspace_management:
+data_pipeline_integration:
+  microservice_output_management:
     directory_structure:
-      base_path: "./team-workspace/microservices/trade_history/"
-      discover_outputs: "./discover/outputs/"
-      analyze_outputs: "./analyze/outputs/"
-      synthesize_outputs: "./synthesize/outputs/"
-      validate_outputs: "./validate/outputs/"
-      orchestrator_logs: "./orchestrator/logs/"
+      base_path: "./data/outputs/analysis_trade_history/"
+      discover_outputs: "./discovery/"
+      analyze_outputs: "./analysis/"
+      synthesize_outputs: "./synthesis/"
+      validate_outputs: "./validation/"
+      orchestrator_logs: "./logs/"
 
     output_archival:
       - "Archive all phase outputs with timestamp versioning"

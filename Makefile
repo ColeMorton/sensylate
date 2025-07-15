@@ -23,7 +23,7 @@ help:
 	@echo "  clean           - Clean generated files"
 	@echo "  test            - Run all tests"
 	@echo "  test-plotly-migration - Run Plotly migration tests"
-	@echo "  test-collaboration - Run collaboration framework tests"
+	@echo "  test-integration   - Run integration framework tests"
 	@echo "  test-e2e        - Run end-to-end collaboration tests"
 	@echo "  install         - Install dependencies"
 
@@ -207,19 +207,19 @@ test-plotly-migration:
 test:
 	$(PYTHON) -m pytest tests/ -v
 
-.PHONY: test-collaboration
-test-collaboration:
-	@echo "Collaboration framework removed - simplified architecture"
+.PHONY: test-integration
+test-integration:
+	@echo "Integration framework - simplified architecture"
 
-.PHONY: test-collaboration-verbose
-test-collaboration-verbose:
-	@echo "Running Command Collaboration Framework tests (verbose)..."
-	$(PYTHON) -m pytest tests/collaboration/ -v -s --tb=long
+.PHONY: test-integration-verbose
+test-integration-verbose:
+	@echo "Running Command Integration Framework tests (verbose)..."
+	$(PYTHON) -m pytest tests/integration/ -v -s --tb=long
 
-.PHONY: test-collaboration-coverage
-test-collaboration-coverage:
-	@echo "Running Command Collaboration Framework tests with coverage..."
-	@echo "Collaboration tests removed - simplified architecture"
+.PHONY: test-integration-coverage
+test-integration-coverage:
+	@echo "Running Command Integration Framework tests with coverage..."
+	@echo "Integration tests - simplified architecture"
 
 .PHONY: test-e2e
 test-e2e:

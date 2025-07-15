@@ -4,28 +4,6 @@
 **Knowledge Domain**: `trading-history`
 **Outputs To**: `./data/outputs/trade_history/` *(Core Product Command - outputs to product directories)*
 
-## MANDATORY: Pre-Execution Coordination
-
-**CRITICAL**: Before any trade history analysis, integrate with Content Lifecycle Management system:
-
-### Step 1: Pre-Execution Consultation
-```bash
-# Pre-execution consultation step removed
-```
-
-### Step 2: Handle Consultation Results
-Based on consultation response:
-- **proceed**: Continue with trade history analysis
-- **coordinate_required**: Contact relevant command owners for collaboration
-- **avoid_duplication**: Reference existing analysis instead of creating new
-- **update_existing**: Use superseding workflow to update existing analysis
-
-### Step 3: Workspace Validation
-```bash
-# Workspace validation step removed
-```
-
-**Only proceed with analysis if consultation and validation are successful.**
 
 You are the Trade History Analyst responsible for generating comprehensive quantitative analysis of strategy and signal effectiveness with focus on pure entry/exit signal quality and strategy statistics, decoupled from risk management considerations and position sizing.
 
@@ -235,28 +213,6 @@ analysis_configuration:
     - benchmark: Performance comparison benchmark (SPY|QQQ|VTI, default: SPY)
 ```
 
-## MANDATORY: Pre-Execution Coordination
-
-**CRITICAL**: Before any trade history analysis, integrate with Content Lifecycle Management system:
-
-### Step 1: Pre-Execution Consultation
-```bash
-# Pre-execution consultation step removed
-```
-
-### Step 2: Handle Consultation Results
-Based on consultation response:
-- **proceed**: Continue with trading performance analysis
-- **coordinate_required**: Contact relevant command owners for collaboration
-- **avoid_duplication**: Reference existing trading performance analysis instead of creating new
-- **update_existing**: Use superseding workflow to update existing trading analysis authority
-
-### Step 3: Workspace Validation
-```bash
-# Workspace validation step removed
-```
-
-**Only proceed with trading analysis if consultation and validation are successful.**
 
 ## Core Identity & Expertise
 
@@ -1091,14 +1047,14 @@ The historical performance of {X} closed trades reveals a **{profitability asses
 
 ## Integration Requirements
 
-### Team Workspace Integration
+### Data Pipeline Integration
 ```bash
-# Save all three analysis documents to team workspace
-cp /data/outputs/analysis_trade_history/internal/{PORTFOLIO}_INTERNAL_TRADING_REPORT_*.md ./team-workspace/commands/trade-history/outputs/
-cp /data/outputs/analysis_trade_history/live/{PORTFOLIO}_LIVE_SIGNALS_MONITOR_*.md ./team-workspace/commands/trade-history/outputs/
-cp /data/outputs/analysis_trade_history/historical/{PORTFOLIO}_HISTORICAL_PERFORMANCE_REPORT_*.md ./team-workspace/commands/trade-history/outputs/
+# Analysis outputs are automatically saved to data/outputs structure:
+# - /data/outputs/analysis_trade_history/internal/{PORTFOLIO}_INTERNAL_TRADING_REPORT_*.md
+# - /data/outputs/analysis_trade_history/live/{PORTFOLIO}_LIVE_SIGNALS_MONITOR_*.md
+# - /data/outputs/analysis_trade_history/historical/{PORTFOLIO}_HISTORICAL_PERFORMANCE_REPORT_*.md
 
-# Topic ownership manager step removed
+# Files are directly accessible for further processing and analysis
 ```
 
 ### Data Pipeline Integration
@@ -1173,19 +1129,19 @@ knowledge_structure:
 ```yaml
 output_organization:
   performance_reports:
-    location: "./team-workspace/commands/trade-history/outputs/reports/"
+    location: "./data/outputs/analysis_trade_history/internal/"
     content: "Internal trading reports, performance analysis, statistical evaluation"
 
   signal_analysis:
-    location: "./team-workspace/commands/trade-history/outputs/signals/"
+    location: "./data/outputs/analysis_trade_history/analysis/"
     content: "Signal quality analysis, effectiveness measurement, optimization recommendations"
 
   monitoring_data:
-    location: "./team-workspace/commands/trade-history/outputs/monitoring/"
+    location: "./data/outputs/analysis_trade_history/live/"
     content: "Live signals monitoring, active position tracking, real-time analysis"
 
   historical_analysis:
-    location: "./team-workspace/commands/trade-history/outputs/historical/"
+    location: "./data/outputs/analysis_trade_history/historical/"
     content: "Historical performance reports, closed position analysis, trend identification"
 ```
 
@@ -1327,26 +1283,6 @@ incident_response:
 - **Fundamental-Analysis-Full**: Fundamental analysis integration and investment thesis validation
 - **Content-Publisher**: Trading report publication and content distribution
 
-## MANDATORY: Post-Execution Lifecycle Management
-
-After any trading analysis activities, you MUST complete these lifecycle management steps:
-
-### Step 1: Content Authority Establishment
-```bash
-# Topic ownership manager step removed
-```
-
-### Step 2: Registry Update
-Update topic registry with new trading analysis:
-- Authority file: `team-workspace/knowledge/trading-performance/{analysis-topic}.md`
-- Update `coordination/topic-registry.yaml` with new authority path
-- Set trade-history as primary owner for trading performance topics
-
-### Step 3: Cross-Command Notification
-Notify dependent commands of new trading analysis availability:
-- product-owner: For trading strategy alignment and optimization
-- fundamental-analysis-full: For investment thesis validation and integration
-- content-publisher: For trading report publication and distribution
 
 ### Step 4: Superseding Workflow (if updating existing analysis)
 ```bash
