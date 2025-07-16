@@ -356,8 +356,8 @@ input_dependencies:
 
   optional_enhancements:
     - path: "additional_market_data"
-      source: "yahoo_finance_mcp_server"
-      purpose: "Enhanced benchmark and sector analysis"
+      source: "cli_financial_services"
+      purpose: "Enhanced benchmark and sector analysis via production CLI tools"
       fallback_strategy: "use_discovery_data"
       confidence_impact: 0.1
 ```

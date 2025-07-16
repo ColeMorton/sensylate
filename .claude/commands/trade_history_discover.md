@@ -194,14 +194,15 @@ market_data_collection:
       - Sector rotation trends
       - Economic calendar events during analysis period
 
-  yahoo_finance_mcp_server:
-    mcp_server: "yahoo-finance"
-    mcp_tools:
-      - get_stock_fundamentals: Current market data and company information
-      - get_market_data_summary: Historical price and volume performance
-      - get_financial_statements: Financial data if relevant for context
-    caching: 15-minute TTL via MCP server infrastructure
-    error_handling: MCP protocol retry logic and standardized responses
+  production_cli_services:
+    primary_service: "yahoo_finance_cli"
+    cli_tools:
+      - analyze: Current market data and company information
+      - quote: Real-time price and volume data
+      - history: Historical price and volume performance
+      - financials: Financial data if relevant for context
+    caching: 15-minute TTL via production CLI infrastructure
+    error_handling: Production-grade retry logic and comprehensive responses
 ```
 
 ### Phase 3: Fundamental Analysis Discovery
@@ -285,10 +286,10 @@ input_dependencies:
       confidence_impact: 0.2
 
   required_services:
-    - source: "yahoo_finance_mcp_server"
-      mcp_tools: ["get_stock_fundamentals", "get_market_data_summary"]
+    - source: "yahoo_finance_cli"
+      cli_tools: ["analyze", "quote", "history"]
       cache_duration: "15m"
-      retry_policy: {mcp_protocol: "built-in", error_handling: "standardized"}
+      retry_policy: {cli_service: "production-grade", error_handling: "comprehensive"}
       confidence_impact: 0.3
 
   optional_services:
@@ -496,6 +497,33 @@ output_specification:
       }
     }
   },
+  "cli_market_context": {
+    "metadata": "complete_cli_response_aggregation_from_fred_and_coingecko",
+    "economic_indicators": "fred_cli_economic_data_real_time",
+    "cryptocurrency_market": "coingecko_cli_sentiment_analysis",
+    "market_summary": "economic_regime_assessment",
+    "trading_implications": "strategy_performance_context_analysis"
+  },
+  "cli_service_validation": {
+    "service_health": "complete_health_check_response_all_7_services",
+    "health_score": "0.0-1.0_operational_assessment",
+    "services_operational": "count_of_working_cli_services",
+    "services_healthy": "boolean_overall_status",
+    "cli_services_utilized": "dynamic_array_of_successfully_utilized_services"
+  },
+  "cli_data_quality": {
+    "overall_data_quality": "0.0-1.0_multi_source_weighted",
+    "cli_service_health": "0.0-1.0_service_reliability",
+    "institutional_grade": "boolean_targeting_true",
+    "data_sources_via_cli": "array_of_7_sources",
+    "cli_integration_status": "operational_or_degraded"
+  },
+  "cli_insights": {
+    "cli_integration_observations": "array_unified_cli_benefits",
+    "data_quality_insights": "array_multi_source_validation_results",
+    "market_context_insights": "array_economic_and_crypto_analysis",
+    "service_performance_insights": "array_cli_efficiency_observations"
+  },
   "research_enhancement": {
     "economic_calendar": {
       "key_events_identified": 8,
@@ -544,28 +572,50 @@ output_specification:
 
 ## Implementation Framework
 
-### Discovery Phase Execution
+### Discovery Phase Execution - CLI-Enhanced Protocol
 
 ```yaml
 execution_sequence:
   pre_discovery:
     - Validate portfolio parameter and resolve to CSV filename
-    - Initialize data collection systems and caching
-    - Set up Yahoo Finance service and web search capabilities
+    - Initialize all 7 CLI financial services and verify health status
+    - Confirm production API key configuration from ./config/financial_services.yaml
+    - Set up multi-source data collection systems and caching
     - Prepare data quality tracking and confidence scoring
 
   main_discovery:
-    - Execute authoritative CSV data ingestion (parallel with validation)
-    - Collect market context data via Yahoo Finance service (parallel)
+    - Execute authoritative CSV data ingestion with enhanced calculations
+    - **Comprehensive Multi-Source Market Analysis**:
+      → Execute python scripts/yahoo_finance_cli.py analyze SPY QQQ VTI --env prod --output-format json
+      → Execute python scripts/alpha_vantage_cli.py quote SPY QQQ --env prod --output-format json
+      → Execute python scripts/yahoo_finance_cli.py analyze VIXY --env prod --output-format json (VIX proxy)
+    - **Economic Context Integration**:
+      → Execute python scripts/fred_economic_cli.py rates --env prod --output-format json
+      → Execute python scripts/fred_economic_cli.py indicator UNRATE DGS10 DGS2 --env prod --output-format json
+    - **Cryptocurrency Sentiment Analysis**:
+      → Execute python scripts/coingecko_cli.py sentiment --env prod --output-format json
+      → Execute python scripts/alpha_vantage_cli.py quote BTCUSD --env prod --output-format json
+    - **Ticker-Level Analysis** (for each unique ticker from trade history):
+      → Execute python scripts/yahoo_finance_cli.py analyze {ticker} --env prod --output-format json
+      → Execute python scripts/fmp_cli.py profile {ticker} --env prod --output-format json
+      → Execute python scripts/alpha_vantage_cli.py quote {ticker} --env prod --output-format json
+    - **CLI Service Health Validation**:
+      → Execute health checks on all 7 CLI services to ensure operational status
     - Discover and process fundamental analysis files (parallel)
     - Perform enhanced market research and context gathering
-    - Cross-validate and integrate all data sources
+    - Cross-validate and integrate all CLI data sources with confidence scoring
 
   post_discovery:
-    - Calculate comprehensive confidence scores across all data sources
-    - Prepare structured JSON output for analysis phase
-    - Update cache systems with fresh data
-    - Log performance metrics, data lineage, and quality assessment
+    - **Apply Multi-Source Validation Optimization**:
+      → Verify price consistency across Yahoo Finance, Alpha Vantage, and FMP CLIs (targeting 1.000 confidence)
+      → Validate market data cross-validation between multiple CLI sources
+      → Ensure economic indicators freshness from FRED CLI with automatic timestamp validation
+      → Verify cryptocurrency sentiment data currency from CoinGecko CLI integration
+    - Calculate comprehensive confidence scores across all 7 CLI data sources
+    - Generate institutional-grade data quality assessment
+    - Prepare structured JSON output with CLI-enhanced sections for analysis phase
+    - Update cache systems with fresh CLI data
+    - Log CLI service performance metrics, data lineage, and quality assessment
 ```
 
 ### Quality Assurance Gates
@@ -578,6 +628,7 @@ data_validation:
     - Position sizing methodology clearly identified
     - Ticker universe extraction successful
     - Status field validation and categorization accuracy
+    - ALL derivable fields calculated (Duration_Days, Trade_Type) - NEVER null
 
   trade_categorization_validation:
     - Closed trades have complete exit data (timestamps, prices, P&L)
@@ -585,30 +636,40 @@ data_validation:
     - Status field consistency across all trades
     - MFE/MAE data available for both closed and active trades
     - Proper separation of realized vs unrealized performance data
+    - Duration_Days calculated for ALL active trades using current execution date
+    - Trade_Type derived for ALL trades using business logic (never null)
 
   comprehensive_data_coverage:
     - All trades included in analysis (no filtering out of data)
     - Clear distinction between closed and active trade analytics
     - Portfolio composition accurately represents active positions
     - Historical performance accurately represents closed positions only
+    - ALL missing but derivable data populated
 
-  market_data_validation:
-    - Benchmark data successfully retrieved and current
-    - Volatility context properly calculated
-    - Economic indicators gathered and validated
-    - Market regime properly identified
+  cli_enhanced_market_data_validation:
+    - **Multi-Source Price Validation**: Cross-validate pricing across Yahoo Finance, Alpha Vantage, and FMP CLIs
+    - **CLI Service Health**: All 7 financial CLI services operational with >80% health score
+    - **Benchmark Data Quality**: SPY, QQQ, VTI data successfully retrieved with <2% price variance
+    - **Volatility Context**: VIX proxy data (VIXY) collected and validated via Yahoo Finance CLI
+    - **Economic Indicators**: FRED CLI data freshness within 24 hours for all indicators
+    - **Crypto Sentiment**: Bitcoin price and sentiment data current and validated
+    - **Market Regime Identification**: Economic regime properly classified based on CLI data
 
   integration_validation:
     - Fundamental analysis files discovered and matched
     - Coverage percentage calculated accurately
     - Research enhancement data gathered successfully
-    - All data sources properly cross-referenced
+    - **CLI Data Cross-Reference**: All ticker data cross-validated across multiple CLI sources
+    - **Economic Context Integration**: FRED CLI economic data properly integrated
+    - **Multi-Source Consistency**: Price consistency verification across 3+ sources
 
-  confidence_calculation:
-    - Weight data sources by reliability and completeness
-    - Penalize missing or stale supplemental data appropriately
-    - Factor in API response quality and success rates
-    - Generate overall discovery confidence score
+  cli_enhanced_confidence_calculation:
+    - **Multi-Source Weighting**: Weight CLI data sources by reliability and cross-validation success
+    - **Service Health Impact**: Factor CLI service operational status into confidence scores
+    - **Price Validation Impact**: Penalize confidence for price inconsistencies across sources
+    - **Economic Context Quality**: Factor FRED CLI data freshness and completeness
+    - **Institutional-Grade Scoring**: Target >85% overall confidence through CLI services integration
+    - **Generate Overall Discovery Confidence**: Comprehensive score based on all 7 CLI data sources
 ```
 
 ## Success Metrics
@@ -617,20 +678,24 @@ data_validation:
 microservice_kpis:
   data_collection:
     - CSV ingestion success rate: target 100%
-    - Yahoo Finance service success rate: target >95%
+    - CLI service health across all 7 services: target >95%
+    - Multi-source price validation success rate: target >90%
     - Fundamental analysis discovery rate: target >70%
     - Web research completion rate: target >80%
 
   quality_metrics:
-    - Data completeness: target >90%
-    - Overall confidence score: target >0.8
-    - Market context coverage: target >85%
+    - Data completeness: target >95%
+    - Overall confidence score: target >0.85
+    - Multi-source validation confidence: target >0.90
+    - Market context coverage: target >90%
+    - Economic context coverage: target >85%
     - Fundamental integration coverage: target >60%
 
   performance_metrics:
-    - Discovery phase completion time: target <30s
-    - Cache utilization rate: target >60%
-    - API call efficiency: target <50 calls total
+    - Discovery phase completion time: target <45s
+    - Cache utilization rate: target >70%
+    - CLI service call efficiency: target <100 calls total
+    - Multi-source validation efficiency: target >90%
     - Error handling effectiveness: target >95%
 ```
 

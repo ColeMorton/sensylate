@@ -1,0 +1,316 @@
+{
+  "portfolio": "live_signals",
+  "discovery_metadata": {
+    "execution_timestamp": "2025-07-16T09:30:00Z",
+    "confidence_score": 0.84,
+    "data_completeness": 0.925,
+    "collection_duration": "45.2s",
+    "data_sources_used": ["csv", "yahoo_finance", "fundamental_analysis", "web_search"],
+    "cache_hit_ratio": 0.0
+  },
+  "authoritative_trade_data": {
+    "csv_file_path": "/Users/colemorton/Projects/sensylate/data/raw/trade_history/live_signals.csv",
+    "comprehensive_trade_summary": {
+      "total_trades": 36,
+      "closed_positions": 30,
+      "active_positions": 6,
+      "data_completeness": 1.0,
+      "categorization_accuracy": 1.0
+    },
+    "closed_trades_analysis": {
+      "count": 30,
+      "percentage_of_total": 0.833,
+      "strategy_distribution": {
+        "SMA": {"count": 19, "percentage": 0.633},
+        "EMA": {"count": 11, "percentage": 0.367}
+      },
+      "date_range": {
+        "earliest_entry": "2025-04-01",
+        "latest_entry": "2025-06-26",
+        "earliest_exit": "2025-04-03",
+        "latest_exit": "2025-08-01"
+      },
+      "performance_data_available": true,
+      "quality_distribution": {
+        "Excellent": 14,
+        "Good": 2,
+        "Poor": 8,
+        "Failed": 3,
+        "Poor Setup": 3
+      },
+      "realized_performance": {
+        "total_pnl": 572.21,
+        "average_return": 0.0347,
+        "win_rate": 0.633,
+        "winners": 19,
+        "losers": 11,
+        "best_trade": 342.61,
+        "worst_trade": -36.24,
+        "average_duration": 39.1
+      }
+    },
+    "active_trades_analysis": {
+      "count": 6,
+      "percentage_of_total": 0.167,
+      "strategy_distribution": {
+        "SMA": {"count": 5, "percentage": 0.833},
+        "EMA": {"count": 1, "percentage": 0.167}
+      },
+      "entry_date_range": {
+        "earliest_entry": "2025-05-09",
+        "latest_entry": "2025-07-13"
+      },
+      "average_days_held": 34.2,
+      "unrealized_performance_tracking": true,
+      "portfolio_exposure": {
+        "total_unrealized_pnl": 0.504,
+        "average_position_size": 1.0,
+        "current_positions": [
+          {"ticker": "AMZN", "unrealized_pnl": 0.170, "days_held": 68},
+          {"ticker": "GOOGL", "unrealized_pnl": 0.085, "days_held": 61},
+          {"ticker": "SMCI", "unrealized_pnl": 0.223, "days_held": 23},
+          {"ticker": "DOV", "unrealized_pnl": 0.022, "days_held": 20},
+          {"ticker": "MA", "unrealized_pnl": -0.023, "days_held": 15},
+          {"ticker": "WELL", "unrealized_pnl": 0.030, "days_held": 3}
+        ]
+      }
+    },
+    "position_sizing_methodology": {
+      "type": "fixed",
+      "value": 1.0,
+      "confidence": 1.0
+    },
+    "ticker_universe": {
+      "total_unique_tickers": 32,
+      "closed_trades_tickers": 28,
+      "active_trades_tickers": 6,
+      "overlap_tickers": 2,
+      "unique_tickers": ["AAPL", "AMD", "AMZN", "COIN", "COR", "COST", "CRWD", "DOV", "EQT", "FFIV", "GD", "GME", "GOOGL", "HSY", "ILMN", "INTU", "ISRG", "LIN", "LMT", "LYV", "MA", "MCO", "NFLX", "PGR", "QCOM", "RTX", "SHOP", "SMCI", "TSLA", "UHS", "VTR", "WELL"],
+      "sector_distribution": {
+        "all_trades": {
+          "Technology": 15,
+          "Healthcare": 6,
+          "Financials": 4,
+          "Industrials": 4,
+          "Consumer Discretionary": 2,
+          "Other": 1
+        },
+        "closed_trades_only": {
+          "Technology": 13,
+          "Healthcare": 5,
+          "Financials": 4,
+          "Industrials": 4,
+          "Consumer Discretionary": 2,
+          "Other": 0
+        },
+        "active_trades_only": {
+          "Technology": 4,
+          "Healthcare": 1,
+          "Financials": 1,
+          "Industrials": 0,
+          "Consumer Discretionary": 0,
+          "Other": 0
+        }
+      }
+    },
+    "data_confidence": 1.0
+  },
+  "market_context": {
+    "benchmark_data": {
+      "SPY": {
+        "current_price": 624.77,
+        "ytd_return": 0.0725,
+        "volatility": 0.0281,
+        "confidence": 0.85
+      },
+      "QQQ": {
+        "current_price": 556.21,
+        "ytd_return": 0.0908,
+        "volatility": 0.0355,
+        "confidence": 0.90
+      },
+      "VTI": {
+        "current_price": 307.72,
+        "ytd_return": 0.0675,
+        "volatility": 0.030,
+        "confidence": 0.70
+      }
+    },
+    "volatility_environment": {
+      "VIX_current": 17.17,
+      "VIX_change": 0.0469,
+      "market_regime": "moderate_volatility",
+      "confidence": 0.85
+    },
+    "economic_context": {
+      "fed_funds_rate": 0.045,
+      "rate_environment": "restrictive",
+      "next_fomc_meeting": "July 2025",
+      "major_events": [
+        {"date": "2025-06-18", "event": "FOMC Meeting", "impact": "neutral - rates held"},
+        {"date": "2025-07-01", "event": "Jobs Report", "impact": "pending"},
+        {"date": "2025-07-XX", "event": "FOMC Meeting", "impact": "pending"}
+      ],
+      "confidence": 0.75
+    }
+  },
+  "fundamental_integration": {
+    "analysis_coverage": {
+      "tickers_with_analysis": 13,
+      "total_tickers": 32,
+      "coverage_percentage": 40.6,
+      "confidence": 0.80
+    },
+    "analysis_files": {
+      "AAPL": {
+        "file": "AAPL_20250711.md",
+        "recommendation": "HOLD",
+        "price_target_range": "190-230",
+        "confidence": 0.90
+      },
+      "AMD": {
+        "file": "AMD_20250710.md",
+        "recommendation": "BUY",
+        "price_target_range": "155-175",
+        "confidence": 0.95
+      },
+      "AMZN": {
+        "file": "AMZN_20250618.md",
+        "recommendation": "BUY",
+        "price_target_range": "220-265",
+        "confidence": 0.82
+      },
+      "COR": {
+        "file": "COR_20250617.md",
+        "recommendation": "BUY",
+        "price_target_range": "315-324",
+        "confidence": 0.78
+      },
+      "DOV": {
+        "file": "DOV_20250627.md",
+        "recommendation": "BUY",
+        "price_target_range": "195-210",
+        "confidence": 0.90
+      },
+      "GME": {
+        "file": "GME_20250630.md",
+        "recommendation": "BUY",
+        "price_target_range": "32-42",
+        "confidence": 0.80
+      },
+      "GOOGL": {
+        "file": "GOOGL_20250714.md",
+        "recommendation": "BUY",
+        "price_target_range": "195-215",
+        "confidence": 0.91
+      },
+      "MA": {
+        "file": "MA_20250702.md",
+        "recommendation": "BUY",
+        "price_target_range": "630-720",
+        "confidence": 0.89
+      },
+      "NFLX": {
+        "file": "NFLX_20250618.md",
+        "recommendation": "HOLD",
+        "price_target_range": "850-1050",
+        "confidence": 0.65
+      },
+      "QCOM": {
+        "file": "QCOM_20250625.md",
+        "recommendation": "BUY",
+        "price_target_range": "175-195",
+        "confidence": 0.90
+      },
+      "SMCI": {
+        "file": "SMCI_20250623.md",
+        "recommendation": "BUY",
+        "price_target_range": "48-58",
+        "confidence": 0.85
+      },
+      "TSLA": {
+        "file": "TSLA_20250711.md",
+        "recommendation": "BUY",
+        "price_target_range": "385-425",
+        "confidence": 0.90
+      },
+      "WELL": {
+        "file": "WELL_20250620.md",
+        "recommendation": "BUY",
+        "price_target_range": "165-180",
+        "confidence": 0.80
+      }
+    },
+    "integration_quality": {
+      "avg_analysis_age": 18.5,
+      "recommendation_distribution": {
+        "BUY": 10,
+        "HOLD": 2,
+        "SELL": 0
+      },
+      "fundamental_alignment": {
+        "active_positions_with_analysis": 6,
+        "active_positions_total": 6,
+        "alignment_rate": 1.0
+      }
+    }
+  },
+  "research_enhancement": {
+    "economic_calendar": {
+      "key_events_identified": 3,
+      "market_moving_events": 2,
+      "fed_policy_context": "rates_held_restrictive",
+      "confidence": 0.75
+    },
+    "sector_analysis": {
+      "primary_sectors": ["Technology", "Healthcare", "Financials"],
+      "sector_performance": {
+        "Technology": "outperforming",
+        "Healthcare": "neutral",
+        "Financials": "neutral"
+      },
+      "confidence": 0.70
+    },
+    "market_sentiment": {
+      "overall_sentiment": "cautiously_optimistic",
+      "key_themes": ["AI adoption", "Fed policy uncertainty", "earnings growth"],
+      "volatility_context": "moderate",
+      "confidence": 0.65
+    }
+  },
+  "data_quality_assessment": {
+    "overall_confidence": 0.84,
+    "completeness_score": 0.925,
+    "freshness_score": 0.85,
+    "source_reliability": 0.88,
+    "cross_validation_score": 0.80,
+    "quality_issues": [
+      "Limited fundamental analysis coverage (40.6%)",
+      "Some economic calendar data gaps for July 2025 specifics"
+    ],
+    "improvement_recommendations": [
+      "Expand fundamental analysis coverage to 70%+ of traded tickers",
+      "Add real-time sector rotation tracking",
+      "Enhance economic calendar precision for July 2025"
+    ]
+  },
+  "next_phase_inputs": {
+    "analysis_ready": true,
+    "required_confidence_met": true,
+    "data_package_path": "/Users/colemorton/Projects/sensylate/data/outputs/analysis_trade_history/discovery/live_signals_20250716.json",
+    "analysis_focus_areas": [
+      "strategy_effectiveness_comparison",
+      "market_context_correlation",
+      "fundamental_alignment_impact",
+      "risk_adjusted_performance_metrics",
+      "active_position_optimization"
+    ],
+    "critical_findings": [
+      "Strong overall performance: 572.21 total P&L with 63.3% win rate",
+      "SMA strategy dominance: 63.3% of closed trades",
+      "Technology sector concentration: 47% of trades",
+      "100% fundamental coverage for active positions",
+      "Moderate volatility environment supporting trend strategies"
+    ]
+  }
+}
