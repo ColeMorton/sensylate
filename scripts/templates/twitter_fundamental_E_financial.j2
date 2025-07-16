@@ -1,0 +1,31 @@
+{#- Twitter Fundamental Analysis Template E: Financial Health Check
+
+    Use this template when:
+    - Balance sheet strength/weakness
+    - Cash flow generation power
+    - Capital allocation track record
+-#}
+
+💰 ${{ ticker }} financial health report card:
+
+Profitability: {{ data.profitability_grade | default("N/A") }} ({{ data.profitability_trend | default("N/A") }})
+Balance Sheet: {{ data.balance_sheet_grade | default("N/A") }} ({{ data.balance_sheet_trend | default("N/A") }})
+Cash Flow: {{ data.cash_flow_grade | default("N/A") }} ({{ data.cash_flow_trend | default("N/A") }})
+Capital Efficiency: {{ data.capital_efficiency_grade | default("N/A") }} ({{ data.capital_efficiency_trend | default("N/A") }})
+
+{%- if data.red_flags %}
+Red flags: {{ data.red_flags | join(", ") }}
+{%- else %}
+Red flags: {{ data.red_flags_summary | default("NONE") }}
+{%- endif %}
+Green lights: {{ data.top_strength | default("Key financial strength") }}
+
+Key metric: {{ data.standout_kpi | default("Standout financial metric") }}
+
+Bottom line: {{ data.investment_implication | default("Investment implication based on financial health") }}
+
+📋 Full analysis: https://www.colemorton.com/blog/{{ ticker.lower() }}-fundamental-analysis-{{ data.date | default(timestamp[:10] | replace("-", "")) }}/
+
+⚠️ Not financial advice. Past performance doesn't guarantee future results.
+
+#{{ ticker }} #FinancialAnalysis #StockAnalysis

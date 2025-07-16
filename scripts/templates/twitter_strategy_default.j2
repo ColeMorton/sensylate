@@ -1,0 +1,40 @@
+{% if data.signal_alert -%}
+🚨 {{ ticker }} {{ data.strategy_type }} Signal Alert
+{%- else -%}
+📈 {{ ticker }} Trading Strategy Update
+{%- endif %}
+
+{% if data.entry_signal -%}
+Entry Signal: {{ data.entry_signal }}
+{%- endif %}
+
+{% if data.strategy_performance -%}
+Strategy Performance:
+{% for metric in data.strategy_performance -%}
+• {{ metric }}
+{% endfor %}
+{%- endif %}
+
+{% if data.seasonality -%}
+Seasonality: {{ data.seasonality }}
+{%- endif %}
+
+{% if data.risk_reward -%}
+Risk/Reward: {{ data.risk_reward }}
+{%- endif %}
+
+{% if data.fundamentals -%}
+Fundamental Context: {{ data.fundamentals }}
+{%- endif %}
+
+{% if data.call_to_action -%}
+{{ data.call_to_action }}
+{%- else -%}
+Time to act on this live signal. 🎯
+{%- endif %}
+
+Not financial advice. Historical performance doesn't guarantee future results.
+
+{% if ticker -%}
+#{{ ticker }} #TradingSignals #TradingStrategy
+{%- endif %}

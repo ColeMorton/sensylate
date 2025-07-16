@@ -36,7 +36,7 @@ class InvestmentSynthesizer:
         self.discovery_data = None
         self.output_dir = output_dir
         self.timestamp = datetime.now()
-        
+
         # Initialize sector cross-reference system
         self.sector_cross_ref = SectorCrossReference("./data/outputs/sector_analysis")
 
@@ -426,8 +426,10 @@ All analysis components have been processed and structured for template-complian
 
             # Integrate sector cross-reference
             print(f"🔗 Integrating sector analysis cross-references for {self.ticker}")
-            synthesis_result = self.sector_cross_ref.integrate_with_fundamental_analysis(
-                self.ticker, synthesis_result
+            synthesis_result = (
+                self.sector_cross_ref.integrate_with_fundamental_analysis(
+                    self.ticker, synthesis_result
+                )
             )
 
             # Save synthesis results
@@ -1111,23 +1113,23 @@ The investment thesis is supported by quantitative analysis and qualitative asse
 
         # Enhanced features confidence factors
         enhanced_confidence_score = 0.90
-        
+
         # Economic sensitivity integration
         if "economic_sensitivity" in synthesis_result:
             enhanced_confidence_score = min(0.95, enhanced_confidence_score + 0.02)
-        
+
         # Sector positioning integration
         if "sector_positioning" in synthesis_result:
             enhanced_confidence_score = min(0.95, enhanced_confidence_score + 0.02)
-        
+
         # Stress testing integration
         if "stress_testing" in synthesis_result:
             enhanced_confidence_score = min(0.95, enhanced_confidence_score + 0.02)
-        
+
         # Quantified risk assessment
         if "quantified_risk_assessment" in synthesis_result:
             enhanced_confidence_score = min(0.95, enhanced_confidence_score + 0.01)
-        
+
         confidence_factors.append(enhanced_confidence_score)
 
         # Investment thesis coherence factor
@@ -1140,17 +1142,17 @@ The investment thesis is supported by quantitative analysis and qualitative asse
         # Calculate weighted confidence (emphasizing analysis and enhanced features)
         if confidence_factors:
             weighted_confidence = (
-                confidence_factors[0] * 0.40 +  # Analysis confidence
-                confidence_factors[1] * 0.25 +  # Discovery confidence
-                confidence_factors[2] * 0.25 +  # Enhanced features
-                confidence_factors[3] * 0.10    # Thesis coherence
+                confidence_factors[0] * 0.40
+                + confidence_factors[1] * 0.25  # Analysis confidence
+                + confidence_factors[2] * 0.25  # Discovery confidence
+                + confidence_factors[3] * 0.10  # Enhanced features  # Thesis coherence
             )
         else:
             weighted_confidence = base_confidence
 
         # Ensure institutional minimum is met
         final_confidence = max(0.90, min(0.98, weighted_confidence))
-        
+
         return round(final_confidence, 3)
 
     def _save_synthesis_results(
@@ -1194,7 +1196,7 @@ def main():
         default="./data/outputs/fundamental_analysis",
         help="Output directory for synthesis results",
     )
-    
+
     # Enhanced flags for sector analysis integration
     parser.add_argument(
         "--include-sector-context",

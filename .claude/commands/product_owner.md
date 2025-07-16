@@ -2,28 +2,6 @@
 
 Automatically transform technical findings into prioritized product decisions using evidence-based strategic framework and measurable outcomes.
 
-## MANDATORY: Pre-Execution Coordination
-
-**CRITICAL**: Before creating any product decisions or strategic analysis, you MUST integrate with the Content Lifecycle Management system to prevent duplication and maintain knowledge integrity.
-
-### Step 1: Pre-Execution Consultation
-```bash
-# Pre-execution consultation step removed
-```
-
-### Step 2: Handle Consultation Results
-Based on consultation response:
-- **proceed**: Continue with product decision creation
-- **coordinate_required**: Contact topic owner for collaboration - check ownership and request coordination
-- **avoid_duplication**: Reference existing authoritative product strategy instead of creating new one
-- **update_existing**: Use superseding workflow to update existing authority decisions
-
-### Step 3: Workspace Validation
-```bash
-# Workspace validation step removed
-```
-
-**Only proceed with decision creation if consultation and validation are successful.**
 
 ## Purpose
 
@@ -77,7 +55,7 @@ Functions as an automated Product Owner that converts code reviews, technical de
 - Generate priority-ranked backlog with clear acceptance criteria
 - Create stakeholder-specific summaries with relevant metrics
 - Establish success metrics and monitoring triggers
-- Save outputs to `team-workspace/commands/product-owner/outputs/` for collaboration
+- Save outputs to `data/outputs/product_analysis/` for accessibility
 
 ## Usage
 
@@ -94,7 +72,7 @@ Functions as an automated Product Owner that converts code reviews, technical de
 
 ## Output Location
 
-All product owner analysis outputs are saved to `team-workspace/commands/product-owner/outputs/` to enable collaboration with other AI commands. This centralized location allows other commands (architect, code-owner, business-analyst) to access product decisions and priorities.
+All product owner analysis outputs are saved to `data/outputs/product_analysis/` as part of the standard data pipeline. This centralized location allows other processes to access product decisions and priorities.
 
 ## Output Structure
 
@@ -233,34 +211,9 @@ team_constraints:
 - Share decision framework learnings across product teams
 - Regular retrospectives on decision quality and process efficiency
 
-## MANDATORY: Post-Execution Lifecycle Management
-
-After creating any product decisions or strategic analysis, you MUST complete these lifecycle management steps:
-
-### Step 1: Content Authority Establishment
-```bash
-# Topic ownership manager step removed
-```
-
-### Step 2: Registry Update
-Update topic registry with new product decisions:
-- Authority file: `team-workspace/knowledge/product-strategy/{decision-topic}.md`
-- Update `coordination/topic-registry.yaml` with new authority path
-- Set product-owner as primary owner for product strategy topics
-
-### Step 3: Cross-Command Notification
-Notify dependent commands of new product decisions availability:
-- architect: For implementation planning alignment
-- code-owner: For technical health prioritization
-- business-analyst: For requirements impact assessment
-
-### Step 4: Superseding Workflow (if updating existing decisions)
-```bash
-# Superseding workflow step removed
-```
 
 ## Output Location
 
-All product owner strategic decisions and analyses must be saved to `team-workspace/commands/product-owner/outputs/` to enable collaboration with other AI commands.
+All product owner strategic decisions and analyses must be saved to `data/outputs/product_analysis/` as part of the standard data pipeline.
 
-**Authority Files**: Also save authoritative product decisions to `team-workspace/knowledge/product-strategy/` for single source of truth.
+**Documentation**: Product decisions are saved directly to the data outputs structure for immediate accessibility.

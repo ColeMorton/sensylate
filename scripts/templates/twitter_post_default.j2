@@ -1,0 +1,30 @@
+{% if data.hook -%}
+{{ data.hook }}
+{%- else -%}
+📊 {{ ticker }} Analysis Update
+{%- endif %}
+
+{% if data.key_metrics -%}
+Key Metrics:
+{% for metric in data.key_metrics -%}
+• {{ metric }}
+{% endfor %}
+{%- endif %}
+
+{% if data.investment_thesis -%}
+Investment Thesis: {{ data.investment_thesis }}
+{%- endif %}
+
+{% if data.price_target -%}
+Price Target: ${{ data.price_target }}
+{%- endif %}
+
+{% if data.blog_link -%}
+Full analysis: {{ data.blog_link }}
+{%- endif %}
+
+⚠️ Not financial advice. Do your own research.
+
+{% if ticker -%}
+#{{ ticker }} #StockAnalysis #Investment
+{%- endif %}

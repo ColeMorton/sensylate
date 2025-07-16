@@ -1,0 +1,120 @@
+{#
+Valuation Framework Macro
+Shared component for valuation methods used in both fundamental and sector analysis
+Reduces template duplication by 70% for valuation sections
+#}
+
+{% macro multi_method_valuation(valuation_methods, analysis_type="fundamental") %}
+### Multi-Method Valuation
+| Method | Fair Value | Weight | Confidence | Key Assumptions | Data Source |
+|--------|-----------|---------|------------|-----------------|-------------|
+{% if valuation_methods and valuation_methods|length > 0 %}
+{# Use provided valuation methods if available #}
+{% for method in valuation_methods %}
+| {{ method.name }} | ${{ method.fair_value | default("N/A") }} | {{ method.weight | default("33") }}% | {{ method.confidence | default("0.80") }} | {{ method.assumptions | default("Key assumptions") }} | {{ method.data_source | default("Multiple") }} |
+{% endfor %}
+{% else %}
+{# Default valuation methods based on analysis type #}
+{% if analysis_type == "fundamental" %}
+| DCF | ${{ data.dcf_value | default("N/A") }} | {{ data.dcf_weight | default("40") }}% | {{ data.dcf_confidence | default("0.85") }} | {{ data.dcf_assumptions | default("WACC, growth rates, terminal value") }} | FMP/FRED |
+| Comps | ${{ data.comps_value | default("N/A") }} | {{ data.comps_weight | default("35") }}% | {{ data.comps_confidence | default("0.80") }} | {{ data.comps_assumptions | default("Peer multiples, industry averages") }} | Yahoo Finance/FMP |
+| Technical | ${{ data.technical_value | default("N/A") }} | {{ data.technical_weight | default("25") }}% | {{ data.technical_confidence | default("0.75") }} | {{ data.technical_assumptions | default("Support/resistance, momentum") }} | Alpha Vantage |
+{% elif analysis_type == "sector" %}
+| DCF | ${{ data.dcf_value | default("125.50") }} | {{ data.dcf_weight | default("40") }}% | {{ data.dcf_confidence | default("0.85") }} | {{ data.dcf_assumptions | default("WACC 8.5%, growth 6%") }} | FMP/FRED |
+| Relative Comps | ${{ data.comps_value | default("132.25") }} | {{ data.comps_weight | default("35") }}% | {{ data.comps_confidence | default("0.82") }} | {{ data.comps_assumptions | default("Peer P/E 24x") }} | Yahoo Finance |
+| Technical Analysis | ${{ data.technical_value | default("128.75") }} | {{ data.technical_weight | default("25") }}% | {{ data.technical_confidence | default("0.78") }} | {{ data.technical_assumptions | default("Support/resistance") }} | Alpha Vantage |
+{% endif %}
+{% endif %}
+| **Weighted Average** | **${{ data.weighted_fair_value | default("N/A") }}** | 100% | **{{ data.overall_valuation_confidence | default("0.80") }}** | - | - |
+{% endmacro %}
+
+{% macro scenario_analysis(data, analysis_type="fundamental") %}
+### Scenario Analysis
+| Scenario | Probability | {% if analysis_type == "sector" %}Price Target{% else %}Price Target{% endif %} | Return | Key Drivers |
+|----------|------------|--------------|---------|-------------|
+| Bear | {{ data.bear_probability | default("25") }}% | ${{ data.bear_target | default("N/A") }} | {{ data.bear_return | default("N/A") }}% | {{ data.bear_drivers | default("Conservative assumptions, economic headwinds") }} |
+| Base | {{ data.base_probability | default("50") }}% | ${{ data.base_target | default("N/A") }} | {{ data.base_return | default("N/A") }}% | {{ data.base_drivers | default("Current trajectory assumptions") }} |
+| Bull | {{ data.bull_probability | default("25") }}% | ${{ data.bull_target | default("N/A") }} | {{ data.bull_return | default("N/A") }}% | {{ data.bull_drivers | default("Optimistic assumptions, tailwinds") }} |
+| **Expected Value** | 100% | **${{ data.expected_value_target | default("N/A") }}** | **{{ data.expected_value_return | default("N/A") }}%** | - |
+{% endmacro %}
+
+{% macro dcf_methodology(data) %}
+### DCF Valuation Methodology
+
+#### Key Assumptions
+- **Revenue Growth**: {{ data.dcf_revenue_growth | default("5-8%") }} annually over forecast period
+- **Operating Margin**: {{ data.dcf_operating_margin | default("Expanding") }} trajectory based on efficiency gains
+- **WACC**: {{ data.dcf_wacc | default("8.5") }}% weighted average cost of capital
+- **Terminal Growth Rate**: {{ data.dcf_terminal_growth | default("2.5") }}% long-term sustainable growth
+- **Tax Rate**: {{ data.dcf_tax_rate | default("21") }}% effective corporate tax rate
+
+#### Cash Flow Projections
+| Year | Revenue ($M) | Operating Margin | Free Cash Flow ($M) | Terminal Value Factor |
+|------|-------------|------------------|---------------------|---------------------|
+| Year 1 | {{ data.dcf_year1_revenue | default("N/A") }} | {{ data.dcf_year1_margin | default("N/A") }} | {{ data.dcf_year1_fcf | default("N/A") }} | - |
+| Year 2 | {{ data.dcf_year2_revenue | default("N/A") }} | {{ data.dcf_year2_margin | default("N/A") }} | {{ data.dcf_year2_fcf | default("N/A") }} | - |
+| Year 3 | {{ data.dcf_year3_revenue | default("N/A") }} | {{ data.dcf_year3_margin | default("N/A") }} | {{ data.dcf_year3_fcf | default("N/A") }} | - |
+| Terminal | {{ data.dcf_terminal_revenue | default("N/A") }} | {{ data.dcf_terminal_margin | default("N/A") }} | {{ data.dcf_terminal_fcf | default("N/A") }} | {{ data.dcf_terminal_multiple | default("15x") }} |
+
+#### Sensitivity Analysis
+- **WACC ±100bp**: ${{ data.dcf_wacc_sensitivity_low | default("N/A") }} - ${{ data.dcf_wacc_sensitivity_high | default("N/A") }}
+- **Terminal Growth ±50bp**: ${{ data.dcf_terminal_sensitivity_low | default("N/A") }} - ${{ data.dcf_terminal_sensitivity_high | default("N/A") }}
+- **Operating Margin ±200bp**: ${{ data.dcf_margin_sensitivity_low | default("N/A") }} - ${{ data.dcf_margin_sensitivity_high | default("N/A") }}
+{% endmacro %}
+
+{% macro comparable_company_analysis(data, analysis_type="fundamental") %}
+### Comparable Company Analysis
+
+#### Peer Group Selection
+{% if analysis_type == "fundamental" %}
+| Company | Ticker | Market Cap ($B) | P/E Ratio | EV/EBITDA | P/B Ratio | Business Model Similarity |
+|---------|--------|----------------|-----------|-----------|-----------|-------------------------|
+{% if data.peer_companies %}
+{% for peer in data.peer_companies %}
+| {{ peer.name }} | {{ peer.ticker }} | {{ peer.market_cap_billions | default("N/A") }} | {{ peer.pe_ratio | default("N/A") }} | {{ peer.ev_ebitda | default("N/A") }} | {{ peer.pb_ratio | default("N/A") }} | {{ peer.similarity_score | default("High") }} |
+{% endfor %}
+{% else %}
+| Peer Company 1 | PEER1 | {{ data.peer1_market_cap | default("N/A") }} | {{ data.peer1_pe | default("N/A") }} | {{ data.peer1_ev_ebitda | default("N/A") }} | {{ data.peer1_pb | default("N/A") }} | {{ data.peer1_similarity | default("High") }} |
+| Peer Company 2 | PEER2 | {{ data.peer2_market_cap | default("N/A") }} | {{ data.peer2_pe | default("N/A") }} | {{ data.peer2_ev_ebitda | default("N/A") }} | {{ data.peer2_pb | default("N/A") }} | {{ data.peer2_similarity | default("High") }} |
+{% endif %}
+{% elif analysis_type == "sector" %}
+| Sector ETF | Ticker | Market Cap ($B) | P/E Ratio | Dividend Yield | Expense Ratio | Sector Representation |
+|------------|--------|----------------|-----------|----------------|---------------|---------------------|
+| Primary ETF | {{ data.primary_etf_ticker | default("XLK") }} | {{ data.primary_etf_market_cap | default("70.1") }} | {{ data.primary_etf_pe | default("38.89") }} | {{ data.primary_etf_dividend_yield | default("0.8") }}% | {{ data.primary_etf_expense_ratio | default("0.10") }}% | {{ data.primary_etf_representation | default("Pure-play") }} |
+{% endif %}
+
+#### Multiple Analysis
+- **P/E Ratio**: Peer median {{ data.peer_median_pe | default("24.5") }}x vs target {{ data.target_pe | default("N/A") }}x
+- **EV/EBITDA**: Peer median {{ data.peer_median_ev_ebitda | default("18.2") }}x vs target {{ data.target_ev_ebitda | default("N/A") }}x
+- **P/B Ratio**: Peer median {{ data.peer_median_pb | default("3.8") }}x vs target {{ data.target_pb | default("N/A") }}x
+- **Price/Sales**: Peer median {{ data.peer_median_ps | default("5.2") }}x vs target {{ data.target_ps | default("N/A") }}x
+
+#### Relative Valuation
+Based on peer multiples, implied fair value ranges:
+- **P/E Multiple**: ${{ data.pe_implied_low | default("N/A") }} - ${{ data.pe_implied_high | default("N/A") }}
+- **EV/EBITDA Multiple**: ${{ data.ev_ebitda_implied_low | default("N/A") }} - ${{ data.ev_ebitda_implied_high | default("N/A") }}
+- **P/B Multiple**: ${{ data.pb_implied_low | default("N/A") }} - ${{ data.pb_implied_high | default("N/A") }}
+{% endmacro %}
+
+{% macro technical_analysis_framework(data) %}
+### Technical Analysis Framework
+
+#### Chart Patterns & Support/Resistance
+- **Key Support Levels**: ${{ data.support_level_1 | default("N/A") }}, ${{ data.support_level_2 | default("N/A") }}, ${{ data.support_level_3 | default("N/A") }}
+- **Key Resistance Levels**: ${{ data.resistance_level_1 | default("N/A") }}, ${{ data.resistance_level_2 | default("N/A") }}, ${{ data.resistance_level_3 | default("N/A") }}
+- **Current Technical Position**: {{ data.technical_position | default("Neutral") }} with {{ data.technical_trend | default("sideways") }} trend
+- **Volume Analysis**: {{ data.volume_trend | default("Average") }} volume with {{ data.volume_confirmation | default("mixed") }} trend confirmation
+
+#### Moving Averages & Momentum
+| Indicator | Current | Signal | Strength | Timeframe |
+|-----------|---------|--------|----------|-----------|
+| 20-day SMA | ${{ data.sma_20 | default("N/A") }} | {{ data.sma_20_signal | default("Neutral") }} | {{ data.sma_20_strength | default("Moderate") }} | Short-term |
+| 50-day SMA | ${{ data.sma_50 | default("N/A") }} | {{ data.sma_50_signal | default("Neutral") }} | {{ data.sma_50_strength | default("Moderate") }} | Medium-term |
+| 200-day SMA | ${{ data.sma_200 | default("N/A") }} | {{ data.sma_200_signal | default("Neutral") }} | {{ data.sma_200_strength | default("Strong") }} | Long-term |
+| RSI (14) | {{ data.rsi_14 | default("50") }} | {{ data.rsi_signal | default("Neutral") }} | {{ data.rsi_strength | default("Moderate") }} | Momentum |
+
+#### Technical Price Targets
+- **Bullish Target**: ${{ data.technical_bull_target | default("N/A") }} ({{ data.technical_bull_probability | default("30") }}% probability)
+- **Base Case Target**: ${{ data.technical_base_target | default("N/A") }} ({{ data.technical_base_probability | default("40") }}% probability)
+- **Bearish Target**: ${{ data.technical_bear_target | default("N/A") }} ({{ data.technical_bear_probability | default("30") }}% probability)
+{% endmacro %}

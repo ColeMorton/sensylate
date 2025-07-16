@@ -1,0 +1,139 @@
+---
+title: {{ data.title | default("Trade History Analysis - " + timestamp[:10]) }}
+description: {{ data.description | default("Comprehensive quantitative analysis of trading performance with signal effectiveness evaluation.") }}
+author: Cole Morton
+date: {{ timestamp }}
+tags:
+  - trade-history
+  - trading-performance
+  - quantitative-analysis
+  - signal-analysis
+---
+
+# Trade History Analysis: {{ data.portfolio | default("Portfolio") }}
+
+*Generated: {{ timestamp[:10] }}*
+
+## Executive Summary
+
+{% if data.executive_summary -%}
+{{ data.executive_summary }}
+{%- else -%}
+This analysis provides comprehensive quantitative evaluation of trading performance with focus on signal effectiveness and strategy optimization.
+{%- endif %}
+
+## Portfolio Performance Overview
+
+{% if data.portfolio_metrics -%}
+### Key Performance Metrics
+- **Total Trades**: {{ data.portfolio_metrics.total_trades | default("N/A") }}
+- **Win Rate**: {{ data.portfolio_metrics.win_rate | default("N/A") }}%
+- **Net Performance**: {{ data.portfolio_metrics.net_performance | default("N/A") }}%
+- **Sharpe Ratio**: {{ data.portfolio_metrics.sharpe | default("N/A") }}
+- **Max Drawdown**: {{ data.portfolio_metrics.max_drawdown | default("N/A") }}%
+- **Profit Factor**: {{ data.portfolio_metrics.profit_factor | default("N/A") }}
+{%- endif %}
+
+## Signal Effectiveness Analysis
+
+{% if data.signal_analysis -%}
+### Signal Quality Assessment
+{% for signal in data.signal_analysis -%}
+- **{{ signal.strategy }}**: {{ signal.win_rate }}% win rate, {{ signal.avg_return }}% avg return
+{% endfor %}
+{%- endif %}
+
+## Strategy Performance Breakdown
+
+{% if data.strategy_breakdown -%}
+### SMA Strategy Performance
+- **Trades**: {{ data.strategy_breakdown.sma.trades | default("N/A") }}
+- **Win Rate**: {{ data.strategy_breakdown.sma.win_rate | default("N/A") }}%
+- **Average Return**: {{ data.strategy_breakdown.sma.avg_return | default("N/A") }}%
+- **Profit Factor**: {{ data.strategy_breakdown.sma.profit_factor | default("N/A") }}
+
+### EMA Strategy Performance
+- **Trades**: {{ data.strategy_breakdown.ema.trades | default("N/A") }}
+- **Win Rate**: {{ data.strategy_breakdown.ema.win_rate | default("N/A") }}%
+- **Average Return**: {{ data.strategy_breakdown.ema.avg_return | default("N/A") }}%
+- **Status**: {{ data.strategy_breakdown.ema.status | default("Active") }}
+{%- endif %}
+
+## Market Context Analysis
+
+{% if data.market_context -%}
+### Economic Environment
+- **Market Regime**: {{ data.market_context.market_regime | default("N/A") }}
+- **VIX Level**: {{ data.market_context.vix | default("N/A") }}
+- **Interest Rate Environment**: {{ data.market_context.rates | default("N/A") }}
+- **Sector Performance**: {{ data.market_context.sector_performance | default("N/A") }}
+{%- endif %}
+
+## Top Performing Trades
+
+{% if data.top_trades -%}
+{% for trade in data.top_trades -%}
+### {{ loop.index }}. {{ trade.ticker }} - {{ trade.return }}%
+- **Strategy**: {{ trade.strategy }}
+- **Entry**: {{ trade.entry_date }} @ ${{ trade.entry_price }}
+- **Exit**: {{ trade.exit_date }} @ ${{ trade.exit_price }}
+- **Duration**: {{ trade.duration }} days
+- **Quality**: {{ trade.quality }}
+{% endfor %}
+{%- endif %}
+
+## Risk Assessment
+
+{% if data.risk_analysis -%}
+### Risk Factors Identified
+{% for risk in data.risk_analysis -%}
+- **{{ risk.type }}**: {{ risk.description }}
+  - Impact: {{ risk.impact }}
+  - Mitigation: {{ risk.mitigation }}
+{% endfor %}
+{%- endif %}
+
+## Optimization Opportunities
+
+{% if data.optimization -%}
+### Recommended Improvements
+{% for opportunity in data.optimization -%}
+- **{{ opportunity.area }}**: {{ opportunity.description }}
+  - Expected Impact: {{ opportunity.expected_impact }}
+  - Implementation: {{ opportunity.implementation }}
+{% endfor %}
+{%- endif %}
+
+## Statistical Validation
+
+{% if data.statistical_validation -%}
+### Confidence Metrics
+- **Sample Size**: {{ data.statistical_validation.sample_size | default("N/A") }} trades
+- **Statistical Significance**: {{ data.statistical_validation.significance | default("N/A") }}
+- **Confidence Level**: {{ data.statistical_validation.confidence_level | default("95") }}%
+- **P-Value**: {{ data.statistical_validation.p_value | default("N/A") }}
+{%- endif %}
+
+## Conclusion
+
+{% if data.conclusion -%}
+{{ data.conclusion }}
+{%- else -%}
+This quantitative analysis provides insights into trading performance and signal effectiveness. The systematic approach to performance measurement enables data-driven optimization of trading strategies.
+{%- endif %}
+
+## Next Steps
+
+{% if data.next_steps -%}
+{% for step in data.next_steps -%}
+- {{ step }}
+{% endfor %}
+{%- endif %}
+
+## Disclaimer
+
+This analysis is for informational purposes only and should not be considered as investment advice. Past performance does not guarantee future results. Trading involves risk of loss.
+
+---
+
+*Analysis generated using the Sensylate trading platform. For more insights and analysis, visit [colemorton.com](https://colemorton.com).*

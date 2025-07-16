@@ -96,7 +96,7 @@ CLI-ENHANCED SECTOR DISCOVERY VALIDATION PROTOCOL:
 2. Sector ETF Validation
    → **MANDATORY ETF Price Validation**: Verify current ETF price is collected and accurate
    → **BLOCKING ETF Price Consistency**: ETF price must be validated across all synthesis references
-   → Verify sector ETF composition via FMP CLI: python fmp_cli.py etf {SECTOR_ETF} --env prod --output-format json
+   → Verify sector ETF composition via FMP CLI: python scripts/fmp_cli.py etf {SECTOR_ETF} --env prod --output-format json
    → Validate ETF holdings match stated sector companies and weightings
    → Cross-check ETF performance correlation with individual sector companies
    → Verify sector ETF flows and sentiment consistency

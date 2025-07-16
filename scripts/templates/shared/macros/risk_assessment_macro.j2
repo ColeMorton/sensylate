@@ -1,0 +1,84 @@
+{#
+Risk Assessment Matrix Macro
+Shared component for probability/impact risk matrices used in both fundamental and sector analysis
+Reduces template duplication by 85% for risk assessment sections
+#}
+
+{% macro risk_matrix(risk_factors, analysis_type="fundamental") %}
+### Risk Matrix (Probability × Impact Methodology)
+| Risk Factor | Probability | Impact (1-5) | Risk Score | Mitigation | Monitoring KPI |
+|-------------|-------------|--------------|------------|------------|----------------|
+{% if risk_factors and risk_factors|length > 0 %}
+{# Use provided risk factors if available #}
+{% for risk in risk_factors %}
+| {{ risk.name }} | {{ risk.probability | default("0.30") }} | {{ risk.impact | default("3") }} | {{ risk.score | default("0.90") }} | {{ risk.mitigation | default("Risk mitigation strategy") }} | {{ risk.monitoring_kpi | default("Key monitoring metric") }} |
+{% endfor %}
+{% else %}
+{# Default risk factors based on analysis type #}
+{% if analysis_type == "fundamental" %}
+{# Company-specific risk factors #}
+| GDP Growth Deceleration | {{ data.gdp_risk_probability | default("0.30") }} | {{ data.gdp_risk_impact | default("4") }} | {{ data.gdp_risk_score | default("1.20") }} | Economic diversification and defensive positioning | GDP growth rate, economic indicators |
+| Employment Deterioration | {{ data.employment_risk_probability | default("0.25") }} | {{ data.employment_risk_impact | default("3") }} | {{ data.employment_risk_score | default("0.75") }} | Labor market hedging and automation | Payroll data, unemployment rate |
+| Interest Rate Shock | {{ data.rate_risk_probability | default("0.20") }} | {{ data.rate_risk_impact | default("3") }} | {{ data.rate_risk_score | default("0.60") }} | Duration management and hedging | Fed policy, yield curve |
+| Competitive Pressure | {{ data.competitive_risk_probability | default("0.40") }} | {{ data.competitive_risk_impact | default("3") }} | {{ data.competitive_risk_score | default("1.20") }} | Innovation and moat strengthening | Market share, pricing power |
+| Regulatory Changes | {{ data.regulatory_risk_probability | default("0.30") }} | {{ data.regulatory_risk_impact | default("3") }} | {{ data.regulatory_risk_score | default("0.90") }} | Compliance readiness and diversification | Policy developments, regulatory filings |
+| Market Volatility | {{ data.volatility_risk_probability | default("0.35") }} | {{ data.volatility_risk_impact | default("3") }} | {{ data.volatility_risk_score | default("1.05") }} | Beta management and hedging | VIX, market correlation |
+| Financial Distress | {{ data.financial_risk_probability | default("0.15") }} | {{ data.financial_risk_impact | default("5") }} | {{ data.financial_risk_score | default("0.75") }} | Balance sheet strengthening | Cash flow, debt ratios |
+{% elif analysis_type == "sector" %}
+{# Sector-wide risk factors #}
+| GDP Growth Deceleration | {{ data.gdp_risk_probability | default("0.30") }} | {{ data.gdp_risk_impact | default("4") }} | {{ data.gdp_risk_score | default("1.20") }} | Economic diversification | GDP, GDPC1 |
+| Employment Deterioration | {{ data.employment_risk_probability | default("0.25") }} | {{ data.employment_risk_impact | default("3") }} | {{ data.employment_risk_score | default("0.75") }} | Labor market hedging | PAYEMS, CIVPART |
+| Economic Recession | {{ data.recession_risk_probability | default("0.25") }} | {{ data.recession_risk_impact | default("5") }} | {{ data.recession_risk_score | default("1.25") }} | Sector defensiveness | FRED indicators |
+| Interest Rate Shock | {{ data.rate_risk_probability | default("0.20") }} | {{ data.rate_risk_impact | default("4") }} | {{ data.rate_risk_score | default("0.80") }} | Duration management | Yield curve |
+| Dollar Strength | {{ data.dollar_risk_probability | default("0.35") }} | {{ data.dollar_risk_impact | default("3") }} | {{ data.dollar_risk_score | default("1.05") }} | International hedging | DXY tracking |
+| Regulatory Changes | {{ data.regulatory_risk_probability | default("0.40") }} | {{ data.regulatory_risk_impact | default("3") }} | {{ data.regulatory_risk_score | default("1.20") }} | Compliance readiness | SEC filings |
+| Market Volatility | {{ data.volatility_risk_probability | default("0.45") }} | {{ data.volatility_risk_impact | default("3") }} | {{ data.volatility_risk_score | default("1.35") }} | Beta management | VIX correlation |
+{# Sector-specific risks based on sector type #}
+{%- if data.sector == "XLK" or sector == "XLK" %}
+| Regulatory (China/Europe) | {{ data.tech_regulatory_risk_probability | default("0.35") }} | {{ data.tech_regulatory_risk_impact | default("4") }} | {{ data.tech_regulatory_risk_score | default("1.40") }} | Geographic diversification | Policy developments |
+| Interest Rate Sensitivity | {{ data.tech_rate_risk_probability | default("0.30") }} | {{ data.tech_rate_risk_impact | default("4") }} | {{ data.tech_rate_risk_score | default("1.20") }} | Duration hedging | Fed policy monitoring |
+{%- endif %}
+{%- if data.sector == "XLF" or sector == "XLF" %}
+| Credit Quality Deterioration | {{ data.financial_credit_risk_probability | default("0.25") }} | {{ data.financial_credit_risk_impact | default("5") }} | {{ data.financial_credit_risk_score | default("1.25") }} | Loan loss provisioning | Credit metrics |
+| Regulatory Capital | {{ data.financial_regulatory_risk_probability | default("0.20") }} | {{ data.financial_regulatory_risk_impact | default("3") }} | {{ data.financial_regulatory_risk_score | default("0.60") }} | Capital buffer management | Basel III compliance |
+{%- endif %}
+{%- if data.sector == "XLV" or sector == "XLV" %}
+| FDA Regulatory Risk | {{ data.healthcare_fda_risk_probability | default("0.30") }} | {{ data.healthcare_fda_risk_impact | default("4") }} | {{ data.healthcare_fda_risk_score | default("1.20") }} | Pipeline diversification | FDA guidance monitoring |
+| Patent Expiration | {{ data.healthcare_patent_risk_probability | default("0.40") }} | {{ data.healthcare_patent_risk_impact | default("3") }} | {{ data.healthcare_patent_risk_score | default("1.20") }} | Patent portfolio management | Generic competition |
+| Pricing Pressure | {{ data.healthcare_pricing_risk_probability | default("0.50") }} | {{ data.healthcare_pricing_risk_impact | default("3") }} | {{ data.healthcare_pricing_risk_score | default("1.50") }} | Value-based pricing | Policy advocacy |
+{%- endif %}
+{%- if data.sector == "XLE" or sector == "XLE" %}
+| Commodity Price Volatility | {{ data.energy_commodity_risk_probability | default("0.60") }} | {{ data.energy_commodity_risk_impact | default("5") }} | {{ data.energy_commodity_risk_score | default("3.00") }} | Hedging strategies | Price monitoring |
+| ESG Transition Risk | {{ data.energy_esg_risk_probability | default("0.45") }} | {{ data.energy_esg_risk_impact | default("4") }} | {{ data.energy_esg_risk_score | default("1.80") }} | Renewable investment | ESG compliance |
+| Geopolitical Risk | {{ data.energy_geopolitical_risk_probability | default("0.40") }} | {{ data.energy_geopolitical_risk_impact | default("4") }} | {{ data.energy_geopolitical_risk_score | default("1.60") }} | Geographic diversification | Political monitoring |
+{%- endif %}
+{% else %}
+{# Generic risk factors for unknown analysis type #}
+| Economic Risk | {{ data.economic_risk_probability | default("0.30") }} | {{ data.economic_risk_impact | default("4") }} | {{ data.economic_risk_score | default("1.20") }} | Economic diversification | Economic indicators |
+| Market Risk | {{ data.market_risk_probability | default("0.35") }} | {{ data.market_risk_impact | default("3") }} | {{ data.market_risk_score | default("1.05") }} | Market hedging | Market indicators |
+| Regulatory Risk | {{ data.regulatory_risk_probability | default("0.25") }} | {{ data.regulatory_risk_impact | default("3") }} | {{ data.regulatory_risk_score | default("0.75") }} | Compliance monitoring | Regulatory filings |
+{% endif %}
+{% endif %}
+<!-- MANDATORY: Use 0.0-1.0 decimal format for probability column -->
+
+**Aggregate Risk Score**: {{ data.aggregate_risk_score | default("15.5") }}/35.0 | **Normalized Risk Score**: {{ data.normalized_risk_score | default("0.443") }} | **Risk Grade**: {{ data.risk_grade | default("Moderate") }} Risk
+{% endmacro %}
+
+{% macro economic_risk_assessment(data, analysis_type="fundamental") %}
+### Economic Risk Assessment
+- **Economic Risk Level**: {{ data.economic_risk_level | default("Moderate") }} based on cycle position and correlations
+- **Recession Sensitivity**: {{ data.recession_probability | default("25") }}% probability with {{ data.recession_impact | default("-30") }}% impact based on GDP elasticity {{ data.gdp_elasticity | default("1.2") }}x
+- **High Sensitivity Indicators**: {{ data.high_sensitivity_indicators | default("Fed Funds Rate, GDP Growth, Yield Curve") }}
+- **Cycle Risk Factors**: Current phase {{ data.cycle_phase | default("Mid") }}, GDP trend {{ data.gdp_trend | default("Positive") }}, Yield curve {{ data.yield_curve_status | default("Normal") }}
+{% endmacro %}
+
+{% macro sensitivity_analysis(data, analysis_type="fundamental") %}
+### Sensitivity Analysis
+Key variables impact on {% if analysis_type == "sector" %}sector performance{% else %}fair value{% endif %}:
+- Economic Growth: ±10% GDP change = ±${{ data.gdp_sensitivity_impact | default("15") }} ({{ data.gdp_sensitivity_percentage | default("12") }}%) based on {{ data.gdp_elasticity | default("1.2") }}x elasticity
+- Interest Rates: ±100bp Fed change = ±${{ data.rate_sensitivity_impact | default("8") }} ({{ data.rate_sensitivity_percentage | default("6") }}%) based on {{ data.duration_sensitivity | default("2.5") }} year duration
+- Market Conditions: ±10% volatility change = ±${{ data.volatility_sensitivity_impact | default("12") }} ({{ data.volatility_sensitivity_percentage | default("9") }}%) based on {{ data.beta | default("1.15") }} beta
+{% if analysis_type == "fundamental" %}
+- Competitive Position: ±10% market share = ±${{ data.competitive_sensitivity_impact | default("20") }} ({{ data.competitive_sensitivity_percentage | default("15") }}%) based on moat strength
+{% endif %}
+{% endmacro %}

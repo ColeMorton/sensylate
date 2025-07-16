@@ -156,78 +156,78 @@ Environment Configuration:
 
 1. Multi-Company Core Data Collection
    → FOR EACH company in selected_sector_companies:
-      → Yahoo Finance CLI: python yahoo_finance_cli.py analyze {company_ticker} --env prod --output-format json
-      → Yahoo Finance CLI: python yahoo_finance_cli.py financials {company_ticker} --env prod --output-format json
-   → **MANDATORY Sector ETF Price Collection**: python yahoo_finance_cli.py analyze {sector_etf} --env prod --output-format json
+      → Yahoo Finance CLI: python scripts/yahoo_finance_cli.py analyze {company_ticker} --env prod --output-format json
+      → Yahoo Finance CLI: python scripts/yahoo_finance_cli.py financials {company_ticker} --env prod --output-format json
+   → **MANDATORY Sector ETF Price Collection**: python scripts/yahoo_finance_cli.py analyze {sector_etf} --env prod --output-format json
    → **CRITICAL: ETF Price Validation**: Verify current ETF price is collected and accurate
-   → Cross-Sector ETF Analysis: python yahoo_finance_cli.py analyze SPY XLK XLF XLI XLP XLU XLB XLE XLY XLV XLRE --env prod --output-format json
-   → Historical Cross-Sector Data: python yahoo_finance_cli.py history SPY XLK XLF XLI XLP XLU XLB XLE XLY XLV XLRE --period 1y --env prod --output-format json
+   → Cross-Sector ETF Analysis: python scripts/yahoo_finance_cli.py analyze SPY XLK XLF XLI XLP XLU XLB XLE XLY XLV XLRE --env prod --output-format json
+   → Historical Cross-Sector Data: python scripts/yahoo_finance_cli.py history SPY XLK XLF XLI XLP XLU XLB XLE XLY XLV XLRE --period 1y --env prod --output-format json
    → Multi-company integration: Sector overview, comparative financial metrics, and market data
    → Automatic cross-company validation with institutional-grade precision
    → Real-time trading data, volume analysis, and sector performance correlation
 
 2. Enhanced Sector Market Intelligence
    → FOR EACH company in selected_sector_companies:
-      → Alpha Vantage CLI: python alpha_vantage_cli.py quote {company_ticker} --env prod --output-format json
-   → Sector ETF real-time data: python alpha_vantage_cli.py quote {sector_etf} --env prod --output-format json
-   → VIX Volatility Analysis: python yahoo_finance_cli.py quote VIXY --env prod --output-format json
-   → VIX Historical Data: python yahoo_finance_cli.py history VIXY --period 2y --env prod --output-format json
-   → DXY Dollar Index: python yahoo_finance_cli.py quote UUP --env prod --output-format json
-   → DXY Historical Data: python yahoo_finance_cli.py history UUP --period 1y --env prod --output-format json
-   → Bitcoin Correlation: python alpha_vantage_cli.py quote BTCUSD --env prod --output-format json
+      → Alpha Vantage CLI: python scripts/alpha_vantage_cli.py quote {company_ticker} --env prod --output-format json
+   → Sector ETF real-time data: python scripts/alpha_vantage_cli.py quote {sector_etf} --env prod --output-format json
+   → VIX Volatility Analysis: python scripts/yahoo_finance_cli.py quote VIXY --env prod --output-format json
+   → VIX Historical Data: python scripts/yahoo_finance_cli.py history VIXY --period 2y --env prod --output-format json
+   → DXY Dollar Index: python scripts/yahoo_finance_cli.py quote UUP --env prod --output-format json
+   → DXY Historical Data: python scripts/yahoo_finance_cli.py history UUP --period 1y --env prod --output-format json
+   → Bitcoin Correlation: python scripts/alpha_vantage_cli.py quote BTCUSD --env prod --output-format json
    → Real-time quote aggregation with sector sentiment analysis and technical indicators
    → Automatic price cross-validation across all sector companies (targeting 1.000 per company)
    → Advanced sector analytics integration and competitive sentiment assessment
 
 3. Advanced Sector Intelligence
    → FOR EACH company in selected_sector_companies:
-      → FMP CLI: python fmp_cli.py profile {company_ticker} --env prod --output-format json
-      → FMP CLI: python fmp_cli.py financials {company_ticker} --statement-type cash-flow-statement --env prod --output-format json
-      → FMP CLI: python fmp_cli.py insider {company_ticker} --env prod --output-format json (if available)
-   → Sector ETF composition: python fmp_cli.py etf {sector_etf} --env prod --output-format json
+      → FMP CLI: python scripts/fmp_cli.py profile {company_ticker} --env prod --output-format json
+      → FMP CLI: python scripts/fmp_cli.py financials {company_ticker} --statement-type cash-flow-statement --env prod --output-format json
+      → FMP CLI: python scripts/fmp_cli.py insider {company_ticker} --env prod --output-format json (if available)
+   → Sector ETF composition: python scripts/fmp_cli.py etf {sector_etf} --env prod --output-format json
    → Advanced sector competitive profiles with detailed business descriptions
    → Complete cash flow statement integration across all sector companies
    → Sector-wide insider trading activity and management intelligence
    → Comprehensive sector valuation metrics and competitive positioning
 
 4. Sector Regulatory Framework Integration
-   → SEC EDGAR CLI: python sec_edgar_cli.py sector {sector} --env prod --output-format json
+   → SEC EDGAR CLI: python scripts/sec_edgar_cli.py sector {sector} --env prod --output-format json
    → Industry-specific regulatory filings and compliance data access
    → Sector regulatory intelligence and policy risk assessment
    → Industry-wide regulatory framework readiness for detailed analysis
 
 5. Sector Economic Context Analysis
-   → FRED CLI: python fred_economic_cli.py rates --env prod --output-format json
-   → FRED CLI: python fred_economic_cli.py indicator UNRATE --env prod --output-format json
-   → FRED CLI: python fred_economic_cli.py indicator DGS10 --env prod --output-format json (10-Year Treasury)
-   → FRED CLI: python fred_economic_cli.py indicator DGS2 --env prod --output-format json (2-Year Treasury)
-   → FRED CLI: python fred_economic_cli.py indicator DEXUSEU --env prod --output-format json (USD/EUR for DXY proxy)
-   → FRED CLI: python fred_economic_cli.py indicator BAMLH0A0HYM2 --env prod --output-format json (High Yield Credit Spreads)
-   → FRED CLI: python fred_economic_cli.py indicator M2SL --env prod --output-format json (M2 Money Supply)
-   → FRED CLI: python fred_economic_cli.py indicator NFCI --env prod --output-format json (Financial Conditions Index)
-   → FRED CLI: python fred_economic_cli.py indicator GDP --env prod --output-format json (Gross Domestic Product)
-   → FRED CLI: python fred_economic_cli.py indicator GDPC1 --env prod --output-format json (Real GDP)
-   → FRED CLI: python fred_economic_cli.py indicator A191RL1Q225SBEA --env prod --output-format json (GDP Growth Rate)
-   → FRED CLI: python fred_economic_cli.py indicator PAYEMS --env prod --output-format json (Nonfarm Payrolls)
-   → FRED CLI: python fred_economic_cli.py indicator CIVPART --env prod --output-format json (Labor Force Participation)
-   → FRED CLI: python fred_economic_cli.py indicator ICSA --env prod --output-format json (Initial Claims)
-   → FRED CLI: python fred_economic_cli.py sector_indicator {sector_specific_indicator} --env prod --output-format json
+   → FRED CLI: python scripts/fred_economic_cli.py rates --env prod --output-format json
+   → FRED CLI: python scripts/fred_economic_cli.py indicator UNRATE --env prod --output-format json
+   → FRED CLI: python scripts/fred_economic_cli.py indicator DGS10 --env prod --output-format json (10-Year Treasury)
+   → FRED CLI: python scripts/fred_economic_cli.py indicator DGS2 --env prod --output-format json (2-Year Treasury)
+   → FRED CLI: python scripts/fred_economic_cli.py indicator DEXUSEU --env prod --output-format json (USD/EUR for DXY proxy)
+   → FRED CLI: python scripts/fred_economic_cli.py indicator BAMLH0A0HYM2 --env prod --output-format json (High Yield Credit Spreads)
+   → FRED CLI: python scripts/fred_economic_cli.py indicator M2SL --env prod --output-format json (M2 Money Supply)
+   → FRED CLI: python scripts/fred_economic_cli.py indicator NFCI --env prod --output-format json (Financial Conditions Index)
+   → FRED CLI: python scripts/fred_economic_cli.py indicator GDP --env prod --output-format json (Gross Domestic Product)
+   → FRED CLI: python scripts/fred_economic_cli.py indicator GDPC1 --env prod --output-format json (Real GDP)
+   → FRED CLI: python scripts/fred_economic_cli.py indicator A191RL1Q225SBEA --env prod --output-format json (GDP Growth Rate)
+   → FRED CLI: python scripts/fred_economic_cli.py indicator PAYEMS --env prod --output-format json (Nonfarm Payrolls)
+   → FRED CLI: python scripts/fred_economic_cli.py indicator CIVPART --env prod --output-format json (Labor Force Participation)
+   → FRED CLI: python scripts/fred_economic_cli.py indicator ICSA --env prod --output-format json (Initial Claims)
+   → FRED CLI: python scripts/fred_economic_cli.py sector_indicator {sector_specific_indicator} --env prod --output-format json
    → Federal Reserve economic indicators with sector-specific sensitivity analysis
    → Real-time economic policy analysis and sector interest rate impact
    → Economic regime assessment with sector-specific implications and cyclical patterns
 
 6. Sector Cryptocurrency Correlation Analysis
-   → CoinGecko CLI: python coingecko_cli.py sentiment --env prod --output-format json
+   → CoinGecko CLI: python scripts/coingecko_cli.py sentiment --env prod --output-format json
    → Bitcoin market sentiment for sector risk appetite correlation assessment
-   → Alpha Vantage CLI: python alpha_vantage_cli.py quote BTCUSD --env prod --output-format json
-   → Alpha Vantage CLI: python alpha_vantage_cli.py daily BTCUSD --outputsize compact --env prod --output-format json
+   → Alpha Vantage CLI: python scripts/alpha_vantage_cli.py quote BTCUSD --env prod --output-format json
+   → Alpha Vantage CLI: python scripts/alpha_vantage_cli.py daily BTCUSD --outputsize compact --env prod --output-format json
    → Cryptocurrency correlation analysis for sector market context
    → Alternative investment sentiment and sector liquidity flow analysis
    → Risk-on/risk-off behavior assessment using Bitcoin as proxy
 
 7. Global Sector Economic Intelligence
-   → IMF CLI: python imf_cli.py country NGDP_RPCH USA --env prod --output-format json
-   → IMF CLI: python imf_cli.py sector_exposure {sector} --env prod --output-format json (if available)
+   → IMF CLI: python scripts/imf_cli.py country NGDP_RPCH USA --env prod --output-format json
+   → IMF CLI: python scripts/imf_cli.py sector_exposure {sector} --env prod --output-format json (if available)
    → International economic indicators and sector country risk assessment
    → Global GDP growth impact on sector and inflation sensitivity
    → Macroeconomic context for sector international exposure and trade implications
@@ -251,30 +251,30 @@ SECTOR CLI INTEGRATION BENEFITS:
 SYSTEMATIC 7-SOURCE DATA GATHERING VIA CLI SERVICES:
 
 1. Multi-Source Stock Analysis
-   → Primary CLI: python yahoo_finance_cli.py stock {ticker} --env prod --output-format json
-   → Secondary CLI: python alpha_vantage_cli.py quote {ticker} --env prod --output-format json
-   → Tertiary CLI: python fmp_cli.py profile {ticker} --env prod --output-format json
+   → Primary CLI: python scripts/yahoo_finance_cli.py stock {ticker} --env prod --output-format json
+   → Secondary CLI: python scripts/alpha_vantage_cli.py quote {ticker} --env prod --output-format json
+   → Tertiary CLI: python scripts/fmp_cli.py profile {ticker} --env prod --output-format json
    → Automatic price cross-validation with confidence scoring
    → Real-time sentiment analysis and analyst intelligence integration
    → Insider trading data and regulatory intelligence integration
    → FORMAT: Institutional-grade precision with multi-source validation
 
 2. Economic Context Integration
-   → FRED CLI: python fred_cli.py data FEDFUNDS --env prod --output-format json
-   → FRED CLI: python fred_cli.py data UNRATE --env prod --output-format json
-   → CoinGecko CLI: python coingecko_cli.py sentiment --env prod --output-format json
+   → FRED CLI: python scripts/fred_cli.py data FEDFUNDS --env prod --output-format json
+   → FRED CLI: python scripts/fred_cli.py data UNRATE --env prod --output-format json
+   → CoinGecko CLI: python scripts/coingecko_cli.py sentiment --env prod --output-format json
    → Automatic economic regime assessment (restrictive/neutral/accommodative)
    → Sector-specific economic implications and policy analysis
    → FORMAT: Real-time economic intelligence with sector correlation analysis
 
 3. Data Quality Validation
-   → Health Check: python yahoo_finance_cli.py health --env prod
-   → Health Check: python alpha_vantage_cli.py health --env prod
-   → Health Check: python fmp_cli.py health --env prod
-   → Health Check: python fred_cli.py health --env prod
-   → Health Check: python coingecko_cli.py health --env prod
-   → Health Check: python sec_edgar_cli.py health --env prod
-   → Health Check: python imf_cli.py health --env prod
+   → Health Check: python scripts/yahoo_finance_cli.py health --env prod
+   → Health Check: python scripts/alpha_vantage_cli.py health --env prod
+   → Health Check: python scripts/fmp_cli.py health --env prod
+   → Health Check: python scripts/fred_cli.py health --env prod
+   → Health Check: python scripts/coingecko_cli.py health --env prod
+   → Health Check: python scripts/sec_edgar_cli.py health --env prod
+   → Health Check: python scripts/imf_cli.py health --env prod
    → Real-time validation of all 7 CLI service integrations
    → Service status monitoring and API reliability assessment
    → Data completeness scoring and quality metrics
@@ -295,8 +295,8 @@ SYSTEMATIC 7-SOURCE DATA GATHERING VIA CLI SERVICES:
 MULTI-SOURCE REASONING CHAIN VIA CLI SERVICES:
 
 1. Comprehensive Company Profile Analysis
-   → Execute python yahoo_finance_cli.py stock {ticker} --env prod --output-format json
-   → Execute python fmp_cli.py profile {ticker} --env prod --output-format json
+   → Execute python scripts/yahoo_finance_cli.py stock {ticker} --env prod --output-format json
+   → Execute python scripts/fmp_cli.py profile {ticker} --env prod --output-format json
    → Extract company intelligence from Yahoo Finance (basic profile) + FMP (detailed description)
    → Cross-validate business model and revenue streams across multiple sources
    → Integrate CEO information, employee count, and operational metrics
@@ -310,9 +310,9 @@ MULTI-SOURCE REASONING CHAIN VIA CLI SERVICES:
    → Confidence score per metric: Cross-validated across data sources [0.0-1.0]
 
 3. Economic Context Integration
-   → Execute python fred_cli.py data FEDFUNDS --env prod for Fed funds rate
-   → Execute python fred_cli.py data UNRATE --env prod for unemployment
-   → Execute python coingecko_cli.py sentiment --env prod for crypto sentiment
+   → Execute python scripts/fred_cli.py data FEDFUNDS --env prod for Fed funds rate
+   → Execute python scripts/fred_cli.py data UNRATE --env prod for unemployment
+   → Execute python scripts/coingecko_cli.py sentiment --env prod for crypto sentiment
    → Analyze interest rate sensitivity based on business model (R&D intensive, cyclical, etc.)
    → Assess cryptocurrency correlation for broader market sentiment context
    → Integrate Fed policy implications and yield curve analysis
@@ -708,44 +708,44 @@ CRITICAL MULTI-SOURCE VALIDATION PROTOCOL:
 
 ### Main Execution - CLI-Enhanced Protocol
 1. **Comprehensive Multi-Source Analysis**
-   - Execute `python yahoo_finance_cli.py analyze {ticker} --env prod --output-format json` for core market data
-   - Execute `python yahoo_finance_cli.py financials {ticker} --env prod --output-format json` for financial statements
-   - **MANDATORY ETF Price Collection**: Execute `python yahoo_finance_cli.py analyze {sector_etf} --env prod --output-format json` for current ETF price
+   - Execute `python scripts/yahoo_finance_cli.py analyze {ticker} --env prod --output-format json` for core market data
+   - Execute `python scripts/yahoo_finance_cli.py financials {ticker} --env prod --output-format json` for financial statements
+   - **MANDATORY ETF Price Collection**: Execute `python scripts/yahoo_finance_cli.py analyze {sector_etf} --env prod --output-format json` for current ETF price
    - **CRITICAL: ETF Price Validation**: Verify ETF price is collected successfully and within acceptable range
-   - Execute `python yahoo_finance_cli.py history {sector_etf} --period 10y --env prod --output-format json` for seasonality analysis
-   - Execute `python yahoo_finance_cli.py history {sector_etf} --period max --env prod --output-format json` for maximum historical data
-   - Execute `python yahoo_finance_cli.py analyze SPY XLK XLF XLI XLP XLU XLB XLE XLY XLV XLRE --env prod --output-format json` for cross-sector analysis
-   - Execute `python yahoo_finance_cli.py history SPY XLK XLF XLI XLP XLU XLB XLE XLY XLV XLRE --period 1y --env prod --output-format json` for sector correlations
-   - Execute `python alpha_vantage_cli.py quote {ticker} --env prod --output-format json` for real-time data
-   - Execute `python fmp_cli.py profile {ticker} --env prod --output-format json` for advanced intelligence
-   - Execute `python fmp_cli.py financials {ticker} --statement-type cash-flow-statement --env prod --output-format json` for cash flow
-   - Attempt `python fmp_cli.py insider {ticker} --env prod --output-format json` for insider trading (handle gracefully if unavailable)
+   - Execute `python scripts/yahoo_finance_cli.py history {sector_etf} --period 10y --env prod --output-format json` for seasonality analysis
+   - Execute `python scripts/yahoo_finance_cli.py history {sector_etf} --period max --env prod --output-format json` for maximum historical data
+   - Execute `python scripts/yahoo_finance_cli.py analyze SPY XLK XLF XLI XLP XLU XLB XLE XLY XLV XLRE --env prod --output-format json` for cross-sector analysis
+   - Execute `python scripts/yahoo_finance_cli.py history SPY XLK XLF XLI XLP XLU XLB XLE XLY XLV XLRE --period 1y --env prod --output-format json` for sector correlations
+   - Execute `python scripts/alpha_vantage_cli.py quote {ticker} --env prod --output-format json` for real-time data
+   - Execute `python scripts/fmp_cli.py profile {ticker} --env prod --output-format json` for advanced intelligence
+   - Execute `python scripts/fmp_cli.py financials {ticker} --statement-type cash-flow-statement --env prod --output-format json` for cash flow
+   - Attempt `python scripts/fmp_cli.py insider {ticker} --env prod --output-format json` for insider trading (handle gracefully if unavailable)
    - Automatic cross-validation across Yahoo Finance, Alpha Vantage, and FMP CLIs
    - Real-time sentiment analysis and complete financial statement integration
    - Company profile integration with detailed business descriptions
    - Track successful CLI service responses in cli_services_utilized (only include services that provided data)
 
 2. **Economic Context Integration**
-   - Execute `python fred_economic_cli.py rates --env prod --output-format json` for comprehensive interest rates
-   - Execute `python fred_economic_cli.py indicator UNRATE --env prod --output-format json` for unemployment
-   - Execute `python fred_economic_cli.py indicator DGS10 --env prod --output-format json` for 10-Year Treasury
-   - Execute `python fred_economic_cli.py indicator DGS2 --env prod --output-format json` for 2-Year Treasury
-   - Execute `python fred_economic_cli.py indicator DEXUSEU --env prod --output-format json` for USD/EUR
-   - Execute `python fred_economic_cli.py indicator BAMLH0A0HYM2 --env prod --output-format json` for credit spreads
-   - Execute `python fred_economic_cli.py indicator M2SL --env prod --output-format json` for money supply
-   - Execute `python fred_economic_cli.py indicator NFCI --env prod --output-format json` for financial conditions
-   - Execute `python fred_economic_cli.py indicator GDP --env prod --output-format json` for nominal GDP
-   - Execute `python fred_economic_cli.py indicator GDPC1 --env prod --output-format json` for real GDP
-   - Execute `python fred_economic_cli.py indicator A191RL1Q225SBEA --env prod --output-format json` for GDP growth rate
-   - Execute `python fred_economic_cli.py indicator PAYEMS --env prod --output-format json` for nonfarm payrolls
-   - Execute `python fred_economic_cli.py indicator CIVPART --env prod --output-format json` for labor force participation
-   - Execute `python fred_economic_cli.py indicator ICSA --env prod --output-format json` for initial claims
-   - Execute `python yahoo_finance_cli.py quote VIXY --env prod --output-format json` for volatility
-   - Execute `python yahoo_finance_cli.py history VIXY --period 2y --env prod --output-format json` for VIX historical data
-   - Execute `python yahoo_finance_cli.py quote UUP --env prod --output-format json` for dollar strength
-   - Execute `python yahoo_finance_cli.py history UUP --period 1y --env prod --output-format json` for DXY historical data
-   - Execute `python alpha_vantage_cli.py quote BTCUSD --env prod --output-format json` for crypto correlation
-   - Execute `python coingecko_cli.py sentiment --env prod --output-format json` for crypto sentiment
+   - Execute `python scripts/fred_economic_cli.py rates --env prod --output-format json` for comprehensive interest rates
+   - Execute `python scripts/fred_economic_cli.py indicator UNRATE --env prod --output-format json` for unemployment
+   - Execute `python scripts/fred_economic_cli.py indicator DGS10 --env prod --output-format json` for 10-Year Treasury
+   - Execute `python scripts/fred_economic_cli.py indicator DGS2 --env prod --output-format json` for 2-Year Treasury
+   - Execute `python scripts/fred_economic_cli.py indicator DEXUSEU --env prod --output-format json` for USD/EUR
+   - Execute `python scripts/fred_economic_cli.py indicator BAMLH0A0HYM2 --env prod --output-format json` for credit spreads
+   - Execute `python scripts/fred_economic_cli.py indicator M2SL --env prod --output-format json` for money supply
+   - Execute `python scripts/fred_economic_cli.py indicator NFCI --env prod --output-format json` for financial conditions
+   - Execute `python scripts/fred_economic_cli.py indicator GDP --env prod --output-format json` for nominal GDP
+   - Execute `python scripts/fred_economic_cli.py indicator GDPC1 --env prod --output-format json` for real GDP
+   - Execute `python scripts/fred_economic_cli.py indicator A191RL1Q225SBEA --env prod --output-format json` for GDP growth rate
+   - Execute `python scripts/fred_economic_cli.py indicator PAYEMS --env prod --output-format json` for nonfarm payrolls
+   - Execute `python scripts/fred_economic_cli.py indicator CIVPART --env prod --output-format json` for labor force participation
+   - Execute `python scripts/fred_economic_cli.py indicator ICSA --env prod --output-format json` for initial claims
+   - Execute `python scripts/yahoo_finance_cli.py quote VIXY --env prod --output-format json` for volatility
+   - Execute `python scripts/yahoo_finance_cli.py history VIXY --period 2y --env prod --output-format json` for VIX historical data
+   - Execute `python scripts/yahoo_finance_cli.py quote UUP --env prod --output-format json` for dollar strength
+   - Execute `python scripts/yahoo_finance_cli.py history UUP --period 1y --env prod --output-format json` for DXY historical data
+   - Execute `python scripts/alpha_vantage_cli.py quote BTCUSD --env prod --output-format json` for crypto correlation
+   - Execute `python scripts/coingecko_cli.py sentiment --env prod --output-format json` for crypto sentiment
    - Gather Fed funds rate, unemployment, yield curve data from unified FRED CLI
    - Economic context is integrated across multiple CLI sources with real-time indicators
 

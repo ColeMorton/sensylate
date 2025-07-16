@@ -248,7 +248,7 @@ DIAGNOSIS:
 4. Review statistical significance of correlation calculations
 
 RESOLUTION:
-1. Update economic indicators: python fred_economic_cli.py indicator {INDICATOR} --env prod
+1. Update economic indicators: python scripts/fred_economic_cli.py indicator {INDICATOR} --env prod
 2. Extend historical lookback period for stable correlations (minimum 5 years)
 3. Apply statistical significance filters (p-value < 0.05)
 4. Use backup economic proxies when primary indicators unavailable
@@ -276,7 +276,7 @@ DIAGNOSIS:
 4. Review data alignment across different timeframes
 
 RESOLUTION:
-1. Execute comprehensive ETF data collection: python yahoo_finance_cli.py analyze SPY XLK XLF XLI XLP XLU XLB XLE XLY XLV XLRE --env prod
+1. Execute comprehensive ETF data collection: python scripts/yahoo_finance_cli.py analyze SPY XLK XLF XLI XLP XLU XLB XLE XLY XLV XLRE --env prod
 2. Apply consistent timeframes across all sector comparisons
 3. Use market-cap weighted calculations for sector aggregates
 4. Implement data quality flags for incomplete comparisons

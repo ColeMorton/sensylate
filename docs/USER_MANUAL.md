@@ -5,10 +5,10 @@
 ## 🎯 Quick Navigation
 
 - [🚀 Getting Started](#-getting-started)
-- [🤝 AI Command Integration](#-ai-command-integration)
+- [🐍 Python Data Pipeline](#-python-data-pipeline)
 - [📊 Trading Analysis](#-trading-analysis)
 - [🌐 Frontend Features](#-frontend-features)
-- [🤖 AI Commands](#-ai-commands)
+- [🔧 Development Tools](#-development-tools)
 - [⚙️ Configuration](#-configuration)
 - [🔧 Troubleshooting](#-troubleshooting)
 
@@ -21,7 +21,7 @@
 - **Node.js**: 18+ for frontend development
 - **Python**: 3.9+ for data processing
 - **Git**: For version control and collaboration
-- **Claude Code**: For AI command collaboration
+- **Yarn**: Package manager for frontend dependencies
 
 ### Initial Setup
 
@@ -76,84 +76,66 @@
 
 3. **Try AI Commands**:
    ```bash
-   > "/code-owner - analyze project health"
+   make test
    ```
 
 ---
 
-## 🤝 AI Command Integration
+## 🐍 Python Data Pipeline
 
-> **⭐ FEATURE**: AI commands integrate with your data pipeline, using analysis outputs to provide contextual insights.
+> **⭐ FEATURE**: Comprehensive trading analysis pipeline with fundamental analysis, sector analysis, and content generation.
 
-### What is AI Command Integration?
+### What is the Data Pipeline?
 
-AI commands work with your data pipeline outputs:
-- **Use Analysis Data**: Commands read from data/outputs/ directories
-- **Contextual Insights**: Analysis results inform AI responses
-- **Data-Driven Decisions**: Commands leverage existing analysis outputs
-- **Integrated Workflow**: Seamless connection between analysis and AI commands
+The Python backend provides a complete trading analysis framework:
+- **Multi-Source Data**: Integrates with 18+ financial APIs (Yahoo Finance, Alpha Vantage, SEC Edgar, FRED, etc.)
+- **DASV Framework**: Discovery → Analysis → Synthesis → Validation workflow
+- **Automated Analysis**: Generates comprehensive fundamental analysis reports
+- **Content Generation**: Creates blog posts, social media content, and sector analysis
+- **Visualization**: Multi-format dashboard generation with Plotly and Matplotlib
 
 ### Quick Start (2 Minutes)
 
-1. **Check Core Data Pipeline**:
+1. **Check Data Pipeline Structure**:
    ```bash
    ls data/outputs/
-   # Should show analysis outputs: fundamental_analysis/ sector_analysis/ etc.
+   # Should show: fundamental_analysis/ sector_analysis/ twitter_post_strategy/
    ```
 
-2. **Try Data-Integrated Commands**:
+2. **Run Fundamental Analysis**:
    ```bash
-   > "/code-owner - analyze current project health"
-   > "/architect - create improvement plan"
+   python scripts/fundamental_analysis/fundamental_analysis.py AAPL
    ```
 
-3. **See Integration**: Commands automatically reference existing analysis data when available!
+3. **Generate Dashboard**:
+   ```bash
+   python scripts/dashboard_generator.py
+   ```
 
-### Best Workflow Patterns
+### Available Analysis Tools
 
-#### Complete Project Analysis
-```bash
-> "Run comprehensive project analysis"
-# Executes commands that reference existing data/outputs/ analysis
-```
+#### 📊 Fundamental Analysis
+| Script | Purpose | Usage |
+|--------|---------|-------|
+| `fundamental_discovery.py` | Data collection from multiple sources | `python scripts/fundamental_analysis/fundamental_discovery.py AAPL` |
+| `fundamental_analysis.py` | Complete analysis pipeline | `python scripts/fundamental_analysis/fundamental_analysis.py AAPL` |
+| `analysis_validation.py` | Analysis quality validation | `python scripts/fundamental_analysis/analysis_validation.py` |
+| `investment_synthesis.py` | Investment recommendation synthesis | `python scripts/fundamental_analysis/investment_synthesis.py` |
 
-#### Feature Development
-```bash
-> "/code-owner - analyze authentication module"         # Technical assessment
-> "/architect - refactor auth for better security"      # References existing analysis
-> "/product-owner - estimate effort for auth refactor"  # Uses available data context
-```
+#### 📈 Trading Analysis
+| Script | Purpose | Usage |
+|--------|---------|-------|
+| `comprehensive_trade_analysis.py` | Complete trade analysis | `python scripts/comprehensive_trade_analysis.py` |
+| `trade_history_cli.py` | Trading history analysis | `python scripts/trade_history_cli.py` |
+| `yahoo_finance_cli.py` | Yahoo Finance data integration | `python scripts/yahoo_finance_cli.py AAPL` |
 
-#### Content Creation
-```bash
-> "/architect - summarize recent improvements"          # Reviews project data
-> "/twitter-post - create content about improvements"   # Uses available analysis data
-```
+#### 🎨 Content & Visualization
+| Script | Purpose | Usage |
+|--------|---------|-------|
+| `dashboard_generator.py` | Multi-format dashboard generation | `python scripts/dashboard_generator.py` |
+| `generate_trade_history_images.py` | Trading chart generation | `python scripts/generate_trade_history_images.py` |
 
-### Available AI Team Members
-
-> **Command Categories**:
-> - **Core Product**: User-facing AI capabilities that ARE the product
-> - **Infrastructure**: Development tools that ENABLE the product
-
-#### 🚀 Core Product Commands (User-facing AI functionality)
-| Command | Role | Best For |
-|---------|------|----------|
-| `/twitter-post` | Content Creation | Social media content optimization |
-| `/twitter-post-strategy` | Financial Content | Trading/financial social media content |
-| `/fundamental-analysis` | Market Analysis | Trading strategies and market insights |
-
-#### 🔧 Infrastructure Commands (Enable product development)
-| Command | Role | Best For |
-|---------|------|----------|
-| `/architect` | Technical Planning | Implementation design, system architecture |
-| `/product-owner` | Business Strategy | Feature prioritization, resource planning |
-| `/code-owner` | Technical Health | Code quality assessment, technical debt |
-| `/business-analyst` | Requirements | Process analysis, stakeholder needs |
-| `/commit-push` | Git Workflow | Automated commit and push operations |
-| `/create-command` | Command Creation | Building new AI commands |
-
-📚 **Full Guide**: See command documentation in `.claude/commands/` for complete usage examples.
+📚 **Full Guide**: See individual script documentation and `templates/` directory for analysis templates.
 
 ---
 
@@ -364,72 +346,69 @@ The frontend automatically integrates with your trading analysis:
 
 ---
 
-## 🤖 AI Commands
+## 🔧 Development Tools
 
-### Command Overview
+### Python Development
 
-Sensylate includes specialized AI commands for different aspects of your workflow:
+#### Quality Assurance
+- **Code Formatting**: `make format` (black, isort)
+- **Linting**: `make lint` (flake8, mypy, bandit)
+- **Testing**: `make test` (pytest with coverage)
+- **Pre-commit Hooks**: Automated quality checks on commit
 
-#### Core Product Commands
-- **`/twitter-post`**: Social media content optimization
-- **`/twitter-post-strategy`**: Financial/trading content for social media
-- **`/fundamental-analysis`**: Market analysis and trading insights
-
-#### Infrastructure Commands (Development)
-- **`/architect`**: Technical planning and implementation design
-- **`/code-owner`**: Codebase health analysis and technical reviews
-- **`/commit-push`**: Automated git workflow
-
-#### Infrastructure Commands (Business)
-- **`/product-owner`**: Business strategy and feature prioritization
-- **`/business-analyst`**: Requirements analysis and process optimization
-
-### Command Collaboration
-
-Commands automatically work together:
-
-#### Data Integration
+#### Available Make Commands
 ```bash
-> "/code-owner - analyze authentication security"
-# Creates technical assessment
+# Development workflow
+make format              # Format Python code with black/isort
+make lint               # Run linting with flake8
+make test               # Run Python tests with pytest
+make generate-dashboard # Generate trading dashboards
 
-> "/architect - improve authentication based on analysis"
-# References available analysis data
-# Result: Data-informed implementation plan
+# Pipeline commands
+make dev-pipeline       # Development data pipeline
+make validate-caching   # Validate data caching system
 ```
 
-#### Quality Enhancement
-- **Context Awareness**: Commands understand project state from data/outputs/
-- **Informed Decisions**: Analysis results inform AI responses
-- **Consistency**: Aligned with existing analysis and project direction
+### Frontend Development
 
-### Usage Patterns
-
-#### Individual Commands
+#### Available Commands
 ```bash
-# Direct command execution
-> "/architect - implement user authentication"
+# Development workflow
+yarn dev               # Start development server
+yarn build            # Production build
+yarn test             # Run test suite
+yarn lint             # ESLint with auto-fix
+yarn check            # TypeScript checking
 
-# Specific context requests
-> "/product-owner - prioritize Q2 features based on latest tech assessment"
+# Content management
+yarn generate-json    # Generate JSON configs from YAML
+yarn format          # Format code with Prettier
 ```
 
-#### Workflow Integration
-```bash
-# Analysis-informed workflows
-> "Run comprehensive project analysis"
+### Data Analysis Workflow
 
-# Sequential command execution
-> "/code-owner" followed by "/architect" followed by "/product-owner"
+#### Complete Analysis Pipeline
+```bash
+# Step 1: Data Discovery
+python scripts/fundamental_analysis/fundamental_discovery.py AAPL
+
+# Step 2: Analysis
+python scripts/fundamental_analysis/fundamental_analysis.py AAPL
+
+# Step 3: Validation
+python scripts/fundamental_analysis/analysis_validation.py AAPL_20250715.md
+
+# Step 4: Dashboard Generation
+python scripts/dashboard_generator.py
 ```
 
-#### Context-Aware Content
+#### Content Creation
 ```bash
-# Content based on analysis data
-> "/twitter-post about our latest performance improvements"
+# Generate trading analysis content
+python scripts/comprehensive_trade_analysis.py
 
-# Strategy-driven content using analysis results
-> "/twitter-post-strategy for Q2 feature releases"
+# Create social media content
+# Results automatically saved to data/outputs/twitter_post_strategy/
 ```
 
 ---
@@ -503,13 +482,13 @@ backtesting:
   "site": {
     "title": "Sensylate",
     "description": "Multi-modal trading analysis platform",
-    "author": "Your Name",
+    "author": "Cole Morton",
     "url": "https://sensylate.com"
   },
   "features": {
     "darkMode": true,
     "search": true,
-    "comments": true,
+    "comments": false,
     "analytics": true
   },
   "social": {
@@ -528,8 +507,8 @@ backtesting:
     "accent": "#f59e0b"
   },
   "typography": {
-    "headingFont": "Inter",
-    "bodyFont": "Inter"
+    "headingFont": "Heebo",
+    "bodyFont": "Heebo"
   },
   "layout": {
     "maxWidth": "1280px",
@@ -571,23 +550,26 @@ command_integration:
 node --version  # Should be 18+
 
 # Clear cache and reinstall
+cd frontend/
 rm -rf node_modules yarn.lock
 yarn install
 
-# Check for port conflicts
+# Check for port conflicts (Astro dev server)
 lsof -i :4321
 ```
 
 **Issue**: Build failures
 ```bash
+cd frontend/
+
 # Check TypeScript errors
 yarn check
 
 # Run linting
 yarn lint
 
-# Check configuration
-yarn generate-json
+# Build with verbose output
+yarn build --verbose
 ```
 
 #### Trading Analysis Issues
@@ -616,33 +598,33 @@ make process-data
 make train-model
 ```
 
-#### AI Command Integration Issues
+#### Python Data Pipeline Issues
 
-**Issue**: Commands not accessing data
+**Issue**: Analysis scripts not working
 ```bash
-# Check data pipeline structure
+# Check Python environment
+python --version  # Should be 3.9+
+pip list | grep pandas
+
+# Verify data pipeline structure
 ls data/outputs/
 ls data/outputs/*/
 
-# Verify recent analysis outputs
-# Check Python script logs for any issues
-
-# Test with simple workflow
-> "/code-owner - quick project health check"
-> "/architect - suggest one improvement"
+# Test individual components
+python scripts/fundamental_analysis/fundamental_discovery.py AAPL
 ```
 
-**Issue**: Missing analysis context
+**Issue**: Missing analysis outputs
 ```bash
-# Check analysis data availability
+# Check data outputs directory
 ls data/outputs/fundamental_analysis/
 ls data/outputs/sector_analysis/
 
 # Verify recent analysis runs
 find data/outputs -name "*.json" -mtime -1
 
-# Run analysis if needed
-make fundamental-analysis
+# Run analysis pipeline
+make dev-pipeline
 ```
 
 ### Performance Optimization
@@ -671,13 +653,16 @@ time make extract-data
 # Edit config/pipelines/feature_engineering.yaml to reduce indicators
 ```
 
-#### AI Command Performance
+#### Data Pipeline Performance
 ```bash
-# Check data access patterns
+# Check data pipeline outputs
 ls -la data/outputs/*/
 
 # Monitor analysis output freshness
 find data/outputs -name "*.json" -mtime -1
+
+# Profile script execution
+time python scripts/fundamental_analysis/fundamental_analysis.py AAPL
 ```
 
 ### Getting Help
@@ -685,18 +670,18 @@ find data/outputs -name "*.json" -mtime -1
 #### Log Files
 - **Frontend**: Browser developer tools console
 - **Trading Analysis**: `data/outputs/logs/`
-- **AI Commands**: `.claude/commands/` directory
+- **Python Scripts**: Check terminal output and error messages
 
 #### Debug Information
 ```bash
 # System information
-make check-env-vars
-yarn check
 python --version
+node --version
+yarn --version
 
 # Analysis data status
 ls -la data/outputs/*/
-cat data/outputs/fundamental_analysis/latest.json
+cat data/outputs/fundamental_analysis/*/analysis.json
 ```
 
 #### Contact Support
@@ -708,7 +693,7 @@ cat data/outputs/fundamental_analysis/latest.json
 
 ## 📚 Additional Resources
 
-- **[AI Command Documentation](.claude/commands/)**: Complete guide to AI command usage
+- **[Python Scripts Documentation](../scripts/)**: Complete guide to Python analysis tools
 - **[Technical Documentation](../README.md)**: Detailed technical implementation
 - **[API Reference](../docs/API.md)**: Trading analysis API documentation
 - **[Contributing Guide](../CONTRIBUTING.md)**: How to contribute to the project

@@ -1,0 +1,3 @@
+# Shared templates directory
+# Contains base templates and macros for reducing duplication between
+# fundamental analysis and sector analysis templates

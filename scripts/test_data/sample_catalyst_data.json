@@ -1,0 +1,37 @@
+{
+  "ticker": "TSLA",
+  "current_price": "248.75",
+  "total_expected_value": "285.50",
+  "timeline_detail": "All catalysts expected within 12 months with Q4 being critical",
+  "top_risk_factor": "Production ramp delays and regulatory approval timing",
+
+  "catalysts": [
+    {
+      "name": "FSD Beta Wide Release",
+      "probability": "75",
+      "impact_per_share": "18.50"
+    },
+    {
+      "name": "Cybertruck Production Ramp",
+      "probability": "65",
+      "impact_per_share": "12.25"
+    },
+    {
+      "name": "Energy Storage Expansion",
+      "probability": "80",
+      "impact_per_share": "8.75"
+    }
+  ],
+
+  "catalyst_1": "FSD Beta Wide Release",
+  "catalyst_1_probability": "75",
+  "catalyst_1_impact": "18.50",
+  "catalyst_2": "Cybertruck Production Ramp",
+  "catalyst_2_probability": "65",
+  "catalyst_2_impact": "12.25",
+  "catalyst_3": "Energy Storage Expansion",
+  "catalyst_3_probability": "80",
+  "catalyst_3_impact": "8.75",
+
+  "date": "20250715"
+}

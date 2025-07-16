@@ -86,14 +86,16 @@ class ServiceConfig(BaseModel):
 class FileBasedCache:
     """Production-grade file-based cache with TTL support"""
 
-    def __init__(self, config: CacheConfig):
+    def __init__(self, config: CacheConfig, service_name: str = "unknown"):
         self.config = config
+        self.service_name = service_name
         self.cache_dir = Path(config.cache_dir)
         self.cache_dir.mkdir(parents=True, exist_ok=True)
 
     def _get_cache_path(self, key: str) -> Path:
-        """Generate cache file path for given key"""
-        hash_key = hashlib.md5(key.encode()).hexdigest()
+        """Generate cache file path for given key - consistent with UnifiedCacheManager"""
+        # Use consistent cache key generation across all cache implementations
+        hash_key = hashlib.md5(f"{self.service_name}_{key}".encode()).hexdigest()
         return self.cache_dir / f"{hash_key}.json"
 
     def get(self, key: str) -> Optional[Dict[str, Any]]:
@@ -209,7 +211,7 @@ class BaseFinancialService(ABC):
 
     def __init__(self, config: ServiceConfig):
         self.config = config
-        self.cache = FileBasedCache(config.cache)
+        self.cache = FileBasedCache(config.cache, config.name)
         self.rate_limiter = RateLimiter(config.rate_limit)
         self.session = requests.Session()
         self.logger = self._setup_logger()

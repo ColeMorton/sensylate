@@ -1,0 +1,3 @@
+# Shared template macros directory
+# Contains reusable Jinja2 macros for common components like
+# economic sensitivity matrices, risk assessments, confidence scoring

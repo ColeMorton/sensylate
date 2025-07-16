@@ -1,0 +1,34 @@
+{#- Twitter Fundamental Analysis Template C: Moat Analysis
+
+    Use this template when:
+    - Sustainable advantages with evidence
+    - Market position strengthening/weakening
+    - Innovation or disruption resistance
+-#}
+
+🏰 ${{ ticker }}'s competitive moat is {{ data.moat_trend | default("STRENGTHENING") | upper }}:
+
+Strong advantages:
+{%- if data.moat_advantages %}
+{%- for advantage in data.moat_advantages[:3] %}
+• {{ advantage.name }}: {{ advantage.strength | default("N/A") }}/10 durability
+{%- endfor %}
+{%- else %}
+• {{ data.moat_1 | default("Primary advantage") }}: {{ data.moat_1_strength | default("N/A") }}/10 durability
+• {{ data.moat_2 | default("Secondary advantage") }}: {{ data.moat_2_strength | default("N/A") }}/10 durability
+• {{ data.moat_3 | default("Third advantage") }}: {{ data.moat_3_strength | default("N/A") }}/10 durability
+{%- endif %}
+
+Evidence: {{ data.moat_evidence | default("Specific metric or trend supporting moat strength") }}
+
+Threat level: {{ data.threat_level | default("Assessment of competitive threats") }}
+Market share: {{ data.market_share_trend | default("Market share trend") }}
+Pricing power: {{ data.pricing_power | default("Pricing power assessment") }}
+
+This moat = ${{ data.moat_value_impact | default("N/A") }} in fair value
+
+📋 Full analysis: https://www.colemorton.com/blog/{{ ticker.lower() }}-fundamental-analysis-{{ data.date | default(timestamp[:10] | replace("-", "")) }}/
+
+⚠️ Not financial advice. Do your own research.
+
+#{{ ticker }} #CompetitiveAdvantage #Moats

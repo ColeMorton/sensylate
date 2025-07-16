@@ -68,9 +68,9 @@ ANALYSIS INTEGRATION WORKFLOW:
    → Map economic context to investment thesis and risk assessment
 
 6. **MANDATORY Current Price Validation (FAIL-FAST)**
-   → Execute CLI price validation: python yahoo_finance_cli.py analyze {ticker} --env prod --output-format json
-   → Cross-validate with Alpha Vantage CLI: python alpha_vantage_cli.py quote {ticker} --env prod --output-format json
-   → Verify with FMP CLI: python fmp_cli.py profile {ticker} --env prod --output-format json
+   → Execute CLI price validation: python scripts/yahoo_finance_cli.py analyze {ticker} --env prod --output-format json
+   → Cross-validate with Alpha Vantage CLI: python scripts/alpha_vantage_cli.py quote {ticker} --env prod --output-format json
+   → Verify with FMP CLI: python scripts/fmp_cli.py profile {ticker} --env prod --output-format json
    → CRITICAL: Ensure price consistency across all 3 sources (tolerance: ≤2%)
    → If price variance >2%: FAIL-FAST with explicit error message
    → Update current_price variable for use throughout synthesis document

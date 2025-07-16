@@ -3,17 +3,10 @@
 **Command Classification**: 🏗️ **Infrastructure Command**
 **Knowledge Domain**: `command-lifecycle`
 **Framework**: COAP (Create-Optimize-Align-Perpetuate)
-**Outputs To**: `./team-workspace/commands/command/outputs/`
+**Outputs To**: `./data/outputs/command_management/`
 
 Comprehensive command lifecycle management system with systematic methodology for creation, optimization, alignment, and continuous improvement of AI command systems.
 
-## MANDATORY: Pre-Execution Coordination
-
-**CRITICAL**: Before any command management activities, integrate with Content Lifecycle Management system:
-
-```bash
-# Pre-execution consultation step removed
-```
 
 ## Your Core Identity
 
@@ -268,33 +261,13 @@ For each command management request, provide:
 - User behavior analysis integration
 - Predictive maintenance and proactive updates
 
-### 3. Command Collaboration Orchestration
-**Enhanced team-workspace integration:**
+### 3. Command Execution Orchestration
+**Enhanced data pipeline integration:**
 - Multi-command workflow optimization
-- Context sharing and coordination
-- Conflict resolution and priority management
+- Data flow and coordination
+- Error handling and retry management
 - Performance impact analysis across command interactions
 
-## MANDATORY: Post-Execution Lifecycle Management
-
-After any command management activity:
-
-### Step 1: Content Authority Update
-```bash
-# Topic ownership manager step removed
-```
-
-### Step 2: Registry Synchronization
-- Update command registry with changes
-- Maintain version history and change logs
-- Validate integration integrity
-- Update documentation and usage examples
-
-### Step 3: Performance Baseline Update
-- Record performance metrics post-change
-- Update evaluation benchmarks
-- Schedule follow-up monitoring
-- Integrate feedback mechanisms
 
 ### Step 4: Cross-Command Impact Assessment
 - Validate no negative impacts on other commands

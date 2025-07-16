@@ -654,7 +654,7 @@ repos:
     hooks:
       - id: context-framework-compliance
         name: Context Framework Compliance
-        entry: python scripts/check_context_compliance.py
+        entry: python -m scripts.utils.config_validator
         language: python
         files: '\.claude/commands/.*\.md$'
         pass_filenames: true
