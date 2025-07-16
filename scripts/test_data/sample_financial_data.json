@@ -1,0 +1,21 @@
+{
+  "ticker": "JPM",
+  "profitability_grade": "A-",
+  "profitability_trend": "Improving",
+  "balance_sheet_grade": "B+",
+  "balance_sheet_trend": "Stable",
+  "cash_flow_grade": "A",
+  "cash_flow_trend": "Improving",
+  "capital_efficiency_grade": "B+",
+  "capital_efficiency_trend": "Improving",
+
+  "red_flags_summary": "NONE",
+  "top_strength": "Best-in-class ROE and consistent capital returns",
+  "standout_kpi": "15.2% ROE with improving efficiency ratios",
+  "investment_implication": "Premium valuation justified by superior capital allocation and defensive positioning",
+
+  "red_flags": [],
+  "financial_health": "Strong balance sheet with conservative loan loss provisions",
+
+  "date": "20250715"
+}

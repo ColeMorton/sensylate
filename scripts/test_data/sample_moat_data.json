@@ -1,0 +1,39 @@
+{
+  "ticker": "MSFT",
+  "moat_trend": "STRENGTHENING",
+  "moat_evidence": "Azure market share gains and Office 365 switching costs creating network effects",
+  "threat_level": "Low - dominant position in enterprise software",
+  "market_share_trend": "Gaining in cloud infrastructure (+3.2% vs AWS)",
+  "pricing_power": "Strong - enterprise dependency enables regular price increases",
+  "moat_value_impact": "45.80",
+
+  "moat_advantages": [
+    {
+      "name": "Network Effects",
+      "strength": "9",
+      "durability": "9"
+    },
+    {
+      "name": "Switching Costs",
+      "strength": "8",
+      "durability": "8"
+    },
+    {
+      "name": "Scale Economies",
+      "strength": "8",
+      "durability": "7"
+    }
+  ],
+
+  "moat_1": "Network Effects",
+  "moat_1_strength": "9",
+  "moat_2": "Switching Costs",
+  "moat_2_strength": "8",
+  "moat_3": "Scale Economies",
+  "moat_3_strength": "8",
+
+  "competitive_advantages": ["Azure ecosystem", "Office 365 integration", "Enterprise relationships"],
+  "market_share": "Gaining",
+
+  "date": "20250715"
+}

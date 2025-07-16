@@ -1,0 +1,32 @@
+{#- Twitter Fundamental Analysis Template B: Catalyst Focus
+
+    Use this template when:
+    - Upcoming events with quantified impact
+    - Probability-weighted opportunity sizing
+    - Timeline and execution risk assessment
+-#}
+
+📈 ${{ ticker }} has 3 major catalysts brewing:
+
+{%- if data.catalysts %}
+{%- for catalyst in data.catalysts[:3] %}
+{{ loop.index }}. {{ catalyst.name }} - {{ catalyst.probability | default("N/A") }}% likely = +${{ catalyst.impact_per_share | default("N/A") }}/share
+{%- endfor %}
+{%- else %}
+1. {{ data.catalyst_1 | default("Primary catalyst") }} - {{ data.catalyst_1_probability | default("N/A") }}% likely = +${{ data.catalyst_1_impact | default("N/A") }}/share
+2. {{ data.catalyst_2 | default("Secondary catalyst") }} - {{ data.catalyst_2_probability | default("N/A") }}% likely = +${{ data.catalyst_2_impact | default("N/A") }}/share
+3. {{ data.catalyst_3 | default("Third catalyst") }} - {{ data.catalyst_3_probability | default("N/A") }}% likely = +${{ data.catalyst_3_impact | default("N/A") }}/share
+{%- endif %}
+
+Current price: ${{ data.current_price | default("N/A") }}
+Expected value if all hit: ${{ data.total_expected_value | default("N/A") }}
+
+The kicker: {{ data.timeline_detail | default("Timeline and execution details") }}
+
+Risk: {{ data.top_risk_factor | default("Key risk factor") }}
+
+📋 Full analysis: https://www.colemorton.com/blog/{{ ticker.lower() }}-fundamental-analysis-{{ data.date | default(timestamp[:10] | replace("-", "")) }}/
+
+⚠️ Not financial advice. Investments carry risk of loss.
+
+#{{ ticker }} #Catalysts #StockAnalysis

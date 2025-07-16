@@ -1,0 +1,37 @@
+{
+  "ticker": "NVDA",
+  "current_price": "485.20",
+  "fair_value_low": "520.00",
+  "fair_value_high": "580.00",
+  "weighted_fair_value": "548.25",
+  "key_assumption": "AI adoption acceleration driving 25% datacenter growth",
+  "bull_case_target": "625.00",
+  "bull_case_probability": "30",
+
+  "valuation_methods": [
+    {
+      "name": "DCF",
+      "value": "545.75",
+      "confidence": "85"
+    },
+    {
+      "name": "Comparable Analysis",
+      "value": "552.50",
+      "confidence": "88"
+    },
+    {
+      "name": "Sum-of-Parts",
+      "value": "540.80",
+      "confidence": "82"
+    }
+  ],
+
+  "dcf_value": "545.75",
+  "dcf_confidence": "85",
+  "comp_value": "552.50",
+  "comp_confidence": "88",
+  "sotp_value": "540.80",
+  "sotp_confidence": "82",
+
+  "date": "20250715"
+}

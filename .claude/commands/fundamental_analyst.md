@@ -209,17 +209,17 @@ CLI Service Configuration:
 **Discovery Phase Commands**:
 ```bash
 # Core market data validation
-python yahoo_finance_cli.py analyze {ticker} --env prod --output-format json
-python alpha_vantage_cli.py quote {ticker} --env prod --output-format json
-python fmp_cli.py profile {ticker} --env prod --output-format json
+python scripts/yahoo_finance_cli.py analyze {ticker} --env prod --output-format json
+python scripts/alpha_vantage_cli.py quote {ticker} --env prod --output-format json
+python scripts/fmp_cli.py profile {ticker} --env prod --output-format json
 
 # Financial statements integration
-python fmp_cli.py financials {ticker} --statement-type cash-flow-statement --env prod --output-format json
-python fmp_cli.py insider {ticker} --env prod --output-format json
+python scripts/fmp_cli.py financials {ticker} --statement-type cash-flow-statement --env prod --output-format json
+python scripts/fmp_cli.py insider {ticker} --env prod --output-format json
 
 # Economic context integration
-python fred_economic_cli.py rates --env prod --output-format json
-python coingecko_cli.py sentiment --env prod --output-format json
+python scripts/fred_economic_cli.py rates --env prod --output-format json
+python scripts/coingecko_cli.py sentiment --env prod --output-format json
 ```
 
 **Validation Commands**:
@@ -228,9 +228,9 @@ python coingecko_cli.py sentiment --env prod --output-format json
 python {service}_cli.py health --env prod
 
 # Multi-source cross-validation
-python yahoo_finance_cli.py analyze {ticker} --env prod --output-format json
-python alpha_vantage_cli.py quote {ticker} --env prod --output-format json
-python fmp_cli.py profile {ticker} --env prod --output-format json
+python scripts/yahoo_finance_cli.py analyze {ticker} --env prod --output-format json
+python scripts/alpha_vantage_cli.py quote {ticker} --env prod --output-format json
+python scripts/fmp_cli.py profile {ticker} --env prod --output-format json
 ```
 
 ## Quality Standards Framework

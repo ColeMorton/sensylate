@@ -76,18 +76,18 @@ data_extractors = {
 ### Interactive Plotly Visualization Generation
 ```bash
 # Leverage CLI-based dashboard generation infrastructure
-python dashboard_generator_cli.py generate --input report_file.md --mode both --env prod
+python scripts/dashboard_generator_cli.py generate --input report_file.md --mode both --env prod
 
 # Use trade history CLI for specific report processing
-python trade_history_cli.py generate 20250626 --report-type HISTORICAL_PERFORMANCE_REPORT --env prod
+python scripts/trade_history_cli.py generate 20250626 --report-type HISTORICAL_PERFORMANCE_REPORT --env prod
 
 # CLI-based theme and scalability management
-python dashboard_generator_cli.py list-themes --env prod
-python trade_history_cli.py validate 20250626 --env prod
+python scripts/dashboard_generator_cli.py list-themes --env prod
+python scripts/trade_history_cli.py validate 20250626 --env prod
 
 # Health checks for visualization infrastructure
-python dashboard_generator_cli.py health --env prod
-python trade_history_cli.py health --env prod
+python scripts/dashboard_generator_cli.py health --env prod
+python scripts/trade_history_cli.py health --env prod
 ```
 
 ### Error Handling
@@ -202,7 +202,7 @@ report_visualizations:
 /trade_history_images 20250626
 
 # Pipeline integration with dashboard generation
-python trade_history_cli.py generate $(date +%Y%m%d) --env prod
+python scripts/trade_history_cli.py generate $(date +%Y%m%d) --env prod
 
 # Batch processing with production optimization
 for date in 20250624 20250625 20250626; do

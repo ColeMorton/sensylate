@@ -1,0 +1,38 @@
+{#- Twitter Fundamental Analysis Template A: Valuation Disconnect
+
+    Use this template when:
+    - Current price vs fair value disconnect
+    - Multiple method convergence/divergence
+    - Scenario analysis outcomes
+-#}
+
+🎯 ${{ ticker }} trading at ${{ data.current_price | default("N/A") }} but our analysis shows fair value of ${{ data.fair_value_low | default("N/A") }}-${{ data.fair_value_high | default("N/A") }}
+
+The math is simple:
+{%- if data.valuation_methods %}
+{%- for method in data.valuation_methods %}
+• {{ method.name }}: ${{ method.value }} ({{ method.confidence | default("N/A") }}% confidence)
+{%- endfor %}
+{%- else %}
+• DCF Model: ${{ data.dcf_value | default("N/A") }} ({{ data.dcf_confidence | default("N/A") }}% confidence)
+• Comparable Analysis: ${{ data.comp_value | default("N/A") }} ({{ data.comp_confidence | default("N/A") }}% confidence)
+• Sum-of-Parts: ${{ data.sotp_value | default("N/A") }} ({{ data.sotp_confidence | default("N/A") }}% confidence)
+{%- endif %}
+
+Weighted fair value: ${{ data.weighted_fair_value | default("N/A") }}
+
+Key assumption: {{ data.key_assumption | default("Critical driver") }}
+
+{%- if data.bull_case_target or data.bear_case_target %}
+{%- if data.bull_case_target %}
+Bull case target: ${{ data.bull_case_target }} ({{ data.bull_case_probability | default("N/A") }}% chance)
+{%- else %}
+Bear case target: ${{ data.bear_case_target }} ({{ data.bear_case_probability | default("N/A") }}% chance)
+{%- endif %}
+{%- endif %}
+
+📋 Full analysis: https://www.colemorton.com/blog/{{ ticker.lower() }}-fundamental-analysis-{{ data.date | default(timestamp[:10] | replace("-", "")) }}/
+
+⚠️ Not financial advice. Past performance doesn't guarantee future results.
+
+#{{ ticker }} #StockAnalysis #Valuation

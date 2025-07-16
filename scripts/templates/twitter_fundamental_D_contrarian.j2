@@ -1,0 +1,35 @@
+{#- Twitter Fundamental Analysis Template D: Contrarian Take
+
+    Use this template when:
+    - Market misunderstanding correction
+    - Hidden value discovery
+    - Risk perception vs reality
+-#}
+
+🔍 Everyone's wrong about ${{ ticker }}. Here's what they're missing:
+
+Market thinks: {{ data.common_perception | default("Common market perception") }}
+Reality: {{ data.contrarian_insight | default("Contrarian insight that challenges conventional wisdom") }}
+
+Proof:
+{%- if data.proof_points %}
+{%- for point in data.proof_points[:3] %}
+• {{ point }}
+{%- endfor %}
+{%- else %}
+• {{ data.data_point_1 | default("First supporting data point") }}
+• {{ data.data_point_2 | default("Second supporting data point") }}
+• {{ data.data_point_3 | default("Third supporting data point") }}
+{%- endif %}
+
+This misconception = {{ data.mispricing_percentage | default("N/A") }}% mispricing
+
+Fair value: ${{ data.fair_value | default("N/A") }} vs ${{ data.current_price | default("N/A") }} current
+
+Timeline for correction: {{ data.correction_timeline | default("Expected timeline for market correction") }}
+
+📋 Full analysis: https://www.colemorton.com/blog/{{ ticker.lower() }}-fundamental-analysis-{{ data.date | default(timestamp[:10] | replace("-", "")) }}/
+
+⚠️ Not financial advice. Stock investments carry risk of loss.
+
+#{{ ticker }} #Contrarian #ValueInvesting

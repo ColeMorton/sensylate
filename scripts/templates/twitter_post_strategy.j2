@@ -1,0 +1,96 @@
+{#- Twitter Post Strategy Template - Official Format Match
+
+    Critical Requirements:
+    - NO BOLD FORMATTING (no asterisks)
+    - 280 character hook limit
+    - Exact structure match with official template
+    - All sections must be present
+    - Specific emoji placement
+-#}
+
+{#- Hook Generation with 280 Character Limit -#}
+{%- if data.hook -%}
+{%- set hook = data.hook -%}
+{%- else -%}
+{%- set hook_emoji = "🚨" -%}
+{%- if data.net_performance and data.net_performance|float > 1000 -%}
+{%- set hook_emoji = "📈" -%}
+{%- elif data.reward_risk and data.reward_risk|float > 3.0 -%}
+{%- set hook_emoji = "💎" -%}
+{%- elif data.current_month_performance and data.current_month_performance|float > 65 -%}
+{%- set hook_emoji = "🔥" -%}
+{%- elif data.win_rate and data.win_rate|float < 45 and data.reward_risk and data.reward_risk|float > 2.0 -%}
+{%- set hook_emoji = "🎯" -%}
+{%- endif -%}
+
+{%- set hook_text = hook_emoji ~ " $" ~ ticker ~ " dual " ~ (data.strategy_type | default("SMA")) ~ " (" ~ (data.short_window | default("10")) ~ "/" ~ (data.long_window | default("25")) ~ ") delivered " ~ (data.net_performance | default("N/A")) ~ "% returns with " ~ (data.win_rate | default("N/A")) ~ "% win rate - " ~ (data.key_insight | default("signal triggered today")) -%}
+
+{%- if hook_text|length > 280 -%}
+{%- set hook = hook_text[:277] ~ "..." -%}
+{%- else -%}
+{%- set hook = hook_text -%}
+{%- endif -%}
+{%- endif -%}
+
+{{ hook }}
+
+Here's why this signal matters. 👇
+
+✅ Strategy Performance (${{ ticker }}, dual {{ data.strategy_type | default("SMA") }} ({{ data.short_window | default("10") }}/{{ data.long_window | default("25") }}) cross, {{ data.period | default("N/A") }} years)
+• Win Rate: {{ data.win_rate | default("N/A") }}% ({{ data.total_trades | default("N/A") }} trades)
+• Net Performance: +{{ data.net_performance | default("N/A") }}%
+• Avg Win/Loss: +{{ data.avg_win | default("N/A") }}% / -{{ data.avg_loss | default("N/A") }}%
+• Reward/Risk Ratio: {{ data.reward_risk | default("N/A") }}
+• Max Drawdown: -{{ data.max_drawdown | default("N/A") }}% (vs B&H: -{{ data.buy_hold_drawdown | default("N/A") }}%)
+• Sharpe: {{ data.sharpe | default("N/A") }} | Sortino: {{ data.sortino | default("N/A") }}
+• Exposure: {{ data.exposure | default("N/A") }}% | Avg Trade: {{ data.avg_trade_length | default("N/A") }} days
+• Expectancy: ${{ data.expectancy | default("N/A") }} per $1 risked
+
+{%- if data.seasonality or data.current_month %}
+
+📅 Seasonality Edge ({{ data.period | default("N/A") }} years)
+{%- set current_month = data.current_month | default("Current") -%}
+{%- set timing_assessment = "Strong" if data.current_month_performance and data.current_month_performance|float > 65 else "Neutral" if data.current_month_performance and data.current_month_performance|float > 35 else "Weak" -%}
+{{ current_month }} timing: {{ timing_assessment }} ({{ data.current_month_performance | default("N/A") }}% positive periods)
+• {{ data.best_months | default("Best months") }}: {{ data.best_months_performance | default("N/A") }}% avg performance
+• {{ data.worst_months | default("Worst months") }}: {{ data.worst_months_performance | default("N/A") }}% avg performance
+• Current month ({{ current_month }}): {{ data.current_month_avg | default("N/A") }}% historical avg
+• Pattern strength: {{ data.seasonality_strength | default("N/A") }}
+{%- endif %}
+
+🔍 Why This Signal Triggered TODAY
+• Entry Condition: {{ data.strategy_type | default("SMA") }} ({{ data.short_window | default("10") }}/{{ data.long_window | default("25") }}) crossover signal confirmed
+• Technical Setup: {{ data.technical_setup | default("Current chart pattern from analysis") }}
+• Fundamental Catalyst: {{ data.fundamental_catalyst | default("Key business driver supporting timing") }}
+• Market Context: Current price ${{ data.current_price | default("N/A") }} vs {{ data.market_context | default("analyst targets") }}
+• Risk Management: {{ data.risk_management | default(data.reward_risk | default("N/A") ~ " reward/risk ratio, " ~ data.exposure | default("N/A") ~ "% time in market") }}
+
+{%- if data.fundamentals or data.recent_earnings or data.key_financial_metrics %}
+
+📊 ${{ ticker }} Fundamentals
+{%- if data.recent_earnings %}
+{{ data.recent_earnings }}
+{%- endif -%}
+{%- if data.key_financial_metrics %}
+{{ data.key_financial_metrics }}
+{%- endif -%}
+{%- if data.sector_performance %}
+{{ data.sector_performance }}
+{%- endif -%}
+{%- if not (data.recent_earnings or data.key_financial_metrics or data.sector_performance) %}
+{{ data.fundamentals | default("Strong fundamentals support the technical signal") }}
+{%- endif %}
+{%- endif %}
+
+📌 Bottom Line
+Strategy with {{ data.net_performance | default("N/A") }}% historical returns just triggered entry signal. {{ timing_assessment | default("Current") }} seasonality + {{ data.technical_setup | default("technical setup") }} + {{ data.fundamental_catalyst | default("fundamental catalyst") }} align for {{ data.conviction_level | default("high") }} opportunity.
+
+Time to act on this live signal. 🎯
+
+{%- if data.disclaimer %}
+{{ data.disclaimer }}
+{%- else %}
+Not financial advice. Historical performance doesn't guarantee future results. Trade at your own risk.
+{%- endif %}
+
+#TradingSignals #TradingStrategy #TradingOpportunity #investment

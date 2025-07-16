@@ -1,0 +1,248 @@
+# Template Validation Checklist
+*Template: {{ template_name }} | Content Type: {{ content_type }} | Generated: {{ timestamp }}*
+
+## 🔍 Template Quality Assessment
+
+**Overall Template Grade**: {{ validation.template_grade | default("B+") }}
+**Institutional Compliance**: {{ validation.institutional_compliant | default("Partial") }}
+**Template Score**: {{ validation.template_score | default("0.85") }}/1.0
+
+---
+
+## 📋 Core Template Standards
+
+### Structure & Format Compliance
+| Standard | Required | Status | Score | Notes |
+|----------|----------|--------|-------|--------|
+| Jinja2 Syntax | ✅ | {{ validation.jinja_syntax.status | default("✅ VALID") }} | {{ validation.jinja_syntax.score | default("1.00") }} | {{ validation.jinja_syntax.notes | default("All syntax valid") }} |
+| Variable Definitions | ✅ | {{ validation.variables.status | default("✅ COMPLETE") }} | {{ validation.variables.score | default("0.95") }} | {{ validation.variables.notes | default("Most variables defined") }} |
+| Default Values | ✅ | {{ validation.defaults.status | default("✅ PRESENT") }} | {{ validation.defaults.score | default("0.90") }} | {{ validation.defaults.notes | default("Defaults for critical variables") }} |
+| Template Comments | ✅ | {{ validation.comments.status | default("✅ ADEQUATE") }} | {{ validation.comments.score | default("0.85") }} | {{ validation.comments.notes | default("Good documentation") }} |
+| Error Handling | ✅ | {{ validation.error_handling.status | default("⚠️ BASIC") }} | {{ validation.error_handling.score | default("0.75") }} | {{ validation.error_handling.notes | default("Basic error handling present") }} |
+
+### Content Type Specific Requirements
+
+{% if content_type == "twitter_fundamental" %}
+### Twitter Fundamental Analysis Template Standards
+| Requirement | Status | Score | Validation |
+|-------------|--------|-------|------------|
+| Character Limit Logic | {{ "✅ PASS" if validation.char_limit_logic else "❌ FAIL" }} | {{ validation.char_limit_score | default("0.90") }} | {{ "280-char limit enforced" if validation.char_limit_logic else "Missing character limit handling" }} |
+| Ticker Variable | {{ "✅ PASS" if validation.ticker_variable else "❌ FAIL" }} | {{ validation.ticker_score | default("1.00") }} | {{ "{{ ticker }} variable present" if validation.ticker_variable else "Missing ticker variable" }} |
+| Blog Link Template | {{ "✅ PASS" if validation.blog_link_template else "❌ FAIL" }} | {{ validation.blog_link_score | default("1.00") }} | {{ "colemorton.com/blog link included" if validation.blog_link_template else "Missing blog link" }} |
+| Disclaimer Requirement | {{ "✅ PASS" if validation.disclaimer_required else "❌ FAIL" }} | {{ validation.disclaimer_score | default("1.00") }} | {{ "Investment disclaimer included" if validation.disclaimer_required else "Missing disclaimer" }} |
+| NO BOLD FORMATTING | {{ "✅ PASS" if validation.no_bold_check else "❌ FAIL" }} | {{ validation.bold_format_score | default("1.00") }} | {{ "No asterisks in template" if validation.no_bold_check else "Bold formatting detected" }} |
+| Hashtag Integration | {{ "✅ PASS" if validation.hashtag_integration else "⚠️ WARNING" }} | {{ validation.hashtag_score | default("0.85") }} | {{ "#ticker hashtag included" if validation.hashtag_integration else "Limited hashtag integration" }} |
+| Data Validation Logic | {{ "✅ PASS" if validation.data_validation else "⚠️ WARNING" }} | {{ validation.data_val_score | default("0.80") }} | {{ "Input validation present" if validation.data_validation else "Limited data validation" }} |
+
+**Template A (Valuation) Specific:**
+{% if template_name == "A_valuation" %}
+- **Fair Value Variables**: {{ "✅ Present" if validation.fair_value_vars else "❌ Missing" }}
+- **Price Comparison Logic**: {{ "✅ Included" if validation.price_comparison else "❌ Missing" }}
+- **Confidence Scoring**: {{ "✅ Present" if validation.confidence_vars else "❌ Missing" }}
+- **Valuation Methods**: {{ "✅ Supported" if validation.valuation_methods else "⚠️ Limited" }}
+{% endif %}
+
+**Template B (Catalyst) Specific:**
+{% if template_name == "B_catalyst" %}
+- **Catalyst Enumeration**: {{ "✅ Present" if validation.catalyst_enum else "❌ Missing" }}
+- **Probability Variables**: {{ "✅ Included" if validation.probability_vars else "❌ Missing" }}
+- **Impact Quantification**: {{ "✅ Present" if validation.impact_vars else "❌ Missing" }}
+- **Timeline Variables**: {{ "✅ Supported" if validation.timeline_vars else "⚠️ Limited" }}
+{% endif %}
+
+**Template C (Moat) Specific:**
+{% if template_name == "C_moat" %}
+- **Advantage Variables**: {{ "✅ Present" if validation.advantage_vars else "❌ Missing" }}
+- **Strength Scoring**: {{ "✅ Included" if validation.strength_scoring else "❌ Missing" }}
+- **Evidence Variables**: {{ "✅ Present" if validation.evidence_vars else "❌ Missing" }}
+- **Threat Assessment**: {{ "✅ Supported" if validation.threat_vars else "⚠️ Limited" }}
+{% endif %}
+
+**Template D (Contrarian) Specific:**
+{% if template_name == "D_contrarian" %}
+- **Perception Variables**: {{ "✅ Present" if validation.perception_vars else "❌ Missing" }}
+- **Insight Variables**: {{ "✅ Included" if validation.insight_vars else "❌ Missing" }}
+- **Proof Point Logic**: {{ "✅ Present" if validation.proof_logic else "❌ Missing" }}
+- **Mispricing Variables**: {{ "✅ Supported" if validation.mispricing_vars else "⚠️ Limited" }}
+{% endif %}
+
+**Template E (Financial) Specific:**
+{% if template_name == "E_financial" %}
+- **Grade Variables**: {{ "✅ Present" if validation.grade_vars else "❌ Missing" }}
+- **Trend Variables**: {{ "✅ Included" if validation.trend_vars else "❌ Missing" }}
+- **Red Flag Logic**: {{ "✅ Present" if validation.red_flag_logic else "❌ Missing" }}
+- **KPI Variables**: {{ "✅ Supported" if validation.kpi_vars else "⚠️ Limited" }}
+{% endif %}
+
+{% elif content_type == "blog" %}
+### Blog Template Standards
+| Requirement | Status | Score | Validation |
+|-------------|--------|-------|------------|
+| Frontmatter Structure | {{ "✅ PASS" if validation.frontmatter else "❌ FAIL" }} | {{ validation.frontmatter_score | default("1.00") }} | {{ "YAML frontmatter present" if validation.frontmatter else "Missing frontmatter" }} |
+| Confidence Variables | {{ "✅ PASS" if validation.confidence_vars else "❌ FAIL" }} | {{ validation.confidence_score | default("0.90") }} | {{ "0.0-1.0 format variables" if validation.confidence_vars else "Missing confidence scoring" }} |
+| Economic Context | {{ "✅ PASS" if validation.economic_context else "⚠️ WARNING" }} | {{ validation.economic_score | default("0.85") }} | {{ "Economic variables present" if validation.economic_context else "Limited economic context" }} |
+| Risk Assessment | {{ "✅ PASS" if validation.risk_assessment else "❌ FAIL" }} | {{ validation.risk_score | default("0.80") }} | {{ "Risk framework included" if validation.risk_assessment else "Missing risk assessment" }} |
+| Multi-Source Variables | {{ "✅ PASS" if validation.multi_source_vars else "⚠️ WARNING" }} | {{ validation.multi_source_score | default("0.75") }} | {{ "Multiple data sources" if validation.multi_source_vars else "Limited source integration" }} |
+| Author Attribution | {{ "✅ PASS" if validation.author_attribution else "❌ FAIL" }} | {{ validation.author_score | default("1.00") }} | {{ "Cole Morton attribution" if validation.author_attribution else "Missing author" }} |
+| Institutional Elements | {{ "✅ PASS" if validation.institutional_elements else "⚠️ PARTIAL" }} | {{ validation.institutional_score | default("0.85") }} | {{ "Most elements present" if validation.institutional_elements else "Some elements missing" }} |
+
+**Institutional Quality Components:**
+- **Investment Thesis Variables**: {{ "✅ Present" if validation.thesis_vars else "❌ Missing" }}
+- **Business Dashboard Tables**: {{ "✅ Included" if validation.dashboard_tables else "⚠️ Partial" }}
+- **Economic Sensitivity Matrix**: {{ "✅ Present" if validation.economic_matrix else "❌ Missing" }}
+- **Stress Testing Variables**: {{ "✅ Included" if validation.stress_testing else "⚠️ Partial" }}
+- **Risk Quantification Framework**: {{ "✅ Present" if validation.risk_framework else "❌ Missing" }}
+- **Competitive Analysis Variables**: {{ "✅ Included" if validation.competitive_vars else "⚠️ Partial" }}
+- **Valuation Framework Variables**: {{ "✅ Present" if validation.valuation_vars else "❌ Missing" }}
+
+{% elif content_type == "twitter_post" %}
+### Twitter Strategy Post Template Standards
+| Requirement | Status | Score | Validation |
+|-------------|--------|-------|------------|
+| Hook Generation Logic | {{ "✅ PASS" if validation.hook_logic else "❌ FAIL" }} | {{ validation.hook_score | default("0.85") }} | {{ "Dynamic hook creation" if validation.hook_logic else "Static/missing hook" }} |
+| Strategy Parameters | {{ "✅ PASS" if validation.strategy_params else "❌ FAIL" }} | {{ validation.strategy_score | default("0.90") }} | {{ "SMA/EMA parameters" if validation.strategy_params else "Missing strategy details" }} |
+| Performance Variables | {{ "✅ PASS" if validation.performance_vars else "❌ FAIL" }} | {{ validation.performance_score | default("0.95") }} | {{ "Comprehensive metrics" if validation.performance_vars else "Missing performance data" }} |
+| Seasonality Integration | {{ "✅ PASS" if validation.seasonality_vars else "⚠️ WARNING" }} | {{ validation.seasonality_score | default("0.80") }} | {{ "Seasonal analysis included" if validation.seasonality_vars else "Limited seasonality" }} |
+| NO BOLD FORMATTING | {{ "✅ PASS" if validation.no_bold_formatting else "❌ FAIL" }} | {{ validation.bold_score | default("1.00") }} | {{ "No asterisks detected" if validation.no_bold_formatting else "Bold formatting found" }} |
+- **Risk Management Variables**: {{ "✅ Present" if validation.risk_mgmt_vars else "⚠️ Limited" }}
+- **Fundamental Context Variables**: {{ "✅ Included" if validation.fundamental_vars else "⚠️ Partial" }}
+- **Technical Setup Variables**: {{ "✅ Present" if validation.technical_vars else "❌ Missing" }}
+{% endif %}
+
+---
+
+## 🔧 Template Engineering Quality
+
+### Code Quality Standards
+| Category | Score | Grade | Assessment | Improvements |
+|----------|-------|-------|------------|--------------|
+| Maintainability | {{ validation.maintainability_score | default("0.85") }} | {{ validation.maintainability_grade | default("B+") }} | {{ validation.maintainability_assessment | default("Well-structured, mostly readable") }} | {{ validation.maintainability_improvements | default("Add more comments") }} |
+| Reusability | {{ validation.reusability_score | default("0.80") }} | {{ validation.reusability_grade | default("B") }} | {{ validation.reusability_assessment | default("Good parameterization") }} | {{ validation.reusability_improvements | default("More flexible data structures") }} |
+| Error Resilience | {{ validation.error_resilience_score | default("0.75") }} | {{ validation.error_resilience_grade | default("B-") }} | {{ validation.error_resilience_assessment | default("Basic error handling") }} | {{ validation.error_resilience_improvements | default("Enhanced error checking") }} |
+| Performance | {{ validation.performance_score | default("0.90") }} | {{ validation.performance_grade | default("A-") }} | {{ validation.performance_assessment | default("Efficient rendering") }} | {{ validation.performance_improvements | default("Optimize complex conditionals") }} |
+| Documentation | {{ validation.documentation_score | default("0.80") }} | {{ validation.documentation_grade | default("B") }} | {{ validation.documentation_assessment | default("Adequate comments") }} | {{ validation.documentation_improvements | default("More usage examples") }} |
+
+### Variable Management
+| Aspect | Status | Score | Notes |
+|--------|--------|-------|--------|
+| Variable Naming | {{ validation.variable_naming.status | default("✅ GOOD") }} | {{ validation.variable_naming.score | default("0.90") }} | {{ validation.variable_naming.notes | default("Consistent, descriptive names") }} |
+| Default Value Strategy | {{ validation.default_strategy.status | default("✅ ROBUST") }} | {{ validation.default_strategy.score | default("0.85") }} | {{ validation.default_strategy.notes | default("Reasonable defaults provided") }} |
+| Data Type Handling | {{ validation.data_types.status | default("⚠️ BASIC") }} | {{ validation.data_types.score | default("0.75") }} | {{ validation.data_types.notes | default("Limited type checking") }} |
+| Conditional Logic | {{ validation.conditional_logic.status | default("✅ CLEAR") }} | {{ validation.conditional_logic.score | default("0.88") }} | {{ validation.conditional_logic.notes | default("Well-structured conditionals") }} |
+| Loop Efficiency | {{ validation.loop_efficiency.status | default("✅ EFFICIENT") }} | {{ validation.loop_efficiency.score | default("0.92") }} | {{ validation.loop_efficiency.notes | default("Efficient iteration patterns") }} |
+
+---
+
+## ⚠️ Template Issues & Recommendations
+
+### Critical Template Issues
+{% if validation.critical_template_issues %}
+{% for issue in validation.critical_template_issues %}
+- **{{ issue.category }}**: {{ issue.description }}
+  - *Severity*: {{ issue.severity }}
+  - *Impact*: {{ issue.impact }}
+  - *Solution*: {{ issue.solution }}
+  - *Priority*: {{ issue.priority }}
+{% endfor %}
+{% else %}
+- No critical template issues identified ✅
+{% endif %}
+
+### Template Warnings
+{% if validation.template_warnings %}
+{% for warning in validation.template_warnings %}
+- **{{ warning.category }}**: {{ warning.description }}
+  - *Risk*: {{ warning.risk }}
+  - *Recommendation*: {{ warning.recommendation }}
+  - *Effort*: {{ warning.effort }}
+{% endfor %}
+{% else %}
+- No template warnings identified ✅
+{% endif %}
+
+### Enhancement Opportunities
+{% if validation.template_enhancements %}
+{% for enhancement in validation.template_enhancements %}
+- **{{ enhancement.category }}**: {{ enhancement.description }}
+  - *Benefit*: {{ enhancement.benefit }}
+  - *Implementation*: {{ enhancement.implementation }}
+  - *Timeline*: {{ enhancement.timeline }}
+{% endfor %}
+{% else %}
+- Template meets enhancement standards ✅
+{% endif %}
+
+---
+
+## 🎯 Template Improvement Plan
+
+### Immediate Actions (High Priority)
+1. **{{ validation.immediate_template_action_1 | default("Fix critical syntax issues") }}**
+   - Impact: {{ validation.immediate_impact_1 | default("High") }}
+   - Effort: {{ validation.immediate_effort_1 | default("Low") }}
+
+2. **{{ validation.immediate_template_action_2 | default("Add missing required variables") }}**
+   - Impact: {{ validation.immediate_impact_2 | default("High") }}
+   - Effort: {{ validation.immediate_effort_2 | default("Medium") }}
+
+3. **{{ validation.immediate_template_action_3 | default("Enhance error handling") }}**
+   - Impact: {{ validation.immediate_impact_3 | default("Medium") }}
+   - Effort: {{ validation.immediate_effort_3 | default("Medium") }}
+
+### Short-term Improvements (Medium Priority)
+1. **{{ validation.shortterm_improvement_1 | default("Improve variable documentation") }}**
+2. **{{ validation.shortterm_improvement_2 | default("Add input validation") }}**
+3. **{{ validation.shortterm_improvement_3 | default("Enhance conditional logic") }}**
+
+### Long-term Enhancements (Low Priority)
+1. **{{ validation.longterm_enhancement_1 | default("Add advanced features") }}**
+2. **{{ validation.longterm_enhancement_2 | default("Optimize performance") }}**
+3. **{{ validation.longterm_enhancement_3 | default("Improve maintainability") }}**
+
+---
+
+## 📊 Template Testing Results
+
+### Rendering Tests
+| Test Case | Status | Score | Notes |
+|-----------|--------|-------|--------|
+| Minimum Data | {{ validation.min_data_test.status | default("✅ PASS") }} | {{ validation.min_data_test.score | default("0.90") }} | {{ validation.min_data_test.notes | default("Renders with basic data") }} |
+| Complete Data | {{ validation.complete_data_test.status | default("✅ PASS") }} | {{ validation.complete_data_test.score | default("0.95") }} | {{ validation.complete_data_test.notes | default("Perfect rendering") }} |
+| Edge Cases | {{ validation.edge_cases_test.status | default("⚠️ PARTIAL") }} | {{ validation.edge_cases_test.score | default("0.75") }} | {{ validation.edge_cases_test.notes | default("Some edge cases handled") }} |
+| Error Conditions | {{ validation.error_conditions_test.status | default("⚠️ BASIC") }} | {{ validation.error_conditions_test.score | default("0.70") }} | {{ validation.error_conditions_test.notes | default("Basic error handling") }} |
+| Performance Load | {{ validation.performance_test.status | default("✅ GOOD") }} | {{ validation.performance_test.score | default("0.88") }} | {{ validation.performance_test.notes | default("Fast rendering") }} |
+
+### Compliance Tests
+| Standard | Status | Score | Compliance Level |
+|----------|--------|-------|------------------|
+| Character Limits | {{ validation.char_limit_compliance.status | default("✅ PASS") }} | {{ validation.char_limit_compliance.score | default("1.00") }} | {{ validation.char_limit_compliance.level | default("Full Compliance") }} |
+| Format Requirements | {{ validation.format_compliance.status | default("✅ PASS") }} | {{ validation.format_compliance.score | default("0.95") }} | {{ validation.format_compliance.level | default("High Compliance") }} |
+| Data Validation | {{ validation.data_compliance.status | default("⚠️ PARTIAL") }} | {{ validation.data_compliance.score | default("0.80") }} | {{ validation.data_compliance.level | default("Partial Compliance") }} |
+| Institutional Standards | {{ validation.institutional_compliance.status | default("⚠️ PARTIAL") }} | {{ validation.institutional_compliance.score | default("0.85") }} | {{ validation.institutional_compliance.level | default("Good Compliance") }} |
+
+---
+
+## 🏆 Template Certification Status
+
+### Certification Criteria
+| Requirement | Threshold | Current | Status | Gap |
+|-------------|-----------|---------|---------|-----|
+| Overall Template Score | ≥0.90 | {{ validation.template_score | default("0.85") }} | {{ "✅ CERTIFIED" if (validation.template_score | default(0.85) | float) >= 0.90 else "❌ PENDING" }} | {{ (0.90 - (validation.template_score | default(0.85) | float)) | round(2) if (validation.template_score | default(0.85) | float) < 0.90 else "0.00" }} |
+| Code Quality | ≥0.85 | {{ validation.code_quality_score | default("0.82") }} | {{ "✅ CERTIFIED" if (validation.code_quality_score | default(0.82) | float) >= 0.85 else "❌ PENDING" }} | {{ (0.85 - (validation.code_quality_score | default(0.82) | float)) | round(2) if (validation.code_quality_score | default(0.82) | float) < 0.85 else "0.00" }} |
+| Standards Compliance | 100% | {{ validation.standards_compliance_percent | default("90") }}% | {{ "✅ CERTIFIED" if (validation.standards_compliance_percent | default(90) | int) >= 100 else "❌ PENDING" }} | {{ (100 - (validation.standards_compliance_percent | default(90) | int)) }}% |
+| Testing Coverage | ≥0.80 | {{ validation.testing_coverage | default("0.75") }} | {{ "✅ CERTIFIED" if (validation.testing_coverage | default(0.75) | float) >= 0.80 else "❌ PENDING" }} | {{ (0.80 - (validation.testing_coverage | default(0.75) | float)) | round(2) if (validation.testing_coverage | default(0.75) | float) < 0.80 else "0.00" }} |
+
+### Certification Summary
+- **Current Status**: {{ validation.certification_status | default("PROVISIONAL") }}
+- **Certification Level**: {{ validation.certification_level | default("Development") }}
+- **Next Review Date**: {{ validation.next_review_date | default("After addressing priority issues") }}
+- **Reviewer**: {{ validation.reviewer | default("Automated Validation System") }}
+
+### Certification Recommendations
+1. **{{ validation.cert_recommendation_1 | default("Address critical template issues") }}**
+2. **{{ validation.cert_recommendation_2 | default("Improve code quality metrics") }}**
+3. **{{ validation.cert_recommendation_3 | default("Enhance testing coverage") }}**
+
+---
+
+*Template Validation Framework v1.0 | Institutional Quality Standards | Generated: {{ timestamp }}*

@@ -27,11 +27,11 @@ You are an expert financial content analyzer and social media strategist. Your s
    - Current market context and positioning insights
 
 4. **Enhanced Multi-Source Data Integration**:
-   - **Yahoo Finance MCP Server**: Real-time market data, fundamentals, financial statements
-   - **SEC EDGAR MCP Server**: Regulatory filings and compliance context
-   - **FRED Economic MCP Server**: Macroeconomic indicators and sector analysis
-   - **Content Automation MCP Server**: Automated post generation with SEO optimization
-   - **Sensylate Trading MCP Server**: Historical analysis integration and performance context
+   - **Yahoo Finance CLI**: Real-time market data, fundamentals, financial statements
+   - **SEC EDGAR CLI**: Regulatory filings and compliance context
+   - **FRED Economic CLI**: Macroeconomic indicators and sector analysis
+   - **Content Automation CLI**: Automated post generation with SEO optimization
+   - **Sensylate Trading CLI**: Historical analysis integration and performance context
 
 5. **Strategy Backtesting Data** (FALLBACK): `@data/raw/analysis_strategy/`
    - CSV files as backup when TrendSpider data unavailable
@@ -44,7 +44,7 @@ You are an expert financial content analyzer and social media strategist. Your s
 **Before creating content, systematically assess:**
 
 1. **SIGNAL URGENCY**: This strategy triggered an entry signal TODAY - lead with this
-2. **Data Completeness**: Cross-reference all MCP data sources for multi-source consistency
+2. **Data Completeness**: Cross-reference all CLI data sources for multi-source consistency
 3. **Strategy Validation**: Use historical performance to justify today's signal
 4. **Timing Context**: Combine current seasonality + technical setup + fundamental thesis + economic context
 5. **Audience Value**: Provide actionable intelligence for immediate positioning
@@ -57,29 +57,31 @@ You are an expert financial content analyzer and social media strategist. Your s
 ./templates/social-media/twitter_post_strategy_template.md
 ```
 
-**Comprehensive MCP Integration for Content Creation:**
+**Comprehensive CLI Integration for Content Creation:**
 
-Use the following MCP tools directly for enhanced content generation:
+Use the following CLI tools directly for enhanced content generation:
 
 **Market Data Collection:**
-- `mcp__yahoo-finance__get_stock_fundamentals` - Get comprehensive fundamental metrics
-- `mcp__yahoo-finance__get_market_data_summary` - Get historical performance context
-- `mcp__fred-economic__get_sector_indicators` - Get sector economic indicators
+- Execute: `python scripts/yahoo_finance_cli.py quote {ticker} --env prod --format json`
+- Execute: `python scripts/yahoo_finance_cli.py history {ticker} --period 1y --summary --format json`
+- Execute: `python scripts/fred_economic_cli.py sector {sector} --env prod --format json`
 
 **Regulatory and Analysis Context:**
-- `mcp__sec-edgar__get_company_filings` - Get "10-K" filings for regulatory context
-- `mcp__sensylate-trading__get_fundamental_analysis` - Get existing historical analysis
+- Execute: `python scripts/sec_edgar_cli.py filings {ticker} --type 10-K --env prod --format json`
+- Access: Direct file access to `./data/outputs/fundamental_analysis/{ticker}_{date}.md`
 
 **Automated Content Generation:**
-- `mcp__content-automation__create_social_content` - Generate trading strategy social posts
-- `mcp__content-automation__optimize_seo_content` - SEO optimize content with keywords
-- `mcp__content-automation__generate_blog_post` - Create comprehensive blog content
+- Execute: `python scripts/content_automation_cli.py social twitter_strategy --ticker {ticker} --template default --format json`
+- Execute: `python scripts/content_automation_cli.py seo {content_file} --keywords {keywords} --format json`
+- Execute: `python scripts/content_automation_cli.py blog {analysis_data} --template trading_strategy --format markdown`
 
 **Enhanced Data Integration Benefits:**
 - **Multi-Source Validation**: Cross-reference market data with regulatory filings
 - **Economic Context**: Sector indicators and macroeconomic environment assessment
 - **Automated Content Generation**: SEO-optimized posts with compliance validation
 - **Historical Integration**: Leverage existing analysis for consistency and depth
+- **CLI Performance**: Direct API access with caching and error handling
+- **Fallback Mechanisms**: WebSearch and WebFetch for data unavailability
 
 ## Pre-Analysis Evaluation Check
 
@@ -468,9 +470,9 @@ def document_authority_resolution(resolution_results):
 - Extract current chart patterns and technical signals
 - Note relative performance vs benchmarks
 - **Real-time Market Data Integration**:
-  - Use MCP tool `get_stock_fundamentals(ticker)` for current price/volume
+  - Execute: `python scripts/yahoo_finance_cli.py quote {ticker} --env prod --format json`
   - Cross-reference with live market data for validation
-  - Benefit from MCP caching and standardized error handling
+  - Benefit from CLI caching and standardized error handling
 
 **Step 4: Strategy Parameters Extraction**
 - Parse CSV headers: Strategy Type, Short Window, Long Window
@@ -719,7 +721,7 @@ PROVEN_HOOK_PATTERNS = {
 
 **Phase 1+ (New Post Creation):**
 1. **EXTRACT STRATEGY PARAMETERS**: Parse CSV file for Strategy Type, Short Window, Long Window
-2. **GET REAL-TIME MARKET DATA**: Use Yahoo Finance MCP server (`get_stock_fundamentals(ticker)`) for current price/volume
+2. **GET REAL-TIME MARKET DATA**: Execute `python scripts/yahoo_finance_cli.py quote {ticker} --env prod --format json`
 3. **DATA SOURCE CONFLICT RESOLUTION**: If TrendSpider vs CSV discrepancies exist, re-analyze TrendSpider data as authoritative source
 4. Extract all metrics from TrendSpider tabular image (left panel) with precision
 5. **CRITICAL**: Extract seasonality data from TrendSpider chart (right panel) with extreme care
@@ -727,9 +729,9 @@ PROVEN_HOOK_PATTERNS = {
    - Double-check current month percentage
    - Cross-validate peak/trough months
 6. Integrate fundamental analysis for investment context
-7. Add technical misc supplemented with Yahoo Finance service data for current market setup
+7. Add technical misc supplemented with Yahoo Finance CLI data for current market setup
 8. **INCLUDE EXPLICIT DISCLAIMERS**: Add investment disclaimer and data source limitations
-9. **MANDATORY FINAL CHECK**: Review strategy parameters, service data, seasonality data, and disclaimer compliance for accuracy
+9. **MANDATORY FINAL CHECK**: Review strategy parameters, CLI data, seasonality data, and disclaimer compliance for accuracy
 
 ## Post-Execution Protocol
 

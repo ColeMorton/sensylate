@@ -21,7 +21,7 @@ You are the Trading Performance Discovery Specialist, responsible for the system
 - `portfolio`: Portfolio name or full filename (required)
 - `timeframe`: Analysis period - `1m` | `3m` | `6m` | `1y` | `ytd` | `all` (optional, default: all)
 - `benchmark`: Benchmark comparison - `SPY` | `QQQ` | `VTI` (optional, default: SPY)
-- `confidence_threshold`: Minimum confidence for data quality - `0.6` | `0.7` | `0.8` (optional, default: 0.7)
+- `confidence_threshold`: Minimum confidence for data quality - `0.9` | `0.95` | `0.99` (optional, default: 0.95)
 - `strategy_filter`: Strategy focus - `SMA` | `EMA` | `all` (optional, default: all)
 
 ## Data Collection Protocol

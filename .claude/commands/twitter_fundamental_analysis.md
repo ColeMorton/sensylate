@@ -101,12 +101,12 @@ VALIDATION-DRIVEN SUCCESS CRITERIA:
    - Risk assessments, catalysts, and price targets
    - Business-specific KPIs and financial health scorecards
 
-3. **Real-Time Market Data - MCP Standardized**: **MANDATORY**
-   - Current stock price via standardized Yahoo Finance MCP server
-   - Use MCP Tool: `get_stock_fundamentals(ticker)` for comprehensive real-time data
-   - **CRITICAL REQUIREMENT**: Always use current market price from MCP response, never analysis price
-   - Access current_price from fundamental_metrics.current_price in standardized format
-   - Ensures Twitter content reflects real-time market conditions via MCP data_quality.timestamp
+3. **Real-Time Market Data - CLI Standardized**: **MANDATORY**
+   - Current stock price via Yahoo Finance CLI
+   - Execute: `python scripts/yahoo_finance_cli.py quote {ticker} --env prod --output-format json`
+   - **CRITICAL REQUIREMENT**: Always use current market price from CLI response, never analysis price
+   - Access current_price from JSON response in standardized format
+   - Ensures Twitter content reflects real-time market conditions via CLI timestamp
    - Production-grade reliability with intelligent caching, retry logic, and health monitoring
 
 ## Enhanced Data Integration Protocol
@@ -114,18 +114,18 @@ VALIDATION-DRIVEN SUCCESS CRITERIA:
 ### Phase 1: Multi-Source Price Validation (MANDATORY)
 **Execute all three validation sources in parallel:**
 
-1. **Yahoo Finance MCP Server** (Primary)
-   - Use MCP Tool: `get_stock_fundamentals(ticker)`
-   - Extract: fundamental_metrics.current_price
-   - Validate: data_quality.timestamp and cache_status
+1. **Yahoo Finance CLI** (Primary)
+   - Execute: `python scripts/yahoo_finance_cli.py quote {ticker} --env prod --output-format json`
+   - Extract: current_price field from JSON response
+   - Validate: timestamp and response status
 
 2. **Alpha Vantage CLI Validation** (Secondary)
-   - Execute: `python alpha_vantage_cli.py quote {ticker} --env prod --output-format json`
+   - Execute: `python scripts/alpha_vantage_cli.py quote {ticker} --env prod --output-format json`
    - Extract: current_price and last_updated
    - Cross-validate with Yahoo Finance price
 
 3. **FMP CLI Validation** (Tertiary)
-   - Execute: `python fmp_cli.py profile {ticker} --env prod --output-format json`
+   - Execute: `python scripts/fmp_cli.py profile {ticker} --env prod --output-format json`
    - Extract: price and priceChange
    - Final cross-validation check
 
@@ -424,7 +424,7 @@ Bottom line: [INVESTMENT IMPLICATION]
   - Economic context integration confidence ≥ 0.9
 
 □ **Multi-Source Price Validation**
-  - Yahoo Finance MCP price obtained and validated
+  - Yahoo Finance CLI price obtained and validated
   - Alpha Vantage CLI cross-validation completed
   - FMP CLI tertiary validation completed
   - Price variance ≤2% across all sources (BLOCKING if exceeded)
@@ -534,7 +534,7 @@ quality_assurance:
 - `/twitter_fundamental_analysis AMZN_20250618`
 
 **Processing Steps:**
-1. **CRITICAL: Get real-time stock price** - Use Yahoo Finance MCP server (`get_stock_fundamentals(ticker)`)
+1. **CRITICAL: Get real-time stock price** - Execute `python scripts/yahoo_finance_cli.py quote {ticker} --env prod --output-format json`
 2. **Load and validate data sources** - Check for TrendSpider tabular data first, then fundamental analysis
 3. **Data source conflict resolution** - If TrendSpider vs CSV discrepancies exist, re-analyze TrendSpider data as authoritative source
 4. Load fundamental analysis from `@data/outputs/fundamental_analysis/{TICKER}_{YYYYMMDD}.md`
@@ -552,14 +552,14 @@ quality_assurance:
 
 ## MANDATORY WORKFLOW REMINDER
 
-⚠️ **CRITICAL FIRST STEP**: Before processing any analysis, ALWAYS get current stock price using the standardized Yahoo Finance MCP server.
+⚠️ **CRITICAL FIRST STEP**: Before processing any analysis, ALWAYS get current stock price using the Yahoo Finance CLI.
 
-**Real-time Data Requirements:** Reference template specifications for complete MCP integration requirements:
+**Real-time Data Requirements:** Reference template specifications for complete CLI integration requirements:
 ```
 ./templates/social-media/twitter_fundamental_analysis_template.md
 ```
 
-**Never use the price from the fundamental analysis file - it may be outdated. Always use real-time market data from the Yahoo Finance MCP server with standardized data quality indicators.**
+**Never use the price from the fundamental analysis file - it may be outdated. Always use real-time market data from the Yahoo Finance CLI with standardized data quality indicators.**
 
 ## Post-Execution Protocol
 
