@@ -1,0 +1,48 @@
+{
+  "initial_analysis": {
+    "total_files": 243,
+    "file_distribution": {
+      "unknown": 231,
+      "coingecko": 1,
+      "alpha_vantage": 1,
+      "yahoo_finance": 1,
+      "sec_edgar": 1,
+      "imf_data": 1,
+      "fmp": 1,
+      "fred_economic": 1
+    },
+    "expiration_analysis": {
+      "expired_24h": 209,
+      "expired_4h": 21,
+      "fresh": 8
+    },
+    "key_format_issues": [
+      "scripts/data/cache/1ee29146e74f0b02a3938bc9ec7163e4.json",
+      "scripts/data/cache/fb8014fdc67be8bceeae8d3bcf58af99.json",
+      "scripts/data/cache/6760c4f1ba6014733c16a16a0ad8f7c8.json",
+      "scripts/data/cache/3b40417c13a6044f19ce58b2a90e6626.json",
+      "scripts/data/cache/ae4cd0104159877ab93b24f0f9bd6571.json"
+    ],
+    "recommendations": [
+      "Clean up 209 expired cache files",
+      "Fix 5 corrupted cache files",
+      "Implement cache size limits (current: 243 files)"
+    ]
+  },
+  "files_deleted": 214,
+  "files_migrated": 0,
+  "structure_optimization": {
+    "directories_created": 7,
+    "files_reorganized": 0,
+    "symlinks_created": 0
+  },
+  "performance_report": "================================================================================\nCACHE PERFORMANCE OPTIMIZATION REPORT\n================================================================================\nGenerated: 2025-07-16T20:22:37.664309\n\n\ud83d\udcca CACHE STATISTICS:\n  Total cache files: 29\n  Service distribution: {'unknown': 29}\n  Expiration analysis: {'expired_4h': 21, 'fresh': 8}\n\n\ud83d\udd0d ISSUES IDENTIFIED:\n  \u2705 No cache key format issues found\n\n\ud83d\udca1 RECOMMENDATIONS:\n  \u2705 Cache is optimally configured\n\n\ud83c\udfaf PERFORMANCE TARGETS:\n  \u2022 Cache hit rate: >80% (current: 0% - to be improved)\n  \u2022 Average response time: <100ms\n  \u2022 Memory usage: <50MB for cache\n  \u2022 File count: <100 files per service\n\n================================================================================",
+  "stats": {
+    "total_files": 0,
+    "valid_files": 0,
+    "expired_files": 0,
+    "corrupted_files": 5,
+    "migrated_files": 0,
+    "deleted_files": 209
+  }
+}

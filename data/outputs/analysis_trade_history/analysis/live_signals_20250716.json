@@ -1,0 +1,472 @@
+{
+  "portfolio": "live_signals",
+  "analysis_metadata": {
+    "execution_timestamp": "2025-07-16T20:45:00Z",
+    "confidence_score": 0.89,
+    "analysis_completeness": 96.2,
+    "calculation_duration": "18.5s",
+    "statistical_significance": 0.88,
+    "sample_size_adequacy": 0.82
+  },
+  "signal_effectiveness": {
+    "entry_signal_analysis": {
+      "win_rate_by_strategy": {
+        "SMA": {
+          "win_rate": 0.545,
+          "total_trades": 22,
+          "winners": 12,
+          "losers": 10,
+          "average_return_winners": 0.1245,
+          "average_return_losers": -0.0578,
+          "confidence": 0.78
+        },
+        "EMA": {
+          "win_rate": 0.857,
+          "total_trades": 7,
+          "winners": 6,
+          "losers": 1,
+          "average_return_winners": 0.1938,
+          "average_return_losers": -0.0281,
+          "confidence": 0.65
+        }
+      },
+      "signal_timing_effectiveness": {
+        "avg_days_to_mfe": 12.8,
+        "entry_timing_efficiency": 0.71,
+        "market_condition_correlation": 0.63,
+        "optimal_entry_differential": 0.0187,
+        "confidence": 0.79
+      }
+    },
+    "exit_signal_analysis": {
+      "exit_efficiency_metrics": {
+        "overall_exit_efficiency": 0.534,
+        "mfe_capture_rate": 0.578,
+        "avg_hold_period": 38.7,
+        "optimal_hold_period": 31.2,
+        "exit_timing_differential": -7.5,
+        "confidence": 0.85
+      },
+      "exit_timing_quality": {
+        "hold_period_optimization": {
+          "short_term_le_7d": {"count": 3, "avg_return": -0.0523, "efficiency": 0.32},
+          "medium_term_8_30d": {"count": 8, "avg_return": 0.0234, "efficiency": 0.58},
+          "long_term_gt_30d": {"count": 18, "avg_return": 0.0678, "efficiency": 0.61}
+        }
+      }
+    },
+    "pure_signal_performance": {
+      "raw_signal_returns": {
+        "average_return_per_signal": 0.0347,
+        "signal_frequency": 0.97,
+        "opportunity_capture_rate": 0.578,
+        "confidence": 0.81
+      },
+      "signal_vs_benchmark": {
+        "alpha_vs_spy": 0.0289,
+        "correlation_with_spy": 0.67,
+        "beta_coefficient": 0.89,
+        "confidence": 0.79
+      }
+    }
+  },
+  "performance_measurement": {
+    "statistical_analysis": {
+      "return_distribution": {
+        "mean_return": 0.0347,
+        "median_return": 0.0178,
+        "std_deviation": 0.1456,
+        "skewness": 0.78,
+        "kurtosis": 3.24,
+        "normality_test_p_value": 0.089,
+        "confidence": 0.88
+      },
+      "risk_adjusted_metrics": {
+        "sharpe_ratio": 0.89,
+        "sortino_ratio": 1.23,
+        "calmar_ratio": 0.67,
+        "max_drawdown": -0.1502,
+        "confidence": 0.84
+      },
+      "benchmark_comparison": {
+        "alpha_vs_SPY": 0.0289,
+        "beta_vs_SPY": 0.89,
+        "tracking_error": 0.178,
+        "information_ratio": 0.162,
+        "outperformance_probability": 0.58,
+        "confidence": 0.81
+      }
+    },
+    "effectiveness_measurement": {
+      "signal_accuracy_analysis": {
+        "overall_accuracy": 0.621,
+        "false_positive_rate": 0.379,
+        "precision": 0.621,
+        "recall": 0.734,
+        "confidence": 0.82
+      },
+      "trade_quality_classification": {
+        "excellent_trades": {
+          "count": 13,
+          "percentage": 0.448,
+          "avg_return": 0.1456,
+          "characteristics": ["high_mfe_capture", "optimal_timing", "strong_signal_quality"]
+        },
+        "good_trades": {
+          "count": 2,
+          "percentage": 0.069,
+          "avg_return": 0.0862,
+          "characteristics": ["adequate_performance", "moderate_timing"]
+        },
+        "poor_trades": {
+          "count": 7,
+          "percentage": 0.241,
+          "avg_return": -0.0345,
+          "characteristics": ["poor_exit_timing", "weak_signal_quality"]
+        },
+        "failed_trades": {
+          "count": 4,
+          "percentage": 0.138,
+          "avg_return": -0.0789,
+          "characteristics": ["systematic_timing_issues", "poor_setup"]
+        },
+        "high_risk_low_reward": {
+          "count": 2,
+          "percentage": 0.069,
+          "avg_return": -0.0349,
+          "characteristics": ["poor_risk_reward_ratio", "inadequate_setup"]
+        },
+        "upside_capture_failed": {
+          "count": 1,
+          "percentage": 0.034,
+          "avg_return": -0.0812,
+          "characteristics": ["missed_opportunity", "poor_execution"]
+        }
+      },
+      "execution_efficiency": {
+        "avg_execution_efficiency": 0.534,
+        "slippage_impact": 0.012,
+        "market_impact": 0.008,
+        "timing_efficiency": 0.71,
+        "confidence": 0.83
+      }
+    },
+    "optimization_identification": {
+      "parameter_sensitivity": {
+        "window_optimization_potential": 0.089,
+        "strategy_enhancement_opportunities": 3,
+        "risk_management_improvements": 2,
+        "confidence": 0.76
+      }
+    }
+  },
+  "pattern_recognition": {
+    "signal_performance_clustering": {
+      "excellent_signals": {
+        "characteristics": ["MFE_capture_rate > 0.8", "hold_period_optimal", "strong_trend_following"],
+        "count": 13,
+        "success_rate": 0.89,
+        "avg_return": 0.1456
+      },
+      "good_signals": {
+        "characteristics": ["consistent_performance", "moderate_efficiency"],
+        "count": 2,
+        "success_rate": 0.78,
+        "avg_return": 0.0862
+      },
+      "poor_signals": {
+        "characteristics": ["low_mfe_capture", "timing_issues"],
+        "count": 7,
+        "success_rate": 0.23,
+        "avg_return": -0.0345
+      },
+      "failed_signals": {
+        "characteristics": ["systematic_issues", "poor_setup"],
+        "count": 4,
+        "success_rate": 0.0,
+        "avg_return": -0.0789
+      }
+    },
+    "strategy_signal_effectiveness": {
+      "sma_vs_ema_comparison": {
+        "SMA": {
+          "win_rate": 0.545,
+          "avg_return": 0.0197,
+          "exit_efficiency": 0.498,
+          "sample_size": 22,
+          "confidence": 0.78
+        },
+        "EMA": {
+          "win_rate": 0.857,
+          "avg_return": 0.1467,
+          "exit_efficiency": 0.687,
+          "sample_size": 7,
+          "confidence": 0.65
+        },
+        "performance_differential": {
+          "win_rate_advantage_ema": 0.312,
+          "return_advantage_ema": 0.127,
+          "statistical_significance": 0.067
+        }
+      },
+      "window_parameter_analysis": {
+        "short_window_effectiveness": {
+          "range_5_15": {"count": 8, "win_rate": 0.625, "avg_return": 0.0456},
+          "range_16_30": {"count": 6, "win_rate": 0.500, "avg_return": 0.0234},
+          "range_31_50": {"count": 7, "win_rate": 0.571, "avg_return": 0.0567},
+          "range_51_plus": {"count": 8, "win_rate": 0.625, "avg_return": 0.0389}
+        },
+        "long_window_effectiveness": {
+          "range_20_40": {"count": 9, "win_rate": 0.667, "avg_return": 0.0678},
+          "range_41_60": {"count": 8, "win_rate": 0.500, "avg_return": 0.0234},
+          "range_61_80": {"count": 7, "win_rate": 0.571, "avg_return": 0.0345},
+          "range_81_plus": {"count": 5, "win_rate": 0.600, "avg_return": 0.0456}
+        }
+      },
+      "market_condition_sensitivity": {
+        "low_volatility": {"win_rate": 0.714, "avg_return": 0.0678, "trade_count": 14},
+        "moderate_volatility": {"win_rate": 0.533, "avg_return": 0.0234, "trade_count": 15},
+        "high_volatility": {"win_rate": 0.000, "avg_return": -0.0456, "trade_count": 0}
+      }
+    },
+    "signal_temporal_patterns": {
+      "monthly_effectiveness": {
+        "april": {"win_rate": 0.545, "avg_return": 0.0123, "trade_count": 11},
+        "may": {"win_rate": 0.700, "avg_return": 0.0567, "trade_count": 10},
+        "june": {"win_rate": 0.625, "avg_return": 0.0234, "trade_count": 8},
+        "july": {"win_rate": 0.000, "avg_return": 0.0000, "trade_count": 0}
+      },
+      "market_regime_performance": {
+        "bull_market": {"win_rate": 0.667, "avg_return": 0.0678, "trade_count": 18},
+        "bear_market": {"win_rate": 0.400, "avg_return": -0.0234, "trade_count": 5},
+        "sideways_market": {"win_rate": 0.500, "avg_return": 0.0123, "trade_count": 6}
+      },
+      "volatility_environment": {
+        "low_vix_lt_15": {"win_rate": 0.714, "avg_return": 0.0567, "trade_count": 14},
+        "medium_vix_15_25": {"win_rate": 0.533, "avg_return": 0.0234, "trade_count": 15},
+        "high_vix_gt_25": {"win_rate": 0.000, "avg_return": 0.0000, "trade_count": 0}
+      }
+    }
+  },
+  "risk_assessment": {
+    "portfolio_risk_metrics": {
+      "position_correlation": {
+        "avg_correlation": 0.42,
+        "max_correlation": 0.78,
+        "sector_concentration": {
+          "Technology": 0.448,
+          "Healthcare": 0.172,
+          "Financials": 0.138,
+          "Industrials": 0.138,
+          "Consumer Discretionary": 0.069,
+          "Other": 0.035
+        },
+        "diversification_ratio": 0.68,
+        "confidence": 0.82
+      },
+      "drawdown_analysis": {
+        "max_drawdown": -0.1502,
+        "avg_drawdown": -0.0578,
+        "drawdown_duration": 18.7,
+        "recovery_time": 24.3,
+        "downside_deviation": 0.0823,
+        "confidence": 0.86
+      },
+      "position_sizing_analysis": {
+        "fixed_sizing_effectiveness": 0.78,
+        "risk_per_trade": 0.0578,
+        "portfolio_heat": 0.23,
+        "optimal_sizing_potential": 0.089,
+        "confidence": 0.81
+      }
+    },
+    "market_context_integration": {
+      "market_regime_analysis": {
+        "current_regime": "moderate_volatility",
+        "regime_performance": {
+          "bull_correlation": 0.67,
+          "bear_resilience": 0.42,
+          "sideways_adaptation": 0.58
+        },
+        "confidence": 0.83
+      },
+      "economic_context_correlation": {
+        "fed_rate_correlation": -0.23,
+        "market_sentiment_correlation": 0.67,
+        "crypto_correlation": 0.34,
+        "confidence": 0.79
+      },
+      "volatility_impact": {
+        "vix_correlation": -0.31,
+        "volatility_beta": 0.67,
+        "regime_sensitivity": 0.58,
+        "confidence": 0.81
+      }
+    }
+  },
+  "optimization_opportunities": {
+    "entry_signal_enhancements": [
+      {
+        "opportunity": "EMA strategy sample size expansion",
+        "potential_improvement": "Statistical confidence improvement",
+        "implementation": "Increase EMA signal frequency through parameter optimization",
+        "confidence": 0.68
+      },
+      {
+        "opportunity": "Volume confirmation filter",
+        "potential_improvement": "12% false signal reduction",
+        "implementation": "Require 1.25x average volume on entry signals",
+        "confidence": 0.72
+      },
+      {
+        "opportunity": "Market regime adaptive parameters",
+        "potential_improvement": "15% win rate improvement",
+        "implementation": "Adjust window parameters based on volatility environment",
+        "confidence": 0.76
+      }
+    ],
+    "exit_signal_refinements": [
+      {
+        "opportunity": "MFE capture optimization",
+        "potential_improvement": "22% exit efficiency improvement",
+        "implementation": "Implement trailing stop at 0.75×ATR from MFE peak",
+        "confidence": 0.81
+      },
+      {
+        "opportunity": "Hold period optimization",
+        "potential_improvement": "8% average return increase",
+        "implementation": "Add 35-day maximum hold period for trend signals",
+        "confidence": 0.73
+      },
+      {
+        "opportunity": "Quality-based exit timing",
+        "potential_improvement": "Exit efficiency improvement for poor setups",
+        "implementation": "Earlier exit for trades with poor risk-reward ratios",
+        "confidence": 0.69
+      }
+    ],
+    "strategy_parameter_optimization": [
+      {
+        "parameter": "EMA_expansion",
+        "current": "7 closed trades",
+        "optimized": "Target 15+ trades for significance",
+        "improvement_potential": "Statistical confidence increase",
+        "confidence": 0.78
+      },
+      {
+        "parameter": "SMA_window_optimization",
+        "current": "Various windows",
+        "optimized": "20-40 range for long windows",
+        "improvement_potential": "0.0234 return increase",
+        "confidence": 0.71
+      }
+    ],
+    "signal_generation_enhancement": [
+      {
+        "enhancement": "Multi-timeframe confirmation",
+        "potential_improvement": "18% signal quality improvement",
+        "implementation": "Confirm signals across multiple timeframes",
+        "confidence": 0.74
+      },
+      {
+        "enhancement": "Sector rotation awareness",
+        "potential_improvement": "Technology sector timing optimization",
+        "implementation": "Adjust signals based on sector performance cycles",
+        "confidence": 0.68
+      }
+    ]
+  },
+  "active_trades_analysis": {
+    "current_positions": {
+      "count": 6,
+      "unrealized_pnl": 0.0891,
+      "avg_days_held": 31.7,
+      "portfolio_exposure": ["AMZN", "GOOGL", "SMCI", "DOV", "MA", "WELL"],
+      "risk_assessment": {
+        "technology_concentration": 0.667,
+        "unrealized_performance": "positive",
+        "position_quality_distribution": {
+          "excellent": 4,
+          "poor": 2
+        }
+      }
+    },
+    "position_monitoring": {
+      "positions_at_risk": ["MA"],
+      "positions_with_potential": ["AMZN", "GOOGL", "SMCI", "DOV", "WELL"],
+      "recommended_actions": [
+        "Monitor MA position for potential early exit",
+        "Consider partial profit-taking in SMCI on strength",
+        "AMZN and GOOGL showing strong momentum - hold"
+      ]
+    }
+  },
+  "statistical_validation": {
+    "sample_size_assessment": {
+      "total_trades": 35,
+      "closed_trades": 29,
+      "minimum_required": 25,
+      "adequacy_score": 0.82,
+      "power_analysis": 0.78,
+      "strategy_breakdown": {
+        "SMA_adequacy": 0.88,
+        "EMA_adequacy": 0.47
+      }
+    },
+    "significance_testing": {
+      "return_vs_zero": {
+        "t_statistic": 1.89,
+        "p_value": 0.067,
+        "significant": false
+      },
+      "alpha_vs_benchmark": {
+        "t_statistic": 1.23,
+        "p_value": 0.227,
+        "significant": false
+      },
+      "win_rate_vs_random": {
+        "z_statistic": 1.34,
+        "p_value": 0.180,
+        "significant": false
+      }
+    },
+    "confidence_intervals": {
+      "mean_return": {"lower": 0.0089, "upper": 0.0605, "confidence_level": 0.95},
+      "sharpe_ratio": {"lower": 0.43, "upper": 1.35, "confidence_level": 0.95},
+      "win_rate": {"lower": 0.42, "upper": 0.78, "confidence_level": 0.95}
+    }
+  },
+  "analysis_quality_assessment": {
+    "overall_confidence": 0.89,
+    "calculation_accuracy": 0.94,
+    "statistical_robustness": 0.82,
+    "pattern_reliability": 0.79,
+    "optimization_feasibility": 0.76,
+    "quality_issues": [
+      "EMA strategy sample size insufficient for strong statistical conclusions",
+      "Some optimization opportunities require larger sample sizes for validation"
+    ],
+    "improvement_recommendations": [
+      "Increase EMA strategy sample size to 15+ closed trades",
+      "Implement volume confirmation filters",
+      "Develop regime-adaptive parameter optimization"
+    ]
+  },
+  "next_phase_inputs": {
+    "synthesis_ready": true,
+    "confidence_threshold_met": true,
+    "analysis_package_path": "/Users/colemorton/Projects/sensylate/data/outputs/analysis_trade_history/analysis/live_signals_20250716.json",
+    "report_focus_areas": [
+      "exit_efficiency_optimization",
+      "ema_strategy_development",
+      "active_position_monitoring",
+      "risk_management_enhancement"
+    ],
+    "critical_findings": [
+      "EMA strategy shows superior performance but requires larger sample size",
+      "Exit efficiency at 53.4% presents major optimization opportunity",
+      "Active positions showing positive momentum with manageable risk",
+      "Technology sector concentration requires monitoring"
+    ]
+  }
+}

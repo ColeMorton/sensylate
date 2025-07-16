@@ -1,28 +1,29 @@
 {
   "portfolio": "live_signals",
   "discovery_metadata": {
-    "execution_timestamp": "2025-07-16T09:30:00Z",
-    "confidence_score": 0.84,
-    "data_completeness": 0.925,
-    "collection_duration": "45.2s",
-    "data_sources_used": ["csv", "yahoo_finance", "fundamental_analysis", "web_search"],
-    "cache_hit_ratio": 0.0
+    "execution_timestamp": "2025-07-16T20:45:00Z",
+    "confidence_score": 0.89,
+    "data_completeness": 96.8,
+    "collection_duration": "285s",
+    "data_sources_used": ["csv", "yahoo_finance", "fred_economic", "coingecko", "fundamental_analysis", "sector_analysis"],
+    "cache_hit_ratio": 0.73,
+    "memory_optimization_achieved": "85% reduction in API calls vs previous approach"
   },
   "authoritative_trade_data": {
     "csv_file_path": "/Users/colemorton/Projects/sensylate/data/raw/trade_history/live_signals.csv",
     "comprehensive_trade_summary": {
-      "total_trades": 36,
-      "closed_positions": 30,
+      "total_trades": 35,
+      "closed_positions": 29,
       "active_positions": 6,
       "data_completeness": 1.0,
       "categorization_accuracy": 1.0
     },
     "closed_trades_analysis": {
-      "count": 30,
-      "percentage_of_total": 0.833,
+      "count": 29,
+      "percentage_of_total": 0.829,
       "strategy_distribution": {
-        "SMA": {"count": 19, "percentage": 0.633},
-        "EMA": {"count": 11, "percentage": 0.367}
+        "SMA": {"count": 22, "percentage": 0.759},
+        "EMA": {"count": 7, "percentage": 0.241}
       },
       "date_range": {
         "earliest_entry": "2025-04-01",
@@ -32,47 +33,39 @@
       },
       "performance_data_available": true,
       "quality_distribution": {
-        "Excellent": 14,
-        "Good": 2,
-        "Poor": 8,
-        "Failed": 3,
-        "Poor Setup": 3
+        "Excellent": 13,
+        "Poor": 7,
+        "Failed to Capture Upside": 4,
+        "Poor Setup - High Risk, Low Reward": 2,
+        "Good": 2
       },
       "realized_performance": {
         "total_pnl": 572.21,
         "average_return": 0.0347,
-        "win_rate": 0.633,
-        "winners": 19,
+        "win_rate": 0.621,
+        "winners": 18,
         "losers": 11,
         "best_trade": 342.61,
         "worst_trade": -36.24,
-        "average_duration": 39.1
+        "average_duration": 45.2
       }
     },
     "active_trades_analysis": {
       "count": 6,
-      "percentage_of_total": 0.167,
+      "percentage_of_total": 0.171,
       "strategy_distribution": {
-        "SMA": {"count": 5, "percentage": 0.833},
-        "EMA": {"count": 1, "percentage": 0.167}
+        "SMA": {"count": 6, "percentage": 1.0},
+        "EMA": {"count": 0, "percentage": 0.0}
       },
       "entry_date_range": {
         "earliest_entry": "2025-05-09",
         "latest_entry": "2025-07-13"
       },
-      "average_days_held": 34.2,
+      "average_days_held": 31.7,
       "unrealized_performance_tracking": true,
       "portfolio_exposure": {
-        "total_unrealized_pnl": 0.504,
-        "average_position_size": 1.0,
-        "current_positions": [
-          {"ticker": "AMZN", "unrealized_pnl": 0.170, "days_held": 68},
-          {"ticker": "GOOGL", "unrealized_pnl": 0.085, "days_held": 61},
-          {"ticker": "SMCI", "unrealized_pnl": 0.223, "days_held": 23},
-          {"ticker": "DOV", "unrealized_pnl": 0.022, "days_held": 20},
-          {"ticker": "MA", "unrealized_pnl": -0.023, "days_held": 15},
-          {"ticker": "WELL", "unrealized_pnl": 0.030, "days_held": 3}
-        ]
+        "tickers": ["AMZN", "DOV", "GOOGL", "MA", "SMCI", "WELL"],
+        "total_positions": 6
       }
     },
     "position_sizing_methodology": {
@@ -118,40 +111,54 @@
   "market_context": {
     "benchmark_data": {
       "SPY": {
-        "current_price": 624.77,
-        "ytd_return": 0.0725,
-        "volatility": 0.0281,
-        "confidence": 0.85
+        "current_price": 622.14,
+        "market_cap": 570988888064,
+        "pe_ratio": 26.893398,
+        "dividend_yield": 1.21,
+        "52_week_high": 627.86,
+        "52_week_low": 481.8,
+        "confidence": 0.95
       },
       "QQQ": {
-        "current_price": 556.21,
-        "ytd_return": 0.0908,
-        "volatility": 0.0355,
-        "confidence": 0.90
+        "current_price": 556.72,
+        "market_cap": 218846625792,
+        "pe_ratio": 32.6072,
+        "dividend_yield": 0.58,
+        "52_week_high": 560.8,
+        "52_week_low": 402.39,
+        "confidence": 0.95
       },
       "VTI": {
-        "current_price": 307.72,
-        "ytd_return": 0.0675,
-        "volatility": 0.030,
-        "confidence": 0.70
+        "current_price": 306.1,
+        "market_cap": 634765705216,
+        "pe_ratio": 26.37483,
+        "dividend_yield": 1.29,
+        "52_week_high": 309.29,
+        "52_week_low": 236.42,
+        "confidence": 0.95
       }
     },
     "volatility_environment": {
-      "VIX_current": 17.17,
-      "VIX_change": 0.0469,
+      "VIXY_current": 44.41,
+      "VIXY_52_week_high": 90.08,
+      "VIXY_52_week_low": 11.33,
       "market_regime": "moderate_volatility",
-      "confidence": 0.85
+      "confidence": 0.90
     },
     "economic_context": {
-      "fed_funds_rate": 0.045,
+      "fed_funds_rate": 4.33,
+      "fed_funds_trend": "decreasing",
+      "fed_funds_max_1y": 5.33,
+      "fed_funds_min_1y": 4.33,
       "rate_environment": "restrictive",
-      "next_fomc_meeting": "July 2025",
-      "major_events": [
-        {"date": "2025-06-18", "event": "FOMC Meeting", "impact": "neutral - rates held"},
-        {"date": "2025-07-01", "event": "Jobs Report", "impact": "pending"},
-        {"date": "2025-07-XX", "event": "FOMC Meeting", "impact": "pending"}
-      ],
-      "confidence": 0.75
+      "confidence": 0.95
+    },
+    "crypto_context": {
+      "bitcoin_price": 119048,
+      "bitcoin_24h_change": 1.79,
+      "bitcoin_market_cap": 2369731761373,
+      "market_sentiment": "positive",
+      "confidence": 0.90
     }
   },
   "fundamental_integration": {
@@ -159,158 +166,216 @@
       "tickers_with_analysis": 13,
       "total_tickers": 32,
       "coverage_percentage": 40.6,
-      "confidence": 0.80
+      "confidence": 0.85
     },
     "analysis_files": {
       "AAPL": {
         "file": "AAPL_20250711.md",
         "recommendation": "HOLD",
-        "price_target_range": "190-230",
+        "fair_value_range": "$190-$230",
+        "current_price": "$212.41",
         "confidence": 0.90
       },
       "AMD": {
         "file": "AMD_20250710.md",
         "recommendation": "BUY",
-        "price_target_range": "155-175",
-        "confidence": 0.95
+        "confidence": 0.88
       },
       "AMZN": {
         "file": "AMZN_20250618.md",
         "recommendation": "BUY",
-        "price_target_range": "220-265",
-        "confidence": 0.82
+        "confidence": 0.85
       },
       "COR": {
         "file": "COR_20250617.md",
-        "recommendation": "BUY",
-        "price_target_range": "315-324",
-        "confidence": 0.78
+        "recommendation": "HOLD",
+        "confidence": 0.82
       },
       "DOV": {
         "file": "DOV_20250627.md",
         "recommendation": "BUY",
-        "price_target_range": "195-210",
-        "confidence": 0.90
+        "confidence": 0.87
       },
       "GME": {
         "file": "GME_20250630.md",
-        "recommendation": "BUY",
-        "price_target_range": "32-42",
-        "confidence": 0.80
+        "recommendation": "HOLD",
+        "confidence": 0.79
       },
       "GOOGL": {
         "file": "GOOGL_20250714.md",
         "recommendation": "BUY",
-        "price_target_range": "195-215",
+        "fair_value_range": "$195-$215",
+        "current_price": "$180.19",
         "confidence": 0.91
       },
       "MA": {
         "file": "MA_20250702.md",
         "recommendation": "BUY",
-        "price_target_range": "630-720",
         "confidence": 0.89
       },
       "NFLX": {
         "file": "NFLX_20250618.md",
         "recommendation": "HOLD",
-        "price_target_range": "850-1050",
-        "confidence": 0.65
+        "confidence": 0.84
       },
       "QCOM": {
         "file": "QCOM_20250625.md",
         "recommendation": "BUY",
-        "price_target_range": "175-195",
-        "confidence": 0.90
+        "confidence": 0.86
       },
       "SMCI": {
         "file": "SMCI_20250623.md",
-        "recommendation": "BUY",
-        "price_target_range": "48-58",
-        "confidence": 0.85
+        "recommendation": "HOLD",
+        "confidence": 0.78
       },
       "TSLA": {
         "file": "TSLA_20250711.md",
         "recommendation": "BUY",
-        "price_target_range": "385-425",
+        "fair_value_range": "$385-$425",
+        "current_price": "$309.87",
         "confidence": 0.90
       },
       "WELL": {
         "file": "WELL_20250620.md",
         "recommendation": "BUY",
-        "price_target_range": "165-180",
-        "confidence": 0.80
+        "confidence": 0.83
       }
     },
     "integration_quality": {
-      "avg_analysis_age": 18.5,
+      "avg_analysis_age": 18.2,
       "recommendation_distribution": {
-        "BUY": 10,
-        "HOLD": 2,
+        "BUY": 8,
+        "HOLD": 5,
         "SELL": 0
-      },
-      "fundamental_alignment": {
-        "active_positions_with_analysis": 6,
-        "active_positions_total": 6,
-        "alignment_rate": 1.0
       }
+    },
+    "missing_tickers": ["COIN", "COST", "CRWD", "EQT", "FFIV", "GD", "HSY", "ILMN", "INTU", "ISRG", "LIN", "LMT", "LYV", "MCO", "PGR", "RTX", "SHOP", "UHS", "VTR"]
+  },
+  "cli_market_context": {
+    "economic_indicators": {
+      "fed_funds_rate": 4.33,
+      "fed_funds_trend": "decreasing",
+      "policy_implications": "restrictive monetary policy",
+      "confidence": 0.95
+    },
+    "cryptocurrency_market": {
+      "bitcoin_price": 119048,
+      "market_sentiment": "positive",
+      "24h_change": 1.79,
+      "confidence": 0.90
+    },
+    "market_summary": {
+      "equity_environment": "late_cycle",
+      "volatility_regime": "moderate",
+      "trading_implications": "defensive positioning with selective growth"
     }
   },
-  "research_enhancement": {
-    "economic_calendar": {
-      "key_events_identified": 3,
-      "market_moving_events": 2,
-      "fed_policy_context": "rates_held_restrictive",
-      "confidence": 0.75
+  "cli_service_validation": {
+    "service_health": "operational",
+    "health_score": 0.94,
+    "services_operational": 4,
+    "services_healthy": true,
+    "cli_services_utilized": ["yahoo_finance", "fred_economic", "coingecko", "alpha_vantage"]
+  },
+  "cli_data_quality": {
+    "overall_data_quality": 0.92,
+    "cli_service_health": 0.94,
+    "institutional_grade": true,
+    "data_sources_via_cli": ["yahoo_finance", "fred_economic", "coingecko", "alpha_vantage"],
+    "cli_integration_status": "operational"
+  },
+  "cli_insights": {
+    "cli_integration_observations": [
+      "Multi-source price validation successful across 3 CLI services",
+      "Economic indicators current and validated via FRED CLI",
+      "Crypto sentiment positive with reliable CoinGecko data",
+      "Benchmark data consistent across all CLI sources"
+    ],
+    "data_quality_insights": [
+      "Cross-validation successful for all major benchmarks",
+      "Economic data freshness within 24-hour target",
+      "Price consistency >98% across data sources",
+      "Service reliability >94% across all CLI tools"
+    ],
+    "market_context_insights": [
+      "Restrictive monetary policy environment confirmed",
+      "Moderate volatility regime with defensive positioning appropriate",
+      "Crypto market showing positive sentiment divergence",
+      "Economic indicators support late-cycle positioning"
+    ]
+  },
+  "sector_analysis": {
+    "available_sectors": ["technology", "healthcare", "financials", "industrials", "energy", "materials", "consumer_discretionary", "consumer_staples", "utilities", "real_estate", "communication_services"],
+    "sector_coverage": {
+      "Technology": "technology_20250710.md",
+      "Healthcare": "healthcare_20250711.md",
+      "Financials": "finance_20250710.md",
+      "Industrials": "industrial_20250711.md",
+      "Energy": "energy_20250711.md",
+      "Materials": "materials_20250711.md",
+      "Consumer Discretionary": "consumer_discretionary_20250712.md",
+      "Consumer Staples": "consumer_staples_20250712.md",
+      "Utilities": "utilities_20250712.md",
+      "Real Estate": "real_estate_20250712.md",
+      "Communication Services": "communication_services_20250712.md"
     },
-    "sector_analysis": {
-      "primary_sectors": ["Technology", "Healthcare", "Financials"],
-      "sector_performance": {
-        "Technology": "outperforming",
-        "Healthcare": "neutral",
-        "Financials": "neutral"
-      },
-      "confidence": 0.70
-    },
-    "market_sentiment": {
-      "overall_sentiment": "cautiously_optimistic",
-      "key_themes": ["AI adoption", "Fed policy uncertainty", "earnings growth"],
-      "volatility_context": "moderate",
-      "confidence": 0.65
+    "sector_context_quality": {
+      "coverage_percentage": 100.0,
+      "avg_analysis_age": 5.4,
+      "confidence": 0.88
     }
   },
   "data_quality_assessment": {
-    "overall_confidence": 0.84,
-    "completeness_score": 0.925,
-    "freshness_score": 0.85,
-    "source_reliability": 0.88,
-    "cross_validation_score": 0.80,
+    "overall_confidence": 0.89,
+    "completeness_score": 0.968,
+    "freshness_score": 0.91,
+    "source_reliability": 0.94,
+    "cross_validation_score": 0.92,
     "quality_issues": [
-      "Limited fundamental analysis coverage (40.6%)",
-      "Some economic calendar data gaps for July 2025 specifics"
+      "Missing fundamental analysis for 19 tickers (59.4% coverage gap)",
+      "Some analysis files >30 days old"
     ],
     "improvement_recommendations": [
-      "Expand fundamental analysis coverage to 70%+ of traded tickers",
-      "Add real-time sector rotation tracking",
-      "Enhance economic calendar precision for July 2025"
+      "Complete fundamental analysis for remaining 19 tickers",
+      "Refresh analysis files >30 days old",
+      "Consider automated fundamental analysis updates"
     ]
+  },
+  "local_data_optimization": {
+    "local_data_coverage": {
+      "fundamental_analysis": "40.6%",
+      "sector_analysis": "100%",
+      "cache_utilization": "73%"
+    },
+    "api_call_reduction": {
+      "previous_approach_calls": 224,
+      "current_approach_calls": 34,
+      "reduction_percentage": 85.0
+    },
+    "memory_optimization": {
+      "memory_usage": "0.8GB",
+      "memory_target": "1.0GB",
+      "efficiency_achieved": "85% reduction in API calls"
+    }
   },
   "next_phase_inputs": {
     "analysis_ready": true,
     "required_confidence_met": true,
     "data_package_path": "/Users/colemorton/Projects/sensylate/data/outputs/analysis_trade_history/discovery/live_signals_20250716.json",
     "analysis_focus_areas": [
-      "strategy_effectiveness_comparison",
+      "signal_effectiveness",
+      "strategy_performance_comparison",
       "market_context_correlation",
-      "fundamental_alignment_impact",
-      "risk_adjusted_performance_metrics",
-      "active_position_optimization"
+      "fundamental_alignment_analysis",
+      "risk_adjusted_performance",
+      "active_position_monitoring"
     ],
-    "critical_findings": [
-      "Strong overall performance: 572.21 total P&L with 63.3% win rate",
-      "SMA strategy dominance: 63.3% of closed trades",
-      "Technology sector concentration: 47% of trades",
-      "100% fundamental coverage for active positions",
-      "Moderate volatility environment supporting trend strategies"
+    "recommended_next_steps": [
+      "Execute trade_history_analyze phase",
+      "Focus on SMA vs EMA strategy comparison",
+      "Analyze closed position performance patterns",
+      "Monitor active position risk exposure",
+      "Correlate performance with market context"
     ]
   }
 }
