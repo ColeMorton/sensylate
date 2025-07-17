@@ -270,7 +270,9 @@ class ContentAutomationCLI(BaseFinancialCLI):
             ),
             output_file: str = typer.Option(None, "--output", help="Output file path"),
             validate_compliance: bool = typer.Option(
-                True, "--validate/--no-validate", help="Validate institutional compliance"
+                True,
+                "--validate/--no-validate",
+                help="Validate institutional compliance",
             ),
         ):
             """Generate institutional-quality analysis document"""
@@ -555,7 +557,7 @@ class ContentAutomationCLI(BaseFinancialCLI):
             # Prepare context with enhanced data structure
             # Map structured data to template-expected format
             mapped_data = self._map_analysis_data_for_template(data, analysis_type)
-            
+
             context = {
                 "data": mapped_data,
                 "ticker": ticker,
@@ -582,12 +584,16 @@ class ContentAutomationCLI(BaseFinancialCLI):
             except Exception as template_error:
                 self.logger.error(f"Template rendering failed: {template_error}")
                 self.console.print(f"[red]Template Error: {template_error}[/red]")
-                
+
                 # Provide helpful debugging information
                 self.console.print(f"[yellow]Template: {template_name}[/yellow]")
-                self.console.print(f"[yellow]Context keys: {list(context.keys())}[/yellow]")
-                self.console.print(f"[yellow]Data sample keys: {list(context['data'].keys())[:10]}[/yellow]")
-                
+                self.console.print(
+                    f"[yellow]Context keys: {list(context.keys())}[/yellow]"
+                )
+                self.console.print(
+                    f"[yellow]Data sample keys: {list(context['data'].keys())[:10]}[/yellow]"
+                )
+
                 raise ServiceError(f"Template rendering failed: {template_error}")
 
             # Perform institutional compliance validation if requested
@@ -717,51 +723,61 @@ Generated: {{ timestamp }}"""
             )
             return "default"
 
-    def _map_analysis_data_for_template(self, data: Dict[str, Any], analysis_type: str) -> Dict[str, Any]:
+    def _map_analysis_data_for_template(
+        self, data: Dict[str, Any], analysis_type: str
+    ) -> Dict[str, Any]:
         """Map structured analysis data to template-expected flat format"""
         try:
             # Create flattened data structure for template compatibility
             mapped_data = {}
-            
+
             # Basic company information
             company_overview = data.get("company_overview", {})
             mapped_data["company_name"] = company_overview.get("name", "")
             mapped_data["sector"] = company_overview.get("sector", "")
             mapped_data["industry"] = company_overview.get("industry", "")
-            
+
             # Market data
             market_data = data.get("market_data", {})
             mapped_data["current_price"] = market_data.get("current_price", 0)
             mapped_data["market_cap"] = market_data.get("market_cap", 0)
             mapped_data["beta"] = market_data.get("beta", 0)
-            
+
             # Quality metrics for synthesis
             quality_metrics = data.get("quality_metrics", {})
-            mapped_data["overall_confidence"] = quality_metrics.get("analysis_confidence", 0)
+            mapped_data["overall_confidence"] = quality_metrics.get(
+                "analysis_confidence", 0
+            )
             mapped_data["data_quality"] = quality_metrics.get("data_quality_impact", 0)
-            
+
             # Financial health grades
             financial_health = data.get("financial_health_analysis", {})
             profitability = financial_health.get("profitability_assessment", {})
             balance_sheet = financial_health.get("balance_sheet_strength", {})
             cash_flow = financial_health.get("cash_flow_analysis", {})
             capital_efficiency = financial_health.get("capital_efficiency", {})
-            
-            mapped_data["financial_health_grade"] = f"{profitability.get('grade', 'N/A')}/{balance_sheet.get('grade', 'N/A')}/{cash_flow.get('grade', 'N/A')}/{capital_efficiency.get('grade', 'N/A')}"
-            
+
+            mapped_data[
+                "financial_health_grade"
+            ] = f"{profitability.get('grade', 'N/A')}/{balance_sheet.get('grade', 'N/A')}/{cash_flow.get('grade', 'N/A')}/{capital_efficiency.get('grade', 'N/A')}"
+
             # Create investment thesis from analytical insights
             insights = data.get("analytical_insights", {})
             key_findings = insights.get("key_findings", [])
             if key_findings:
                 mapped_data["investment_thesis"] = ". ".join(key_findings[:3]) + "."
             else:
-                mapped_data["investment_thesis"] = "Investment thesis based on comprehensive fundamental analysis."
-            
+                mapped_data[
+                    "investment_thesis"
+                ] = "Investment thesis based on comprehensive fundamental analysis."
+
             # Generate recommendation based on financial health and competitive position
             # Default to moderate recommendation - would be enhanced by proper valuation analysis
             mapped_data["recommendation"] = "HOLD"
-            mapped_data["conviction"] = str(quality_metrics.get("analysis_confidence", 0.85))
-            
+            mapped_data["conviction"] = str(
+                quality_metrics.get("analysis_confidence", 0.85)
+            )
+
             # Valuation estimates (would come from proper DCF/valuation model)
             current_price = market_data.get("current_price", 0)
             if current_price > 0:
@@ -771,70 +787,90 @@ Generated: {{ timestamp }}"""
             else:
                 mapped_data["fair_value_low"] = "N/A"
                 mapped_data["fair_value_high"] = "N/A"
-            
-            mapped_data["valuation_confidence"] = str(quality_metrics.get("analysis_confidence", 0.85))
-            
+
+            mapped_data["valuation_confidence"] = str(
+                quality_metrics.get("analysis_confidence", 0.85)
+            )
+
             # Add risk factor data for template macros
             risk_assessment = data.get("risk_assessment", {})
             risk_matrix = risk_assessment.get("risk_matrix", {})
-            
+
             # Map macro/financial risks to template expected format
             macro_risks = risk_matrix.get("macro_risks", [])
             financial_risks = risk_matrix.get("financial_risks", [])
-            
+
             # Set default risk values that macros expect
-            mapped_data.update({
-                "gdp_risk_probability": "0.30",
-                "gdp_risk_impact": "2", 
-                "gdp_risk_score": "0.60",
-                "employment_risk_probability": "0.25",
-                "employment_risk_impact": "2",
-                "employment_risk_score": "0.50",
-                "rate_risk_probability": "0.60",
-                "rate_risk_impact": "2", 
-                "rate_risk_score": "1.20",
-                "competitive_risk_probability": "0.50",
-                "competitive_risk_impact": "3",
-                "competitive_risk_score": "1.50",
-                "regulatory_risk_probability": "0.40",
-                "regulatory_risk_impact": "5",
-                "regulatory_risk_score": "2.00",
-                "volatility_risk_probability": "0.35",
-                "volatility_risk_impact": "3",
-                "volatility_risk_score": "1.05",
-                "financial_risk_probability": "0.80",
-                "financial_risk_impact": "4",
-                "financial_risk_score": "3.20"
-            })
-            
+            mapped_data.update(
+                {
+                    "gdp_risk_probability": "0.30",
+                    "gdp_risk_impact": "2",
+                    "gdp_risk_score": "0.60",
+                    "employment_risk_probability": "0.25",
+                    "employment_risk_impact": "2",
+                    "employment_risk_score": "0.50",
+                    "rate_risk_probability": "0.60",
+                    "rate_risk_impact": "2",
+                    "rate_risk_score": "1.20",
+                    "competitive_risk_probability": "0.50",
+                    "competitive_risk_impact": "3",
+                    "competitive_risk_score": "1.50",
+                    "regulatory_risk_probability": "0.40",
+                    "regulatory_risk_impact": "5",
+                    "regulatory_risk_score": "2.00",
+                    "volatility_risk_probability": "0.35",
+                    "volatility_risk_impact": "3",
+                    "volatility_risk_score": "1.05",
+                    "financial_risk_probability": "0.80",
+                    "financial_risk_impact": "4",
+                    "financial_risk_score": "3.20",
+                }
+            )
+
             # Extract actual risk data if available
             for risk in macro_risks:
                 risk_name = risk.get("risk", "").lower().replace(" ", "_")
                 if "economic" in risk_name or "recession" in risk_name:
-                    mapped_data["gdp_risk_probability"] = str(risk.get("probability", 0.30))
+                    mapped_data["gdp_risk_probability"] = str(
+                        risk.get("probability", 0.30)
+                    )
                     mapped_data["gdp_risk_impact"] = str(risk.get("impact", 2))
-                    mapped_data["gdp_risk_score"] = str(risk.get("probability", 0.30) * risk.get("impact", 2))
+                    mapped_data["gdp_risk_score"] = str(
+                        risk.get("probability", 0.30) * risk.get("impact", 2)
+                    )
                 elif "currency" in risk_name:
-                    mapped_data["employment_risk_probability"] = str(risk.get("probability", 0.25))
+                    mapped_data["employment_risk_probability"] = str(
+                        risk.get("probability", 0.25)
+                    )
                     mapped_data["employment_risk_impact"] = str(risk.get("impact", 3))
-                    mapped_data["employment_risk_score"] = str(risk.get("probability", 0.25) * risk.get("impact", 3))
-            
+                    mapped_data["employment_risk_score"] = str(
+                        risk.get("probability", 0.25) * risk.get("impact", 3)
+                    )
+
             for risk in financial_risks:
                 risk_name = risk.get("risk", "").lower()
                 if "leverage" in risk_name or "debt" in risk_name:
-                    mapped_data["financial_risk_probability"] = str(risk.get("probability", 0.80))
+                    mapped_data["financial_risk_probability"] = str(
+                        risk.get("probability", 0.80)
+                    )
                     mapped_data["financial_risk_impact"] = str(risk.get("impact", 4))
-                    mapped_data["financial_risk_score"] = str(risk.get("probability", 0.80) * risk.get("impact", 4))
+                    mapped_data["financial_risk_score"] = str(
+                        risk.get("probability", 0.80) * risk.get("impact", 4)
+                    )
                 elif "interest" in risk_name:
-                    mapped_data["rate_risk_probability"] = str(risk.get("probability", 0.60))
+                    mapped_data["rate_risk_probability"] = str(
+                        risk.get("probability", 0.60)
+                    )
                     mapped_data["rate_risk_impact"] = str(risk.get("impact", 2))
-                    mapped_data["rate_risk_score"] = str(risk.get("probability", 0.60) * risk.get("impact", 2))
-            
+                    mapped_data["rate_risk_score"] = str(
+                        risk.get("probability", 0.60) * risk.get("impact", 2)
+                    )
+
             # Preserve the original structured data for template access
             mapped_data.update(data)
-            
+
             return mapped_data
-            
+
         except Exception as e:
             self.logger.error(f"Failed to map analysis data: {e}")
             # Return original data with minimal required fields
@@ -842,15 +878,19 @@ Generated: {{ timestamp }}"""
                 **data,
                 "company_name": data.get("company_overview", {}).get("name", "Unknown"),
                 "current_price": data.get("market_data", {}).get("current_price", 0),
-                "overall_confidence": data.get("quality_metrics", {}).get("analysis_confidence", 0.85),
-                "data_quality": data.get("quality_metrics", {}).get("data_quality_impact", 0.95),
+                "overall_confidence": data.get("quality_metrics", {}).get(
+                    "analysis_confidence", 0.85
+                ),
+                "data_quality": data.get("quality_metrics", {}).get(
+                    "data_quality_impact", 0.95
+                ),
                 "financial_health_grade": "B+/B/A-/B+",
                 "investment_thesis": "Investment opportunity based on fundamental analysis.",
                 "recommendation": "HOLD",
                 "conviction": "0.85",
                 "fair_value_low": "N/A",
                 "fair_value_high": "N/A",
-                "valuation_confidence": "0.85"
+                "valuation_confidence": "0.85",
             }
 
     def _get_validated_template(
@@ -2119,22 +2159,26 @@ Generated: {{ timestamp }}"""
 
         # Analysis-specific required fields
         if analysis_type == "fundamental":
-            required_fields.extend([
-                "company_name",
-                "investment_thesis",
-                "fair_value_low",
-                "fair_value_high",
-                "current_price",
-                "financial_health_grade",
-            ])
+            required_fields.extend(
+                [
+                    "company_name",
+                    "investment_thesis",
+                    "fair_value_low",
+                    "fair_value_high",
+                    "current_price",
+                    "financial_health_grade",
+                ]
+            )
         elif analysis_type == "sector":
-            required_fields.extend([
-                "sector_name",
-                "sector_thesis",
-                "gdp_elasticity",
-                "employment_beta",
-                "rotation_score",
-            ])
+            required_fields.extend(
+                [
+                    "sector_name",
+                    "sector_thesis",
+                    "gdp_elasticity",
+                    "employment_beta",
+                    "rotation_score",
+                ]
+            )
 
         # Check for missing required fields
         for field in required_fields:
@@ -2182,18 +2226,22 @@ Generated: {{ timestamp }}"""
         ]
 
         if analysis_type == "fundamental":
-            required_sections.extend([
-                "Business Intelligence Dashboard",
-                "Cross-Sector Positioning",
-                "Competitive Position Analysis",
-                "Valuation Analysis",
-            ])
+            required_sections.extend(
+                [
+                    "Business Intelligence Dashboard",
+                    "Cross-Sector Positioning",
+                    "Competitive Position Analysis",
+                    "Valuation Analysis",
+                ]
+            )
         elif analysis_type == "sector":
-            required_sections.extend([
-                "Market Positioning Dashboard",
-                "Fundamental Health Assessment",
-                "Valuation & Technical Framework",
-            ])
+            required_sections.extend(
+                [
+                    "Market Positioning Dashboard",
+                    "Fundamental Health Assessment",
+                    "Valuation & Technical Framework",
+                ]
+            )
 
         for section in required_sections:
             if section not in content:
@@ -2209,9 +2257,10 @@ Generated: {{ timestamp }}"""
 
         # Check for confidence score format consistency
         import re
+
         confidence_pattern = r"Confidence: ([0-9.]+)/1\.0"
         confidence_matches = re.findall(confidence_pattern, content)
-        
+
         for match in confidence_matches:
             try:
                 conf_val = float(match)

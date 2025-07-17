@@ -132,7 +132,7 @@
   "cli_service_validation": {
     "service_health": {
       "yahoo_finance": "healthy",
-      "alpha_vantage": "healthy", 
+      "alpha_vantage": "healthy",
       "fmp": "healthy",
       "fred_economic": "healthy",
       "coingecko": "healthy"
@@ -165,7 +165,7 @@
         "eps_growth_2025e": 0.045
       },
       {
-        "symbol": "BTI", 
+        "symbol": "BTI",
         "name": "British American Tobacco plc",
         "description": "Global tobacco company with traditional and next-generation products",
         "market_cap_comparison": "comparable_to_PM",
@@ -174,7 +174,7 @@
       },
       {
         "symbol": "TPB",
-        "name": "Turning Point Brands Inc", 
+        "name": "Turning Point Brands Inc",
         "description": "Smaller tobacco and smoking accessories company",
         "market_cap_comparison": "much_smaller_than_PM",
         "geographic_focus": "primarily_US",
@@ -203,7 +203,7 @@
     ],
     "data_gaps_identified": [
       "Insider trading data unavailable for international listing structure",
-      "Detailed IQOS user metrics and geographic penetration rates need analysis phase research", 
+      "Detailed IQOS user metrics and geographic penetration rates need analysis phase research",
       "ESG scoring and regulatory compliance metrics require supplementary analysis",
       "Competitive smoke-free product market share data needs industry research"
     ],

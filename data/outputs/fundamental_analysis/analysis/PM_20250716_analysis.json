@@ -95,7 +95,7 @@
         "eps_growth_2025e": 0.045
       },
       {
-        "symbol": "BTI", 
+        "symbol": "BTI",
         "name": "British American Tobacco plc",
         "description": "Global tobacco company with traditional and next-generation products",
         "market_cap_comparison": "comparable_to_PM",
@@ -104,7 +104,7 @@
       },
       {
         "symbol": "TPB",
-        "name": "Turning Point Brands Inc", 
+        "name": "Turning Point Brands Inc",
         "description": "Smaller tobacco and smoking accessories company",
         "market_cap_comparison": "much_smaller_than_PM",
         "geographic_focus": "primarily_US",
@@ -279,13 +279,13 @@
           "evidence": "Complex regulatory approval process for reduced-risk products"
         },
         "distribution_network": {
-          "strength": "Strong", 
+          "strength": "Strong",
           "durability": "High",
           "evidence": "Established relationships with distributors in 180+ markets"
         },
         "brand_portfolio": {
           "strength": "Moderate",
-          "durability": "Moderate", 
+          "durability": "Moderate",
           "evidence": "Strong international brands but declining traditional tobacco demand"
         },
         "manufacturing_scale": {
@@ -385,7 +385,7 @@
         },
         "new_product_launches": {
           "probability": 0.8,
-          "timeline": "12-36 months", 
+          "timeline": "12-36 months",
           "impact": "Medium - supports margin expansion"
         },
         "regulatory_marketing_approval": {
@@ -572,7 +572,7 @@
         "adverse_scenario_2": {
           "description": "Major competitor technology breakthrough + market share loss",
           "revenue_impact": "-10%",
-          "margin_impact": "-150bp", 
+          "margin_impact": "-150bp",
           "probability": 0.10
         },
         "adverse_scenario_3": {

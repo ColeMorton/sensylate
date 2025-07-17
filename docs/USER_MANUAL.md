@@ -548,7 +548,7 @@ template_architecture:
       - "fundamental_analysis_template.md"  # 476 lines of institutional requirements
       - "sector_analysis_template.md"       # 709 lines with sector customization
     purpose: "Complete methodology, validation rules, and compliance standards"
-    
+
   functional_implementations:
     location: "scripts/templates/"
     files:
@@ -558,7 +558,7 @@ template_architecture:
       - "Template inheritance and shared components"
       - "40-50% reduction in template duplication"
       - "Dynamic content generation with confidence scoring"
-      
+
   shared_components:
     location: "scripts/templates/shared/"
     files:

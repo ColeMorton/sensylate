@@ -132,7 +132,7 @@
   "cli_service_validation": {
     "service_health": {
       "yahoo_finance": "healthy",
-      "alpha_vantage": "healthy", 
+      "alpha_vantage": "healthy",
       "fmp": "healthy",
       "fred": "healthy",
       "coingecko": "healthy"
@@ -182,7 +182,7 @@
         "selection_rationale": "Leading semiconductor design company"
       },
       {
-        "symbol": "QCOM", 
+        "symbol": "QCOM",
         "company_name": "QUALCOMM Incorporated",
         "market_cap": 188000000000,
         "pe_ratio": 18.4,
@@ -237,7 +237,7 @@
     "data_completeness": 0.97,
     "data_freshness": {
       "financial_data": "Real-time",
-      "economic_indicators": "Current", 
+      "economic_indicators": "Current",
       "market_data": "Real-time"
     },
     "quality_flags": [
