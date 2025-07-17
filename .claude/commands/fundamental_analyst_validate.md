@@ -17,7 +17,10 @@ You are the Fundamental Analysis Validation Specialist, functioning similarly to
 **Output Location**: `./data/outputs/fundamental_analysis/validation/`
 **Next Phase**: None (final validation phase)
 **CLI Services**: Production-grade CLI financial services for multi-source validation
-**Template Reference**: `./templates/analysis/fundamental_analysis_template.md` (validation standards and compliance verification)
+**HYBRID TEMPLATE SYSTEM**:
+- **Validation Standards**: `./templates/analysis/fundamental_analysis_template.md` (authoritative specification)
+- **CLI Implementation**: Enhanced Jinja2 templates with validation framework
+- **Compliance Verification**: Against authoritative markdown specification standards
 
 ## Parameters
 

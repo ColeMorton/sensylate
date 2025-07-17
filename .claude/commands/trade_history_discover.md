@@ -34,7 +34,7 @@ You are the Trading Performance Discovery Specialist, responsible for the system
 local_data_inventory:
   purpose: "Prevent memory leaks by utilizing local data before external API calls"
   execution_priority: "MUST execute before any external data collection"
-  
+
   fundamental_analysis_inventory:
     search_directory: "/data/outputs/fundamental_analysis/"
     file_pattern: "{TICKER}_{YYYYMMDD}.md"
@@ -45,7 +45,7 @@ local_data_inventory:
       - Build map of ticker → latest analysis file
       - Calculate true local coverage percentage
       - Identify ONLY missing tickers for external API calls
-    
+
   sector_analysis_inventory:
     search_directory: "/data/outputs/sector_analysis/"
     file_pattern: "{SECTOR}_{YYYYMMDD}.md"
@@ -55,7 +55,7 @@ local_data_inventory:
       - Check for existing sector analysis files
       - Use local sector data for context
       - Skip external sector research if data exists
-    
+
   cache_inventory:
     cache_directories: ["/data/cache/", "/scripts/data/cache/"]
     cache_validation:
@@ -63,7 +63,7 @@ local_data_inventory:
       - Validate cache file integrity
       - Build cache hit/miss inventory
       - Prioritize cache hits to reduce API calls
-    
+
   discovery_history_inventory:
     search_directory: "/data/outputs/analysis_trade_history/discovery/"
     file_pattern: "{PORTFOLIO}_{YYYYMMDD}.json"
@@ -72,7 +72,7 @@ local_data_inventory:
       - Validate data completeness and freshness
       - Reuse market context data if recent
       - Skip redundant external data collection
-      
+
   output_requirements:
     local_data_coverage_report:
       - fundamental_analysis_coverage: "X/Y tickers (Z%)"
@@ -255,7 +255,7 @@ market_data_collection:
   optimized_cli_services:
     service_discovery: "Use scripts/service_discovery.py for intelligent service detection"
     execution_strategy: "CLI wrapper with local Python fallback"
-    
+
     service_wrapper_configuration:
       - primary_service: "yahoo_finance"
       - wrapper_class: "CLIServiceWrapper from scripts/cli_wrapper.py"
@@ -263,19 +263,19 @@ market_data_collection:
         - global_command: "yahoo_finance_cli analyze SPY" (if available)
         - local_fallback: "python scripts/yahoo_finance_cli.py analyze SPY" (automatic fallback)
       - fail_fast_logic: "Use local Python execution if global CLI unavailable"
-    
+
     service_discovery_manager:
       - discovery_class: "ServiceDiscoveryManager from scripts/service_discovery.py"
       - intelligent_fallback: "get_market_data_with_fallback() for automatic service selection"
       - local_data_priority: "Check local data availability before external API calls"
       - resource_optimization: "Minimize API calls through local-first strategy"
-    
+
     cli_tools_with_fallback:
       - analyze: "Service discovery → CLI wrapper → Local Python execution"
       - quote: "Service discovery → CLI wrapper → Local Python execution"
       - history: "Service discovery → CLI wrapper → Local Python execution"
       - financials: "Service discovery → CLI wrapper → Local Python execution"
-    
+
     caching: 15-minute TTL via production CLI infrastructure
     error_handling: Production-grade retry logic with automatic fallback to local execution
 ```
@@ -291,7 +291,7 @@ cli_service_optimization:
     - manager_creation: "discovery = create_service_discovery_manager()"
     - health_check: "health = discovery.get_service_health_summary()"
     - available_services: "services = discovery.cli_manager.get_available_services()"
-    
+
   intelligent_market_data_collection:
     process_flow:
       - "For each ticker/market data request:"
@@ -299,26 +299,26 @@ cli_service_optimization:
       - "2. discovery.get_market_data_with_fallback(ticker, data_type) → Intelligent service selection"
       - "3. Automatic fallback: Global CLI → Local Python script → Local data files"
       - "4. Memory-efficient execution with resource limits"
-    
+
     example_usage:
       market_data_collection: |
         # Replace failing CLI commands with intelligent service discovery
         # OLD: subprocess.run(['yahoo_finance_cli', 'analyze', 'SPY'])  # FAILS
         # NEW: Intelligent service discovery with fallback
-        
+
         from scripts.service_discovery import create_service_discovery_manager
         discovery = create_service_discovery_manager()
-        
+
         # Get market data with automatic fallback
         spy_data = discovery.get_market_data_with_fallback('SPY', 'quote')
         qqq_data = discovery.get_market_data_with_fallback('QQQ', 'history')
-        
+
         # Service discovery automatically handles:
         # 1. Local data availability check (70% coverage → use local files)
         # 2. Global CLI availability (yahoo_finance_cli analyze SPY)
         # 3. Local Python fallback (python scripts/yahoo_finance_cli.py analyze SPY)
         # 4. Caching and resource optimization
-        
+
         # Result includes metadata about execution method and success
         {
           "ticker": "SPY",
@@ -328,35 +328,35 @@ cli_service_optimization:
           "success": true,
           "local_coverage": 0.75
         }
-    
+
   cli_wrapper_direct_usage:
     import_path: "from scripts.cli_wrapper import get_cli_service, execute_cli_command"
-    
+
     service_wrapper_example: |
       # Direct CLI wrapper usage for specific services
       from scripts.cli_wrapper import get_cli_service
-      
+
       # Get service wrapper (handles global vs local execution)
       yahoo_service = get_cli_service('yahoo_finance')
-      
+
       # Execute with automatic fallback
       success, stdout, stderr = yahoo_service.execute_command('analyze', 'AAPL', env='dev')
-      
+
       # Service wrapper automatically tries:
       # 1. yahoo_finance_cli analyze AAPL --env dev (if global CLI available)
       # 2. python scripts/yahoo_finance_cli.py analyze AAPL --env dev (fallback)
-    
+
     bulk_execution_example: |
       # Bulk execution with resource optimization
       from scripts.cli_wrapper import execute_cli_command
-      
+
       tickers = ['SPY', 'QQQ', 'VTI']
       results = {}
-      
+
       for ticker in tickers:
         try:
           success, stdout, stderr = execute_cli_command(
-            'yahoo_finance', 'quote', ticker, 
+            'yahoo_finance', 'quote', ticker,
             env='dev', format='json'
           )
           if success:
@@ -364,24 +364,24 @@ cli_service_optimization:
         except Exception as e:
           print(f"Service execution failed for {ticker}: {e}")
           # Fallback to local data or skip
-    
+
   resource_optimization_integration:
     local_first_strategy: |
       # BEFORE external API calls, check local data availability
       optimization_plan = discovery.optimize_service_usage(all_tickers)
-      
+
       # Results show:
       # - local_data_available: 22/32 tickers (68.75%)
       # - external_calls_needed: 10/32 tickers (31.25%)
       # - service_plan: {...} # Execution plan for each ticker
-      
+
       # Use local data for high-coverage tickers
       for ticker in high_coverage_tickers:
         local_data = discovery.check_local_data_availability(ticker)
         if local_data['local_coverage'] > 0.7:
           # Use local fundamental analysis files
           fundamental_data = discovery._get_local_data(ticker, 'fundamental', local_data)
-    
+
   error_handling_protocol:
     cli_service_not_found: |
       # Handle "command not found" errors gracefully
@@ -395,13 +395,13 @@ cli_service_optimization:
       except CLIExecutionError as e:
         print(f"CLI execution error: {e}")
         # Log error and continue with reduced confidence
-    
+
     service_health_monitoring: |
       # Monitor service health before bulk operations
       health_summary = discovery.get_service_health_summary()
-      available_services = [name for name, info in health_summary['services'].items() 
+      available_services = [name for name, info in health_summary['services'].items()
                           if info['status'] == 'healthy']
-      
+
       print(f"Available services: {available_services}")
       # Adjust execution strategy based on service availability
 ```
@@ -413,7 +413,7 @@ cli_service_optimization:
 ```yaml
 fundamental_integration:
   data_source_priority: "Local files first, external APIs only for missing data"
-  
+
   local_data_utilization:
     source: "Phase 0 local inventory results"
     process:
@@ -422,7 +422,7 @@ fundamental_integration:
       - Extract key data: investment thesis, price targets, risk factors
       - Calculate confidence scores based on data freshness
       - Skip external API calls for tickers with local data
-  
+
   external_data_collection:
     trigger: "Only for tickers missing local fundamental analysis"
     optimization:
@@ -430,10 +430,10 @@ fundamental_integration:
       - Use connection pooling to prevent memory leaks
       - Implement circuit breakers for service failures
       - Cache responses immediately to prevent future API calls
-    
+
   integration_data:
     investment_thesis: Extract key investment themes
-    price_targets: Current price targets and recommendations  
+    price_targets: Current price targets and recommendations
     risk_factors: Identified risks and catalysts
     valuation_metrics: Key financial ratios and valuations
     sector_context: Use local sector analysis files when available
@@ -800,24 +800,24 @@ execution_sequence:
   local_first_discovery:
     - **Phase 0: Execute Local Data Inventory** (CRITICAL - prevents memory leaks):
       → Inventory /data/outputs/fundamental_analysis/ files
-      → Inventory /data/outputs/sector_analysis/ files  
+      → Inventory /data/outputs/sector_analysis/ files
       → Check /data/cache/ and /scripts/data/cache/ for valid entries
       → Build ticker → local_data mapping
       → Calculate true coverage percentages
       → Identify ONLY missing data requiring external API calls
-    
+
     - **Phase 1: Authoritative CSV Data Ingestion**:
       → Load CSV with streaming reader (prevent memory overflow)
       → Extract unique tickers efficiently
       → Validate data completeness and categorize trades
       → Trigger garbage collection after CSV processing
-    
+
     - **Phase 2: Cache-First Market Context Collection**:
       → Check cache for recent benchmark data (SPY, QQQ, VTI)
       → Use cached data if < 4 hours old
       → Batch API calls for missing benchmark data only
       → Limit concurrent API calls to 3 maximum
-    
+
     - **Phase 3: Optimized Fundamental Integration**:
       → Use local fundamental analysis files (from Phase 0 inventory)
       → Extract data from local files using efficient parsing
@@ -832,21 +832,21 @@ execution_sequence:
       → Check local data availability: discovery.check_local_data_availability(ticker)
       → Use intelligent fallback: discovery.get_market_data_with_fallback(ticker, data_type)
       → Monitor service health throughout execution
-    
+
     - **CLI Wrapper Execution**:
       → Use CLI wrapper system: get_cli_service(service_name)
       → Automatic fallback: Global CLI → Local Python script → Local data
       → Handle "command not found" errors gracefully
       → Resource-limited execution with timeout controls
       → Connection pooling for all CLI services
-    
+
     - **Memory-Controlled API Execution**:
       → Maximum 5 concurrent API calls (vs previous unlimited)
       → Circuit breakers: fail fast on service timeouts
       → Cache all API responses immediately
       → Memory monitoring: abort if usage > 1.5GB
       → Intelligent service selection reduces API calls by 85%
-    
+
     - **Selective External Data Collection** (only for missing data):
       → Market data: Only if cache miss or expired AND local data unavailable
       → Economic indicators: Only if not in recent discovery files
@@ -861,7 +861,7 @@ execution_sequence:
       → Clean up temporary data structures immediately
       → Update cache with new data efficiently
       → Trigger garbage collection before output generation
-    
+
     - **Resource Usage Reporting**:
       → Log memory usage statistics
       → Report API call reduction achieved
@@ -963,21 +963,21 @@ memory_management:
     max_api_calls_per_minute: 20
     connection_pool_size: 5
     task_timeout: 30
-    
+
   monitoring_points:
     - Monitor memory usage before/after each phase
     - Track API call counts and response times
     - Monitor cache hit/miss ratios
     - Track garbage collection frequency
     - Monitor connection pool utilization
-    
+
   fail_fast_triggers:
     - Memory usage > 1.5GB: Abort with error
     - API response time > 10s: Circuit breaker activation
     - Cache miss ratio > 50%: Warning logged
     - Concurrent tasks > 5: Queue remaining tasks
     - Connection pool exhaustion: Immediate cleanup
-    
+
   cleanup_procedures:
     - Explicit garbage collection after CSV processing
     - Connection pool cleanup after API calls
@@ -995,13 +995,13 @@ optimization_targets:
     - Proper cleanup of pandas DataFrames
     - Connection pool management
     - Cache size limits and TTL enforcement
-    
+
   performance_improvements:
     - 85% reduction in API calls (224 → 34)
     - 70% reduction in memory usage (3GB → 1GB)
     - 5x faster execution (45s → 9s)
     - 80%+ cache hit rate (vs 0%)
-    
+
   cost_optimization:
     - 85% reduction in API costs
     - Reduced cloud resource usage

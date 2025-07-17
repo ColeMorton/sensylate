@@ -267,7 +267,11 @@ INVESTMENT RECOMMENDATION SYNTHESIS REQUIREMENTS:
 
 ## Sector Output Structure Reference
 
-**Template Specification**: All sector analysis outputs must follow `./templates/analysis/sector_analysis_template.md` exactly
+**HYBRID TEMPLATE SYSTEM**:
+- **Authoritative Specification**: `./templates/analysis/sector_analysis_template.md`
+- **CLI Implementation**: `./scripts/templates/sector_analysis_enhanced.j2`
+- **Command Reference**: This command follows the authoritative markdown specification
+- **CLI Execution**: Uses enhanced Jinja2 template with sector-specific customization
 
 **File Naming**: `{SECTOR}_{YYYYMMDD}.md` (e.g., `technology_20250710.md`)
 **Directory**: `./data/outputs/sector_analysis/`
@@ -437,7 +441,7 @@ INVESTMENT RECOMMENDATION SYNTHESIS REQUIREMENTS:
 □ Saved to: ./data/outputs/sector_analysis/
 □ Analysis focused solely on requested sector with cross-sector context
 □ No additional files generated
-□ **CRITICAL: Follows ./templates/analysis/sector_analysis_template.md specification exactly including Investment Recommendation Summary**
+□ **CRITICAL: Follows ./templates/analysis/sector_analysis_template.md specification exactly including Investment Recommendation Summary (CLI implements via enhanced Jinja2 templates with sector-specific customization)**
 □ **CRITICAL: Sector ETF prices must be validated and accurate**
 □ **CRITICAL: All cross-sector references must use validated data consistently**
 □ **All sector financial metrics must match discovery aggregates exactly**

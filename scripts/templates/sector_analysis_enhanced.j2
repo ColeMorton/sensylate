@@ -1,7 +1,142 @@
 {% extends "shared/base_analysis_template.j2" %}
 
-{# Enhanced Sector Analysis Template using shared inheritance and macros #}
-{# Reduces template duplication by 40-50% through shared components #}
+{# ========================================================================== #}
+{# SECTOR ANALYSIS TEMPLATE - INSTITUTIONAL-QUALITY SPECIFICATION            #}
+{# ========================================================================== #}
+{#                                                                            #}
+{# Enhanced Sector Analysis Template using shared inheritance and macros      #}
+{# Reduces template duplication by 40-50% through shared components           #}
+{#                                                                            #}
+{# AUTHORITATIVE SPECIFICATION REFERENCE:                                     #}
+{# This template implements the specifications defined in:                    #}
+{# -> templates/analysis/sector_analysis_template.md                         #}
+{# -> The markdown file contains the complete institutional specification     #}
+{# -> ALL methodology, validation rules, and quality standards are defined   #}
+{#    in the markdown specification file                                      #}
+{# -> This Jinja2 template provides the functional implementation            #}
+{#                                                                            #}
+{# HYBRID TEMPLATE SYSTEM:                                                   #}
+{# - Markdown Specification (templates/analysis/): Authoritative standards   #}
+{# - Jinja2 Implementation (scripts/templates/): Functional rendering        #}
+{# - Shared Components (scripts/templates/shared/): Common inheritance/macros #}
+{# - Commands reference the markdown specifications for compliance            #}
+{# - CLI uses Jinja2 templates for document generation                       #}
+{#                                                                            #}
+{# TEMPLATE SPECIFICATION REQUIREMENTS:                                       #}
+{# - Confidence Scores: All metrics use 0.0-1.0 format (baseline 0.9+)      #}
+{# - Risk Probabilities: Decimal format (0.0-1.0) from quantified matrices   #}
+{# - Economic Context: GDP/employment integration throughout analysis         #}
+{# - Cross-Sector Analysis: All 11 sector comparisons with statistical sig   #}
+{# - Author Attribution: "Cole Morton" consistent across all documents        #}
+{#                                                                            #}
+{# DYNAMIC DATA CONFIGURATION FRAMEWORK:                                      #}
+{# Technology Sector (XLK):                                                  #}
+{# - Primary: Fed Funds Rate, GDP Growth, Employment Growth, DXY, Yield Curve #}
+{# - Sector-Specific: Semiconductor Billings, Cloud Revenue, Patent Filings  #}
+{# - Risk Factors: Regulatory (China/Europe), Interest Rate, Currency        #}
+{#                                                                            #}
+{# Financial Sector (XLF):                                                   #}
+{# - Primary: Fed Funds Rate, Yield Curve, Credit Spreads, DXY, GDP Growth  #}
+{# - Sector-Specific: Net Interest Margin, Loan Growth, Credit Loss Provisions #}
+{# - Risk Factors: Interest Rate Duration, Credit Quality, Regulatory Capital #}
+{#                                                                            #}
+{# Healthcare Sector (XLV):                                                  #}
+{# - Primary: GDP Growth, Employment Growth, Aging Demographics, Drug Approvals #}
+{# - Sector-Specific: Medicare/Medicaid Reimbursement, R&D Pipeline          #}
+{# - Risk Factors: Regulatory Price Controls, Patent Cliffs, FDA Approvals   #}
+{#                                                                            #}
+{# SECTOR-SPECIFIC CUSTOMIZATION RULES:                                       #}
+{# - Template adaptation framework by sector (XLK, XLF, XLV, XLE, etc.)      #}
+{# - Cross-sector comparison rules and statistical significance testing       #}
+{# - Investment recommendation customization (150-250 words)                 #}
+{# - Portfolio allocation framework (Growth/Balanced/Conservative)            #}
+{# - Sector rotation signals and economic cycle timing framework             #}
+{#                                                                            #}
+{# CONFIDENCE-WEIGHTED DATA POPULATION FRAMEWORK:                             #}
+{# Data Quality Hierarchy (4 tiers):                                         #}
+{# - Tier 1: Real-time market data (Yahoo Finance, Alpha Vantage) - 0.95+    #}
+{# - Tier 2: Government economic data (FRED) - 0.90+                         #}
+{# - Tier 3: Corporate filings (SEC EDGAR) - 0.85+                           #}
+{# - Tier 4: Alternative data (CoinGecko sentiment) - 0.80+                  #}
+{#                                                                            #}
+{# Dynamic Confidence Calculation Formulas:                                   #}
+{# - Overall Confidence = Weighted average of component confidences           #}
+{# - Economic Factor Integration = FRED confidence × correlation strength     #}
+{# - Validation Rules: Cross-source variance <2%, data age <24h              #}
+{# - Investment Recommendation Confidence = Min(valuation, risk, economic)    #}
+{#                                                                            #}
+{# REAL-TIME DATA INTEGRATION SPECIFICATIONS:                                 #}
+{# - Yahoo Finance: Sector ETF prices, volume, performance metrics           #}
+{# - Alpha Vantage: Technical indicators, VIX correlation, volatility data   #}
+{# - FRED Economic: GDP, employment, Fed funds, yield curve, inflation       #}
+{# - SEC EDGAR: Regulatory filings, compliance data, policy impact           #}
+{# - FMP: Sector fundamental aggregates, financial health metrics            #}
+{# - CoinGecko: Market sentiment, risk appetite, alternative asset flows     #}
+{# - IMF: Global economic indicators, country risk, international trade      #}
+{#                                                                            #}
+{# CROSS-SECTOR POSITIONING ANALYSIS:                                         #}
+{# 11-Sector Framework: Technology, Healthcare, Financials, Consumer Disc,   #}
+{# Consumer Staples, Energy, Industrials, Materials, Real Estate, Utilities, #}
+{# Communication Services                                                     #}
+{# - Relative valuation metrics with statistical significance testing         #}
+{# - Performance attribution analysis across multiple time periods            #}
+{# - Beta analysis and correlation matrices                                   #}
+{# - Sector rotation scoring (0.0-10.0) based on economic cycle              #}
+{#                                                                            #}
+{# ECONOMIC CYCLE & LIQUIDITY POSITIONING:                                    #}
+{# - Business Cycle Sensitivity: Early/Mid/Late cycle performance patterns   #}
+{# - GDP Elasticity Calculations: Quantified sensitivity to economic growth  #}
+{# - Employment Beta Analysis: Labor market correlation and transmission      #}
+{# - Interest Rate Duration: Fed policy impact and yield curve sensitivity   #}
+{# - Liquidity Cycle Assessment: Money supply, credit spreads, bond issuance #}
+{#                                                                            #}
+{# STRESS TESTING & SCENARIO ANALYSIS:                                        #}
+{# Required Scenarios (5+ minimum):                                          #}
+{# - GDP Contraction (-2%): Sector elasticity × economic impact              #}
+{# - Employment Shock (-500k): Labor sensitivity × employment impact         #}
+{# - Bear Market (-20%): Historical correlation and drawdown analysis        #}
+{# - Interest Rate Shock (+200bp): Duration impact and refinancing risk      #}
+{# - Recession Scenario: Sector-specific historical performance patterns     #}
+{# - Recovery Timeline: Quantified quarters/months for normalization         #}
+{#                                                                            #}
+{# INVESTMENT RECOMMENDATION SUMMARY REQUIREMENTS:                            #}
+{# Word Count: 150-250 words with comprehensive coverage                     #}
+{# Required Elements:                                                        #}
+{# 1. Core investment thesis with economic cycle positioning                 #}
+{# 2. GDP/employment sensitivity quantification                               #}
+{# 3. Cross-sector valuation attractiveness assessment                       #}
+{# 4. Risk-adjusted return potential with Sharpe ratio context              #}
+{# 5. Current economic environment impact (Fed policy, GDP, employment)      #}
+{# 6. Portfolio allocation guidance with position sizing                     #}
+{# 7. Sector rotation timing and tactical considerations                     #}
+{# 8. Key catalysts and risk factors with probability weighting             #}
+{# 9. Multi-source validation results and confidence levels                 #}
+{# 10. Clear buy/hold/sell recommendation with conviction scoring            #}
+{#                                                                            #}
+{# VALIDATION REQUIREMENTS:                                                   #}
+{# - Template Compliance: Exact structure adherence required                 #}
+{# - Confidence Propagation: 0.9+ baseline from discovery through synthesis  #}
+{# - Economic Sensitivity: GDP/employment correlations with supporting data  #}
+{# - Risk Quantification: Probability/impact matrices with monitoring KPIs   #}
+{# - Cross-Sector Positioning: Complete relative analysis across all sectors #}
+{# - Multi-Source Validation: <2% variance tolerance across data providers   #}
+{# - Sector ETF Price Accuracy: Validated current prices throughout document #}
+{# - Economic Indicator Currency: FRED indicators current within 24 hours    #}
+{# - Institutional Presentation: Publication-ready quality with evidence     #}
+{#                                                                            #}
+{# OUTPUT MANAGEMENT:                                                         #}
+{# File Structure: ./data/outputs/sector_analysis/                           #}
+{# - discovery/{SECTOR}_{YYYYMMDD}_discovery.json                            #}
+{# - analysis/{SECTOR}_{YYYYMMDD}_analysis.json                              #}
+{# - {SECTOR}_{YYYYMMDD}.md (synthesis output)                               #}
+{# - validation/{SECTOR}_{YYYYMMDD}_validation.json                          #}
+{#                                                                            #}
+{# REFERENCED BY COMMANDS:                                                    #}
+{# - sector_analyst_synthesize (primary generator)                           #}
+{# - sector_analyst_discover, sector_analyst_analyze                         #}
+{# - sector_analyst_validate                                                 #}
+{#                                                                            #}
+{# ========================================================================== #}
 
 {% block title %}{{ data.sector_name | default(sector) }} Sector Analysis{% endblock %}
 
@@ -143,3 +278,56 @@ This analysis is for informational purposes only and should not be considered as
 *Framework: Confidence-weighted, multi-source validation, economic/liquidity cycle integrated*
 *Analysis generated using the Sensylate trading platform with institutional-quality validation. For more insights and analysis, visit [colemorton.com](https://colemorton.com).*
 {% endblock %}
+
+{# ========================================================================== #}
+{# SECTOR ANALYSIS TEMPLATE VALIDATION CHECKLIST:                            #}
+{# □ All confidence scores in 0.0-1.0 format (baseline 0.9+)                #}
+{# □ Risk probabilities in decimal format from quantified matrices           #}
+{# □ Economic sensitivity with GDP/employment correlations                    #}
+{# □ Complete cross-sector analysis (all 11 sectors)                         #}
+{# □ Sector rotation scoring (0.0-10.0) based on economic cycle             #}
+{# □ Author attribution "Cole Morton" consistent                              #}
+{# □ Sector ETF price accuracy validation (≤2% variance)                     #}
+{# □ FRED economic indicator currency (within 24 hours)                      #}
+{# □ Multi-source validation across 7 CLI services                          #}
+{# □ Statistical significance testing for cross-sector comparisons           #}
+{# □ Economic cycle positioning (Early/Mid/Late cycle preferences)           #}
+{# □ Stress testing scenarios (5+ required with recovery timelines)          #}
+{# □ Investment summary 150-250 words with all required elements             #}
+{# □ Portfolio allocation guidance with position sizing recommendations       #}
+{# □ Sector-specific customization rules properly applied                    #}
+{#                                                                            #}
+{# SECTOR-SPECIFIC VALIDATION RULES:                                          #}
+{# Technology (XLK): Semiconductor cycles, cloud revenue, patent activity     #}
+{# Financials (XLF): Interest rate sensitivity, credit quality, Basel ratios #}
+{# Healthcare (XLV): Regulatory environment, patent cliffs, aging demographics #}
+{# Consumer Discretionary (XLY): Employment correlation, consumer confidence  #}
+{# Consumer Staples (XLP): Inflation hedge, recession resilience              #}
+{# Energy (XLE): Oil price correlation, geopolitical risk, ESG factors       #}
+{# Industrials (XLI): GDP elasticity, infrastructure spend, trade policy     #}
+{# Materials (XLB): Commodity cycles, global trade, emerging market exposure  #}
+{# Real Estate (XLRE): Interest rate duration, REITs, housing market         #}
+{# Utilities (XLU): Interest rate sensitivity, regulatory framework, ESG     #}
+{# Communication Services (XLC): 5G deployment, content monetization, adtech #}
+{#                                                                            #}
+{# BEST PRACTICES:                                                           #}
+{# - Validate sector ETF prices and fundamental data before execution        #}
+{# - Apply sector-specific economic indicators and customization rules       #}
+{# - Use appropriate peer group comparisons and correlation analysis         #}
+{# - Quantify sector rotation timing with economic cycle context             #}
+{# - Maintain comprehensive cross-sector relative positioning                #}
+{# - Execute phases in proper DASV sequence with sector-specific validation  #}
+{# - Monitor sector-specific risk factors and regulatory developments        #}
+{# - Align portfolio allocation with investor risk profile and cycle timing  #}
+{#                                                                            #}
+{# INTEGRATION NOTES:                                                        #}
+{# This template serves as the authoritative specification for sector         #}
+{# analysis document generation within the DASV framework. All sector        #}
+{# analyst commands should reference this template for consistency and       #}
+{# institutional-quality output standards with sector-specific customization.#}
+{#                                                                            #}
+{# Template Version: 2.0 (Enhanced with comprehensive sector specifications) #}
+{# Framework Integration: DASV Phase 3 (Synthesize) with sector context     #}
+{# Specification Authority: templates/analysis/sector_analysis_template.md   #}
+{# Cross-Reference: All validation rules defined in authoritative markdown   #}
+{# ========================================================================== #}

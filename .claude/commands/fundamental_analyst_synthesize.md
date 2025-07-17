@@ -222,12 +222,17 @@ VALUATION SYNTHESIS:
 
 ## Output Structure
 
-**Template Reference**: `./templates/analysis/fundamental_analysis_template.md`
+**HYBRID TEMPLATE SYSTEM**:
+- **Authoritative Specification**: `./templates/analysis/fundamental_analysis_template.md`
+- **CLI Implementation**: `./scripts/templates/fundamental_analysis_enhanced.j2`
+- **Command Reference**: This command follows the authoritative markdown specification
+- **CLI Execution**: Uses Jinja2 template for document generation
+
 **File Naming**: `TICKER_YYYYMMDD.md` (e.g., `AAPL_20250629.md`)
 **Directory**: `./data/outputs/fundamental_analysis/`
 **Data Sources**: analysis with multi-source validation
 
-The synthesis command generates fundamental analysis documents following the exact structure defined in the fundamental analysis template. All outputs must adhere to the template specification for institutional-quality consistency and professional presentation standards.
+The synthesis command generates fundamental analysis documents following the exact structure defined in the authoritative fundamental analysis template specification. The Content Automation CLI uses enhanced Jinja2 templates that implement this specification with shared inheritance and macro systems. All outputs must adhere to the markdown template specification for institutional-quality consistency and professional presentation standards.
 
 ## Synthesis Execution Protocol
 
@@ -366,7 +371,7 @@ The synthesis command generates fundamental analysis documents following the exa
 □ Saved to: ./data/outputs/fundamental_analysis/
 □ Analysis focused solely on requested ticker
 □ No additional files generated
-□ **CRITICAL: Follows ./templates/analysis/fundamental_analysis_template.md specification exactly including Investment Recommendation Summary**
+□ **CRITICAL: Follows ./templates/analysis/fundamental_analysis_template.md specification exactly including Investment Recommendation Summary (CLI implements via enhanced Jinja2 templates)**
 □ **CRITICAL: Current price must be CLI-validated and accurate (tolerance: ≤2%)**
 □ **CRITICAL: All price references must use validated current_price consistently**
 □ **All financial metrics must match analysis data exactly**

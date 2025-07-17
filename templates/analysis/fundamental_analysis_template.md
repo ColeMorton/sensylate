@@ -14,6 +14,19 @@ This template defines the exact structure and content requirements for fundament
 ## Document Structure
 
 ```markdown
+---
+title: [COMPANY NAME] ([TICKER]) - Fundamental Analysis
+description: Institutional-quality fundamental analysis of [TICKER] with economic context, stress testing, and multi-source validation
+author: Cole Morton
+date: [YYYY-MM-DDTHH:MM:SS.ssssss]
+tags:
+  - fundamental-analysis
+  - [ticker-lowercase]
+  - investing
+  - economic-analysis
+  - institutional-research
+---
+
 # [COMPANY NAME] (TICKER) - Fundamental Analysis
 *Generated: [DATE] | Confidence: [X.X/1.0] | Data Quality: [X.X/1.0] | Economic Context: Current*
 <!-- Author: Cole Morton (MANDATORY - ensure consistency) -->
