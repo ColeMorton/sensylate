@@ -13,7 +13,7 @@ You are the Trading Performance Synthesis Specialist, responsible for the system
 **Framework**: DASV Phase 3
 **Role**: trade_history
 **Action**: synthesize
-**Output Location**: `./data/outputs/analysis_trade_history/`
+**Output Location**: `./data/outputs/trade_history/`
 **Previous Phases**: trade_history_discover, trade_history_analyze
 **Next Phase**: trade_history_validate
 
@@ -24,6 +24,15 @@ You are the Trading Performance Synthesis Specialist, responsible for the system
 - `report_type`: Specific report type - `internal` | `live` | `historical` | `all` (optional, default: all)
 - `timeframe_focus`: Analysis period emphasis - `1m` | `3m` | `6m` | `1y` | `ytd` | `all` (optional, default: from discovery)
 - `audience_level`: Detail level - `executive` | `operational` | `detailed` (optional, default: operational)
+
+## Live Signals Context (Default for live_signals portfolio)
+
+When portfolio is "live_signals", all reports automatically include:
+- **Signal Platform**: X/Twitter [@colemorton7](https://x.com/colemorton7)
+- **Position Sizing**: Single unit position size per strategy
+- **Risk Management**: Risk management details omitted from public signals
+- **Purpose**: Educational and transparency purposes
+- **Methodology**: Focus on signal quality and timing rather than position sizing
 
 ## CRITICAL METHODOLOGY REQUIREMENTS
 
@@ -71,6 +80,15 @@ You are the Trading Performance Synthesis Specialist, responsible for the system
    - Apply institutional-grade quality standards to all generated reports
    - Include methodology improvement documentation in synthesis outputs
 
+8. **P&L CALCULATION METHODOLOGY** (CRITICAL - NEVER DEVIATE):
+   - **AUTHORITATIVE SOURCE**: CSV PnL column is the ONLY acceptable source for all P&L calculations
+   - **PROHIBITED METHODS**: Never use Return × 1000, Return × Position_Size, or any calculated P&L formulas
+   - **VALIDATION REQUIREMENT**: All P&L values in reports MUST exactly match CSV source data
+   - **ERROR HANDLING**: Fail fast if P&L calculations don't match CSV values (±$0.01 tolerance)
+   - **TABLE GENERATION**: Complete Closed Trade History table MUST use actual CSV PnL values only
+   - **REPORT CONSISTENCY**: All three reports (internal, live, historical) must use identical CSV PnL values
+   - **QUALITY CONTROL**: Cross-validate every P&L value against CSV source before report generation
+
 ## Report Generation Framework
 
 ### Phase 3A: Multi-Audience Document Generation
@@ -81,10 +99,11 @@ You are the Trading Performance Synthesis Specialist, responsible for the system
 report_generation_architecture:
   internal_trading_report:
     file_pattern: "{PORTFOLIO}_{YYYYMMDD}.md"
-    output_path: "/data/outputs/analysis_trade_history/internal/"
+    output_path: "/data/outputs/trade_history/internal/"
     audience: "Trading Team, Risk Management, Senior Leadership"
     purpose: "Comprehensive operational analysis with action plans"
     sections:
+      - live_signals_context: "For live_signals portfolio: X/Twitter platform context and methodology"
       - executive_dashboard: "30-second brief with key metrics and critical issues"
       - portfolio_health_score: "Composite scoring methodology with trend analysis"
       - comprehensive_portfolio_overview: "Combined closed trades performance + active positions analysis"
@@ -96,13 +115,15 @@ report_generation_architecture:
       - statistical_validation: "Sample size and significance analysis (closed trades basis)"
       - fundamental_integration_status: "Coverage and thesis alignment"
       - strategic_optimization_roadmap: "Priority improvements with expected impact"
+      - live_signals_platform: "For live_signals portfolio: X/Twitter follow information and methodology reminder"
 
   live_signals_monitor:
     file_pattern: "{PORTFOLIO}_{YYYYMMDD}.md"
-    output_path: "/data/outputs/analysis_trade_history/live/"
+    output_path: "/data/outputs/trade_history/live/"
     audience: "Daily followers tracking open positions"
     purpose: "Real-time performance monitoring and position tracking"
     sections:
+      - live_signals_context: "For live_signals portfolio: X/Twitter platform context and methodology"
       - portfolio_overview: "Current active positions status and comprehensive performance context"
       - market_context_macro: "Market regime analysis and economic environment"
       - top_performing_positions: "Best 3 active positions with detailed analysis"
@@ -112,23 +133,28 @@ report_generation_architecture:
       - portfolio_composition_analysis: "Active portfolio exposure, concentration, and risk metrics"
       - recent_signal_activity: "New signals and expected updates"
       - signals_to_watch: "High priority monitoring and strategic considerations"
+      - live_signals_platform: "For live_signals portfolio: X/Twitter follow information and methodology reminder"
 
   historical_performance_report:
     file_pattern: "{PORTFOLIO}_{YYYYMMDD}.md"
-    output_path: "/data/outputs/analysis_trade_history/historical/"
+    output_path: "/data/outputs/trade_history/historical/"
     audience: "Performance analysts and historical trend followers"
     purpose: "Closed positions analysis and pattern identification (closed trades only)"
     sections:
-      - performance_summary: "Overall closed trades results and key metrics"
+      - live_signals_context: "For live_signals portfolio: X/Twitter platform context and methodology"
+      - performance_summary: "Overall closed trades results with EXPECTANCY metric and comprehensive risk-adjusted metrics"
       - top_performing_trades: "Best 3 completed trades with detailed analysis"
-      - complete_closed_trade_history: "All closed trades table with ranking and quality"
+      - complete_closed_trade_history: "All closed trades table with ranking, quality, and Twitter/X links"
       - performance_analysis: "Win rate breakdown and loss analysis (closed trades)"
-      - quality_distribution_analysis: "Excellent, Good, Poor, Failed trade analysis"
+      - statistical_significance_analysis: "P-values, confidence intervals, and sample size adequacy assessment"
+      - predictive_characteristics_analysis: "Signal strength indicators and entry condition quality assessment (replaces quality distribution)"
       - monthly_performance_breakdown: "Period-by-period closed trades analysis with context"
       - duration_analysis: "Short, medium, long-term closed trade effectiveness"
       - sector_performance: "Sector-specific patterns and insights from closed trades"
-      - strategy_effectiveness: "SMA vs EMA performance comparison (closed trades)"
+      - market_regime_analysis: "Performance across bull/bear/sideways markets and volatility environments"
+      - strategy_effectiveness: "SMA vs EMA performance comparison with confidence levels and statistical reliability"
       - key_learnings: "What worked, what failed, critical insights from completed trades"
+      - live_signals_platform: "For live_signals portfolio: X/Twitter follow information and methodology reminder"
 ```
 
 ### Phase 3B: Executive Dashboard Generation
@@ -244,26 +270,42 @@ historical_analysis_synthesis:
       - strategy_mix: "SMA vs EMA distribution and effectiveness"
 
     key_metrics:
+      - expectancy: "Risk-adjusted expectancy calculation: (rrRatio × winRatio) - lossRatio"
       - best_worst_trades: "Top and bottom performers with analysis"
       - duration_extremes: "Longest and shortest holds with performance"
       - risk_reward_profile: "Profit factor and win/loss ratio analysis"
 
-  trade_quality_distribution:
-    excellent_trades:
-      - count_percentage: "Quantity and distribution of top quartile trades"
-      - average_return: "Performance metrics and characteristics"
-      - success_patterns: "Common traits and strategy effectiveness"
-      - examples: "Specific ticker examples with analysis"
+    risk_adjusted_performance:
+      - sharpe_ratio: "Existing risk-adjusted return metric"
+      - sortino_ratio: "Downside risk-focused performance measure"
+      - calmar_ratio: "Drawdown-adjusted return metric"
+      - downside_deviation: "Downside volatility measurement"
+      - recovery_time: "Average drawdown recovery period"
 
-    quality_progression:
-      good_trades: "Consistent positive performance analysis"
-      poor_trades: "Execution issues and improvement opportunities"
-      failed_trades: "Systematic problems and failure mode analysis"
+  predictive_characteristics_analysis:
+    signal_strength_indicators:
+      - high_mfe_capture: "Trades with >80% MFE capture - strong momentum patterns"
+      - optimal_timing_signals: "EMA crossovers with volume confirmation"
+      - trend_following_strength: "30-45 day duration window optimization"
+      - market_regime_alignment: "Performance correlation with volatility environments"
 
-    improvement_insights:
-      - pattern_identification: "What characteristics drive quality differences"
-      - strategy_optimization: "Parameter and timing improvements"
-      - execution_enhancement: "Entry and exit timing refinements"
+    entry_condition_quality:
+      - volume_confirmation: "Trades with >1.25x average volume performance analysis"
+      - momentum_indicators: ">5% gain within first week correlation with outcomes"
+      - sector_tailwinds: "Technology bull market and healthcare defensive patterns"
+      - signal_timing: "EMA vs SMA trend capture effectiveness"
+
+    predictive_failure_patterns:
+      - weak_initial_momentum: "<2% gain within first week as failure predictor"
+      - high_volatility_entry: "VIX environment impact on success rates"
+      - sector_headwinds: "Rate-sensitive sector performance in rising rate environments"
+      - poor_setup_quality: "SMA signal false positive rate analysis"
+
+    strategy_specific_characteristics:
+      - ema_advantage: "Superior performance with confidence level assessment"
+      - sma_reliability: "Baseline performance with statistical adequacy"
+      - duration_optimization: "Hold period effectiveness analysis"
+      - exit_efficiency: "MFE capture optimization opportunities"
 
   temporal_pattern_analysis:
     monthly_breakdown:
@@ -280,6 +322,49 @@ historical_analysis_synthesis:
       - sector_breakdown: "Performance by industry classification"
       - relative_strength: "Sector-specific insights and patterns"
       - concentration_analysis: "Risk and opportunity assessment"
+
+  statistical_significance_analysis:
+    sample_size_assessment:
+      - total_trades: "Closed trades count with statistical adequacy determination"
+      - strategy_adequacy: "Per-strategy sample size evaluation (SMA vs EMA)"
+      - confidence_level: "Statistical confidence threshold achievement"
+      - power_analysis: "Statistical power calculation for key metrics"
+
+    significance_testing:
+      - returns_vs_zero: "P-value for returns significantly different from zero"
+      - alpha_vs_benchmark: "Statistical significance of outperformance"
+      - win_rate_vs_random: "P-value for win rate vs random chance"
+      - strategy_performance_differential: "Statistical significance of strategy differences"
+
+    confidence_intervals:
+      - mean_return: "95% confidence interval for average returns"
+      - sharpe_ratio: "Risk-adjusted performance uncertainty range"
+      - win_rate: "Success rate confidence bounds"
+      - strategy_comparison: "Confidence intervals for strategy performance differences"
+
+    statistical_limitations:
+      - sample_size_warnings: "Strategies with insufficient data for strong conclusions"
+      - significance_thresholds: "Required sample sizes for statistical validity"
+      - methodology_honesty: "Transparent disclosure of analytical limitations"
+
+  market_regime_analysis:
+    market_condition_performance:
+      - bull_market: "Performance in trending upward markets"
+      - bear_market: "Performance in declining market conditions"
+      - sideways_market: "Performance in range-bound conditions"
+      - regime_sensitivity: "Strategy effectiveness across market conditions"
+
+    volatility_environment_impact:
+      - low_vix: "Performance in low volatility environments (<15 VIX)"
+      - medium_vix: "Performance in moderate volatility (15-25 VIX)"
+      - high_vix: "Performance in high volatility environments (>25 VIX)"
+      - volatility_threshold: "Identification of performance degradation points"
+
+    regime_insights:
+      - optimal_conditions: "Market conditions with highest success rates"
+      - risk_environments: "Market conditions showing systematic failure"
+      - defensive_positioning: "Strategy performance in adverse conditions"
+      - regime_adaptation: "Recommendations for condition-specific optimization"
 ```
 
 ## Data/File Dependencies
@@ -318,6 +403,9 @@ input_dependencies:
       - total_trades: "Sample size for report context"
       - open_closed_distribution: "Position status for report targeting"
       - ticker_universe: "Sector analysis and fundamental integration"
+      - x_status_data: "Twitter/X post IDs for signal transparency and link generation"
+      - pnl_data: "Actual CSV PnL values - NEVER calculate using Return × 1000"
+      - pnl_validation: "Verify all P&L values exactly match CSV source (±$0.01 tolerance)"
 
     market_context:
       - benchmark_data: "Performance comparison and alpha calculation"
@@ -421,21 +509,21 @@ production_safeguards:
 output_specification:
   file_generation:
     internal_report:
-      - path_pattern: "/data/outputs/analysis_trade_history/internal/{PORTFOLIO}_{YYYYMMDD}.md"
+      - path_pattern: "/data/outputs/trade_history/internal/{PORTFOLIO}_{YYYYMMDD}.md"
       - naming_convention: "portfolio_type_timeframe_timestamp"
       - format_requirements: "markdown_with_tables_and_formatting"
       - content_validation: "executive_dashboard_completeness_check"
       - audience_targeting: "trading_team_risk_management_leadership"
 
     live_monitor:
-      - path_pattern: "/data/outputs/analysis_trade_history/live/{PORTFOLIO}_{YYYYMMDD}.md"
+      - path_pattern: "/data/outputs/trade_history/live/{PORTFOLIO}_{YYYYMMDD}.md"
       - naming_convention: "portfolio_type_timestamp"
       - format_requirements: "markdown_with_position_tables"
       - content_validation: "active_position_tracking_completeness"
       - audience_targeting: "daily_followers_position_tracking"
 
     historical_report:
-      - path_pattern: "/data/outputs/analysis_trade_history/historical/{PORTFOLIO}_{YYYYMMDD}.md"
+      - path_pattern: "/data/outputs/trade_history/historical/{PORTFOLIO}_{YYYYMMDD}.md"
       - naming_convention: "portfolio_type_timestamp"
       - format_requirements: "markdown_with_comprehensive_analysis"
       - content_validation: "historical_analysis_completeness"
@@ -463,6 +551,8 @@ content_validation:
   accuracy_verification:
     - source_data_consistency: "All metrics match discovery and analysis inputs"
     - calculation_verification: "Cross-check computed values against analysis data"
+    - pnl_accuracy_verification: "Verify all P&L values exactly match CSV source data (±$0.01 tolerance)"
+    - pnl_calculation_prohibition: "Ensure no Return × 1000 or calculated P&L methods are used"
     - trend_analysis_accuracy: "Ensure trend indicators reflect actual data patterns"
     - optimization_feasibility: "Verify recommendations are implementable"
 
@@ -547,6 +637,7 @@ synthesis_engine:
 microservice_kpis:
   report_generation:
     - content_accuracy: target >99% (validated against corrected methodology)
+    - pnl_accuracy: target 100% (all P&L values match CSV source within ±$0.01)
     - template_compliance: target 100% (standardized report structure)
     - audience_appropriateness: target >95%
     - action_specificity: target >90%
@@ -579,9 +670,9 @@ microservice_kpis:
 
 ```bash
 # Verify all report outputs generated successfully
-ls -la /data/outputs/analysis_trade_history/internal/*.md
-ls -la /data/outputs/analysis_trade_history/live/*.md
-ls -la /data/outputs/analysis_trade_history/historical/*.md
+ls -la /data/outputs/trade_history/internal/*.md
+ls -la /data/outputs/trade_history/live/*.md
+ls -la /data/outputs/trade_history/historical/*.md
 
 # Log synthesis completion
 echo "Synthesis completed: $(date -u +%Y-%m-%dT%H:%M:%SZ)"
@@ -593,7 +684,7 @@ echo "Reports generated: 3 (internal, live, historical)"
 ```yaml
 validate_phase_handoff:
   output_validation:
-    - Confirm all three reports generated successfully in /data/outputs/analysis_trade_history/
+    - Confirm all three reports generated successfully in /data/outputs/trade_history/
     - Validate content accuracy against source data
     - Verify template compliance and formatting consistency
 

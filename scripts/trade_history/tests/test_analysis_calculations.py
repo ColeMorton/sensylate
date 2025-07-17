@@ -9,8 +9,6 @@ for signal effectiveness, performance measurement, and pattern recognition.
 import json
 import math
 import statistics
-from datetime import datetime
-from typing import Dict, List, Tuple
 
 
 def test_signal_effectiveness_calculations():
@@ -239,7 +237,7 @@ def test_trade_quality_classification():
         # Criteria for classification
         return_threshold = 0.10  # 10% return threshold
         efficiency_threshold = 0.60  # 60% exit efficiency
-        mfe_mae_ratio_threshold = 3.0
+        # mfe_mae_ratio_threshold = 3.0  # Unused variable
 
         mfe_mae_ratio = trade["mfe"] / abs(trade["mae"]) if trade["mae"] < 0 else 0
 
@@ -273,7 +271,7 @@ def test_trade_quality_classification():
             f"Trade: {trade['return']:+.1%} return, {trade['exit_efficiency']:.2f} efficiency → {quality.upper()}"
         )
 
-    print(f"\nQuality Distribution:")
+    print("\nQuality Distribution:")
     total_trades = len(trades)
     for quality, count in quality_distribution.items():
         percentage = count / total_trades * 100
@@ -370,7 +368,7 @@ def validate_analysis_schema():
     Validate that the analysis JSON schema is properly structured.
     """
 
-    schema_path = "/Users/colemorton/Projects/sensylate/data/outputs/analysis_trade_history/analyze/trading_analysis_schema_v1.json"
+    schema_path = "/Users/colemorton/Projects/sensylate/data/outputs/trade_history/analyze/trading_analysis_schema_v1.json"
 
     print("=== Analysis Schema Validation ===\n")
 

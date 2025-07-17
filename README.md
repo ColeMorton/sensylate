@@ -42,7 +42,7 @@ sensylate/                           # Root: Institutional-grade platform
 │   ├── fundamental_analysis/       # Financial analysis reports
 │   ├── sector_analysis/            # Market sector analysis
 │   ├── twitter_post_strategy/      # Social media content
-│   └── analysis_trade_history/     # Trading performance data
+│   └── trade_history/     # Trading performance data
 ├── data/                           # Sophisticated Data Management
 │   ├── outputs/fundamental_analysis/ # Institutional-quality analysis reports
 │   ├── images/tradingview/         # Financial visualization assets

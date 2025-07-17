@@ -8,8 +8,6 @@ whether to use exact filename or find latest file matching pattern.
 
 import os
 import re
-from datetime import datetime
-from pathlib import Path
 from typing import Optional, Tuple
 
 
@@ -48,7 +46,7 @@ def parse_portfolio_parameter(
             return False, "", f"Data directory not found: {data_dir}"
 
         # Find all files matching portfolio pattern
-        pattern = f"{portfolio}_*.csv"
+        # pattern = f"{portfolio}_*.csv"  # Unused variable
         matching_files = []
 
         for filename in os.listdir(data_dir):
@@ -131,7 +129,7 @@ def test_portfolio_parsing():
                 print(
                     f"CSV Info: {csv_info['total_rows']} rows, {csv_info['total_columns']} columns"
                 )
-                print(f"Key columns: Position_UUID, Ticker, Strategy_Type, Status")
+                print("Key columns: Position_UUID, Ticker, Strategy_Type, Status")
 
         else:
             print(f"Error: {error}")
@@ -144,7 +142,7 @@ def validate_discovery_schema():
     Validate that the JSON schema file is properly structured.
     """
 
-    schema_path = "/Users/colemorton/Projects/sensylate/data/outputs/analysis_trade_history/discover/trading_discovery_schema_v1.json"
+    schema_path = "/Users/colemorton/Projects/sensylate/data/outputs/trade_history/discover/trading_discovery_schema_v1.json"
 
     print("=== Discovery Schema Validation ===\n")
 

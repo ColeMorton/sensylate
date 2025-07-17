@@ -123,6 +123,51 @@ Use the production CLI financial services for comprehensive multi-company sector
 - **Multi-Company Performance Optimization**: Production-grade caching and rate limiting optimized for sector analysis
 - **Sector Error Resilience**: Comprehensive error handling with graceful degradation for individual companies within sector
 
+## Data Flow Integration
+
+### Input Consumption Patterns
+**sector_analysis_discover_inputs**:
+```yaml
+sector_analysis_inputs:
+  required_parameters:
+    - sector: "Sector identifier (XLK | XLF | XLE | technology | financials | energy)"
+    - companies_count: "5 | 10 | 15 | 20 (default: 10)"
+    - confidence_threshold: "9.0 | 9.5 | 9.8 (default: 9.0)"
+
+  upstream_data_consumption:
+    - fundamental_analysis_files: "./data/outputs/fundamental_analysis/{TICKER}_{DATE}.md"
+    - fundamental_discovery_data: "./data/outputs/fundamental_analysis/discovery/{TICKER}_{DATE}_discovery.json"
+    - fundamental_validation_scores: "./data/outputs/fundamental_analysis/validation/{TICKER}_{DATE}_validation.json"
+
+  cli_services_consumed:
+    - yahoo_finance_cli: "Multi-company market data + sector ETF analysis"
+    - alpha_vantage_cli: "Real-time quotes across sector companies"
+    - fmp_cli: "Sector financial intelligence + competitive metrics"
+    - sec_edgar_cli: "Regulatory environment affecting sector"
+    - fred_economic_cli: "Sector-sensitive economic indicators"
+    - coingecko_cli: "Risk appetite + sector correlation analysis"
+    - imf_cli: "Global context + sector international exposure"
+
+  mandatory_etf_data:
+    - sector_etf_prices: "MANDATORY current ETF price collection and validation"
+    - cross_sector_etfs: "SPY, XLK, XLF, XLI, XLP, XLU, XLB, XLE, XLY, XLV, XLRE"
+    - blocking_requirements: "Missing ETF prices prevent institutional certification"
+
+sector_analysis_outputs:
+  discovery_files: "./data/outputs/sector_analysis/discovery/{SECTOR}_{YYYYMMDD}_discovery.json"
+  next_phase_inputs: "sector_analyst_analyze consumption"
+  downstream_dependencies:
+    - "twitter_sector_analysis: sector content generation"
+    - "portfolio_allocation: sector insights for allocation decisions"
+    - "social_media_strategist: sector themes integration"
+
+  data_flow_architecture:
+    - namespace: "sector_analysis"
+    - pattern: "fundamental_analysis_inputs → multi_company_discovery → sector_analysis → sector_synthesis → validation"
+    - integration_points: "Individual company data → sector aggregation → downstream consumption"
+    - quality_inheritance: "Inherits fundamental analysis confidence scores → aggregates for sector confidence"
+```
+
 ## Multi-Company Sector Data Collection Protocol
 
 ### Phase 1: Comprehensive Multi-Company Sector Data Collection via CLI Services

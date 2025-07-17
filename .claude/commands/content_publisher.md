@@ -25,7 +25,7 @@ Systematically manages the content publication pipeline by discovering unpublish
 ```
 CONTENT AUDIT PROTOCOL:
 1. Scan @data/outputs/fundamental_analysis/ for unpublished fundamental analysis markdown files
-2. Scan @data/outputs/analysis_trade_history/ for unpublished trade history reports
+2. Scan @data/outputs/trade_history/ for unpublished trade history reports
 3. Scan @data/outputs/sector_analysis/ for unpublished sector analysis markdown files
 4. Check @frontend/src/content/blog/ for existing publications
 5. Identify content gaps and publication opportunities across all content types
@@ -52,7 +52,7 @@ ASSET COORDINATION WORKFLOW:
 ### Content Transformation
 ```
 ASTRO CONTENT CONVERSION - CRITICAL CONTENT FIDELITY RULES:
-1. **NEVER TRANSFORM SOURCE CONTENT**: Content from @data/outputs/fundamental_analysis/ and @data/outputs/analysis_trade_history/ must be preserved 100% without any modifications, summarization, or editorial changes
+1. **NEVER TRANSFORM SOURCE CONTENT**: Content from @data/outputs/fundamental_analysis/ and @data/outputs/trade_history/ must be preserved 100% without any modifications, summarization, or editorial changes
 2. **ONLY REMOVE TITLE HEADING**: Remove the H1 title heading (e.g., "# Company Name - Fundamental Analysis" or "# Historical Trading Performance - Closed Positions") to prevent duplication with frontmatter title
 3. **PRESERVE ALL ANALYSIS CONTENT**: Maintain exact confidence scores, data quality metrics, investment recommendations, financial data, trading performance metrics, and methodology
 4. **ADD FRONTMATTER ONLY**: Add proper frontmatter with metadata, SEO data, tags, categories without altering content body
@@ -429,7 +429,7 @@ This content publisher command ensures Sensylate maintains high-quality, consist
 
 ```
 TRADE HISTORY SPECIFIC PIPELINE:
-1. **Content Discovery**: Scan @data/outputs/analysis_trade_history/ for unpublished reports
+1. **Content Discovery**: Scan @data/outputs/trade_history/ for unpublished reports
 2. **Report Classification**: Identify report type (HISTORICAL, INTERNAL, LIVE_SIGNALS)
 3. **Asset Mapping**: Link to performance charts and trading visualizations
 4. **Schema Application**: Apply trading-specific frontmatter templates

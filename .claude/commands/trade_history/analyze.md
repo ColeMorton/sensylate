@@ -13,7 +13,7 @@ You are the Trading Performance Analysis Specialist, responsible for the systema
 **Framework**: DASV Phase 2
 **Role**: trade_history
 **Action**: analyze
-**Output Location**: `./data/outputs/analysis_trade_history/analysis/`
+**Output Location**: `./data/outputs/trade_history/analysis/`
 **Previous Phase**: trade_history_discover
 **Next Phase**: trade_history_synthesize
 
@@ -131,6 +131,13 @@ signal_effectiveness_analysis:
 
 ```yaml
 performance_measurement_analysis:
+  pnl_calculation_methodology:
+    source_data_requirements:
+      - ALL P&L values MUST come from CSV PnL column only
+      - NEVER calculate P&L using Return × 1000 or any derived formulas
+      - Cross-validate all P&L values against CSV source with ±$0.01 tolerance
+      - Fail analysis if any P&L value doesn't match CSV source exactly
+
   statistical_analysis:
     return_distribution:
       - Return distribution analysis and normality testing
@@ -344,6 +351,8 @@ input_dependencies:
       - position_sizing_methodology: "Fixed vs calculated sizing analysis"
       - strategy_distribution: "SMA vs EMA trade distribution"
       - ticker_universe: "Sector and stock analysis scope"
+      - pnl_data: "Actual CSV PnL column values - NO calculated P&L methods allowed"
+      - x_status_data: "Twitter/X post IDs for signal transparency and link generation"
 
     market_context:
       - benchmark_data: "SPY, QQQ, VTI performance context"
@@ -376,6 +385,8 @@ pre_analysis_checks:
   - Validate confidence thresholds are met from discovery phase
   - Cross-validate trade counts between discovery data and actual CSV
   - Ensure active trades properly categorized for portfolio analysis
+  - Validate P&L values match CSV source data exactly (prohibit Return × 1000 calculations)
+  - Validate X_Status column presence and completeness for Twitter/X link generation
 
 runtime_monitoring:
   - Track statistical calculation accuracy and validation
@@ -391,7 +402,7 @@ runtime_monitoring:
 ```yaml
 output_specification:
   file_generation:
-    - path_pattern: "/data/outputs/analysis_trade_history/analysis/{portfolio}_{YYYYMMDD}.json"
+    - path_pattern: "/data/outputs/trade_history/analysis/{portfolio}_{YYYYMMDD}.json"
     - naming_convention: "portfolio_timestamp_analyzed"
     - format_requirements: "structured_json_with_schema_validation"
     - content_validation: "trading_analysis_schema_v1"
@@ -661,7 +672,7 @@ output_specification:
   "next_phase_inputs": {
     "synthesis_ready": true,
     "confidence_threshold_met": true,
-    "analysis_package_path": "/data/outputs/analysis_trade_history/analysis/live_signals_20250702.json",
+    "analysis_package_path": "/data/outputs/trade_history/analysis/live_signals_20250702.json",
     "report_focus_areas": [
       "exit_efficiency_optimization",
       "strategy_parameter_tuning",
@@ -762,12 +773,12 @@ microservice_kpis:
 
 ```bash
 # Save analysis output to data pipeline
-mkdir -p ./data/outputs/analysis_trade_history/analyze/outputs/
-cp /data/outputs/analysis_trade_history/analysis/{portfolio}_{YYYYMMDD}.json ./data/outputs/analysis_trade_history/analyze/outputs/
+mkdir -p ./data/outputs/trade_history/analyze/outputs/
+cp /data/outputs/trade_history/analysis/{portfolio}_{YYYYMMDD}.json ./data/outputs/trade_history/analyze/outputs/
 
 # Update analysis manifest
-echo "last_execution: $(date -u +%Y-%m-%dT%H:%M:%SZ)" >> ./data/outputs/analysis_trade_history/analyze/manifest.yaml
-echo "confidence_score: {calculated_score}" >> ./data/outputs/analysis_trade_history/analyze/manifest.yaml
+echo "last_execution: $(date -u +%Y-%m-%dT%H:%M:%SZ)" >> ./data/outputs/trade_history/analyze/manifest.yaml
+echo "confidence_score: {calculated_score}" >> ./data/outputs/trade_history/analyze/manifest.yaml
 ```
 
 ### Next Phase Preparation

@@ -1184,11 +1184,13 @@ class FundamentalAnalyzer:
         return {
             "estimated_duration": round(estimated_duration, 1),
             "fed_funds_correlation": fed_correlation,
-            "rate_sensitivity": "High"
-            if estimated_duration > 4.0
-            else "Moderate"
-            if estimated_duration > 2.0
-            else "Low",
+            "rate_sensitivity": (
+                "High"
+                if estimated_duration > 4.0
+                else "Moderate"
+                if estimated_duration > 2.0
+                else "Low"
+            ),
             "current_rate_environment": "Restrictive",  # Based on Fed Funds Rate > 4%
         }
 

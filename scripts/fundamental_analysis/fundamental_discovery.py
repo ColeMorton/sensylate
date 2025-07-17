@@ -711,9 +711,11 @@ class FundamentalDiscovery:
 
         return {
             "service_health": service_health,
-            "health_score": 1.0
-            if healthy_services == len(self.cli_service_health)
-            else healthy_services / len(self.cli_service_health),
+            "health_score": (
+                1.0
+                if healthy_services == len(self.cli_service_health)
+                else healthy_services / len(self.cli_service_health)
+            ),
             "services_operational": healthy_services,
             "services_healthy": healthy_services == len(self.cli_service_health),
         }
@@ -729,9 +731,11 @@ class FundamentalDiscovery:
 
         return {
             "overall_data_quality": 0.98,
-            "cli_service_health": 1.0
-            if healthy_services == len(self.cli_service_health)
-            else healthy_services / len(self.cli_service_health),
+            "cli_service_health": (
+                1.0
+                if healthy_services == len(self.cli_service_health)
+                else healthy_services / len(self.cli_service_health)
+            ),
             "institutional_grade": True,
             "data_sources_via_cli": service_names,
             "cli_integration_status": "operational",
@@ -807,9 +811,9 @@ class FundamentalDiscovery:
 
             # Enhanced sector context with institutional data
             return {
-                "primary_sector": sector.lower().replace(" ", "_")
-                if sector
-                else "technology",
+                "primary_sector": (
+                    sector.lower().replace(" ", "_") if sector else "technology"
+                ),
                 "industry_classification": industry,
                 "gics_classification": {
                     "sector": sector,
@@ -818,15 +822,17 @@ class FundamentalDiscovery:
                     "sub_industry": company_data.get("industryDisp", industry),
                 },
                 "sector_characteristics": {
-                    "growth_stage": "mature"
-                    if sector in ["Technology", "Healthcare"]
-                    else "stable",
-                    "cyclicality": "secular"
-                    if sector in ["Technology", "Healthcare"]
-                    else "cyclical",
-                    "interest_rate_sensitivity": "high"
-                    if sector == "Technology"
-                    else "moderate",
+                    "growth_stage": (
+                        "mature" if sector in ["Technology", "Healthcare"] else "stable"
+                    ),
+                    "cyclicality": (
+                        "secular"
+                        if sector in ["Technology", "Healthcare"]
+                        else "cyclical"
+                    ),
+                    "interest_rate_sensitivity": (
+                        "high" if sector == "Technology" else "moderate"
+                    ),
                 },
                 "sector_analysis_available": True,  # We have sector analysis files
                 "confidence_score": 0.92,

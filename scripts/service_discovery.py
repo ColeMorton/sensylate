@@ -321,14 +321,16 @@ class ServiceDiscoveryManager:
 
         # Add local data statistics
         local_stats = {
-            "fundamental_analysis_files": len(
-                list(self.fundamental_analysis_dir.glob("*.md"))
-            )
-            if self.fundamental_analysis_dir.exists()
-            else 0,
-            "sector_analysis_files": len(list(self.sector_analysis_dir.glob("*.md")))
-            if self.sector_analysis_dir.exists()
-            else 0,
+            "fundamental_analysis_files": (
+                len(list(self.fundamental_analysis_dir.glob("*.md")))
+                if self.fundamental_analysis_dir.exists()
+                else 0
+            ),
+            "sector_analysis_files": (
+                len(list(self.sector_analysis_dir.glob("*.md")))
+                if self.sector_analysis_dir.exists()
+                else 0
+            ),
             "cache_files": sum(
                 len(list(cache_dir.glob("*.json")))
                 for cache_dir in self.cache_dirs

@@ -22,17 +22,17 @@ The Dashboard Generation system provides automated creation of high-quality perf
 ```bash
 # Generate both light and dark mode dashboards
 python scripts/dashboard_generator.py \\
-    --input data/outputs/analysis_trade_history/HISTORICAL_PERFORMANCE_REPORT_20250626.md \\
+    --input data/outputs/trade_history/HISTORICAL_PERFORMANCE_REPORT_20250626.md \\
     --mode both
 
 # Generate only light mode
 python scripts/dashboard_generator.py \\
-    --input data/outputs/analysis_trade_history/HISTORICAL_PERFORMANCE_REPORT_20250626.md \\
+    --input data/outputs/trade_history/HISTORICAL_PERFORMANCE_REPORT_20250626.md \\
     --mode light
 
 # Validate configuration without generating
 python scripts/dashboard_generator.py \\
-    --input data/outputs/analysis_trade_history/HISTORICAL_PERFORMANCE_REPORT_20250626.md \\
+    --input data/outputs/trade_history/HISTORICAL_PERFORMANCE_REPORT_20250626.md \\
     --validate-only
 ```
 
@@ -292,7 +292,7 @@ Each dashboard includes:
 #!/bin/bash
 # Generate dashboard for specific report
 python scripts/dashboard_generator.py \\
-    --input "data/outputs/analysis_trade_history/HISTORICAL_PERFORMANCE_REPORT_20250626.md" \\
+    --input "data/outputs/trade_history/HISTORICAL_PERFORMANCE_REPORT_20250626.md" \\
     --mode both \\
     --env prod \\
     --output-dir "custom/output/path"
@@ -303,7 +303,7 @@ python scripts/dashboard_generator.py \\
 ```bash
 #!/bin/bash
 # Generate dashboards for all historical reports
-for report in data/outputs/analysis_trade_history/HISTORICAL_*.md; do
+for report in data/outputs/trade_history/HISTORICAL_*.md; do
     echo "Processing $report..."
     python scripts/dashboard_generator.py \\
         --input "$report" \\
@@ -345,7 +345,7 @@ done
 3. **Input File Not Found**
    ```bash
    # Check available files
-   ls -la data/outputs/analysis_trade_history/
+   ls -la data/outputs/trade_history/
 
    # Use most recent file
    make quick-dashboard

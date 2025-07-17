@@ -78,7 +78,7 @@ generate-report-integrated:
 .PHONY: generate-dashboard
 generate-dashboard: $(OUTPUT_DIR)/dashboards/historical-performance-dashboard-light-$(TIMESTAMP).png
 
-$(OUTPUT_DIR)/dashboards/historical-performance-dashboard-light-$(TIMESTAMP).png: data/outputs/analysis_trade_history/HISTORICAL_PERFORMANCE_REPORT_$(TIMESTAMP).md
+$(OUTPUT_DIR)/dashboards/historical-performance-dashboard-light-$(TIMESTAMP).png: data/outputs/trade_history/HISTORICAL_PERFORMANCE_REPORT_$(TIMESTAMP).md
 	$(PYTHON) scripts/dashboard_generator.py \
 		--config $(CONFIG_DIR)/dashboard_generation.yaml \
 		--input $< \
@@ -92,7 +92,7 @@ generate-dashboard-light: $(OUTPUT_DIR)/dashboards/historical-performance-dashbo
 .PHONY: generate-dashboard-dark
 generate-dashboard-dark: $(OUTPUT_DIR)/dashboards/historical-performance-dashboard-dark-$(TIMESTAMP).png
 
-$(OUTPUT_DIR)/dashboards/historical-performance-dashboard-dark-$(TIMESTAMP).png: data/outputs/analysis_trade_history/HISTORICAL_PERFORMANCE_REPORT_$(TIMESTAMP).md
+$(OUTPUT_DIR)/dashboards/historical-performance-dashboard-dark-$(TIMESTAMP).png: data/outputs/trade_history/HISTORICAL_PERFORMANCE_REPORT_$(TIMESTAMP).md
 	$(PYTHON) scripts/dashboard_generator.py \
 		--config $(CONFIG_DIR)/dashboard_generation.yaml \
 		--input $< \
@@ -139,7 +139,7 @@ prod-pipeline-dashboard:
 quick-dashboard:
 	$(PYTHON) scripts/dashboard_generator.py \
 		--config $(CONFIG_DIR)/dashboard_generation.yaml \
-		--input $(shell ls -t data/outputs/analysis_trade_history/*.md | head -1) \
+		--input $(shell ls -t data/outputs/trade_history/*.md | head -1) \
 		--mode both \
 		--env dev \
 		--log-level DEBUG
@@ -148,7 +148,7 @@ quick-dashboard:
 quick-dashboard-validate:
 	$(PYTHON) scripts/dashboard_generator.py \
 		--config $(CONFIG_DIR)/dashboard_generation.yaml \
-		--input $(shell ls -t data/outputs/analysis_trade_history/*.md | head -1) \
+		--input $(shell ls -t data/outputs/trade_history/*.md | head -1) \
 		--validate-only \
 		--env dev
 
@@ -179,7 +179,7 @@ clean-dashboards:
 dashboard-multi-format:
 	$(PYTHON) scripts/dashboard_generator.py \
 		--config $(CONFIG_DIR)/dashboard_generation.yaml \
-		--input $(shell ls -t data/outputs/analysis_trade_history/*.md | head -1) \
+		--input $(shell ls -t data/outputs/trade_history/*.md | head -1) \
 		--export-formats png,pdf,svg \
 		--high-dpi \
 		--env dev
@@ -188,7 +188,7 @@ dashboard-multi-format:
 dashboard-frontend-export:
 	$(PYTHON) scripts/dashboard_generator.py \
 		--config $(CONFIG_DIR)/dashboard_generation.yaml \
-		--input $(shell ls -t data/outputs/analysis_trade_history/*.md | head -1) \
+		--input $(shell ls -t data/outputs/trade_history/*.md | head -1) \
 		--export-frontend-config \
 		--export-json-schema \
 		--env dev

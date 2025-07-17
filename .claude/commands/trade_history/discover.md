@@ -13,7 +13,7 @@ You are the Trading Performance Discovery Specialist, responsible for the system
 **Framework**: DASV Phase 1
 **Role**: trade_history
 **Action**: discover
-**Output Location**: `./data/outputs/analysis_trade_history/discovery/`
+**Output Location**: `./data/outputs/trade_history/discovery/`
 **Next Phase**: trade_history_analyze
 
 ## Parameters
@@ -23,6 +23,53 @@ You are the Trading Performance Discovery Specialist, responsible for the system
 - `benchmark`: Benchmark comparison - `SPY` | `QQQ` | `VTI` (optional, default: SPY)
 - `confidence_threshold`: Minimum confidence for data quality - `0.9` | `0.95` | `0.99` (optional, default: 0.95)
 - `strategy_filter`: Strategy focus - `SMA` | `EMA` | `all` (optional, default: all)
+
+## Data Flow Integration
+
+### Input Consumption Patterns
+**trade_history_discover_inputs**:
+```yaml
+trade_history_inputs:
+  required_parameters:
+    - portfolio: "Portfolio name or full filename (live_signals | live_signals_20250626)"
+    - confidence_threshold: "0.9 | 0.95 | 0.99 (default: 0.95)"
+
+  authoritative_data_source:
+    - trade_history_csv: "/data/raw/trade_history/{PORTFOLIO}_{YYYYMMDD}.csv"
+    - data_authority: "100% accurate and authoritative - no validation required"
+    - portfolio_resolution: "Auto-resolve to latest file if only portfolio name provided"
+
+  local_data_consumption:
+    - fundamental_analysis_files: "/data/outputs/fundamental_analysis/{TICKER}_{DATE}.md"
+    - sector_analysis_files: "/data/outputs/sector_analysis/{SECTOR}_{DATE}.md"
+    - cache_directories: "/data/cache/, /scripts/data/cache/"
+    - discovery_history: "/data/outputs/trade_history/discovery/{PORTFOLIO}_{DATE}.json"
+
+  cli_services_consumed:
+    - yahoo_finance_cli: "Benchmark data (SPY, QQQ, VTI) and market context"
+    - fred_economic_cli: "Economic indicators for performance correlation"
+    - coingecko_cli: "Cryptocurrency sentiment for risk appetite assessment"
+    - content_automation_cli: "Professional report generation and SEO optimization"
+
+  optimization_strategy:
+    - local_first_approach: "Phase 0 local inventory prevents memory leaks"
+    - api_call_reduction: "85% reduction through local data utilization"
+    - memory_management: "Connection pooling and resource limits"
+
+trade_history_outputs:
+  discovery_files: "./data/outputs/trade_history/discovery/{PORTFOLIO}_{YYYYMMDD}.json"
+  next_phase_inputs: "trade_history_analyze consumption"
+  downstream_dependencies:
+    - "twitter_trade_history: performance content generation"
+    - "portfolio_monitoring: trading system health assessment"
+    - "risk_management: signal effectiveness evaluation"
+
+  data_flow_architecture:
+    - namespace: "trade_history"
+    - pattern: "csv_data + market_context + fundamental_integration → discovery → analysis → synthesis → validation"
+    - integration_points: "Trade data + market context → performance analysis → content generation"
+    - memory_optimization: "Local-first strategy reduces external dependencies by 85%"
+```
 
 ## Data Collection Protocol
 
@@ -65,7 +112,7 @@ local_data_inventory:
       - Prioritize cache hits to reduce API calls
 
   discovery_history_inventory:
-    search_directory: "/data/outputs/analysis_trade_history/discovery/"
+    search_directory: "/data/outputs/trade_history/discovery/"
     file_pattern: "{PORTFOLIO}_{YYYYMMDD}.json"
     reuse_strategy:
       - Check for recent discovery files (< 24 hours)
@@ -137,12 +184,12 @@ csv_columns_expected:
 
   performance_metrics:
     closed_trades_only:
-      - PnL: Profit/Loss for closed positions only
+      - PnL: Actual CSV PnL column values for closed positions only (NEVER calculate using Return × 1000)
       - Return: Return percentage for closed positions only
       - Trade_Quality: Quality classification (Excellent, Good, Poor, Failed)
 
     active_trades_only:
-      - Current_Unrealized_PnL: Current PnL for open positions
+      - Current_Unrealized_PnL: Current PnL for open positions (calculated from actual CSV entry prices)
       - Current_Excursion_Status: Current excursion status
 
     universal_metrics:
@@ -155,6 +202,7 @@ csv_columns_expected:
   categorization_fields:
     - Trade_Type: Trade classification
     - Status: Open or Closed (KEY SEPARATION FIELD)
+    - X_Status: Twitter/X post ID for signal transparency and link generation
 ```
 
 **CRITICAL DATA ENHANCEMENT REQUIREMENTS**:
@@ -185,6 +233,11 @@ mandatory_data_calculations:
       missing_data_action: "Flag as data quality issue requiring current price data"
       temporary_fallback: "0.0 with warning logged"
 
+    x_status_validation:
+      requirement: "Validate all trades have X_Status for Twitter/X link generation"
+      missing_data_action: "Flag as data quality issue requiring X_Status data"
+      temporary_fallback: "null with warning logged (links will not be generated)"
+
   data_quality_enforcement:
     fail_fast_principle: "Throw meaningful exceptions for uncalculable required data"
     no_fallback_nulls: "Never output null for any derivable field"
@@ -200,7 +253,7 @@ data_separation_protocol:
       filter_criteria: "Status = 'Closed'"
       data_completeness: "ALL fields populated (no nulls for available data)"
       analysis_purpose: "Realized performance calculation, historical analysis"
-      key_metrics: "PnL, Return, Trade_Quality, Exit_Efficiency, Trade_Type"
+      key_metrics: "PnL (CSV source only), Return, Trade_Quality, Exit_Efficiency, Trade_Type"
 
     active_trades:
       filter_criteria: "Status = 'Open' OR Status = 'Active'"
@@ -214,7 +267,7 @@ data_separation_protocol:
       - Ensure closed trades have complete exit data
       - Confirm active trades have null exit timestamps only
       - Calculate ALL derivable fields (Duration_Days, Trade_Type)
-      - Validate unrealized P&L calculations for active trades
+      - Validate unrealized P&L calculations for active trades (using actual CSV entry prices, not calculated formulas)
 
     comprehensive_coverage:
       - Include ALL trades in discovery output
@@ -539,7 +592,7 @@ runtime_monitoring:
 ```yaml
 output_specification:
   file_generation:
-    - path_pattern: "/data/outputs/analysis_trade_history/discovery/{portfolio}_{YYYYMMDD}.json"
+    - path_pattern: "/data/outputs/trade_history/discovery/{portfolio}_{YYYYMMDD}.json"
     - naming_convention: "portfolio_timestamp_discovered"
     - format_requirements: "structured_json_with_schema_validation"
     - content_validation: "trading_discovery_schema_v1"
@@ -773,7 +826,7 @@ output_specification:
   "next_phase_inputs": {
     "analysis_ready": true,
     "required_confidence_met": true,
-    "data_package_path": "/data/outputs/analysis_trade_history/discovery/live_signals_20250702.json",
+    "data_package_path": "/data/outputs/trade_history/discovery/live_signals_20250702.json",
     "analysis_focus_areas": [
       "signal_effectiveness",
       "market_context_correlation",
@@ -883,7 +936,7 @@ data_validation:
     - ALL derivable fields calculated (Duration_Days, Trade_Type) - NEVER null
 
   trade_categorization_validation:
-    - Closed trades have complete exit data (timestamps, prices, P&L)
+    - Closed trades have complete exit data (timestamps, prices, CSV P&L values)
     - Active trades have null exit fields but populated unrealized metrics
     - Status field consistency across all trades
     - MFE/MAE data available for both closed and active trades
@@ -1015,12 +1068,12 @@ optimization_targets:
 
 ```bash
 # Save discovery output to data pipeline
-mkdir -p ./data/outputs/analysis_trade_history/discover/outputs/
-cp /data/outputs/analysis_trade_history/discovery/{portfolio}_{YYYYMMDD}.json ./data/outputs/analysis_trade_history/discover/outputs/
+mkdir -p ./data/outputs/trade_history/discover/outputs/
+cp /data/outputs/trade_history/discovery/{portfolio}_{YYYYMMDD}.json ./data/outputs/trade_history/discover/outputs/
 
 # Update discovery manifest
-echo "last_execution: $(date -u +%Y-%m-%dT%H:%M:%SZ)" >> ./data/outputs/analysis_trade_history/discover/manifest.yaml
-echo "confidence_score: {calculated_score}" >> ./data/outputs/analysis_trade_history/discover/manifest.yaml
+echo "last_execution: $(date -u +%Y-%m-%dT%H:%M:%SZ)" >> ./data/outputs/trade_history/discover/manifest.yaml
+echo "confidence_score: {calculated_score}" >> ./data/outputs/trade_history/discover/manifest.yaml
 ```
 
 ### Next Phase Preparation

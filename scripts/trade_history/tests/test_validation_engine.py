@@ -7,10 +7,6 @@ report integrity verification, and business logic coherence checking.
 """
 
 import json
-import math
-import statistics
-from datetime import datetime
-from typing import Dict, List, Optional, Tuple
 
 
 def test_statistical_validation_engine():
@@ -130,13 +126,13 @@ def test_statistical_validation_engine():
     print(f"  Tolerance Met: {'✅' if win_rate_validation['tolerance_met'] else '❌'}")
     print(f"  Confidence: {win_rate_validation['validation_confidence']:.2f}")
 
-    print(f"\nSharpe Ratio Validation:")
+    print("\nSharpe Ratio Validation:")
     print(f"  Reported: {sharpe_validation['calculated_value']:.2f}")
     print(f"  Cross-check: {sharpe_validation['cross_check_value']:.2f}")
     print(f"  Variance: {sharpe_validation['variance']:.3f}")
     print(f"  Tolerance Met: {'✅' if sharpe_validation['tolerance_met'] else '❌'}")
 
-    print(f"\nSample Adequacy:")
+    print("\nSample Adequacy:")
     print(
         f"  Total Trades: {sample_analysis_data['performance_measurement']['statistical_analysis']['total_trades']}"
     )
@@ -263,7 +259,7 @@ def test_report_integrity_validation():
     print(f"  Section Count: {internal_validation['section_count']}/9")
     print(f"  Completeness Score: {internal_validation['completeness_score']:.1%}")
 
-    print(f"\nLive Monitor Structure:")
+    print("\nLive Monitor Structure:")
     print(
         f"  Position Tracking: {'✅' if live_validation['position_tracking'] else '❌'}"
     )
@@ -272,7 +268,7 @@ def test_report_integrity_validation():
     print(f"  Real-time Focus: {'✅' if live_validation['real_time_focus'] else '❌'}")
     print(f"  Completeness Score: {live_validation['completeness_score']:.1%}")
 
-    print(f"\nContent Accuracy:")
+    print("\nContent Accuracy:")
     print(
         f"  Discovery-Analysis Alignment: {content_accuracy['discovery_analysis_alignment']:.1%}"
     )
@@ -411,13 +407,13 @@ def test_business_logic_validation():
         status = "✅" if result else "❌"
         print(f"  {check}: {status}")
 
-    print(f"\nOptimization Feasibility:")
+    print("\nOptimization Feasibility:")
     for opp in optimization_feasibility:
         print(f"  Area: {opp['optimization_area']}")
         print(f"  Feasibility Score: {opp['feasibility_score']:.2f}")
         print(f"  Timeline Realistic: {'✅' if opp['timeline_realistic'] else '❌'}")
 
-    print(f"\nRisk Assessment Coherence:")
+    print("\nRisk Assessment Coherence:")
     portfolio_risk = risk_coherence["portfolio_risk_coherence"]
     market_context = risk_coherence["market_context_integration"]
 
@@ -577,7 +573,7 @@ def test_confidence_scoring_methodology():
         f"    Action Specificity: {phase_scores['synthesis']['action_specificity']:.2f}"
     )
 
-    print(f"\nOverall Assessment:")
+    print("\nOverall Assessment:")
     print(f"  Overall Confidence: {overall_confidence:.3f}")
     print(f"  Quality Band: {quality_band}")
     print(f"  Description: {band_description}")
@@ -587,7 +583,7 @@ def test_confidence_scoring_methodology():
     threshold_met = overall_confidence >= threshold
     threshold_margin = overall_confidence - threshold
 
-    print(f"\nThreshold Assessment:")
+    print("\nThreshold Assessment:")
     print(f"  Minimum Threshold: {threshold:.2f}")
     print(f"  Threshold Met: {'✅' if threshold_met else '❌'}")
     print(f"  Margin: {threshold_margin:+.3f}")
@@ -600,7 +596,7 @@ def validate_validation_schema():
     Validate that the validation JSON schema is properly structured.
     """
 
-    schema_path = "/Users/colemorton/Projects/sensylate/data/outputs/analysis_trade_history/validate/trading_validation_schema_v1.json"
+    schema_path = "/Users/colemorton/Projects/sensylate/data/outputs/trade_history/validate/trading_validation_schema_v1.json"
 
     print("=== Validation Schema Validation ===\n")
 

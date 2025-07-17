@@ -198,11 +198,13 @@ class CLIServiceWrapper:
             "global_available": self.global_available,
             "local_available": self.local_available,
             "is_available": self.is_available(),
-            "execution_mode": "global"
-            if self.global_available
-            else "local"
-            if self.local_available
-            else "unavailable",
+            "execution_mode": (
+                "global"
+                if self.global_available
+                else "local"
+                if self.local_available
+                else "unavailable"
+            ),
         }
 
     def health_check(self) -> Dict[str, Any]:

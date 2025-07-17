@@ -361,7 +361,7 @@
   "next_phase_inputs": {
     "analysis_ready": true,
     "required_confidence_met": true,
-    "data_package_path": "/Users/colemorton/Projects/sensylate/data/outputs/analysis_trade_history/discovery/live_signals_20250716.json",
+    "data_package_path": "/Users/colemorton/Projects/sensylate/data/outputs/trade_history/discovery/live_signals_20250716.json",
     "analysis_focus_areas": [
       "signal_effectiveness",
       "strategy_performance_comparison",

@@ -13,7 +13,7 @@ You are the Trading Performance Validation Specialist, responsible for the syste
 **Framework**: DASV Phase 4
 **Role**: trade_history
 **Action**: validate
-**Output Location**: `./data/outputs/analysis_trade_history/`
+**Output Location**: `./data/outputs/trade_history/`
 **Previous Phases**: trade_history_discover, trade_history_analyze, trade_history_synthesize
 **Next Phase**: System completion
 
@@ -52,6 +52,14 @@ statistical_validation_architecture:
       tolerance: "±0.1% acceptable variance"
       duration_analysis: "Validate drawdown period calculations"
       recovery_analysis: "Verify recovery time and efficiency metrics"
+
+    pnl_calculation_validation:
+      method: "Direct comparison of all P&L values against CSV source data"
+      tolerance: "±$0.01 acceptable variance for dollar amounts"
+      prohibited_methods: "Never accept Return × 1000 or any calculated P&L formulas"
+      source_authority: "CSV PnL column is the single source of truth"
+      error_handling: "Fail fast if any P&L value doesn't match CSV source"
+      validation_scope: "All closed trades must have exact CSV P&L match"
 
   sample_adequacy:
     minimum_trades_check:
@@ -146,6 +154,9 @@ business_logic_validation:
       exit_efficiency_bounds: "0.0 ≤ exit_efficiency ≤ 1.0 range validation"
       duration_reasonableness: "Hold periods within expected trading timeframes"
       strategy_consistency: "SMA vs EMA classification accuracy"
+      pnl_source_validation: "All P&L values must derive from CSV PnL column, never calculated"
+      pnl_return_consistency: "P&L and Return values must be mathematically consistent"
+      x_status_consistency: "X_Status field presence and format validation for Twitter/X link generation"
 
     performance_attribution:
       win_rate_profitability: "Win rate correlation with positive returns"
@@ -321,7 +332,7 @@ runtime_monitoring:
 ```yaml
 validation_output_specification:
   validation_report:
-    path_pattern: "/data/outputs/analysis_trade_history/validation/{PORTFOLIO}_VALIDATION_REPORT_{YYYYMMDD}.json"
+    path_pattern: "/data/outputs/trade_history/validation/{PORTFOLIO}_VALIDATION_REPORT_{YYYYMMDD}.json"
     format: "json"
     schema: "trading_validation_schema_v1"
     content_validation: "Comprehensive quality assessment results"
@@ -330,6 +341,8 @@ validation_output_specification:
   validation_standards:
     statistical_accuracy_requirements:
       calculation_tolerance: "±0.5% for percentages, ±0.02 for ratios"
+      pnl_accuracy_tolerance: "±$0.01 for P&L dollar amounts vs CSV source"
+      pnl_methodology_compliance: "100% use of CSV PnL values, 0% calculated methods"
       significance_thresholds: "p-value ≤0.05 for statistical conclusions"
       confidence_intervals: "95% CI methodology verification"
       sample_size_adequacy: "≥10 trades minimum, power analysis validation"
@@ -425,6 +438,7 @@ validation_engine:
 validation_kpis:
   accuracy_metrics:
     - statistical_validation_accuracy: target >98%
+    - pnl_validation_accuracy: target 100% (all P&L values match CSV within ±$0.01)
     - false_positive_rate: target <2%
     - false_negative_rate: target <1%
     - confidence_calibration_accuracy: target ±5%
@@ -448,12 +462,12 @@ validation_kpis:
 
 ```bash
 # Save all validation outputs to data pipeline
-mkdir -p ./data/outputs/analysis_trade_history/validate/outputs/
-cp /data/outputs/analysis_trade_history/validation/*.json ./data/outputs/analysis_trade_history/validate/outputs/
+mkdir -p ./data/outputs/trade_history/validate/outputs/
+cp /data/outputs/trade_history/validation/*.json ./data/outputs/trade_history/validate/outputs/
 
 # Update validation manifest
-echo "last_execution: $(date -u +%Y-%m-%dT%H:%M:%SZ)" >> ./data/outputs/analysis_trade_history/validate/manifest.yaml
-echo "validation_completed: true" >> ./data/outputs/analysis_trade_history/validate/manifest.yaml
+echo "last_execution: $(date -u +%Y-%m-%dT%H:%M:%SZ)" >> ./data/outputs/trade_history/validate/manifest.yaml
+echo "validation_completed: true" >> ./data/outputs/trade_history/validate/manifest.yaml
 ```
 
 ### Analysis Pipeline Completion

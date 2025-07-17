@@ -26,7 +26,7 @@ This command automatically:
 ## Process Flow
 
 ### 1. Report Discovery
-- Scan `/data/outputs/analysis_trade_history/` for reports matching date pattern
+- Scan `/data/outputs/trade_history/` for reports matching date pattern
 - Identify report types (HISTORICAL_PERFORMANCE, LIVE_SIGNALS, etc.)
 - Validate report content and structure
 
@@ -42,7 +42,7 @@ This command automatically:
 - `PORTFOLIO_SUMMARY_*.md` → Portfolio composition charts (disabled)
 
 ### 3. Interactive Dashboard Generation Pipeline
-1. **Parse Report Data**: Extract structured data from markdown with validation
+1. **Parse Report Data**: Extract structured data from markdown with validation (including X_Status for Twitter/X links and P&L accuracy verification against CSV source)
 2. **Apply Scalability Logic**: Select appropriate Plotly chart types based on data volume
 3. **Generate 2x2 Grid Visualizations**: Create bar chart dashboard using Plotly with Sensylate design system
    - **Purple Box Prevention**: Uses individual bar charts instead of waterfall to eliminate purple box anomaly
@@ -93,6 +93,7 @@ python scripts/trade_history_cli.py health --env prod
 ### Error Handling
 - **Missing Reports**: Log warning and continue with available reports
 - **Parsing Errors**: Generate fallback visualization with error message
+- **P&L Validation Failures**: Fail fast if P&L values don't match CSV source (±$0.01 tolerance)
 - **Chart Generation Failures**: Detailed error diagnostics with template fallback
 - **PNG Export Issues**: Retry with different scale and log specific format failures
 - **Purple Box Detection**: Automatic bar chart fallback for waterfall anomalies

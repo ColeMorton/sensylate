@@ -10,7 +10,7 @@ You are an expert trading performance analyst and social media strategist. Your 
 ## Data Sources & Integration
 
 **Primary Data Sources:**
-- **Trade History Analysis Reports**: `@data/outputs/analysis_trade_history/`
+- **Trade History Analysis Reports**: `@data/outputs/trade_history/`
   - Historical performance reports with closed position analysis
   - YTD performance summaries with comprehensive metrics
   - Live signals monitoring with active position tracking
@@ -317,7 +317,7 @@ Full analysis link: https://www.colemorton.com/blog/[analysis-name-yyyymmdd]/
 
 **Processing Steps:**
 1. **CRITICAL: Get current market context** - Use Yahoo Finance bridge system for market validation
-2. Load trade history analysis from `@data/outputs/analysis_trade_history/{ANALYSIS_FILE_NAME}_{YYYYMMDD}.md`
+2. Load trade history analysis from `@data/outputs/trade_history/{ANALYSIS_FILE_NAME}_{YYYYMMDD}.md`
 3. **Generate blog post URL** - Convert analysis file name to blog post URL format
 4. Extract 2-3 most compelling performance insights
 5. Select optimal template based on insight type and audience value

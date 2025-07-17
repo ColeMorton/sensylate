@@ -92,7 +92,7 @@ class IntegratedReportGenerator:
 
     def _find_historical_performance_files(self) -> List[Path]:
         """Find available historical performance markdown files."""
-        hist_dir = Path("data/outputs/analysis_trade_history")
+        hist_dir = Path("data/outputs/trade_history")
 
         if not hist_dir.exists():
             return []

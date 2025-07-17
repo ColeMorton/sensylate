@@ -113,6 +113,48 @@ Use the production CLI financial services for comprehensive multi-source analysi
 - **Performance Optimization**: Production-grade caching and rate limiting reduces API calls and improves response times
 - **Error Resilience**: Comprehensive error handling with graceful degradation and source reliability scoring
 
+## Data Flow Integration
+
+### Input Consumption Patterns
+**fundamental_analysis_discover_inputs**:
+```yaml
+fundamental_analysis_inputs:
+  required_parameters:
+    - ticker: "Stock symbol (uppercase format)"
+    - confidence_threshold: "9.0 | 9.5 | 9.8 (default: 9.0)"
+
+  cli_services_consumed:
+    - yahoo_finance_cli: "Core market data and financial statements"
+    - alpha_vantage_cli: "Real-time quotes and sentiment analysis"
+    - fmp_cli: "Advanced financials and company intelligence"
+    - sec_edgar_cli: "Regulatory filings and compliance data"
+    - fred_economic_cli: "Federal Reserve economic indicators"
+    - coingecko_cli: "Cryptocurrency sentiment and risk appetite"
+    - imf_cli: "Global economic indicators and country risk"
+
+  validation_enhancement_inputs:
+    - existing_validation_file: "./data/outputs/fundamental_analysis/validation/{TICKER}_{YYYYMMDD}_validation.json"
+    - discovery_optimization_trigger: "Phase 0A enhancement protocol"
+
+  dependency_workflows:
+    - upstream_dependencies: "None (source command)"
+    - data_inheritance: "No input data dependencies"
+    - external_apis: "7-source CLI financial services integration"
+
+fundamental_analysis_outputs:
+  discovery_files: "./data/outputs/fundamental_analysis/discovery/{TICKER}_{YYYYMMDD}_discovery.json"
+  next_phase_inputs: "fundamental_analyst_analyze consumption"
+  downstream_dependencies:
+    - "twitter_fundamental_analysis: analysis file consumption"
+    - "sector_analyst: company analysis aggregation"
+    - "social_media_strategist: investment themes extraction"
+
+  data_flow_architecture:
+    - namespace: "fundamental_analysis"
+    - pattern: "source_command → discovery → analysis → synthesis → validation"
+    - integration_points: "CLI services → JSON output → downstream consumption"
+```
+
 ## Data Collection Protocol
 
 ### Phase 1: Comprehensive Multi-Source Data Collection via CLI Services

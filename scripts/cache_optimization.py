@@ -6,13 +6,11 @@ Fixes cache key inconsistency issues and optimizes cache performance.
 This script addresses the memory leak root cause by fixing the 0% cache hit rate.
 """
 
-import hashlib
 import json
 import logging
-import shutil
 from datetime import datetime, timedelta
 from pathlib import Path
-from typing import Dict, List, Tuple
+from typing import Dict
 
 # Configure logging
 logging.basicConfig(
@@ -309,7 +307,7 @@ def main():
         print(
             f"📂 Directories created: {results['structure_optimization']['directories_created']}"
         )
-        print(f"✅ Cache system optimized for improved performance")
+        print("✅ Cache system optimized for improved performance")
         print("=" * 60)
 
     except Exception as e:

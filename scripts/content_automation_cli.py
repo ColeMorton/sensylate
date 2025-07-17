@@ -11,7 +11,6 @@ Command-line interface for content generation and optimization with:
 - Multiple output formats
 """
 
-import hashlib
 import json
 import re
 import sys
@@ -20,8 +19,7 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional
 
 import typer
-from jinja2 import Environment, FileSystemLoader, Template
-from rich.console import Console
+from jinja2 import Environment, FileSystemLoader, Template, TemplateNotFound
 
 # Add utils to path
 sys.path.insert(0, str(Path(__file__).parent))
@@ -131,7 +129,7 @@ class ContentAutomationCLI(BaseFinancialCLI):
                     self._output_result(result, output_format, "SEO Optimized Content")
 
             except Exception as e:
-                self._handle_error(e, f"Failed to optimize SEO content")
+                self._handle_error(e, "Failed to optimize SEO content")
 
         @self.app.command("blog")
         def generate_blog_post(
@@ -169,7 +167,7 @@ class ContentAutomationCLI(BaseFinancialCLI):
                     )
 
             except Exception as e:
-                self._handle_error(e, f"Failed to generate blog post")
+                self._handle_error(e, "Failed to generate blog post")
 
         @self.app.command("validate")
         def validate_content(
@@ -213,7 +211,7 @@ class ContentAutomationCLI(BaseFinancialCLI):
                     )
 
             except Exception as e:
-                self._handle_error(e, f"Failed to validate content")
+                self._handle_error(e, "Failed to validate content")
 
         @self.app.command("validate-template")
         def validate_template(
@@ -251,7 +249,7 @@ class ContentAutomationCLI(BaseFinancialCLI):
                     )
 
             except Exception as e:
-                self._handle_error(e, f"Failed to validate template")
+                self._handle_error(e, "Failed to validate template")
 
         @self.app.command("analysis")
         def generate_analysis_document(
@@ -326,7 +324,7 @@ class ContentAutomationCLI(BaseFinancialCLI):
                 import yaml
 
                 return yaml.safe_load(content)
-            except:
+            except (yaml.YAMLError, ImportError):
                 pass
 
             # If it's markdown, extract frontmatter and content
@@ -353,7 +351,7 @@ class ContentAutomationCLI(BaseFinancialCLI):
                     "content": markdown_content,
                     "type": "markdown",
                 }
-            except:
+            except (yaml.YAMLError, ValueError, IndexError):
                 pass
 
         return {"content": content, "type": "markdown"}
@@ -439,7 +437,7 @@ class ContentAutomationCLI(BaseFinancialCLI):
         try:
             # Analyze current content
             word_count = len(content.split())
-            current_keywords = self._extract_keywords(content)
+            # current_keywords = self._extract_keywords(content)  # Unused variable
 
             # Calculate keyword density
             keyword_density = {}
@@ -572,11 +570,9 @@ class ContentAutomationCLI(BaseFinancialCLI):
                     mapped_data, analysis_type
                 )
                 if not data_validation.get("compliant", False):
-                    self.console.print(
-                        f"[yellow]Warning: Data validation issues detected[/yellow]"
-                    )
+                    print("Warning: Data validation issues detected")
                     for issue in data_validation.get("issues", []):
-                        self.console.print(f"  - {issue}")
+                        print(f"  - {issue}")
 
             # Generate analysis document
             try:
@@ -635,7 +631,7 @@ class ContentAutomationCLI(BaseFinancialCLI):
         """Get Jinja2 template"""
         try:
             return self.jinja_env.get_template(template_name)
-        except:
+        except (TemplateNotFound, FileNotFoundError):
             # If template doesn't exist, create a basic one
             return self._create_default_template(template_name)
 
@@ -1141,13 +1137,17 @@ Generated: {{ timestamp }}"""
             return {
                 "completeness_score": completeness_score,
                 "issues": issues,
-                "data_quality": "excellent"
-                if completeness_score >= 0.9
-                else "good"
-                if completeness_score >= 0.7
-                else "fair"
-                if completeness_score >= 0.5
-                else "poor",
+                "data_quality": (
+                    "excellent"
+                    if completeness_score >= 0.9
+                    else (
+                        "good"
+                        if completeness_score >= 0.7
+                        else "fair"
+                        if completeness_score >= 0.5
+                        else "poor"
+                    )
+                ),
                 "validation_timestamp": datetime.now().isoformat(),
             }
 
@@ -1245,15 +1245,21 @@ Generated: {{ timestamp }}"""
                 "quality_score": quality_score,
                 "issues": issues,
                 "character_count": len(content),
-                "quality_grade": "A"
-                if quality_score >= 0.95
-                else "B"
-                if quality_score >= 0.85
-                else "C"
-                if quality_score >= 0.75
-                else "D"
-                if quality_score >= 0.60
-                else "F",
+                "quality_grade": (
+                    "A"
+                    if quality_score >= 0.95
+                    else (
+                        "B"
+                        if quality_score >= 0.85
+                        else (
+                            "C"
+                            if quality_score >= 0.75
+                            else "D"
+                            if quality_score >= 0.60
+                            else "F"
+                        )
+                    )
+                ),
                 "institutional_certified": compliant and quality_score >= 0.90,
                 "validation_timestamp": datetime.now().isoformat(),
             }
@@ -1324,18 +1330,24 @@ Generated: {{ timestamp }}"""
             compliance_rate = total_score / len(results)
             results["overall_compliance"] = {
                 "score": compliance_rate,
-                "grade": "A"
-                if compliance_rate >= 0.9
-                else "B"
-                if compliance_rate >= 0.8
-                else "C"
-                if compliance_rate >= 0.7
-                else "F",
-                "status": "✅ INSTITUTIONAL"
-                if compliance_rate >= 0.9
-                else "⚠️ PARTIAL"
-                if compliance_rate >= 0.7
-                else "❌ NON-COMPLIANT",
+                "grade": (
+                    "A"
+                    if compliance_rate >= 0.9
+                    else (
+                        "B"
+                        if compliance_rate >= 0.8
+                        else "C"
+                        if compliance_rate >= 0.7
+                        else "F"
+                    )
+                ),
+                "status": (
+                    "✅ INSTITUTIONAL"
+                    if compliance_rate >= 0.9
+                    else "⚠️ PARTIAL"
+                    if compliance_rate >= 0.7
+                    else "❌ NON-COMPLIANT"
+                ),
             }
 
         return results
@@ -1352,11 +1364,13 @@ Generated: {{ timestamp }}"""
         standards["confidence_scoring"] = {
             "present": len(confidence_matches) > 0,
             "count": len(confidence_matches),
-            "status": "✅ PASS"
-            if len(confidence_matches) >= 5
-            else "⚠️ LIMITED"
-            if len(confidence_matches) > 0
-            else "❌ MISSING",
+            "status": (
+                "✅ PASS"
+                if len(confidence_matches) >= 5
+                else "⚠️ LIMITED"
+                if len(confidence_matches) > 0
+                else "❌ MISSING"
+            ),
             "score": min(1.0, len(confidence_matches) / 5),
         }
 
@@ -1376,11 +1390,13 @@ Generated: {{ timestamp }}"""
         )
         standards["economic_context"] = {
             "indicators_count": economic_mentions,
-            "status": "✅ COMPREHENSIVE"
-            if economic_mentions >= 8
-            else "⚠️ BASIC"
-            if economic_mentions >= 4
-            else "❌ LIMITED",
+            "status": (
+                "✅ COMPREHENSIVE"
+                if economic_mentions >= 8
+                else "⚠️ BASIC"
+                if economic_mentions >= 4
+                else "❌ LIMITED"
+            ),
             "score": min(1.0, economic_mentions / 8),
         }
 
@@ -1397,11 +1413,13 @@ Generated: {{ timestamp }}"""
         )
         standards["risk_quantification"] = {
             "elements_count": risk_mentions,
-            "status": "✅ COMPREHENSIVE"
-            if risk_mentions >= 4
-            else "⚠️ BASIC"
-            if risk_mentions >= 2
-            else "❌ LIMITED",
+            "status": (
+                "✅ COMPREHENSIVE"
+                if risk_mentions >= 4
+                else "⚠️ BASIC"
+                if risk_mentions >= 2
+                else "❌ LIMITED"
+            ),
             "score": min(1.0, risk_mentions / 4),
         }
 
@@ -1417,11 +1435,13 @@ Generated: {{ timestamp }}"""
         source_mentions = sum(1 for source in sources if source in content)
         standards["multi_source_validation"] = {
             "sources_count": source_mentions,
-            "status": "✅ COMPREHENSIVE"
-            if source_mentions >= 4
-            else "⚠️ BASIC"
-            if source_mentions >= 2
-            else "❌ LIMITED",
+            "status": (
+                "✅ COMPREHENSIVE"
+                if source_mentions >= 4
+                else "⚠️ BASIC"
+                if source_mentions >= 2
+                else "❌ LIMITED"
+            ),
             "score": min(1.0, source_mentions / 4),
         }
 
@@ -1430,18 +1450,24 @@ Generated: {{ timestamp }}"""
         overall_score = total_score / len(standards)
         standards["overall_institutional"] = {
             "score": overall_score,
-            "grade": "A"
-            if overall_score >= 0.9
-            else "B"
-            if overall_score >= 0.8
-            else "C"
-            if overall_score >= 0.7
-            else "F",
-            "status": "✅ INSTITUTIONAL"
-            if overall_score >= 0.9
-            else "⚠️ PARTIAL"
-            if overall_score >= 0.7
-            else "❌ NON-COMPLIANT",
+            "grade": (
+                "A"
+                if overall_score >= 0.9
+                else (
+                    "B"
+                    if overall_score >= 0.8
+                    else "C"
+                    if overall_score >= 0.7
+                    else "F"
+                )
+            ),
+            "status": (
+                "✅ INSTITUTIONAL"
+                if overall_score >= 0.9
+                else "⚠️ PARTIAL"
+                if overall_score >= 0.7
+                else "❌ NON-COMPLIANT"
+            ),
             "certification": "Achieved" if overall_score >= 0.9 else "Not Achieved",
         }
 
@@ -1521,9 +1547,9 @@ Generated: {{ timestamp }}"""
                         "institutional_certified", False
                     ),
                     "character_count": len(content),
-                    "word_count": len(content.split())
-                    if content_type == "blog"
-                    else None,
+                    "word_count": (
+                        len(content.split()) if content_type == "blog" else None
+                    ),
                     # Template compliance
                     "template_structure": {
                         "status": "✅ PASS",
@@ -1536,20 +1562,24 @@ Generated: {{ timestamp }}"""
                         "issues": [],
                     },
                     "character_limits": {
-                        "status": "✅ PASS"
-                        if len(content) <= 280 or content_type == "blog"
-                        else "❌ FAIL",
-                        "score": 1.0
-                        if len(content) <= 280 or content_type == "blog"
-                        else 0.5,
+                        "status": (
+                            "✅ PASS"
+                            if len(content) <= 280 or content_type == "blog"
+                            else "❌ FAIL"
+                        ),
+                        "score": (
+                            1.0
+                            if len(content) <= 280 or content_type == "blog"
+                            else 0.5
+                        ),
                         "issues": [],
                     },
                     "formatting_rules": {
                         "status": "✅ PASS" if "**" not in content else "⚠️ WARNING",
                         "score": 1.0 if "**" not in content else 0.7,
-                        "issues": ["Bold formatting detected"]
-                        if "**" in content
-                        else [],
+                        "issues": (
+                            ["Bold formatting detected"] if "**" in content else []
+                        ),
                     },
                     # Content quality standards
                     "accuracy": {
@@ -1636,25 +1666,29 @@ Generated: {{ timestamp }}"""
                         "issues": [],
                     },
                     # Issues and recommendations
-                    "critical_issues": []
-                    if basic_validation.get("compliant", True)
-                    else [
-                        {
-                            "category": "Compliance",
-                            "description": "Failed institutional standards",
-                            "impact": "High",
-                            "solution": "Address compliance issues",
-                        }
-                    ],
-                    "warnings": []
-                    if basic_validation.get("quality_score", 0.8) >= 0.8
-                    else [
-                        {
-                            "category": "Quality",
-                            "description": "Quality score below threshold",
-                            "recommendation": "Improve content quality",
-                        }
-                    ],
+                    "critical_issues": (
+                        []
+                        if basic_validation.get("compliant", True)
+                        else [
+                            {
+                                "category": "Compliance",
+                                "description": "Failed institutional standards",
+                                "impact": "High",
+                                "solution": "Address compliance issues",
+                            }
+                        ]
+                    ),
+                    "warnings": (
+                        []
+                        if basic_validation.get("quality_score", 0.8) >= 0.8
+                        else [
+                            {
+                                "category": "Quality",
+                                "description": "Quality score below threshold",
+                                "recommendation": "Improve content quality",
+                            }
+                        ]
+                    ),
                     "enhancements": [],
                     # Quality improvement
                     "immediate_action_1": "Fix critical formatting issues",

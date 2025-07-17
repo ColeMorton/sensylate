@@ -505,9 +505,7 @@ if __name__ == "__main__":
     from scripts.utils.dashboard_parser import parse_dashboard_data
 
     # Load test data
-    test_file = (
-        "data/outputs/analysis_trade_history/HISTORICAL_PERFORMANCE_REPORT_20250626.md"
-    )
+    test_file = "data/outputs/trade_history/HISTORICAL_PERFORMANCE_REPORT_20250626.md"
 
     try:
         data = parse_dashboard_data(test_file)

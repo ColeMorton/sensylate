@@ -258,7 +258,7 @@
   "next_phase_inputs": {
     "synthesis_ready": true,
     "confidence_threshold_met": true,
-    "analysis_package_path": "/data/outputs/analysis_trade_history/analysis/live_signals_20250703.json",
+    "analysis_package_path": "/data/outputs/trade_history/analysis/live_signals_20250703.json",
     "report_focus_areas": [
       "exit_efficiency_optimization",
       "sample_size_considerations",
