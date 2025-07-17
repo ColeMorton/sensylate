@@ -1,0 +1,819 @@
+{
+  "timestamp": "2025-07-18T08:07:32.526990",
+  "project_root": "/Users/colemorton/Projects/sensylate",
+  "annotation_coverage": {
+    "overall_coverage_percent": 93.0,
+    "total_functions": 1141,
+    "annotated_functions": 1061,
+    "files_analyzed": 74,
+    "coverage_by_file": {
+      "scripts/report_generation.py": {
+        "functions": 3,
+        "annotated": 3,
+        "coverage_percent": 100.0
+      },
+      "scripts/feature_engineering.py": {
+        "functions": 3,
+        "annotated": 3,
+        "coverage_percent": 100.0
+      },
+      "scripts/cache_summary_report.py": {
+        "functions": 7,
+        "annotated": 6,
+        "coverage_percent": 85.7
+      },
+      "scripts/sec_edgar_cli.py": {
+        "functions": 18,
+        "annotated": 16,
+        "coverage_percent": 88.9
+      },
+      "scripts/validate_caching.py": {
+        "functions": 11,
+        "annotated": 10,
+        "coverage_percent": 90.9
+      },
+      "scripts/content_automation_cli.py": {
+        "functions": 43,
+        "annotated": 41,
+        "coverage_percent": 95.3
+      },
+      "scripts/validate_architecture.py": {
+        "functions": 10,
+        "annotated": 8,
+        "coverage_percent": 80.0
+      },
+      "scripts/enhanced_discovery_metrics.py": {
+        "functions": 4,
+        "annotated": 4,
+        "coverage_percent": 100.0
+      },
+      "scripts/cache_optimization.py": {
+        "functions": 8,
+        "annotated": 6,
+        "coverage_percent": 75.0
+      },
+      "scripts/model_training.py": {
+        "functions": 3,
+        "annotated": 3,
+        "coverage_percent": 100.0
+      },
+      "scripts/trade_history_comprehensive_analysis.py": {
+        "functions": 16,
+        "annotated": 15,
+        "coverage_percent": 93.8
+      },
+      "scripts/fred_economic_cli.py": {
+        "functions": 16,
+        "annotated": 14,
+        "coverage_percent": 87.5
+      },
+      "scripts/comprehensive_trade_analysis.py": {
+        "functions": 17,
+        "annotated": 14,
+        "coverage_percent": 82.4
+      },
+      "scripts/alpha_vantage_cli.py": {
+        "functions": 18,
+        "annotated": 16,
+        "coverage_percent": 88.9
+      },
+      "scripts/enhanced_fundamental_analyzer.py": {
+        "functions": 13,
+        "annotated": 12,
+        "coverage_percent": 92.3
+      },
+      "scripts/enhance_discovery_sections.py": {
+        "functions": 4,
+        "annotated": 4,
+        "coverage_percent": 100.0
+      },
+      "scripts/imf_cli.py": {
+        "functions": 19,
+        "annotated": 17,
+        "coverage_percent": 89.5
+      },
+      "scripts/dashboard_generator_cli.py": {
+        "functions": 9,
+        "annotated": 7,
+        "coverage_percent": 77.8
+      },
+      "scripts/cli_wrapper.py": {
+        "functions": 20,
+        "annotated": 20,
+        "coverage_percent": 100.0
+      },
+      "scripts/fmp_cli.py": {
+        "functions": 19,
+        "annotated": 17,
+        "coverage_percent": 89.5
+      },
+      "scripts/yahoo_finance_service.py": {
+        "functions": 22,
+        "annotated": 22,
+        "coverage_percent": 100.0
+      },
+      "scripts/trade_history_images.py": {
+        "functions": 11,
+        "annotated": 10,
+        "coverage_percent": 90.9
+      },
+      "scripts/check_mcp_compliance.py": {
+        "functions": 14,
+        "annotated": 12,
+        "coverage_percent": 85.7
+      },
+      "scripts/coingecko_cli.py": {
+        "functions": 17,
+        "annotated": 15,
+        "coverage_percent": 88.2
+      },
+      "scripts/plotly_dashboard_generator.py": {
+        "functions": 15,
+        "annotated": 14,
+        "coverage_percent": 93.3
+      },
+      "scripts/yahoo_finance_cli.py": {
+        "functions": 11,
+        "annotated": 9,
+        "coverage_percent": 81.8
+      },
+      "scripts/generate_report_with_dashboard.py": {
+        "functions": 4,
+        "annotated": 4,
+        "coverage_percent": 100.0
+      },
+      "scripts/data_extraction.py": {
+        "functions": 3,
+        "annotated": 3,
+        "coverage_percent": 100.0
+      },
+      "scripts/validate_templates.py": {
+        "functions": 3,
+        "annotated": 0,
+        "coverage_percent": 0.0
+      },
+      "scripts/dashboard_generator.py": {
+        "functions": 13,
+        "annotated": 13,
+        "coverage_percent": 100.0
+      },
+      "scripts/trade_history_cli.py": {
+        "functions": 10,
+        "annotated": 8,
+        "coverage_percent": 80.0
+      },
+      "scripts/generate_trade_history_images.py": {
+        "functions": 15,
+        "annotated": 12,
+        "coverage_percent": 80.0
+      },
+      "scripts/mcp_integration.py": {
+        "functions": 42,
+        "annotated": 36,
+        "coverage_percent": 85.7
+      },
+      "scripts/service_discovery.py": {
+        "functions": 8,
+        "annotated": 8,
+        "coverage_percent": 100.0
+      },
+      "scripts/signal_effectiveness_analysis.py": {
+        "functions": 11,
+        "annotated": 11,
+        "coverage_percent": 100.0
+      },
+      "scripts/utils/scalability_manager.py": {
+        "functions": 16,
+        "annotated": 16,
+        "coverage_percent": 100.0
+      },
+      "scripts/utils/layout_manager.py": {
+        "functions": 13,
+        "annotated": 13,
+        "coverage_percent": 100.0
+      },
+      "scripts/utils/config_loader.py": {
+        "functions": 16,
+        "annotated": 16,
+        "coverage_percent": 100.0
+      },
+      "scripts/utils/plotly_theme_mapper.py": {
+        "functions": 27,
+        "annotated": 25,
+        "coverage_percent": 92.6
+      },
+      "scripts/utils/cache_manager.py": {
+        "functions": 18,
+        "annotated": 17,
+        "coverage_percent": 94.4
+      },
+      "scripts/utils/cli_base.py": {
+        "functions": 21,
+        "annotated": 20,
+        "coverage_percent": 95.2
+      },
+      "scripts/utils/config_validator.py": {
+        "functions": 15,
+        "annotated": 13,
+        "coverage_percent": 86.7
+      },
+      "scripts/utils/frontend_config_exporter.py": {
+        "functions": 18,
+        "annotated": 17,
+        "coverage_percent": 94.4
+      },
+      "scripts/utils/chart_comparison_framework.py": {
+        "functions": 6,
+        "annotated": 6,
+        "coverage_percent": 100.0
+      },
+      "scripts/utils/validators.py": {
+        "functions": 9,
+        "annotated": 9,
+        "coverage_percent": 100.0
+      },
+      "scripts/utils/abstract_chart_generator.py": {
+        "functions": 8,
+        "annotated": 7,
+        "coverage_percent": 87.5
+      },
+      "scripts/utils/feature_flags.py": {
+        "functions": 20,
+        "annotated": 14,
+        "coverage_percent": 70.0
+      },
+      "scripts/utils/plotly_layout_manager.py": {
+        "functions": 12,
+        "annotated": 12,
+        "coverage_percent": 100.0
+      },
+      "scripts/utils/dashboard_parser.py": {
+        "functions": 8,
+        "annotated": 8,
+        "coverage_percent": 100.0
+      },
+      "scripts/utils/typing_metrics.py": {
+        "functions": 13,
+        "annotated": 12,
+        "coverage_percent": 92.3
+      },
+      "scripts/utils/production_optimizer.py": {
+        "functions": 24,
+        "annotated": 18,
+        "coverage_percent": 75.0
+      },
+      "scripts/utils/chart_generators.py": {
+        "functions": 12,
+        "annotated": 11,
+        "coverage_percent": 91.7
+      },
+      "scripts/utils/plotly_chart_generator.py": {
+        "functions": 16,
+        "annotated": 14,
+        "coverage_percent": 87.5
+      },
+      "scripts/utils/chart_generator_factory.py": {
+        "functions": 2,
+        "annotated": 2,
+        "coverage_percent": 100.0
+      },
+      "scripts/utils/file_utils.py": {
+        "functions": 8,
+        "annotated": 8,
+        "coverage_percent": 100.0
+      },
+      "scripts/utils/theme_manager.py": {
+        "functions": 19,
+        "annotated": 19,
+        "coverage_percent": 100.0
+      },
+      "scripts/utils/local_font_manager.py": {
+        "functions": 11,
+        "annotated": 11,
+        "coverage_percent": 100.0
+      },
+      "scripts/utils/matplotlib_chart_generator.py": {
+        "functions": 7,
+        "annotated": 6,
+        "coverage_percent": 85.7
+      },
+      "scripts/utils/json_schema_generator.py": {
+        "functions": 20,
+        "annotated": 18,
+        "coverage_percent": 90.0
+      },
+      "scripts/utils/logging_setup.py": {
+        "functions": 2,
+        "annotated": 2,
+        "coverage_percent": 100.0
+      },
+      "scripts/fundamental_analysis/sector_cross_reference.py": {
+        "functions": 8,
+        "annotated": 7,
+        "coverage_percent": 87.5
+      },
+      "scripts/fundamental_analysis/analysis_validation.py": {
+        "functions": 31,
+        "annotated": 30,
+        "coverage_percent": 96.8
+      },
+      "scripts/fundamental_analysis/investment_synthesis.py": {
+        "functions": 59,
+        "annotated": 58,
+        "coverage_percent": 98.3
+      },
+      "scripts/fundamental_analysis/fundamental_analysis.py": {
+        "functions": 76,
+        "annotated": 75,
+        "coverage_percent": 98.7
+      },
+      "scripts/fundamental_analysis/fundamental_discovery.py": {
+        "functions": 40,
+        "annotated": 39,
+        "coverage_percent": 97.5
+      },
+      "scripts/services/fmp.py": {
+        "functions": 17,
+        "annotated": 17,
+        "coverage_percent": 100.0
+      },
+      "scripts/services/coingecko.py": {
+        "functions": 12,
+        "annotated": 12,
+        "coverage_percent": 100.0
+      },
+      "scripts/services/base_financial_service.py": {
+        "functions": 20,
+        "annotated": 20,
+        "coverage_percent": 100.0
+      },
+      "scripts/services/data_orchestrator.py": {
+        "functions": 10,
+        "annotated": 9,
+        "coverage_percent": 90.0
+      },
+      "scripts/services/fred_economic.py": {
+        "functions": 13,
+        "annotated": 13,
+        "coverage_percent": 100.0
+      },
+      "scripts/services/imf.py": {
+        "functions": 15,
+        "annotated": 15,
+        "coverage_percent": 100.0
+      },
+      "scripts/services/sec_edgar.py": {
+        "functions": 14,
+        "annotated": 14,
+        "coverage_percent": 100.0
+      },
+      "scripts/services/yahoo_finance.py": {
+        "functions": 10,
+        "annotated": 10,
+        "coverage_percent": 100.0
+      },
+      "scripts/services/alpha_vantage.py": {
+        "functions": 15,
+        "annotated": 15,
+        "coverage_percent": 100.0
+      }
+    },
+    "high_coverage_files": [
+      "scripts/report_generation.py",
+      "scripts/feature_engineering.py",
+      "scripts/cache_summary_report.py",
+      "scripts/sec_edgar_cli.py",
+      "scripts/validate_caching.py",
+      "scripts/content_automation_cli.py",
+      "scripts/validate_architecture.py",
+      "scripts/enhanced_discovery_metrics.py",
+      "scripts/model_training.py",
+      "scripts/trade_history_comprehensive_analysis.py",
+      "scripts/fred_economic_cli.py",
+      "scripts/comprehensive_trade_analysis.py",
+      "scripts/alpha_vantage_cli.py",
+      "scripts/enhanced_fundamental_analyzer.py",
+      "scripts/enhance_discovery_sections.py",
+      "scripts/imf_cli.py",
+      "scripts/cli_wrapper.py",
+      "scripts/fmp_cli.py",
+      "scripts/yahoo_finance_service.py",
+      "scripts/trade_history_images.py",
+      "scripts/check_mcp_compliance.py",
+      "scripts/coingecko_cli.py",
+      "scripts/plotly_dashboard_generator.py",
+      "scripts/yahoo_finance_cli.py",
+      "scripts/generate_report_with_dashboard.py",
+      "scripts/data_extraction.py",
+      "scripts/dashboard_generator.py",
+      "scripts/trade_history_cli.py",
+      "scripts/generate_trade_history_images.py",
+      "scripts/mcp_integration.py",
+      "scripts/service_discovery.py",
+      "scripts/signal_effectiveness_analysis.py",
+      "scripts/utils/scalability_manager.py",
+      "scripts/utils/layout_manager.py",
+      "scripts/utils/config_loader.py",
+      "scripts/utils/plotly_theme_mapper.py",
+      "scripts/utils/cache_manager.py",
+      "scripts/utils/cli_base.py",
+      "scripts/utils/config_validator.py",
+      "scripts/utils/frontend_config_exporter.py",
+      "scripts/utils/chart_comparison_framework.py",
+      "scripts/utils/validators.py",
+      "scripts/utils/abstract_chart_generator.py",
+      "scripts/utils/plotly_layout_manager.py",
+      "scripts/utils/dashboard_parser.py",
+      "scripts/utils/typing_metrics.py",
+      "scripts/utils/chart_generators.py",
+      "scripts/utils/plotly_chart_generator.py",
+      "scripts/utils/chart_generator_factory.py",
+      "scripts/utils/file_utils.py",
+      "scripts/utils/theme_manager.py",
+      "scripts/utils/local_font_manager.py",
+      "scripts/utils/matplotlib_chart_generator.py",
+      "scripts/utils/json_schema_generator.py",
+      "scripts/utils/logging_setup.py",
+      "scripts/fundamental_analysis/sector_cross_reference.py",
+      "scripts/fundamental_analysis/analysis_validation.py",
+      "scripts/fundamental_analysis/investment_synthesis.py",
+      "scripts/fundamental_analysis/fundamental_analysis.py",
+      "scripts/fundamental_analysis/fundamental_discovery.py",
+      "scripts/services/fmp.py",
+      "scripts/services/coingecko.py",
+      "scripts/services/base_financial_service.py",
+      "scripts/services/data_orchestrator.py",
+      "scripts/services/fred_economic.py",
+      "scripts/services/imf.py",
+      "scripts/services/sec_edgar.py",
+      "scripts/services/yahoo_finance.py",
+      "scripts/services/alpha_vantage.py"
+    ],
+    "low_coverage_files": [
+      "scripts/validate_templates.py"
+    ]
+  },
+  "mypy_compliance": {
+    "is_compliant": false,
+    "error_count": 324,
+    "errors": [
+      "scripts/validate_architecture.py:46:9: error: Need type annotation for \"violations\" (hint: \"violations: list[<type>] = ...\")  [var-annotated]",
+      "scripts/utils/plotly_layout_manager.py:108:42: error: Dict entry 0 has incompatible type \"str\": \"bool\"; expected \"str\": \"str\"  [dict-item]",
+      "scripts/utils/plotly_layout_manager.py:199:34: error: Item \"dict[Any, Any]\" of \"Any | dict[Any, Any]\" has no attribute \"primary_text\"  [union-attr]",
+      "scripts/validate_caching.py:71:17: error: \"object\" has no attribute \"append\"  [attr-defined]",
+      "scripts/validate_caching.py:82:13: error: \"object\" has no attribute \"append\"  [attr-defined]",
+      "scripts/validate_caching.py:113:21: error: Unsupported operand types for + (\"object\" and \"int\")  [operator]",
+      "scripts/validate_caching.py:122:13: error: \"object\" has no attribute \"append\"  [attr-defined]",
+      "scripts/validate_caching.py:161:21: error: \"object\" has no attribute \"append\"  [attr-defined]",
+      "scripts/validate_caching.py:162:21: error: Unsupported left operand type for + (\"object\")  [operator]",
+      "scripts/validate_caching.py:163:21: error: Unsupported left operand type for + (\"object\")  [operator]",
+      "scripts/validate_caching.py:195:21: error: Unsupported operand types for + (\"object\" and \"int\")  [operator]",
+      "scripts/validate_caching.py:197:17: error: \"object\" has no attribute \"append\"  [attr-defined]",
+      "scripts/validate_caching.py:198:17: error: Unsupported operand types for + (\"object\" and \"int\")  [operator]",
+      "scripts/validate_caching.py:201:17: error: \"object\" has no attribute \"append\"  [attr-defined]",
+      "scripts/validate_caching.py:207:24: error: \"object\" has no attribute \"__iter__\"; maybe \"__dir__\" or \"__str__\"? (not iterable)  [attr-defined]",
+      "scripts/validate_caching.py:210:13: error: \"object\" has no attribute \"append\"  [attr-defined]",
+      "scripts/fundamental_analysis/sector_cross_reference.py:164:45: error: Argument \"key\" to \"max\" has incompatible type \"Callable[[dict[str, object]], object]\"; expected \"Callable[[dict[str, object]], SupportsDunderLT[Any] | SupportsDunderGT[Any]]\"  [arg-type]",
+      "scripts/fundamental_analysis/sector_cross_reference.py:164:55: error: Incompatible return value type (got \"object\", expected \"SupportsDunderLT[Any] | SupportsDunderGT[Any]\")  [return-value]",
+      "scripts/fundamental_analysis/sector_cross_reference.py:169:20: error: \"object\" has no attribute \"strftime\"  [attr-defined]",
+      "scripts/fundamental_analysis/sector_cross_reference.py:177:41: error: Incompatible types in assignment (expression has type \"str\", target has type \"None\")  [assignment]",
+      "scripts/fundamental_analysis/sector_cross_reference.py:181:13: error: Dict entry 1 has incompatible type \"str\": \"object\"; expected \"str\": \"str\"  [dict-item]",
+      "scripts/fundamental_analysis/sector_cross_reference.py:182:21: error: \"object\" has no attribute \"strftime\"  [attr-defined]",
+      "scripts/fundamental_analysis/sector_cross_reference.py:334:13: error: \"object\" has no attribute \"append\"  [attr-defined]",
+      "scripts/fundamental_analysis/sector_cross_reference.py:361:13: error: \"object\" has no attribute \"append\"  [attr-defined]",
+      "scripts/fundamental_analysis/sector_cross_reference.py:384:21: error: \"object\" has no attribute \"append\"  [attr-defined]",
+      "scripts/fundamental_analysis/sector_cross_reference.py:388:17: error: \"object\" has no attribute \"append\"  [attr-defined]",
+      "scripts/fundamental_analysis/sector_cross_reference.py:402:17: error: Argument 1 to \"sum\" has incompatible type \"list[object]\"; expected \"Iterable[bool]\"  [arg-type]",
+      "scripts/fundamental_analysis/investment_synthesis.py:213:52: error: Argument 1 to \"_develop_key_themes\" of \"InvestmentSynthesizer\" has incompatible type \"Sequence[str]\"; expected \"list[str]\"  [arg-type]",
+      "scripts/fundamental_analysis/investment_synthesis.py:420:52: error: Incompatible types in assignment (expression has type \"str\", target has type \"dict[str, Any]\")  [assignment]",
+      "scripts/fundamental_analysis/investment_synthesis.py:425:17: error: Incompatible types in assignment (expression has type \"float\", target has type \"dict[str, Any]\")  [assignment]",
+      "scripts/fundamental_analysis/investment_synthesis.py:517:9: error: Need type annotation for \"highlights\" (hint: \"highlights: list[<type>] = ...\")  [var-annotated]",
+      "scripts/fundamental_analysis/investment_synthesis.py:549:9: error: Need type annotation for \"risks\" (hint: \"risks: list[<type>] = ...\")  [var-annotated]",
+      "scripts/fundamental_analysis/investment_synthesis.py:648:9: error: Need type annotation for \"strengths\" (hint: \"strengths: list[<type>] = ...\")  [var-annotated]",
+      "scripts/fundamental_analysis/analysis_validation.py:149:47: error: Incompatible types in assignment (expression has type \"dict[str, dict[str, str]]\", variable has type \"None\")  [assignment]",
+      "scripts/fundamental_analysis/analysis_validation.py:445:13: error: \"object\" has no attribute \"append\"  [attr-defined]",
+      "scripts/fundamental_analysis/analysis_validation.py:459:17: error: Argument 1 to \"sum\" has incompatible type \"list[object]\"; expected \"Iterable[bool]\"  [arg-type]",
+      "scripts/fundamental_analysis/analysis_validation.py:480:13: error: \"object\" has no attribute \"append\"  [attr-defined]",
+      "scripts/fundamental_analysis/analysis_validation.py:488:13: error: \"object\" has no attribute \"append\"  [attr-defined]",
+      "scripts/fundamental_analysis/analysis_validation.py:502:17: error: Argument 1 to \"sum\" has incompatible type \"list[object]\"; expected \"Iterable[bool]\"  [arg-type]",
+      "scripts/fundamental_analysis/analysis_validation.py:525:13: error: \"object\" has no attribute \"append\"  [attr-defined]",
+      "scripts/fundamental_analysis/analysis_validation.py:548:17: error: Argument 1 to \"sum\" has incompatible type \"list[object]\"; expected \"Iterable[bool]\"  [arg-type]",
+      "scripts/fundamental_analysis/analysis_validation.py:565:9: error: Need type annotation for \"confidence_scores\" (hint: \"confidence_scores: list[<type>] = ...\")  [var-annotated]",
+      "scripts/fundamental_analysis/analysis_validation.py:593:13: error: \"object\" has no attribute \"append\"  [attr-defined]",
+      "scripts/fundamental_analysis/analysis_validation.py:621:13: error: \"object\" has no attribute \"append\"  [attr-defined]",
+      "scripts/service_discovery.py:119:17: error: Unsupported target for indexed assignment (\"object\")  [index]",
+      "scripts/service_discovery.py:120:17: error: Unsupported target for indexed assignment (\"object\")  [index]",
+      "scripts/service_discovery.py:126:17: error: Unsupported target for indexed assignment (\"object\")  [index]",
+      "scripts/service_discovery.py:127:17: error: Unsupported target for indexed assignment (\"object\")  [index]",
+      "scripts/service_discovery.py:134:13: error: Unsupported target for indexed assignment (\"object\")  [index]",
+      "scripts/service_discovery.py:135:13: error: Unsupported target for indexed assignment (\"object\")  [index]",
+      "scripts/service_discovery.py:142:21: error: Unsupported target for indexed assignment (\"object\")  [index]",
+      "scripts/service_discovery.py:143:21: error: Value of type \"object\" is not indexable  [index]",
+      "scripts/service_discovery.py:149:12: error: Value of type \"object\" is not indexable  [index]",
+      "scripts/service_discovery.py:150:13: error: Incompatible types in assignment (expression has type \"float\", variable has type \"int\")  [assignment]",
+      "scripts/service_discovery.py:151:12: error: Value of type \"object\" is not indexable  [index]",
+      "scripts/service_discovery.py:152:13: error: Incompatible types in assignment (expression has type \"float\", variable has type \"int\")  [assignment]",
+      "scripts/service_discovery.py:153:12: error: Value of type \"object\" is not indexable  [index]",
+      "scripts/service_discovery.py:154:13: error: Incompatible types in assignment (expression has type \"float\", variable has type \"int\")  [assignment]",
+      "scripts/service_discovery.py:369:17: error: Unsupported operand types for + (\"object\" and \"int\")  [operator]",
+      "scripts/service_discovery.py:370:17: error: Unsupported target for indexed assignment (\"object\")  [index]",
+      "scripts/service_discovery.py:375:17: error: Unsupported operand types for + (\"object\" and \"int\")  [operator]",
+      "scripts/service_discovery.py:376:17: error: Unsupported target for indexed assignment (\"object\")  [index]",
+      "scripts/service_discovery.py:382:32: error: Unsupported operand types for / (\"object\" and \"int\")  [operator]",
+      "scripts/service_discovery.py:385:13: error: \"object\" has no attribute \"append\"  [attr-defined]",
+      "scripts/service_discovery.py:389:13: error: \"object\" has no attribute \"append\"  [attr-defined]",
+      "scripts/service_discovery.py:393:13: error: \"object\" has no attribute \"append\"  [attr-defined]",
+      "scripts/service_discovery.py:397:12: error: Unsupported operand types for < (\"int\" and \"object\")  [operator]",
+      "scripts/service_discovery.py:398:13: error: \"object\" has no attribute \"append\"  [attr-defined]",
+      "scripts/mcp_integration.py:50:9: error: Need type annotation for \"session_cache\" (hint: \"session_cache: dict[<type>, <type>] = ...\")  [var-annotated]",
+      "scripts/mcp_integration.py:270:9: error: Unsupported operand types for + (\"object\" and \"int\")  [operator]",
+      "scripts/mcp_integration.py:279:17: error: \"object\" has no attribute \"append\"  [attr-defined]",
+      "scripts/mcp_integration.py:338:17: error: Unsupported operand types for + (\"object\" and \"int\")  [operator]",
+      "scripts/mcp_integration.py:339:17: error: \"object\" has no attribute \"append\"  [attr-defined]",
+      "scripts/mcp_integration.py:352:13: error: Unsupported operand types for + (\"object\" and \"int\")  [operator]",
+      "scripts/mcp_integration.py:354:13: error: \"object\" has no attribute \"append\"  [attr-defined]",
+      "scripts/mcp_integration.py:359:13: error: Unsupported operand types for + (\"object\" and \"int\")  [operator]",
+      "scripts/mcp_integration.py:361:13: error: \"object\" has no attribute \"append\"  [attr-defined]",
+      "scripts/mcp_integration.py:523:13: error: Unsupported target for indexed assignment (\"Collection[str]\")  [index]",
+      "scripts/mcp_integration.py:526:13: error: Unsupported target for indexed assignment (\"Collection[str]\")  [index]",
+      "scripts/mcp_integration.py:529:13: error: Unsupported target for indexed assignment (\"Collection[str]\")  [index]",
+      "scripts/mcp_integration.py:532:13: error: \"Collection[str]\" has no attribute \"append\"  [attr-defined]",
+      "scripts/mcp_integration.py:536:13: error: Unsupported target for indexed assignment (\"Collection[str]\")  [index]",
+      "scripts/mcp_integration.py:540:13: error: Unsupported target for indexed assignment (\"Collection[str]\")  [index]",
+      "scripts/mcp_integration.py:541:13: error: Unsupported target for indexed assignment (\"Collection[str]\")  [index]",
+      "scripts/mcp_integration.py:544:13: error: Unsupported target for indexed assignment (\"Collection[str]\")  [index]",
+      "scripts/mcp_integration.py:545:13: error: \"Collection[str]\" has no attribute \"append\"  [attr-defined]",
+      "scripts/mcp_integration.py:549:13: error: Unsupported target for indexed assignment (\"Collection[str]\")  [index]",
+      "scripts/mcp_integration.py:553:13: error: Unsupported target for indexed assignment (\"Collection[str]\")  [index]",
+      "scripts/mcp_integration.py:554:13: error: Unsupported target for indexed assignment (\"Collection[str]\")  [index]",
+      "scripts/mcp_integration.py:557:13: error: \"Collection[str]\" has no attribute \"append\"  [attr-defined]",
+      "scripts/mcp_integration.py:561:13: error: Unsupported target for indexed assignment (\"Collection[str]\")  [index]",
+      "scripts/mcp_integration.py:565:13: error: Unsupported target for indexed assignment (\"Collection[str]\")  [index]",
+      "scripts/mcp_integration.py:568:13: error: \"Collection[str]\" has no attribute \"append\"  [attr-defined]",
+      "scripts/mcp_integration.py:572:13: error: Unsupported target for indexed assignment (\"Collection[str]\")  [index]",
+      "scripts/mcp_integration.py:574:42: error: Incompatible types in assignment (expression has type \"int\", target has type \"Collection[str]\")  [assignment]",
+      "scripts/mcp_integration.py:575:41: error: Incompatible types in assignment (expression has type \"bool\", target has type \"Collection[str]\")  [assignment]",
+      "scripts/mcp_integration.py:626:12: error: Unsupported operand types for < (\"int\" and \"object\")  [operator]",
+      "scripts/mcp_integration.py:627:40: error: Unsupported left operand type for / (\"object\")  [operator]",
+      "scripts/mcp_integration.py:628:40: error: Unsupported left operand type for / (\"object\")  [operator]",
+      "scripts/enhanced_fundamental_analyzer.py:74:13: error: \"Collection[str]\" has no attribute \"append\"  [attr-defined]",
+      "scripts/enhanced_fundamental_analyzer.py:84:13: error: Unsupported target for indexed assignment (\"Collection[str]\")  [index]",
+      "scripts/enhanced_fundamental_analyzer.py:103:13: error: \"Collection[str]\" has no attribute \"append\"  [attr-defined]",
+      "scripts/enhanced_fundamental_analyzer.py:107:13: error: Unsupported target for indexed assignment (\"Collection[str]\")  [index]",
+      "scripts/enhanced_fundamental_analyzer.py:120:21: error: \"Collection[str]\" has no attribute \"get\"  [attr-defined]",
+      "scripts/enhanced_fundamental_analyzer.py:135:17: error: \"Collection[str]\" has no attribute \"append\"  [attr-defined]",
+      "scripts/enhanced_fundamental_analyzer.py:139:17: error: Unsupported target for indexed assignment (\"Collection[str]\")  [index]",
+      "scripts/enhanced_fundamental_analyzer.py:156:17: error: \"Collection[str]\" has no attribute \"get\"  [attr-defined]",
+      "scripts/enhanced_fundamental_analyzer.py:166:13: error: \"Collection[str]\" has no attribute \"append\"  [attr-defined]",
+      "scripts/enhanced_fundamental_analyzer.py:170:13: error: Unsupported target for indexed assignment (\"Collection[str]\")  [index]",
+      "scripts/enhanced_fundamental_analyzer.py:288:25: error: \"Sequence[str]\" has no attribute \"append\"  [attr-defined]",
+      "scripts/enhanced_fundamental_analyzer.py:293:25: error: \"Sequence[str]\" has no attribute \"append\"  [attr-defined]",
+      "scripts/enhanced_fundamental_analyzer.py:307:25: error: \"Sequence[str]\" has no attribute \"append\"  [attr-defined]",
+      "scripts/enhanced_fundamental_analyzer.py:312:25: error: \"Sequence[str]\" has no attribute \"append\"  [attr-defined]",
+      "scripts/enhanced_fundamental_analyzer.py:337:17: error: \"Sequence[str]\" has no attribute \"append\"  [attr-defined]",
+      "scripts/enhanced_fundamental_analyzer.py:342:17: error: \"Sequence[str]\" has no attribute \"append\"  [attr-defined]",
+      "scripts/enhanced_fundamental_analyzer.py:349:17: error: \"Sequence[str]\" has no attribute \"append\"  [attr-defined]",
+      "scripts/enhanced_fundamental_analyzer.py:356:17: error: \"Sequence[str]\" has no attribute \"append\"  [attr-defined]",
+      "scripts/enhanced_fundamental_analyzer.py:362:17: error: \"Sequence[str]\" has no attribute \"append\"  [attr-defined]",
+      "scripts/enhanced_fundamental_analyzer.py:403:17: error: \"Sequence[str]\" has no attribute \"append\"  [attr-defined]",
+      "scripts/enhanced_fundamental_analyzer.py:406:17: error: \"Sequence[str]\" has no attribute \"append\"  [attr-defined]",
+      "scripts/enhanced_fundamental_analyzer.py:409:17: error: \"Sequence[str]\" has no attribute \"append\"  [attr-defined]",
+      "scripts/enhanced_fundamental_analyzer.py:415:17: error: \"Sequence[str]\" has no attribute \"append\"  [attr-defined]",
+      "scripts/enhanced_fundamental_analyzer.py:418:17: error: \"Sequence[str]\" has no attribute \"append\"  [attr-defined]",
+      "scripts/enhanced_fundamental_analyzer.py:437:40: error: \"Sequence[str]\" has no attribute \"upper\"  [attr-defined]",
+      "scripts/check_mcp_compliance.py:375:9: error: Need type annotation for \"files_to_check\" (hint: \"files_to_check: list[<type>] = ...\")  [var-annotated]",
+      "scripts/check_mcp_compliance.py:415:9: error: Need type annotation for \"by_type\" (hint: \"by_type: dict[<type>, <type>] = ...\")  [var-annotated]",
+      "scripts/check_mcp_compliance.py:416:9: error: Need type annotation for \"by_severity\" (hint: \"by_severity: dict[<type>, <type>] = ...\")  [var-annotated]",
+      "scripts/check_mcp_compliance.py:417:9: error: Need type annotation for \"by_file\" (hint: \"by_file: dict[<type>, <type>] = ...\")  [var-annotated]",
+      "scripts/check_mcp_compliance.py:472:9: error: Need type annotation for \"by_file\" (hint: \"by_file: dict[<type>, <type>] = ...\")  [var-annotated]",
+      "scripts/cache_optimization.py:39:54: error: Function \"builtins.any\" is not valid as a type  [valid-type]",
+      "scripts/cache_optimization.py:54:13: error: Unsupported operand types for + (\"object\" and \"int\")  [operator]",
+      "scripts/cache_optimization.py:63:24: error: Unsupported right operand type for in (\"object\")  [operator]",
+      "scripts/cache_optimization.py:64:25: error: Unsupported target for indexed assignment (\"object\")  [index]",
+      "scripts/cache_optimization.py:65:21: error: Value of type \"object\" is not indexable  [index]",
+      "scripts/cache_optimization.py:65:21: error: Unsupported target for indexed assignment (\"object\")  [index]",
+      "scripts/cache_optimization.py:74:29: error: Unsupported target for indexed assignment (\"object\")  [index]",
+      "scripts/cache_optimization.py:75:33: error: \"object\" has no attribute \"get\"  [attr-defined]",
+      "scripts/cache_optimization.py:79:29: error: Unsupported target for indexed assignment (\"object\")  [index]",
+      "scripts/cache_optimization.py:80:33: error: \"object\" has no attribute \"get\"  [attr-defined]",
+      "scripts/cache_optimization.py:83:29: error: Unsupported target for indexed assignment (\"object\")  [index]",
+      "scripts/cache_optimization.py:84:33: error: \"object\" has no attribute \"get\"  [attr-defined]",
+      "scripts/cache_optimization.py:88:21: error: \"object\" has no attribute \"append\"  [attr-defined]",
+      "scripts/cache_optimization.py:91:25: error: \"object\" has no attribute \"get\"  [attr-defined]",
+      "scripts/cache_optimization.py:93:13: error: \"object\" has no attribute \"append\"  [attr-defined]",
+      "scripts/cache_optimization.py:97:16: error: Argument 1 to \"len\" has incompatible type \"object\"; expected \"Sized\"  [arg-type]",
+      "scripts/cache_optimization.py:98:13: error: \"object\" has no attribute \"append\"  [attr-defined]",
+      "scripts/cache_optimization.py:99:28: error: Argument 1 to \"len\" has incompatible type \"object\"; expected \"Sized\"  [arg-type]",
+      "scripts/cache_optimization.py:103:12: error: Unsupported operand types for < (\"int\" and \"object\")  [operator]",
+      "scripts/cache_optimization.py:104:13: error: \"object\" has no attribute \"append\"  [attr-defined]",
+      "scripts/cache_optimization.py:211:22: error: any? has no attribute \"__iter__\" (not iterable)  [attr-defined]",
+      "scripts/cache_optimization.py:224:20: error: any? has no attribute \"__iter__\" (not iterable)  [attr-defined]",
+      "scripts/cache_optimization.py:245:50: error: Function \"builtins.any\" is not valid as a type  [valid-type]",
+      "scripts/cli_wrapper.py:224:17: error: Unsupported target for indexed assignment (\"Collection[str]\")  [index]",
+      "scripts/cli_wrapper.py:232:21: error: Unsupported target for indexed assignment (\"Collection[str]\")  [index]",
+      "scripts/cli_wrapper.py:235:21: error: Unsupported target for indexed assignment (\"Collection[str]\")  [index]",
+      "scripts/cli_wrapper.py:238:17: error: Unsupported target for indexed assignment (\"Collection[str]\")  [index]",
+      "scripts/cli_wrapper.py:240:13: error: Unsupported target for indexed assignment (\"Collection[str]\")  [index]",
+      "scripts/cli_wrapper.py:244:13: error: Unsupported target for indexed assignment (\"Collection[str]\")  [index]",
+      "scripts/cli_wrapper.py:257:9: error: Need type annotation for \"services\" (hint: \"services: dict[<type>, <type>] = ...\")  [var-annotated]",
+      "scripts/cli_wrapper.py:327:13: error: Unsupported target for indexed assignment (\"object\")  [index]",
+      "scripts/cli_wrapper.py:348:13: error: Unsupported target for indexed assignment (\"Collection[str]\")  [index]",
+      "scripts/cli_wrapper.py:352:17: error: Value of type \"Collection[str]\" is not indexable  [index]",
+      "scripts/cli_wrapper.py:352:17: error: Unsupported target for indexed assignment (\"Collection[str]\")  [index]",
+      "scripts/cli_wrapper.py:354:17: error: Value of type \"Collection[str]\" is not indexable  [index]",
+      "scripts/cli_wrapper.py:354:17: error: Unsupported target for indexed assignment (\"Collection[str]\")  [index]",
+      "scripts/cli_wrapper.py:356:17: error: Value of type \"Collection[str]\" is not indexable  [index]",
+      "scripts/cli_wrapper.py:356:17: error: Unsupported target for indexed assignment (\"Collection[str]\")  [index]",
+      "scripts/utils/cache_manager.py:84:17: error: Incompatible types in assignment (expression has type \"Path\", variable has type \"str | None\")  [assignment]",
+      "scripts/utils/cache_manager.py:233:63: error: Function \"builtins.callable\" is not valid as a type  [valid-type]",
+      "scripts/utils/cache_manager.py:243:28: error: callable? not callable  [misc]",
+      "scripts/utils/production_optimizer.py:48:9: error: Need type annotation for \"cache\" (hint: \"cache: dict[<type>, <type>] = ...\")  [var-annotated]",
+      "scripts/utils/production_optimizer.py:49:9: error: Need type annotation for \"access_count\" (hint: \"access_count: dict[<type>, <type>] = ...\")  [var-annotated]",
+      "scripts/utils/production_optimizer.py:460:9: error: Need type annotation for \"by_chart_type\" (hint: \"by_chart_type: dict[<type>, <type>] = ...\")  [var-annotated]",
+      "scripts/utils/production_optimizer.py:508:33: error: Dict entry 0 has incompatible type \"str\": \"int\"; expected \"str\": \"str\"  [dict-item]",
+      "scripts/utils/production_optimizer.py:508:47: error: Dict entry 1 has incompatible type \"str\": \"int\"; expected \"str\": \"str\"  [dict-item]",
+      "scripts/utils/production_optimizer.py:508:62: error: Dict entry 2 has incompatible type \"str\": \"int\"; expected \"str\": \"str\"  [dict-item]",
+      "scripts/utils/production_optimizer.py:510:33: error: Dict entry 0 has incompatible type \"str\": \"int\"; expected \"str\": \"str\"  [dict-item]",
+      "scripts/utils/production_optimizer.py:510:48: error: Dict entry 1 has incompatible type \"str\": \"int\"; expected \"str\": \"str\"  [dict-item]",
+      "scripts/utils/production_optimizer.py:510:63: error: Dict entry 2 has incompatible type \"str\": \"int\"; expected \"str\": \"str\"  [dict-item]",
+      "scripts/utils/production_optimizer.py:512:33: error: Dict entry 0 has incompatible type \"str\": \"int\"; expected \"str\": \"str\"  [dict-item]",
+      "scripts/utils/production_optimizer.py:512:48: error: Dict entry 1 has incompatible type \"str\": \"int\"; expected \"str\": \"str\"  [dict-item]",
+      "scripts/utils/production_optimizer.py:512:64: error: Dict entry 2 has incompatible type \"str\": \"int\"; expected \"str\": \"str\"  [dict-item]",
+      "scripts/generate_trade_history_images.py:187:31: error: Incompatible types in assignment (expression has type \"dict[str, Any]\", target has type \"str\")  [assignment]",
+      "scripts/generate_trade_history_images.py:188:34: error: Incompatible types in assignment (expression has type \"list[dict[str, Any]]\", target has type \"str\")  [assignment]",
+      "scripts/generate_trade_history_images.py:191:35: error: Incompatible types in assignment (expression has type \"list[dict[str, Any]]\", target has type \"str\")  [assignment]",
+      "scripts/generate_trade_history_images.py:192:17: error: Argument 1 to \"_extract_weekly_performance\" of \"TemplateBasedDashboardGenerator\" has incompatible type \"str\"; expected \"list[dict[str, Any]]\"  [arg-type]",
+      "scripts/generate_trade_history_images.py:321:21: error: \"object\" has no attribute \"append\"  [attr-defined]",
+      "scripts/generate_trade_history_images.py:322:21: error: Unsupported operand types for + (\"object\" and \"int\")  [operator]",
+      "scripts/generate_trade_history_images.py:331:17: error: No overload variant of \"sum\" matches argument type \"object\"  [call-overload]",
+      "scripts/generate_trade_history_images.py:331:44: error: Argument 1 to \"len\" has incompatible type \"object\"; expected \"Sized\"  [arg-type]",
+      "scripts/fundamental_analysis/fundamental_analysis.py:510:17: error: Incompatible types in assignment (expression has type \"float\", target has type \"dict[str, Any]\")  [assignment]",
+      "scripts/fundamental_analysis/fundamental_analysis.py:2002:9: error: Need type annotation for \"monitoring_kpis\" (hint: \"monitoring_kpis: dict[<type>, <type>] = ...\")  [var-annotated]",
+      "scripts/trade_history_comprehensive_analysis.py:141:32: error: Unsupported operand types for < (\"int\" and \"ExtensionArray\")  [operator]",
+      "scripts/trade_history_comprehensive_analysis.py:142:34: error: Unsupported operand types for >= (\"int\" and \"ExtensionArray\")  [operator]",
+      "scripts/trade_history_comprehensive_analysis.py:145:41: error: Argument 1 to \"mean\" has incompatible type \"Any | ExtensionArray | ndarray[Any, Any]\"; expected \"_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]] | _NestedSequence[_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]]] | bool | int | float | _NestedSequence[bool | int | float]\"  [arg-type]",
+      "scripts/trade_history_comprehensive_analysis.py:146:42: error: Argument 1 to \"mean\" has incompatible type \"Any | ExtensionArray | ndarray[Any, Any]\"; expected \"_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]] | _NestedSequence[_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]]] | bool | int | float | _NestedSequence[bool | int | float]\"  [arg-type]",
+      "scripts/trade_history_comprehensive_analysis.py:167:17: error: Value of type \"object\" is not indexable  [index]",
+      "scripts/trade_history_comprehensive_analysis.py:176:61: error: Argument 1 to \"mean\" has incompatible type \"ExtensionArray | ndarray[Any, Any]\"; expected \"_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]] | _NestedSequence[_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]]] | bool | int | float | _NestedSequence[bool | int | float]\"  [arg-type]",
+      "scripts/trade_history_comprehensive_analysis.py:183:17: error: Value of type \"object\" is not indexable  [index]",
+      "scripts/trade_history_comprehensive_analysis.py:204:65: error: Argument 1 to \"__call__\" of \"_UFunc_Nin1_Nout1\" has incompatible type \"ExtensionArray | ndarray[Any, Any]\"; expected \"_SupportsArray[dtype[Any]] | _NestedSequence[_SupportsArray[dtype[Any]]] | bool | int | float | complex | str | bytes | _NestedSequence[bool | int | float | complex | str | bytes]\"  [arg-type]",
+      "scripts/trade_history_comprehensive_analysis.py:206:17: error: Unsupported target for indexed assignment (\"object\")  [index]",
+      "scripts/trade_history_comprehensive_analysis.py:208:39: error: Argument 1 to \"mean\" has incompatible type \"ExtensionArray | ndarray[Any, Any]\"; expected \"_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]] | _NestedSequence[_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]]] | bool | int | float | _NestedSequence[bool | int | float]\"  [arg-type]",
+      "scripts/trade_history_comprehensive_analysis.py:212:63: error: Argument 1 to \"median\" has incompatible type \"ExtensionArray | ndarray[Any, Any]\"; expected \"_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]] | _NestedSequence[_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]]] | bool | int | float | _NestedSequence[bool | int | float]\"  [arg-type]",
+      "scripts/trade_history_comprehensive_analysis.py:214:39: error: Argument 1 to \"mean\" has incompatible type \"ExtensionArray | ndarray[Any, Any]\"; expected \"_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]] | _NestedSequence[_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]]] | bool | int | float | _NestedSequence[bool | int | float]\"  [arg-type]",
+      "scripts/trade_history_comprehensive_analysis.py:224:45: error: Unsupported operand types for < (\"float\" and \"ExtensionArray\")  [operator]",
+      "scripts/trade_history_comprehensive_analysis.py:228:45: error: Unsupported operand types for > (\"int\" and \"ExtensionArray\")  [operator]",
+      "scripts/trade_history_comprehensive_analysis.py:231:54: error: Argument 1 to \"__call__\" of \"_UFunc_Nin1_Nout1\" has incompatible type \"ExtensionArray | ndarray[Any, Any]\"; expected \"_SupportsArray[dtype[Any]] | _NestedSequence[_SupportsArray[dtype[Any]]] | bool | int | float | complex | str | bytes | _NestedSequence[bool | int | float | complex | str | bytes]\"  [arg-type]",
+      "scripts/trade_history_comprehensive_analysis.py:255:64: error: Argument 1 to \"__call__\" of \"_UFunc_Nin1_Nout1\" has incompatible type \"ExtensionArray | ndarray[Any, Any]\"; expected \"_SupportsArray[dtype[Any]] | _NestedSequence[_SupportsArray[dtype[Any]]] | bool | int | float | complex | str | bytes | _NestedSequence[bool | int | float | complex | str | bytes]\"  [arg-type]",
+      "scripts/trade_history_comprehensive_analysis.py:262:53: error: Argument 1 to \"mean\" has incompatible type \"ExtensionArray | ndarray[Any, Any]\"; expected \"_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]] | _NestedSequence[_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]]] | bool | int | float | _NestedSequence[bool | int | float]\"  [arg-type]",
+      "scripts/trade_history_comprehensive_analysis.py:263:58: error: Argument 1 to \"median\" has incompatible type \"ExtensionArray | ndarray[Any, Any]\"; expected \"_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]] | _NestedSequence[_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]]] | bool | int | float | _NestedSequence[bool | int | float]\"  [arg-type]",
+      "scripts/trade_history_comprehensive_analysis.py:264:55: error: Unsupported operand types for < (\"int\" and \"ExtensionArray\")  [operator]",
+      "scripts/trade_history_comprehensive_analysis.py:266:43: error: Argument 1 to \"mean\" has incompatible type \"ExtensionArray | ndarray[Any, Any]\"; expected \"_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]] | _NestedSequence[_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]]] | bool | int | float | _NestedSequence[bool | int | float]\"  [arg-type]",
+      "scripts/trade_history_comprehensive_analysis.py:273:13: error: Unsupported target for indexed assignment (\"object\")  [index]",
+      "scripts/trade_history_comprehensive_analysis.py:288:42: error: Argument 1 to \"mean\" has incompatible type \"ExtensionArray | ndarray[Any, Any]\"; expected \"_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]] | _NestedSequence[_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]]] | bool | int | float | _NestedSequence[bool | int | float]\"  [arg-type]",
+      "scripts/trade_history_comprehensive_analysis.py:289:46: error: Argument 1 to \"median\" has incompatible type \"ExtensionArray | ndarray[Any, Any]\"; expected \"_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]] | _NestedSequence[_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]]] | bool | int | float | _NestedSequence[bool | int | float]\"  [arg-type]",
+      "scripts/trade_history_comprehensive_analysis.py:290:43: error: Argument 1 to \"std\" has incompatible type \"ExtensionArray | ndarray[Any, Any]\"; expected \"_SupportsArray[dtype[bool_ | integer[Any] | floating[Any] | complexfloating[Any, Any]]] | _NestedSequence[_SupportsArray[dtype[bool_ | integer[Any] | floating[Any] | complexfloating[Any, Any]]]] | bool | int | float | complex | _NestedSequence[bool | int | float | complex]\"  [arg-type]",
+      "scripts/trade_history_comprehensive_analysis.py:293:40: error: Argument 1 has incompatible type \"ExtensionArray | ndarray[Any, Any]\"; expected \"_SupportsArray[dtype[Any]] | _NestedSequence[_SupportsArray[dtype[Any]]]\"  [arg-type]",
+      "scripts/trade_history_comprehensive_analysis.py:294:40: error: Argument 1 has incompatible type \"ExtensionArray | ndarray[Any, Any]\"; expected \"_SupportsArray[dtype[Any]] | _NestedSequence[_SupportsArray[dtype[Any]]]\"  [arg-type]",
+      "scripts/trade_history_comprehensive_analysis.py:305:19: error: Argument 1 to \"std\" has incompatible type \"ExtensionArray | ndarray[Any, Any]\"; expected \"_SupportsArray[dtype[bool_ | integer[Any] | floating[Any] | complexfloating[Any, Any]]] | _NestedSequence[_SupportsArray[dtype[bool_ | integer[Any] | floating[Any] | complexfloating[Any, Any]]]] | bool | int | float | complex | _NestedSequence[bool | int | float | complex]\"  [arg-type]",
+      "scripts/trade_history_comprehensive_analysis.py:307:25: error: Argument 1 to \"mean\" has incompatible type \"ExtensionArray | ndarray[Any, Any]\"; expected \"_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]] | _NestedSequence[_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]]] | bool | int | float | _NestedSequence[bool | int | float]\"  [arg-type]",
+      "scripts/trade_history_comprehensive_analysis.py:307:43: error: Argument 1 to \"std\" has incompatible type \"ExtensionArray | ndarray[Any, Any]\"; expected \"_SupportsArray[dtype[bool_ | integer[Any] | floating[Any] | complexfloating[Any, Any]]] | _NestedSequence[_SupportsArray[dtype[bool_ | integer[Any] | floating[Any] | complexfloating[Any, Any]]]] | bool | int | float | complex | _NestedSequence[bool | int | float | complex]\"  [arg-type]",
+      "scripts/trade_history_comprehensive_analysis.py:311:40: error: Unsupported operand types for > (\"int\" and \"ExtensionArray\")  [operator]",
+      "scripts/trade_history_comprehensive_analysis.py:313:24: error: Argument 1 to \"std\" has incompatible type \"Any | ExtensionArray | ndarray[Any, Any]\"; expected \"_SupportsArray[dtype[bool_ | integer[Any] | floating[Any] | complexfloating[Any, Any]]] | _NestedSequence[_SupportsArray[dtype[bool_ | integer[Any] | floating[Any] | complexfloating[Any, Any]]]] | bool | int | float | complex | _NestedSequence[bool | int | float | complex]\"  [arg-type]",
+      "scripts/trade_history_comprehensive_analysis.py:315:29: error: Argument 1 to \"std\" has incompatible type \"ExtensionArray | ndarray[Any, Any]\"; expected \"_SupportsArray[dtype[bool_ | integer[Any] | floating[Any] | complexfloating[Any, Any]]] | _NestedSequence[_SupportsArray[dtype[bool_ | integer[Any] | floating[Any] | complexfloating[Any, Any]]]] | bool | int | float | complex | _NestedSequence[bool | int | float | complex]\"  [arg-type]",
+      "scripts/trade_history_comprehensive_analysis.py:318:25: error: Argument 1 to \"mean\" has incompatible type \"ExtensionArray | ndarray[Any, Any]\"; expected \"_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]] | _NestedSequence[_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]]] | bool | int | float | _NestedSequence[bool | int | float]\"  [arg-type]",
+      "scripts/trade_history_comprehensive_analysis.py:324:45: error: Unsupported operand types for + (\"int\" and \"ExtensionArray\")  [operator]",
+      "scripts/trade_history_comprehensive_analysis.py:330:31: error: Unsupported operand types for < (\"int\" and \"ExtensionArray\")  [operator]",
+      "scripts/trade_history_comprehensive_analysis.py:331:30: error: Unsupported operand types for >= (\"int\" and \"ExtensionArray\")  [operator]",
+      "scripts/trade_history_comprehensive_analysis.py:334:35: error: Argument 1 to \"mean\" has incompatible type \"Any | ExtensionArray | ndarray[Any, Any]\"; expected \"_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]] | _NestedSequence[_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]]] | bool | int | float | _NestedSequence[bool | int | float]\"  [arg-type]",
+      "scripts/trade_history_comprehensive_analysis.py:335:36: error: Argument 1 to \"mean\" has incompatible type \"Any | ExtensionArray | ndarray[Any, Any]\"; expected \"_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]] | _NestedSequence[_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]]] | bool | int | float | _NestedSequence[bool | int | float]\"  [arg-type]",
+      "scripts/trade_history_comprehensive_analysis.py:343:34: error: Incompatible types in assignment (expression has type \"int\", variable has type \"floating[Any]\")  [assignment]",
+      "scripts/trade_history_comprehensive_analysis.py:345:30: error: Incompatible types in assignment (expression has type \"int\", variable has type \"floating[Any]\")  [assignment]",
+      "scripts/trade_history_comprehensive_analysis.py:352:55: error: Argument 1 to \"std\" has incompatible type \"ExtensionArray | ndarray[Any, Any]\"; expected \"_SupportsArray[dtype[bool_ | integer[Any] | floating[Any] | complexfloating[Any, Any]]] | _NestedSequence[_SupportsArray[dtype[bool_ | integer[Any] | floating[Any] | complexfloating[Any, Any]]]] | bool | int | float | complex | _NestedSequence[bool | int | float | complex]\"  [arg-type]",
+      "scripts/trade_history_comprehensive_analysis.py:357:29: error: Dict entry 0 has incompatible type \"str\": \"str\"; expected \"str\": \"float\"  [dict-item]",
+      "scripts/trade_history_comprehensive_analysis.py:372:28: error: Unsupported operand types for < (\"int\" and \"ExtensionArray\")  [operator]",
+      "scripts/trade_history_comprehensive_analysis.py:423:49: error: Argument 1 to \"mean\" has incompatible type \"ExtensionArray | ndarray[Any, Any]\"; expected \"_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]] | _NestedSequence[_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]]] | bool | int | float | _NestedSequence[bool | int | float]\"  [arg-type]",
+      "scripts/trade_history_comprehensive_analysis.py:424:51: error: Unsupported operand types for < (\"int\" and \"ExtensionArray\")  [operator]",
+      "scripts/trade_history_comprehensive_analysis.py:425:56: error: Argument 1 to \"sum\" has incompatible type \"ExtensionArray | ndarray[Any, Any]\"; expected \"_SupportsArray[dtype[Any]] | _NestedSequence[_SupportsArray[dtype[Any]]]\"  [arg-type]",
+      "scripts/trade_history_comprehensive_analysis.py:486:60: error: Argument 1 to \"__call__\" of \"_UFunc_Nin1_Nout1\" has incompatible type \"ExtensionArray | ndarray[Any, Any]\"; expected \"_SupportsArray[dtype[Any]] | _NestedSequence[_SupportsArray[dtype[Any]]] | bool | int | float | complex | str | bytes | _NestedSequence[bool | int | float | complex | str | bytes]\"  [arg-type]",
+      "scripts/trade_history_comprehensive_analysis.py:491:49: error: Argument 1 to \"mean\" has incompatible type \"ExtensionArray | ndarray[Any, Any]\"; expected \"_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]] | _NestedSequence[_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]]] | bool | int | float | _NestedSequence[bool | int | float]\"  [arg-type]",
+      "scripts/trade_history_comprehensive_analysis.py:492:54: error: Argument 1 to \"median\" has incompatible type \"ExtensionArray | ndarray[Any, Any]\"; expected \"_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]] | _NestedSequence[_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]]] | bool | int | float | _NestedSequence[bool | int | float]\"  [arg-type]",
+      "scripts/trade_history_comprehensive_analysis.py:493:51: error: Unsupported operand types for < (\"int\" and \"ExtensionArray\")  [operator]",
+      "scripts/trade_history_comprehensive_analysis.py:495:39: error: Argument 1 to \"mean\" has incompatible type \"ExtensionArray | ndarray[Any, Any]\"; expected \"_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]] | _NestedSequence[_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]]] | bool | int | float | _NestedSequence[bool | int | float]\"  [arg-type]",
+      "scripts/trade_history_comprehensive_analysis.py:508:25: error: Need type annotation for \"opportunities\"  [var-annotated]",
+      "scripts/trade_history_comprehensive_analysis.py:545:65: error: Argument 1 to \"__call__\" of \"_UFunc_Nin1_Nout1\" has incompatible type \"ExtensionArray | ndarray[Any, Any]\"; expected \"_SupportsArray[dtype[Any]] | _NestedSequence[_SupportsArray[dtype[Any]]] | bool | int | float | complex | str | bytes | _NestedSequence[bool | int | float | complex | str | bytes]\"  [arg-type]",
+      "scripts/trade_history_comprehensive_analysis.py:547:29: error: Argument 1 to \"mean\" has incompatible type \"ExtensionArray | ndarray[Any, Any]\"; expected \"_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]] | _NestedSequence[_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]]] | bool | int | float | _NestedSequence[bool | int | float]\"  [arg-type]",
+      "scripts/trade_history_comprehensive_analysis.py:641:30: error: Need type annotation for \"portfolio_analysis\"  [var-annotated]",
+      "scripts/trade_history_comprehensive_analysis.py:727:53: error: Incompatible types in assignment (expression has type \"dict[str, float]\", target has type \"float\")  [assignment]",
+      "scripts/signal_effectiveness_analysis.py:204:35: error: Redundant cast to \"Index[Any]\"  [redundant-cast]",
+      "scripts/signal_effectiveness_analysis.py:471:46: error: Incompatible types in assignment (expression has type \"Series[Any] | DataFrame\", variable has type \"Series[Any]\")  [assignment]",
+      "scripts/comprehensive_trade_analysis.py:109:17: error: Incompatible types in assignment (expression has type \"Any | float\", target has type \"int\")  [assignment]",
+      "scripts/comprehensive_trade_analysis.py:118:41: error: Incompatible types in assignment (expression has type \"float\", target has type \"int\")  [assignment]",
+      "scripts/comprehensive_trade_analysis.py:126:17: error: Incompatible types in assignment (expression has type \"float | int\", target has type \"int\")  [assignment]",
+      "scripts/comprehensive_trade_analysis.py:137:17: error: Incompatible types in assignment (expression has type \"float | int\", target has type \"int\")  [assignment]",
+      "scripts/comprehensive_trade_analysis.py:148:17: error: Incompatible types in assignment (expression has type \"float | int\", target has type \"int\")  [assignment]",
+      "scripts/comprehensive_trade_analysis.py:168:17: error: Incompatible types in assignment (expression has type \"floating[Any] | int\", target has type \"int\")  [assignment]",
+      "scripts/comprehensive_trade_analysis.py:181:38: error: Incompatible types in assignment (expression has type \"tuple[float, float]\", target has type \"int\")  [assignment]",
+      "scripts/comprehensive_trade_analysis.py:186:49: error: Incompatible types in assignment (expression has type \"float\", target has type \"int\")  [assignment]",
+      "scripts/comprehensive_trade_analysis.py:189:52: error: Incompatible types in assignment (expression has type \"float\", target has type \"int\")  [assignment]",
+      "scripts/comprehensive_trade_analysis.py:1108:16: error: Incompatible return value type (got \"dict[str, Path]\", expected \"dict[str, str]\")  [return-value]",
+      "scripts/fundamental_analysis/fundamental_discovery.py:163:46: error: Incompatible types in assignment (expression has type \"dict[str, object]\", variable has type \"None\")  [assignment]",
+      "scripts/fundamental_analysis/fundamental_discovery.py:172:42: error: Incompatible types in assignment (expression has type \"dict[str, object]\", variable has type \"None\")  [assignment]",
+      "scripts/fundamental_analysis/fundamental_discovery.py:808:13: error: Need type annotation for \"company_data\" (hint: \"company_data: dict[<type>, <type>] = ...\")  [var-annotated]",
+      "scripts/utils/layout_manager.py:375:33: error: Item \"SubFigure\" of \"Figure | SubFigure\" has no attribute \"get_size_inches\"  [union-attr]",
+      "scripts/utils/layout_manager.py:393:31: error: Argument \"rect\" to \"tight_layout\" of \"Figure\" has incompatible type \"list[float]\"; expected \"tuple[float, float, float, float] | None\"  [arg-type]",
+      "scripts/utils/chart_comparison_framework.py:153:19: error: Incompatible types in assignment (expression has type \"Image\", variable has type \"ImageFile\")  [assignment]",
+      "scripts/utils/chart_comparison_framework.py:157:22: error: Incompatible types in assignment (expression has type \"Image\", variable has type \"ImageFile\")  [assignment]",
+      "scripts/utils/chart_comparison_framework.py:180:20: error: Incompatible types in assignment (expression has type \"FreeTypeFont | ImageFont\", variable has type \"FreeTypeFont\")  [assignment]",
+      "scripts/imf_cli.py:426:36: error: Incompatible types in assignment (expression has type \"dict[str, object]\", variable has type \"list[dict[str, Any]]\")  [assignment]",
+      "scripts/content_automation_cli.py:590:55: error: \"Collection[str]\" has no attribute \"keys\"  [attr-defined]",
+      "scripts/content_automation_cli.py:1329:31: error: Generator has incompatible item type \"float | bool | str\"; expected \"bool\"  [misc]",
+      "scripts/content_automation_cli.py:1449:27: error: Generator has incompatible item type \"float | int | str\"; expected \"bool\"  [misc]",
+      "scripts/utils/frontend_config_exporter.py:76:38: error: No overload variant of \"dict\" matches argument type \"MonthlyPerformance | QualityDistribution | TradeData\"  [call-overload]",
+      "scripts/utils/frontend_config_exporter.py:78:38: error: Argument 1 to \"append\" of \"list\" has incompatible type \"str\"; expected \"dict[str, Any]\"  [arg-type]",
+      "scripts/utils/chart_generator_factory.py:25:5: error: Function is missing a type annotation for one or more arguments  [no-untyped-def]",
+      "scripts/utils/chart_generator_factory.py:66:13: error: Returning Any from function declared to return \"str\"  [no-any-return]",
+      "scripts/utils/config_loader.py:295:21: error: Unsupported operand types for + (\"object\" and \"int\")  [operator]",
+      "scripts/utils/config_loader.py:298:21: error: \"object\" has no attribute \"append\"  [attr-defined]",
+      "scripts/utils/config_loader.py:307:13: error: \"object\" has no attribute \"append\"  [attr-defined]",
+      "scripts/services/base_financial_service.py:253:5: error: Missing return statement  [return]",
+      "scripts/utils/config_validator.py:24:5: error: Function is missing a return type annotation  [no-untyped-def]",
+      "scripts/utils/config_validator.py:333:5: error: Function is missing a return type annotation  [no-untyped-def]",
+      "scripts/utils/config_validator.py:458:44: error: Argument 1 to \"load_config\" of \"ConfigLoader\" has incompatible type \"Path\"; expected \"str\"  [arg-type]",
+      "scripts/utils/cli_base.py:258:26: error: Incompatible types in assignment (expression has type \"Writer\", variable has type \"DictWriter[Any]\")  [assignment]",
+      "scripts/utils/cli_base.py:260:37: error: Argument 1 to \"writerow\" of \"DictWriter\" has incompatible type \"list[Any]\"; expected \"Mapping[Any, Any]\"  [arg-type]",
+      "scripts/services/sec_edgar.py:313:26: error: Need type annotation for \"financial_data\"  [var-annotated]",
+      "scripts/services/sec_edgar.py:374:19: error: Need type annotation for \"metrics\"  [var-annotated]",
+      "scripts/services/imf.py:92:5: error: Return type \"dict[str, Any] | list[dict[str, Any]]\" of \"_validate_response\" incompatible with return type \"dict[str, Any]\" in supertype \"BaseFinancialService\"  [override]",
+      "scripts/services/imf.py:136:9: error: Need type annotation for \"params\" (hint: \"params: dict[<type>, <type>] = ...\")  [var-annotated]",
+      "scripts/services/imf.py:174:9: error: Need type annotation for \"params\" (hint: \"params: dict[<type>, <type>] = ...\")  [var-annotated]",
+      "scripts/services/imf.py:213:9: error: Need type annotation for \"params\" (hint: \"params: dict[<type>, <type>] = ...\")  [var-annotated]",
+      "scripts/services/imf.py:258:9: error: Need type annotation for \"params\" (hint: \"params: dict[<type>, <type>] = ...\")  [var-annotated]",
+      "scripts/services/fred_economic.py:100:5: error: Signature of \"_make_request_with_retry\" incompatible with supertype \"BaseFinancialService\"  [override]",
+      "scripts/services/fred_economic.py:284:17: error: Dict entry 0 has incompatible type \"str\": \"float\"; expected \"str\": \"str\"  [dict-item]",
+      "scripts/services/fred_economic.py:285:17: error: Dict entry 1 has incompatible type \"str\": \"float\"; expected \"str\": \"str\"  [dict-item]",
+      "scripts/services/fred_economic.py:286:17: error: Dict entry 2 has incompatible type \"str\": \"float\"; expected \"str\": \"str\"  [dict-item]",
+      "scripts/services/fred_economic.py:287:17: error: Dict entry 3 has incompatible type \"str\": \"float\"; expected \"str\": \"str\"  [dict-item]",
+      "scripts/services/fred_economic.py:289:17: error: Dict entry 5 has incompatible type \"str\": \"int\"; expected \"str\": \"str\"  [dict-item]",
+      "scripts/services/fmp.py:51:5: error: Return type \"dict[str, Any] | list[dict[str, Any]]\" of \"_validate_response\" incompatible with return type \"dict[str, Any]\" in supertype \"BaseFinancialService\"  [override]",
+      "scripts/services/fmp.py:95:16: error: Incompatible return value type (got \"dict[str, Any]\", expected \"list[dict[str, Any]]\")  [return-value]",
+      "scripts/services/fmp.py:114:16: error: Incompatible return value type (got \"dict[str, Any]\", expected \"list[dict[str, Any]]\")  [return-value]",
+      "scripts/services/fmp.py:159:16: error: Incompatible return value type (got \"dict[str, Any]\", expected \"list[dict[str, Any]]\")  [return-value]",
+      "scripts/services/fmp.py:183:16: error: Incompatible return value type (got \"dict[str, Any]\", expected \"list[dict[str, Any]]\")  [return-value]",
+      "scripts/services/fmp.py:207:16: error: Incompatible return value type (got \"dict[str, Any]\", expected \"list[dict[str, Any]]\")  [return-value]",
+      "scripts/services/fmp.py:267:16: error: Incompatible return value type (got \"dict[str, Any]\", expected \"list[dict[str, Any]]\")  [return-value]",
+      "scripts/services/fmp.py:305:38: error: Incompatible types in assignment (expression has type \"float\", target has type \"int\")  [assignment]",
+      "scripts/services/fmp.py:307:39: error: Incompatible types in assignment (expression has type \"float\", target has type \"int\")  [assignment]",
+      "scripts/services/fmp.py:313:42: error: Incompatible types in assignment (expression has type \"float\", target has type \"int\")  [assignment]",
+      "scripts/services/fmp.py:315:43: error: Incompatible types in assignment (expression has type \"float\", target has type \"int\")  [assignment]",
+      "scripts/services/fmp.py:324:16: error: Incompatible return value type (got \"dict[str, Any]\", expected \"list[dict[str, Any]]\")  [return-value]",
+      "scripts/services/fmp.py:346:16: error: Incompatible return value type (got \"dict[str, Any]\", expected \"list[dict[str, Any]]\")  [return-value]",
+      "scripts/services/fmp.py:368:16: error: Incompatible return value type (got \"dict[str, Any]\", expected \"list[dict[str, Any]]\")  [return-value]",
+      "scripts/services/fmp.py:390:16: error: Incompatible return value type (got \"dict[str, Any]\", expected \"list[dict[str, Any]]\")  [return-value]",
+      "scripts/services/fmp.py:420:16: error: Incompatible return value type (got \"dict[str, Any]\", expected \"list[dict[str, Any]]\")  [return-value]",
+      "scripts/services/fmp.py:450:16: error: Incompatible return value type (got \"dict[str, Any]\", expected \"list[dict[str, Any]]\")  [return-value]",
+      "scripts/services/coingecko.py:49:5: error: Return type \"dict[str, Any] | list[dict[str, Any]]\" of \"_validate_response\" incompatible with return type \"dict[str, Any]\" in supertype \"BaseFinancialService\"  [override]",
+      "scripts/services/coingecko.py:215:16: error: Incompatible return value type (got \"dict[str, Any]\", expected \"list[dict[str, Any]]\")  [return-value]",
+      "scripts/plotly_dashboard_generator.py:391:30: error: Need type annotation for \"cumulative_returns\"  [var-annotated]",
+      "scripts/plotly_dashboard_generator.py:391:40: error: Argument 1 to \"cumsum\" has incompatible type \"list[float | int]\"; expected \"_SupportsArray[dtype[Never]] | _NestedSequence[_SupportsArray[dtype[Never]]]\"  [arg-type]",
+      "scripts/dashboard_generator.py:453:18: error: Argument \"rect\" to \"tight_layout\" of \"Figure\" has incompatible type \"list[float]\"; expected \"tuple[float, float, float, float] | None\"  [arg-type]",
+      "scripts/trade_history_images.py:153:9: error: Need type annotation for \"found_reports\" (hint: \"found_reports: list[<type>] = ...\")  [var-annotated]",
+      "scripts/generate_report_with_dashboard.py:55:27: error: Need type annotation for \"generated_files\"  [var-annotated]",
+      "scripts/generate_report_with_dashboard.py:60:27: error: \"main\" does not return a value (it only ever returns None)  [func-returns-value]",
+      "scripts/generate_report_with_dashboard.py:103:9: error: Need type annotation for \"files\" (hint: \"files: list[<type>] = ...\")  [var-annotated]"
+    ],
+    "raw_output": "scripts/validate_architecture.py:46:9: error: Need type annotation for \"violations\" (hint: \"violations: list[<type>] = ...\")  [var-annotated]\nscripts/utils/plotly_layout_manager.py:108:42: error: Dict entry 0 has incompatible type \"str\": \"bool\"; expected \"str\": \"str\"  [dict-item]\nscripts/utils/plotly_layout_manager.py:199:34: error: Item \"dict[Any, Any]\" of \"Any | dict[Any, Any]\" has no attribute \"primary_text\"  [union-attr]\nscripts/validate_caching.py:71:17: error: \"object\" has no attribute \"append\"  [attr-defined]\nscripts/validate_caching.py:82:13: error: \"object\" has no attribute \"append\"  [attr-defined]\nscripts/validate_caching.py:113:21: error: Unsupported operand types for + (\"object\" and \"int\")  [operator]\nscripts/validate_caching.py:122:13: error: \"object\" has no attribute \"append\"  [attr-defined]\nscripts/validate_caching.py:161:21: error: \"object\" has no attribute \"append\"  [attr-defined]\nscripts/validate_caching.py:162:21: error: Unsupported left operand type for + (\"object\")  [operator]\nscripts/validate_caching.py:163:21: error: Unsupported left operand type for + (\"object\")  [operator]\nscripts/validate_caching.py:195:21: error: Unsupported operand types for + (\"object\" and \"int\")  [operator]\nscripts/validate_caching.py:197:17: error: \"object\" has no attribute \"append\"  [attr-defined]\nscripts/validate_caching.py:198:17: error: Unsupported operand types for + (\"object\" and \"int\")  [operator]\nscripts/validate_caching.py:201:17: error: \"object\" has no attribute \"append\"  [attr-defined]\nscripts/validate_caching.py:207:24: error: \"object\" has no attribute \"__iter__\"; maybe \"__dir__\" or \"__str__\"? (not iterable)  [attr-defined]\nscripts/validate_caching.py:210:13: error: \"object\" has no attribute \"append\"  [attr-defined]\nscripts/fundamental_analysis/sector_cross_reference.py:164:45: error: Argument \"key\" to \"max\" has incompatible type \"Callable[[dict[str, object]], object]\"; expected \"Callable[[dict[str, object]], SupportsDunderLT[Any] | SupportsDunderGT[Any]]\"  [arg-type]\nscripts/fundamental_analysis/sector_cross_reference.py:164:55: error: Incompatible return value type (got \"object\", expected \"SupportsDunderLT[Any] | SupportsDunderGT[Any]\")  [return-value]\nscripts/fundamental_analysis/sector_cross_reference.py:169:20: error: \"object\" has no attribute \"strftime\"  [attr-defined]\nscripts/fundamental_analysis/sector_cross_reference.py:177:41: error: Incompatible types in assignment (expression has type \"str\", target has type \"None\")  [assignment]\nscripts/fundamental_analysis/sector_cross_reference.py:181:13: error: Dict entry 1 has incompatible type \"str\": \"object\"; expected \"str\": \"str\"  [dict-item]\nscripts/fundamental_analysis/sector_cross_reference.py:182:21: error: \"object\" has no attribute \"strftime\"  [attr-defined]\nscripts/fundamental_analysis/sector_cross_reference.py:334:13: error: \"object\" has no attribute \"append\"  [attr-defined]\nscripts/fundamental_analysis/sector_cross_reference.py:361:13: error: \"object\" has no attribute \"append\"  [attr-defined]\nscripts/fundamental_analysis/sector_cross_reference.py:384:21: error: \"object\" has no attribute \"append\"  [attr-defined]\nscripts/fundamental_analysis/sector_cross_reference.py:388:17: error: \"object\" has no attribute \"append\"  [attr-defined]\nscripts/fundamental_analysis/sector_cross_reference.py:402:17: error: Argument 1 to \"sum\" has incompatible type \"list[object]\"; expected \"Iterable[bool]\"  [arg-type]\nscripts/fundamental_analysis/investment_synthesis.py:213:52: error: Argument 1 to \"_develop_key_themes\" of \"InvestmentSynthesizer\" has incompatible type \"Sequence[str]\"; expected \"list[str]\"  [arg-type]\nscripts/fundamental_analysis/investment_synthesis.py:420:52: error: Incompatible types in assignment (expression has type \"str\", target has type \"dict[str, Any]\")  [assignment]\nscripts/fundamental_analysis/investment_synthesis.py:425:17: error: Incompatible types in assignment (expression has type \"float\", target has type \"dict[str, Any]\")  [assignment]\nscripts/fundamental_analysis/investment_synthesis.py:517:9: error: Need type annotation for \"highlights\" (hint: \"highlights: list[<type>] = ...\")  [var-annotated]\nscripts/fundamental_analysis/investment_synthesis.py:549:9: error: Need type annotation for \"risks\" (hint: \"risks: list[<type>] = ...\")  [var-annotated]\nscripts/fundamental_analysis/investment_synthesis.py:648:9: error: Need type annotation for \"strengths\" (hint: \"strengths: list[<type>] = ...\")  [var-annotated]\nscripts/fundamental_analysis/analysis_validation.py:149:47: error: Incompatible types in assignment (expression has type \"dict[str, dict[str, str]]\", variable has type \"None\")  [assignment]\nscripts/fundamental_analysis/analysis_validation.py:445:13: error: \"object\" has no attribute \"append\"  [attr-defined]\nscripts/fundamental_analysis/analysis_validation.py:459:17: error: Argument 1 to \"sum\" has incompatible type \"list[object]\"; expected \"Iterable[bool]\"  [arg-type]\nscripts/fundamental_analysis/analysis_validation.py:480:13: error: \"object\" has no attribute \"append\"  [attr-defined]\nscripts/fundamental_analysis/analysis_validation.py:488:13: error: \"object\" has no attribute \"append\"  [attr-defined]\nscripts/fundamental_analysis/analysis_validation.py:502:17: error: Argument 1 to \"sum\" has incompatible type \"list[object]\"; expected \"Iterable[bool]\"  [arg-type]\nscripts/fundamental_analysis/analysis_validation.py:525:13: error: \"object\" has no attribute \"append\"  [attr-defined]\nscripts/fundamental_analysis/analysis_validation.py:548:17: error: Argument 1 to \"sum\" has incompatible type \"list[object]\"; expected \"Iterable[bool]\"  [arg-type]\nscripts/fundamental_analysis/analysis_validation.py:565:9: error: Need type annotation for \"confidence_scores\" (hint: \"confidence_scores: list[<type>] = ...\")  [var-annotated]\nscripts/fundamental_analysis/analysis_validation.py:593:13: error: \"object\" has no attribute \"append\"  [attr-defined]\nscripts/fundamental_analysis/analysis_validation.py:621:13: error: \"object\" has no attribute \"append\"  [attr-defined]\nscripts/service_discovery.py:119:17: error: Unsupported target for indexed assignment (\"object\")  [index]\nscripts/service_discovery.py:120:17: error: Unsupported target for indexed assignment (\"object\")  [index]\nscripts/service_discovery.py:126:17: error: Unsupported target for indexed assignment (\"object\")  [index]\nscripts/service_discovery.py:127:17: error: Unsupported target for indexed assignment (\"object\")  [index]\nscripts/service_discovery.py:134:13: error: Unsupported target for indexed assignment (\"object\")  [index]\nscripts/service_discovery.py:135:13: error: Unsupported target for indexed assignment (\"object\")  [index]\nscripts/service_discovery.py:142:21: error: Unsupported target for indexed assignment (\"object\")  [index]\nscripts/service_discovery.py:143:21: error: Value of type \"object\" is not indexable  [index]\nscripts/service_discovery.py:149:12: error: Value of type \"object\" is not indexable  [index]\nscripts/service_discovery.py:150:13: error: Incompatible types in assignment (expression has type \"float\", variable has type \"int\")  [assignment]\nscripts/service_discovery.py:151:12: error: Value of type \"object\" is not indexable  [index]\nscripts/service_discovery.py:152:13: error: Incompatible types in assignment (expression has type \"float\", variable has type \"int\")  [assignment]\nscripts/service_discovery.py:153:12: error: Value of type \"object\" is not indexable  [index]\nscripts/service_discovery.py:154:13: error: Incompatible types in assignment (expression has type \"float\", variable has type \"int\")  [assignment]\nscripts/service_discovery.py:369:17: error: Unsupported operand types for + (\"object\" and \"int\")  [operator]\nscripts/service_discovery.py:370:17: error: Unsupported target for indexed assignment (\"object\")  [index]\nscripts/service_discovery.py:375:17: error: Unsupported operand types for + (\"object\" and \"int\")  [operator]\nscripts/service_discovery.py:376:17: error: Unsupported target for indexed assignment (\"object\")  [index]\nscripts/service_discovery.py:382:32: error: Unsupported operand types for / (\"object\" and \"int\")  [operator]\nscripts/service_discovery.py:385:13: error: \"object\" has no attribute \"append\"  [attr-defined]\nscripts/service_discovery.py:389:13: error: \"object\" has no attribute \"append\"  [attr-defined]\nscripts/service_discovery.py:393:13: error: \"object\" has no attribute \"append\"  [attr-defined]\nscripts/service_discovery.py:397:12: error: Unsupported operand types for < (\"int\" and \"object\")  [operator]\nscripts/service_discovery.py:398:13: error: \"object\" has no attribute \"append\"  [attr-defined]\nscripts/mcp_integration.py:50:9: error: Need type annotation for \"session_cache\" (hint: \"session_cache: dict[<type>, <type>] = ...\")  [var-annotated]\nscripts/mcp_integration.py:270:9: error: Unsupported operand types for + (\"object\" and \"int\")  [operator]\nscripts/mcp_integration.py:279:17: error: \"object\" has no attribute \"append\"  [attr-defined]\nscripts/mcp_integration.py:338:17: error: Unsupported operand types for + (\"object\" and \"int\")  [operator]\nscripts/mcp_integration.py:339:17: error: \"object\" has no attribute \"append\"  [attr-defined]\nscripts/mcp_integration.py:352:13: error: Unsupported operand types for + (\"object\" and \"int\")  [operator]\nscripts/mcp_integration.py:354:13: error: \"object\" has no attribute \"append\"  [attr-defined]\nscripts/mcp_integration.py:359:13: error: Unsupported operand types for + (\"object\" and \"int\")  [operator]\nscripts/mcp_integration.py:361:13: error: \"object\" has no attribute \"append\"  [attr-defined]\nscripts/mcp_integration.py:523:13: error: Unsupported target for indexed assignment (\"Collection[str]\")  [index]\nscripts/mcp_integration.py:526:13: error: Unsupported target for indexed assignment (\"Collection[str]\")  [index]\nscripts/mcp_integration.py:529:13: error: Unsupported target for indexed assignment (\"Collection[str]\")  [index]\nscripts/mcp_integration.py:532:13: error: \"Collection[str]\" has no attribute \"append\"  [attr-defined]\nscripts/mcp_integration.py:536:13: error: Unsupported target for indexed assignment (\"Collection[str]\")  [index]\nscripts/mcp_integration.py:540:13: error: Unsupported target for indexed assignment (\"Collection[str]\")  [index]\nscripts/mcp_integration.py:541:13: error: Unsupported target for indexed assignment (\"Collection[str]\")  [index]\nscripts/mcp_integration.py:544:13: error: Unsupported target for indexed assignment (\"Collection[str]\")  [index]\nscripts/mcp_integration.py:545:13: error: \"Collection[str]\" has no attribute \"append\"  [attr-defined]\nscripts/mcp_integration.py:549:13: error: Unsupported target for indexed assignment (\"Collection[str]\")  [index]\nscripts/mcp_integration.py:553:13: error: Unsupported target for indexed assignment (\"Collection[str]\")  [index]\nscripts/mcp_integration.py:554:13: error: Unsupported target for indexed assignment (\"Collection[str]\")  [index]\nscripts/mcp_integration.py:557:13: error: \"Collection[str]\" has no attribute \"append\"  [attr-defined]\nscripts/mcp_integration.py:561:13: error: Unsupported target for indexed assignment (\"Collection[str]\")  [index]\nscripts/mcp_integration.py:565:13: error: Unsupported target for indexed assignment (\"Collection[str]\")  [index]\nscripts/mcp_integration.py:568:13: error: \"Collection[str]\" has no attribute \"append\"  [attr-defined]\nscripts/mcp_integration.py:572:13: error: Unsupported target for indexed assignment (\"Collection[str]\")  [index]\nscripts/mcp_integration.py:574:42: error: Incompatible types in assignment (expression has type \"int\", target has type \"Collection[str]\")  [assignment]\nscripts/mcp_integration.py:575:41: error: Incompatible types in assignment (expression has type \"bool\", target has type \"Collection[str]\")  [assignment]\nscripts/mcp_integration.py:626:12: error: Unsupported operand types for < (\"int\" and \"object\")  [operator]\nscripts/mcp_integration.py:627:40: error: Unsupported left operand type for / (\"object\")  [operator]\nscripts/mcp_integration.py:628:40: error: Unsupported left operand type for / (\"object\")  [operator]\nscripts/enhanced_fundamental_analyzer.py:74:13: error: \"Collection[str]\" has no attribute \"append\"  [attr-defined]\nscripts/enhanced_fundamental_analyzer.py:84:13: error: Unsupported target for indexed assignment (\"Collection[str]\")  [index]\nscripts/enhanced_fundamental_analyzer.py:103:13: error: \"Collection[str]\" has no attribute \"append\"  [attr-defined]\nscripts/enhanced_fundamental_analyzer.py:107:13: error: Unsupported target for indexed assignment (\"Collection[str]\")  [index]\nscripts/enhanced_fundamental_analyzer.py:120:21: error: \"Collection[str]\" has no attribute \"get\"  [attr-defined]\nscripts/enhanced_fundamental_analyzer.py:135:17: error: \"Collection[str]\" has no attribute \"append\"  [attr-defined]\nscripts/enhanced_fundamental_analyzer.py:139:17: error: Unsupported target for indexed assignment (\"Collection[str]\")  [index]\nscripts/enhanced_fundamental_analyzer.py:156:17: error: \"Collection[str]\" has no attribute \"get\"  [attr-defined]\nscripts/enhanced_fundamental_analyzer.py:166:13: error: \"Collection[str]\" has no attribute \"append\"  [attr-defined]\nscripts/enhanced_fundamental_analyzer.py:170:13: error: Unsupported target for indexed assignment (\"Collection[str]\")  [index]\nscripts/enhanced_fundamental_analyzer.py:288:25: error: \"Sequence[str]\" has no attribute \"append\"  [attr-defined]\nscripts/enhanced_fundamental_analyzer.py:293:25: error: \"Sequence[str]\" has no attribute \"append\"  [attr-defined]\nscripts/enhanced_fundamental_analyzer.py:307:25: error: \"Sequence[str]\" has no attribute \"append\"  [attr-defined]\nscripts/enhanced_fundamental_analyzer.py:312:25: error: \"Sequence[str]\" has no attribute \"append\"  [attr-defined]\nscripts/enhanced_fundamental_analyzer.py:337:17: error: \"Sequence[str]\" has no attribute \"append\"  [attr-defined]\nscripts/enhanced_fundamental_analyzer.py:342:17: error: \"Sequence[str]\" has no attribute \"append\"  [attr-defined]\nscripts/enhanced_fundamental_analyzer.py:349:17: error: \"Sequence[str]\" has no attribute \"append\"  [attr-defined]\nscripts/enhanced_fundamental_analyzer.py:356:17: error: \"Sequence[str]\" has no attribute \"append\"  [attr-defined]\nscripts/enhanced_fundamental_analyzer.py:362:17: error: \"Sequence[str]\" has no attribute \"append\"  [attr-defined]\nscripts/enhanced_fundamental_analyzer.py:403:17: error: \"Sequence[str]\" has no attribute \"append\"  [attr-defined]\nscripts/enhanced_fundamental_analyzer.py:406:17: error: \"Sequence[str]\" has no attribute \"append\"  [attr-defined]\nscripts/enhanced_fundamental_analyzer.py:409:17: error: \"Sequence[str]\" has no attribute \"append\"  [attr-defined]\nscripts/enhanced_fundamental_analyzer.py:415:17: error: \"Sequence[str]\" has no attribute \"append\"  [attr-defined]\nscripts/enhanced_fundamental_analyzer.py:418:17: error: \"Sequence[str]\" has no attribute \"append\"  [attr-defined]\nscripts/enhanced_fundamental_analyzer.py:437:40: error: \"Sequence[str]\" has no attribute \"upper\"  [attr-defined]\nscripts/check_mcp_compliance.py:79:9: note: By default the bodies of untyped functions are not checked, consider using --check-untyped-defs  [annotation-unchecked]\nscripts/check_mcp_compliance.py:375:9: error: Need type annotation for \"files_to_check\" (hint: \"files_to_check: list[<type>] = ...\")  [var-annotated]\nscripts/check_mcp_compliance.py:415:9: error: Need type annotation for \"by_type\" (hint: \"by_type: dict[<type>, <type>] = ...\")  [var-annotated]\nscripts/check_mcp_compliance.py:416:9: error: Need type annotation for \"by_severity\" (hint: \"by_severity: dict[<type>, <type>] = ...\")  [var-annotated]\nscripts/check_mcp_compliance.py:417:9: error: Need type annotation for \"by_file\" (hint: \"by_file: dict[<type>, <type>] = ...\")  [var-annotated]\nscripts/check_mcp_compliance.py:472:9: error: Need type annotation for \"by_file\" (hint: \"by_file: dict[<type>, <type>] = ...\")  [var-annotated]\nscripts/cache_optimization.py:39:54: error: Function \"builtins.any\" is not valid as a type  [valid-type]\nscripts/cache_optimization.py:39:54: note: Perhaps you meant \"typing.Any\" instead of \"any\"?\nscripts/cache_optimization.py:54:13: error: Unsupported operand types for + (\"object\" and \"int\")  [operator]\nscripts/cache_optimization.py:63:24: error: Unsupported right operand type for in (\"object\")  [operator]\nscripts/cache_optimization.py:64:25: error: Unsupported target for indexed assignment (\"object\")  [index]\nscripts/cache_optimization.py:65:21: error: Value of type \"object\" is not indexable  [index]\nscripts/cache_optimization.py:65:21: error: Unsupported target for indexed assignment (\"object\")  [index]\nscripts/cache_optimization.py:74:29: error: Unsupported target for indexed assignment (\"object\")  [index]\nscripts/cache_optimization.py:75:33: error: \"object\" has no attribute \"get\"  [attr-defined]\nscripts/cache_optimization.py:79:29: error: Unsupported target for indexed assignment (\"object\")  [index]\nscripts/cache_optimization.py:80:33: error: \"object\" has no attribute \"get\"  [attr-defined]\nscripts/cache_optimization.py:83:29: error: Unsupported target for indexed assignment (\"object\")  [index]\nscripts/cache_optimization.py:84:33: error: \"object\" has no attribute \"get\"  [attr-defined]\nscripts/cache_optimization.py:88:21: error: \"object\" has no attribute \"append\"  [attr-defined]\nscripts/cache_optimization.py:91:25: error: \"object\" has no attribute \"get\"  [attr-defined]\nscripts/cache_optimization.py:93:13: error: \"object\" has no attribute \"append\"  [attr-defined]\nscripts/cache_optimization.py:97:16: error: Argument 1 to \"len\" has incompatible type \"object\"; expected \"Sized\"  [arg-type]\nscripts/cache_optimization.py:98:13: error: \"object\" has no attribute \"append\"  [attr-defined]\nscripts/cache_optimization.py:99:28: error: Argument 1 to \"len\" has incompatible type \"object\"; expected \"Sized\"  [arg-type]\nscripts/cache_optimization.py:103:12: error: Unsupported operand types for < (\"int\" and \"object\")  [operator]\nscripts/cache_optimization.py:104:13: error: \"object\" has no attribute \"append\"  [attr-defined]\nscripts/cache_optimization.py:211:22: error: any? has no attribute \"__iter__\" (not iterable)  [attr-defined]\nscripts/cache_optimization.py:224:20: error: any? has no attribute \"__iter__\" (not iterable)  [attr-defined]\nscripts/cache_optimization.py:245:50: error: Function \"builtins.any\" is not valid as a type  [valid-type]\nscripts/cache_optimization.py:245:50: note: Perhaps you meant \"typing.Any\" instead of \"any\"?\nscripts/cli_wrapper.py:224:17: error: Unsupported target for indexed assignment (\"Collection[str]\")  [index]\nscripts/cli_wrapper.py:232:21: error: Unsupported target for indexed assignment (\"Collection[str]\")  [index]\nscripts/cli_wrapper.py:235:21: error: Unsupported target for indexed assignment (\"Collection[str]\")  [index]\nscripts/cli_wrapper.py:238:17: error: Unsupported target for indexed assignment (\"Collection[str]\")  [index]\nscripts/cli_wrapper.py:240:13: error: Unsupported target for indexed assignment (\"Collection[str]\")  [index]\nscripts/cli_wrapper.py:244:13: error: Unsupported target for indexed assignment (\"Collection[str]\")  [index]\nscripts/cli_wrapper.py:257:9: error: Need type annotation for \"services\" (hint: \"services: dict[<type>, <type>] = ...\")  [var-annotated]\nscripts/cli_wrapper.py:327:13: error: Unsupported target for indexed assignment (\"object\")  [index]\nscripts/cli_wrapper.py:348:13: error: Unsupported target for indexed assignment (\"Collection[str]\")  [index]\nscripts/cli_wrapper.py:352:17: error: Value of type \"Collection[str]\" is not indexable  [index]\nscripts/cli_wrapper.py:352:17: error: Unsupported target for indexed assignment (\"Collection[str]\")  [index]\nscripts/cli_wrapper.py:354:17: error: Value of type \"Collection[str]\" is not indexable  [index]\nscripts/cli_wrapper.py:354:17: error: Unsupported target for indexed assignment (\"Collection[str]\")  [index]\nscripts/cli_wrapper.py:356:17: error: Value of type \"Collection[str]\" is not indexable  [index]\nscripts/cli_wrapper.py:356:17: error: Unsupported target for indexed assignment (\"Collection[str]\")  [index]\nscripts/utils/cache_manager.py:84:17: error: Incompatible types in assignment (expression has type \"Path\", variable has type \"str | None\")  [assignment]\nscripts/utils/cache_manager.py:233:63: error: Function \"builtins.callable\" is not valid as a type  [valid-type]\nscripts/utils/cache_manager.py:233:63: note: Perhaps you meant \"typing.Callable\" instead of \"callable\"?\nscripts/utils/cache_manager.py:243:28: error: callable? not callable  [misc]\nscripts/utils/production_optimizer.py:48:9: error: Need type annotation for \"cache\" (hint: \"cache: dict[<type>, <type>] = ...\")  [var-annotated]\nscripts/utils/production_optimizer.py:49:9: error: Need type annotation for \"access_count\" (hint: \"access_count: dict[<type>, <type>] = ...\")  [var-annotated]\nscripts/utils/production_optimizer.py:460:9: error: Need type annotation for \"by_chart_type\" (hint: \"by_chart_type: dict[<type>, <type>] = ...\")  [var-annotated]\nscripts/utils/production_optimizer.py:508:33: error: Dict entry 0 has incompatible type \"str\": \"int\"; expected \"str\": \"str\"  [dict-item]\nscripts/utils/production_optimizer.py:508:47: error: Dict entry 1 has incompatible type \"str\": \"int\"; expected \"str\": \"str\"  [dict-item]\nscripts/utils/production_optimizer.py:508:62: error: Dict entry 2 has incompatible type \"str\": \"int\"; expected \"str\": \"str\"  [dict-item]\nscripts/utils/production_optimizer.py:510:33: error: Dict entry 0 has incompatible type \"str\": \"int\"; expected \"str\": \"str\"  [dict-item]\nscripts/utils/production_optimizer.py:510:48: error: Dict entry 1 has incompatible type \"str\": \"int\"; expected \"str\": \"str\"  [dict-item]\nscripts/utils/production_optimizer.py:510:63: error: Dict entry 2 has incompatible type \"str\": \"int\"; expected \"str\": \"str\"  [dict-item]\nscripts/utils/production_optimizer.py:512:33: error: Dict entry 0 has incompatible type \"str\": \"int\"; expected \"str\": \"str\"  [dict-item]\nscripts/utils/production_optimizer.py:512:48: error: Dict entry 1 has incompatible type \"str\": \"int\"; expected \"str\": \"str\"  [dict-item]\nscripts/utils/production_optimizer.py:512:64: error: Dict entry 2 has incompatible type \"str\": \"int\"; expected \"str\": \"str\"  [dict-item]\nscripts/generate_trade_history_images.py:187:31: error: Incompatible types in assignment (expression has type \"dict[str, Any]\", target has type \"str\")  [assignment]\nscripts/generate_trade_history_images.py:188:34: error: Incompatible types in assignment (expression has type \"list[dict[str, Any]]\", target has type \"str\")  [assignment]\nscripts/generate_trade_history_images.py:191:35: error: Incompatible types in assignment (expression has type \"list[dict[str, Any]]\", target has type \"str\")  [assignment]\nscripts/generate_trade_history_images.py:192:17: error: Argument 1 to \"_extract_weekly_performance\" of \"TemplateBasedDashboardGenerator\" has incompatible type \"str\"; expected \"list[dict[str, Any]]\"  [arg-type]\nscripts/generate_trade_history_images.py:321:21: error: \"object\" has no attribute \"append\"  [attr-defined]\nscripts/generate_trade_history_images.py:322:21: error: Unsupported operand types for + (\"object\" and \"int\")  [operator]\nscripts/generate_trade_history_images.py:331:17: error: No overload variant of \"sum\" matches argument type \"object\"  [call-overload]\nscripts/generate_trade_history_images.py:331:17: note: Possible overload variants:\nscripts/generate_trade_history_images.py:331:17: note:     def sum(Iterable[bool], /, start: int = ...) -> int\nscripts/generate_trade_history_images.py:331:17: note:     def [_SupportsSumNoDefaultT: _SupportsSumWithNoDefaultGiven] sum(Iterable[_SupportsSumNoDefaultT], /) -> _SupportsSumNoDefaultT | Literal[0]\nscripts/generate_trade_history_images.py:331:17: note:     def [_AddableT1: SupportsAdd[Any, Any], _AddableT2: SupportsAdd[Any, Any]] sum(Iterable[_AddableT1], /, start: _AddableT2) -> _AddableT1 | _AddableT2\nscripts/generate_trade_history_images.py:331:44: error: Argument 1 to \"len\" has incompatible type \"object\"; expected \"Sized\"  [arg-type]\nscripts/fundamental_analysis/fundamental_analysis.py:510:17: error: Incompatible types in assignment (expression has type \"float\", target has type \"dict[str, Any]\")  [assignment]\nscripts/fundamental_analysis/fundamental_analysis.py:2002:9: error: Need type annotation for \"monitoring_kpis\" (hint: \"monitoring_kpis: dict[<type>, <type>] = ...\")  [var-annotated]\nscripts/trade_history_comprehensive_analysis.py:141:32: error: Unsupported operand types for < (\"int\" and \"ExtensionArray\")  [operator]\nscripts/trade_history_comprehensive_analysis.py:141:32: note: Left operand is of type \"ExtensionArray | ndarray[Any, Any]\"\nscripts/trade_history_comprehensive_analysis.py:142:34: error: Unsupported operand types for >= (\"int\" and \"ExtensionArray\")  [operator]\nscripts/trade_history_comprehensive_analysis.py:142:34: note: Left operand is of type \"ExtensionArray | ndarray[Any, Any]\"\nscripts/trade_history_comprehensive_analysis.py:145:41: error: Argument 1 to \"mean\" has incompatible type \"Any | ExtensionArray | ndarray[Any, Any]\"; expected \"_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]] | _NestedSequence[_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]]] | bool | int | float | _NestedSequence[bool | int | float]\"  [arg-type]\nscripts/trade_history_comprehensive_analysis.py:146:42: error: Argument 1 to \"mean\" has incompatible type \"Any | ExtensionArray | ndarray[Any, Any]\"; expected \"_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]] | _NestedSequence[_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]]] | bool | int | float | _NestedSequence[bool | int | float]\"  [arg-type]\nscripts/trade_history_comprehensive_analysis.py:167:17: error: Value of type \"object\" is not indexable  [index]\nscripts/trade_history_comprehensive_analysis.py:176:61: error: Argument 1 to \"mean\" has incompatible type \"ExtensionArray | ndarray[Any, Any]\"; expected \"_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]] | _NestedSequence[_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]]] | bool | int | float | _NestedSequence[bool | int | float]\"  [arg-type]\nscripts/trade_history_comprehensive_analysis.py:183:17: error: Value of type \"object\" is not indexable  [index]\nscripts/trade_history_comprehensive_analysis.py:204:65: error: Argument 1 to \"__call__\" of \"_UFunc_Nin1_Nout1\" has incompatible type \"ExtensionArray | ndarray[Any, Any]\"; expected \"_SupportsArray[dtype[Any]] | _NestedSequence[_SupportsArray[dtype[Any]]] | bool | int | float | complex | str | bytes | _NestedSequence[bool | int | float | complex | str | bytes]\"  [arg-type]\nscripts/trade_history_comprehensive_analysis.py:206:17: error: Unsupported target for indexed assignment (\"object\")  [index]\nscripts/trade_history_comprehensive_analysis.py:208:39: error: Argument 1 to \"mean\" has incompatible type \"ExtensionArray | ndarray[Any, Any]\"; expected \"_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]] | _NestedSequence[_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]]] | bool | int | float | _NestedSequence[bool | int | float]\"  [arg-type]\nscripts/trade_history_comprehensive_analysis.py:212:63: error: Argument 1 to \"median\" has incompatible type \"ExtensionArray | ndarray[Any, Any]\"; expected \"_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]] | _NestedSequence[_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]]] | bool | int | float | _NestedSequence[bool | int | float]\"  [arg-type]\nscripts/trade_history_comprehensive_analysis.py:214:39: error: Argument 1 to \"mean\" has incompatible type \"ExtensionArray | ndarray[Any, Any]\"; expected \"_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]] | _NestedSequence[_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]]] | bool | int | float | _NestedSequence[bool | int | float]\"  [arg-type]\nscripts/trade_history_comprehensive_analysis.py:224:45: error: Unsupported operand types for < (\"float\" and \"ExtensionArray\")  [operator]\nscripts/trade_history_comprehensive_analysis.py:224:45: note: Left operand is of type \"ExtensionArray | ndarray[Any, Any]\"\nscripts/trade_history_comprehensive_analysis.py:228:45: error: Unsupported operand types for > (\"int\" and \"ExtensionArray\")  [operator]\nscripts/trade_history_comprehensive_analysis.py:228:45: note: Left operand is of type \"ExtensionArray | ndarray[Any, Any]\"\nscripts/trade_history_comprehensive_analysis.py:231:54: error: Argument 1 to \"__call__\" of \"_UFunc_Nin1_Nout1\" has incompatible type \"ExtensionArray | ndarray[Any, Any]\"; expected \"_SupportsArray[dtype[Any]] | _NestedSequence[_SupportsArray[dtype[Any]]] | bool | int | float | complex | str | bytes | _NestedSequence[bool | int | float | complex | str | bytes]\"  [arg-type]\nscripts/trade_history_comprehensive_analysis.py:255:64: error: Argument 1 to \"__call__\" of \"_UFunc_Nin1_Nout1\" has incompatible type \"ExtensionArray | ndarray[Any, Any]\"; expected \"_SupportsArray[dtype[Any]] | _NestedSequence[_SupportsArray[dtype[Any]]] | bool | int | float | complex | str | bytes | _NestedSequence[bool | int | float | complex | str | bytes]\"  [arg-type]\nscripts/trade_history_comprehensive_analysis.py:262:53: error: Argument 1 to \"mean\" has incompatible type \"ExtensionArray | ndarray[Any, Any]\"; expected \"_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]] | _NestedSequence[_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]]] | bool | int | float | _NestedSequence[bool | int | float]\"  [arg-type]\nscripts/trade_history_comprehensive_analysis.py:263:58: error: Argument 1 to \"median\" has incompatible type \"ExtensionArray | ndarray[Any, Any]\"; expected \"_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]] | _NestedSequence[_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]]] | bool | int | float | _NestedSequence[bool | int | float]\"  [arg-type]\nscripts/trade_history_comprehensive_analysis.py:264:55: error: Unsupported operand types for < (\"int\" and \"ExtensionArray\")  [operator]\nscripts/trade_history_comprehensive_analysis.py:264:55: note: Left operand is of type \"ExtensionArray | ndarray[Any, Any]\"\nscripts/trade_history_comprehensive_analysis.py:266:43: error: Argument 1 to \"mean\" has incompatible type \"ExtensionArray | ndarray[Any, Any]\"; expected \"_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]] | _NestedSequence[_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]]] | bool | int | float | _NestedSequence[bool | int | float]\"  [arg-type]\nscripts/trade_history_comprehensive_analysis.py:273:13: error: Unsupported target for indexed assignment (\"object\")  [index]\nscripts/trade_history_comprehensive_analysis.py:288:42: error: Argument 1 to \"mean\" has incompatible type \"ExtensionArray | ndarray[Any, Any]\"; expected \"_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]] | _NestedSequence[_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]]] | bool | int | float | _NestedSequence[bool | int | float]\"  [arg-type]\nscripts/trade_history_comprehensive_analysis.py:289:46: error: Argument 1 to \"median\" has incompatible type \"ExtensionArray | ndarray[Any, Any]\"; expected \"_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]] | _NestedSequence[_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]]] | bool | int | float | _NestedSequence[bool | int | float]\"  [arg-type]\nscripts/trade_history_comprehensive_analysis.py:290:43: error: Argument 1 to \"std\" has incompatible type \"ExtensionArray | ndarray[Any, Any]\"; expected \"_SupportsArray[dtype[bool_ | integer[Any] | floating[Any] | complexfloating[Any, Any]]] | _NestedSequence[_SupportsArray[dtype[bool_ | integer[Any] | floating[Any] | complexfloating[Any, Any]]]] | bool | int | float | complex | _NestedSequence[bool | int | float | complex]\"  [arg-type]\nscripts/trade_history_comprehensive_analysis.py:293:40: error: Argument 1 has incompatible type \"ExtensionArray | ndarray[Any, Any]\"; expected \"_SupportsArray[dtype[Any]] | _NestedSequence[_SupportsArray[dtype[Any]]]\"  [arg-type]\nscripts/trade_history_comprehensive_analysis.py:294:40: error: Argument 1 has incompatible type \"ExtensionArray | ndarray[Any, Any]\"; expected \"_SupportsArray[dtype[Any]] | _NestedSequence[_SupportsArray[dtype[Any]]]\"  [arg-type]\nscripts/trade_history_comprehensive_analysis.py:305:19: error: Argument 1 to \"std\" has incompatible type \"ExtensionArray | ndarray[Any, Any]\"; expected \"_SupportsArray[dtype[bool_ | integer[Any] | floating[Any] | complexfloating[Any, Any]]] | _NestedSequence[_SupportsArray[dtype[bool_ | integer[Any] | floating[Any] | complexfloating[Any, Any]]]] | bool | int | float | complex | _NestedSequence[bool | int | float | complex]\"  [arg-type]\nscripts/trade_history_comprehensive_analysis.py:307:25: error: Argument 1 to \"mean\" has incompatible type \"ExtensionArray | ndarray[Any, Any]\"; expected \"_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]] | _NestedSequence[_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]]] | bool | int | float | _NestedSequence[bool | int | float]\"  [arg-type]\nscripts/trade_history_comprehensive_analysis.py:307:43: error: Argument 1 to \"std\" has incompatible type \"ExtensionArray | ndarray[Any, Any]\"; expected \"_SupportsArray[dtype[bool_ | integer[Any] | floating[Any] | complexfloating[Any, Any]]] | _NestedSequence[_SupportsArray[dtype[bool_ | integer[Any] | floating[Any] | complexfloating[Any, Any]]]] | bool | int | float | complex | _NestedSequence[bool | int | float | complex]\"  [arg-type]\nscripts/trade_history_comprehensive_analysis.py:311:40: error: Unsupported operand types for > (\"int\" and \"ExtensionArray\")  [operator]\nscripts/trade_history_comprehensive_analysis.py:311:40: note: Left operand is of type \"ExtensionArray | ndarray[Any, Any]\"\nscripts/trade_history_comprehensive_analysis.py:313:24: error: Argument 1 to \"std\" has incompatible type \"Any | ExtensionArray | ndarray[Any, Any]\"; expected \"_SupportsArray[dtype[bool_ | integer[Any] | floating[Any] | complexfloating[Any, Any]]] | _NestedSequence[_SupportsArray[dtype[bool_ | integer[Any] | floating[Any] | complexfloating[Any, Any]]]] | bool | int | float | complex | _NestedSequence[bool | int | float | complex]\"  [arg-type]\nscripts/trade_history_comprehensive_analysis.py:315:29: error: Argument 1 to \"std\" has incompatible type \"ExtensionArray | ndarray[Any, Any]\"; expected \"_SupportsArray[dtype[bool_ | integer[Any] | floating[Any] | complexfloating[Any, Any]]] | _NestedSequence[_SupportsArray[dtype[bool_ | integer[Any] | floating[Any] | complexfloating[Any, Any]]]] | bool | int | float | complex | _NestedSequence[bool | int | float | complex]\"  [arg-type]\nscripts/trade_history_comprehensive_analysis.py:318:25: error: Argument 1 to \"mean\" has incompatible type \"ExtensionArray | ndarray[Any, Any]\"; expected \"_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]] | _NestedSequence[_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]]] | bool | int | float | _NestedSequence[bool | int | float]\"  [arg-type]\nscripts/trade_history_comprehensive_analysis.py:324:45: error: Unsupported operand types for + (\"int\" and \"ExtensionArray\")  [operator]\nscripts/trade_history_comprehensive_analysis.py:324:45: note: Right operand is of type \"ExtensionArray | ndarray[Any, Any]\"\nscripts/trade_history_comprehensive_analysis.py:330:31: error: Unsupported operand types for < (\"int\" and \"ExtensionArray\")  [operator]\nscripts/trade_history_comprehensive_analysis.py:330:31: note: Left operand is of type \"ExtensionArray | ndarray[Any, Any]\"\nscripts/trade_history_comprehensive_analysis.py:331:30: error: Unsupported operand types for >= (\"int\" and \"ExtensionArray\")  [operator]\nscripts/trade_history_comprehensive_analysis.py:331:30: note: Left operand is of type \"ExtensionArray | ndarray[Any, Any]\"\nscripts/trade_history_comprehensive_analysis.py:334:35: error: Argument 1 to \"mean\" has incompatible type \"Any | ExtensionArray | ndarray[Any, Any]\"; expected \"_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]] | _NestedSequence[_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]]] | bool | int | float | _NestedSequence[bool | int | float]\"  [arg-type]\nscripts/trade_history_comprehensive_analysis.py:335:36: error: Argument 1 to \"mean\" has incompatible type \"Any | ExtensionArray | ndarray[Any, Any]\"; expected \"_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]] | _NestedSequence[_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]]] | bool | int | float | _NestedSequence[bool | int | float]\"  [arg-type]\nscripts/trade_history_comprehensive_analysis.py:343:34: error: Incompatible types in assignment (expression has type \"int\", variable has type \"floating[Any]\")  [assignment]\nscripts/trade_history_comprehensive_analysis.py:345:30: error: Incompatible types in assignment (expression has type \"int\", variable has type \"floating[Any]\")  [assignment]\nscripts/trade_history_comprehensive_analysis.py:352:55: error: Argument 1 to \"std\" has incompatible type \"ExtensionArray | ndarray[Any, Any]\"; expected \"_SupportsArray[dtype[bool_ | integer[Any] | floating[Any] | complexfloating[Any, Any]]] | _NestedSequence[_SupportsArray[dtype[bool_ | integer[Any] | floating[Any] | complexfloating[Any, Any]]]] | bool | int | float | complex | _NestedSequence[bool | int | float | complex]\"  [arg-type]\nscripts/trade_history_comprehensive_analysis.py:357:29: error: Dict entry 0 has incompatible type \"str\": \"str\"; expected \"str\": \"float\"  [dict-item]\nscripts/trade_history_comprehensive_analysis.py:372:28: error: Unsupported operand types for < (\"int\" and \"ExtensionArray\")  [operator]\nscripts/trade_history_comprehensive_analysis.py:372:28: note: Left operand is of type \"ExtensionArray | ndarray[Any, Any]\"\nscripts/trade_history_comprehensive_analysis.py:423:49: error: Argument 1 to \"mean\" has incompatible type \"ExtensionArray | ndarray[Any, Any]\"; expected \"_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]] | _NestedSequence[_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]]] | bool | int | float | _NestedSequence[bool | int | float]\"  [arg-type]\nscripts/trade_history_comprehensive_analysis.py:424:51: error: Unsupported operand types for < (\"int\" and \"ExtensionArray\")  [operator]\nscripts/trade_history_comprehensive_analysis.py:424:51: note: Left operand is of type \"ExtensionArray | ndarray[Any, Any]\"\nscripts/trade_history_comprehensive_analysis.py:425:56: error: Argument 1 to \"sum\" has incompatible type \"ExtensionArray | ndarray[Any, Any]\"; expected \"_SupportsArray[dtype[Any]] | _NestedSequence[_SupportsArray[dtype[Any]]]\"  [arg-type]\nscripts/trade_history_comprehensive_analysis.py:486:60: error: Argument 1 to \"__call__\" of \"_UFunc_Nin1_Nout1\" has incompatible type \"ExtensionArray | ndarray[Any, Any]\"; expected \"_SupportsArray[dtype[Any]] | _NestedSequence[_SupportsArray[dtype[Any]]] | bool | int | float | complex | str | bytes | _NestedSequence[bool | int | float | complex | str | bytes]\"  [arg-type]\nscripts/trade_history_comprehensive_analysis.py:491:49: error: Argument 1 to \"mean\" has incompatible type \"ExtensionArray | ndarray[Any, Any]\"; expected \"_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]] | _NestedSequence[_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]]] | bool | int | float | _NestedSequence[bool | int | float]\"  [arg-type]\nscripts/trade_history_comprehensive_analysis.py:492:54: error: Argument 1 to \"median\" has incompatible type \"ExtensionArray | ndarray[Any, Any]\"; expected \"_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]] | _NestedSequence[_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]]] | bool | int | float | _NestedSequence[bool | int | float]\"  [arg-type]\nscripts/trade_history_comprehensive_analysis.py:493:51: error: Unsupported operand types for < (\"int\" and \"ExtensionArray\")  [operator]\nscripts/trade_history_comprehensive_analysis.py:493:51: note: Left operand is of type \"ExtensionArray | ndarray[Any, Any]\"\nscripts/trade_history_comprehensive_analysis.py:495:39: error: Argument 1 to \"mean\" has incompatible type \"ExtensionArray | ndarray[Any, Any]\"; expected \"_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]] | _NestedSequence[_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]]] | bool | int | float | _NestedSequence[bool | int | float]\"  [arg-type]\nscripts/trade_history_comprehensive_analysis.py:508:25: error: Need type annotation for \"opportunities\"  [var-annotated]\nscripts/trade_history_comprehensive_analysis.py:545:65: error: Argument 1 to \"__call__\" of \"_UFunc_Nin1_Nout1\" has incompatible type \"ExtensionArray | ndarray[Any, Any]\"; expected \"_SupportsArray[dtype[Any]] | _NestedSequence[_SupportsArray[dtype[Any]]] | bool | int | float | complex | str | bytes | _NestedSequence[bool | int | float | complex | str | bytes]\"  [arg-type]\nscripts/trade_history_comprehensive_analysis.py:547:29: error: Argument 1 to \"mean\" has incompatible type \"ExtensionArray | ndarray[Any, Any]\"; expected \"_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]] | _NestedSequence[_SupportsArray[dtype[bool_ | integer[Any] | floating[Any]]]] | bool | int | float | _NestedSequence[bool | int | float]\"  [arg-type]\nscripts/trade_history_comprehensive_analysis.py:641:30: error: Need type annotation for \"portfolio_analysis\"  [var-annotated]\nscripts/trade_history_comprehensive_analysis.py:727:53: error: Incompatible types in assignment (expression has type \"dict[str, float]\", target has type \"float\")  [assignment]\nscripts/signal_effectiveness_analysis.py:204:35: error: Redundant cast to \"Index[Any]\"  [redundant-cast]\nscripts/signal_effectiveness_analysis.py:471:46: error: Incompatible types in assignment (expression has type \"Series[Any] | DataFrame\", variable has type \"Series[Any]\")  [assignment]\nscripts/comprehensive_trade_analysis.py:109:17: error: Incompatible types in assignment (expression has type \"Any | float\", target has type \"int\")  [assignment]\nscripts/comprehensive_trade_analysis.py:118:41: error: Incompatible types in assignment (expression has type \"float\", target has type \"int\")  [assignment]\nscripts/comprehensive_trade_analysis.py:126:17: error: Incompatible types in assignment (expression has type \"float | int\", target has type \"int\")  [assignment]\nscripts/comprehensive_trade_analysis.py:137:17: error: Incompatible types in assignment (expression has type \"float | int\", target has type \"int\")  [assignment]\nscripts/comprehensive_trade_analysis.py:148:17: error: Incompatible types in assignment (expression has type \"float | int\", target has type \"int\")  [assignment]\nscripts/comprehensive_trade_analysis.py:168:17: error: Incompatible types in assignment (expression has type \"floating[Any] | int\", target has type \"int\")  [assignment]\nscripts/comprehensive_trade_analysis.py:181:38: error: Incompatible types in assignment (expression has type \"tuple[float, float]\", target has type \"int\")  [assignment]\nscripts/comprehensive_trade_analysis.py:186:49: error: Incompatible types in assignment (expression has type \"float\", target has type \"int\")  [assignment]\nscripts/comprehensive_trade_analysis.py:189:52: error: Incompatible types in assignment (expression has type \"float\", target has type \"int\")  [assignment]\nscripts/comprehensive_trade_analysis.py:1108:16: error: Incompatible return value type (got \"dict[str, Path]\", expected \"dict[str, str]\")  [return-value]\nscripts/fundamental_analysis/fundamental_discovery.py:163:46: error: Incompatible types in assignment (expression has type \"dict[str, object]\", variable has type \"None\")  [assignment]\nscripts/fundamental_analysis/fundamental_discovery.py:172:42: error: Incompatible types in assignment (expression has type \"dict[str, object]\", variable has type \"None\")  [assignment]\nscripts/fundamental_analysis/fundamental_discovery.py:808:13: error: Need type annotation for \"company_data\" (hint: \"company_data: dict[<type>, <type>] = ...\")  [var-annotated]\nscripts/utils/layout_manager.py:375:33: error: Item \"SubFigure\" of \"Figure | SubFigure\" has no attribute \"get_size_inches\"  [union-attr]\nscripts/utils/layout_manager.py:393:31: error: Argument \"rect\" to \"tight_layout\" of \"Figure\" has incompatible type \"list[float]\"; expected \"tuple[float, float, float, float] | None\"  [arg-type]\nscripts/utils/chart_comparison_framework.py:153:19: error: Incompatible types in assignment (expression has type \"Image\", variable has type \"ImageFile\")  [assignment]\nscripts/utils/chart_comparison_framework.py:157:22: error: Incompatible types in assignment (expression has type \"Image\", variable has type \"ImageFile\")  [assignment]\nscripts/utils/chart_comparison_framework.py:180:20: error: Incompatible types in assignment (expression has type \"FreeTypeFont | ImageFont\", variable has type \"FreeTypeFont\")  [assignment]\nscripts/imf_cli.py:426:36: error: Incompatible types in assignment (expression has type \"dict[str, object]\", variable has type \"list[dict[str, Any]]\")  [assignment]\nscripts/content_automation_cli.py:590:55: error: \"Collection[str]\" has no attribute \"keys\"  [attr-defined]\nscripts/content_automation_cli.py:1329:31: error: Generator has incompatible item type \"float | bool | str\"; expected \"bool\"  [misc]\nscripts/content_automation_cli.py:1449:27: error: Generator has incompatible item type \"float | int | str\"; expected \"bool\"  [misc]\nscripts/utils/frontend_config_exporter.py:76:38: error: No overload variant of \"dict\" matches argument type \"MonthlyPerformance | QualityDistribution | TradeData\"  [call-overload]\nscripts/utils/frontend_config_exporter.py:76:38: note: Possible overload variants:\nscripts/utils/frontend_config_exporter.py:76:38: note:     def [_KT, _VT] dict(self) -> dict[_KT, _VT]\nscripts/utils/frontend_config_exporter.py:76:38: note:     def [_KT, _VT] dict(self, **kwargs: _VT) -> dict[str, _VT]\nscripts/utils/frontend_config_exporter.py:76:38: note:     def [_KT, _VT] dict(self, SupportsKeysAndGetItem[_KT, _VT], /) -> dict[_KT, _VT]\nscripts/utils/frontend_config_exporter.py:76:38: note:     def [_KT, _VT] dict(self, SupportsKeysAndGetItem[str, _VT], /, **kwargs: _VT) -> dict[str, _VT]\nscripts/utils/frontend_config_exporter.py:76:38: note:     def [_KT, _VT] dict(self, Iterable[tuple[_KT, _VT]], /) -> dict[_KT, _VT]\nscripts/utils/frontend_config_exporter.py:76:38: note:     def [_KT, _VT] dict(self, Iterable[tuple[str, _VT]], /, **kwargs: _VT) -> dict[str, _VT]\nscripts/utils/frontend_config_exporter.py:76:38: note:     def [_KT, _VT] dict(self, Iterable[list[str]], /) -> dict[str, str]\nscripts/utils/frontend_config_exporter.py:76:38: note:     def [_KT, _VT] dict(self, Iterable[list[bytes]], /) -> dict[bytes, bytes]\nscripts/utils/frontend_config_exporter.py:78:38: error: Argument 1 to \"append\" of \"list\" has incompatible type \"str\"; expected \"dict[str, Any]\"  [arg-type]\nscripts/utils/chart_generator_factory.py:25:5: error: Function is missing a type annotation for one or more arguments  [no-untyped-def]\nscripts/utils/chart_generator_factory.py:66:13: error: Returning Any from function declared to return \"str\"  [no-any-return]\nscripts/utils/config_loader.py:295:21: error: Unsupported operand types for + (\"object\" and \"int\")  [operator]\nscripts/utils/config_loader.py:298:21: error: \"object\" has no attribute \"append\"  [attr-defined]\nscripts/utils/config_loader.py:307:13: error: \"object\" has no attribute \"append\"  [attr-defined]\nscripts/services/base_financial_service.py:253:5: error: Missing return statement  [return]\nscripts/utils/config_validator.py:24:5: error: Function is missing a return type annotation  [no-untyped-def]\nscripts/utils/config_validator.py:24:5: note: Use \"-> None\" if function does not return a value\nscripts/utils/config_validator.py:333:5: error: Function is missing a return type annotation  [no-untyped-def]\nscripts/utils/config_validator.py:333:5: note: Use \"-> None\" if function does not return a value\nscripts/utils/config_validator.py:458:44: error: Argument 1 to \"load_config\" of \"ConfigLoader\" has incompatible type \"Path\"; expected \"str\"  [arg-type]\nscripts/utils/cli_base.py:258:26: error: Incompatible types in assignment (expression has type \"Writer\", variable has type \"DictWriter[Any]\")  [assignment]\nscripts/utils/cli_base.py:260:37: error: Argument 1 to \"writerow\" of \"DictWriter\" has incompatible type \"list[Any]\"; expected \"Mapping[Any, Any]\"  [arg-type]\nscripts/services/sec_edgar.py:313:26: error: Need type annotation for \"financial_data\"  [var-annotated]\nscripts/services/sec_edgar.py:374:19: error: Need type annotation for \"metrics\"  [var-annotated]\nscripts/services/imf.py:92:5: error: Return type \"dict[str, Any] | list[dict[str, Any]]\" of \"_validate_response\" incompatible with return type \"dict[str, Any]\" in supertype \"BaseFinancialService\"  [override]\nscripts/services/imf.py:136:9: error: Need type annotation for \"params\" (hint: \"params: dict[<type>, <type>] = ...\")  [var-annotated]\nscripts/services/imf.py:174:9: error: Need type annotation for \"params\" (hint: \"params: dict[<type>, <type>] = ...\")  [var-annotated]\nscripts/services/imf.py:213:9: error: Need type annotation for \"params\" (hint: \"params: dict[<type>, <type>] = ...\")  [var-annotated]\nscripts/services/imf.py:258:9: error: Need type annotation for \"params\" (hint: \"params: dict[<type>, <type>] = ...\")  [var-annotated]\nscripts/services/fred_economic.py:100:5: error: Signature of \"_make_request_with_retry\" incompatible with supertype \"BaseFinancialService\"  [override]\nscripts/services/fred_economic.py:100:5: note:      Superclass:\nscripts/services/fred_economic.py:100:5: note:          def _make_request_with_retry(self, endpoint: str, params: dict[str, Any] = ..., cache_key: str | None = ...) -> dict[str, Any]\nscripts/services/fred_economic.py:100:5: note:      Subclass:\nscripts/services/fred_economic.py:100:5: note:          def _make_request_with_retry(self, endpoint: str, params: dict[str, Any] = ...) -> dict[str, Any]\nscripts/services/fred_economic.py:284:17: error: Dict entry 0 has incompatible type \"str\": \"float\"; expected \"str\": \"str\"  [dict-item]\nscripts/services/fred_economic.py:285:17: error: Dict entry 1 has incompatible type \"str\": \"float\"; expected \"str\": \"str\"  [dict-item]\nscripts/services/fred_economic.py:286:17: error: Dict entry 2 has incompatible type \"str\": \"float\"; expected \"str\": \"str\"  [dict-item]\nscripts/services/fred_economic.py:287:17: error: Dict entry 3 has incompatible type \"str\": \"float\"; expected \"str\": \"str\"  [dict-item]\nscripts/services/fred_economic.py:289:17: error: Dict entry 5 has incompatible type \"str\": \"int\"; expected \"str\": \"str\"  [dict-item]\nscripts/services/fmp.py:51:5: error: Return type \"dict[str, Any] | list[dict[str, Any]]\" of \"_validate_response\" incompatible with return type \"dict[str, Any]\" in supertype \"BaseFinancialService\"  [override]\nscripts/services/fmp.py:95:16: error: Incompatible return value type (got \"dict[str, Any]\", expected \"list[dict[str, Any]]\")  [return-value]\nscripts/services/fmp.py:114:16: error: Incompatible return value type (got \"dict[str, Any]\", expected \"list[dict[str, Any]]\")  [return-value]\nscripts/services/fmp.py:159:16: error: Incompatible return value type (got \"dict[str, Any]\", expected \"list[dict[str, Any]]\")  [return-value]\nscripts/services/fmp.py:183:16: error: Incompatible return value type (got \"dict[str, Any]\", expected \"list[dict[str, Any]]\")  [return-value]\nscripts/services/fmp.py:207:16: error: Incompatible return value type (got \"dict[str, Any]\", expected \"list[dict[str, Any]]\")  [return-value]\nscripts/services/fmp.py:267:16: error: Incompatible return value type (got \"dict[str, Any]\", expected \"list[dict[str, Any]]\")  [return-value]\nscripts/services/fmp.py:305:38: error: Incompatible types in assignment (expression has type \"float\", target has type \"int\")  [assignment]\nscripts/services/fmp.py:307:39: error: Incompatible types in assignment (expression has type \"float\", target has type \"int\")  [assignment]\nscripts/services/fmp.py:313:42: error: Incompatible types in assignment (expression has type \"float\", target has type \"int\")  [assignment]\nscripts/services/fmp.py:315:43: error: Incompatible types in assignment (expression has type \"float\", target has type \"int\")  [assignment]\nscripts/services/fmp.py:324:16: error: Incompatible return value type (got \"dict[str, Any]\", expected \"list[dict[str, Any]]\")  [return-value]\nscripts/services/fmp.py:346:16: error: Incompatible return value type (got \"dict[str, Any]\", expected \"list[dict[str, Any]]\")  [return-value]\nscripts/services/fmp.py:368:16: error: Incompatible return value type (got \"dict[str, Any]\", expected \"list[dict[str, Any]]\")  [return-value]\nscripts/services/fmp.py:390:16: error: Incompatible return value type (got \"dict[str, Any]\", expected \"list[dict[str, Any]]\")  [return-value]\nscripts/services/fmp.py:420:16: error: Incompatible return value type (got \"dict[str, Any]\", expected \"list[dict[str, Any]]\")  [return-value]\nscripts/services/fmp.py:450:16: error: Incompatible return value type (got \"dict[str, Any]\", expected \"list[dict[str, Any]]\")  [return-value]\nscripts/services/data_orchestrator.py:31:9: note: By default the bodies of untyped functions are not checked, consider using --check-untyped-defs  [annotation-unchecked]\nscripts/services/coingecko.py:49:5: error: Return type \"dict[str, Any] | list[dict[str, Any]]\" of \"_validate_response\" incompatible with return type \"dict[str, Any]\" in supertype \"BaseFinancialService\"  [override]\nscripts/services/coingecko.py:215:16: error: Incompatible return value type (got \"dict[str, Any]\", expected \"list[dict[str, Any]]\")  [return-value]\nscripts/plotly_dashboard_generator.py:391:30: error: Need type annotation for \"cumulative_returns\"  [var-annotated]\nscripts/plotly_dashboard_generator.py:391:40: error: Argument 1 to \"cumsum\" has incompatible type \"list[float | int]\"; expected \"_SupportsArray[dtype[Never]] | _NestedSequence[_SupportsArray[dtype[Never]]]\"  [arg-type]\nscripts/dashboard_generator.py:453:18: error: Argument \"rect\" to \"tight_layout\" of \"Figure\" has incompatible type \"list[float]\"; expected \"tuple[float, float, float, float] | None\"  [arg-type]\nscripts/trade_history_images.py:153:9: error: Need type annotation for \"found_reports\" (hint: \"found_reports: list[<type>] = ...\")  [var-annotated]\nscripts/generate_report_with_dashboard.py:55:27: error: Need type annotation for \"generated_files\"  [var-annotated]\nscripts/generate_report_with_dashboard.py:60:27: error: \"main\" does not return a value (it only ever returns None)  [func-returns-value]\nscripts/generate_report_with_dashboard.py:103:9: error: Need type annotation for \"files\" (hint: \"files: list[<type>] = ...\")  [var-annotated]\nFound 324 errors in 39 files (checked 77 source files)\n",
+    "compliance_status": "FAIL"
+  },
+  "strict_modules": {
+    "strict_module_count": 4,
+    "strict_modules": [
+      "scripts.utils.config_validator",
+      "scripts.utils.chart_generator_factory",
+      "scripts.utils.dashboard_parser",
+      "scripts.services.base_financial_service"
+    ],
+    "config_file_exists": true
+  },
+  "error_analysis": {
+    "type_annotations": 32,
+    "return_types": 21,
+    "argument_types": 52,
+    "attribute_access": 69,
+    "import_errors": 0,
+    "other": 150
+  },
+  "file_statistics": {
+    "total_python_files": 74,
+    "total_lines_of_code": 39360,
+    "files_with_typing_imports": 73,
+    "typing_adoption_rate_percent": 98.6,
+    "average_lines_per_file": 531.9
+  },
+  "team_adoption": {
+    "methodology": "simplified_analysis",
+    "note": "Real implementation would analyze git history for individual developer metrics",
+    "overall_trend": "positive",
+    "recommendation": "Continue monitoring through git commit analysis"
+  }
+}

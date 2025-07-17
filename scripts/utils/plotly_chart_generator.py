@@ -6,12 +6,12 @@ This module provides Plotly-based chart generation with JSON schema support
 for unified backend/frontend chart definitions.
 """
 
-from typing import Any, Dict, List, Union
+from typing import Any, Dict, List
 
 import numpy as np
+import numpy.typing as npt
 import plotly.graph_objects as go
 import plotly.io as pio
-from plotly.subplots import make_subplots
 
 from scripts.utils.abstract_chart_generator import AbstractChartGenerator
 from scripts.utils.dashboard_parser import (
@@ -46,7 +46,7 @@ class PlotlyChartGenerator(AbstractChartGenerator):
 
         # Configure kaleido for high-quality exports (300+ DPI equivalent)
         try:
-            import kaleido
+            pass  # kaleido import handled elsewhere
 
             # Configure Kaleido scope for high-DPI exports
             if hasattr(pio, "kaleido") and pio.kaleido.scope is not None:
@@ -436,7 +436,7 @@ class PlotlyChartGenerator(AbstractChartGenerator):
         tickers = [trade.ticker for trade in sorted_trades]
 
         # Calculate cumulative returns for waterfall effect
-        cumulative = np.cumsum([0] + returns[:-1])
+        cumulative: npt.NDArray[np.float64] = np.cumsum(np.array([0] + returns[:-1]))
         final_cumulative = cumulative + np.array(returns)
 
         # Create figure
