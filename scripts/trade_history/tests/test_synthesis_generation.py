@@ -7,10 +7,7 @@ for multi-audience document creation and executive dashboard synthesis.
 """
 
 import json
-import os
 import re
-from datetime import datetime
-from typing import Dict, List, Optional, Tuple
 
 
 def test_report_generation_logic():
@@ -237,7 +234,7 @@ def test_executive_dashboard_generation():
     print(f"  Sharpe Ratio: {dashboard['key_metrics']['sharpe_ratio']:.2f}")
     print(f"  Max Drawdown: {dashboard['key_metrics']['max_drawdown']:.1%}")
 
-    print(f"\nTrend Indicators:")
+    print("\nTrend Indicators:")
     for trend, direction in dashboard["trend_indicators"].items():
         emoji = (
             "↗️" if direction == "improving" else "→" if direction == "stable" else "↘️"
@@ -377,7 +374,7 @@ def test_live_monitor_generation():
     # Test live monitor generation
     monitor = generate_live_monitor(sample_positions)
 
-    print(f"Live Monitor Generated:")
+    print("Live Monitor Generated:")
     print(f"  Total Positions: {monitor['total_positions']}")
     print(f"  Top Performers: {len(monitor['top_performers'])}")
     print(f"  Watch List: {len(monitor['watch_list'])}")
@@ -385,13 +382,13 @@ def test_live_monitor_generation():
     print(f"  Positive Rate: {monitor['signal_strength']['positive_rate']:.1%}")
     print(f"  Generation Confidence: {monitor['generation_confidence']:.2f}")
 
-    print(f"\nTop Performers:")
+    print("\nTop Performers:")
     for performer in monitor["top_performers"]:
         print(
             f"  {performer['ticker']}: {performer['return']:+.1%} ({performer['momentum']} momentum)"
         )
 
-    print(f"\nWatch List:")
+    print("\nWatch List:")
     for watch in monitor["watch_list"]:
         print(
             f"  {watch['ticker']}: {watch['return']:+.1%} return, {watch['mae']:.1%} MAE ({watch['risk_level']} risk)"
@@ -497,7 +494,7 @@ def validate_synthesis_schema():
     Validate that the synthesis JSON schema is properly structured.
     """
 
-    schema_path = "/Users/colemorton/Projects/sensylate/data/outputs/analysis_trade_history/synthesize/trading_synthesis_schema_v1.json"
+    schema_path = "/Users/colemorton/Projects/sensylate/data/outputs/trade_history/synthesize/trading_synthesis_schema_v1.json"
 
     print("=== Synthesis Schema Validation ===\n")
 

@@ -29,9 +29,16 @@ This analysis provides comprehensive quantitative evaluation of trading performa
 - **Total Trades**: {{ data.portfolio_metrics.total_trades | default("N/A") }}
 - **Win Rate**: {{ data.portfolio_metrics.win_rate | default("N/A") }}%
 - **Net Performance**: {{ data.portfolio_metrics.net_performance | default("N/A") }}%
+- **Expectancy**: {{ data.portfolio_metrics.expectancy | default("N/A") }}¢ per $1 risk
 - **Sharpe Ratio**: {{ data.portfolio_metrics.sharpe | default("N/A") }}
 - **Max Drawdown**: {{ data.portfolio_metrics.max_drawdown | default("N/A") }}%
 - **Profit Factor**: {{ data.portfolio_metrics.profit_factor | default("N/A") }}
+
+### Risk-Adjusted Performance
+- **Sortino Ratio**: {{ data.portfolio_metrics.sortino | default("N/A") }}
+- **Calmar Ratio**: {{ data.portfolio_metrics.calmar | default("N/A") }}
+- **Downside Deviation**: {{ data.portfolio_metrics.downside_deviation | default("N/A") }}%
+- **Recovery Time**: {{ data.portfolio_metrics.recovery_time | default("N/A") }} days
 {%- endif %}
 
 ## Signal Effectiveness Analysis
@@ -56,6 +63,9 @@ This analysis provides comprehensive quantitative evaluation of trading performa
 - **Trades**: {{ data.strategy_breakdown.ema.trades | default("N/A") }}
 - **Win Rate**: {{ data.strategy_breakdown.ema.win_rate | default("N/A") }}%
 - **Average Return**: {{ data.strategy_breakdown.ema.avg_return | default("N/A") }}%
+- **Expectancy**: {{ data.strategy_breakdown.ema.expectancy | default("N/A") }}¢ per $1 risk
+- **Confidence Level**: {{ data.strategy_breakdown.ema.confidence | default("N/A") }}%
+- **Statistical Reliability**: {{ data.strategy_breakdown.ema.reliability | default("N/A") }}
 - **Status**: {{ data.strategy_breakdown.ema.status | default("Active") }}
 {%- endif %}
 
@@ -91,6 +101,62 @@ This analysis provides comprehensive quantitative evaluation of trading performa
   - Impact: {{ risk.impact }}
   - Mitigation: {{ risk.mitigation }}
 {% endfor %}
+{%- endif %}
+
+## Statistical Significance Analysis
+
+{% if data.statistical_analysis -%}
+### Sample Size Assessment
+- **Total Closed Trades**: {{ data.statistical_analysis.total_trades | default("N/A") }}
+- **Statistical Adequacy**: {{ data.statistical_analysis.adequacy_score | default("N/A") }}%
+- **Confidence Level**: {{ data.statistical_analysis.confidence_level | default("N/A") }}%
+
+### Significance Testing
+- **Returns vs Zero**: p={{ data.statistical_analysis.returns_pvalue | default("N/A") }} ({{ "✅ Significant" if data.statistical_analysis.returns_pvalue < 0.05 else "⚠️ Not Significant" }})
+- **Win Rate vs Random**: p={{ data.statistical_analysis.win_rate_pvalue | default("N/A") }} ({{ "✅ Above Random" if data.statistical_analysis.win_rate_pvalue < 0.05 else "⚠️ Random Level" }})
+- **Alpha vs Benchmark**: {{ data.statistical_analysis.alpha_significance | default("N/A") }}
+
+### Confidence Intervals (95% Level)
+- **Mean Return**: {{ data.statistical_analysis.return_ci_lower | default("N/A") }}% to {{ data.statistical_analysis.return_ci_upper | default("N/A") }}%
+- **Win Rate**: {{ data.statistical_analysis.win_rate_ci_lower | default("N/A") }}% to {{ data.statistical_analysis.win_rate_ci_upper | default("N/A") }}%
+{%- endif %}
+
+## Market Regime Analysis
+
+{% if data.regime_analysis -%}
+### Market Condition Performance
+- **Bull Market**: {{ data.regime_analysis.bull_market.win_rate | default("N/A") }}% win rate, {{ data.regime_analysis.bull_market.avg_return | default("N/A") }}% avg return
+- **Bear Market**: {{ data.regime_analysis.bear_market.win_rate | default("N/A") }}% win rate, {{ data.regime_analysis.bear_market.avg_return | default("N/A") }}% avg return
+- **Sideways Market**: {{ data.regime_analysis.sideways_market.win_rate | default("N/A") }}% win rate, {{ data.regime_analysis.sideways_market.avg_return | default("N/A") }}% avg return
+
+### Volatility Environment Impact
+- **Low VIX**: {{ data.regime_analysis.low_vix.win_rate | default("N/A") }}% win rate, {{ data.regime_analysis.low_vix.avg_return | default("N/A") }}% avg return
+- **Medium VIX**: {{ data.regime_analysis.medium_vix.win_rate | default("N/A") }}% win rate, {{ data.regime_analysis.medium_vix.avg_return | default("N/A") }}% avg return
+- **High VIX**: {{ data.regime_analysis.high_vix.win_rate | default("N/A") }}% win rate, {{ data.regime_analysis.high_vix.avg_return | default("N/A") }}% avg return
+
+### Regime Insights
+- **Optimal Conditions**: {{ data.regime_analysis.optimal_conditions | default("N/A") }}
+- **Risk Environment**: {{ data.regime_analysis.risk_environment | default("N/A") }}
+- **Adaptation Recommendations**: {{ data.regime_analysis.adaptation_recommendations | default("N/A") }}
+{%- endif %}
+
+## Signal Quality & Predictive Characteristics
+
+{% if data.signal_quality -%}
+### Signal Strength Indicators
+- **High MFE Capture**: {{ data.signal_quality.high_mfe_capture | default("N/A") }}% of trades
+- **Optimal Timing Signals**: {{ data.signal_quality.optimal_timing | default("N/A") }}
+- **Trend Following Strength**: {{ data.signal_quality.trend_strength | default("N/A") }}
+
+### Entry Condition Quality
+- **Volume Confirmation**: {{ data.signal_quality.volume_confirmation | default("N/A") }}
+- **Momentum Indicators**: {{ data.signal_quality.momentum_indicators | default("N/A") }}
+- **Sector Tailwinds**: {{ data.signal_quality.sector_tailwinds | default("N/A") }}
+
+### Predictive Failure Patterns
+- **Weak Initial Momentum**: {{ data.signal_quality.weak_momentum | default("N/A") }}
+- **High Volatility Entry**: {{ data.signal_quality.high_volatility_entry | default("N/A") }}
+- **Poor Setup Quality**: {{ data.signal_quality.poor_setup_quality | default("N/A") }}
 {%- endif %}
 
 ## Optimization Opportunities

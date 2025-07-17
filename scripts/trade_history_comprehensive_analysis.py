@@ -156,6 +156,14 @@ class TradeHistoryAnalyzer:
                 else:
                     ci_lower = ci_upper = 0
 
+                # Calculate expectancy: (rrRatio × winRatio) - lossRatio
+                if avg_loss != 0:
+                    rr_ratio = abs(avg_win / avg_loss)
+                    loss_ratio = 1 - win_rate
+                    expectancy = (rr_ratio * win_rate) - loss_ratio
+                else:
+                    expectancy = 0
+
                 effectiveness["entry_signal_analysis"]["win_rate_by_strategy"][
                     strategy
                 ] = {
@@ -166,6 +174,7 @@ class TradeHistoryAnalyzer:
                     "average_return_winners": avg_win,
                     "average_return_losers": avg_loss,
                     "overall_average_return": float(np.mean(returns)),
+                    "expectancy": float(expectancy),
                     "win_rate_confidence_interval": [ci_lower, ci_upper],
                     "confidence": 0.9 if n >= 10 else 0.7,
                 }
@@ -195,13 +204,17 @@ class TradeHistoryAnalyzer:
                 finite_efficiency = exit_efficiency[np.isfinite(exit_efficiency)]
 
                 effectiveness["exit_signal_analysis"]["exit_efficiency_metrics"] = {
-                    "overall_exit_efficiency": float(np.mean(finite_efficiency))
-                    if len(finite_efficiency) > 0
-                    else 0.0,
+                    "overall_exit_efficiency": (
+                        float(np.mean(finite_efficiency))
+                        if len(finite_efficiency) > 0
+                        else 0.0
+                    ),
                     "median_exit_efficiency": float(np.median(exit_efficiency)),
-                    "mfe_capture_rate": float(np.mean(finite_efficiency))
-                    if len(finite_efficiency) > 0
-                    else 0.0,
+                    "mfe_capture_rate": (
+                        float(np.mean(finite_efficiency))
+                        if len(finite_efficiency) > 0
+                        else 0.0
+                    ),
                     "avg_hold_period": float(np.mean(valid_exits["Duration_Days"])),
                     "median_hold_period": float(
                         np.median(valid_exits["Duration_Days"])
@@ -249,9 +262,11 @@ class TradeHistoryAnalyzer:
                         "avg_return": float(np.mean(returns)),
                         "median_return": float(np.median(returns)),
                         "win_rate": float(len(returns[returns > 0]) / len(returns)),
-                        "avg_efficiency": float(np.mean(finite_efficiency))
-                        if len(finite_efficiency) > 0
-                        else 0.0,
+                        "avg_efficiency": (
+                            float(np.mean(finite_efficiency))
+                            if len(finite_efficiency) > 0
+                            else 0.0
+                        ),
                         "avg_duration": float(np.mean(bucket_trades["Duration_Days"])),
                     }
 
@@ -311,12 +326,31 @@ class TradeHistoryAnalyzer:
             drawdown = (cumulative_returns - running_max) / running_max
             max_drawdown = np.min(drawdown)
 
+            # Calculate overall expectancy
+            winners = returns[returns > 0]
+            losers = returns[returns <= 0]
+
+            if len(winners) > 0 and len(losers) > 0:
+                avg_win = np.mean(winners)
+                avg_loss = np.mean(losers)
+                win_rate = len(winners) / len(returns)
+
+                if avg_loss != 0:
+                    rr_ratio = abs(avg_win / avg_loss)
+                    loss_ratio = 1 - win_rate
+                    expectancy = (rr_ratio * win_rate) - loss_ratio
+                else:
+                    expectancy = 0
+            else:
+                expectancy = 0
+
             risk_metrics = {
                 "sharpe_ratio": float(sharpe_ratio),
                 "sortino_ratio": float(sortino_ratio),
                 "max_drawdown": float(max_drawdown),
                 "avg_drawdown": float(np.mean(drawdown)),
                 "volatility_annualized": float(np.std(returns) * np.sqrt(252)),
+                "expectancy": float(expectancy),
                 "confidence": 0.88 if len(returns) >= 15 else 0.7,
             }
         else:
@@ -457,9 +491,11 @@ class TradeHistoryAnalyzer:
                     "avg_return": float(np.mean(returns)),
                     "median_return": float(np.median(returns)),
                     "win_rate": float(len(returns[returns > 0]) / len(returns)),
-                    "avg_efficiency": float(np.mean(finite_efficiency))
-                    if len(finite_efficiency) > 0
-                    else 0.0,
+                    "avg_efficiency": (
+                        float(np.mean(finite_efficiency))
+                        if len(finite_efficiency) > 0
+                        else 0.0
+                    ),
                     "avg_duration": float(np.mean(bucket_trades["Duration_Days"])),
                 }
 
@@ -778,7 +814,7 @@ class TradeHistoryAnalyzer:
                 "synthesis_ready": True,
                 "confidence_threshold_met": confidence_metrics["overall_confidence"]
                 > 0.5,
-                "analysis_package_path": "/Users/colemorton/Projects/sensylate/data/outputs/analysis_trade_history/analysis/live_signals_20250716.json",
+                "analysis_package_path": "/Users/colemorton/Projects/sensylate/data/outputs/trade_history/analysis/live_signals_20250716.json",
                 "report_focus_areas": self._identify_focus_areas(),
                 "critical_findings": self._identify_critical_findings(),
             },
@@ -901,8 +937,8 @@ def main():
     csv_path = (
         "/Users/colemorton/Projects/sensylate/data/raw/trade_history/live_signals.csv"
     )
-    discovery_path = "/Users/colemorton/Projects/sensylate/data/outputs/analysis_trade_history/discovery/live_signals_20250703.json"
-    output_path = "/Users/colemorton/Projects/sensylate/data/outputs/analysis_trade_history/analysis/live_signals_20250716.json"
+    discovery_path = "/Users/colemorton/Projects/sensylate/data/outputs/trade_history/discovery/live_signals_20250703.json"
+    output_path = "/Users/colemorton/Projects/sensylate/data/outputs/trade_history/analysis/live_signals_20250716.json"
 
     try:
         # Validate input files exist

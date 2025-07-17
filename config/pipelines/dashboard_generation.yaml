@@ -29,7 +29,7 @@ feature_flags:
 
 input:
   data_source: "markdown"
-  report_path: "data/outputs/analysis_trade_history/HISTORICAL_PERFORMANCE_REPORT_{date}.md"
+  report_path: "data/outputs/trade_history/HISTORICAL_PERFORMANCE_REPORT_{date}.md"
   validation:
     required_sections: ["Performance Summary", "Complete Trade History", "Performance Analysis"]
     required_metrics: ["win_rate", "total_return", "profit_factor"]

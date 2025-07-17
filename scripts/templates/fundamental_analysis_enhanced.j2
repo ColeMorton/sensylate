@@ -1,7 +1,112 @@
 {% extends "shared/base_analysis_template.j2" %}
 
+{# ========================================================================== #}
+{# FUNDAMENTAL ANALYSIS TEMPLATE - INSTITUTIONAL-QUALITY SPECIFICATION       #}
+{# ========================================================================== #}
+{#                                                                            #}
 {# Enhanced Fundamental Analysis Template using shared inheritance and macros #}
-{# Reduces template duplication by 40-50% through shared components #}
+{# Reduces template duplication by 40-50% through shared components           #}
+{#                                                                            #}
+{# AUTHORITATIVE SPECIFICATION REFERENCE:                                     #}
+{# This template implements the specifications defined in:                    #}
+{# -> templates/analysis/fundamental_analysis_template.md                     #}
+{# -> The markdown file contains the complete institutional specification     #}
+{# -> ALL methodology, validation rules, and quality standards are defined   #}
+{#    in the markdown specification file                                      #}
+{# -> This Jinja2 template provides the functional implementation            #}
+{#                                                                            #}
+{# HYBRID TEMPLATE SYSTEM:                                                   #}
+{# - Markdown Specification (templates/analysis/): Authoritative standards   #}
+{# - Jinja2 Implementation (scripts/templates/): Functional rendering        #}
+{# - Shared Components (scripts/templates/shared/): Common inheritance/macros #}
+{# - Commands reference the markdown specifications for compliance            #}
+{# - CLI uses Jinja2 templates for document generation                       #}
+{#                                                                            #}
+{# TEMPLATE SPECIFICATION REQUIREMENTS:                                       #}
+{# - Confidence Scores: All metrics use 0.0-1.0 format (baseline 0.9+)      #}
+{# - Risk Probabilities: Decimal format (0.0-1.0) from quantified matrices   #}
+{# - Economic Sensitivity: GDP/employment correlations with FRED integration  #}
+{# - Sector Context: Cross-sector positioning and rotation scoring (0.0-10.0) #}
+{# - Stress Testing: 5+ economic scenarios with recovery timeline analysis    #}
+{# - Author Attribution: "Cole Morton" consistent across all documents        #}
+{# - Financial Health Grades: A-F scoring system with trend analysis          #}
+{#                                                                            #}
+{# CLI FINANCIAL SERVICES INTEGRATION:                                        #}
+{# - Yahoo Finance CLI: Core market data and financial statements             #}
+{# - Alpha Vantage CLI: Real-time quotes and technical indicators             #}
+{# - FMP CLI: Advanced financials and company intelligence                    #}
+{# - SEC EDGAR CLI: Regulatory filings and compliance data                    #}
+{# - FRED Economic CLI: Federal Reserve economic indicators                   #}
+{# - CoinGecko CLI: Cryptocurrency sentiment and risk appetite               #}
+{# - IMF CLI: Global economic indicators and country risk                    #}
+{#                                                                            #}
+{# QUALITY STANDARDS FRAMEWORK:                                               #}
+{# - Baseline Quality: 0.9+ minimum for institutional usage                  #}
+{# - Enhanced Quality: 0.95+ target for validation-optimized analysis        #}
+{# - Premium Quality: 0.98+ for mathematical precision requirements          #}
+{# - Price Consistency: ≤2% variance across sources (BLOCKING validation)    #}
+{# - Financial Data Integrity: ≤1% variance for regulatory-sourced data      #}
+{# - Economic Context Freshness: Real-time FRED/CoinGecko integration        #}
+{# - Service Health: 80%+ operational across all CLI services               #}
+{#                                                                            #}
+{# RISK QUANTIFICATION FRAMEWORK:                                             #}
+{# - Probability Scale: 0.0-1.0 decimal format with economic context         #}
+{# - Impact Scale: 1-5 severity with quantified financial impact             #}
+{# - Risk Score: Calculated as probability × impact with correlation analysis #}
+{# - Evidence Requirements: CLI-validated data sources and economic indicators #}
+{# - Risk Categories: Economic/Operational/Financial/Competitive/Regulatory   #}
+{#                                                                            #}
+{# ECONOMIC CONTEXT INTEGRATION:                                              #}
+{# - FRED Economic Indicators: Interest rates, GDP, employment, inflation     #}
+{# - Economic Regime Assessment: Restrictive/neutral/accommodative policy     #}
+{# - Sector Implications: Industry-specific economic impact analysis         #}
+{# - CoinGecko Sentiment: Cryptocurrency market sentiment correlation         #}
+{# - Risk Appetite Assessment: Alternative investment sentiment indicators    #}
+{#                                                                            #}
+{# FINANCIAL HEALTH SCORECARD FRAMEWORK (A-F GRADING):                       #}
+{# - Profitability: Revenue growth, margin analysis, ROE/ROA, earnings quality #}
+{# - Balance Sheet: Debt management, liquidity, asset quality, capital structure #}
+{# - Cash Flow: Operating cash flow, free cash flow, cash conversion, dividend coverage #}
+{# - Capital Efficiency: Capital allocation, ROIC, asset utilization, reinvestment #}
+{#                                                                            #}
+{# COMPETITIVE MOAT ASSESSMENT (0-10 RATING):                                #}
+{# - Network Effects: User base growth and retention patterns                 #}
+{# - Switching Costs: Customer lock-in mechanisms and barriers               #}
+{# - Economies of Scale: Cost advantages from operational size               #}
+{# - Brand Strength: Pricing power and market recognition metrics            #}
+{# - Regulatory Advantages: Licensing requirements and regulatory barriers    #}
+{# - Durability Analysis: Long-term competitive position sustainability       #}
+{#                                                                            #}
+{# VALIDATION REQUIREMENTS:                                                   #}
+{# - Template Compliance: Exact structure adherence with required sections   #}
+{# - Confidence Propagation: 0.9+ baseline from discovery through synthesis  #}
+{# - Economic Context Integration: FRED/CoinGecko insights throughout DASV   #}
+{# - Sector Positioning Validation: Cross-sector analysis and rotation timing #}
+{# - Stress Testing Framework: Quantified scenario analysis with recovery    #}
+{# - Risk Quantification: Probability/impact matrices with monitoring KPIs   #}
+{# - Business Intelligence: Competitive moat assessments with sector-relative #}
+{#                                                                            #}
+{# SECURITY AND COMPLIANCE:                                                   #}
+{# - API Key Management: Secure storage in ./config/financial_services.yaml  #}
+{# - Access Control: CLI services automatically access secure configuration  #}
+{# - Output Protection: API keys NEVER included in outputs or logs           #}
+{# - Privacy Protection: No personal information in outputs                  #}
+{# - Regulatory Compliance: SEC filing compliance and fair use standards     #}
+{# - Quality Standards: Institutional-grade data validation and audit trails #}
+{#                                                                            #}
+{# OUTPUT MANAGEMENT:                                                         #}
+{# File Structure: ./data/outputs/fundamental_analysis/                       #}
+{# - discovery/{TICKER}_{YYYYMMDD}_discovery.json                            #}
+{# - analysis/{TICKER}_{YYYYMMDD}_analysis.json                              #}
+{# - {TICKER}_{YYYYMMDD}.md (synthesis output)                               #}
+{# - validation/{TICKER}_{YYYYMMDD}_validation.json                          #}
+{#                                                                            #}
+{# REFERENCED BY COMMANDS:                                                    #}
+{# - fundamental_analyst_synthesize (primary generator)                       #}
+{# - cli_fundamental_analyst_discover, fundamental_analyst_analyze            #}
+{# - fundamental_analyst_validate                                             #}
+{#                                                                            #}
+{# ========================================================================== #}
 
 {% block title %}{{ data.company_name | default(ticker) }} ({{ ticker }}) - Fundamental Analysis{% endblock %}
 
@@ -142,7 +247,7 @@
 ## 📈 Valuation Analysis
 
 {% from 'shared/macros/valuation_framework_macro.j2' import multi_method_valuation, scenario_analysis %}
-{{ multi_method_valuation(data.valuation_methods if data.valuation_methods else [], "fundamental") }}
+{{ multi_method_valuation(data.valuation_methods if data.valuation_methods else [], "fundamental", data) }}
 
 {{ scenario_analysis(data, "fundamental") }}
 {% endblock %}
@@ -150,7 +255,7 @@
 {% block risk_assessment %}
 {# Use the shared risk assessment macro with fundamental-specific context #}
 {% from 'shared/macros/risk_assessment_macro.j2' import risk_matrix, economic_risk_assessment, sensitivity_analysis %}
-{{ risk_matrix(data.risk_factors if data.risk_factors else [], "fundamental") }}
+{{ risk_matrix(data.risk_factors if data.risk_factors else [], "fundamental", data) }}
 
 {{ economic_risk_assessment(data, "fundamental") }}
 
@@ -162,3 +267,42 @@
 
 Key catalysts include {{ data.catalyst_1 | default("operational improvements") }} with {{ data.catalyst_1_probability | default("0.50") }} probability and ${{ data.catalyst_1_impact | default("15") }}/share impact, {{ data.catalyst_2 | default("market expansion") }} with {{ data.catalyst_2_probability | default("0.40") }} probability and ${{ data.catalyst_2_impact | default("12") }}/share impact, and {{ data.catalyst_3 | default("efficiency gains") }} with {{ data.catalyst_3_probability | default("0.30") }} probability and ${{ data.catalyst_3_impact | default("8") }}/share impact, while primary risks encompass {{ data.gdp_risk_probability | default("0.30") }} probability GDP deceleration risk ({{ data.gdp_risk_impact | default("4") }}/5 impact) and {{ data.competitive_risk_probability | default("0.40") }} probability competitive pressure ({{ data.competitive_risk_impact | default("3") }}/5 impact). Valuation analysis through DCF/Comps/Technical methods yields ${{ data.fair_value_low | default("180") }}-${{ data.fair_value_high | default("220") }} fair value range with {{ data.overall_valuation_confidence | default("0.80") }} confidence, representing {{ data.expected_return | default("15") }}% expected returns over {{ data.time_horizon | default("12") }}-month horizon. Current {{ data.fed_policy_stance | default("restrictive") }} monetary policy environment with {{ data.fed_funds_rate | default("5.25") }}% Fed funds rate and {{ data.yield_curve_status | default("normal") }} yield curve {{ data.economic_environment_impact | default("creates moderate headwinds") }} for near-term performance, while {{ data.gdp_growth | default("2.5") }}% GDP growth and {{ data.employment_growth | default("150") }}k employment trends {{ data.economic_alignment | default("align favorably") }} with the company's economic sensitivity profile. Portfolio allocation guidance recommends {{ data.position_size | default("4-6") }}% position sizing for {{ data.portfolio_type | default("balanced") }} portfolios, with {{ data.positioning_recommendation | default("neutral") }} positioning relative to {{ data.benchmark_weight | default("market") }} benchmark allocation based on {{ data.risk_adjusted_expectations | default("moderate risk-adjusted return expectations") }}, {{ data.cycle_timing | default("mid-cycle economic timing") }}, and {{ data.opportunity_set | default("cross-sector opportunity assessment") }}.
 {% endblock %}
+
+{# ========================================================================== #}
+{# TEMPLATE VALIDATION CHECKLIST:                                             #}
+{# □ All confidence scores in 0.0-1.0 format (baseline 0.9+)                #}
+{# □ Risk probabilities in decimal format from quantified matrices           #}
+{# □ Economic sensitivity with GDP/employment correlations                    #}
+{# □ Cross-sector positioning and rotation scoring (0.0-10.0)               #}
+{# □ 5+ economic stress testing scenarios with recovery timelines            #}
+{# □ Author attribution "Cole Morton" consistent                              #}
+{# □ Financial health grades A-F with trend analysis                         #}
+{# □ CLI price accuracy validation (≤2% variance)                            #}
+{# □ FRED economic indicator currency (within 24 hours)                      #}
+{# □ Multi-source validation across 7 CLI services                          #}
+{# □ Institutional presentation quality                                       #}
+{# □ Cross-validation with sector analysis reports                           #}
+{# □ Template compliance with exact structure requirements                    #}
+{# □ Investment summary 200-250 words with all required elements             #}
+{#                                                                            #}
+{# BEST PRACTICES:                                                           #}
+{# - Validate CLI service health before execution                            #}
+{# - Use multiple sources for cross-validation                               #}
+{# - Apply economic context at all analytical levels                         #}
+{# - Quantify risks with probability/impact matrices                         #}
+{# - Maintain comprehensive audit trails                                     #}
+{# - Execute phases in proper DASV sequence                                  #}
+{# - Handle errors gracefully with fallback strategies                       #}
+{# - Monitor performance and quality metrics continuously                     #}
+{#                                                                            #}
+{# INTEGRATION NOTES:                                                        #}
+{# This template serves as the authoritative specification for fundamental    #}
+{# analysis document generation within the DASV framework. All fundamental   #}
+{# analyst commands should reference this template for consistency and       #}
+{# institutional-quality output standards.                                   #}
+{#                                                                            #}
+{# Template Version: 2.0 (Enhanced with comprehensive specifications)        #}
+{# Framework Integration: DASV Phase 3 (Synthesize) with economic context   #}
+{# Specification Authority: templates/analysis/fundamental_analysis_template.md #}
+{# Cross-Reference: All validation rules defined in authoritative markdown   #}
+{# ========================================================================== #}

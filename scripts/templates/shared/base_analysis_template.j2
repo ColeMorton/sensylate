@@ -1,3 +1,19 @@
+{# ========================================================================== #}
+{# BASE ANALYSIS TEMPLATE - SHARED FOUNDATION FOR INSTITUTIONAL ANALYSIS    #}
+{# ========================================================================== #}
+{#                                                                            #}
+{# This template provides shared structure for both fundamental and sector    #}
+{# analysis templates, implementing common elements while allowing specific   #}
+{# customization through inheritance blocks.                                  #}
+{#                                                                            #}
+{# HYBRID TEMPLATE SYSTEM COMPONENT:                                          #}
+{# - Base Template: Common structure and shared components                    #}
+{# - Child Templates: fundamental_analysis_enhanced.j2, sector_analysis_enhanced.j2 #}
+{# - Specification Authority: templates/analysis/*.md files                   #}
+{# - Shared Macros: scripts/templates/shared/macros/*.j2                     #}
+{#                                                                            #}
+{# ========================================================================== #}
+
 ---
 title: {% block title %}{{ data.company_name | default(ticker) }} Analysis{% endblock %}
 description: {% block description %}Institutional-quality analysis with economic context and multi-source validation{% endblock %}

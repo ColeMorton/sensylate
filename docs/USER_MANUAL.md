@@ -536,6 +536,81 @@ command_integration:
   output_format: "markdown, json"
 ```
 
+#### Template System (`templates/` and `scripts/templates/`)
+
+**Hybrid Template System**: Sensylate uses a sophisticated hybrid template system that combines authoritative markdown specifications with functional Jinja2 implementations:
+
+```yaml
+template_architecture:
+  authoritative_specifications:
+    location: "templates/analysis/"
+    files:
+      - "fundamental_analysis_template.md"  # 476 lines of institutional requirements
+      - "sector_analysis_template.md"       # 709 lines with sector customization
+    purpose: "Complete methodology, validation rules, and compliance standards"
+
+  functional_implementations:
+    location: "scripts/templates/"
+    files:
+      - "fundamental_analysis_enhanced.j2"   # Jinja2 template with inheritance
+      - "sector_analysis_enhanced.j2"        # Sector-specific Jinja2 template
+    features:
+      - "Template inheritance and shared components"
+      - "40-50% reduction in template duplication"
+      - "Dynamic content generation with confidence scoring"
+
+  shared_components:
+    location: "scripts/templates/shared/"
+    files:
+      - "base_analysis_template.j2"          # Common structure and blocks
+      - "macros/*.j2"                        # Reusable components
+    benefits:
+      - "Economic sensitivity matrices"
+      - "Risk assessment frameworks"
+      - "Confidence scoring systems"
+      - "Data quality validation"
+```
+
+**Usage Patterns**:
+
+1. **Command Files** reference markdown specifications:
+   ```bash
+   # Commands use authoritative specifications for compliance
+   fundamental_analyst_synthesize.md -> templates/analysis/fundamental_analysis_template.md
+   sector_analyst_synthesize.md -> templates/analysis/sector_analysis_template.md
+   ```
+
+2. **CLI Tools** use Jinja2 implementations:
+   ```bash
+   # Content Automation CLI renders using enhanced templates
+   python scripts/content_automation_cli.py analysis --type fundamental
+   python scripts/content_automation_cli.py analysis --type sector
+   ```
+
+3. **Validation** against authoritative standards:
+   ```bash
+   # Validation commands check against markdown specifications
+   fundamental_analyst_validate.md -> validates template compliance
+   sector_analyst_validate.md -> validates sector customization rules
+   ```
+
+**Template Features**:
+
+- **Institutional Quality**: 0.9+ confidence baseline, multi-source validation
+- **Economic Integration**: FRED indicators, GDP/employment correlations
+- **Risk Quantification**: Probability/impact matrices with monitoring KPIs
+- **Cross-Sector Analysis**: Complete 11-sector relative positioning
+- **CLI Integration**: 7-source data validation (Yahoo Finance, Alpha Vantage, FMP, FRED, SEC EDGAR, CoinGecko, IMF)
+- **Compliance Framework**: Template validation checklist and quality gates
+
+**Development Workflow**:
+
+1. **Specifications** (markdown files): Define methodology and requirements
+2. **Implementation** (Jinja2 files): Functional templates with inheritance
+3. **Commands** reference specifications for institutional compliance
+4. **CLI** uses implementations for efficient document generation
+5. **Validation** ensures output meets specification standards
+
 ---
 
 ## 🔧 Troubleshooting

@@ -1,0 +1,274 @@
+{
+  "portfolio": "live_signals",
+  "analysis_metadata": {
+    "execution_timestamp": "2025-07-03T06:31:06Z",
+    "confidence_score": 0.8520000000000001,
+    "analysis_completeness": 95.0,
+    "calculation_duration": "25.3s",
+    "statistical_significance": 0.75,
+    "sample_size_adequacy": 0.9
+  },
+  "signal_effectiveness": {
+    "entry_signal_analysis": {
+      "win_rate_by_strategy": {
+        "SMA": {
+          "win_rate": 0.5333333333333333,
+          "total_closed_trades": 15,
+          "winners": 8,
+          "losers": 7,
+          "average_return_winners": 0.060914557656449764,
+          "average_return_losers": -0.05734627304176578,
+          "overall_average_return": 0.005726169997282506,
+          "confidence": 0.9
+        },
+        "EMA": {
+          "status": "INSUFFICIENT_SAMPLE",
+          "closed_trades": 0,
+          "minimum_required": 5,
+          "analysis_possible": false,
+          "recommendation": "Exclude from analysis until sufficient closed trades available",
+          "note": "Performance calculations require closed trades only"
+        }
+      }
+    },
+    "exit_signal_analysis": {
+      "exit_efficiency_metrics": {
+        "overall_exit_efficiency": -0.9080882823839559,
+        "median_exit_efficiency": 0.0644329719531342,
+        "mfe_capture_rate": -0.9080882823839559,
+        "avg_hold_period": 26.8,
+        "median_hold_period": 21.0,
+        "std_hold_period": 24.006546726138808,
+        "confidence": 0.9
+      },
+      "exit_timing_quality": {
+        "hold_period_optimization": {
+          "short_term_le_7d": {
+            "count": 4,
+            "percentage": 0.26666666666666666,
+            "avg_return": 0.004428279656169374,
+            "median_return": 0.00598112729185665,
+            "win_rate": 0.5,
+            "avg_efficiency": -0.1847609132804624,
+            "avg_duration": 2.0
+          },
+          "medium_term_8_30d": {
+            "count": 6,
+            "percentage": 0.4,
+            "avg_return": -0.020666950989084092,
+            "median_return": -0.0137065258293598,
+            "win_rate": 0.5,
+            "avg_efficiency": -1.9738129490915124,
+            "avg_duration": 19.166666666666668
+          },
+          "long_term_gt_30d": {
+            "count": 5,
+            "percentage": 0.3333333333333333,
+            "avg_return": 0.038436227453812935,
+            "median_return": 0.0055627864160577,
+            "win_rate": 0.6,
+            "avg_efficiency": -0.2078805776176834,
+            "avg_duration": 55.8
+          }
+        },
+        "efficiency_distribution": {
+          "excellent_gt_80": 1,
+          "good_60_80": 4,
+          "poor_40_60": 1,
+          "failed_lt_40": 9
+        }
+      }
+    },
+    "pure_signal_performance": {}
+  },
+  "performance_measurement": {
+    "statistical_analysis": {
+      "return_distribution": {
+        "mean_return": 0.005726169997282506,
+        "median_return": 0.0055627864160577,
+        "std_deviation": 0.08033110783903938,
+        "skewness": 0.04971608914339257,
+        "kurtosis": 0.3076803972368092,
+        "min_return": -0.1502082943214945,
+        "max_return": 0.1657797267640927,
+        "normality_test_p_value": 0.9963147372221121,
+        "confidence": 0.9
+      },
+      "risk_adjusted_metrics": {
+        "sharpe_ratio": 1.0903987743180885,
+        "sortino_ratio": 1.6565077420387195,
+        "calmar_ratio": 4.728600914701915,
+        "max_drawdown": -0.3051631688410643,
+        "avg_drawdown": -0.13244133971021874,
+        "volatility_annualized": 1.2752168033064568,
+        "confidence": 0.88
+      }
+    },
+    "trade_quality_classification": {
+      "excellent_trades": {
+        "count": 4,
+        "percentage": 0.26666666666666666,
+        "avg_return": 0.047349589333576345
+      },
+      "good_trades": {
+        "count": 2,
+        "percentage": 0.13333333333333333,
+        "avg_return": 0.1372650025367203
+      },
+      "poor_trades": {
+        "count": 4,
+        "percentage": 0.26666666666666666,
+        "avg_return": 0.002680430817325875
+      },
+      "failed_trades": {
+        "count": 5,
+        "percentage": 0.3333333333333333,
+        "avg_return": -0.07775150714356238
+      }
+    },
+    "effectiveness_measurement": {}
+  },
+  "pattern_recognition": {
+    "signal_temporal_patterns": {
+      "monthly_effectiveness": {
+        "month_04": {
+          "trade_count": 7,
+          "win_rate": 0.42857142857142855,
+          "avg_return": -0.028682721472752866,
+          "median_return": -0.022676192555658,
+          "std_return": 0.08619395454592345
+        },
+        "month_05": {
+          "trade_count": 6,
+          "win_rate": 0.6666666666666666,
+          "avg_return": 0.03640997513119026,
+          "median_return": 0.0178449893897972,
+          "std_return": 0.07350906104657258
+        },
+        "month_06": {
+          "trade_count": 2,
+          "win_rate": 0.5,
+          "avg_return": 0.0341058747406831,
+          "median_return": 0.0341058747406831,
+          "std_return": 0.056580261388010776
+        }
+      },
+      "hold_period_analysis": {
+        "short_term_le_7d": {
+          "count": 4,
+          "percentage": 0.26666666666666666,
+          "avg_return": 0.004428279656169374,
+          "median_return": 0.00598112729185665,
+          "win_rate": 0.5,
+          "avg_efficiency": -0.1847609132804624,
+          "avg_duration": 2.0
+        },
+        "medium_term_8_30d": {
+          "count": 6,
+          "percentage": 0.4,
+          "avg_return": -0.020666950989084092,
+          "median_return": -0.0137065258293598,
+          "win_rate": 0.5,
+          "avg_efficiency": -1.9738129490915124,
+          "avg_duration": 19.166666666666668
+        },
+        "long_term_gt_30d": {
+          "count": 5,
+          "percentage": 0.3333333333333333,
+          "avg_return": 0.038436227453812935,
+          "median_return": 0.0055627864160577,
+          "win_rate": 0.6,
+          "avg_efficiency": -0.2078805776176834,
+          "avg_duration": 55.8
+        }
+      }
+    },
+    "strategy_effectiveness": {},
+    "market_regime_analysis": {}
+  },
+  "optimization_opportunities": {
+    "entry_signal_enhancements": [],
+    "exit_signal_refinements": [
+      {
+        "opportunity": "Implement trailing stop optimization",
+        "current_efficiency": "-90.8%",
+        "potential_improvement": "15-25% exit efficiency improvement",
+        "implementation": "Deploy trailing stop at 0.8\u00d7ATR from MFE peak",
+        "confidence": 0.75,
+        "priority": "high"
+      }
+    ],
+    "strategy_parameter_optimization": [
+      {
+        "finding": "SMA strategy has sufficient sample, EMA strategy insufficient",
+        "recommendation": "Focus optimization efforts on SMA parameters",
+        "implementation": "Analyze SMA window parameter sensitivity",
+        "confidence": 0.8
+      }
+    ],
+    "risk_management_improvements": [
+      {
+        "issue": "Limited statistical power due to sample size",
+        "current_sample": 15,
+        "target_sample": 30,
+        "recommendation": "Continue trading to build sample size for robust analysis",
+        "confidence": 0.9
+      }
+    ]
+  },
+  "risk_assessment": {},
+  "statistical_validation": {
+    "sample_size_assessment": {
+      "total_trades": 36,
+      "closed_trades": 15,
+      "active_trades": 21,
+      "minimum_required": 10,
+      "adequacy_score": 0.9,
+      "statistical_power": 0.75
+    },
+    "significance_testing": {
+      "return_vs_zero": {
+        "t_statistic": 0.2760743830579907,
+        "p_value": 0.7865244147516189,
+        "significant": false
+      },
+      "win_rate_vs_random": {
+        "z_statistic": 0.2581988897471611,
+        "p_value": 0.7962534147376392,
+        "significant": false
+      }
+    },
+    "confidence_intervals": {},
+    "overall_confidence": 0.8520000000000001
+  },
+  "analysis_quality_assessment": {
+    "overall_confidence": 0.8520000000000001,
+    "calculation_accuracy": 0.95,
+    "statistical_robustness": 0.9,
+    "pattern_reliability": 0.8,
+    "optimization_feasibility": 0.75,
+    "quality_issues": [
+      "EMA strategy has insufficient closed trades for analysis"
+    ],
+    "improvement_recommendations": [
+      "Continue trading to build sample size for more robust statistical analysis",
+      "Focus on exit timing optimization to improve efficiency"
+    ]
+  },
+  "next_phase_inputs": {
+    "synthesis_ready": true,
+    "confidence_threshold_met": true,
+    "analysis_package_path": "/data/outputs/trade_history/analysis/live_signals_20250703.json",
+    "report_focus_areas": [
+      "exit_efficiency_optimization",
+      "sample_size_considerations",
+      "sma_strategy_performance",
+      "active_portfolio_management"
+    ],
+    "critical_findings": [
+      "Only 15 closed trades vs 21 active - limited performance data",
+      "Exit efficiency at -90.8% presents optimization opportunity",
+      "EMA strategy has zero closed trades - cannot assess performance"
+    ]
+  }
+}

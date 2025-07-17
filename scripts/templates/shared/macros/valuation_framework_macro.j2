@@ -4,7 +4,7 @@ Shared component for valuation methods used in both fundamental and sector analy
 Reduces template duplication by 70% for valuation sections
 #}
 
-{% macro multi_method_valuation(valuation_methods, analysis_type="fundamental") %}
+{% macro multi_method_valuation(valuation_methods, analysis_type="fundamental", data={}) %}
 ### Multi-Method Valuation
 | Method | Fair Value | Weight | Confidence | Key Assumptions | Data Source |
 |--------|-----------|---------|------------|-----------------|-------------|

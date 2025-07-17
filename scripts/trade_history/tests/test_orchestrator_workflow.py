@@ -6,11 +6,8 @@ Validates the DASV workflow orchestration, microservice coordination,
 error handling, performance optimization, and quality assurance integration.
 """
 
-import json
 import time
-from datetime import datetime
-from typing import Dict, List, Optional, Tuple
-from unittest.mock import Mock, patch
+from typing import Dict, List
 
 
 class MockMicroservice:
@@ -123,7 +120,7 @@ def test_workflow_orchestration():
                 else:
                     # Non-critical failure - continue with degraded confidence
                     confidence_scores[phase] = 0.5
-                    print(f"  ⚠️ Continuing with degraded confidence")
+                    print("  ⚠️ Continuing with degraded confidence")
 
         # Calculate overall metrics
         total_time = time.time() - workflow_start
@@ -146,7 +143,7 @@ def test_workflow_orchestration():
     portfolio = "test_portfolio"
     workflow_result = execute_dasv_workflow(portfolio)
 
-    print(f"DASV Workflow Execution Results:")
+    print("DASV Workflow Execution Results:")
     print(f"  Success: {'✅' if workflow_result['success'] else '❌'}")
     print(f"  Total Time: {workflow_result['total_execution_time']:.2f}s")
     print(f"  Overall Confidence: {workflow_result['overall_confidence']:.3f}")
@@ -155,7 +152,7 @@ def test_workflow_orchestration():
         perf = workflow_result["performance_metrics"]
         print(f"  Performance Improvement: {perf['performance_improvement']:.1f}%")
 
-    print(f"\nPhase Confidence Scores:")
+    print("\nPhase Confidence Scores:")
     for phase, confidence in workflow_result["confidence_scores"].items():
         print(f"  {phase.capitalize()}: {confidence:.3f}")
 
@@ -204,45 +201,45 @@ def test_error_handling_and_recovery():
             print(f"Testing: {scenario['name']}")
 
             # Create microservices with specific failure pattern
-            test_microservices = {
-                "discover": MockMicroservice(
-                    "trade_history_discover",
-                    1.0,
-                    0.0 if scenario["failed_phase"] == "discover" else 1.0,
-                ),
-                "analyze": MockMicroservice(
-                    "trade_history_analyze",
-                    1.0,
-                    0.0 if scenario["failed_phase"] == "analyze" else 1.0,
-                ),
-                "synthesize": MockMicroservice(
-                    "trade_history_synthesize",
-                    1.0,
-                    0.0 if scenario["failed_phase"] == "synthesize" else 1.0,
-                ),
-                "validate": MockMicroservice(
-                    "trade_history_validate",
-                    1.0,
-                    0.0 if scenario["failed_phase"] == "validate" else 1.0,
-                ),
-            }
+            # test_microservices = {
+            #     "discover": MockMicroservice(
+            #         "trade_history_discover",
+            #         1.0,
+            #         0.0 if scenario["failed_phase"] == "discover" else 1.0,
+            #     ),
+            #     "analyze": MockMicroservice(
+            #         "trade_history_analyze",
+            #         1.0,
+            #         0.0 if scenario["failed_phase"] == "analyze" else 1.0,
+            #     ),
+            #     "synthesize": MockMicroservice(
+            #         "trade_history_synthesize",
+            #         1.0,
+            #         0.0 if scenario["failed_phase"] == "synthesize" else 1.0,
+            #     ),
+            #     "validate": MockMicroservice(
+            #         "trade_history_validate",
+            #         1.0,
+            #         0.0 if scenario["failed_phase"] == "validate" else 1.0,
+            #     ),
+            # }
 
             # Simulate error handling logic
             if scenario["failed_phase"] == "discover":
                 # Critical failure - should terminate
-                result = {
-                    "success": False,
-                    "termination_reason": "critical_discovery_failure",
-                }
-                print(f"  ❌ Workflow terminated as expected")
+                # result = {
+                #     "success": False,
+                #     "termination_reason": "critical_discovery_failure",
+                # }
+                print("  ❌ Workflow terminated as expected")
             else:
                 # Non-critical failure - should continue with degradation
-                result = {
-                    "success": True,
-                    "degraded_confidence": True,
-                    "failed_phase": scenario["failed_phase"],
-                }
-                print(f"  ⚠️ Graceful degradation applied")
+                # result = {
+                #     "success": True,
+                #     "degraded_confidence": True,
+                #     "failed_phase": scenario["failed_phase"],
+                # }
+                print("  ⚠️ Graceful degradation applied")
 
             print(f"  Description: {scenario['description']}")
             print(f"  Expected: {scenario['expected_behavior']}")
@@ -274,7 +271,7 @@ def test_error_handling_and_recovery():
             print(f"  Trigger: {scenario['trigger']}")
             print(f"  Action: {scenario['action']}")
             print(f"  Preservation: {scenario['preservation']}")
-            print(f"  Status: ✅ Rollback strategy defined")
+            print("  Status: ✅ Rollback strategy defined")
             print()
 
     test_phase_failure_handling()
@@ -294,17 +291,17 @@ def test_performance_optimization():
         """Test caching strategies and effectiveness."""
 
         # Simulate cache implementation
-        cache = {
-            "market_data": {
-                "spy_data": "cached_spy_data",
-                "vix_data": "cached_vix_data",
-            },
-            "calculations": {"sharpe_ratio": 1.82, "win_rate": 0.576},
-            "templates": {
-                "internal_report": "cached_template",
-                "live_monitor": "cached_template",
-            },
-        }
+        # cache = {
+        #     "market_data": {
+        #         "spy_data": "cached_spy_data",
+        #         "vix_data": "cached_vix_data",
+        #     },
+        #     "calculations": {"sharpe_ratio": 1.82, "win_rate": 0.576},
+        #     "templates": {
+        #         "internal_report": "cached_template",
+        #         "live_monitor": "cached_template",
+        #     },
+        # }
 
         cache_scenarios = [
             {"phase": "discover", "cache_type": "market_data", "hit_rate": 0.85},
@@ -357,7 +354,7 @@ def test_performance_optimization():
             print(f"    Parallel tasks: {', '.join(opp['parallelizable'])}")
 
         print(
-            f"  Overall Parallelization: ✅ Significant optimization opportunities identified"
+            "  Overall Parallelization: ✅ Significant optimization opportunities identified"
         )
         print()
 
@@ -500,7 +497,7 @@ def test_data_output_integration():
         """Test output archival and versioning."""
 
         archival_structure = {
-            "base_path": "./data/outputs/analysis_trade_history/",
+            "base_path": "./data/outputs/trade_history/",
             "phase_outputs": {
                 "discover": "./discover/outputs/",
                 "analyze": "./analyze/outputs/",
@@ -515,7 +512,7 @@ def test_data_output_integration():
         for phase, path in archival_structure["phase_outputs"].items():
             print(f"  {phase.capitalize()}: {path}")
         print(f"  Orchestrator Logs: {archival_structure['orchestrator_logs']}")
-        print(f"  Versioning: ✅ Timestamp-based with metadata preservation")
+        print("  Versioning: ✅ Timestamp-based with metadata preservation")
         print()
 
     def test_collaboration_integration():
@@ -545,7 +542,7 @@ def test_data_output_integration():
             print(f"  {command.title()}:")
             print(f"    Provides: {', '.join(integration['provides'])}")
             print(f"    Consumes: {', '.join(integration['consumes'])}")
-            print(f"    Status: ✅ Integration framework defined")
+            print("    Status: ✅ Integration framework defined")
             print()
 
     test_output_archival()
@@ -580,7 +577,7 @@ def main():
 
     # Summary of key metrics
     if workflow_result and workflow_result.get("success"):
-        print(f"\n📊 Key Performance Metrics:")
+        print("\n📊 Key Performance Metrics:")
         print(f"   Overall Confidence: {workflow_result['overall_confidence']:.3f}")
         print(f"   Execution Time: {workflow_result['total_execution_time']:.2f}s")
         if "performance_metrics" in workflow_result:

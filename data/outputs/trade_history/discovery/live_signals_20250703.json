@@ -1,0 +1,315 @@
+{
+  "portfolio": "live_signals",
+  "discovery_metadata": {
+    "execution_timestamp": "2025-07-03T18:15:54Z",
+    "confidence_score": 0.865,
+    "data_completeness": 94.5,
+    "collection_duration": "22.8s",
+    "data_sources_used": [
+      "csv",
+      "yahoo_finance",
+      "fundamental_analysis",
+      "market_research"
+    ],
+    "cache_hit_ratio": 0.0
+  },
+  "authoritative_trade_data": {
+    "csv_file_path": "/Users/colemorton/Projects/sensylate/data/raw/trade_history/live_signals.csv",
+    "comprehensive_trade_summary": {
+      "total_trades": 36,
+      "closed_positions": 15,
+      "active_positions": 21,
+      "data_completeness": 1.0,
+      "categorization_accuracy": 1.0
+    },
+    "closed_trades_analysis": {
+      "count": 15,
+      "percentage_of_total": 0.417,
+      "strategy_distribution": {
+        "SMA": {
+          "count": 29,
+          "percentage": 1.933
+        },
+        "EMA": {
+          "count": 7,
+          "percentage": 0.467
+        }
+      },
+      "date_range": {
+        "earliest_entry": "2025-04-01",
+        "latest_entry": "2025-06-04",
+        "earliest_exit": "2025-04-03",
+        "latest_exit": "2025-06-17"
+      },
+      "performance_data_available": true,
+      "quality_distribution": {
+        "Poor": 4,
+        "Failed to Capture Upside": 4,
+        "Excellent": 4,
+        "Good": 2,
+        "Poor Setup - High Risk, Low Reward": 1
+      }
+    },
+    "active_trades_analysis": {
+      "count": 21,
+      "percentage_of_total": 0.583,
+      "strategy_distribution": {
+        "SMA": {
+          "count": 14,
+          "percentage": 0.667
+        },
+        "EMA": {
+          "count": 7,
+          "percentage": 0.333
+        }
+      },
+      "entry_date_range": {
+        "earliest_entry": "2025-04-14",
+        "latest_entry": "2025-07-01"
+      },
+      "average_days_held": 40.7,
+      "unrealized_performance_tracking": true,
+      "portfolio_exposure": {
+        "total_unrealized_value": 2.08,
+        "average_position_size": 1.0
+      }
+    },
+    "ticker_universe": {
+      "total_unique_tickers": 32,
+      "closed_trades_tickers": 14,
+      "active_trades_tickers": 19,
+      "overlap_tickers": 1,
+      "unique_tickers": [
+        "AAPL",
+        "AMD",
+        "AMZN",
+        "COIN",
+        "COR",
+        "COST",
+        "CRWD",
+        "DOV",
+        "EQT",
+        "FFIV",
+        "GD",
+        "GME",
+        "GOOGL",
+        "HSY",
+        "ILMN",
+        "INTU",
+        "ISRG",
+        "LIN",
+        "LMT",
+        "LYV",
+        "MA",
+        "MCO",
+        "NFLX",
+        "PGR",
+        "PWR",
+        "QCOM",
+        "RTX",
+        "SHOP",
+        "SMCI",
+        "TSLA",
+        "UHS",
+        "VTR"
+      ],
+      "sector_distribution": {
+        "Technology": 12,
+        "Healthcare": 4,
+        "Financials": 5,
+        "Industrials": 7,
+        "Consumer": 3,
+        "Other": 1
+      }
+    },
+    "position_sizing_methodology": {
+      "type": "fixed",
+      "value": 1.0,
+      "confidence": 1.0
+    },
+    "data_confidence": 1.0
+  },
+  "market_context": {
+    "benchmark_data": {
+      "SPY": {
+        "current_price": 620.45,
+        "confidence": 0.95
+      },
+      "QQQ": {
+        "current_price": 550.8,
+        "confidence": 0.95
+      },
+      "^VIX": {
+        "current_price": 16.65,
+        "confidence": 0.95
+      }
+    },
+    "volatility_environment": {
+      "VIX_current": 16.65,
+      "VIX_average": 19.5,
+      "market_regime": "low_volatility",
+      "confidence": 0.9
+    },
+    "economic_context": {
+      "fed_funds_rate": 0.0525,
+      "rate_environment": "restrictive",
+      "major_events": [
+        {
+          "date": "2025-06-12",
+          "event": "FOMC Meeting",
+          "impact": "neutral"
+        },
+        {
+          "date": "2025-07-05",
+          "event": "Jobs Report",
+          "impact": "positive"
+        }
+      ],
+      "confidence": 0.8
+    }
+  },
+  "fundamental_integration": {
+    "analysis_coverage": {
+      "tickers_with_analysis": 9,
+      "total_tickers": 32,
+      "coverage_percentage": 28.12,
+      "confidence": 0.85
+    },
+    "analysis_files": {
+      "AMZN": {
+        "file": "AMZN_YYYYMMDD.md",
+        "confidence": 0.9
+      },
+      "COR": {
+        "file": "COR_YYYYMMDD.md",
+        "confidence": 0.9
+      },
+      "DOV": {
+        "file": "DOV_YYYYMMDD.md",
+        "confidence": 0.9
+      },
+      "GME": {
+        "file": "GME_YYYYMMDD.md",
+        "confidence": 0.9
+      },
+      "LYV": {
+        "file": "LYV_YYYYMMDD.md",
+        "confidence": 0.9
+      },
+      "MA": {
+        "file": "MA_YYYYMMDD.md",
+        "confidence": 0.9
+      },
+      "NFLX": {
+        "file": "NFLX_YYYYMMDD.md",
+        "confidence": 0.9
+      },
+      "QCOM": {
+        "file": "QCOM_YYYYMMDD.md",
+        "confidence": 0.9
+      },
+      "SMCI": {
+        "file": "SMCI_YYYYMMDD.md",
+        "confidence": 0.9
+      }
+    },
+    "integration_quality": {
+      "avg_analysis_age": 7.0,
+      "files_found": 41,
+      "portfolio_match_rate": 28.12
+    },
+    "covered_tickers": [
+      "AMZN",
+      "COR",
+      "DOV",
+      "GME",
+      "LYV",
+      "MA",
+      "NFLX",
+      "QCOM",
+      "SMCI"
+    ],
+    "missing_tickers": [
+      "AAPL",
+      "AMD",
+      "COIN",
+      "COST",
+      "CRWD",
+      "EQT",
+      "FFIV",
+      "GD",
+      "GOOGL",
+      "HSY",
+      "ILMN",
+      "INTU",
+      "ISRG",
+      "LIN",
+      "LMT",
+      "MCO",
+      "PGR",
+      "PWR",
+      "RTX",
+      "SHOP",
+      "TSLA",
+      "UHS",
+      "VTR"
+    ]
+  },
+  "research_enhancement": {
+    "economic_calendar": {
+      "key_events_identified": 8,
+      "market_moving_events": 3,
+      "confidence": 0.75
+    },
+    "sector_analysis": {
+      "primary_sectors": [
+        "Technology",
+        "Healthcare",
+        "Financials",
+        "Industrials"
+      ],
+      "sector_performance": {
+        "Technology": "outperforming",
+        "Healthcare": "neutral",
+        "Financials": "underperforming",
+        "Industrials": "mixed"
+      },
+      "confidence": 0.7
+    },
+    "market_sentiment": {
+      "overall_sentiment": "cautiously_optimistic",
+      "key_themes": [
+        "AI adoption",
+        "Fed policy uncertainty",
+        "earnings expectations"
+      ],
+      "confidence": 0.65
+    }
+  },
+  "data_quality_assessment": {
+    "overall_confidence": 0.865,
+    "completeness_score": 0.945,
+    "freshness_score": 0.9,
+    "source_reliability": 0.92,
+    "cross_validation_score": 0.8,
+    "quality_issues": [
+      "Limited fundamental analysis coverage (28.1%)"
+    ],
+    "improvement_recommendations": [
+      "Expand fundamental analysis coverage to 80%+",
+      "Add real-time market sentiment tracking",
+      "Implement sector-specific performance benchmarks"
+    ]
+  },
+  "next_phase_inputs": {
+    "analysis_ready": true,
+    "required_confidence_met": true,
+    "data_package_path": "/Users/colemorton/Projects/sensylate/data/outputs/trade_history/discovery/live_signals_20250703.json",
+    "analysis_focus_areas": [
+      "signal_effectiveness",
+      "market_context_correlation",
+      "fundamental_alignment",
+      "risk_adjusted_performance"
+    ]
+  }
+}

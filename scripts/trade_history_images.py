@@ -71,7 +71,7 @@ class TradeHistoryImageGenerator:
         self.parser = DashboardDataParser()
 
         # Base directories
-        self.reports_dir = Path("data/outputs/analysis_trade_history")
+        self.reports_dir = Path("data/outputs/trade_history")
 
     def generate_images_for_date(
         self, date_str: str, report_type: Optional[str] = None

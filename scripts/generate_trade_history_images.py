@@ -37,7 +37,7 @@ class TemplateBasedDashboardGenerator:
         self.date_str = date_str
         self.debug = debug
         self.report_dir = Path(
-            "/Users/colemorton/Projects/sensylate/data/outputs/analysis_trade_history"
+            "/Users/colemorton/Projects/sensylate/data/outputs/trade_history"
         )
         self.template_dir = Path(
             "/Users/colemorton/Projects/sensylate/templates/dashboards"

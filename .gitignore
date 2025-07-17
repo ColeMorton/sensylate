@@ -64,10 +64,10 @@ outputs/logs/*
 !outputs/logs/.gitkeep
 
 # Analysis trade history outputs (live and internal)
-data/outputs/analysis_trade_history/live/*
-data/outputs/analysis_trade_history/internal/*
+data/outputs/trade_history/live/*
+data/outputs/trade_history/internal/*
 data/outputs/twitter_post_strategy_live/*
-data/outputs/analysis_trade_history/historical/*
+data/outputs/trade_history/historical/*
 
 # Temporary files
 *.tmp

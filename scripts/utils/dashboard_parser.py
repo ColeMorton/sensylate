@@ -353,7 +353,9 @@ if __name__ == "__main__":
     if len(sys.argv) > 1:
         file_path = sys.argv[1]
     else:
-        file_path = "data/outputs/analysis_trade_history/HISTORICAL_PERFORMANCE_REPORT_20250626.md"
+        file_path = (
+            "data/outputs/trade_history/HISTORICAL_PERFORMANCE_REPORT_20250626.md"
+        )
 
     try:
         data = parse_dashboard_data(file_path)
