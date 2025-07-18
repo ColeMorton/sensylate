@@ -140,22 +140,28 @@ performance_measurement_analysis:
 
   statistical_analysis:
     return_distribution:
-      - Return distribution analysis and normality testing
-      - Statistical significance testing vs benchmark
-      - Confidence interval calculation and reliability validation
-      - Risk-adjusted return measurement (Sharpe, Sortino ratios)
+      - Return distribution analysis and normality testing with Shapiro-Wilk tests
+      - Statistical significance testing vs zero: t-tests with p-value calculation
+      - Confidence interval calculation (95% CI) for mean return, win rate, and key metrics
+      - Risk-adjusted return measurement (Sharpe, Sortino, Calmar ratios) with pending benchmark data
+
+    expectancy_calculation:
+      - Risk-adjusted expectancy: (Average Win × Win Rate) - (Average Loss × Loss Rate)
+      - Kelly fraction calculation for optimal position sizing recommendations
+      - Consecutive loss probability assessment for risk management
+      - Recovery time analysis (average trades to recover from losses)
 
     sharpe_ratio_calculation:
-      - Risk-adjusted performance measurement methodology
-      - Benchmark comparison and relative performance assessment
-      - Volatility-adjusted return analysis
-      - Rolling Sharpe ratio trend analysis
+      - Risk-adjusted performance measurement methodology with risk-free rate consideration
+      - Benchmark comparison and relative performance assessment (pending SPY data)
+      - Volatility-adjusted return analysis with downside deviation measurement
+      - Rolling Sharpe ratio trend analysis for performance consistency
 
     benchmark_comparison:
-      - Alpha generation measurement and attribution
-      - Beta stability analysis and market correlation
-      - Tracking error and information ratio calculation
-      - Risk-adjusted outperformance measurement
+      - Alpha generation measurement and attribution analysis (requires SPY comparison data)
+      - Beta stability analysis and market correlation assessment
+      - Tracking error and information ratio calculation for risk-adjusted performance
+      - Risk-adjusted outperformance statistical significance testing
 
   effectiveness_measurement:
     signal_accuracy_analysis:
@@ -196,30 +202,30 @@ performance_measurement_analysis:
 
 ```yaml
 pattern_recognition_analysis:
-  signal_performance_clustering:
-    excellent_signals:
-      - Top quartile pure return identification
-      - Consistent positive performance patterns
-      - Market condition correlation analysis
-      - Strategy parameter effectiveness patterns
+  predictive_characteristics_identification:
+    signal_strength_indicators:
+      - High MFE capture patterns (>80% MFE capture rate identification)
+      - Volume confirmation success (>1.25x average volume correlation with outcomes)
+      - Technology momentum signals vs market performance correlation
+      - EMA vs SMA trend capture effectiveness analysis
 
-    good_signals:
-      - Consistent positive performance identification
-      - Reliable signal characteristics analysis
-      - Market condition adaptability assessment
-      - Strategy optimization opportunities
+    entry_condition_quality_assessment:
+      - Momentum confirmation patterns (>5% gain within first week prediction success)
+      - Sector tailwinds impact (technology bull market, healthcare defensive characteristics)
+      - Signal timing excellence (EMA crossovers with volume confirmation outperformance)
+      - 30-45 day duration window optimization for trend following strategies
 
-    poor_signals:
-      - Inconsistent or negative performance identification
-      - Signal failure pattern analysis
-      - Market condition sensitivity assessment
-      - Improvement opportunity identification
+    predictive_failure_pattern_recognition:
+      - Weak initial momentum indicators (<2% gain within first week failure correlation)
+      - Poor setup quality indicators (SMA signals with poor quality rating outcomes)
+      - High-risk, low-reward setup identification (systematic failure pattern recognition)
+      - Failed to capture upside pattern analysis (inability to ride trends identification)
 
-    failed_signals:
-      - Systematic timing issue identification
-      - Signal failure mode analysis
-      - Root cause analysis and remediation
-      - Strategy adjustment recommendations
+    strategy_specific_characteristic_analysis:
+      - EMA advantage quantification (superior exit efficiency measurement)
+      - SMA reliability baseline (consistent signal generation assessment)
+      - Quality rating predictive power (correlation between trade quality and outcomes)
+      - Exit efficiency optimization opportunities (MFE capture improvement potential)
 
   strategy_signal_effectiveness:
     sma_vs_ema_comparison:
@@ -403,7 +409,8 @@ runtime_monitoring:
 output_specification:
   file_generation:
     - path_pattern: "/data/outputs/trade_history/analysis/{portfolio}_{YYYYMMDD}.json"
-    - naming_convention: "portfolio_timestamp_analyzed"
+    - naming_convention: "portfolio_date_format (e.g., live_signals_20250718.json)"
+    - prohibited_patterns: "NO timestamp suffixes, NO phase identifiers, NO time components"
     - format_requirements: "structured_json_with_schema_validation"
     - content_validation: "trading_analysis_schema_v1"
     - confidence_integration: "calculation_and_result_level"

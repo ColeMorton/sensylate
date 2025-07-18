@@ -103,7 +103,7 @@ report_generation_architecture:
     audience: "Trading Team, Risk Management, Senior Leadership"
     purpose: "Comprehensive operational analysis with action plans"
     sections:
-      - live_signals_context: "For live_signals portfolio: X/Twitter platform context and methodology"
+      - live_signals_overview: "MANDATORY for live_signals portfolio: Complete standardized '📡 Live Signals Overview' section with Trading Signal Platform, Methodology & Approach, and Platform Benefits subsections following exact format from live_signals_20250716.md template"
       - executive_dashboard: "30-second brief with key metrics and critical issues"
       - portfolio_health_score: "Composite scoring methodology with trend analysis"
       - comprehensive_portfolio_overview: "Combined closed trades performance + active positions analysis"
@@ -123,7 +123,7 @@ report_generation_architecture:
     audience: "Daily followers tracking open positions"
     purpose: "Real-time performance monitoring and position tracking"
     sections:
-      - live_signals_context: "For live_signals portfolio: X/Twitter platform context and methodology"
+      - live_signals_overview: "MANDATORY for live_signals portfolio: Complete standardized '📡 Live Signals Overview' section with Trading Signal Platform, Methodology & Approach, and Platform Benefits subsections following exact format from live_signals_20250716.md template"
       - portfolio_overview: "Current active positions status and comprehensive performance context"
       - market_context_macro: "Market regime analysis and economic environment"
       - top_performing_positions: "Best 3 active positions with detailed analysis"
@@ -140,21 +140,22 @@ report_generation_architecture:
     output_path: "/data/outputs/trade_history/historical/"
     audience: "Performance analysts and historical trend followers"
     purpose: "Closed positions analysis and pattern identification (closed trades only)"
+    quality_standard: "Match live_signals_20250718.md structure, format, and analytical depth"
     sections:
-      - live_signals_context: "For live_signals portfolio: X/Twitter platform context and methodology"
-      - performance_summary: "Overall closed trades results with EXPECTANCY metric and comprehensive risk-adjusted metrics"
-      - top_performing_trades: "Best 3 completed trades with detailed analysis"
-      - complete_closed_trade_history: "All closed trades table with ranking, quality, and Twitter/X links"
-      - performance_analysis: "Win rate breakdown and loss analysis (closed trades)"
-      - statistical_significance_analysis: "P-values, confidence intervals, and sample size adequacy assessment"
-      - predictive_characteristics_analysis: "Signal strength indicators and entry condition quality assessment (replaces quality distribution)"
-      - monthly_performance_breakdown: "Period-by-period closed trades analysis with context"
-      - duration_analysis: "Short, medium, long-term closed trade effectiveness"
-      - sector_performance: "Sector-specific patterns and insights from closed trades"
-      - market_regime_analysis: "Performance across bull/bear/sideways markets and volatility environments"
-      - strategy_effectiveness: "SMA vs EMA performance comparison with confidence levels and statistical reliability"
-      - key_learnings: "What worked, what failed, critical insights from completed trades"
-      - live_signals_platform: "For live_signals portfolio: X/Twitter follow information and methodology reminder"
+      - live_signals_overview: "MANDATORY for live_signals portfolio: Complete standardized '📡 Live Signals Overview' section with Trading Signal Platform, Methodology & Approach, and Platform Benefits subsections following exact format from live_signals_20250716.md template"
+      - performance_summary: "Overall closed trades results with EXPECTANCY metric (Risk-adjusted expectancy: (rrRatio × winRatio) - lossRatio), risk-adjusted performance (Sharpe, Sortino, Calmar ratios), downside deviation, recovery time, and comprehensive statistical metrics"
+      - top_performing_trades: "Best 3 completed trades with detailed P&L analysis ($), return (%), duration, strategy parameters, and comprehensive performance characteristics including MFE/MAE ratios"
+      - complete_closed_trade_history: "All closed trades table with ranking, P&L ($), return (%), duration, strategy, quality, and Twitter/X links - MUST use exact CSV P&L values (±$0.01 tolerance)"
+      - performance_analysis: "Win rate breakdown with confidence intervals, loss analysis, average win/loss metrics, and comprehensive statistical assessment including loss distribution analysis"
+      - statistical_significance_analysis: "P-values for returns vs zero, win rate vs random (50%), alpha vs benchmark, confidence intervals (95%), sample size adequacy assessment, and transparent statistical limitations disclosure"
+      - predictive_characteristics_analysis: "Signal strength indicators (>80% MFE capture patterns), entry condition quality assessment (volume confirmation success), predictive failure patterns (<2% gain within first week), and strategy-specific characteristics (EMA vs SMA effectiveness)"
+      - monthly_performance_breakdown: "Period-by-period closed trades analysis with market context, key wins/losses by month, lessons learned, and market environment correlation"
+      - duration_analysis: "Short-term (≤7 days), medium-term (8-30 days), long-term (>30 days) effectiveness with win rates, best performers, insights, and duration optimization recommendations"
+      - sector_performance: "Comprehensive sector breakdown with win rates, best performers, total P&L, performance insights, and sector-specific patterns and recommendations"
+      - market_regime_analysis: "Performance across bull/bear/sideways markets, volatility environments (Low/Medium/High VIX), optimal conditions identification, risk environments, and regime-specific optimization strategies"
+      - strategy_effectiveness: "SMA vs EMA performance comparison with statistical reliability assessment, confidence levels, sample size adequacy warnings, and strategy-specific recommendations for implementation"
+      - key_learnings: "What worked (with statistical support and implementation details), what failed (failure patterns and statistical evidence), critical insights for future signals, and implementation recommendations for system improvements"
+      - live_signals_platform: "For live_signals portfolio: X/Twitter follow information, methodology reminder, historical track record summary, and educational value proposition"
 ```
 
 ### Phase 3B: Executive Dashboard Generation
@@ -263,24 +264,24 @@ live_monitoring_synthesis:
 historical_analysis_synthesis:
   performance_summary:
     overall_results:
-      - total_closed_trades: "Completed signal count with statistical adequacy"
-      - win_rate: "Success percentage with confidence intervals"
-      - total_return: "Cumulative performance on closed positions"
-      - average_duration: "Hold period analysis with optimization opportunities"
-      - strategy_mix: "SMA vs EMA distribution and effectiveness"
+      - total_closed_trades: "Completed signal count with statistical adequacy assessment (minimum 25 for basic analysis)"
+      - win_rate: "Success percentage (Wins, Losses, Breakeven) with 95% confidence intervals and comparison vs random (50%)"
+      - total_return: "Cumulative P&L performance using exact CSV P&L values (never calculated methods)"
+      - average_duration: "Hold period analysis with duration optimization opportunities and effectiveness windows"
+      - strategy_mix: "SMA vs EMA distribution with closed trade counts and statistical adequacy warnings"
 
     key_metrics:
-      - expectancy: "Risk-adjusted expectancy calculation: (rrRatio × winRatio) - lossRatio"
-      - best_worst_trades: "Top and bottom performers with analysis"
-      - duration_extremes: "Longest and shortest holds with performance"
-      - risk_reward_profile: "Profit factor and win/loss ratio analysis"
+      - expectancy: "Risk-adjusted expectancy calculation: +1.00 target using (Average Win × Win Rate) - (Average Loss × Loss Rate)"
+      - best_worst_trades: "Best: Ticker +$XXX.XX (+XX.XX%), Worst: Ticker -$XXX.XX (-XX.XX%) with duration and analysis"
+      - duration_extremes: "Longest: Ticker XX days (±XX.XX%), Shortest: Ticker X day(s) (±XX.XX%) with performance insights"
+      - risk_reward_profile: "Profit Factor: X.XX (target 1.50+), Win/Loss Ratio: X.XX:1 (target 2.00:1), with breakeven analysis"
 
     risk_adjusted_performance:
-      - sharpe_ratio: "Existing risk-adjusted return metric"
-      - sortino_ratio: "Downside risk-focused performance measure"
-      - calmar_ratio: "Drawdown-adjusted return metric"
-      - downside_deviation: "Downside volatility measurement"
-      - recovery_time: "Average drawdown recovery period"
+      - sharpe_ratio: "Risk-adjusted return metric (pending benchmark data calculation)"
+      - sortino_ratio: "Downside risk-focused performance measure (pending calculation with benchmark data)"
+      - calmar_ratio: "Drawdown-adjusted return metric (pending calculation)"
+      - downside_deviation: "Estimated XX.X% from loss distribution analysis"
+      - recovery_time: "Average X.X trades to recover from losses with time-based recovery analysis"
 
   predictive_characteristics_analysis:
     signal_strength_indicators:
@@ -325,27 +326,27 @@ historical_analysis_synthesis:
 
   statistical_significance_analysis:
     sample_size_assessment:
-      - total_trades: "Closed trades count with statistical adequacy determination"
-      - strategy_adequacy: "Per-strategy sample size evaluation (SMA vs EMA)"
-      - confidence_level: "Statistical confidence threshold achievement"
-      - power_analysis: "Statistical power calculation for key metrics"
+      - total_trades: "XX closed trades ✅ **ADEQUATE** for portfolio-level analysis (minimum 25 achieved)"
+      - strategy_adequacy: "SMA: XX trades ✅ **ADEQUATE**, EMA: X trades ⚠️ **MINIMAL** (requires 15+ for confidence)"
+      - confidence_level: "Statistical confidence threshold achievement with adequacy score: XX.X%"
+      - power_analysis: "Statistical power XX% for detecting meaningful performance differences"
 
     significance_testing:
-      - returns_vs_zero: "P-value for returns significantly different from zero"
-      - alpha_vs_benchmark: "Statistical significance of outperformance"
-      - win_rate_vs_random: "P-value for win rate vs random chance"
-      - strategy_performance_differential: "Statistical significance of strategy differences"
+      - returns_vs_zero: "P-value: p < 0.01 (highly significant positive returns) or p = X.XXX (not significant)"
+      - alpha_vs_benchmark: "Requires SPY comparison data for statistical significance testing"
+      - win_rate_vs_random: "P-value: p = X.XXX vs 50% random (significant if p < 0.05)"
+      - strategy_performance_differential: "Insufficient EMA sample for reliable strategy comparison testing"
 
     confidence_intervals:
-      - mean_return: "95% confidence interval for average returns"
-      - sharpe_ratio: "Risk-adjusted performance uncertainty range"
-      - win_rate: "Success rate confidence bounds"
-      - strategy_comparison: "Confidence intervals for strategy performance differences"
+      - mean_return: "X.XX% ± X.X% (95% CI: X.X% to X.X%) showing uncertainty range"
+      - sharpe_ratio: "Risk-adjusted performance pending benchmark data for calculation"
+      - win_rate: "XX.XX% ± XX.X% (95% CI: XX.X% to XX.X%) confidence bounds"
+      - strategy_comparison: "Cannot reliably compare until EMA reaches 15+ closed trades"
 
     statistical_limitations:
-      - sample_size_warnings: "Strategies with insufficient data for strong conclusions"
-      - significance_thresholds: "Required sample sizes for statistical validity"
-      - methodology_honesty: "Transparent disclosure of analytical limitations"
+      - sample_size_warnings: "⚠️ **STATISTICAL LIMITED**: EMA strategy has only X closed trades insufficient for independent analysis"
+      - significance_thresholds: "Small sample creates wide confidence intervals due to limited trades"
+      - methodology_honesty: "Performance may not persist with market regime changes - requires larger sample validation"
 
   market_regime_analysis:
     market_condition_performance:
@@ -558,6 +559,7 @@ content_validation:
 
   template_compliance:
     - section_completeness: "All required sections present and populated"
+    - live_signals_compliance: "MANDATORY: live_signals portfolio reports MUST include complete '📡 Live Signals Overview' section with all three subsections (Trading Signal Platform, Methodology & Approach, Platform Benefits) using exact standardized format"
     - formatting_consistency: "Uniform styling across all three reports"
     - audience_appropriateness: "Content depth matches target audience needs"
     - action_specificity: "Concrete actions with clear implementation steps"

@@ -11,22 +11,15 @@ Provides intelligent service discovery and execution for trade history analysis 
 
 import json
 import logging
-import os
 import sys
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple, Union
+from typing import Any, Dict, List, Optional
 
 # Add current directory to path for imports
 sys.path.insert(0, str(Path(__file__).parent))
 
-from cli_wrapper import (
-    CLIServiceManager,
-    CLIServiceWrapper,
-    execute_cli_command,
-    get_service_manager,
-)
-from services.base_financial_service import BaseFinancialService
+from cli_wrapper import execute_cli_command, get_service_manager
 
 
 class ServiceDiscoveryError(Exception):
@@ -219,7 +212,7 @@ class ServiceDiscoveryManager:
                 command = command_map.get(data_type, "quote")
 
                 success, stdout, stderr = execute_cli_command(
-                    service_name, command, ticker, env="dev", format="json"
+                    service_name, command, ticker, env="dev", output_format="json"
                 )
 
                 if success and stdout:
@@ -429,6 +422,6 @@ if __name__ == "__main__":
         print(f"{ticker}: {availability['local_coverage']:.1%} coverage")
 
     # Test optimization planning
-    print(f"\n=== Optimization Plan ===")
+    print("\n=== Optimization Plan ===")
     plan = discovery.optimize_service_usage(test_tickers)
     pprint.pprint(plan)

@@ -263,19 +263,29 @@ data_separation_protocol:
 
   quality_assurance:
     data_validation:
-      - Verify status field accuracy and consistency
-      - Ensure closed trades have complete exit data
-      - Confirm active trades have null exit timestamps only
-      - Calculate ALL derivable fields (Duration_Days, Trade_Type)
+      - Verify status field accuracy and consistency across all trades
+      - Ensure closed trades have complete exit data (timestamps, prices, CSV P&L values)
+      - Confirm active trades have null exit timestamps only but populated unrealized metrics
+      - Calculate ALL derivable fields (Duration_Days, Trade_Type) - NEVER null
       - Validate unrealized P&L calculations for active trades (using actual CSV entry prices, not calculated formulas)
+      - Cross-validate P&L values exactly match CSV source (±$0.01 tolerance) for all closed trades
+      - Validate X_Status field presence for Twitter/X link generation capabilities
 
     comprehensive_coverage:
-      - Include ALL trades in discovery output
-      - Calculate ALL missing but derivable data
-      - Maintain clear categorization in data structure
-      - Provide both closed and active trade counts
-      - Calculate coverage percentages for each category
-      - Log all data enhancement operations performed
+      - Include ALL trades in discovery output with proper categorization
+      - Calculate ALL missing but derivable data using fail-fast methodology
+      - Maintain clear separation between closed and active trade analytics
+      - Provide both closed and active trade counts with statistical adequacy assessment
+      - Calculate coverage percentages for each category and sample size adequacy
+      - Log all data enhancement operations performed with confidence impact tracking
+      - Validate minimum sample sizes for statistical analysis (25+ closed trades recommended)
+
+    advanced_quality_validation:
+      - Validate sufficient closed trade sample for statistical significance (minimum 25 for basic analysis)
+      - Assess strategy-specific sample adequacy (SMA vs EMA closed trade distribution)
+      - Validate timeframe coverage for meaningful analysis (minimum 30-day period recommended)
+      - Cross-validate fundamental analysis coverage for traded tickers
+      - Ensure market context data freshness and completeness for analysis period
 ```
 
 ### Phase 2: Market Context Data Collection
@@ -593,7 +603,8 @@ runtime_monitoring:
 output_specification:
   file_generation:
     - path_pattern: "/data/outputs/trade_history/discovery/{portfolio}_{YYYYMMDD}.json"
-    - naming_convention: "portfolio_timestamp_discovered"
+    - naming_convention: "portfolio_date_format (e.g., live_signals_20250718.json)"
+    - prohibited_patterns: "NO timestamp suffixes, NO phase identifiers, NO time components"
     - format_requirements: "structured_json_with_schema_validation"
     - content_validation: "trading_discovery_schema_v1"
     - confidence_integration: "metadata_and_data_point_level"
@@ -839,18 +850,52 @@ output_specification:
 
 ## Implementation Framework
 
-### Discovery Phase Execution - Local-First Memory-Optimized Protocol
+### Script Management and Reuse Protocol
+
+**DEDICATED SCRIPT APPROACH**: The trade_history:discover command uses a dedicated, reusable script following DRY principles.
+
+```yaml
+script_management:
+  dedicated_script: "scripts/trade_history_discover.py"
+  script_reuse_protocol:
+    - "ALWAYS check if scripts/trade_history_discover.py exists before creating"
+    - "REUSE existing script instead of creating new ones"
+    - "ENHANCE existing script rather than duplicating functionality"
+    - "NEVER create scripts with names like 'comprehensive_trade_discovery.py'"
+
+  script_detection:
+    primary_script: "scripts/trade_history_discover.py"
+    fallback_creation: "Only if primary script is missing or incompatible"
+    enhancement_protocol: "Modify existing script to add new functionality"
+
+  execution_approach:
+    command: "python scripts/trade_history_discover.py --portfolio {portfolio_name}"
+    parameters: "--portfolio live_signals --verbose --output-format summary"
+    working_directory: "project_root"
+
+  script_standards:
+    naming_convention: "trade_history_{phase}.py (discover, analyze, synthesize, validate)"
+    forbidden_patterns: "comprehensive_*, dasv_phase*, *_discovery_* (except trade_history_discover.py)"
+    reuse_requirement: "100% reuse rate - no duplicate scripts"
+```
+
+### Discovery Phase Execution - Using Dedicated Script
 
 ```yaml
 execution_sequence:
-  pre_discovery:
-    - Validate portfolio parameter and resolve to CSV filename
-    - Initialize connection pooling for CLI services (prevent memory leaks)
-    - Set up resource limits: max_memory=2GB, max_concurrent_tasks=3
-    - Prepare local data inventory tracking system
-    - Configure garbage collection triggers for large operations
+  script_validation:
+    - Check if scripts/trade_history_discover.py exists
+    - Validate script implements required DASV Phase 1 functionality
+    - Confirm script handles portfolio parameter and output generation
+    - Verify script includes derivable field calculations and confidence scoring
 
-  local_first_discovery:
+  script_execution:
+    - Execute: python scripts/trade_history_discover.py --portfolio {portfolio_name}
+    - Monitor script execution for memory usage and performance
+    - Capture script output and validate JSON schema compliance
+    - Log script execution metrics and success/failure status
+
+  discovery_protocol (implemented in script):
     - **Phase 0: Execute Local Data Inventory** (CRITICAL - prevents memory leaks):
       → Inventory /data/outputs/fundamental_analysis/ files
       → Inventory /data/outputs/sector_analysis/ files
@@ -863,64 +908,19 @@ execution_sequence:
       → Load CSV with streaming reader (prevent memory overflow)
       → Extract unique tickers efficiently
       → Validate data completeness and categorize trades
-      → Trigger garbage collection after CSV processing
+      → Calculate ALL derivable fields (Duration_Days, Trade_Type)
 
-    - **Phase 2: Cache-First Market Context Collection**:
-      → Check cache for recent benchmark data (SPY, QQQ, VTI)
-      → Use cached data if < 4 hours old
-      → Batch API calls for missing benchmark data only
-      → Limit concurrent API calls to 3 maximum
+    - **Phase 2: Data Categorization and Quality Validation**:
+      → Separate closed and active trades with proper validation
+      → Calculate confidence scores based on data completeness
+      → Generate comprehensive discovery output following DASV schema
+      → Save output with standard naming: {portfolio}_{YYYYMMDD}.json
 
-    - **Phase 3: Optimized Fundamental Integration**:
-      → Use local fundamental analysis files (from Phase 0 inventory)
-      → Extract data from local files using efficient parsing
-      → Skip external API calls for tickers with local data
-      → Batch API calls for missing tickers only (typically 5-10 vs 32)
-      → Use connection pooling to prevent service connection leaks
-
-  resource_managed_external_calls:
-    - **Service Discovery Integration**:
-      → Initialize service discovery manager: create_service_discovery_manager()
-      → Health check all CLI services: discovery.get_service_health_summary()
-      → Check local data availability: discovery.check_local_data_availability(ticker)
-      → Use intelligent fallback: discovery.get_market_data_with_fallback(ticker, data_type)
-      → Monitor service health throughout execution
-
-    - **CLI Wrapper Execution**:
-      → Use CLI wrapper system: get_cli_service(service_name)
-      → Automatic fallback: Global CLI → Local Python script → Local data
-      → Handle "command not found" errors gracefully
-      → Resource-limited execution with timeout controls
-      → Connection pooling for all CLI services
-
-    - **Memory-Controlled API Execution**:
-      → Maximum 5 concurrent API calls (vs previous unlimited)
-      → Circuit breakers: fail fast on service timeouts
-      → Cache all API responses immediately
-      → Memory monitoring: abort if usage > 1.5GB
-      → Intelligent service selection reduces API calls by 85%
-
-    - **Selective External Data Collection** (only for missing data):
-      → Market data: Only if cache miss or expired AND local data unavailable
-      → Economic indicators: Only if not in recent discovery files
-      → Ticker analysis: Only for tickers missing local fundamental analysis
-      → Sector context: Use local sector analysis files when available
-      → API call optimization: 224 calls → 34 calls (85% reduction)
-
-  post_discovery:
-    - **Memory-Efficient Data Integration**:
-      → Use streaming JSON generation for large outputs
-      → Implement incremental confidence scoring
-      → Clean up temporary data structures immediately
-      → Update cache with new data efficiently
-      → Trigger garbage collection before output generation
-
-    - **Resource Usage Reporting**:
-      → Log memory usage statistics
-      → Report API call reduction achieved
-      → Track cache hit ratio improvement
-      → Document local data utilization percentage
-      → Monitor for memory leak prevention success
+  post_execution:
+    - Validate script generated proper discovery JSON output
+    - Confirm confidence scores meet minimum thresholds
+    - Log discovery completion metrics and next phase readiness
+    - Signal analysis phase can proceed with discovery data
 ```
 
 ### Quality Assurance Gates

@@ -1,0 +1,119 @@
+{#- Twitter Content Quality Validation Template
+
+    Use this template for:
+    - Content quality assessment
+    - Compliance verification
+    - Pre-publication validation
+-#}
+
+{#- Quality Gates Validation -#}
+{%- macro validate_content_quality(content_data) -%}
+{
+  "validation_results": {
+    "character_count": {{ content_data.character_count | default(0) }},
+    "character_limit_compliance": {{ "true" if content_data.character_count and content_data.character_count <= 280 else "false" }},
+    "disclaimer_present": {{ "true" if content_data.disclaimer_present else "false" }},
+    "data_source_attribution": {{ "true" if content_data.data_sources else "false" }},
+    "engagement_elements": {
+      "emoji_usage": {{ "true" if content_data.emoji_count and content_data.emoji_count >= 1 and content_data.emoji_count <= 3 else "false" }},
+      "hook_effectiveness": {{ content_data.hook_score | default(0.0) }},
+      "call_to_action": {{ "true" if content_data.cta_present else "false" }},
+      "hashtag_strategy": {{ "true" if content_data.hashtag_count and content_data.hashtag_count >= 2 and content_data.hashtag_count <= 5 else "false" }}
+    },
+    "compliance_checks": {
+      "investment_disclaimer": {{ "true" if content_data.investment_disclaimer else "false" }},
+      "risk_warning": {{ "true" if content_data.risk_warning else "false" }},
+      "data_limitations_noted": {{ "true" if content_data.data_limitations else "false" }},
+      "performance_disclaimers": {{ "true" if content_data.performance_disclaimers else "false" }}
+    },
+    "data_quality": {
+      "source_confidence": {{ content_data.source_confidence | default(0.0) }},
+      "data_freshness": {{ "true" if content_data.data_age_hours and content_data.data_age_hours <= 24 else "false" }},
+      "cross_validation": {{ "true" if content_data.cross_validated else "false" }},
+      "authority_protocol_applied": {{ "true" if content_data.authority_protocol else "false" }}
+    }
+  },
+  "validation_score": {{ calculate_overall_score(content_data) }},
+  "institutional_ready": {{ "true" if calculate_overall_score(content_data) >= 0.9 else "false" }},
+  "recommendations": [
+    {%- if not content_data.disclaimer_present -%}
+    "Add required investment disclaimer",
+    {%- endif -%}
+    {%- if content_data.character_count and content_data.character_count > 280 -%}
+    "Reduce character count to meet Twitter limit",
+    {%- endif -%}
+    {%- if not content_data.hashtag_count or content_data.hashtag_count < 2 -%}
+    "Add relevant hashtags for discoverability",
+    {%- endif -%}
+    {%- if content_data.source_confidence and content_data.source_confidence < 0.9 -%}
+    "Improve data source confidence before publication",
+    {%- endif -%}
+    {%- if not content_data.cross_validated -%}
+    "Perform cross-validation with multiple data sources"
+    {%- endif -%}
+  ]
+}
+{%- endmacro -%}
+
+{#- Calculate Overall Quality Score -#}
+{%- macro calculate_overall_score(data) -%}
+{%- set base_score = 0.0 -%}
+{%- set score_components = [] -%}
+
+{#- Character count compliance (10%) -#}
+{%- if data.character_count and data.character_count <= 280 -%}
+{%- set score_components = score_components + [0.1] -%}
+{%- endif -%}
+
+{#- Disclaimer compliance (20%) -#}
+{%- if data.disclaimer_present -%}
+{%- set score_components = score_components + [0.2] -%}
+{%- endif -%}
+
+{#- Data quality (25%) -#}
+{%- if data.source_confidence -%}
+{%- set score_components = score_components + [data.source_confidence * 0.25] -%}
+{%- endif -%}
+
+{#- Engagement elements (20%) -#}
+{%- set engagement_score = 0.0 -%}
+{%- if data.emoji_count and data.emoji_count >= 1 and data.emoji_count <= 3 -%}
+{%- set engagement_score = engagement_score + 0.05 -%}
+{%- endif -%}
+{%- if data.hook_score -%}
+{%- set engagement_score = engagement_score + (data.hook_score * 0.10) -%}
+{%- endif -%}
+{%- if data.cta_present -%}
+{%- set engagement_score = engagement_score + 0.05 -%}
+{%- endif -%}
+{%- set score_components = score_components + [engagement_score] -%}
+
+{#- Risk management (15%) -#}
+{%- set risk_score = 0.0 -%}
+{%- if data.risk_warning -%}
+{%- set risk_score = risk_score + 0.075 -%}
+{%- endif -%}
+{%- if data.data_limitations -%}
+{%- set risk_score = risk_score + 0.075 -%}
+{%- endif -%}
+{%- set score_components = score_components + [risk_score] -%}
+
+{#- Data attribution (10%) -#}
+{%- if data.data_sources -%}
+{%- set score_components = score_components + [0.1] -%}
+{%- endif -%}
+
+{{ (score_components | sum) | round(2) }}
+{%- endmacro -%}
+
+{#- Validation Report Template -#}
+{%- if content_data -%}
+{{ validate_content_quality(content_data) }}
+{%- else -%}
+{
+  "error": "No content data provided for validation",
+  "validation_results": null,
+  "validation_score": 0.0,
+  "institutional_ready": false
+}
+{%- endif -%}

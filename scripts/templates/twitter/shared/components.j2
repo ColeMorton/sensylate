@@ -1,0 +1,146 @@
+{#- Shared Twitter Components
+
+    Reusable components for all Twitter content:
+    - Advanced hook generation
+    - Dynamic disclaimer selection
+    - URL pattern management
+    - Character optimization
+-#}
+
+{#- Advanced Hook Generation Framework -#}
+{%- macro generate_dynamic_hook(ticker, data, content_type, style="performance") -%}
+{%- set hook_emoji = select_hook_emoji(data, content_type) -%}
+
+{%- if content_type == "fundamental" -%}
+  {%- if style == "valuation" and data.fair_value_gap -%}
+    {%- set hook_text = hook_emoji ~ " $" ~ ticker ~ " trading at $" ~ (data.current_price | default("N/A")) ~ " but analysis shows fair value of $" ~ (data.fair_value_low | default("N/A")) ~ "-$" ~ (data.fair_value_high | default("N/A")) -%}
+  {%- elif style == "catalyst" and data.catalysts -%}
+    {%- set hook_text = hook_emoji ~ " $" ~ ticker ~ " has " ~ (data.catalysts|length) ~ " major catalysts brewing with " ~ (data.total_catalyst_impact | default("significant")) ~ " upside potential" -%}
+  {%- elif style == "contrarian" and data.contrarian_insight -%}
+    {%- set hook_text = hook_emoji ~ " Everyone's wrong about $" ~ ticker ~ ". " ~ (data.contrarian_insight | default("Here's what they're missing")) -%}
+  {%- else -%}
+    {%- set hook_text = hook_emoji ~ " $" ~ ticker ~ " fundamental analysis reveals " ~ (data.investment_thesis | default("compelling opportunity")) -%}
+  {%- endif -%}
+
+{%- elif content_type == "strategy" -%}
+  {%- if data.signal_triggered -%}
+    {%- set hook_text = hook_emoji ~ " $" ~ ticker ~ " " ~ (data.strategy_type | default("dual SMA")) ~ " signal triggered with " ~ (data.net_performance | default("N/A")) ~ "% historical returns" -%}
+  {%- else -%}
+    {%- set hook_text = hook_emoji ~ " $" ~ ticker ~ " " ~ (data.strategy_type | default("strategy")) ~ ": " ~ (data.win_rate | default("N/A")) ~ "% win rate, " ~ (data.reward_risk_ratio | default("N/A")) ~ " reward/risk ratio" -%}
+  {%- endif -%}
+
+{%- elif content_type == "sector" -%}
+  {%- if data.rotation_signal -%}
+    {%- set hook_text = hook_emoji ~ " " ~ (data.sector_name | default("Sector")) ~ " rotation signal: " ~ (data.outperformance | default("N/A")) ~ "% outperformance with institutional flow" -%}
+  {%- else -%}
+    {%- set hook_text = hook_emoji ~ " " ~ (data.sector_name | default("Sector")) ~ " analysis: " ~ (data.relative_performance | default("N/A")) ~ "% vs SPY" -%}
+  {%- endif -%}
+
+{%- elif content_type == "trade_history" -%}
+  {%- set hook_text = hook_emoji ~ " Trading update: " ~ (data.period_return | default("N/A")) ~ "% returns with " ~ (data.win_rate | default("N/A")) ~ "% win rate (" ~ (data.total_trades | default("N/A")) ~ " trades)" -%}
+
+{%- else -%}
+  {%- set hook_text = hook_emoji ~ " $" ~ ticker ~ " analysis update" -%}
+{%- endif -%}
+
+{{ truncate_with_ellipsis(hook_text, 280) }}
+{%- endmacro -%}
+
+{#- Smart Disclaimer Selection -#}
+{%- macro smart_disclaimer(content_type, data) -%}
+{%- if content_type == "strategy" and data.live_signal -%}
+⚠️ Not financial advice. Historical performance doesn't guarantee future results. Trade at your own risk.
+{%- elif content_type == "fundamental" and data.price_targets -%}
+⚠️ Not financial advice. Past performance doesn't guarantee future results.
+{%- elif content_type == "trade_history" -%}
+⚠️ Not financial advice. Investments carry risk of loss.
+{%- elif data.high_risk_content -%}
+⚠️ Not financial advice. Stock investments carry significant risk of loss.
+{%- else -%}
+⚠️ Not financial advice. Do your own research.
+{%- endif -%}
+{%- endmacro -%}
+
+{#- Dynamic URL Generation with Content Type Detection -#}
+{%- macro smart_blog_url(ticker, data, content_type) -%}
+{%- if content_type == "fundamental" -%}
+https://www.colemorton.com/blog/{{ ticker.lower() }}-fundamental-analysis-{{ data.date | default(timestamp[:10] | replace("-", "")) }}/
+{%- elif content_type == "strategy" -%}
+https://www.colemorton.com/blog/{{ ticker.lower() }}-trading-strategy-{{ data.date | default(timestamp[:10] | replace("-", "")) }}/
+{%- elif content_type == "sector" -%}
+https://www.colemorton.com/blog/{{ (data.sector_name | default("sector") | lower | replace(" ", "-")) }}-analysis-{{ data.date | default(timestamp[:10] | replace("-", "")) }}/
+{%- elif content_type == "trade_history" -%}
+https://www.colemorton.com/blog/trading-performance-{{ data.date | default(timestamp[:10] | replace("-", "")) }}/
+{%- else -%}
+https://www.colemorton.com/blog/{{ ticker.lower() }}-analysis-{{ data.date | default(timestamp[:10] | replace("-", "")) }}/
+{%- endif -%}
+{%- endmacro -%}
+
+{#- Content Structure Validation -#}
+{%- macro validate_content_structure(content) -%}
+{%- set validation = {
+  "character_count": content|length,
+  "has_disclaimer": "⚠️" in content and "Not financial advice" in content,
+  "has_emoji": content|regex_search('[\U0001F600-\U0001F64F\U0001F300-\U0001F5FF\U0001F680-\U0001F6FF\U0001F1E0-\U0001F1FF]'),
+  "has_hashtags": "#" in content,
+  "has_blog_link": "https://www.colemorton.com" in content,
+  "within_twitter_limit": content|length <= 280
+} -%}
+{{ validation | tojson }}
+{%- endmacro -%}
+
+{#- Enhanced Hashtag Strategy -#}
+{%- macro enhanced_hashtags(content_type, ticker, data, max_tags=4) -%}
+{%- set base_tags = [] -%}
+{%- set contextual_tags = [] -%}
+
+{#- Base content type tags -#}
+{%- if content_type == "fundamental" -%}
+{%- set base_tags = ["#" + ticker, "#StockAnalysis"] -%}
+  {%- if data.valuation_discount and data.valuation_discount|float > 15 -%}
+  {%- set contextual_tags = contextual_tags + ["#ValueInvesting"] -%}
+  {%- endif -%}
+  {%- if data.growth_rate and data.growth_rate|float > 20 -%}
+  {%- set contextual_tags = contextual_tags + ["#GrowthStocks"] -%}
+  {%- endif -%}
+{%- elif content_type == "strategy" -%}
+{%- set base_tags = ["#TradingSignals", "#TradingStrategy"] -%}
+  {%- if data.live_signal -%}
+  {%- set contextual_tags = contextual_tags + ["#LiveSignal"] -%}
+  {%- endif -%}
+  {%- if data.win_rate and data.win_rate|float > 70 -%}
+  {%- set contextual_tags = contextual_tags + ["#HighWinRate"] -%}
+  {%- endif -%}
+{%- elif content_type == "sector" -%}
+{%- set base_tags = ["#SectorAnalysis", "#SectorRotation"] -%}
+  {%- if data.rotation_signal -%}
+  {%- set contextual_tags = contextual_tags + ["#MarketRotation"] -%}
+  {%- endif -%}
+{%- elif content_type == "trade_history" -%}
+{%- set base_tags = ["#TradingResults", "#PortfolioUpdate"] -%}
+  {%- if data.transparency -%}
+  {%- set contextual_tags = contextual_tags + ["#TradingTransparency"] -%}
+  {%- endif -%}
+{%- endif -%}
+
+{%- set all_tags = (base_tags + contextual_tags)[:max_tags] -%}
+{%- for tag in all_tags -%}
+{{ tag }}{{ " " if not loop.last }}
+{%- endfor -%}
+{%- endmacro -%}
+
+{#- Performance Metrics Formatter -#}
+{%- macro format_performance_metrics(data) -%}
+{%- if data.win_rate -%}
+Win Rate: {{ data.win_rate }}%{{ " | " if data.avg_win else "" }}
+{%- endif -%}
+{%- if data.avg_win and data.avg_loss -%}
+Avg Win/Loss: +{{ data.avg_win }}%/-{{ data.avg_loss }}%{{ " | " if data.reward_risk_ratio else "" }}
+{%- endif -%}
+{%- if data.reward_risk_ratio -%}
+Reward/Risk: {{ data.reward_risk_ratio }}{{ " | " if data.max_drawdown else "" }}
+{%- endif -%}
+{%- if data.max_drawdown -%}
+Max DD: -{{ data.max_drawdown }}%
+{%- endif -%}
+{%- endmacro -%}

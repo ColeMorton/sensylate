@@ -1,0 +1,76 @@
+{#- Twitter Sector Rotation Analysis Template
+
+    Use this template for:
+    - Sector rotation signals
+    - Cross-sector performance comparison
+    - Allocation strategy recommendations
+-#}
+
+{%- extends "shared/base_twitter.j2" -%}
+
+{%- set content_type = "sector" -%}
+{%- set blog_content_type = "sector-analysis" -%}
+{%- set disclaimer_type = "sector" -%}
+
+{%- block content -%}
+{%- set hook_emoji = select_hook_emoji(data, "sector") -%}
+
+{#- Generate dynamic hook based on rotation signal strength -#}
+{%- if data.rotation_signal -%}
+{%- set hook_text = hook_emoji ~ " " ~ data.sector_name ~ " rotation signal: " ~ (data.outperformance | default("N/A")) ~ "% vs SPY with " ~ (data.allocation_change | default("N/A")) ~ "% institutional rebalancing" -%}
+{%- else -%}
+{%- set hook_text = hook_emoji ~ " " ~ data.sector_name ~ " analysis: " ~ (data.momentum_score | default("N/A")) ~ "/10 momentum, " ~ (data.valuation_score | default("N/A")) ~ "/10 valuation vs historical" -%}
+{%- endif -%}
+
+{{ truncate_with_ellipsis(hook_text, 280) }}
+
+Here's why {{ data.sector_name | default("this sector") }} is moving: 👇
+
+📊 Sector Performance Metrics
+• Relative Performance: {{ data.relative_performance | default("N/A") }}% vs SPY ({{ data.period | default("YTD") }})
+• Momentum Score: {{ data.momentum_score | default("N/A") }}/10
+• Valuation Score: {{ data.valuation_score | default("N/A") }}/10 (vs 10-year avg)
+• Technical Rating: {{ data.technical_rating | default("N/A") }}
+• Institutional Flow: {{ data.institutional_flow | default("N/A") }}% net buying
+
+{%- if data.rotation_drivers %}
+
+🔍 Key Rotation Drivers
+{%- for driver in data.rotation_drivers %}
+• {{ driver.factor }}: {{ driver.impact | default("N/A") }}{{ driver.direction | default("") }}
+{%- endfor %}
+{%- endif %}
+
+{%- if data.top_performers or data.leading_stocks %}
+
+⭐ Leading Stocks in Rotation
+{%- set performers = data.top_performers or data.leading_stocks %}
+{%- for stock in performers[:3] %}
+• ${{ stock.ticker }}: {{ stock.performance | default("N/A") }}% ({{ stock.rating | default("Strong") }})
+{%- endfor %}
+{%- endif %}
+
+{%- if data.allocation_recommendation %}
+
+💡 Allocation Strategy
+{{ data.allocation_recommendation }}
+{%- if data.target_allocation %}
+Target allocation: {{ data.target_allocation }}% of portfolio
+{%- endif %}
+{%- if data.risk_level %}
+Risk level: {{ data.risk_level }}
+{%- endif %}
+{%- endif %}
+
+{%- if data.economic_context %}
+
+🌍 Economic Context
+{{ data.economic_context }}
+{%- endif %}
+
+📌 Bottom Line
+{{ data.sector_name | default("Sector") }} showing {{ data.signal_strength | default("notable") }} rotation signal with {{ data.confidence_level | default("moderate") }} conviction.
+{%- if data.time_horizon %}
+{{ data.time_horizon }} outlook: {{ data.outlook | default("Positive") }}
+{%- endif %}
+{%- endblock -%}

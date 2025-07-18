@@ -9,21 +9,21 @@
 -#}
 
 {#- Hook Generation with 280 Character Limit -#}
-{%- if data.hook -%}
+{%- if data and data.hook -%}
 {%- set hook = data.hook -%}
 {%- else -%}
 {%- set hook_emoji = "🚨" -%}
-{%- if data.net_performance and data.net_performance|float > 1000 -%}
+{%- if data and data.net_performance and data.net_performance|float > 1000 -%}
 {%- set hook_emoji = "📈" -%}
-{%- elif data.reward_risk and data.reward_risk|float > 3.0 -%}
+{%- elif data and data.reward_risk and data.reward_risk|float > 3.0 -%}
 {%- set hook_emoji = "💎" -%}
-{%- elif data.current_month_performance and data.current_month_performance|float > 65 -%}
+{%- elif data and data.current_month_performance and data.current_month_performance|float > 65 -%}
 {%- set hook_emoji = "🔥" -%}
-{%- elif data.win_rate and data.win_rate|float < 45 and data.reward_risk and data.reward_risk|float > 2.0 -%}
+{%- elif data and data.win_rate and data.win_rate|float < 45 and data.reward_risk and data.reward_risk|float > 2.0 -%}
 {%- set hook_emoji = "🎯" -%}
 {%- endif -%}
 
-{%- set hook_text = hook_emoji ~ " $" ~ ticker ~ " dual " ~ (data.strategy_type | default("SMA")) ~ " (" ~ (data.short_window | default("10")) ~ "/" ~ (data.long_window | default("25")) ~ ") delivered " ~ (data.net_performance | default("N/A")) ~ "% returns with " ~ (data.win_rate | default("N/A")) ~ "% win rate - " ~ (data.key_insight | default("signal triggered today")) -%}
+{%- set hook_text = hook_emoji ~ " $" ~ ticker ~ " dual " ~ ((data.strategy_type if data else None) | default("SMA")) ~ " (" ~ ((data.short_window if data else None) | default("10")) ~ "/" ~ ((data.long_window if data else None) | default("25")) ~ ") delivered " ~ ((data.net_performance if data else None) | default("N/A")) ~ "% returns with " ~ ((data.win_rate if data else None) | default("N/A")) ~ "% win rate - " ~ ((data.key_insight if data else None) | default("signal triggered today")) -%}
 
 {%- if hook_text|length > 280 -%}
 {%- set hook = hook_text[:277] ~ "..." -%}
@@ -86,6 +86,9 @@ Here's why this signal matters. 👇
 Strategy with {{ data.net_performance | default("N/A") }}% historical returns just triggered entry signal. {{ timing_assessment | default("Current") }} seasonality + {{ data.technical_setup | default("technical setup") }} + {{ data.fundamental_catalyst | default("fundamental catalyst") }} align for {{ data.conviction_level | default("high") }} opportunity.
 
 Time to act on this live signal. 🎯
+
+{%- from 'shared/base_twitter.j2' import generate_blog_url -%}
+📋 Full analysis: {{ generate_blog_url("trading-strategy", ticker, data.date | default(None), timestamp | default(None)) }}
 
 {%- if data.disclaimer %}
 {{ data.disclaimer }}
