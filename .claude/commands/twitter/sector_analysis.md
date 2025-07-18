@@ -2,7 +2,7 @@
 
 **Command Classification**: 📊 **Core Product Command**
 **Knowledge Domain**: `social-media-strategy`
-**Outputs To**: `./data/outputs/twitter_sector_analysis/` *(Core Product Command - outputs to product directories)*
+**Outputs To**: `./data/outputs/twitter/sector_analysis/` *(Core Product Command - outputs to product directories)*
 
 You are an expert sector strategist and social media strategist. Your specialty is distilling comprehensive sector analysis into compelling, bite-sized X posts that make complex sector allocation insights accessible and actionable for investors seeking portfolio optimization guidance.
 
@@ -13,7 +13,7 @@ You are an expert sector strategist and social media strategist. Your specialty 
 ```
 EXISTING POST IMPROVEMENT WORKFLOW:
 1. Check input pattern for validation file path:
-   → Pattern: data/outputs/twitter_sector_analysis/validation/{SECTOR}_{YYYYMMDD}_validation.json
+   → Pattern: data/outputs/twitter/sector_analysis/validation/{SECTOR}_{YYYYMMDD}_validation.json
    → Alternative: data/outputs/sector_analysis/validation/{SECTOR}_{YYYYMMDD}_validation.json
    → Extract SECTOR_YYYYMMDD from validation file path
 
@@ -36,7 +36,7 @@ Step 1: Examine Existing Post
    → Map engagement elements and character count optimization
 
 Step 2: Examine Validation Assessment
-   → Read validation file: twitter_sector_analysis/validation/{SECTOR}_{YYYYMMDD}_validation.json
+   → Read validation file: twitter/sector_analysis/validation/{SECTOR}_{YYYYMMDD}_validation.json
    → Focus on sector data accuracy issues and content improvement areas
    → Extract cross-sector comparison discrepancies and ETF data conflicts
    → Note economic context concerns and disclaimer requirements
@@ -509,7 +509,7 @@ quality_assurance:
 ### File Output Requirements
 **Primary Output File:**
 ```
-./data/outputs/twitter_sector_analysis/{SECTOR}_{YYYYMMDD}.md
+./data/outputs/twitter/sector_analysis/{SECTOR}_{YYYYMMDD}.md
 ```
 
 **File contains:**
@@ -563,7 +563,7 @@ quality_assurance:
 
 ### Required Actions
 1. **Generate Output Metadata**: Include collaboration metadata for sector content
-2. **Store Outputs**: Save to `./data/outputs/twitter_sector_analysis/` directories
+2. **Store Outputs**: Save to `./data/outputs/twitter/sector_analysis/` directories
 3. **Quality Validation**: Content accuracy and sector analysis compliance verification
 4. **Content Tracking**: Performance metrics and institutional quality standards
 

@@ -2,7 +2,7 @@
 
 **Command Classification**: 📊 **Core Product Command**
 **Knowledge Domain**: `social-media-strategy`
-**Outputs To**: `./data/outputs/twitter_strategy/` *(Core Product Command - outputs to product directories)*
+**Outputs To**: `./data/outputs/twitter/post_strategy/` *(Core Product Command - outputs to product directories)*
 
 You are an expert financial content analyzer and social media strategist specialized in creating compelling X posts for **LIVE TRADING SIGNALS** using the project's Jinja2 template infrastructure.
 
@@ -144,7 +144,7 @@ context = {
 
 6. **Export with Metadata**
    ```
-   ./data/outputs/twitter_strategy/{TICKER}_{YYYYMMDD}.md
+   ./data/outputs/twitter/post_strategy/{TICKER}_{YYYYMMDD}.md
    ```
 
 ## Enhanced Data Validation Protocol
@@ -243,13 +243,13 @@ hook = generate_dynamic_hook(
 
 **Validation-Driven Enhancement**:
 ```
-/twitter_post_strategy data/outputs/twitter_post_strategy/validation/{TICKER}_{YYYYMMDD}_validation.json
+/twitter_post_strategy data/outputs/twitter/post_strategy/validation/{TICKER}_{YYYYMMDD}_validation.json
 ```
 
 **Processing Examples**:
 - `/twitter_post_strategy COR_20250616` (new post)
 - `/twitter_post_strategy AAPL_20250615` (new post)
-- `/twitter_post_strategy data/outputs/twitter_post_strategy/validation/DOV_20250627_validation.json` (enhancement)
+- `/twitter_post_strategy data/outputs/twitter/post_strategy/validation/DOV_20250627_validation.json` (enhancement)
 
 ## Template-Driven Advantages
 

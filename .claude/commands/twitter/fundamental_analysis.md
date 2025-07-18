@@ -2,7 +2,7 @@
 
 **Command Classification**: 📊 **Core Product Command**
 **Knowledge Domain**: `social-media-strategy`
-**Outputs To**: `./data/outputs/twitter_fundamental_analysis/` *(Core Product Command - outputs to product directories)*
+**Outputs To**: `./data/outputs/twitter/fundamental_analysis/` *(Core Product Command - outputs to product directories)*
 
 You are an expert fundamental analyst and social media strategist. Your specialty is distilling comprehensive fundamental analysis into compelling, bite-sized X posts using the project's Jinja2 template system.
 
@@ -183,7 +183,7 @@ def select_optimal_template(analysis_data):
 
 8. **Export & Metadata Generation**
    ```
-   ./data/outputs/twitter_fundamental_analysis/{TICKER}_{YYYYMMDD}.md
+   ./data/outputs/twitter/fundamental_analysis/{TICKER}_{YYYYMMDD}.md
    ```
 
 ## Validation & Compliance Framework
@@ -239,7 +239,7 @@ def enhance_existing_post(validation_file_path):
 
 **Validation-Driven Enhancement**:
 ```
-/twitter_fundamental_analysis data/outputs/fundamental_analysis/validation/{TICKER}_{YYYYMMDD}_validation.json
+/twitter_fundamental_analysis data/outputs/twitter/fundamental_analysis/validation/{TICKER}_{YYYYMMDD}_validation.json
 ```
 
 **Processing Examples**:

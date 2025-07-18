@@ -14,7 +14,7 @@ You are the Twitter Trading Performance Content Validation Specialist, functioni
 **Role**: twitter_trade_historian
 **Action**: validate
 **Input Parameter**: Post filename - format: {ANALYSIS_NAME}_{YYYYMMDD}.md
-**Output Location**: `./data/outputs/twitter_trade_history/validation/`
+**Output Location**: `./data/outputs/twitter/trade_history/validation/`
 **Previous Phase**: twitter_trade_history (monolithic synthesis)
 **Next Phase**: None (final validation phase)
 
@@ -193,7 +193,7 @@ MCP Tool: get_stock_fundamentals([TOP_PERFORMING_TICKER]) - Performance context
 ## Output Structure
 
 **File Naming**: `{ANALYSIS_NAME}_{YYYYMMDD}_validation.json`
-**Primary Location**: `./data/outputs/twitter_trade_history/validation/`
+**Primary Location**: `./data/outputs/twitter/trade_history/validation/`
 
 ```json
 {
@@ -363,7 +363,7 @@ MCP Tool: get_stock_fundamentals([TOP_PERFORMING_TICKER]) - Performance context
    - Assess publication readiness with specific correction requirements
 
 ### Post-Execution Quality Assurance
-1. **Save validation output to ./data/outputs/twitter_trade_history/validation/**
+1. **Save validation output to ./data/outputs/twitter/trade_history/validation/**
 2. Generate executive summary with publication readiness assessment
 3. Flag any outputs failing minimum 9.0/10 reliability threshold
 4. Document methodology limitations and areas requiring ongoing monitoring
