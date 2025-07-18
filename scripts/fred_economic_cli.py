@@ -228,26 +228,26 @@ class FREDEconomicCLI(BaseFinancialCLI):
                 for category in category_list:
                     try:
                         if category == "inflation":
-                            analysis["economic_data"][
-                                "inflation"
-                            ] = service.get_inflation_data(period)
+                            analysis["economic_data"]["inflation"] = (
+                                service.get_inflation_data(period)
+                            )
                         elif category == "interest_rates":
-                            analysis["economic_data"][
-                                "interest_rates"
-                            ] = service.get_interest_rates("all", period)
+                            analysis["economic_data"]["interest_rates"] = (
+                                service.get_interest_rates("all", period)
+                            )
                         elif category == "employment":
-                            analysis["economic_data"][
-                                "employment"
-                            ] = service.get_economic_indicator("UNRATE", period)
+                            analysis["economic_data"]["employment"] = (
+                                service.get_economic_indicator("UNRATE", period)
+                            )
                         elif category == "gdp":
-                            analysis["economic_data"][
-                                "gdp"
-                            ] = service.get_economic_indicator("GDP", period)
+                            analysis["economic_data"]["gdp"] = (
+                                service.get_economic_indicator("GDP", period)
+                            )
                         else:
                             # Try as direct series ID
-                            analysis["economic_data"][
-                                category
-                            ] = service.get_economic_indicator(category, period)
+                            analysis["economic_data"][category] = (
+                                service.get_economic_indicator(category, period)
+                            )
 
                     except Exception as e:
                         analysis["economic_data"][category] = {"error": str(e)}

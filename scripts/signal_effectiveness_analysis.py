@@ -417,9 +417,9 @@ class SignalEffectivenessAnalyzer:
                 )
 
         # Exit optimization
-        exit_analysis: Dict[
-            str, Union[str, int, float, Dict[str, float]]
-        ] = self.analyze_exit_efficiency()
+        exit_analysis: Dict[str, Union[str, int, float, Dict[str, float]]] = (
+            self.analyze_exit_efficiency()
+        )
         if "poor_exits_pct" in exit_analysis:
             poor_exits_pct: Union[str, int, float, Dict[str, float]] = exit_analysis[
                 "poor_exits_pct"
@@ -573,9 +573,9 @@ class SignalEffectivenessAnalyzer:
         }
 
         # Optimization opportunities
-        report[
-            "optimization_opportunities"
-        ] = self.identify_optimization_opportunities()
+        report["optimization_opportunities"] = (
+            self.identify_optimization_opportunities()
+        )
 
         return report
 

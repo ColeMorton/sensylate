@@ -420,9 +420,9 @@ All analysis components have been processed and structured for template-complian
             synthesis_result["markdown_content"] = markdown_content
 
             # Calculate synthesis confidence
-            synthesis_result[
-                "synthesis_confidence"
-            ] = self._calculate_synthesis_confidence(synthesis_result)
+            synthesis_result["synthesis_confidence"] = (
+                self._calculate_synthesis_confidence(synthesis_result)
+            )
 
             # Integrate sector cross-reference
             print(f"🔗 Integrating sector analysis cross-references for {self.ticker}")
@@ -579,20 +579,20 @@ All analysis components have been processed and structured for template-complian
                     "competitive_position_analysis", {}
                 )
                 market_position = competitive_analysis.get("market_position", {})
-                themes[
-                    theme
-                ] = f"Company maintains {market_position.get('category', 'strong')} market position with {market_position.get('description', 'competitive advantages')}"
+                themes[theme] = (
+                    f"Company maintains {market_position.get('category', 'strong')} market position with {market_position.get('description', 'competitive advantages')}"
+                )
             elif theme == "Growth potential" and self.analysis_data:
                 investment_metrics = self.analysis_data.get("investment_metrics", {})
                 growth_metrics = investment_metrics.get("growth_metrics", {})
                 revenue_growth = growth_metrics.get("revenue_growth", 0)
-                themes[
-                    theme
-                ] = f"Revenue growth of {revenue_growth:.1%} demonstrates expansion potential"
+                themes[theme] = (
+                    f"Revenue growth of {revenue_growth:.1%} demonstrates expansion potential"
+                )
             else:
-                themes[
-                    theme
-                ] = f"Analysis supports {theme.lower()} as key investment driver"
+                themes[theme] = (
+                    f"Analysis supports {theme.lower()} as key investment driver"
+                )
 
         return themes
 
@@ -709,9 +709,7 @@ All analysis components have been processed and structured for template-complian
             "pe_assessment": (
                 "Reasonable"
                 if 15 <= pe_ratio <= 25
-                else "Extended"
-                if pe_ratio > 25
-                else "Attractive"
+                else "Extended" if pe_ratio > 25 else "Attractive"
             ),
             "valuation_metrics_summary": {
                 "pe_ratio": pe_ratio,

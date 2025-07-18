@@ -18,7 +18,7 @@
     "data_extraction_accuracy": {
       "seasonality_chart_precision": "8.5/10.0",
       "tabular_metrics_accuracy": "9.8/10.0",
-      "strategy_parameter_validation": "9.0/10.0", 
+      "strategy_parameter_validation": "9.0/10.0",
       "real_time_data_alignment": "7.5/10.0",
       "overall_data_score": "8.7/10.0",
       "critical_data_issues": [
@@ -92,7 +92,7 @@
     },
     "content_flow_analysis": {
       "logical_progression": "Excellent",
-      "data_to_action_coherence": "Strong", 
+      "data_to_action_coherence": "Strong",
       "call_to_action_clarity": "Clear"
     },
     "target_audience_alignment": {
@@ -110,7 +110,7 @@
     "accuracy_risk_factors": {
       "data_extraction_risks": [
         "Visual chart reading precision limitations",
-        "Win rate discrepancy between sources", 
+        "Win rate discrepancy between sources",
         "Real-time price data not verified"
       ],
       "market_timing_risks": [

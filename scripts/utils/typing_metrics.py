@@ -287,9 +287,9 @@ class TypeSafetyMetricsCollector:
             "total_lines_of_code": total_lines,
             "files_with_typing_imports": files_with_typing_imports,
             "typing_adoption_rate_percent": round(typing_adoption_rate, 1),
-            "average_lines_per_file": round(total_lines / total_files, 1)
-            if total_files > 0
-            else 0,
+            "average_lines_per_file": (
+                round(total_lines / total_files, 1) if total_files > 0 else 0
+            ),
         }
 
     def _calculate_team_adoption_metrics(self) -> Dict[str, Any]:

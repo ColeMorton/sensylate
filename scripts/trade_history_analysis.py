@@ -179,9 +179,9 @@ class DASVPhase2Analyzer:
                     "profit_factor": perf_metrics.get("profit_factor", 0),
                     "confidence": base_confidence,
                     "win_rate_confidence_interval": [ci_lower, ci_upper],
-                    "sample_size_quality": "MINIMAL"
-                    if closed_strategy_count < 10
-                    else "ADEQUATE",
+                    "sample_size_quality": (
+                        "MINIMAL" if closed_strategy_count < 10 else "ADEQUATE"
+                    ),
                 }
 
         return strategy_analysis
@@ -242,9 +242,9 @@ class DASVPhase2Analyzer:
             },
             "unrealized_winners": len([r for r in current_returns if r > 0]),
             "unrealized_losers": len([r for r in current_returns if r < 0]),
-            "portfolio_health": "HEALTHY"
-            if np.mean(current_returns) > 0
-            else "MONITOR",
+            "portfolio_health": (
+                "HEALTHY" if np.mean(current_returns) > 0 else "MONITOR"
+            ),
         }
 
         return portfolio_metrics
@@ -422,9 +422,9 @@ class DASVPhase2Analyzer:
                 "sample_size_validation": {
                     "total_closed": self.closed_trades_count,
                     "minimum_required": 5,
-                    "quality": "ADEQUATE"
-                    if self.closed_trades_count >= 30
-                    else "MINIMAL",
+                    "quality": (
+                        "ADEQUATE" if self.closed_trades_count >= 30 else "MINIMAL"
+                    ),
                 },
             },
             "active_portfolio_analysis": active_portfolio,

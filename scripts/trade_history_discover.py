@@ -370,23 +370,27 @@ class TradeHistoryDiscovery:
                     inventory["fundamental_analysis_coverage"][ticker] = {
                         "file_path": str(latest_file),
                         "file_date": file_date.isoformat() if file_date else None,
-                        "age_days": (self.execution_date - file_date).days
-                        if file_date
-                        else None,
+                        "age_days": (
+                            (self.execution_date - file_date).days
+                            if file_date
+                            else None
+                        ),
                     }
                     inventory["tickers_with_local_data"].append(ticker)
 
         # Calculate coverage statistics
         local_coverage_count = len(inventory["tickers_with_local_data"])
         inventory["coverage_statistics"] = {
-            "fundamental_analysis_coverage": local_coverage_count / len(unique_tickers)
-            if unique_tickers
-            else 0,
+            "fundamental_analysis_coverage": (
+                local_coverage_count / len(unique_tickers) if unique_tickers else 0
+            ),
             "tickers_with_analysis": local_coverage_count,
             "tickers_missing_analysis": len(unique_tickers) - local_coverage_count,
-            "coverage_percentage": (local_coverage_count / len(unique_tickers) * 100)
-            if unique_tickers
-            else 0,
+            "coverage_percentage": (
+                (local_coverage_count / len(unique_tickers) * 100)
+                if unique_tickers
+                else 0
+            ),
         }
 
         logger.info(
@@ -473,18 +477,18 @@ class TradeHistoryDiscovery:
                 "percentage": len(closed_trades) / len(trades) if trades else 0,
                 "strategy_distribution": closed_strategy_dist,
                 "date_range": {
-                    "earliest_entry": min(closed_entry_dates)
-                    if closed_entry_dates
-                    else None,
-                    "latest_entry": max(closed_entry_dates)
-                    if closed_entry_dates
-                    else None,
-                    "earliest_exit": min(closed_exit_dates)
-                    if closed_exit_dates
-                    else None,
-                    "latest_exit": max(closed_exit_dates)
-                    if closed_exit_dates
-                    else None,
+                    "earliest_entry": (
+                        min(closed_entry_dates) if closed_entry_dates else None
+                    ),
+                    "latest_entry": (
+                        max(closed_entry_dates) if closed_entry_dates else None
+                    ),
+                    "earliest_exit": (
+                        min(closed_exit_dates) if closed_exit_dates else None
+                    ),
+                    "latest_exit": (
+                        max(closed_exit_dates) if closed_exit_dates else None
+                    ),
                 },
                 "trades": closed_trades,
             },
@@ -493,25 +497,25 @@ class TradeHistoryDiscovery:
                 "percentage": len(active_trades) / len(trades) if trades else 0,
                 "strategy_distribution": active_strategy_dist,
                 "entry_date_range": {
-                    "earliest_entry": min(active_entry_dates)
-                    if active_entry_dates
-                    else None,
-                    "latest_entry": max(active_entry_dates)
-                    if active_entry_dates
-                    else None,
+                    "earliest_entry": (
+                        min(active_entry_dates) if active_entry_dates else None
+                    ),
+                    "latest_entry": (
+                        max(active_entry_dates) if active_entry_dates else None
+                    ),
                 },
-                "average_days_held": sum(
-                    trade.get("Days_Since_Entry", 0) for trade in active_trades
-                )
-                / len(active_trades)
-                if active_trades
-                else 0,
+                "average_days_held": (
+                    sum(trade.get("Days_Since_Entry", 0) for trade in active_trades)
+                    / len(active_trades)
+                    if active_trades
+                    else 0
+                ),
                 "trades": active_trades,
             },
             "validation_issues": validation_issues,
-            "data_quality_score": 1.0 - (len(validation_issues) / len(trades))
-            if trades
-            else 0,
+            "data_quality_score": (
+                1.0 - (len(validation_issues) / len(trades)) if trades else 0
+            ),
         }
 
         logger.info(
@@ -621,12 +625,12 @@ class TradeHistoryDiscovery:
             "win_rate": len(wins) / len(closed_trades) if closed_trades else 0,
             "total_wins": len(wins),
             "total_losses": len(losses),
-            "average_win_return": sum(t.get("Return", 0) for t in wins) / len(wins)
-            if wins
-            else 0,
-            "average_loss_return": sum(t.get("Return", 0) for t in losses) / len(losses)
-            if losses
-            else 0,
+            "average_win_return": (
+                sum(t.get("Return", 0) for t in wins) / len(wins) if wins else 0
+            ),
+            "average_loss_return": (
+                sum(t.get("Return", 0) for t in losses) / len(losses) if losses else 0
+            ),
             "profit_factor": (
                 abs(
                     sum(t.get("Return", 0) for t in wins)
@@ -682,16 +686,18 @@ class TradeHistoryDiscovery:
                         for t in closed_trades
                         if t.get("Ticker") == ticker and t.get("Return") is not None
                     ),
-                    "win_rate": len(
-                        [
-                            t
-                            for t in closed_trades
-                            if t.get("Ticker") == ticker and t.get("Return", 0) > 0
-                        ]
-                    )
-                    / len([t for t in closed_trades if t.get("Ticker") == ticker])
-                    if [t for t in closed_trades if t.get("Ticker") == ticker]
-                    else 0,
+                    "win_rate": (
+                        len(
+                            [
+                                t
+                                for t in closed_trades
+                                if t.get("Ticker") == ticker and t.get("Return", 0) > 0
+                            ]
+                        )
+                        / len([t for t in closed_trades if t.get("Ticker") == ticker])
+                        if [t for t in closed_trades if t.get("Ticker") == ticker]
+                        else 0
+                    ),
                 }
                 for ticker in unique_tickers
             },
