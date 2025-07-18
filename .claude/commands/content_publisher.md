@@ -1,13 +1,51 @@
 # Content Publisher
 
-Transform analytical insights from data pipeline outputs into publication-ready blog content for the "Cole Morton" frontend.
-Specializes in content synchronization between `data/outputs/` and `frontend/src/content/` with quality assurance and asset coordination.
+**Command Classification**: 📊 **Core Product Command**
+**Knowledge Domain**: `content-publication-workflow`
+**Ecosystem Version**: `2.1.0` *(Last Updated: 2025-07-18)*
+**Outputs To**: `frontend/src/content/blog/`
 
-**Multi-Content Type Support**: Handles both fundamental analysis and trade history reports with content-specific publication workflows.
+## Script Integration Mapping
 
-## Core Product Command Profile
+**Primary Script**: `{SCRIPTS_BASE}/content_publishing/content_publisher_script.py`
+**Script Class**: `ContentPublisherScript`
+**Registry Name**: `content_publisher`
+**Content Types**: `["blog_publication", "asset_coordination"]`
+**Requires Validation**: `true`
 
-**Type**: Core Product Command (User-facing AI functionality)
+**Registry Decorator**:
+```python
+@twitter_script(
+    name="content_publisher",
+    content_types=["blog_publication", "asset_coordination"],
+    requires_validation=True
+)
+class ContentPublisherScript(BaseScript):
+    """Transform analytical insights into publication-ready blog content with absolute content fidelity"""
+```
+
+**Additional Scripts** (multi-phase workflow):
+```yaml
+discovery_script:
+  path: "{SCRIPTS_BASE}/content_publishing/content_discovery.py"
+  class: "ContentDiscoveryScript"
+  phase: "Phase 1 - Content Discovery & Assessment"
+  
+asset_script:
+  path: "{SCRIPTS_BASE}/content_publishing/asset_coordinator.py"
+  class: "AssetCoordinatorScript"
+  phase: "Phase 2 - Asset Management & Synchronization"
+  
+transformation_script:
+  path: "{SCRIPTS_BASE}/content_publishing/content_transformer.py"
+  class: "ContentTransformerScript"
+  phase: "Phase 3 - Content Transformation"
+  
+publication_script:
+  path: "{SCRIPTS_BASE}/content_publishing/frontend_publisher.py"
+  class: "FrontendPublisherScript"
+  phase: "Phase 4 - Publication & Validation"
+```
 
 ## Purpose
 
@@ -18,6 +56,54 @@ Systematically manages the content publication pipeline by discovering unpublish
 **CRITICAL**: This command serves as a faithful custodian of analytical content. The primary responsibility is preserving 100% content accuracy without any transformation, summarization, or editorial modification. The only permitted change is removing the H1 title heading to prevent duplication with frontmatter titles.
 
 **Output Location**: Published content in `frontend/src/content/blog/` with supporting assets in `frontend/public/images/`
+
+## Template Integration Architecture
+
+**Template Directory**: `{TEMPLATES_BASE}/content_publishing/`
+
+**Template Mappings**:
+| Template ID | File Path | Selection Criteria | Purpose |
+|------------|-----------|-------------------|---------|
+| fundamental_analysis_blog | `publishing/fundamental_analysis_blog.j2` | Content type fundamental analysis | Investment research blog posts |
+| trade_history_blog | `publishing/trade_history_blog.j2` | Content type trade history | Trading performance blog posts |
+| sector_analysis_blog | `publishing/sector_analysis_blog.j2` | Content type sector analysis | Sector analysis blog posts |
+| blog_frontmatter | `publishing/blog_frontmatter.j2` | All blog content | Standardized frontmatter generation |
+
+**Shared Components**:
+```yaml
+frontmatter_base:
+  path: "{TEMPLATES_BASE}/content_publishing/shared/frontmatter_base.j2"
+  purpose: "Base frontmatter template with common metadata and SEO optimization"
+  
+content_fidelity:
+  path: "{TEMPLATES_BASE}/content_publishing/shared/content_fidelity.j2"
+  purpose: "Content preservation template ensuring 100% analytical integrity"
+  
+asset_integration:
+  path: "{TEMPLATES_BASE}/content_publishing/shared/asset_integration.j2"
+  purpose: "Asset coordination and image optimization templates"
+```
+
+**Template Selection Algorithm**:
+```python
+def select_publication_template(content_analysis):
+    """Select optimal template for content publication"""
+    
+    # Fundamental analysis blog template
+    if content_analysis.get('content_type') == 'fundamental_analysis':
+        return 'publishing/fundamental_analysis_blog.j2'
+    
+    # Trade history blog template
+    elif content_analysis.get('content_type') == 'trade_history':
+        return 'publishing/trade_history_blog.j2'
+    
+    # Sector analysis blog template
+    elif content_analysis.get('content_type') == 'sector_analysis':
+        return 'publishing/sector_analysis_blog.j2'
+    
+    # Default blog template
+    return 'publishing/blog_frontmatter.j2'
+```
 
 ## Content Pipeline Management
 
@@ -70,6 +156,126 @@ FRONTEND INTEGRATION:
 5. Confirm search functionality includes new content
 6. Validate SEO metadata and social sharing
 ```
+
+## CLI Service Integration
+
+**Service Commands**:
+```yaml
+astro_dev_server:
+  command: "cd frontend && yarn dev"
+  usage: "Start development server for content validation"
+  purpose: "Real-time content rendering validation"
+  health_check: "curl http://localhost:4321/health"
+  priority: "primary"
+  
+content_validator:
+  command: "cd frontend && yarn check"
+  usage: "TypeScript and content validation"
+  purpose: "Content integrity and type safety validation"
+  health_check: "cd frontend && yarn check --help"
+  priority: "primary"
+  
+image_optimizer:
+  command: "python {SCRIPTS_BASE}/image_processing/optimize_images.py"
+  usage: "{command} --source {source_path} --dest {dest_path}"
+  purpose: "Image optimization and responsive asset generation"
+  health_check: "{command} --help"
+  priority: "secondary"
+```
+
+**Publication Integration Protocol**:
+```bash
+# Content validation
+cd frontend && yarn check
+
+# Development server validation
+cd frontend && yarn dev &
+sleep 5 && curl http://localhost:4321/blog/
+
+# Image optimization
+python {SCRIPTS_BASE}/image_processing/optimize_images.py --source data/images/ --dest frontend/public/images/
+```
+
+**Data Authority Protocol**:
+```yaml
+authority_hierarchy:
+  source_content: "HIGHEST_AUTHORITY"  # Data outputs are authoritative source
+  frontmatter_templates: "METADATA_AUTHORITY"  # Templates control metadata structure
+  astro_framework: "RENDERING_AUTHORITY"  # Astro framework controls final presentation
+  
+conflict_resolution:
+  content_precedence: "source_content"  # Source content takes priority
+  metadata_standards: "frontmatter_templates"  # Templates enforce standardization
+  rendering_compatibility: "astro_framework"  # Framework requirements must be met
+  action: "preserve_content_fidelity"  # Resolution strategy
+```
+
+## Data Flow & File References
+
+**Input Sources**:
+```yaml
+fundamental_analysis:
+  path: "{DATA_OUTPUTS}/fundamental_analysis/{TICKER}_{YYYYMMDD}.md"
+  format: "markdown"
+  required: true
+  description: "Fundamental analysis reports for publication"
+  
+trade_history:
+  path: "{DATA_OUTPUTS}/trade_history/trading-performance-{TYPE}-{YYYYMMDD}.md"
+  format: "markdown"
+  required: false
+  description: "Trade history reports for publication"
+  
+sector_analysis:
+  path: "{DATA_OUTPUTS}/sector_analysis/{SECTOR}-sector-analysis-{YYYYMMDD}.md"
+  format: "markdown"
+  required: false
+  description: "Sector analysis reports for publication"
+  
+visual_assets:
+  path: "{DATA_IMAGES}/{asset_type}/{IDENTIFIER}_{YYYYMMDD}.png"
+  format: "png|jpg"
+  required: false
+  description: "Visual assets for content enhancement"
+```
+
+**Output Structure**:
+```yaml
+blog_content:
+  path: "frontend/src/content/blog/{identifier}-{type}-{YYYYMMDD}.md"
+  format: "markdown"
+  description: "Published blog content with standardized frontmatter"
+  
+optimized_images:
+  path: "frontend/public/images/{asset_type}/{IDENTIFIER}_{YYYYMMDD}.png"
+  format: "png|jpg"
+  description: "Optimized images for web presentation"
+  
+publication_metadata:
+  path: "{DATA_OUTPUTS}/content_publication/{IDENTIFIER}_{YYYYMMDD}_metadata.json"
+  format: "json"
+  description: "Publication metadata and validation results"
+```
+
+## Parameters
+
+### Core Parameters
+- `content_type`: Content type to publish - `fundamental_analysis` | `trade_history` | `sector_analysis` | `all` (optional, default: all)
+- `ticker`: Specific ticker to publish (optional)
+- `priority`: Publication priority - `high` | `medium` | `low` (optional, default: medium)
+- `mode`: Publication mode - `full` | `assets_only` | `validation_only` (optional, default: full)
+
+### Advanced Parameters
+- `scope`: Publication scope - `comprehensive` | `selective` | `targeted` (optional, default: comprehensive)
+- `validation_level`: Validation depth - `basic` | `standard` | `comprehensive` (optional, default: standard)
+- `asset_optimization`: Enable image optimization - `true` | `false` (optional, default: true)
+- `frontend_validation`: Enable frontend rendering validation - `true` | `false` (optional, default: true)
+
+### Workflow Parameters (Multi-Phase Commands)
+- `phase_start`: Starting phase - `discovery` | `asset` | `transformation` | `publication` (optional)
+- `phase_end`: Ending phase - `discovery` | `asset` | `transformation` | `publication` (optional)
+- `continue_on_error`: Continue workflow despite errors - `true` | `false` (optional, default: false)
+- `report_type`: Trade history report type - `historical` | `internal` | `live_signals` (optional)
 
 ## Fundamental Analysis Standard Template
 
@@ -377,34 +583,80 @@ Systematically process unpublished analysis for publication opportunities and co
 - Validate cross-platform compatibility and responsive design
 - Ensure SEO optimization and social media integration
 
-## Usage Examples
+## Quality Standards Framework
 
+### Confidence Scoring
+**Publication-Quality Thresholds**:
+- **Content Fidelity**: 100% preservation of source analytical content (mandatory)
+- **Frontmatter Compliance**: 100% adherence to standardized templates
+- **Asset Integration**: 95% successful image optimization and linking
+- **Frontend Validation**: 98% rendering compatibility across devices
+
+### Validation Protocols
+**Multi-Phase Validation Standards**:
+- **Content Integrity**: 0% variance from source analytical content
+- **Metadata Accuracy**: 100% compliance with frontmatter templates
+- **Asset Optimization**: <500KB image sizes with responsive breakpoints
+- **Frontend Health**: Development server rendering validation
+
+### Quality Gate Enforcement
+**Critical Validation Points**:
+1. **Discovery Phase**: Content completeness and publication readiness
+2. **Asset Phase**: Image optimization and responsive asset generation
+3. **Transformation Phase**: Content fidelity and frontmatter compliance
+4. **Publication Phase**: Frontend validation and cross-platform compatibility
+
+## Cross-Command Integration
+
+### Upstream Dependencies
+**Commands that provide input to this command**:
+- `fundamental_analyst`: Provides fundamental analysis reports via {DATA_OUTPUTS}/fundamental_analysis/
+- `trade_history`: Provides trade history reports via {DATA_OUTPUTS}/trade_history/
+- `sector_analyst`: Provides sector analysis reports via {DATA_OUTPUTS}/sector_analysis/
+
+### Downstream Dependencies  
+**Commands that consume this command's outputs**:
+- `content_evaluator`: Evaluates published content for quality assurance
+- `documentation_owner`: Documents publication workflows and standards
+
+### Coordination Workflows
+**Multi-Command Orchestration**:
 ```bash
-# Complete content discovery and publication workflow
-/content_publisher
+# Sequential publication workflow
+/fundamental_analyst TICKER
+/content_publisher ticker=TICKER content_type=fundamental_analysis
+/content_evaluator filename="frontend/src/content/blog/{ticker}-fundamental-analysis-{date}.md"
 
-# Audit specific content type for publication opportunities
-/content_publisher content_type=fundamental_analysis
-/content_publisher content_type=trade_history
-/content_publisher content_type=sector_analysis
-
-# Publish specific analysis with priority handling
-/content_publisher ticker=AAPL priority=high
-/content_publisher report_type=historical_performance priority=high
-/content_publisher sector=technology priority=high
-/content_publisher sector=finance priority=high
-
-# Asset synchronization and optimization only
-/content_publisher mode=assets_only
-
-# Quality assurance and validation check
-/content_publisher mode=validation_only
-
-# Multi-content type processing
+# Multi-content publication
 /content_publisher content_type=all scope=comprehensive
 ```
 
-This content publisher command ensures Sensylate maintains high-quality, consistent content publication with **absolute analytical integrity** - preserving 100% content fidelity while adding proper web infrastructure (frontmatter, images, navigation). This approach maintains the trust and accuracy that readers depend on for investment decisions while integrating seamlessly with the team workspace collaboration framework.
+## Usage Examples
+
+### Basic Usage
+```
+/content_publisher
+/content_publisher content_type=fundamental_analysis
+```
+
+### Advanced Usage
+```
+/content_publisher ticker=AAPL priority=high validation_level=comprehensive
+```
+
+### Validation Enhancement
+```
+/content_publisher mode=validation_only frontend_validation=true
+```
+
+---
+
+**Integration with Framework**: This command integrates with the broader Sensylate ecosystem through standardized script registry, template system, CLI service integration, and validation framework protocols.
+
+**Author**: Cole Morton
+**Framework**: Content Publication Workflow Framework
+**Confidence**: High - Standardized publication methodology
+**Data Quality**: High - Content fidelity preservation protocols
 
 ## Trade History Report Management
 

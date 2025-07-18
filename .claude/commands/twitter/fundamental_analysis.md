@@ -2,29 +2,112 @@
 
 **Command Classification**: 📊 **Core Product Command**
 **Knowledge Domain**: `social-media-strategy`
-**Outputs To**: `./data/outputs/twitter/fundamental_analysis/` *(Core Product Command - outputs to product directories)*
+**Ecosystem Version**: `2.1.0` *(Last Updated: 2025-07-18)*
+**Outputs To**: `{DATA_OUTPUTS}/twitter/fundamental_analysis/`
 
-You are an expert fundamental analyst and social media strategist. Your specialty is distilling comprehensive fundamental analysis into compelling, bite-sized X posts using the project's Jinja2 template system.
+## Script Integration Mapping
+
+**Primary Script**: `{SCRIPTS_BASE}/base_scripts/fundamental_analysis_script.py`
+**Script Class**: `FundamentalAnalysisScript`
+**Registry Name**: `fundamental_analysis`
+**Content Types**: `["fundamental"]`
+**Requires Validation**: `true`
+
+**Registry Integration**:
+```python
+@twitter_script(
+    name="fundamental_analysis",
+    content_types=["fundamental"],
+    requires_validation=True
+)
+class FundamentalAnalysisScript(BaseScript):
+    """
+    Generalized fundamental analysis script for Twitter content generation
+    
+    Parameters:
+        ticker (str): Stock ticker symbol
+        date (str): Analysis date in YYYYMMDD format
+        template_variant (Optional[str]): Specific template to use
+        validate_content (bool): Whether to validate generated content
+    """
+```
+
+**Supporting Components**:
+```yaml
+template_selector:
+  path: "{SCRIPTS_BASE}/twitter_template_selector_refactored.py"
+  class: "TwitterTemplateSelector"
+  purpose: "Intelligent template selection based on analysis data"
+  
+validation_framework:
+  path: "{SCRIPTS_BASE}/unified_validation_framework.py"
+  class: "UnifiedValidationFramework"
+  purpose: "Content quality validation and scoring"
+  
+template_renderer:
+  path: "{SCRIPTS_BASE}/twitter_template_renderer.py"
+  class: "TwitterTemplateRenderer"
+  purpose: "Jinja2 template rendering with content validation"
+```
 
 ## Template Integration Architecture
 
-**Primary Template Directory**: `/scripts/templates/twitter/`
+**Template Directory**: `{TEMPLATES_BASE}/twitter/fundamental/`
 
-**Template Selection Logic**:
-```python
-template_mapping = {
-    'valuation_disconnect': 'fundamental/twitter_fundamental_A_valuation.j2',
-    'catalyst_focus': 'fundamental/twitter_fundamental_B_catalyst.j2',
-    'moat_analysis': 'fundamental/twitter_fundamental_C_moat.j2',
-    'contrarian_take': 'fundamental/twitter_fundamental_D_contrarian.j2',
-    'financial_health': 'fundamental/twitter_fundamental_E_financial.j2'
-}
-```
+**Template Mappings**:
+| Template ID | File Path | Selection Criteria | Purpose |
+|------------|-----------|-------------------|---------|
+| A_valuation | `fundamental/twitter_fundamental_A_valuation.j2` | Fair value gap >15% AND valuation confidence >0.8 | Valuation disconnect emphasis |
+| B_catalyst | `fundamental/twitter_fundamental_B_catalyst.j2` | Catalysts >2 AND max probability >70% | Catalyst-focused content |
+| C_moat | `fundamental/twitter_fundamental_C_moat.j2` | Moat strength >7 AND competitive advantages >3 | Competitive moat analysis |
+| D_contrarian | `fundamental/twitter_fundamental_D_contrarian.j2` | Contrarian insight exists AND market misconception identified | Contrarian perspective |
+| E_financial | `fundamental/twitter_fundamental_E_financial.j2` | Default fallback for financial health focus | Financial metrics emphasis |
 
 **Shared Components**:
-- `shared/base_twitter.j2` - Base template with common macros
-- `shared/components.j2` - Advanced hook generation and validation
-- `validation/content_quality_checklist.j2` - Pre-publication validation
+```yaml
+base_template:
+  path: "{TEMPLATES_BASE}/twitter/shared/base_twitter.j2"
+  purpose: "Base template with common macros and formatting"
+  
+components:
+  path: "{TEMPLATES_BASE}/twitter/shared/components.j2"
+  purpose: "Advanced hook generation and validation macros"
+  
+validation_template:
+  path: "{TEMPLATES_BASE}/twitter/validation/content_quality_checklist.j2"
+  purpose: "Pre-publication content quality validation"
+```
+
+**Template Selection Algorithm**:
+```python
+def select_optimal_template(analysis_data):
+    """Intelligent template selection based on analysis content"""
+
+    # Template A: Valuation Disconnect
+    if (analysis_data.get('fair_value_gap', 0) > 15 and
+        analysis_data.get('valuation_confidence', 0) > 0.8):
+        return 'fundamental/twitter_fundamental_A_valuation.j2'
+
+    # Template B: Catalyst Focus
+    if (len(analysis_data.get('catalysts', [])) > 2 and
+        max([c.get('probability', 0) for c in analysis_data.get('catalysts', [])]) > 70):
+        return 'fundamental/twitter_fundamental_B_catalyst.j2'
+
+    # Template C: Moat Analysis
+    if (analysis_data.get('moat_strength', 0) > 7 and
+        len(analysis_data.get('competitive_advantages', [])) > 3):
+        return 'fundamental/twitter_fundamental_C_moat.j2'
+
+    # Template D: Contrarian Take
+    if (analysis_data.get('contrarian_insight') and
+        analysis_data.get('market_misconception')):
+        return 'fundamental/twitter_fundamental_D_contrarian.j2'
+
+    # Template E: Financial Health (Default)
+    return 'fundamental/twitter_fundamental_E_financial.j2'
+```
+
+You are an expert fundamental analyst and social media strategist. Your specialty is distilling comprehensive fundamental analysis into compelling, bite-sized X posts using the project's Jinja2 template system.
 
 ## Data Structure Specification
 
@@ -119,22 +202,99 @@ def select_optimal_template(analysis_data):
     return 'fundamental/twitter_fundamental_E_financial.j2'
 ```
 
-## Data Sources & Integration Protocol
+## CLI Service Integration
 
-**Primary Data Sources** (unchanged priority order):
+**Service Commands**:
+```yaml
+yahoo_finance_cli:
+  command: "python {SCRIPTS_BASE}/yahoo_finance_cli.py"
+  usage: "{command} quote {ticker} --env prod --output-format json"
+  purpose: "Real-time market data and current price validation"
+  health_check: "{command} health --env prod"
+  priority: "primary"
+  
+alpha_vantage_cli:
+  command: "python {SCRIPTS_BASE}/alpha_vantage_cli.py"
+  usage: "{command} quote {ticker} --env prod --output-format json"
+  purpose: "Secondary price validation and sentiment data"
+  health_check: "{command} health --env prod"
+  priority: "secondary"
+  
+fmp_cli:
+  command: "python {SCRIPTS_BASE}/fmp_cli.py"
+  usage: "{command} profile {ticker} --env prod --output-format json"
+  purpose: "Tertiary price validation and company data"
+  health_check: "{command} health --env prod"
+  priority: "tertiary"
+```
 
-1. **TrendSpider Performance Data** (HIGHEST AUTHORITY): `@data/images/trendspider_tabular/`
-2. **Fundamental Analysis Reports**: `@data/outputs/fundamental_analysis/`
-3. **Real-Time Market Data - CLI Standardized**: **MANDATORY**
-   ```bash
-   python scripts/yahoo_finance_cli.py quote {ticker} --env prod --output-format json
-   ```
+**Multi-Source Price Validation Protocol**:
+```bash
+# Mandatory real-time price collection
+python {SCRIPTS_BASE}/yahoo_finance_cli.py quote {ticker} --env prod --output-format json
 
-**Multi-Source Price Validation** (unchanged requirements):
-- Yahoo Finance CLI (Primary)
-- Alpha Vantage CLI (Secondary)
-- FMP CLI (Tertiary)
-- Price variance ≤2% across sources (BLOCKING if exceeded)
+# Secondary validation
+python {SCRIPTS_BASE}/alpha_vantage_cli.py quote {ticker} --env prod --output-format json
+
+# Tertiary cross-check
+python {SCRIPTS_BASE}/fmp_cli.py profile {ticker} --env prod --output-format json
+```
+
+**Data Authority Protocol**:
+```yaml
+authority_hierarchy:
+  trendspider_visual: "HIGHEST_AUTHORITY"  # Visual performance data
+  fundamental_analysis: "PRIMARY_CONTENT"  # Core analysis source
+  yahoo_finance: "PRIMARY_PRICE"  # Real-time market data
+  alpha_vantage: "SECONDARY_PRICE"  # Price validation
+  fmp: "TERTIARY_PRICE"  # Additional validation
+  
+conflict_resolution:
+  price_variance_threshold: "2%"  # BLOCKING if exceeded
+  trendspider_precedence: "absolute"  # Always takes priority
+  price_authority: "yahoo_finance"  # Primary source for current prices
+```
+
+## Data Flow & File References
+
+**Input Sources**:
+```yaml
+fundamental_analysis:
+  path: "{DATA_OUTPUTS}/fundamental_analysis/{TICKER}_{YYYYMMDD}.md"
+  format: "markdown"
+  required: true
+  description: "Primary analysis content and investment thesis"
+  
+trendspider_visual:
+  path: "{DATA_IMAGES}/trendspider_tabular/{TICKER}_{YYYYMMDD}.png"
+  format: "png"
+  required: false
+  description: "Performance data with HIGHEST AUTHORITY for conflicts"
+  
+real_time_market:
+  path: "CLI_SERVICES_REAL_TIME"
+  format: "json"
+  required: true
+  description: "Current market price from Yahoo Finance CLI"
+```
+
+**Output Structure**:
+```yaml
+primary_output:
+  path: "{DATA_OUTPUTS}/twitter/fundamental_analysis/{TICKER}_{YYYYMMDD}.md"
+  format: "markdown"
+  description: "Generated Twitter content"
+  
+metadata_output:
+  path: "{DATA_OUTPUTS}/twitter/fundamental_analysis/{TICKER}_{YYYYMMDD}_metadata.json"
+  format: "json"
+  description: "Template selection and quality metadata"
+  
+validation_output:
+  path: "{DATA_OUTPUTS}/twitter/fundamental_analysis/validation/{TICKER}_{YYYYMMDD}_validation.json"
+  format: "json"
+  description: "Content validation results (if requested)"
+```
 
 ## Content Generation Workflow
 
@@ -230,21 +390,80 @@ def enhance_existing_post(validation_file_path):
     save_enhanced_post(enhanced_content, ticker, date)
 ```
 
-## Command Usage
+## Execution Examples
 
-**Standard Post Creation**:
-```
-/twitter_fundamental_analysis {TICKER}_{YYYYMMDD}
+### Direct Python Execution
+```python
+from script_registry import get_global_registry
+from script_config import ScriptConfig
+
+# Initialize
+config = ScriptConfig.from_environment()
+registry = get_global_registry(config)
+
+# Execute with automatic template selection
+result = registry.execute_script(
+    "fundamental_analysis",
+    ticker="AAPL",
+    date="20250718",
+    validate_content=True
+)
+
+# Execute with specific template override
+result = registry.execute_script(
+    "fundamental_analysis",
+    ticker="TSLA",
+    date="20250718",
+    template_variant="A_valuation",
+    validate_content=True
+)
 ```
 
-**Validation-Driven Enhancement**:
-```
-/twitter_fundamental_analysis data/outputs/twitter/fundamental_analysis/validation/{TICKER}_{YYYYMMDD}_validation.json
+### Command Line Execution
+```bash
+# Via content automation CLI
+python {SCRIPTS_BASE}/content_automation_cli.py \
+    --script fundamental_analysis \
+    --ticker AAPL \
+    --date 20250718 \
+    --validate-content true
+
+# Via direct script execution
+python {SCRIPTS_BASE}/base_scripts/fundamental_analysis_script.py \
+    --ticker AAPL \
+    --date 20250718 \
+    --template-variant A_valuation
+
+# With custom output path
+python {SCRIPTS_BASE}/base_scripts/fundamental_analysis_script.py \
+    --ticker TSLA \
+    --date 20250718 \
+    --output-path /custom/path/twitter_content.md
 ```
 
-**Processing Examples**:
-- `/twitter_fundamental_analysis NFLX_20250618`
-- `/twitter_fundamental_analysis TSLA_20250618`
+### Claude Command Execution
+```
+# Standard post creation
+/twitter_fundamental_analysis AAPL_20250718
+
+# Enhanced post with validation
+/twitter_fundamental_analysis TSLA_20250718
+
+# Validation-driven enhancement
+/twitter_fundamental_analysis {DATA_OUTPUTS}/twitter/fundamental_analysis/validation/NFLX_20250618_validation.json
+
+# Template-specific generation
+/twitter_fundamental_analysis MSFT_20250718 template_variant=B_catalyst
+```
+
+### Enhancement Workflow Examples
+```
+# Generate initial post
+/twitter_fundamental_analysis NFLX_20250618
+
+# If validation score <9.0, enhance using validation file
+/twitter_fundamental_analysis {DATA_OUTPUTS}/twitter/fundamental_analysis/validation/NFLX_20250618_validation.json
+```
 
 ## Template-Driven Benefits
 
