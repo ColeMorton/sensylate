@@ -9,14 +9,12 @@ enabling unified data access patterns and reducing API dependencies.
 import hashlib
 import json
 import logging
-import os
 import pickle
 import subprocess
-import tempfile
 import time
-from datetime import datetime, timedelta
+from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Dict, Optional
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -526,9 +524,9 @@ class MCPDataAccess:
             analysis["yahoo_finance"]["market_data"] = self.get_market_data(
                 ticker, "1y"
             )
-            analysis["yahoo_finance"]["financial_statements"] = (
-                self.get_financial_statements(ticker)
-            )
+            analysis["yahoo_finance"][
+                "financial_statements"
+            ] = self.get_financial_statements(ticker)
             analysis["data_sources"].append("yahoo_finance")
             logger.info(f"Yahoo Finance data retrieved for {ticker}")
         except Exception as e:
@@ -538,9 +536,9 @@ class MCPDataAccess:
         # SEC EDGAR Data
         try:
             analysis["sec_edgar"]["filings"] = self.get_company_filings(ticker, "10-K")
-            analysis["sec_edgar"]["financial_statements"] = (
-                self.get_edgar_financial_statements(ticker)
-            )
+            analysis["sec_edgar"][
+                "financial_statements"
+            ] = self.get_edgar_financial_statements(ticker)
             analysis["sec_edgar"]["metrics"] = self.get_sec_metrics(ticker)
             analysis["data_sources"].append("sec_edgar")
             logger.info(f"SEC EDGAR data retrieved for {ticker}")
@@ -562,9 +560,9 @@ class MCPDataAccess:
 
         # Existing Analysis
         try:
-            analysis["existing_analysis"]["fundamental"] = (
-                self.get_fundamental_analysis(ticker)
-            )
+            analysis["existing_analysis"][
+                "fundamental"
+            ] = self.get_fundamental_analysis(ticker)
             analysis["data_sources"].append("existing_analysis")
             logger.info(f"Existing analysis retrieved for {ticker}")
         except Exception as e:
@@ -766,7 +764,7 @@ if __name__ == "__main__":
         print(f"\n7. Performance optimization: {mcp.optimize_performance()}")
 
         # Cache cleanup
-        print(f"\n8. Running cache cleanup...")
+        print("\n8. Running cache cleanup...")
         mcp.cleanup_cache()
 
     except Exception as e:

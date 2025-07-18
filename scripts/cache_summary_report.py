@@ -4,9 +4,6 @@ Cache Implementation Summary Report
 Provides a comprehensive summary of caching implementation status
 """
 
-from pathlib import Path
-from typing import Any, Dict
-
 
 class CacheImplementationReport:
     """Generate comprehensive caching implementation report"""

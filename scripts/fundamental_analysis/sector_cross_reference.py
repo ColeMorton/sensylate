@@ -6,8 +6,8 @@ Maps companies to relevant sector analysis reports and integrates sector context
 
 import json
 import os
-from datetime import datetime, timedelta
-from typing import Any, Dict, List, Optional, Tuple
+from datetime import datetime
+from typing import Any, Dict, Optional
 
 
 class SectorCrossReference:
@@ -301,9 +301,9 @@ class SectorCrossReference:
             enhanced_data["sector_positioning"].update(
                 sector_context["sector_positioning"]
             )
-            enhanced_data["sector_positioning"]["sector_analysis_reference"] = (
-                sector_context["sector_reference"]
-            )
+            enhanced_data["sector_positioning"][
+                "sector_analysis_reference"
+            ] = sector_context["sector_reference"]
 
         # Add cross-reference metadata
         enhanced_data["sector_cross_reference"] = {

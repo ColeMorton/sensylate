@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 import json
 import sys
-from datetime import datetime
 
 from jinja2 import Environment, FileSystemLoader
 
@@ -16,8 +15,7 @@ def render_twitter_post(ticker, date):
 
     # Set up Jinja2 environment with autoescape for security
     env = Environment(
-        loader=FileSystemLoader("scripts/templates/twitter/"),
-        autoescape=True
+        loader=FileSystemLoader("scripts/templates/twitter/"), autoescape=True
     )
 
     # Prepare context for template

@@ -12,12 +12,11 @@ Production-grade Federal Reserve Economic Data (FRED) integration with:
 import sys
 from datetime import datetime, timedelta
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict
 
 from .base_financial_service import (
     BaseFinancialService,
     DataNotFoundError,
-    FinancialServiceError,
     ServiceConfig,
     ValidationError,
 )
@@ -273,7 +272,9 @@ class FREDEconomicService(BaseFinancialService):
                 trend = (
                     "increasing"
                     if slope > 0
-                    else "decreasing" if slope < 0 else "stable"
+                    else "decreasing"
+                    if slope < 0
+                    else "stable"
                 )
             else:
                 trend = "insufficient_data"

@@ -8,7 +8,7 @@ import json
 import sys
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any, Dict
 
 
 def generate_peer_group_analysis(
@@ -86,7 +86,6 @@ def generate_discovery_insights(
     revenue_growth = financial_data.get("revenue_growth", 0)
     net_income = financial_data.get("net_income", 0)
     roe = financial_data.get("return_on_equity", 0)
-    current_price = market_data.get("current_price", 0)
 
     # Generate insights based on financial performance
     insights = {
@@ -128,7 +127,9 @@ def generate_discovery_insights(
         growth_status = (
             "growth"
             if revenue_growth > 0.05
-            else "slow growth" if revenue_growth > 0 else "declining"
+            else "slow growth"
+            if revenue_growth > 0
+            else "declining"
         )
 
         insights["initial_observations"] = [
@@ -286,7 +287,7 @@ def enhance_discovery_with_sections(ticker: str, date_str: str) -> bool:
     for enhancement in enhancements_made:
         print(f"   • {enhancement}")
 
-    print(f"📊 Final quality scores:")
+    print("📊 Final quality scores:")
     print(
         f"   • Overall data quality: {discovery_data['cli_data_quality']['overall_data_quality']}"
     )

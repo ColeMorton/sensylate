@@ -9,11 +9,10 @@ Standardized data structures for all Twitter content types:
 - Template-ready data formatting
 """
 
-import json
 from dataclasses import dataclass, field
 from datetime import datetime
 from enum import Enum
-from typing import Any, Dict, List, Literal, Optional, Union
+from typing import Any, Dict, List, Optional, Union
 
 
 class ContentType(Enum):
@@ -529,7 +528,9 @@ class UnifiedDataSchema:
             ContentType.TRADE_HISTORY: TradeHistoryDataSchema,
         }
 
-    def create_data_schema(self, content_type: ContentType, **kwargs) -> Union[
+    def create_data_schema(
+        self, content_type: ContentType, **kwargs
+    ) -> Union[
         FundamentalDataSchema,
         StrategyDataSchema,
         SectorDataSchema,
@@ -569,9 +570,9 @@ class UnifiedDataSchema:
         else:
             required_fields = []
 
-        for field in required_fields:
-            if field not in data or data[field] is None:
-                validation_result["missing_fields"].append(field)
+        for required_field in required_fields:
+            if required_field not in data or data[required_field] is None:
+                validation_result["missing_fields"].append(required_field)
                 validation_result["valid"] = False
 
         return validation_result
@@ -590,7 +591,7 @@ class UnifiedDataSchema:
                 **{k: v for k, v in data.items() if k in schema_class.__annotations__}
             )
             return schema_instance.to_dict()
-        except Exception as e:
+        except Exception:
             # Return original data if normalization fails
             return data
 

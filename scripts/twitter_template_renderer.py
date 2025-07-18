@@ -10,12 +10,11 @@ Unified template rendering system for all Twitter content types:
 - Output formatting and export
 """
 
-import json
 import re
 import sys
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Dict, List, Optional
 
 from jinja2 import Environment, FileSystemLoader, Template, TemplateNotFound
 
@@ -330,7 +329,9 @@ class TwitterTemplateRenderer:
                 else (
                     "good"
                     if completeness_score >= 0.7
-                    else "fair" if completeness_score >= 0.5 else "poor"
+                    else "fair"
+                    if completeness_score >= 0.5
+                    else "poor"
                 )
             ),
         }

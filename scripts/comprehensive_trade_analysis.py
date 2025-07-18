@@ -616,17 +616,23 @@ class ComprehensiveTradeAnalyzer:
             status_icon = (
                 "🟢"
                 if position["mfe"] > 0.10
-                else "🟡" if position["mfe"] > 0.05 else "🔴"
+                else "🟡"
+                if position["mfe"] > 0.05
+                else "🔴"
             )
             status_text = (
                 "Strong"
                 if position["mfe"] > 0.10
-                else "Developing" if position["mfe"] > 0.05 else "Watch"
+                else "Developing"
+                if position["mfe"] > 0.05
+                else "Watch"
             )
             watch_level = (
                 "🔥 Excellent"
                 if position["mfe"] > 0.15
-                else "📊 Developing" if position["mfe"] > 0.05 else "⚠️ Monitor"
+                else "📊 Developing"
+                if position["mfe"] > 0.05
+                else "⚠️ Monitor"
             )
 
             report += f"\n| **{position['ticker']}** | {position['strategy']} | {position['entry_date']} | {position['days_held']}d | {status_icon} {status_text} | +{position['mfe']:.1%} | -{position['mae']:.1%} | {watch_level} |"

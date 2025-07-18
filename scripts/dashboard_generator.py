@@ -19,12 +19,9 @@ import matplotlib
 
 matplotlib.use("Agg")  # Use non-interactive backend for server environments
 from datetime import datetime
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional
 
-import matplotlib.patches as mpatches
 import matplotlib.pyplot as plt
-import numpy as np
-from matplotlib.patches import Wedge
 
 from scripts.utils.chart_generator_factory import ChartGeneratorFactory
 
@@ -35,18 +32,11 @@ from scripts.utils.config_validator import (
     validate_dashboard_config,
     validate_input_file,
 )
-from scripts.utils.dashboard_parser import (
-    MonthlyPerformance,
-    TradeData,
-    parse_dashboard_data,
-)
-from scripts.utils.layout_manager import LayoutManager, create_layout_manager
+from scripts.utils.dashboard_parser import parse_dashboard_data
+from scripts.utils.layout_manager import create_layout_manager
 from scripts.utils.logging_setup import setup_logging
-from scripts.utils.scalability_manager import (
-    ScalabilityManager,
-    create_scalability_manager,
-)
-from scripts.utils.theme_manager import ThemeManager, create_theme_manager
+from scripts.utils.scalability_manager import create_scalability_manager
+from scripts.utils.theme_manager import create_theme_manager
 
 
 class DashboardGenerator:

@@ -9,10 +9,9 @@ import json
 import os
 import sys
 from datetime import datetime
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional
 
 import numpy as np
-import requests
 
 # FRED API configuration for economic data
 FRED_API_KEY = "your_fred_api_key_here"  # Should be configured in environment
@@ -426,7 +425,6 @@ class FundamentalAnalyzer:
             raise ValueError("Discovery data not available for analysis")
 
         financial_metrics = self.discovery_data.get("financial_metrics", {})
-        market_data = self.discovery_data.get("market_data", {})
 
         # Valuation metrics
         valuation_metrics = {
@@ -505,9 +503,9 @@ class FundamentalAnalyzer:
             }
 
             # Calculate overall analysis confidence
-            analysis_result["analysis_confidence"] = (
-                self._calculate_analysis_confidence(analysis_result)
-            )
+            analysis_result[
+                "analysis_confidence"
+            ] = self._calculate_analysis_confidence(analysis_result)
 
             # Save analysis results
             self._save_analysis_results(analysis_result)
@@ -629,7 +627,9 @@ class FundamentalAnalyzer:
             "assessment": (
                 "Strong"
                 if strength_score > 0.7
-                else "Moderate" if strength_score > 0.4 else "Weak"
+                else "Moderate"
+                if strength_score > 0.4
+                else "Weak"
             ),
         }
 
@@ -638,7 +638,6 @@ class FundamentalAnalyzer:
     ) -> Dict[str, Any]:
         """Analyze industry dynamics and trends"""
         sector = company_info.get("sector", "").lower()
-        industry = company_info.get("industry", "").lower()
 
         # Industry growth assessment
         growth_outlook = "Moderate"
@@ -745,7 +744,9 @@ class FundamentalAnalyzer:
             "financial_stability": (
                 "Low"
                 if risk_score > 0.7
-                else "Moderate" if risk_score > 0.4 else "High"
+                else "Moderate"
+                if risk_score > 0.4
+                else "High"
             ),
             "risk_score": round(risk_score, 3),
             "risk_factors": risk_factors,
@@ -793,7 +794,7 @@ class FundamentalAnalyzer:
         risk_levels = [
             f"Market: {market_risks['market_sensitivity']}",
             f"Financial: {financial_risks['financial_stability']}",
-            f"Operational: Moderate",
+            "Operational: Moderate",
         ]
         return f"Risk Profile - {', '.join(risk_levels)}"
 
@@ -1183,7 +1184,9 @@ class FundamentalAnalyzer:
             "rate_sensitivity": (
                 "High"
                 if estimated_duration > 4.0
-                else "Moderate" if estimated_duration > 2.0 else "Low"
+                else "Moderate"
+                if estimated_duration > 2.0
+                else "Low"
             ),
             "current_rate_environment": "Restrictive",  # Based on Fed Funds Rate > 4%
         }
@@ -1376,8 +1379,6 @@ class FundamentalAnalyzer:
         self, sector: str, market_data: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Analyze sector rotation dynamics and timing"""
-
-        beta = market_data.get("beta", 1.0)
 
         # Sector rotation characteristics
         sector_rotation_profiles = {
@@ -1650,7 +1651,6 @@ class FundamentalAnalyzer:
 
         # Market/Economic Risks
         beta = market_data.get("beta", 1.0)
-        market_cap = market_data.get("market_cap", 0)
 
         # GDP Growth Deceleration Risk
         gdp_risk_prob = self._calculate_gdp_deceleration_probability(beta, company_info)
@@ -2208,7 +2208,6 @@ class FundamentalAnalyzer:
 
         # Base recovery factors
         profit_margin = financial_metrics.get("profit_margin", 0.1)
-        revenue_growth = financial_metrics.get("revenue_growth", 0.05)
         sector = company_info.get("sector", "").lower()
 
         # Sector recovery characteristics

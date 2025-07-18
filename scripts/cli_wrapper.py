@@ -9,9 +9,7 @@ Provides unified interface for CLI service execution with:
 - Local-first data strategy integration
 """
 
-import json
 import logging
-import os
 import shutil
 import subprocess
 import sys
@@ -201,7 +199,9 @@ class CLIServiceWrapper:
             "execution_mode": (
                 "global"
                 if self.global_available
-                else "local" if self.local_available else "unavailable"
+                else "local"
+                if self.local_available
+                else "unavailable"
             ),
         }
 
