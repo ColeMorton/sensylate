@@ -6,31 +6,27 @@ This module provides sophisticated chart generation capabilities with enhanced
 styling, animations, and interactive features for trading performance dashboards.
 """
 
-import math
-
 # Add project root to Python path for imports
 import sys
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Tuple
 
 import matplotlib.patches as patches
 import matplotlib.pyplot as plt
 import numpy as np
-import pandas as pd
-from matplotlib.patches import Circle, Wedge
+from matplotlib.patches import Circle
 
+# Configure path before imports
 project_root = Path(__file__).parent.parent.parent
-sys.path.insert(0, str(project_root))
+if str(project_root) not in sys.path:
+    sys.path.insert(0, str(project_root))
 
+# Local imports after path configuration
 from scripts.utils.dashboard_parser import (
     MonthlyPerformance,
     QualityDistribution,
     TradeData,
-)
-from scripts.utils.scalability_manager import (
-    ScalabilityManager,
-    create_scalability_manager,
 )
 
 
@@ -256,7 +252,8 @@ class AdvancedChartGenerator:
         colors = [quality_colors.get(cat, theme.borders) for cat in categories]
 
         # Create donut chart with enhanced styling
-        wedges, texts, autotexts = ax.pie(
+        # Handle conditional return signature based on autopct parameter
+        pie_result = ax.pie(
             percentages,
             labels=None,  # We'll add custom labels
             colors=colors,
@@ -265,6 +262,12 @@ class AdvancedChartGenerator:
             wedgeprops=dict(width=0.4, edgecolor=theme.background, linewidth=2),
             pctdistance=0.85,
         )
+
+        # Unpack result safely - autopct="" returns 2-tuple, others return 3-tuple
+        if len(pie_result) == 3:
+            wedges, texts, _ = pie_result  # Ignore autotexts
+        else:
+            wedges, texts = pie_result
 
         # Add custom labels outside the donut
         for i, (wedge, category, percentage, win_rate) in enumerate(
@@ -355,7 +358,7 @@ class AdvancedChartGenerator:
         tickers = [trade.ticker for trade in sorted_trades]
 
         # Calculate cumulative returns for waterfall effect
-        cumulative = np.cumsum([0] + returns[:-1])
+        cumulative: np.ndarray = np.cumsum(np.array([0] + returns[:-1]))
 
         # Create waterfall bars
         for i, (ret, cum, ticker) in enumerate(zip(returns, cumulative, tickers)):
@@ -366,7 +369,7 @@ class AdvancedChartGenerator:
             )
 
             # Bar from cumulative to cumulative + return
-            bar = ax.bar(
+            ax.bar(
                 i,
                 abs(ret),
                 bottom=cum if ret >= 0 else cum + ret,
@@ -608,7 +611,7 @@ class AdvancedChartGenerator:
         for i, (trade, dur, ret, color, size, alpha) in enumerate(
             zip(trades, durations, returns, colors, sizes, alphas)
         ):
-            point = ax.scatter(
+            ax.scatter(
                 dur,
                 ret,
                 c=color,
@@ -670,7 +673,7 @@ class AdvancedChartGenerator:
                 significant_trades.append((trade, dur, ret))
 
         # Add labels with intelligent positioning to avoid overlap
-        labeled_positions = []
+        labeled_positions: List[Tuple[float, float]] = []
 
         for trade, dur, ret in significant_trades:
             # Calculate label position with offset to avoid overlapping bubble

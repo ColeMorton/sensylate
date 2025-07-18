@@ -11,14 +11,13 @@ Command-line interface for dashboard generation with:
 
 import sys
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any, Dict
 
 import typer
 
 # Add utils to path
 sys.path.insert(0, str(Path(__file__).parent))
 
-from dashboard_generator import DashboardGenerator
 from dashboard_generator import main as dashboard_main  # noqa: E402
 from utils.cli_base import BaseFinancialCLI, OutputFormat, ValidationError  # noqa: E402
 from utils.config_loader import ConfigLoader  # noqa: E402
@@ -140,10 +139,6 @@ class DashboardGeneratorCLI(BaseFinancialCLI):
         ):
             """List available dashboard themes"""
             try:
-                from utils.theme_manager import create_theme_manager
-
-                theme_manager = create_theme_manager()
-
                 themes = {
                     "available_themes": ["light", "dark"],
                     "default_theme": "light",
@@ -197,10 +192,6 @@ class DashboardGeneratorCLI(BaseFinancialCLI):
             config_exists = config_path.exists()
 
             # Check output directory permissions
-            from utils.theme_manager import create_theme_manager
-
-            theme_manager = create_theme_manager()
-
             health_status = {
                 "service": "dashboard_generator",
                 "status": "healthy",

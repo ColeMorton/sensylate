@@ -11,18 +11,17 @@ import sys
 from collections import defaultdict
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple, Union
+from typing import Any, Collection, Dict, List, Tuple, Union
 
-import matplotlib.pyplot as plt
 import numpy as np
-import pandas as pd
-from matplotlib.patches import Circle
 from sklearn.cluster import DBSCAN
 
-# Add project root to Python path for imports
+# Configure path before imports
 project_root = Path(__file__).parent.parent.parent
-sys.path.insert(0, str(project_root))
+if str(project_root) not in sys.path:
+    sys.path.insert(0, str(project_root))
 
+# Local imports after path configuration
 from scripts.utils.dashboard_parser import MonthlyPerformance, TradeData
 
 
@@ -213,7 +212,7 @@ class ScalabilityManager:
         Returns:
             Dictionary of performance bands
         """
-        bands = {
+        bands: Dict[str, List[TradeData]] = {
             "Large Winners (>10%)": [],
             "Winners (2-10%)": [],
             "Small Winners (0-2%)": [],
@@ -258,10 +257,14 @@ class ScalabilityManager:
         returns = [trade.return_pct for trade in trades]
 
         # Normalize data for clustering
+        durations_array = np.array(durations)
+        returns_array = np.array(returns)
         X = np.column_stack(
             [
-                (durations - np.mean(durations)) / (np.std(durations) + 1e-8),
-                (returns - np.mean(returns)) / (np.std(returns) + 1e-8),
+                (durations_array - np.mean(durations_array))
+                / (np.std(durations_array) + 1e-8),
+                (returns_array - np.mean(returns_array))
+                / (np.std(returns_array) + 1e-8),
             ]
         )
 
@@ -439,14 +442,14 @@ class ScalabilityManager:
         self, trades: List[TradeData]
     ) -> Dict[str, int]:
         """Calculate quality distribution for trades."""
-        quality_counts = defaultdict(int)
+        quality_counts: Dict[str, int] = defaultdict(int)
         for trade in trades:
             quality_counts[trade.quality] += 1
         return dict(quality_counts)
 
     def get_chart_recommendation(
         self, trades: List[TradeData], monthly_data: List[MonthlyPerformance]
-    ) -> Dict[str, str]:
+    ) -> Dict[str, Union[str, Collection[str]]]:
         """
         Get chart type recommendations based on data volume.
 

@@ -1,0 +1,99 @@
+{#- Twitter Trade History Performance Update Template
+
+    Use this template for:
+    - Portfolio performance updates
+    - Trading results transparency
+    - Historical performance reporting
+-#}
+
+{%- extends "shared/base_twitter.j2" -%}
+
+{%- set content_type = "trade_history" -%}
+{%- set blog_content_type = "trading-performance" -%}
+{%- set disclaimer_type = "trade_history" -%}
+
+{%- block content -%}
+{%- set hook_emoji = select_hook_emoji(data, "trade_history") -%}
+
+{#- Generate performance hook -#}
+{%- if data.period_return -%}
+{%- set hook_text = hook_emoji ~ " Trading update: " ~ (data.period_return | default("N/A")) ~ "% returns over " ~ (data.period | default("period")) ~ " with " ~ (data.win_rate | default("N/A")) ~ "% win rate (" ~ (data.total_trades | default("N/A")) ~ " trades)" -%}
+{%- else -%}
+{%- set hook_text = hook_emoji ~ " Portfolio performance transparency: Real results from live trading with full position history" -%}
+{%- endif -%}
+
+{{ truncate_with_ellipsis(hook_text, 280) }}
+
+Here's the complete breakdown: 👇
+
+📈 Performance Metrics ({{ data.period | default("Period") }})
+• Total Return: {{ data.total_return | default("N/A") }}%
+• Win Rate: {{ data.win_rate | default("N/A") }}% ({{ data.wins | default("N/A") }}/{{ data.total_trades | default("N/A") }} trades)
+• Average Win: +{{ data.avg_win | default("N/A") }}%
+• Average Loss: -{{ data.avg_loss | default("N/A") }}%
+• Reward/Risk Ratio: {{ data.reward_risk_ratio | default("N/A") }}
+• Max Drawdown: -{{ data.max_drawdown | default("N/A") }}%
+• Sharpe Ratio: {{ data.sharpe_ratio | default("N/A") }}
+
+{%- if data.vs_benchmark %}
+
+📊 vs Benchmark
+• Portfolio: {{ data.portfolio_return | default("N/A") }}%
+• {{ data.benchmark_name | default("SPY") }}: {{ data.benchmark_return | default("N/A") }}%
+• Alpha: {{ data.alpha | default("N/A") }}%
+• Beta: {{ data.beta | default("N/A") }}
+{%- endif %}
+
+{%- if data.top_performers or data.biggest_winners %}
+
+⭐ Top Performers
+{%- set winners = data.top_performers or data.biggest_winners %}
+{%- for trade in winners[:3] %}
+• ${{ trade.ticker }}: {{ trade.return | default("N/A") }}% ({{ trade.holding_period | default("N/A") }} days)
+{%- endfor %}
+{%- endif %}
+
+{%- if data.worst_performers or data.biggest_losers %}
+
+⚠️ Biggest Losses
+{%- set losers = data.worst_performers or data.biggest_losers %}
+{%- for trade in losers[:3] %}
+• ${{ trade.ticker }}: {{ trade.return | default("N/A") }}% ({{ trade.holding_period | default("N/A") }} days)
+{%- endfor %}
+{%- endif %}
+
+{%- if data.current_positions %}
+
+🎯 Current Holdings
+{%- for position in data.current_positions[:5] %}
+• ${{ position.ticker }}: {{ position.allocation | default("N/A") }}% allocation ({{ position.unrealized_pnl | default("N/A") }}% P&L)
+{%- endfor %}
+{%- endif %}
+
+{%- if data.lessons_learned or data.key_insights %}
+
+💡 Key Insights
+{%- if data.lessons_learned %}
+{%- for lesson in data.lessons_learned %}
+• {{ lesson }}
+{%- endfor %}
+{%- endif %}
+{%- if data.key_insights %}
+{%- for insight in data.key_insights %}
+• {{ insight }}
+{%- endfor %}
+{%- endif %}
+{%- endif %}
+
+📌 Bottom Line
+{%- if data.performance_summary %}
+{{ data.performance_summary }}
+{%- else %}
+{{ data.total_return | default("N/A") }}% returns with {{ data.win_rate | default("N/A") }}% accuracy over {{ data.period | default("period") }}.
+{%- endif %}
+{%- if data.outlook %}
+{{ data.outlook }}
+{%- endif %}
+
+Full transparency, real results. 📊
+{%- endblock -%}

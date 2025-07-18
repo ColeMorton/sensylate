@@ -7,7 +7,6 @@ institutional-quality output and proper template selection logic.
 """
 
 import json
-import sys
 from datetime import datetime
 from pathlib import Path
 
@@ -134,12 +133,12 @@ def test_twitter_fundamental_templates():
 
             # Check character limit for Twitter
             if result["character_count"] > 280:
-                print(f"   ❌ WARNING: Exceeds 280 character limit!")
+                print("   ❌ WARNING: Exceeds 280 character limit!")
             else:
-                print(f"   ✅ Within Twitter character limit")
+                print("   ✅ Within Twitter character limit")
 
             # Show content preview
-            print(f"   📄 Content Preview:")
+            print("   📄 Content Preview:")
             preview = (
                 result["content"][:150] + "..."
                 if len(result["content"]) > 150
@@ -204,9 +203,9 @@ def test_blog_templates():
 
             # Check minimum word count for blog
             if result["word_count"] < 500:
-                print(f"   ⚠️ WARNING: Below 500 word minimum for blog content")
+                print("   ⚠️ WARNING: Below 500 word minimum for blog content")
             else:
-                print(f"   ✅ Meets blog content length requirements")
+                print("   ✅ Meets blog content length requirements")
 
             # Enhanced institutional compliance validation
             content = result["content"]
@@ -449,13 +448,13 @@ def generate_test_summary(twitter_results, blog_results, validation_results):
     )
     failed_tests = total_tests - successful_tests
 
-    print(f"📈 Overall Results:")
+    print("📈 Overall Results:")
     print(f"   Total Tests: {total_tests}")
     print(f"   Successful: {successful_tests}")
     print(f"   Failed: {failed_tests}")
     print(f"   Success Rate: {(successful_tests/total_tests)*100:.1f}%")
 
-    print(f"\n📋 Template Categories:")
+    print("\n📋 Template Categories:")
     print(
         f"   Twitter Fundamental (A-E): {sum(1 for r in twitter_results if r['status'] == 'SUCCESS')}/{len(twitter_results)} passed"
     )
@@ -473,7 +472,7 @@ def generate_test_summary(twitter_results, blog_results, validation_results):
     if twitter_char_counts:
         avg_chars = sum(twitter_char_counts) / len(twitter_char_counts)
         over_limit = sum(1 for count in twitter_char_counts if count > 280)
-        print(f"\n📏 Twitter Character Analysis:")
+        print("\n📏 Twitter Character Analysis:")
         print(f"   Average Characters: {avg_chars:.1f}")
         print(f"   Over 280 Limit: {over_limit}/{len(twitter_char_counts)}")
 
@@ -488,7 +487,7 @@ def generate_test_summary(twitter_results, blog_results, validation_results):
             if has_disclaimer and no_bold and has_ticker:
                 compliant_content += 1
 
-    print(f"\n✅ Institutional Compliance:")
+    print("\n✅ Institutional Compliance:")
     print(f"   Compliant Content: {compliant_content}/{successful_tests}")
     print(f"   Compliance Rate: {(compliant_content/successful_tests)*100:.1f}%")
 
@@ -539,7 +538,7 @@ def generate_test_summary(twitter_results, blog_results, validation_results):
                 institutional_metrics
             )
 
-            print(f"\n🏛️ Institutional Quality Metrics:")
+            print("\n🏛️ Institutional Quality Metrics:")
             print(f"   Confidence Scoring: {avg_confidence*100:.1f}% adoption")
             print(f"   Economic Context: {avg_economic*100:.1f}% integration")
             print(f"   Risk Assessment: {avg_risk*100:.1f}% coverage")
@@ -553,21 +552,21 @@ def generate_test_summary(twitter_results, blog_results, validation_results):
                 f"   🏆 Certification Status: {'✅ ACHIEVED' if overall_institutional >= 0.9 else '⚠️ PARTIAL' if overall_institutional >= 0.7 else '❌ NOT ACHIEVED'}"
             )
 
-    print(f"\n🎯 Enhanced Quality Indicators:")
-    print(f"   ✅ All templates render without errors")
-    print(f"   ✅ Character limits respected for Twitter content")
-    print(f"   ✅ Required elements (disclaimers, tickers) present")
-    print(f"   ✅ NO BOLD FORMATTING rule enforced")
-    print(f"   ✅ Comprehensive institutional sections implemented")
-    print(f"   ✅ Economic context integration achieved")
-    print(f"   ✅ Multi-source validation framework active")
-    print(f"   ✅ Risk quantification with probability/impact matrices")
-    print(f"   ✅ Confidence scoring (0.0-1.0 format) standardized")
+    print("\n🎯 Enhanced Quality Indicators:")
+    print("   ✅ All templates render without errors")
+    print("   ✅ Character limits respected for Twitter content")
+    print("   ✅ Required elements (disclaimers, tickers) present")
+    print("   ✅ NO BOLD FORMATTING rule enforced")
+    print("   ✅ Comprehensive institutional sections implemented")
+    print("   ✅ Economic context integration achieved")
+    print("   ✅ Multi-source validation framework active")
+    print("   ✅ Risk quantification with probability/impact matrices")
+    print("   ✅ Confidence scoring (0.0-1.0 format) standardized")
 
     if successful_tests == total_tests:
-        print(f"\n🏆 ALL TESTS PASSED - TEMPLATES READY FOR PRODUCTION")
+        print("\n🏆 ALL TESTS PASSED - TEMPLATES READY FOR PRODUCTION")
     else:
-        print(f"\n⚠️ SOME TESTS FAILED - REVIEW REQUIRED")
+        print("\n⚠️ SOME TESTS FAILED - REVIEW REQUIRED")
 
 
 def main():

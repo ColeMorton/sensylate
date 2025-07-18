@@ -1,0 +1,89 @@
+{#- Twitter Cross-Sector Comparison Template
+
+    Use this template for:
+    - Multi-sector performance comparison
+    - Relative sector strength analysis
+    - Sector allocation decisions
+-#}
+
+{%- extends "shared/base_twitter.j2" -%}
+
+{%- set content_type = "sector" -%}
+{%- set blog_content_type = "sector-analysis" -%}
+{%- set disclaimer_type = "sector" -%}
+
+{%- block content -%}
+{%- set hook_emoji = select_hook_emoji(data, "sector") -%}
+
+{#- Generate comparison hook -#}
+{%- if data.sectors and data.sectors|length > 1 -%}
+{%- set best_sector = data.sectors | sort(attribute='performance', reverse=true) | first -%}
+{%- set worst_sector = data.sectors | sort(attribute='performance') | first -%}
+{%- set hook_text = hook_emoji ~ " Sector rotation update: " ~ best_sector.name ~ " +" ~ (best_sector.performance | default("N/A")) ~ "% vs " ~ worst_sector.name ~ " " ~ (worst_sector.performance | default("N/A")) ~ "% - here's what's driving the divergence" -%}
+{%- else -%}
+{%- set hook_text = hook_emoji ~ " Cross-sector analysis reveals significant performance divergence with clear winners and losers emerging" -%}
+{%- endif -%}
+
+{{ truncate_with_ellipsis(hook_text, 280) }}
+
+Here's the sector breakdown: 👇
+
+{%- if data.sectors %}
+
+📊 Sector Performance Rankings ({{ data.period | default("YTD") }})
+{%- for sector in data.sectors | sort(attribute='performance', reverse=true) %}
+{{ loop.index }}. {{ sector.name }}: {{ sector.performance | default("N/A") }}%
+   • Momentum: {{ sector.momentum | default("N/A") }}/10
+   • Valuation: {{ sector.valuation | default("N/A") }}/10
+   • Flow: {{ sector.flow_direction | default("Neutral") }}
+{%- endfor %}
+{%- endif %}
+
+{%- if data.rotation_signal or data.key_drivers %}
+
+🔄 Rotation Signals
+{%- if data.rotation_signal %}
+• Primary Signal: {{ data.rotation_signal }}
+{%- endif %}
+{%- if data.key_drivers %}
+{%- for driver in data.key_drivers %}
+• {{ driver.factor }}: {{ driver.impact | default("Impacting rotation") }}
+{%- endfor %}
+{%- endif %}
+{%- endif %}
+
+{%- if data.outperformers or data.underperformers %}
+
+⭐ Standout Moves
+{%- if data.outperformers %}
+Outperformers: {{ data.outperformers | join(", ") }}
+{%- endif %}
+{%- if data.underperformers %}
+Underperformers: {{ data.underperformers | join(", ") }}
+{%- endif %}
+{%- endif %}
+
+{%- if data.allocation_shifts %}
+
+💡 Smart Money Flows
+{%- for shift in data.allocation_shifts %}
+• {{ shift.from_sector }} → {{ shift.to_sector }}: {{ shift.amount | default("Significant") }} institutional movement
+{%- endfor %}
+{%- endif %}
+
+{%- if data.economic_catalyst %}
+
+🌍 Economic Driver
+{{ data.economic_catalyst }}
+{%- endif %}
+
+📌 Bottom Line
+{%- if data.primary_trend %}
+{{ data.primary_trend }}
+{%- else %}
+Clear sector rotation in progress with {{ data.conviction_level | default("high") }} conviction signals.
+{%- endif %}
+{%- if data.action_item %}
+{{ data.action_item }}
+{%- endif %}
+{%- endblock -%}

@@ -1,0 +1,224 @@
+{
+  "metadata": {
+    "portfolio": "live_signals",
+    "analysis_timestamp": "2025-07-18T13:29:15.771649",
+    "discovery_source": "data/outputs/trade_history/discovery/live_signals_20250718.json",
+    "protocol_version": "DASV_1.0",
+    "phase": "Phase_2_Analysis"
+  },
+  "data_summary": {
+    "total_trades": 37,
+    "closed_trades": 29,
+    "active_trades": 8,
+    "performance_calculations_based_on": "CLOSED_TRADES_ONLY"
+  },
+  "strategy_performance": {
+    "SMA": {
+      "status": "INSUFFICIENT_SAMPLE",
+      "closed_trades": 0,
+      "active_trades": 7,
+      "total_trades": 7,
+      "minimum_required": 5,
+      "confidence_penalty": 1.0,
+      "recommendation": "Exclude from reliable analysis until more closed trades available"
+    },
+    "EMA": {
+      "status": "INSUFFICIENT_SAMPLE",
+      "closed_trades": 0,
+      "active_trades": 1,
+      "total_trades": 1,
+      "minimum_required": 5,
+      "confidence_penalty": 1.0,
+      "recommendation": "Exclude from reliable analysis until more closed trades available"
+    }
+  },
+  "overall_performance": {
+    "closed_trades_metrics": {
+      "total_closed_trades": 29,
+      "win_rate": 0.5517241379310345,
+      "total_wins": 16,
+      "total_losses": 12,
+      "average_win_return": 0.13802599999999998,
+      "average_loss_return": -0.05254191666666667,
+      "profit_factor": 3.502625681400405,
+      "total_pnl": 647.4145120000003,
+      "total_return_percentage": 1.5779129999999997
+    },
+    "confidence_note": "Metrics calculated from closed trades only",
+    "sample_size_validation": {
+      "total_closed": 29,
+      "minimum_required": 5,
+      "quality": "MINIMAL"
+    }
+  },
+  "active_portfolio_analysis": {
+    "position_count": 8,
+    "strategy_composition": {
+      "SMA": 7,
+      "EMA": 1
+    },
+    "ticker_concentration": {
+      "AMZN": 1,
+      "GOOGL": 1,
+      "SMCI": 1,
+      "DOV": 1,
+      "MA": 1,
+      "WELL": 1,
+      "PWR": 1,
+      "NVDA": 1
+    },
+    "average_holding_period": 40.5,
+    "median_holding_period": 35.0,
+    "longest_held_position": 77.0,
+    "average_unrealized_return": 0.14821614834939922,
+    "median_unrealized_return": 0.11045395590888579,
+    "best_performer": {
+      "ticker": "NVDA",
+      "return": 0.5294328191760791
+    },
+    "worst_performer": {
+      "ticker": "MA",
+      "return": -0.0132137725751486
+    },
+    "unrealized_winners": 7,
+    "unrealized_losers": 1,
+    "portfolio_health": "HEALTHY"
+  },
+  "risk_analysis": {
+    "win_rate": 0.5517241379310345,
+    "profit_factor": 3.502625681400405,
+    "risk_reward_ratio": 2.626969261050304,
+    "average_win": 0.13802599999999998,
+    "average_loss": -0.05254191666666667,
+    "kelly_fraction": 0.25,
+    "recommended_position_size": "25.0%",
+    "consecutive_loss_probability": {
+      "3_losses": 0.09008159416130224,
+      "5_losses": 0.018102008814815787
+    },
+    "estimated_max_drawdown": 0.15762575,
+    "risk_assessment": "MODERATE_RISK"
+  },
+  "optimization_recommendations": [
+    {
+      "priority": "MEDIUM",
+      "category": "DIVERSIFICATION",
+      "issue": "Over-concentration in SMA strategy (87.5%)",
+      "recommendation": "Consider diversifying strategy mix for robustness",
+      "potential_impact": "Reduce strategy-specific risk"
+    },
+    {
+      "priority": "MEDIUM",
+      "category": "SAMPLE_SIZE",
+      "issue": "Limited closed trades (29)",
+      "recommendation": "Continue gathering data for more reliable statistics",
+      "potential_impact": "Higher confidence in performance metrics with 50+ closed trades"
+    }
+  ],
+  "ticker_deep_dive": {
+    "top_winners": [
+      {
+        "ticker": "NFLX",
+        "total_return": 0.3673,
+        "win_rate": 1.0,
+        "total_trades": 1
+      },
+      {
+        "ticker": "AMD",
+        "total_return": 0.3616,
+        "win_rate": 1.0,
+        "total_trades": 1
+      },
+      {
+        "ticker": "CRWD",
+        "total_return": 0.2611,
+        "win_rate": 1.0,
+        "total_trades": 1
+      },
+      {
+        "ticker": "INTU",
+        "total_return": 0.2513,
+        "win_rate": 1.0,
+        "total_trades": 1
+      },
+      {
+        "ticker": "ILMN",
+        "total_return": 0.2063,
+        "win_rate": 1.0,
+        "total_trades": 1
+      }
+    ],
+    "top_losers": [
+      {
+        "ticker": "AAPL",
+        "total_return": -0.045238,
+        "win_rate": 0.0,
+        "total_trades": 1
+      },
+      {
+        "ticker": "GOOGL",
+        "total_return": -0.049079,
+        "win_rate": 0.0,
+        "total_trades": 2
+      },
+      {
+        "ticker": "VTR",
+        "total_return": -0.081148,
+        "win_rate": 0.0,
+        "total_trades": 1
+      },
+      {
+        "ticker": "PGR",
+        "total_return": -0.125901,
+        "win_rate": 0.0,
+        "total_trades": 1
+      },
+      {
+        "ticker": "UHS",
+        "total_return": -0.150208,
+        "win_rate": 0.0,
+        "total_trades": 1
+      }
+    ],
+    "most_traded": [
+      {
+        "ticker": "TSLA",
+        "total_return": 0.07629300000000001,
+        "win_rate": 0.5,
+        "total_trades": 2
+      },
+      {
+        "ticker": "MA",
+        "total_return": -0.022676,
+        "win_rate": 0.0,
+        "total_trades": 2
+      },
+      {
+        "ticker": "GOOGL",
+        "total_return": -0.049079,
+        "win_rate": 0.0,
+        "total_trades": 2
+      },
+      {
+        "ticker": "NFLX",
+        "total_return": 0.3673,
+        "win_rate": 1.0,
+        "total_trades": 1
+      },
+      {
+        "ticker": "AMD",
+        "total_return": 0.3616,
+        "win_rate": 1.0,
+        "total_trades": 1
+      }
+    ]
+  },
+  "next_steps": {
+    "immediate_actions": [],
+    "monitoring_priorities": [
+      "Track strategy-specific win rates as more trades close",
+      "Monitor active position performance for exit timing",
+      "Validate signal effectiveness with larger sample"
+    ]
+  }
+}

@@ -12,7 +12,7 @@ import sys
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List
 
 # Add project root to Python path for imports
 project_root = Path(__file__).parent.parent.parent
@@ -74,7 +74,7 @@ class PerformanceMetrics:
 class DashboardDataParser:
     """Parser for extracting dashboard data from markdown trading reports."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
 
     def parse_report(self, file_path: Path) -> Dict[str, Any]:

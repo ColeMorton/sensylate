@@ -6,8 +6,8 @@ Maps companies to relevant sector analysis reports and integrates sector context
 
 import json
 import os
-from datetime import datetime, timedelta
-from typing import Any, Dict, List, Optional, Tuple
+from datetime import datetime
+from typing import Any, Dict, Optional
 
 
 class SectorCrossReference:

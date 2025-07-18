@@ -9,14 +9,12 @@ enabling unified data access patterns and reducing API dependencies.
 import hashlib
 import json
 import logging
-import os
 import pickle
 import subprocess
-import tempfile
 import time
-from datetime import datetime, timedelta
+from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Dict, Optional
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -766,7 +764,7 @@ if __name__ == "__main__":
         print(f"\n7. Performance optimization: {mcp.optimize_performance()}")
 
         # Cache cleanup
-        print(f"\n8. Running cache cleanup...")
+        print("\n8. Running cache cleanup...")
         mcp.cleanup_cache()
 
     except Exception as e:

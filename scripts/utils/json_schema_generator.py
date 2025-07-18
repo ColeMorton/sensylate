@@ -8,15 +8,8 @@ and JavaScript frontend.
 """
 
 import json
-from dataclasses import asdict
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Union
-
-from scripts.utils.dashboard_parser import (
-    MonthlyPerformance,
-    QualityDistribution,
-    TradeData,
-)
+from typing import Any, Dict, List
 
 
 class JSONSchemaGenerator:

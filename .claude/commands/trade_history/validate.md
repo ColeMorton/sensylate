@@ -63,15 +63,25 @@ statistical_validation_architecture:
 
   sample_adequacy:
     minimum_trades_check:
-      threshold: 10
-      impact: "Flag insufficient sample size warnings"
-      adjustment: "Confidence score reduction for small samples"
+      portfolio_threshold: 25
+      strategy_threshold: 15
+      basic_threshold: 10
+      impact: "Flag insufficient sample size warnings with transparency requirements"
+      adjustment: "Conservative confidence score reduction for small samples"
+      adequacy_assessment: "✅ ADEQUATE (>25), ⚠️ MINIMAL (10-24), ❌ INSUFFICIENT (<10)"
 
     statistical_power:
       alpha_level: 0.05
       beta_level: 0.20
-      effect_size: "Minimum detectable effect calculation"
-      power_analysis: "Statistical significance reliability assessment"
+      effect_size: "Minimum detectable effect calculation with practical significance"
+      power_analysis: "Statistical significance reliability assessment with sample size recommendations"
+      confidence_interval_validation: "95% CI width assessment and interpretation requirements"
+
+    strategy_specific_validation:
+      sma_sample_adequacy: "Verify adequate SMA closed trade sample (target: 15+ for statistical confidence)"
+      ema_sample_adequacy: "Assess EMA closed trade sample sufficiency (often insufficient - flag limitations)"
+      comparison_validity: "Validate ability to compare strategies (both must meet minimum thresholds)"
+      limitation_disclosure: "Require transparent disclosure of statistical limitations for small samples"
 
   distribution_analysis:
     normality_testing:
@@ -107,11 +117,16 @@ report_integrity_validation:
       monitoring_guidance: "Clear watch list and action triggers"
 
     historical_report_validation:
-      trade_coverage: "All closed positions analyzed comprehensively"
-      quality_distribution: "Excellent/Good/Poor/Failed classification complete"
-      temporal_patterns: "Monthly, seasonal, duration analysis present"
-      learning_extraction: "Key insights and actionable recommendations"
-      performance_attribution: "Sector, strategy, timing analysis complete"
+      trade_coverage: "All closed positions analyzed comprehensively with complete closed trade history table"
+      statistical_significance_section: "P-values, confidence intervals, and sample size adequacy assessment present and accurate"
+      predictive_characteristics_section: "Signal strength indicators, entry condition quality, and failure pattern analysis complete"
+      expectancy_calculation: "Risk-adjusted expectancy calculation present: (rrRatio × winRatio) - lossRatio"
+      risk_adjusted_metrics: "Sharpe, Sortino, Calmar ratios included with pending benchmark disclaimers where appropriate"
+      temporal_patterns: "Monthly breakdown with market context, duration analysis (short/medium/long-term), sector performance present"
+      market_regime_analysis: "Bull/bear/sideways performance, volatility environment analysis, and regime-specific insights"
+      strategy_effectiveness: "SMA vs EMA comparison with statistical reliability assessment and adequacy warnings"
+      learning_extraction: "Comprehensive key insights with statistical support and implementation recommendations"
+      performance_attribution: "Comprehensive sector, strategy, timing analysis with confidence intervals and limitations"
 
   content_accuracy:
     data_consistency_checks:
@@ -333,6 +348,8 @@ runtime_monitoring:
 validation_output_specification:
   validation_report:
     path_pattern: "/data/outputs/trade_history/validation/{PORTFOLIO}_VALIDATION_REPORT_{YYYYMMDD}.json"
+    naming_convention: "portfolio_VALIDATION_REPORT_date_format (e.g., live_signals_VALIDATION_REPORT_20250718.json)"
+    prohibited_patterns: "NO timestamp suffixes, NO phase identifiers, NO time components beyond YYYYMMDD"
     format: "json"
     schema: "trading_validation_schema_v1"
     content_validation: "Comprehensive quality assessment results"

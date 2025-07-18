@@ -15,7 +15,6 @@ from pathlib import Path
 from typing import Any, Dict
 
 import typer
-from rich.console import Console
 
 # Add utils to path
 sys.path.insert(0, str(Path(__file__).parent))
@@ -257,7 +256,7 @@ class FREDEconomicCLI(BaseFinancialCLI):
                 )
 
             except Exception as e:
-                self._handle_error(e, f"Failed to perform economic analysis")
+                self._handle_error(e, "Failed to perform economic analysis")
 
         @self.app.command("batch")
         def batch_indicators(

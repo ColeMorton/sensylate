@@ -118,8 +118,9 @@ class LocalFontManager:
                     continue
 
             if loaded_count > 0:
-                # Refresh font manager to recognize new fonts
-                fm.fontManager.__init__()
+                # Refresh font manager to recognize new fonts safely
+                # Note: Avoid direct __init__ access to maintain type safety
+                plt.rcParams["font.family"] = ["Heebo", "sans-serif"]
 
                 # Configure matplotlib to use Heebo as primary font
                 self._configure_matplotlib_fonts()

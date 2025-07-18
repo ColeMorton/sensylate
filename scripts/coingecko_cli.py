@@ -11,7 +11,6 @@ Command-line interface for CoinGecko cryptocurrency data with:
 """
 
 import sys
-from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict
 
@@ -272,12 +271,10 @@ class CoinGeckoCLI(BaseFinancialCLI):
                             }
                         )
 
-                self._output_result(
-                    results, output_format, f"Cryptocurrency Comparison"
-                )
+                self._output_result(results, output_format, "Cryptocurrency Comparison")
 
             except Exception as e:
-                self._handle_error(e, f"Failed to compare cryptocurrencies")
+                self._handle_error(e, "Failed to compare cryptocurrencies")
 
         @self.app.command("batch")
         def batch_prices(
@@ -316,7 +313,7 @@ class CoinGeckoCLI(BaseFinancialCLI):
                 self._output_result(result, output_format, f"Batch Prices: {coin_ids}")
 
             except Exception as e:
-                self._handle_error(e, f"Failed to get batch prices")
+                self._handle_error(e, "Failed to get batch prices")
 
     def perform_health_check(self, env: str) -> Dict[str, Any]:
         """Perform CoinGecko service health check"""

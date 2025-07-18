@@ -1,0 +1,106 @@
+{#- Base Twitter Template
+
+    Shared components for all Twitter content types:
+    - URL generation patterns
+    - Disclaimer text variations
+    - Hashtag strategies
+    - Character count optimization
+    - Emoji placement standards
+-#}
+
+{#- URL Generation Macro -#}
+{%- macro generate_blog_url(content_type, ticker, date=None, timestamp=None) -%}
+{%- if date -%}
+{%- set formatted_date = date -%}
+{%- elif timestamp -%}
+{%- set formatted_date = timestamp[:10] | replace("-", "") -%}
+{%- else -%}
+{%- set formatted_date = "unknown" -%}
+{%- endif -%}
+https://www.colemorton.com/blog/{{ ticker.lower() }}-{{ content_type }}-{{ formatted_date }}/
+{%- endmacro -%}
+
+{#- Disclaimer Variations Macro -#}
+{%- macro disclaimer(type="default") -%}
+{%- if type == "fundamental" -%}
+⚠️ Not financial advice. Past performance doesn't guarantee future results.
+{%- elif type == "strategy" -%}
+Not financial advice. Historical performance doesn't guarantee future results. Trade at your own risk.
+{%- elif type == "sector" -%}
+⚠️ Not financial advice. Do your own research.
+{%- elif type == "trade_history" -%}
+⚠️ Not financial advice. Investments carry risk of loss.
+{%- else -%}
+⚠️ Not financial advice. Stock investments carry risk of loss.
+{%- endif -%}
+{%- endmacro -%}
+
+{#- Hashtag Generation Macro -#}
+{%- macro hashtags(content_type, ticker, additional_tags=[]) -%}
+{%- set base_tags = [] -%}
+{%- if content_type == "fundamental" -%}
+{%- set base_tags = ["#" + ticker, "#StockAnalysis", "#Valuation"] -%}
+{%- elif content_type == "strategy" -%}
+{%- set base_tags = ["#TradingSignals", "#TradingStrategy", "#TradingOpportunity", "#investment"] -%}
+{%- elif content_type == "sector" -%}
+{%- set base_tags = ["#SectorAnalysis", "#SectorRotation", "#MarketAllocation"] -%}
+{%- elif content_type == "trade_history" -%}
+{%- set base_tags = ["#TradingPerformance", "#PortfolioUpdate", "#TradingResults"] -%}
+{%- endif -%}
+{%- for tag in (base_tags + additional_tags) -%}
+{{ tag }}{{ " " if not loop.last }}
+{%- endfor -%}
+{%- endmacro -%}
+
+{#- Character Count Optimization Macro -#}
+{%- macro truncate_with_ellipsis(text, limit=280) -%}
+{%- if text|length > limit -%}
+{{ text[:limit-3] }}...
+{%- else -%}
+{{ text }}
+{%- endif -%}
+{%- endmacro -%}
+
+{#- Hook Emoji Selection Macro -#}
+{%- macro select_hook_emoji(data, content_type) -%}
+{%- if content_type == "fundamental" -%}
+  {%- if data.fair_value_gap and data.fair_value_gap|float > 15 -%}🎯
+  {%- elif data.catalyst_count and data.catalyst_count|int > 2 -%}📈
+  {%- elif data.moat_strength and data.moat_strength|float > 7 -%}🏰
+  {%- elif data.contrarian_insight -%}🔍
+  {%- else -%}💰
+  {%- endif -%}
+{%- elif content_type == "strategy" -%}
+  {%- if data.net_performance and data.net_performance|float > 1000 -%}📈
+  {%- elif data.reward_risk and data.reward_risk|float > 3.0 -%}💎
+  {%- elif data.current_month_performance and data.current_month_performance|float > 65 -%}🔥
+  {%- elif data.win_rate and data.win_rate|float < 45 and data.reward_risk and data.reward_risk|float > 2.0 -%}🎯
+  {%- else -%}🚨
+  {%- endif -%}
+{%- elif content_type == "sector" -%}
+  {%- if data.rotation_signal -%}🔄
+  {%- elif data.outperformance and data.outperformance|float > 10 -%}📊
+  {%- else -%}🎯
+  {%- endif -%}
+{%- elif content_type == "trade_history" -%}
+  {%- if data.win_rate and data.win_rate|float > 70 -%}✅
+  {%- elif data.return_performance and data.return_performance|float > 20 -%}📈
+  {%- else -%}📊
+  {%- endif -%}
+{%- else -%}🚨
+{%- endif -%}
+{%- endmacro -%}
+
+{#- Template Content Block for Extension -#}
+{%- block content -%}
+{#- This block should be overridden by specific templates -#}
+{%- endblock -%}
+
+{#- Standard Footer with Blog Link and Disclaimer -#}
+{%- block footer -%}
+📋 Full analysis: {{ generate_blog_url(blog_content_type | default("analysis"), ticker, data.date) }}
+
+{{ disclaimer(disclaimer_type | default("default")) }}
+
+{{ hashtags(content_type, ticker, additional_hashtags | default([])) }}
+{%- endblock -%}

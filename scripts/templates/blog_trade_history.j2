@@ -14,6 +14,31 @@ tags:
 
 *Generated: {{ timestamp[:10] }}*
 
+{% if data.portfolio == "live_signals" -%}
+## 📡 Live Signals Overview
+
+### Trading Signal Platform
+
+**Live Signals** are real-time trading signals posted publicly on X/Twitter at **[@colemorton7](https://x.com/colemorton7)** for educational and transparency purposes. These signals provide followers with live market insights, entry/exit points, and portfolio tracking in real-time.
+
+### Methodology & Approach
+
+- **Position Sizing**: Single unit position size per strategy for consistency and simplicity
+- **Risk Management**: Risk management details are omitted from public signals to focus on signal quality and timing
+- **Signal Types**: Technical analysis using SMA and EMA crossover strategies
+- **Transparency**: All trades are tracked and reported publicly for educational purposes
+
+### Platform Benefits
+
+- **Real-time Updates**: Live signal posting and portfolio tracking
+- **Educational Value**: Transparent methodology and performance reporting
+- **Accessibility**: Public access to institutional-quality analysis
+- **Community**: Shared learning and market insights
+
+---
+
+{% endif -%}
+
 ## Executive Summary
 
 {% if data.executive_summary -%}

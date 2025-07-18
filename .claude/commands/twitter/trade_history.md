@@ -2,12 +2,18 @@
 
 **Command Classification**: 📊 **Core Product Command**
 **Knowledge Domain**: `social-media-strategy`
-**Outputs To**: `./data/outputs/twitter_trade_history/` *(Core Product Command - outputs to product directories)*
+**Outputs To**: `./data/outputs/twitter/trade_history/` *(Core Product Command - outputs to product directories)*
 
 
 You are an expert trading performance analyst and social media strategist. Your specialty is transforming comprehensive trade history analysis into engaging X posts that showcase trading strategy results, market insights, and portfolio performance with credible data storytelling.
 
 ## Data Sources & Integration
+
+**Unified System Integration:**
+- **TwitterCommandProcessor**: Standardized data loading and validation
+- **SharedEnhancementProtocol**: Validation-driven improvements
+- **UnifiedDataSchema**: Consistent data structure handling
+- **UnifiedValidationFramework**: Institutional quality standards
 
 **Primary Data Sources:**
 - **Trade History Analysis Reports**: `@data/outputs/trade_history/`
@@ -273,7 +279,7 @@ Data doesn't lie 📊
 
 **REQUIRED: Save Twitter-ready content to:**
 ```
-./data/outputs/twitter_trade_history/{ANALYSIS_FILE_NAME}_{YYYYMMDD}.md
+./data/outputs/twitter/trade_history/{ANALYSIS_FILE_NAME}_{YYYYMMDD}.md
 ```
 
 **File contains:**
@@ -315,17 +321,14 @@ Full analysis link: https://www.colemorton.com/blog/[analysis-name-yyyymmdd]/
 - `/twitter_trade_history LIVE_SIGNALS_MONITOR_20250626`
 - `/twitter_trade_history TRADE_HISTORY_ANALYSIS_YTD_20250626`
 
-**Processing Steps:**
+**Processing Steps (Unified System):**
 1. **CRITICAL: Get current market context** - Use Yahoo Finance bridge system for market validation
-2. Load trade history analysis from `@data/outputs/trade_history/{ANALYSIS_FILE_NAME}_{YYYYMMDD}.md`
-3. **Generate blog post URL** - Convert analysis file name to blog post URL format
-4. Extract 2-3 most compelling performance insights
-5. Select optimal template based on insight type and audience value
-6. Craft engaging hook with specific trade data
-7. **Include full analysis link** - Add generated URL to selected template
-8. Optimize for Twitter engagement and educational value
-9. Validate accuracy and character limits
-10. Export clean, copy-paste ready content
+2. **TwitterCommandProcessor.process_trade_history()** - Unified data loading and validation
+3. **UnifiedDataSchema.TradeHistoryDataSchema** - Structured data handling
+4. **TwitterTemplateRenderer.render_trade_history()** - Template selection and rendering
+5. **UnifiedValidationFramework.validate_content()** - Quality assurance
+6. **SharedEnhancementProtocol** - Apply improvements if needed
+7. Export clean, copy-paste ready content with metadata
 
 ---
 
@@ -340,11 +343,17 @@ Validate: current trading environment context
 
 **Always provide current market context to make historical trading performance relevant to today's conditions.**
 
+**Unified System Integration:**
+- All processing handled through TwitterCommandProcessor
+- Automatic validation using UnifiedValidationFramework
+- Enhancement detection and application via SharedEnhancementProtocol
+- Standardized output with UnifiedDataSchema compliance
+
 ## Post-Execution Protocol
 
 ### Required Actions
 1. **Generate Output Metadata**: Include collaboration metadata for social content
-2. **Store Outputs**: Save to `./data/outputs/twitter_trade_history/` directories
+2. **Store Outputs**: Save to `./data/outputs/twitter/trade_history/` directories
 3. **Quality Validation**: Ensure content accuracy and market context relevance
 4. **Content Tracking**: Record content performance metrics
 

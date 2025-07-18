@@ -1,0 +1,341 @@
+{
+  "metadata": {
+    "portfolio": "live_signals",
+    "discovery_timestamp": "2025-07-18T11:39:49.661183",
+    "data_source": "/Users/colemorton/Projects/sensylate/data/raw/trade_history/live_signals.csv",
+    "protocol_version": "DASV_1.0",
+    "phase": "Phase_1_Discovery"
+  },
+  "phase0_inventory": {
+    "local_data_coverage": 0.4117647058823529,
+    "tickers_with_local_data": 14,
+    "total_unique_tickers": 34,
+    "fundamental_analysis_files": 14
+  },
+  "portfolio_summary": {
+    "total_trades": 37,
+    "closed_trades": 29,
+    "active_trades": 8,
+    "unique_tickers": 34,
+    "date_range": {
+      "earliest_entry": "2025-04-01",
+      "latest_entry": "2025-07-13"
+    }
+  },
+  "performance_metrics": {
+    "win_rate": 0.5517,
+    "total_wins": 16,
+    "total_losses": 12,
+    "total_breakeven": 1,
+    "average_win_return": 0.138,
+    "average_loss_return": -0.0525,
+    "profit_factor": 3.5
+  },
+  "strategy_distribution": {
+    "EMA": 7,
+    "SMA": 30
+  },
+  "ticker_performance": {
+    "CRWD": {
+      "total_trades": 1,
+      "wins": 1,
+      "losses": 0,
+      "total_return": 0.2611,
+      "avg_return": 0.2611,
+      "win_rate": 1.0
+    },
+    "NFLX": {
+      "total_trades": 1,
+      "wins": 1,
+      "losses": 0,
+      "total_return": 0.3673,
+      "avg_return": 0.3673,
+      "win_rate": 1.0
+    },
+    "COST": {
+      "total_trades": 1,
+      "wins": 0,
+      "losses": 1,
+      "total_return": -0.0169,
+      "avg_return": -0.0169,
+      "win_rate": 0.0
+    },
+    "INTU": {
+      "total_trades": 1,
+      "wins": 1,
+      "losses": 0,
+      "total_return": 0.2513,
+      "avg_return": 0.2513,
+      "win_rate": 1.0
+    },
+    "GOOGL": {
+      "total_trades": 1,
+      "wins": 0,
+      "losses": 1,
+      "total_return": -0.049079,
+      "avg_return": -0.049079,
+      "win_rate": 0.0
+    },
+    "FFIV": {
+      "total_trades": 1,
+      "wins": 1,
+      "losses": 0,
+      "total_return": 0.0646,
+      "avg_return": 0.0646,
+      "win_rate": 1.0
+    },
+    "RTX": {
+      "total_trades": 1,
+      "wins": 1,
+      "losses": 0,
+      "total_return": 0.135,
+      "avg_return": 0.135,
+      "win_rate": 1.0
+    },
+    "AMD": {
+      "total_trades": 1,
+      "wins": 1,
+      "losses": 0,
+      "total_return": 0.3616,
+      "avg_return": 0.3616,
+      "win_rate": 1.0
+    },
+    "GD": {
+      "total_trades": 1,
+      "wins": 1,
+      "losses": 0,
+      "total_return": 0.0739,
+      "avg_return": 0.0739,
+      "win_rate": 1.0
+    },
+    "LMT": {
+      "total_trades": 1,
+      "wins": 0,
+      "losses": 1,
+      "total_return": -0.0281,
+      "avg_return": -0.0281,
+      "win_rate": 0.0
+    },
+    "ILMN": {
+      "total_trades": 1,
+      "wins": 1,
+      "losses": 0,
+      "total_return": 0.2063,
+      "avg_return": 0.2063,
+      "win_rate": 1.0
+    },
+    "PGR": {
+      "total_trades": 1,
+      "wins": 0,
+      "losses": 1,
+      "total_return": -0.125901,
+      "avg_return": -0.125901,
+      "win_rate": 0.0
+    },
+    "COR": {
+      "total_trades": 1,
+      "wins": 0,
+      "losses": 0,
+      "total_return": 0.0,
+      "avg_return": 0.0,
+      "win_rate": 0.0
+    },
+    "QCOM": {
+      "total_trades": 1,
+      "wins": 0,
+      "losses": 1,
+      "total_return": -0.0091,
+      "avg_return": -0.0091,
+      "win_rate": 0.0
+    },
+    "LIN": {
+      "total_trades": 1,
+      "wins": 1,
+      "losses": 0,
+      "total_return": 0.005563,
+      "avg_return": 0.005563,
+      "win_rate": 1.0
+    },
+    "VTR": {
+      "total_trades": 1,
+      "wins": 0,
+      "losses": 1,
+      "total_return": -0.081148,
+      "avg_return": -0.081148,
+      "win_rate": 0.0
+    },
+    "UHS": {
+      "total_trades": 1,
+      "wins": 0,
+      "losses": 1,
+      "total_return": -0.150208,
+      "avg_return": -0.150208,
+      "win_rate": 0.0
+    },
+    "TSLA": {
+      "total_trades": 2,
+      "wins": 1,
+      "losses": 1,
+      "total_return": 0.07629300000000001,
+      "avg_return": 0.03814650000000001,
+      "win_rate": 0.5
+    },
+    "MA": {
+      "total_trades": 1,
+      "wins": 0,
+      "losses": 1,
+      "total_return": -0.022676,
+      "avg_return": -0.022676,
+      "win_rate": 0.0
+    },
+    "LYV": {
+      "total_trades": 1,
+      "wins": 1,
+      "losses": 0,
+      "total_return": 0.10875,
+      "avg_return": 0.10875,
+      "win_rate": 1.0
+    },
+    "MCO": {
+      "total_trades": 1,
+      "wins": 1,
+      "losses": 0,
+      "total_return": 0.028427,
+      "avg_return": 0.028427,
+      "win_rate": 1.0
+    },
+    "ISRG": {
+      "total_trades": 1,
+      "wins": 1,
+      "losses": 0,
+      "total_return": 0.017865,
+      "avg_return": 0.017865,
+      "win_rate": 1.0
+    },
+    "EQT": {
+      "total_trades": 1,
+      "wins": 1,
+      "losses": 0,
+      "total_return": 0.068992,
+      "avg_return": 0.068992,
+      "win_rate": 1.0
+    },
+    "HSY": {
+      "total_trades": 1,
+      "wins": 0,
+      "losses": 1,
+      "total_return": -0.006764,
+      "avg_return": -0.006764,
+      "win_rate": 0.0
+    },
+    "GME": {
+      "total_trades": 1,
+      "wins": 1,
+      "losses": 0,
+      "total_return": 0.017825,
+      "avg_return": 0.017825,
+      "win_rate": 1.0
+    },
+    "AAPL": {
+      "total_trades": 1,
+      "wins": 0,
+      "losses": 1,
+      "total_return": -0.045238,
+      "avg_return": -0.045238,
+      "win_rate": 0.0
+    },
+    "SHOP": {
+      "total_trades": 1,
+      "wins": 1,
+      "losses": 0,
+      "total_return": 0.074114,
+      "avg_return": 0.074114,
+      "win_rate": 1.0
+    },
+    "COIN": {
+      "total_trades": 1,
+      "wins": 0,
+      "losses": 1,
+      "total_return": -0.005902,
+      "avg_return": -0.005902,
+      "win_rate": 0.0
+    }
+  },
+  "active_positions": [
+    {
+      "ticker": "AMZN",
+      "strategy": "SMA",
+      "entry_date": "2025-05-09",
+      "days_held": 70,
+      "current_return": 0.1577205462296005,
+      "position_uuid": "AMZN_SMA_10_27_2025-05-09"
+    },
+    {
+      "ticker": "GOOGL",
+      "strategy": "EMA",
+      "entry_date": "2025-05-16",
+      "days_held": 63,
+      "current_return": 0.10231777249342318,
+      "position_uuid": "GOOGL_EMA_9_46_2025-05-20"
+    },
+    {
+      "ticker": "SMCI",
+      "strategy": "SMA",
+      "entry_date": "2025-06-23",
+      "days_held": 25,
+      "current_return": 0.2134805272302859,
+      "position_uuid": "SMCI_SMA_58_60_2025-06-23"
+    },
+    {
+      "ticker": "DOV",
+      "strategy": "SMA",
+      "entry_date": "2025-06-26",
+      "days_held": 22,
+      "current_return": 0.04124783287090424,
+      "position_uuid": "DOV_SMA_45_86_2025-06-26"
+    },
+    {
+      "ticker": "MA",
+      "strategy": "SMA",
+      "entry_date": "2025-07-01",
+      "days_held": 17,
+      "current_return": -0.013213772575148663,
+      "position_uuid": "MA_SMA_78_82_2025-07-01"
+    },
+    {
+      "ticker": "WELL",
+      "strategy": "SMA",
+      "entry_date": "2025-07-13",
+      "days_held": 5,
+      "current_return": 0.036153322045701076,
+      "position_uuid": "WELL_SMA_67_88_2025-07-11"
+    },
+    {
+      "ticker": "PWR",
+      "strategy": "SMA",
+      "entry_date": "2025-06-03",
+      "days_held": 45,
+      "current_return": 0.11859013932434852,
+      "position_uuid": "PWR_SMA_66_78_2025-06-03"
+    },
+    {
+      "ticker": "NVDA",
+      "strategy": "SMA",
+      "entry_date": "2025-05-02",
+      "days_held": 77,
+      "current_return": 0.5294328191760791,
+      "position_uuid": "NVDA_SMA_36_40_2025-05-02"
+    }
+  ],
+  "market_data_collection": {
+    "total_tickers": 34,
+    "local_data_used": 14,
+    "external_calls_made": 0,
+    "failed_lookups": 20
+  },
+  "data_quality": {
+    "trades_with_complete_data": 37,
+    "trades_missing_exit_data": 0,
+    "trades_missing_return_data": 0
+  }
+}

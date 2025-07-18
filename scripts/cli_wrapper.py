@@ -9,9 +9,7 @@ Provides unified interface for CLI service execution with:
 - Local-first data strategy integration
 """
 
-import json
 import logging
-import os
 import shutil
 import subprocess
 import sys
