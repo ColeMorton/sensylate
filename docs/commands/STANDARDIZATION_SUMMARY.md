@@ -125,7 +125,7 @@ primary_output:
 **Comprehensive Examples Added**:
 ```markdown
 ### Direct Python Execution
-### Command Line Execution  
+### Command Line Execution
 ### Claude Command Execution
 ```
 

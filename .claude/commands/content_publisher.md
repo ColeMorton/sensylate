@@ -30,17 +30,17 @@ discovery_script:
   path: "{SCRIPTS_BASE}/content_publishing/content_discovery.py"
   class: "ContentDiscoveryScript"
   phase: "Phase 1 - Content Discovery & Assessment"
-  
+
 asset_script:
   path: "{SCRIPTS_BASE}/content_publishing/asset_coordinator.py"
   class: "AssetCoordinatorScript"
   phase: "Phase 2 - Asset Management & Synchronization"
-  
+
 transformation_script:
   path: "{SCRIPTS_BASE}/content_publishing/content_transformer.py"
   class: "ContentTransformerScript"
   phase: "Phase 3 - Content Transformation"
-  
+
 publication_script:
   path: "{SCRIPTS_BASE}/content_publishing/frontend_publisher.py"
   class: "FrontendPublisherScript"
@@ -74,11 +74,11 @@ Systematically manages the content publication pipeline by discovering unpublish
 frontmatter_base:
   path: "{TEMPLATES_BASE}/content_publishing/shared/frontmatter_base.j2"
   purpose: "Base frontmatter template with common metadata and SEO optimization"
-  
+
 content_fidelity:
   path: "{TEMPLATES_BASE}/content_publishing/shared/content_fidelity.j2"
   purpose: "Content preservation template ensuring 100% analytical integrity"
-  
+
 asset_integration:
   path: "{TEMPLATES_BASE}/content_publishing/shared/asset_integration.j2"
   purpose: "Asset coordination and image optimization templates"
@@ -88,19 +88,19 @@ asset_integration:
 ```python
 def select_publication_template(content_analysis):
     """Select optimal template for content publication"""
-    
+
     # Fundamental analysis blog template
     if content_analysis.get('content_type') == 'fundamental_analysis':
         return 'publishing/fundamental_analysis_blog.j2'
-    
+
     # Trade history blog template
     elif content_analysis.get('content_type') == 'trade_history':
         return 'publishing/trade_history_blog.j2'
-    
+
     # Sector analysis blog template
     elif content_analysis.get('content_type') == 'sector_analysis':
         return 'publishing/sector_analysis_blog.j2'
-    
+
     # Default blog template
     return 'publishing/blog_frontmatter.j2'
 ```
@@ -167,14 +167,14 @@ astro_dev_server:
   purpose: "Real-time content rendering validation"
   health_check: "curl http://localhost:4321/health"
   priority: "primary"
-  
+
 content_validator:
   command: "cd frontend && yarn check"
   usage: "TypeScript and content validation"
   purpose: "Content integrity and type safety validation"
   health_check: "cd frontend && yarn check --help"
   priority: "primary"
-  
+
 image_optimizer:
   command: "python {SCRIPTS_BASE}/image_processing/optimize_images.py"
   usage: "{command} --source {source_path} --dest {dest_path}"
@@ -202,7 +202,7 @@ authority_hierarchy:
   source_content: "HIGHEST_AUTHORITY"  # Data outputs are authoritative source
   frontmatter_templates: "METADATA_AUTHORITY"  # Templates control metadata structure
   astro_framework: "RENDERING_AUTHORITY"  # Astro framework controls final presentation
-  
+
 conflict_resolution:
   content_precedence: "source_content"  # Source content takes priority
   metadata_standards: "frontmatter_templates"  # Templates enforce standardization
@@ -219,19 +219,19 @@ fundamental_analysis:
   format: "markdown"
   required: true
   description: "Fundamental analysis reports for publication"
-  
+
 trade_history:
   path: "{DATA_OUTPUTS}/trade_history/trading-performance-{TYPE}-{YYYYMMDD}.md"
   format: "markdown"
   required: false
   description: "Trade history reports for publication"
-  
+
 sector_analysis:
   path: "{DATA_OUTPUTS}/sector_analysis/{SECTOR}-sector-analysis-{YYYYMMDD}.md"
   format: "markdown"
   required: false
   description: "Sector analysis reports for publication"
-  
+
 visual_assets:
   path: "{DATA_IMAGES}/{asset_type}/{IDENTIFIER}_{YYYYMMDD}.png"
   format: "png|jpg"
@@ -245,12 +245,12 @@ blog_content:
   path: "frontend/src/content/blog/{identifier}-{type}-{YYYYMMDD}.md"
   format: "markdown"
   description: "Published blog content with standardized frontmatter"
-  
+
 optimized_images:
   path: "frontend/public/images/{asset_type}/{IDENTIFIER}_{YYYYMMDD}.png"
   format: "png|jpg"
   description: "Optimized images for web presentation"
-  
+
 publication_metadata:
   path: "{DATA_OUTPUTS}/content_publication/{IDENTIFIER}_{YYYYMMDD}_metadata.json"
   format: "json"
@@ -614,7 +614,7 @@ Systematically process unpublished analysis for publication opportunities and co
 - `trade_history`: Provides trade history reports via {DATA_OUTPUTS}/trade_history/
 - `sector_analyst`: Provides sector analysis reports via {DATA_OUTPUTS}/sector_analysis/
 
-### Downstream Dependencies  
+### Downstream Dependencies
 **Commands that consume this command's outputs**:
 - `content_evaluator`: Evaluates published content for quality assurance
 - `documentation_owner`: Documents publication workflows and standards

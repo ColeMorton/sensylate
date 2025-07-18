@@ -30,17 +30,17 @@ validation_script:
   path: "{SCRIPTS_BASE}/content_validation/financial_data_validator.py"
   class: "FinancialDataValidator"
   phase: "Phase 1 - Financial Data Validation"
-  
+
 market_data_script:
   path: "{SCRIPTS_BASE}/market_data/market_data_integrator.py"
   class: "MarketDataIntegrator"
   phase: "Phase 2 - Real-Time Market Data Integration"
-  
+
 compliance_script:
   path: "{SCRIPTS_BASE}/compliance/regulatory_compliance_checker.py"
   class: "RegulatoryComplianceChecker"
   phase: "Phase 3 - Regulatory Compliance Assessment"
-  
+
 evidence_script:
   path: "{SCRIPTS_BASE}/research/evidence_sourcing_engine.py"
   class: "EvidenceSourcingEngine"
@@ -65,11 +65,11 @@ evidence_script:
 evaluation_base_template:
   path: "{TEMPLATES_BASE}/content_evaluation/shared/evaluation_base.j2"
   purpose: "Base template with common evaluation framework and scoring"
-  
+
 evidence_matrix_template:
   path: "{TEMPLATES_BASE}/content_evaluation/shared/evidence_matrix.j2"
   purpose: "Evidence-based validation matrix and source tracking"
-  
+
 risk_assessment_template:
   path: "{TEMPLATES_BASE}/content_evaluation/shared/risk_assessment.j2"
   purpose: "Risk calibration and impact assessment components"
@@ -79,25 +79,25 @@ risk_assessment_template:
 ```python
 def select_evaluation_template(content_analysis):
     """Select optimal template for content evaluation"""
-    
+
     # Financial analysis evaluation for investment content
     if (content_analysis.get('content_type') == 'financial_analysis' or
         len(content_analysis.get('stock_symbols', [])) > 0):
         return 'evaluation/financial_analysis_validation.j2'
-    
+
     # Market research evaluation for market analysis
     elif content_analysis.get('content_type') == 'market_research':
         return 'evaluation/market_research_validation.j2'
-    
+
     # Strategic assessment for business intelligence
     elif content_analysis.get('content_type') == 'strategic_analysis':
         return 'evaluation/strategic_assessment_validation.j2'
-    
+
     # Compliance evaluation for regulatory content
     elif (content_analysis.get('regulatory_focus', False) or
           content_analysis.get('compliance_required', False)):
         return 'evaluation/compliance_validation.j2'
-    
+
     # Default general content evaluation
     return 'evaluation/general_content_validation.j2'
 ```
@@ -112,28 +112,28 @@ yahoo_finance_cli:
   purpose: "Real-time market data validation for financial content"
   health_check: "{command} health --env prod"
   priority: "primary"
-  
+
 sec_edgar_cli:
   command: "python {SCRIPTS_BASE}/sec_edgar_cli.py"
   usage: "{command} filings {ticker} --env prod --output-format json"
   purpose: "Primary source verification from SEC filings"
   health_check: "{command} health --env prod"
   priority: "primary"
-  
+
 fred_economic_cli:
   command: "python {SCRIPTS_BASE}/fred_economic_cli.py"
   usage: "{command} indicators --env prod --output-format json"
   purpose: "Economic data validation and context verification"
   health_check: "{command} health --env prod"
   priority: "secondary"
-  
+
 fmp_cli:
   command: "python {SCRIPTS_BASE}/fmp_cli.py"
   usage: "{command} profile {ticker} --env prod --output-format json"
   purpose: "Financial data cross-validation and verification"
   health_check: "{command} health --env prod"
   priority: "secondary"
-  
+
 alpha_vantage_cli:
   command: "python {SCRIPTS_BASE}/alpha_vantage_cli.py"
   usage: "{command} fundamentals {ticker} --env prod --output-format json"
@@ -164,7 +164,7 @@ authority_hierarchy:
   real_time_market: "PRICING_AUTHORITY"  # Yahoo Finance for current market data
   regulatory_data: "COMPLIANCE_AUTHORITY"  # SEC EDGAR for regulatory information
   cross_validation: "VERIFICATION_AUTHORITY"  # FMP/Alpha Vantage for data verification
-  
+
 conflict_resolution:
   financial_precedence: "primary_sources"  # SEC filings take priority
   pricing_authority: "yahoo_finance"  # Primary source for market data
@@ -181,25 +181,25 @@ evaluation_target:
   format: "markdown"
   required: true
   description: "Target file for comprehensive content evaluation"
-  
+
 financial_data_sources:
   path: "CLI_SERVICES_REAL_TIME"
   format: "json"
   required: false
   description: "Real-time financial data for content validation"
-  
+
 regulatory_filings:
   path: "CLI_SERVICES_REAL_TIME"
   format: "json"
   required: false
   description: "SEC filings and regulatory data for primary source verification"
-  
+
 economic_indicators:
   path: "CLI_SERVICES_REAL_TIME"
   format: "json"
   required: false
   description: "Economic data for macroeconomic content validation"
-  
+
 evaluation_templates:
   path: "{TEMPLATES_BASE}/content_evaluation/"
   format: "jinja2"
@@ -213,17 +213,17 @@ evaluation_report:
   path: "{TARGET_FILE_DIRECTORY}/{TARGET_FILENAME}_evaluation.md"
   format: "markdown"
   description: "Comprehensive content evaluation report with evidence-based scoring"
-  
+
 evaluation_metadata:
   path: "{DATA_OUTPUTS}/content_evaluation/{TARGET_FILENAME}_{YYYYMMDD}_metadata.json"
   format: "json"
   description: "Evaluation metadata including validation sources and confidence scores"
-  
+
 evidence_matrix:
   path: "{DATA_OUTPUTS}/content_evaluation/evidence/{TARGET_FILENAME}_{YYYYMMDD}_evidence.json"
   format: "json"
   description: "Evidence tracking matrix with source verification and confidence levels"
-  
+
 validation_summary:
   path: "{DATA_OUTPUTS}/content_evaluation/summary/{TARGET_FILENAME}_{YYYYMMDD}_summary.json"
   format: "json"
@@ -238,13 +238,13 @@ content_evaluation_flow:
     - "stock symbols extraction for financial validation"
     - "data freshness requirements assessment"
     - "methodology and confidence level analysis"
-    
+
   validation_execution:
     - "multi-source financial data verification"
     - "primary source cross-referencing"
     - "regulatory compliance assessment"
     - "evidence quality categorization"
-    
+
   assessment_generation:
     - "evidence-based scoring calculation"
     - "risk impact assessment"
@@ -655,7 +655,7 @@ Analyzes the specified file and generates comprehensive accuracy evaluation repo
 - `trade_history`: Provides trade history reports via {DATA_OUTPUTS}/trade_history/
 - `sector_analyst`: Provides sector analysis reports via {DATA_OUTPUTS}/sector_analysis/
 
-### Downstream Dependencies  
+### Downstream Dependencies
 **Commands that consume this command's outputs**:
 - `content_publisher`: Consumes evaluation reports for publication quality assurance
 - `documentation_owner`: Transforms evaluation results for documentation updates

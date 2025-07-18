@@ -23,7 +23,7 @@
 class TradeHistoryTwitterScript(BaseScript):
     """
     Trade history performance Twitter content generation script
-    
+
     Parameters:
         analysis_file (str): Trade history analysis identifier
         date (str): Analysis date in YYYYMMDD format
@@ -39,17 +39,17 @@ trade_performance_analyzer:
   path: "{SCRIPTS_BASE}/trade_history/trade_performance_analyzer.py"
   class: "TradePerformanceAnalyzer"
   purpose: "Trade history data extraction and performance metrics calculation"
-  
+
 market_context_collector:
   path: "{SCRIPTS_BASE}/market_data/market_context_collector.py"
   class: "MarketContextCollector"
   purpose: "Real-time market context for performance validation"
-  
+
 twitter_command_processor:
   path: "{SCRIPTS_BASE}/twitter_command_processor.py"
   class: "TwitterCommandProcessor"
   purpose: "Unified Twitter content processing and validation"
-  
+
 unified_validation_framework:
   path: "{SCRIPTS_BASE}/unified_validation_framework.py"
   class: "UnifiedValidationFramework"
@@ -74,11 +74,11 @@ unified_validation_framework:
 trade_base_template:
   path: "{TEMPLATES_BASE}/twitter/shared/base_twitter.j2"
   purpose: "Base template with common macros and trading formatting"
-  
+
 performance_components:
   path: "{TEMPLATES_BASE}/twitter/shared/performance_components.j2"
   purpose: "Performance metrics components and risk disclaimers"
-  
+
 validation_template:
   path: "{TEMPLATES_BASE}/twitter/validation/trade_performance_validation.j2"
   purpose: "Trading performance compliance and transparency validation"
@@ -88,32 +88,32 @@ validation_template:
 ```python
 def select_trade_history_template(trade_data):
     """Select optimal template for trade history Twitter content"""
-    
+
     # Performance summary for comprehensive YTD metrics
     if (trade_data.get('ytd_metrics_available', False) and
         trade_data.get('comprehensive_data', False)):
         return 'trade_history/twitter_performance_summary.j2'
-    
+
     # Top trades showcase for highlighting wins
     elif (len(trade_data.get('best_trades', [])) >= 3 and
           trade_data.get('detailed_trade_data', False)):
         return 'trade_history/twitter_top_trades.j2'
-    
+
     # Learning transparency for balanced narrative
     elif (trade_data.get('wins_and_losses_available', False) and
           trade_data.get('educational_focus', False)):
         return 'trade_history/twitter_learning_transparency.j2'
-    
+
     # Real-time performance for current context
     elif (trade_data.get('active_positions', False) and
           trade_data.get('current_market_context', False)):
         return 'trade_history/twitter_real_time_performance.j2'
-    
+
     # Statistical validation for strategy analysis
     elif (trade_data.get('signal_quality_data', False) and
           trade_data.get('statistical_analysis', False)):
         return 'trade_history/twitter_statistical_validation.j2'
-    
+
     # Default to performance summary
     return 'trade_history/twitter_performance_summary.j2'
 ```
@@ -128,28 +128,28 @@ yahoo_finance_cli:
   purpose: "Real-time market data for performance validation and context"
   health_check: "{command} health --env prod"
   priority: "primary"
-  
+
 market_data_cli:
   command: "python {SCRIPTS_BASE}/market_data_cli.py"
   usage: "{command} market-overview --env prod --output-format json"
   purpose: "Current market context and sentiment analysis"
   health_check: "{command} health --env prod"
   priority: "primary"
-  
+
 fred_economic_cli:
   command: "python {SCRIPTS_BASE}/fred_economic_cli.py"
   usage: "{command} indicators VIX,DXY,TNX --env prod --output-format json"
   purpose: "Economic indicators for market environment context"
   health_check: "{command} health --env prod"
   priority: "secondary"
-  
+
 trade_analyzer_cli:
   command: "python {SCRIPTS_BASE}/trade_analyzer_cli.py"
   usage: "{command} performance-metrics {analysis_file} --env prod"
   purpose: "Trade performance analysis and metrics calculation"
   health_check: "{command} health --env prod"
   priority: "primary"
-  
+
 alpha_vantage_cli:
   command: "python {SCRIPTS_BASE}/alpha_vantage_cli.py"
   usage: "{command} market-sentiment --env prod --output-format json"
@@ -180,7 +180,7 @@ authority_hierarchy:
   real_time_market: "CONTEXT_AUTHORITY"  # Current market data for validation
   performance_calculations: "METRICS_AUTHORITY"  # Trade analyzer for accurate metrics
   economic_indicators: "ENVIRONMENT_AUTHORITY"  # Economic context for interpretation
-  
+
 conflict_resolution:
   trade_data_precedence: "analysis_document_primary"  # Trade analysis takes priority
   market_context_authority: "yahoo_finance"  # Primary source for current market
@@ -198,25 +198,25 @@ trade_history_analysis:
   format: "markdown"
   required: true
   description: "Primary trade history analysis with performance metrics and insights"
-  
+
 real_time_market_data:
   path: "CLI_SERVICES_REAL_TIME"
   format: "json"
   required: true
   description: "Current market context for performance validation"
-  
+
 trade_performance_metrics:
   path: "{DATA_OUTPUTS}/trade_analysis/{ANALYSIS_FILE_NAME}_{YYYYMMDD}_metrics.json"
   format: "json"
   required: false
   description: "Calculated performance metrics and statistical analysis"
-  
+
 market_context_data:
   path: "CLI_SERVICES_REAL_TIME"
   format: "json"
   required: true
   description: "Market environment and sentiment for performance interpretation"
-  
+
 validation_file:
   path: "{DATA_OUTPUTS}/twitter/trade_history/validation/{ANALYSIS_FILE_NAME}_{YYYYMMDD}_validation.json"
   format: "json"
@@ -230,22 +230,22 @@ primary_output:
   path: "{DATA_OUTPUTS}/twitter/trade_history/{ANALYSIS_FILE_NAME}_{YYYYMMDD}.md"
   format: "markdown"
   description: "Generated trading performance Twitter content"
-  
+
 metadata_output:
   path: "{DATA_OUTPUTS}/twitter/trade_history/{ANALYSIS_FILE_NAME}_{YYYYMMDD}_metadata.json"
   format: "json"
   description: "Template selection and performance validation metadata"
-  
+
 validation_output:
   path: "{DATA_OUTPUTS}/twitter/trade_history/validation/{ANALYSIS_FILE_NAME}_{YYYYMMDD}_validation.json"
   format: "json"
   description: "Content validation results and enhancement recommendations"
-  
+
 blog_url_output:
   path: "{DATA_OUTPUTS}/twitter/trade_history/{ANALYSIS_FILE_NAME}_{YYYYMMDD}_blog_url.txt"
   format: "text"
   description: "Generated blog URL for full trade history analysis access"
-  
+
 performance_summary:
   path: "{DATA_OUTPUTS}/twitter/trade_history/{ANALYSIS_FILE_NAME}_{YYYYMMDD}_summary.json"
   format: "json"
@@ -260,13 +260,13 @@ content_generation_flow:
     - "current market context ≤ 24 hours"
     - "performance metrics calculated and verified"
     - "market environment assessment completed"
-    
+
   template_selection:
     - "trade performance data evaluation"
     - "market context integration"
     - "transparency and educational value assessment"
     - "engagement optimization criteria check"
-    
+
   content_optimization:
     - "Twitter character limit compliance"
     - "performance transparency standards"

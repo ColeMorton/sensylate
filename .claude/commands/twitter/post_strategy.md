@@ -23,7 +23,7 @@
 class StrategyAnalysisScript(BaseScript):
     """
     Generalized strategy analysis script for live trading signal content generation
-    
+
     Parameters:
         ticker (str): Stock ticker symbol
         date (str): Analysis date in YYYYMMDD format
@@ -38,12 +38,12 @@ template_selector:
   path: "{SCRIPTS_BASE}/twitter_template_selector_refactored.py"
   class: "TwitterTemplateSelector"
   purpose: "Template selection for strategy signals"
-  
+
 validation_framework:
   path: "{SCRIPTS_BASE}/unified_validation_framework.py"
   class: "UnifiedValidationFramework"
   purpose: "Content quality validation and scoring"
-  
+
 template_renderer:
   path: "{SCRIPTS_BASE}/twitter_template_renderer.py"
   class: "TwitterTemplateRenderer"
@@ -65,11 +65,11 @@ template_renderer:
 base_template:
   path: "{TEMPLATES_BASE}/twitter/shared/base_twitter.j2"
   purpose: "Base template with common macros and formatting"
-  
+
 components:
   path: "{TEMPLATES_BASE}/twitter/shared/components.j2"
   purpose: "Advanced hook generation for live signals"
-  
+
 validation_template:
   path: "{TEMPLATES_BASE}/twitter/validation/content_quality_checklist.j2"
   purpose: "Quality gates for trading signal compliance"
@@ -79,12 +79,12 @@ validation_template:
 ```python
 def select_strategy_template(signal_data):
     """Select optimal template for trading signal content"""
-    
+
     # Primary: Live signal template for TODAY'S signals
     if (signal_data.get('signal_triggered', False) and
         signal_data.get('live_signal', False)):
         return 'strategy/twitter_post_strategy.j2'
-    
+
     # Default: General strategy performance template
     return 'strategy/twitter_strategy_default.j2'
 ```
@@ -182,7 +182,7 @@ yahoo_finance_cli:
   purpose: "Real-time market data for current price validation"
   health_check: "{command} health --env prod"
   priority: "primary"
-  
+
 alpha_vantage_cli:
   command: "python {SCRIPTS_BASE}/alpha_vantage_cli.py"
   usage: "{command} quote {ticker} --env prod --output-format json"
@@ -206,7 +206,7 @@ authority_hierarchy:
   trendspider_performance: "HIGHEST_AUTHORITY"  # TrendSpider tabular data
   csv_strategy_data: "SECONDARY"  # Strategy parameters and historical performance
   yahoo_finance: "REAL_TIME_PRICE"  # Current market price
-  
+
 conflict_resolution:
   trendspider_precedence: "absolute"  # TrendSpider always takes priority
   threshold: "10%"  # Variance threshold for conflict detection
@@ -222,19 +222,19 @@ trendspider_tabular:
   format: "png"
   required: false
   description: "Performance data with HIGHEST AUTHORITY - pixel-level accuracy required"
-  
+
 csv_strategy_data:
   path: "{DATA_RAW}/analysis_strategy/{TICKER}_{YYYYMMDD}.csv"
   format: "csv"
   required: true
   description: "Strategy parameters and historical performance data"
-  
+
 real_time_market:
   path: "CLI_SERVICES_REAL_TIME"
   format: "json"
   required: true
   description: "Current market price for TODAY'S ENTRY SIGNAL context"
-  
+
 fundamental_context:
   path: "{DATA_OUTPUTS}/fundamental_analysis/{TICKER}_{YYYYMMDD}.md"
   format: "markdown"
@@ -248,12 +248,12 @@ primary_output:
   path: "{DATA_OUTPUTS}/twitter/post_strategy/{TICKER}_{YYYYMMDD}.md"
   format: "markdown"
   description: "Generated live trading signal content"
-  
+
 metadata_output:
   path: "{DATA_OUTPUTS}/twitter/post_strategy/{TICKER}_{YYYYMMDD}_metadata.json"
   format: "json"
   description: "Strategy parameters and template selection metadata"
-  
+
 validation_output:
   path: "{DATA_OUTPUTS}/twitter/post_strategy/validation/{TICKER}_{YYYYMMDD}_validation.json"
   format: "json"

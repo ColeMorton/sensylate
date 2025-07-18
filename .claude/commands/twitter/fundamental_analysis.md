@@ -23,7 +23,7 @@
 class FundamentalAnalysisScript(BaseScript):
     """
     Generalized fundamental analysis script for Twitter content generation
-    
+
     Parameters:
         ticker (str): Stock ticker symbol
         date (str): Analysis date in YYYYMMDD format
@@ -38,12 +38,12 @@ template_selector:
   path: "{SCRIPTS_BASE}/twitter_template_selector_refactored.py"
   class: "TwitterTemplateSelector"
   purpose: "Intelligent template selection based on analysis data"
-  
+
 validation_framework:
   path: "{SCRIPTS_BASE}/unified_validation_framework.py"
   class: "UnifiedValidationFramework"
   purpose: "Content quality validation and scoring"
-  
+
 template_renderer:
   path: "{SCRIPTS_BASE}/twitter_template_renderer.py"
   class: "TwitterTemplateRenderer"
@@ -68,11 +68,11 @@ template_renderer:
 base_template:
   path: "{TEMPLATES_BASE}/twitter/shared/base_twitter.j2"
   purpose: "Base template with common macros and formatting"
-  
+
 components:
   path: "{TEMPLATES_BASE}/twitter/shared/components.j2"
   purpose: "Advanced hook generation and validation macros"
-  
+
 validation_template:
   path: "{TEMPLATES_BASE}/twitter/validation/content_quality_checklist.j2"
   purpose: "Pre-publication content quality validation"
@@ -212,14 +212,14 @@ yahoo_finance_cli:
   purpose: "Real-time market data and current price validation"
   health_check: "{command} health --env prod"
   priority: "primary"
-  
+
 alpha_vantage_cli:
   command: "python {SCRIPTS_BASE}/alpha_vantage_cli.py"
   usage: "{command} quote {ticker} --env prod --output-format json"
   purpose: "Secondary price validation and sentiment data"
   health_check: "{command} health --env prod"
   priority: "secondary"
-  
+
 fmp_cli:
   command: "python {SCRIPTS_BASE}/fmp_cli.py"
   usage: "{command} profile {ticker} --env prod --output-format json"
@@ -248,7 +248,7 @@ authority_hierarchy:
   yahoo_finance: "PRIMARY_PRICE"  # Real-time market data
   alpha_vantage: "SECONDARY_PRICE"  # Price validation
   fmp: "TERTIARY_PRICE"  # Additional validation
-  
+
 conflict_resolution:
   price_variance_threshold: "2%"  # BLOCKING if exceeded
   trendspider_precedence: "absolute"  # Always takes priority
@@ -264,13 +264,13 @@ fundamental_analysis:
   format: "markdown"
   required: true
   description: "Primary analysis content and investment thesis"
-  
+
 trendspider_visual:
   path: "{DATA_IMAGES}/trendspider_tabular/{TICKER}_{YYYYMMDD}.png"
   format: "png"
   required: false
   description: "Performance data with HIGHEST AUTHORITY for conflicts"
-  
+
 real_time_market:
   path: "CLI_SERVICES_REAL_TIME"
   format: "json"
@@ -284,12 +284,12 @@ primary_output:
   path: "{DATA_OUTPUTS}/twitter/fundamental_analysis/{TICKER}_{YYYYMMDD}.md"
   format: "markdown"
   description: "Generated Twitter content"
-  
+
 metadata_output:
   path: "{DATA_OUTPUTS}/twitter/fundamental_analysis/{TICKER}_{YYYYMMDD}_metadata.json"
   format: "json"
   description: "Template selection and quality metadata"
-  
+
 validation_output:
   path: "{DATA_OUTPUTS}/twitter/fundamental_analysis/validation/{TICKER}_{YYYYMMDD}_validation.json"
   format: "json"

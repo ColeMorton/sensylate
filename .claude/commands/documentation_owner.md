@@ -30,17 +30,17 @@ discovery_script:
   path: "{SCRIPTS_BASE}/documentation/documentation_discovery.py"
   class: "DocumentationDiscoveryScript"
   phase: "Phase 1 - Document Discovery and Inventory"
-  
+
 quality_script:
   path: "{SCRIPTS_BASE}/documentation/quality_assessment.py"
   class: "QualityAssessmentScript"
   phase: "Phase 2 - Quality Standards Assessment"
-  
+
 enforcement_script:
   path: "{SCRIPTS_BASE}/documentation/quality_enforcement.py"
   class: "QualityEnforcementScript"
   phase: "Phase 3 - Quality Implementation and Standardization"
-  
+
 maintenance_script:
   path: "{SCRIPTS_BASE}/documentation/lifecycle_maintenance.py"
   class: "LifecycleMaintenanceScript"
@@ -64,11 +64,11 @@ maintenance_script:
 documentation_base:
   path: "{TEMPLATES_BASE}/documentation/shared/documentation_base.j2"
   purpose: "Base template with common documentation standards and formatting"
-  
+
 quality_framework:
   path: "{TEMPLATES_BASE}/documentation/shared/quality_framework.j2"
   purpose: "Quality assessment framework and metrics templates"
-  
+
 lifecycle_management:
   path: "{TEMPLATES_BASE}/documentation/shared/lifecycle_management.j2"
   purpose: "Documentation lifecycle and maintenance workflow templates"
@@ -78,23 +78,23 @@ lifecycle_management:
 ```python
 def select_documentation_template(request_analysis):
     """Select optimal template for documentation management"""
-    
+
     # Quality assessment template
     if request_analysis.get('focus') == 'quality_assessment':
         return 'documentation/quality_report.j2'
-    
+
     # Standardization guide template
     elif request_analysis.get('focus') == 'standardization':
         return 'documentation/standardization_guide.j2'
-    
+
     # Lifecycle management template
     elif request_analysis.get('focus') == 'lifecycle_management':
         return 'documentation/lifecycle_plan.j2'
-    
+
     # Integration guide template
     elif request_analysis.get('focus') == 'integration':
         return 'documentation/integration_guide.j2'
-    
+
     # Default quality report
     return 'documentation/quality_report.j2'
 ```
@@ -506,14 +506,14 @@ documentation_validator:
   purpose: "Documentation quality validation and compliance checking"
   health_check: "{command} health --env prod"
   priority: "primary"
-  
+
 content_formatter:
   command: "python {SCRIPTS_BASE}/documentation/content_formatter.py"
   usage: "{command} format {docs_path} --standard {standard} --env prod"
   purpose: "Automated documentation formatting and standardization"
   health_check: "{command} health --env prod"
   priority: "primary"
-  
+
 cross_reference_checker:
   command: "python {SCRIPTS_BASE}/documentation/cross_reference_checker.py"
   usage: "{command} check {docs_path} --deep-scan --env prod"
@@ -543,13 +543,13 @@ documentation_inventory:
   format: "json"
   required: true
   description: "Complete documentation inventory and classification"
-  
+
 quality_standards:
   path: "{CONFIG_BASE}/documentation/quality_standards.yaml"
   format: "yaml"
   required: true
   description: "Documentation quality standards and compliance requirements"
-  
+
 existing_docs:
   path: "{PROJECT_ROOT}/**/*.md"
   format: "markdown"
@@ -563,17 +563,17 @@ quality_report:
   path: "{DATA_OUTPUTS}/documentation/quality/{DATE}_quality_report.md"
   format: "markdown"
   description: "Comprehensive documentation quality assessment report"
-  
+
 standardization_guide:
   path: "{DATA_OUTPUTS}/documentation/standards/{DATE}_standardization_guide.md"
   format: "markdown"
   description: "Documentation standardization guidelines and requirements"
-  
+
 lifecycle_plan:
   path: "{DATA_OUTPUTS}/documentation/lifecycle/{DATE}_lifecycle_plan.md"
   format: "markdown"
   description: "Documentation lifecycle management and maintenance plan"
-  
+
 management_metadata:
   path: "{DATA_OUTPUTS}/documentation/metadata/{DATE}_management_metadata.json"
   format: "json"
@@ -631,7 +631,7 @@ management_metadata:
 - `content_publisher`: Provides published content for documentation lifecycle management
 - `content_evaluator`: Provides content quality metrics for documentation standards
 
-### Downstream Dependencies  
+### Downstream Dependencies
 **Commands that consume this command's outputs**:
 - `content_evaluator`: Uses documentation standards for content quality assessment
 - `content_publisher`: Uses documentation guidelines for publication standards

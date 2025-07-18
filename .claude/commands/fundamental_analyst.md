@@ -14,19 +14,19 @@ discovery_script:
   class: "FundamentalDiscoveryScript"
   phase: "Phase 1 - Multi-Source Data Collection"
   registry_name: "fundamental_discovery"
-  
+
 analysis_script:
   path: "{SCRIPTS_BASE}/fundamental_analysis/fundamental_analysis.py"
   class: "FundamentalAnalysisScript"
   phase: "Phase 2 - Analytical Intelligence Transformation"
   registry_name: "fundamental_analysis"
-  
+
 synthesis_script:
   path: "{SCRIPTS_BASE}/fundamental_analysis/investment_synthesis.py"
   class: "InvestmentSynthesisScript"
   phase: "Phase 3 - Institutional Document Generation"
   registry_name: "investment_synthesis"
-  
+
 validation_script:
   path: "{SCRIPTS_BASE}/fundamental_analysis/analysis_validation.py"
   class: "AnalysisValidationScript"
@@ -45,7 +45,7 @@ validation_script:
 class FundamentalDiscoveryScript(BaseScript):
 
 @twitter_script(
-    name="fundamental_analysis", 
+    name="fundamental_analysis",
     content_types=["fundamental_analysis"],
     requires_validation=True
 )
@@ -76,7 +76,7 @@ config = ScriptConfig.from_environment()
 registry = get_global_registry(config)
 
 # Full workflow execution
-phases = ["fundamental_discovery", "fundamental_analysis", 
+phases = ["fundamental_discovery", "fundamental_analysis",
           "investment_synthesis", "analysis_validation"]
 
 for phase in phases:
@@ -95,11 +95,11 @@ for phase in phases:
 fundamental_analysis_template:
   path: "{SCRIPTS_BASE}/templates/fundamental_analysis_enhanced.j2"
   purpose: "Primary analysis document generation"
-  
+
 validation_template:
   path: "{SCRIPTS_BASE}/templates/validation_framework.j2"
   purpose: "Quality assurance and validation scoring"
-  
+
 sector_analysis_template:
   path: "{SCRIPTS_BASE}/templates/analysis/sector_analysis_template.md"
   purpose: "Sector-wide analysis specification"
@@ -317,13 +317,13 @@ yahoo_finance_cli:
   usage: "{command} analyze {ticker} --env prod --output-format json"
   purpose: "Core market data and financial statements"
   health_check: "{command} health --env prod"
-  
+
 alpha_vantage_cli:
   command: "python {SCRIPTS_BASE}/alpha_vantage_cli.py"
   usage: "{command} quote {ticker} --env prod --output-format json"
   purpose: "Real-time quotes and sentiment analysis"
   health_check: "{command} health --env prod"
-  
+
 fmp_cli:
   command: "python {SCRIPTS_BASE}/fmp_cli.py"
   usage: "{command} profile {ticker} --env prod --output-format json"
@@ -332,25 +332,25 @@ fmp_cli:
   additional_commands:
     financials: "{command} financials {ticker} --statement-type cash-flow-statement --env prod --output-format json"
     insider: "{command} insider {ticker} --env prod --output-format json"
-  
+
 sec_edgar_cli:
   command: "python {SCRIPTS_BASE}/sec_edgar_cli.py"
   usage: "{command} filings {ticker} --env prod --output-format json"
   purpose: "Regulatory filings and compliance data"
   health_check: "{command} health --env prod"
-  
+
 fred_economic_cli:
   command: "python {SCRIPTS_BASE}/fred_economic_cli.py"
   usage: "{command} rates --env prod --output-format json"
   purpose: "Federal Reserve economic indicators"
   health_check: "{command} health --env prod"
-  
+
 coingecko_cli:
   command: "python {SCRIPTS_BASE}/coingecko_cli.py"
   usage: "{command} sentiment --env prod --output-format json"
   purpose: "Cryptocurrency sentiment and risk appetite"
   health_check: "{command} health --env prod"
-  
+
 imf_cli:
   command: "python {SCRIPTS_BASE}/imf_cli.py"
   usage: "{command} global-indicators --env prod --output-format json"
@@ -386,7 +386,7 @@ authority_hierarchy:
   secondary: "alpha_vantage"  # Backup quote source
   validation: "fmp"  # Cross-validation source
   economic_context: "fred_economic"  # Economic indicators
-  
+
 conflict_resolution:
   threshold: "2%"  # Maximum price variance before flag
   action: "use_primary"  # Use Yahoo Finance for conflicts
@@ -593,13 +593,13 @@ market_data:
   format: "json"
   required: true
   description: "Real-time market data from 7 CLI financial services"
-  
+
 configuration:
   path: "{SCRIPTS_BASE}/config/financial_services.yaml"
   format: "yaml"
   required: true
   description: "API keys and service configuration"
-  
+
 economic_indicators:
   path: "FRED_API_REAL_TIME"
   format: "json"
@@ -613,22 +613,22 @@ discovery_output:
   path: "{DATA_OUTPUTS}/fundamental_analysis/discovery/{TICKER}_{YYYYMMDD}_discovery.json"
   format: "json"
   description: "Phase 1 - Multi-source data collection results"
-  
+
 analysis_output:
   path: "{DATA_OUTPUTS}/fundamental_analysis/analysis/{TICKER}_{YYYYMMDD}_analysis.json"
   format: "json"
   description: "Phase 2 - Analytical intelligence transformation"
-  
+
 synthesis_output:
   path: "{DATA_OUTPUTS}/fundamental_analysis/{TICKER}_{YYYYMMDD}.md"
   format: "markdown"
   description: "Phase 3 - Institutional-quality document"
-  
+
 validation_output:
   path: "{DATA_OUTPUTS}/fundamental_analysis/validation/{TICKER}_{YYYYMMDD}_validation.json"
   format: "json"
   description: "Phase 4 - Quality assurance results"
-  
+
 metadata_output:
   path: "{DATA_OUTPUTS}/fundamental_analysis/{TICKER}_{YYYYMMDD}_metadata.json"
   format: "json"
@@ -642,7 +642,7 @@ phase_dependencies:
   analysis: ["discovery"]  # Requires discovery output
   synthesis: ["discovery", "analysis"]  # Requires both previous phases
   validation: ["discovery", "analysis", "synthesis"]  # Requires all phases
-  
+
 file_inheritance:
   analysis_references_discovery: "{DATA_OUTPUTS}/fundamental_analysis/discovery/{TICKER}_{YYYYMMDD}_discovery.json"
   synthesis_references_both: ["discovery_file", "analysis_file"]
@@ -679,7 +679,7 @@ file_inheritance:
   "quality_assessment": {
     "phase_confidence_scores": {
       "discovery": "9.X/10.0",
-      "analysis": "9.X/10.0", 
+      "analysis": "9.X/10.0",
       "synthesis": "9.X/10.0",
       "validation": "9.X/10.0"
     },
@@ -709,7 +709,7 @@ discovery_result = registry.execute_script(
 )
 
 # Execute full DASV workflow
-phases = ["fundamental_discovery", "fundamental_analysis", 
+phases = ["fundamental_discovery", "fundamental_analysis",
           "investment_synthesis", "analysis_validation"]
 
 workflow_results = {}

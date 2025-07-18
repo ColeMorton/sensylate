@@ -87,12 +87,12 @@ from pathlib import Path
 
 def resolve_base_path(env_var: str, default: str) -> Path:
     """Resolve base path with environment variable override"""
-    
+
     # 1. Check environment variable
     env_value = os.environ.get(env_var)
     if env_value:
         return Path(env_value)
-    
+
     # 2. Use default relative path
     return Path(default)
 

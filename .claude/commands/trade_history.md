@@ -15,17 +15,17 @@ trade_history_analyzer:
   registry_name: "trade_history"
   content_types: ["trade_history"]
   requires_validation: true
-  
+
 comprehensive_trade_analyzer:
   path: "{SCRIPTS_BASE}/trade_history/comprehensive_trade_analyzer.py"
   class: "ComprehensiveTradeAnalyzer"
   purpose: "Statistical analysis and performance measurement"
-  
+
 trade_performance_calculator:
   path: "{SCRIPTS_BASE}/trade_history/trade_performance_calculator.py"
   class: "TradePerformanceCalculator"
   purpose: "Risk-adjusted returns and signal quality metrics"
-  
+
 trade_history_cli:
   path: "{SCRIPTS_BASE}/trade_history_cli.py"
   class: "TradeHistoryCLI"
@@ -42,7 +42,7 @@ trade_history_cli:
 class TradeHistoryScript(BaseScript):
     """
     Comprehensive trade history and performance analysis script
-    
+
     Parameters:
         portfolio (str): Portfolio to analyze (live_signals, momentum_strategy, etc.)
         date (Optional[str]): Analysis date in YYYYMMDD format
@@ -60,17 +60,17 @@ signal_quality_analyzer:
   path: "{SCRIPTS_BASE}/trade_history/signal_quality_analyzer.py"
   class: "SignalQualityAnalyzer"
   purpose: "Entry/exit signal effectiveness evaluation"
-  
+
 statistical_validator:
   path: "{SCRIPTS_BASE}/trade_history/statistical_validator.py"
   class: "StatisticalValidator"
   purpose: "Statistical significance testing and confidence scoring"
-  
+
 performance_reporter:
   path: "{SCRIPTS_BASE}/trade_history/performance_reporter.py"
   class: "PerformanceReporter"
   purpose: "Multi-audience report generation (internal, live, historical)"
-  
+
 market_context_integrator:
   path: "{SCRIPTS_BASE}/trade_history/market_context_integrator.py"
   class: "MarketContextIntegrator"
@@ -95,15 +95,15 @@ market_context_integrator:
 performance_base_template:
   path: "{TEMPLATES_BASE}/trade_history/shared/performance_base.j2"
   purpose: "Base template with common performance metrics and formatting"
-  
+
 statistical_components:
   path: "{TEMPLATES_BASE}/trade_history/shared/statistical_components.j2"
   purpose: "Statistical analysis components and significance testing"
-  
+
 risk_management_template:
   path: "{TEMPLATES_BASE}/trade_history/shared/risk_management.j2"
   purpose: "Risk metrics, drawdown analysis, and portfolio health scoring"
-  
+
 market_context_template:
   path: "{TEMPLATES_BASE}/trade_history/shared/market_context.j2"
   purpose: "Economic environment and market regime analysis integration"
@@ -113,31 +113,31 @@ market_context_template:
 ```python
 def select_trade_history_template(analysis_request):
     """Select optimal template for trade history analysis"""
-    
+
     # Internal trading report for comprehensive operational analysis
     if (analysis_request.get('audience') == 'internal' and
         analysis_request.get('depth') == 'comprehensive'):
         return 'trade_history/internal_trading_report.j2'
-    
+
     # Live signals monitor for active position tracking
     elif (analysis_request.get('status_filter') == 'open' and
           analysis_request.get('real_time_context', False)):
         return 'trade_history/live_signals_monitor.j2'
-    
+
     # Historical performance for closed position analysis
     elif (analysis_request.get('status_filter') == 'closed' and
           analysis_request.get('trend_analysis', False)):
         return 'trade_history/historical_performance_report.j2'
-    
+
     # Quarterly review for periodic assessment
     elif analysis_request.get('timeframe') in ['3m', 'quarterly']:
         return 'trade_history/quarterly_review.j2'
-    
+
     # Statistical validation for significance testing
     elif (analysis_request.get('statistical_focus', False) and
           analysis_request.get('confidence_threshold', 0) >= 9.5):
         return 'trade_history/statistical_validation.j2'
-    
+
     # Default to internal trading report
     return 'trade_history/internal_trading_report.j2'
 ```
@@ -152,28 +152,28 @@ trade_history_cli:
   purpose: "Trade history data generation and portfolio analysis"
   health_check: "{command} health --env prod"
   priority: "primary"
-  
+
 yahoo_finance_cli:
   command: "python {SCRIPTS_BASE}/yahoo_finance_cli.py"
   usage: "{command} history SPY --period 1y --summary --format json"
   purpose: "Benchmark performance data and market context"
   health_check: "{command} health --env prod"
   priority: "primary"
-  
+
 fred_economic_cli:
   command: "python {SCRIPTS_BASE}/fred_economic_cli.py"
   usage: "{command} indicator GDP --env prod --format json"
   purpose: "Economic indicators for market environment assessment"
   health_check: "{command} health --env prod"
   priority: "secondary"
-  
+
 content_automation_cli:
   command: "python {SCRIPTS_BASE}/content_automation_cli.py"
   usage: "{command} blog {analysis_data} --template trade_history --format markdown"
   purpose: "Professional report generation and analysis documentation"
   health_check: "{command} status --env prod"
   priority: "secondary"
-  
+
 comprehensive_trade_analyzer:
   command: "python {SCRIPTS_BASE}/comprehensive_trade_analysis.py"
   usage: "{command} --portfolio {portfolio} --format json"
@@ -207,7 +207,7 @@ authority_hierarchy:
   fundamental_analysis: "INVESTMENT_CONTEXT"  # Supporting investment thesis integration
   market_context: "BENCHMARK_AUTHORITY"  # Yahoo Finance for benchmark comparison
   economic_indicators: "MACRO_CONTEXT"  # FRED for economic environment
-  
+
 conflict_resolution:
   csv_precedence: "absolute"  # CSV data takes absolute precedence in any conflicts
   supplemental_alignment: "supportive_only"  # External data must support, not contradict CSV
@@ -224,25 +224,25 @@ portfolio_trade_data:
   format: "csv"
   required: true
   description: "ULTIMATE TRUTH - Portfolio trade data with entry/exit signals (100% accurate)"
-  
+
 fundamental_analysis_files:
   path: "{DATA_OUTPUTS}/fundamental_analysis/"
   format: "markdown"
   required: false
   description: "Investment thesis and analysis for traded stocks/tickers"
-  
+
 benchmark_data:
   path: "CLI_SERVICES_REAL_TIME"
   format: "json"
   required: true
   description: "Market benchmarks (SPY, QQQ, sector ETFs) for relative analysis"
-  
+
 economic_indicators:
   path: "CLI_SERVICES_REAL_TIME"
   format: "json"
   required: false
   description: "Economic context and market regime assessment"
-  
+
 market_context_data:
   path: "WEB_SEARCH_REAL_TIME"
   format: "json"
@@ -256,22 +256,22 @@ internal_trading_report:
   path: "{DATA_OUTPUTS}/trade_history/internal/{PORTFOLIO}_INTERNAL_TRADING_REPORT_{TIMEFRAME}_{YYYYMMDD}.md"
   format: "markdown"
   description: "Comprehensive operational analysis for trading team"
-  
+
 live_signals_monitor:
   path: "{DATA_OUTPUTS}/trade_history/live/{PORTFOLIO}_LIVE_SIGNALS_MONITOR_{YYYYMMDD}.md"
   format: "markdown"
   description: "Real-time performance monitoring and position tracking"
-  
+
 historical_performance_report:
   path: "{DATA_OUTPUTS}/trade_history/historical/{PORTFOLIO}_HISTORICAL_PERFORMANCE_REPORT_{YYYYMMDD}.md"
   format: "markdown"
   description: "Closed positions analysis and pattern identification"
-  
+
 performance_metadata:
   path: "{DATA_OUTPUTS}/trade_history/analysis/{PORTFOLIO}_{YYYYMMDD}_metrics.json"
   format: "json"
   description: "Statistical analysis results and confidence scoring"
-  
+
 signal_analysis:
   path: "{DATA_OUTPUTS}/trade_history/analysis/{PORTFOLIO}_{YYYYMMDD}_signal_analysis.json"
   format: "json"
@@ -286,13 +286,13 @@ analysis_generation_flow:
     - "fundamental analysis integration via ticker matching"
     - "benchmark data collection for relative performance"
     - "economic context gathering for market environment"
-    
+
   statistical_analysis:
     - "signal quality metrics calculation"
     - "performance attribution and risk-adjusted returns"
     - "statistical significance testing and confidence scoring"
     - "market regime analysis and condition-specific performance"
-    
+
   report_generation:
     - "multi-audience report generation (internal, live, historical)"
     - "institutional quality standards enforcement"
@@ -1805,7 +1805,7 @@ incident_response:
 - `trade_history_cli`: Provides trading data via CLI service integration
 - `market_data_services`: Provides benchmark and market context data
 
-### Downstream Dependencies  
+### Downstream Dependencies
 **Commands that consume this command's outputs**:
 - `content_publisher`: Publishes trading performance reports to blog
 - `twitter_trade_history`: Transforms trading results into social media content

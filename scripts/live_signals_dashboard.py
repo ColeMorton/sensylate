@@ -239,11 +239,15 @@ class LiveSignalsDashboard:
 
         # Extract sector exposure
         if "Technology-heavy" in content:
-            tech_match = re.search(r"Technology-heavy \((\d+)/(\d+) positions\)", content)
+            tech_match = re.search(
+                r"Technology-heavy \((\d+)/(\d+) positions\)", content
+            )
             if tech_match:
                 tech_positions = int(tech_match.group(1))
                 total_positions = int(tech_match.group(2))
-                composition["technology_exposure"] = tech_positions / total_positions * 100
+                composition["technology_exposure"] = (
+                    tech_positions / total_positions * 100
+                )
 
         # Extract strategy mix
         sma_match = re.search(r"(\d+\.?\d*)% SMA", content)
@@ -275,7 +279,9 @@ class LiveSignalsDashboard:
 
         return light_fig, dark_fig
 
-    def _create_dashboard_figure(self, data: Dict[str, Any], theme_mode: str) -> go.Figure:
+    def _create_dashboard_figure(
+        self, data: Dict[str, Any], theme_mode: str
+    ) -> go.Figure:
         """Create 2x2 grid dashboard figure"""
         # Create subplots with 2x2 grid
         fig = make_subplots(
@@ -304,12 +310,16 @@ class LiveSignalsDashboard:
             tickers = [pos["ticker"] for pos in positions]
             returns = [pos["current_return"] for pos in positions]
             colors = [
-                self.theme["colors"]["success"] if r > 0 else self.theme["colors"]["danger"]
+                self.theme["colors"]["success"]
+                if r > 0
+                else self.theme["colors"]["danger"]
                 for r in returns
             ]
 
             fig.add_trace(
-                go.Bar(x=tickers, y=returns, marker_color=colors, name="Position Returns"),
+                go.Bar(
+                    x=tickers, y=returns, marker_color=colors, name="Position Returns"
+                ),
                 row=1,
                 col=1,
             )
@@ -426,9 +436,7 @@ class LiveSignalsDashboard:
 
         return exported_files
 
-    def generate_frontend_config(
-        self, data: Dict[str, Any], output_dir: Path
-    ) -> Path:
+    def generate_frontend_config(self, data: Dict[str, Any], output_dir: Path) -> Path:
         """Generate frontend-ready JSON configuration"""
         config = {
             "dashboard_type": "live_signals",

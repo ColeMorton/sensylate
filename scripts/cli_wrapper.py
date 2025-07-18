@@ -14,35 +14,41 @@ Provides unified interface for CLI service execution with:
 import shutil
 import subprocess
 import sys
+from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
-from datetime import datetime
+
+from error_handler import ErrorHandler
 
 # Import new architectural components
-from errors import ProcessingError, ConfigurationError, ValidationError
-from error_handler import ErrorHandler
+from errors import ConfigurationError, ProcessingError, ValidationError
 from logging_config import TwitterSystemLogger
 from result_types import ProcessingResult
 from script_config import ScriptConfig
-from script_registry import get_global_registry, ScriptRegistry
+from script_registry import ScriptRegistry, get_global_registry
 
 
 class CLIServiceWrapper:
     """
     Wrapper for CLI services that handles both global and local execution modes
-    
+
     Integrated with new architectural components:
     - Hierarchical error handling with context
     - Structured logging with performance tracking
     - Type-safe results with metadata
     """
 
-    def __init__(self, service_name: str, config: Optional[ScriptConfig] = None, scripts_dir: Optional[Path] = None):
+    def __init__(
+        self,
+        service_name: str,
+        config: Optional[ScriptConfig] = None,
+        scripts_dir: Optional[Path] = None,
+    ):
         self.service_name = service_name
-        
+
         # Validate service name
         self._validate_service_name(service_name)
-        
+
         # Initialize configuration
         if config:
             self.config = config
@@ -50,7 +56,7 @@ class CLIServiceWrapper:
         else:
             self.scripts_dir = scripts_dir or Path(__file__).parent
             self.config = None
-        
+
         # Initialize new architectural components
         self.error_handler = ErrorHandler()
         self.logger = TwitterSystemLogger(f"cli_wrapper.{service_name}")
@@ -59,17 +65,17 @@ class CLIServiceWrapper:
         self.cli_script_name = f"{service_name}_cli.py"
         self.cli_script_path = self.scripts_dir / self.cli_script_name
         self.global_command_name = f"{service_name}_cli"
-        
+
         # Configuration-based settings
         self.timeout = 30  # Default timeout
         self.retry_count = 1  # Default retry count
         self.use_cache = False  # Default cache usage
-        
+
         if self.config:
             # Apply configuration-based settings
-            self.timeout = getattr(self.config, 'cli_timeout', 30)
-            self.retry_count = getattr(self.config, 'cli_retry_count', 1)
-            self.use_cache = getattr(self.config, 'cli_use_cache', False)
+            self.timeout = getattr(self.config, "cli_timeout", 30)
+            self.retry_count = getattr(self.config, "cli_retry_count", 1)
+            self.use_cache = getattr(self.config, "cli_use_cache", False)
 
         # Execution modes
         self.global_available = self._check_global_availability()
@@ -84,28 +90,27 @@ class CLIServiceWrapper:
                 "timeout": self.timeout,
                 "retry_count": self.retry_count,
                 "use_cache": self.use_cache,
-                "has_config": self.config is not None
-            }
+                "has_config": self.config is not None,
+            },
         )
 
     def _validate_service_name(self, service_name: str) -> None:
         """Validate service name using fail-fast approach"""
         if not service_name or not service_name.strip():
             raise ValidationError(
-                "Service name cannot be empty",
-                context={"service_name": service_name}
+                "Service name cannot be empty", context={"service_name": service_name}
             )
-        
+
         if not service_name.replace("_", "").isalnum():
             raise ValidationError(
                 f"Invalid service name format: {service_name}",
-                context={"valid_format": "Alphanumeric with underscores only"}
+                context={"valid_format": "Alphanumeric with underscores only"},
             )
-        
+
         if len(service_name) > 50:
             raise ValidationError(
                 f"Service name too long: {len(service_name)} characters",
-                context={"max_length": 50}
+                context={"max_length": 50},
             )
 
     def _check_global_availability(self) -> bool:
@@ -114,55 +119,65 @@ class CLIServiceWrapper:
             # Check if command exists in PATH
             global_path = shutil.which(self.global_command_name)
             is_available = global_path is not None
-            
+
             self.logger.log_operation(
                 f"Global availability check for {self.service_name}",
                 {
                     "global_command": self.global_command_name,
                     "available": is_available,
-                    "path": global_path
-                }
+                    "path": global_path,
+                },
             )
-            
+
             return is_available
         except Exception as e:
             self.error_handler.handle_processing_error(
                 "global_availability_check",
-                {"service_name": self.service_name, "global_command": self.global_command_name},
+                {
+                    "service_name": self.service_name,
+                    "global_command": self.global_command_name,
+                },
                 e,
-                fail_fast=False
+                fail_fast=False,
             )
             return False
 
     def _check_local_availability(self) -> bool:
         """Check if CLI service is available as local Python script"""
         try:
-            is_available = self.cli_script_path.exists() and self.cli_script_path.is_file()
-            
+            is_available = (
+                self.cli_script_path.exists() and self.cli_script_path.is_file()
+            )
+
             self.logger.log_operation(
                 f"Local availability check for {self.service_name}",
                 {
                     "cli_script_path": str(self.cli_script_path),
                     "available": is_available,
                     "exists": self.cli_script_path.exists(),
-                    "is_file": self.cli_script_path.is_file() if self.cli_script_path.exists() else False
-                }
+                    "is_file": self.cli_script_path.is_file()
+                    if self.cli_script_path.exists()
+                    else False,
+                },
             )
-            
+
             return is_available
         except Exception as e:
             self.error_handler.handle_processing_error(
                 "local_availability_check",
-                {"service_name": self.service_name, "cli_script_path": str(self.cli_script_path)},
+                {
+                    "service_name": self.service_name,
+                    "cli_script_path": str(self.cli_script_path),
+                },
                 e,
-                fail_fast=False
+                fail_fast=False,
             )
             return False
 
     def is_available(self) -> bool:
         """Check if CLI service is available in any form"""
         available = self.global_available or self.local_available
-        
+
         if not available:
             self.logger.log_operation(
                 f"Service {self.service_name} is not available",
@@ -170,11 +185,11 @@ class CLIServiceWrapper:
                     "global_available": self.global_available,
                     "local_available": self.local_available,
                     "cli_script_path": str(self.cli_script_path),
-                    "global_command": self.global_command_name
+                    "global_command": self.global_command_name,
                 },
-                level="WARNING"
+                level="WARNING",
             )
-        
+
         return available
 
     def execute_command(self, command: str, *args, **kwargs) -> ProcessingResult:
@@ -190,14 +205,13 @@ class CLIServiceWrapper:
             ProcessingResult with execution details and metadata
         """
         start_time = datetime.now()
-        
+
         # Validate inputs
         if not command or not command.strip():
             raise ValidationError(
-                "Command cannot be empty",
-                context={"service_name": self.service_name}
+                "Command cannot be empty", context={"service_name": self.service_name}
             )
-        
+
         if not self.is_available():
             raise ConfigurationError(
                 f"CLI service '{self.service_name}' is not available",
@@ -205,8 +219,8 @@ class CLIServiceWrapper:
                     "service_name": self.service_name,
                     "global_available": self.global_available,
                     "local_available": self.local_available,
-                    "cli_script_path": str(self.cli_script_path)
-                }
+                    "cli_script_path": str(self.cli_script_path),
+                },
             )
 
         try:
@@ -230,8 +244,10 @@ class CLIServiceWrapper:
                     "service_name": self.service_name,
                     "command": command,
                     "args": list(args),
-                    "options": {k: v for k, v in kwargs.items() if not k.startswith("_")}
-                }
+                    "options": {
+                        k: v for k, v in kwargs.items() if not k.startswith("_")
+                    },
+                },
             )
 
             # Try global command first
@@ -239,7 +255,7 @@ class CLIServiceWrapper:
                 try:
                     success, stdout, stderr = self._execute_global_command(cmd_args)
                     execution_time = (datetime.now() - start_time).total_seconds()
-                    
+
                     return self._create_result(
                         success, stdout, stderr, "global", execution_time, cmd_args
                     )
@@ -249,9 +265,9 @@ class CLIServiceWrapper:
                         {
                             "service_name": self.service_name,
                             "error": str(e),
-                            "command": command
+                            "command": command,
                         },
-                        level="WARNING"
+                        level="WARNING",
                     )
 
             # Fall back to local execution
@@ -259,7 +275,7 @@ class CLIServiceWrapper:
                 try:
                     success, stdout, stderr = self._execute_local_command(cmd_args)
                     execution_time = (datetime.now() - start_time).total_seconds()
-                    
+
                     return self._create_result(
                         success, stdout, stderr, "local", execution_time, cmd_args
                     )
@@ -269,9 +285,9 @@ class CLIServiceWrapper:
                         {
                             "service_name": self.service_name,
                             "command": command,
-                            "cmd_args": cmd_args
+                            "cmd_args": cmd_args,
                         },
-                        e
+                        e,
                     )
 
             raise ConfigurationError(
@@ -279,14 +295,16 @@ class CLIServiceWrapper:
                 context={
                     "service_name": self.service_name,
                     "global_available": self.global_available,
-                    "local_available": self.local_available
-                }
+                    "local_available": self.local_available,
+                },
             )
-            
+
         except Exception as e:
             execution_time = (datetime.now() - start_time).total_seconds()
-            
-            if not isinstance(e, (ValidationError, ConfigurationError, ProcessingError)):
+
+            if not isinstance(
+                e, (ValidationError, ConfigurationError, ProcessingError)
+            ):
                 # Wrap unexpected errors in ProcessingError
                 raise ProcessingError(
                     f"CLI command execution failed: {str(e)}",
@@ -295,42 +313,42 @@ class CLIServiceWrapper:
                         "service_name": self.service_name,
                         "command": command,
                         "args": list(args),
-                        "execution_time": execution_time
+                        "execution_time": execution_time,
                     },
-                    context={"original_error": str(e)}
+                    context={"original_error": str(e)},
                 )
             raise
-    
+
     def _create_result(
-        self, 
-        success: bool, 
-        stdout: str, 
-        stderr: str, 
-        execution_mode: str, 
-        execution_time: float, 
-        cmd_args: List[str]
+        self,
+        success: bool,
+        stdout: str,
+        stderr: str,
+        execution_mode: str,
+        execution_time: float,
+        cmd_args: List[str],
     ) -> ProcessingResult:
         """Create ProcessingResult from CLI execution"""
-        
+
         result = ProcessingResult(
             success=success,
             operation=f"cli_{self.service_name}_{cmd_args[0]}",
             content=stdout if success else None,
             error=stderr if not success else None,
-            processing_time=execution_time
+            processing_time=execution_time,
         )
-        
+
         # Add metadata
         result.add_metadata("service_name", self.service_name)
         result.add_metadata("execution_mode", execution_mode)
         result.add_metadata("command", cmd_args[0] if cmd_args else "")
         result.add_metadata("full_command", cmd_args)
-        
+
         if not success:
             result.add_error_context("stderr", stderr)
             result.add_error_context("stdout", stdout)
             result.add_error_context("execution_mode", execution_mode)
-        
+
         self.logger.log_operation(
             f"CLI command completed: {cmd_args[0] if cmd_args else 'unknown'}",
             {
@@ -339,23 +357,23 @@ class CLIServiceWrapper:
                 "execution_mode": execution_mode,
                 "execution_time": execution_time,
                 "stdout_length": len(stdout),
-                "stderr_length": len(stderr)
-            }
+                "stderr_length": len(stderr),
+            },
         )
-        
+
         return result
 
     def _execute_global_command(self, args: List[str]) -> Tuple[bool, str, str]:
         """Execute command as global CLI"""
         cmd = [self.global_command_name] + args
-        
+
         self.logger.log_operation(
             f"Executing global command",
             {
                 "service_name": self.service_name,
-                "command": ' '.join(cmd),
-                "args_count": len(args)
-            }
+                "command": " ".join(cmd),
+                "args_count": len(args),
+            },
         )
 
         try:
@@ -377,9 +395,9 @@ class CLIServiceWrapper:
                 input_data={
                     "service_name": self.service_name,
                     "command": cmd,
-                    "timeout": self.timeout
+                    "timeout": self.timeout,
                 },
-                context={"timeout_error": str(e)}
+                context={"timeout_error": str(e)},
             )
         except subprocess.CalledProcessError as e:
             raise ProcessingError(
@@ -388,33 +406,30 @@ class CLIServiceWrapper:
                 input_data={
                     "service_name": self.service_name,
                     "command": cmd,
-                    "return_code": e.returncode
+                    "return_code": e.returncode,
                 },
-                context={"stderr": e.stderr, "stdout": e.stdout}
+                context={"stderr": e.stderr, "stdout": e.stdout},
             )
         except Exception as e:
             raise ProcessingError(
                 f"Global command execution failed: {str(e)}",
                 pipeline_stage="global_command_execution",
-                input_data={
-                    "service_name": self.service_name,
-                    "command": cmd
-                },
-                context={"original_error": str(e)}
+                input_data={"service_name": self.service_name, "command": cmd},
+                context={"original_error": str(e)},
             )
 
     def _execute_local_command(self, args: List[str]) -> Tuple[bool, str, str]:
         """Execute command as local Python script"""
         cmd = [sys.executable, str(self.cli_script_path)] + args
-        
+
         self.logger.log_operation(
             f"Executing local command",
             {
                 "service_name": self.service_name,
-                "command": ' '.join(cmd),
+                "command": " ".join(cmd),
                 "args_count": len(args),
-                "script_path": str(self.cli_script_path)
-            }
+                "script_path": str(self.cli_script_path),
+            },
         )
 
         try:
@@ -436,9 +451,9 @@ class CLIServiceWrapper:
                 input_data={
                     "service_name": self.service_name,
                     "command": cmd,
-                    "timeout": self.timeout
+                    "timeout": self.timeout,
                 },
-                context={"timeout_error": str(e)}
+                context={"timeout_error": str(e)},
             )
         except subprocess.CalledProcessError as e:
             raise ProcessingError(
@@ -447,19 +462,16 @@ class CLIServiceWrapper:
                 input_data={
                     "service_name": self.service_name,
                     "command": cmd,
-                    "return_code": e.returncode
+                    "return_code": e.returncode,
                 },
-                context={"stderr": e.stderr, "stdout": e.stdout}
+                context={"stderr": e.stderr, "stdout": e.stdout},
             )
         except Exception as e:
             raise ProcessingError(
                 f"Local command execution failed: {str(e)}",
                 pipeline_stage="local_command_execution",
-                input_data={
-                    "service_name": self.service_name,
-                    "command": cmd
-                },
-                context={"original_error": str(e)}
+                input_data={"service_name": self.service_name, "command": cmd},
+                context={"original_error": str(e)},
             )
 
     def get_service_info(self) -> Dict[str, Any]:
@@ -522,13 +534,15 @@ class CLIServiceWrapper:
 class CLIServiceManager:
     """
     Manager for all CLI services with discovery and health checking
-    
+
     Integrated with new architectural components:
     - Structured logging for service management
     - Error handling for service discovery
     """
 
-    def __init__(self, config: Optional[ScriptConfig] = None, scripts_dir: Optional[Path] = None):
+    def __init__(
+        self, config: Optional[ScriptConfig] = None, scripts_dir: Optional[Path] = None
+    ):
         # Initialize configuration
         if config:
             self.config = config
@@ -536,11 +550,11 @@ class CLIServiceManager:
         else:
             self.scripts_dir = scripts_dir or Path(__file__).parent
             self.config = None
-        
+
         self.logger = TwitterSystemLogger("cli_service_manager")
         self.error_handler = ErrorHandler()
         self.services = {}
-        
+
         # Initialize script registry integration
         self.script_registry = None
         if config:
@@ -550,14 +564,14 @@ class CLIServiceManager:
                 self.logger.log_operation(
                     "Could not initialize script registry",
                     {"error": str(e)},
-                    level="WARNING"
+                    level="WARNING",
                 )
-        
+
         # Validate scripts directory
         self._validate_scripts_directory()
-        
+
         self._discover_services()
-        
+
         # Register CLI services with script registry if available
         if self.script_registry:
             self._register_cli_services()
@@ -567,20 +581,19 @@ class CLIServiceManager:
         if not self.scripts_dir.exists():
             raise ConfigurationError(
                 f"Scripts directory does not exist: {self.scripts_dir}",
-                context={"scripts_dir": str(self.scripts_dir)}
+                context={"scripts_dir": str(self.scripts_dir)},
             )
-        
+
         if not self.scripts_dir.is_dir():
             raise ConfigurationError(
                 f"Scripts path is not a directory: {self.scripts_dir}",
-                context={"scripts_dir": str(self.scripts_dir)}
+                context={"scripts_dir": str(self.scripts_dir)},
             )
 
     def _discover_services(self) -> None:
         """Discover available CLI services"""
         self.logger.log_operation(
-            "Starting CLI service discovery",
-            {"scripts_dir": str(self.scripts_dir)}
+            "Starting CLI service discovery", {"scripts_dir": str(self.scripts_dir)}
         )
 
         # Expected financial CLI services
@@ -610,8 +623,8 @@ class CLIServiceManager:
                         {
                             "service_name": service_name,
                             "global_available": wrapper.global_available,
-                            "local_available": wrapper.local_available
-                        }
+                            "local_available": wrapper.local_available,
+                        },
                     )
                 else:
                     self.logger.log_operation(
@@ -619,17 +632,20 @@ class CLIServiceManager:
                         {
                             "service_name": service_name,
                             "global_available": wrapper.global_available,
-                            "local_available": wrapper.local_available
+                            "local_available": wrapper.local_available,
                         },
-                        level="WARNING"
+                        level="WARNING",
                     )
 
             except Exception as e:
                 self.error_handler.handle_processing_error(
                     "service_discovery",
-                    {"service_name": service_name, "scripts_dir": str(self.scripts_dir)},
+                    {
+                        "service_name": service_name,
+                        "scripts_dir": str(self.scripts_dir),
+                    },
                     e,
-                    fail_fast=False
+                    fail_fast=False,
                 )
 
         self.logger.log_operation(
@@ -637,77 +653,78 @@ class CLIServiceManager:
             {
                 "discovered_services": discovered_count,
                 "available_services": available_count,
-                "total_expected": len(expected_services)
-            }
+                "total_expected": len(expected_services),
+            },
         )
-    
+
     def _register_cli_services(self) -> None:
         """Register CLI services with the script registry"""
         if not self.script_registry:
             return
-        
+
         try:
             # Import and register CLI service script
             from cli_service_script import CLIServiceScript
-            
+
             # Check if already registered
             if "cli_service" not in self.script_registry.list_available_scripts():
                 self.script_registry.register_script(CLIServiceScript, "cli_service")
-                
+
                 self.logger.log_operation(
                     "Registered CLI service script with registry",
                     {
                         "available_services": self.get_available_services(),
-                        "total_services": len(self.services)
-                    }
+                        "total_services": len(self.services),
+                    },
                 )
-            
+
         except Exception as e:
             self.error_handler.handle_processing_error(
                 "cli_service_registration",
                 {"available_services": self.get_available_services()},
                 e,
-                fail_fast=False
+                fail_fast=False,
             )
-    
-    def execute_via_registry(self, service_name: str, command: str, *args, **kwargs) -> ProcessingResult:
+
+    def execute_via_registry(
+        self, service_name: str, command: str, *args, **kwargs
+    ) -> ProcessingResult:
         """Execute CLI service via script registry"""
         if not self.script_registry:
             raise ConfigurationError(
                 "Script registry not available for CLI service execution",
-                context={"service_name": service_name, "command": command}
+                context={"service_name": service_name, "command": command},
             )
-        
+
         try:
             return self.script_registry.execute_script(
                 "cli_service",
                 service_name=service_name,
                 command=command,
                 args=list(args),
-                options=kwargs
+                options=kwargs,
             )
         except Exception as e:
             self.error_handler.handle_processing_error(
                 "registry_cli_execution",
                 {"service_name": service_name, "command": command},
-                e
+                e,
             )
 
     def get_service(self, service_name: str) -> CLIServiceWrapper:
         """Get CLI service wrapper"""
         if not service_name or not service_name.strip():
             raise ValidationError(
-                "Service name cannot be empty",
-                context={"service_name": service_name}
+                "Service name cannot be empty", context={"service_name": service_name}
             )
-        
+
         if service_name not in self.services:
             raise ConfigurationError(
                 f"Service '{service_name}' not found",
                 context={
                     "service_name": service_name,
-                    "available_services": list(self.services.keys())
-                }
+                    "available_services": list(self.services.keys()),
+                },
             )
 
         wrapper = self.services[service_name]
@@ -717,8 +734,8 @@ class CLIServiceManager:
                 context={
                     "service_name": service_name,
                     "global_available": wrapper.global_available,
-                    "local_available": wrapper.local_available
-                }
+                    "local_available": wrapper.local_available,
+                },
             )
 
         return wrapper

@@ -23,7 +23,7 @@
 class SectorTwitterScript(BaseScript):
     """
     Sector analysis Twitter content generation script
-    
+
     Parameters:
         sector (str): Sector symbol or name (XLK, technology, healthcare, etc.)
         date (str): Analysis date in YYYYMMDD format
@@ -39,17 +39,17 @@ sector_data_analyzer:
   path: "{SCRIPTS_BASE}/sector_analysis/sector_data_analyzer.py"
   class: "SectorDataAnalyzer"
   purpose: "Sector analysis data extraction and validation"
-  
+
 etf_data_collector:
   path: "{SCRIPTS_BASE}/market_data/etf_data_collector.py"
   class: "ETFDataCollector"
   purpose: "Real-time sector ETF data collection and validation"
-  
+
 economic_context_integrator:
   path: "{SCRIPTS_BASE}/economic_data/economic_context_integrator.py"
   class: "EconomicContextIntegrator"
   purpose: "FRED economic indicators integration for sector context"
-  
+
 twitter_template_renderer:
   path: "{SCRIPTS_BASE}/twitter_template_renderer.py"
   class: "TwitterTemplateRenderer"
@@ -74,11 +74,11 @@ twitter_template_renderer:
 sector_base_template:
   path: "{TEMPLATES_BASE}/twitter/shared/base_twitter.j2"
   purpose: "Base template with common macros and sector formatting"
-  
+
 sector_components:
   path: "{TEMPLATES_BASE}/twitter/shared/sector_components.j2"
   purpose: "Sector-specific components for allocation and economic analysis"
-  
+
 compliance_template:
   path: "{TEMPLATES_BASE}/twitter/validation/sector_compliance.j2"
   purpose: "Sector allocation compliance and disclaimer validation"
@@ -88,27 +88,27 @@ compliance_template:
 ```python
 def select_sector_template(sector_analysis_data):
     """Select optimal template for sector Twitter content"""
-    
+
     # Sector rotation template for economic cycle analysis
     if (sector_analysis_data.get('cycle_positioning_strength', 0) > 0.8 and
         sector_analysis_data.get('gdp_correlation', 0) > 0.6):
         return 'sector/twitter_sector_rotation.j2'
-    
+
     # Cross-sector comparison for ranking extremes
     elif (sector_analysis_data.get('sector_rank') in [1, 2, 3, 9, 10, 11] and
           sector_analysis_data.get('relative_valuation_extreme', False)):
         return 'sector/twitter_cross_sector_comparison.j2'
-    
+
     # Allocation strategy for portfolio guidance
     elif (sector_analysis_data.get('allocation_guidance') and
           sector_analysis_data.get('risk_return_profile_complete', False)):
         return 'sector/twitter_allocation_strategy.j2'
-    
+
     # Economic sensitivity for macro analysis
     elif (sector_analysis_data.get('economic_sensitivity_comprehensive', False) and
           len(sector_analysis_data.get('significant_correlations', [])) > 2):
         return 'sector/twitter_economic_sensitivity.j2'
-    
+
     # Default ETF vs stocks analysis
     return 'sector/twitter_etf_vs_stocks.j2'
 ```
@@ -123,28 +123,28 @@ yahoo_finance_cli:
   purpose: "Real-time sector ETF pricing and performance data"
   health_check: "{command} health --env prod"
   priority: "primary"
-  
+
 fred_economic_cli:
   command: "python {SCRIPTS_BASE}/fred_economic_cli.py"
   usage: "{command} indicators GDP,PAYEMS,FEDFUNDS --env prod --output-format json"
   purpose: "Economic indicators for sector correlation and sensitivity analysis"
   health_check: "{command} health --env prod"
   priority: "primary"
-  
+
 sec_edgar_cli:
   command: "python {SCRIPTS_BASE}/sec_edgar_cli.py"
   usage: "{command} sector-filings {sector} --env prod --output-format json"
   purpose: "Regulatory filings and sector compliance data"
   health_check: "{command} health --env prod"
   priority: "secondary"
-  
+
 alpha_vantage_cli:
   command: "python {SCRIPTS_BASE}/alpha_vantage_cli.py"
   usage: "{command} sector-overview {sector} --env prod --output-format json"
   purpose: "Sector performance and sentiment validation"
   health_check: "{command} health --env prod"
   priority: "secondary"
-  
+
 fmp_cli:
   command: "python {SCRIPTS_BASE}/fmp_cli.py"
   usage: "{command} sector-analysis {sector} --env prod --output-format json"
@@ -175,7 +175,7 @@ authority_hierarchy:
   sector_etf_data: "PRICING_AUTHORITY"  # Real-time ETF pricing and flows
   economic_indicators: "MACRO_AUTHORITY"  # FRED economic context
   cross_validation: "VALIDATION_AUTHORITY"  # Alpha Vantage/FMP validation
-  
+
 conflict_resolution:
   sector_precedence: "sector_analysis_primary"  # Sector analysis takes priority
   pricing_authority: "yahoo_finance"  # Primary source for ETF pricing
@@ -193,25 +193,25 @@ sector_analysis_document:
   format: "markdown"
   required: true
   description: "Primary sector analysis with investment thesis and recommendations"
-  
+
 sector_etf_data:
   path: "CLI_SERVICES_REAL_TIME"
   format: "json"
   required: true
   description: "Real-time sector ETF pricing, flows, and performance data"
-  
+
 economic_indicators:
   path: "CLI_SERVICES_REAL_TIME"
   format: "json"
   required: true
   description: "Current economic indicators for sector correlation analysis"
-  
+
 cross_sector_analysis:
   path: "{DATA_OUTPUTS}/sector_analysis/cross_sector_{YYYYMMDD}_comparison.json"
   format: "json"
   required: false
   description: "Cross-sector comparison and ranking data"
-  
+
 validation_file:
   path: "{DATA_OUTPUTS}/twitter/sector_analysis/validation/{SECTOR}_{YYYYMMDD}_validation.json"
   format: "json"
@@ -225,17 +225,17 @@ primary_output:
   path: "{DATA_OUTPUTS}/twitter/sector_analysis/{SECTOR}_{YYYYMMDD}.md"
   format: "markdown"
   description: "Generated sector Twitter content ready for posting"
-  
+
 metadata_output:
   path: "{DATA_OUTPUTS}/twitter/sector_analysis/{SECTOR}_{YYYYMMDD}_metadata.json"
   format: "json"
   description: "Template selection metadata and quality assurance metrics"
-  
+
 validation_output:
   path: "{DATA_OUTPUTS}/twitter/sector_analysis/validation/{SECTOR}_{YYYYMMDD}_validation.json"
   format: "json"
   description: "Content validation results and enhancement recommendations"
-  
+
 blog_url_output:
   path: "{DATA_OUTPUTS}/twitter/sector_analysis/{SECTOR}_{YYYYMMDD}_blog_url.txt"
   format: "text"
@@ -250,13 +250,13 @@ content_generation_flow:
     - "ETF data currency ≤ 24 hours"
     - "economic indicators currency ≤ 24 hours"
     - "cross-sector variance ≤ 3%"
-    
+
   template_selection:
     - "sector analysis content evaluation"
     - "economic cycle positioning assessment"
     - "cross-sector ranking determination"
     - "allocation guidance availability check"
-    
+
   content_optimization:
     - "Twitter character limit compliance"
     - "regulatory disclaimer inclusion"

@@ -30,17 +30,17 @@ discovery_script:
   path: "{SCRIPTS_BASE}/path/to/discovery.py"
   class: "DiscoveryScript"
   phase: "Phase 1 - Data Collection"
-  
+
 analysis_script:
   path: "{SCRIPTS_BASE}/path/to/analysis.py"
   class: "AnalysisScript"
   phase: "Phase 2 - Analysis"
-  
+
 synthesis_script:
   path: "{SCRIPTS_BASE}/path/to/synthesis.py"
   class: "SynthesisScript"
   phase: "Phase 3 - Document Generation"
-  
+
 validation_script:
   path: "{SCRIPTS_BASE}/path/to/validation.py"
   class: "ValidationScript"
@@ -63,11 +63,11 @@ validation_script:
 base_template:
   path: "{TEMPLATES_BASE}/shared/base_template.j2"
   purpose: "Base template with common macros"
-  
+
 components:
   path: "{TEMPLATES_BASE}/shared/components.j2"
   purpose: "Reusable component macros"
-  
+
 validation_template:
   path: "{TEMPLATES_BASE}/validation/quality_checklist.j2"
   purpose: "Content quality validation"
@@ -77,17 +77,17 @@ validation_template:
 ```python
 def select_optimal_template(data_context):
     """Intelligent template selection based on data characteristics"""
-    
+
     # Template A: Primary Condition
     if (data_context.get('metric_1', 0) > threshold_1 and
         data_context.get('confidence', 0) > threshold_2):
         return 'category/template_variant_a.j2'
-    
+
     # Template B: Alternative Condition
     if (condition_check(data_context) and
         data_context.get('type') == 'specific_type'):
         return 'category/template_variant_b.j2'
-    
+
     # Default fallback
     return 'category/default_template.j2'
 ```
@@ -101,13 +101,13 @@ primary_service:
   usage: "{command} action {parameter} --env prod --output-format json"
   purpose: "Primary data source description"
   health_check: "{command} health --env prod"
-  
+
 secondary_service:
   command: "python {SCRIPTS_BASE}/backup_service_cli.py"
   usage: "{command} action {parameter} --env prod --output-format json"
   purpose: "Backup/validation data source"
   health_check: "{command} health --env prod"
-  
+
 supporting_service:
   command: "python {SCRIPTS_BASE}/context_service_cli.py"
   usage: "{command} context --env prod --output-format json"
@@ -136,13 +136,13 @@ primary_data:
   format: "markdown|json|csv"
   required: true
   description: "Primary data source description"
-  
+
 supplementary_data:
   path: "{DATA_IMAGES}/image_directory/{IDENTIFIER}_{YYYYMMDD}.png"
   format: "png|jpg|pdf"
   required: false
   description: "Visual/supplementary data source"
-  
+
 validation_data:
   path: "{DATA_OUTPUTS}/validation_directory/{IDENTIFIER}_{YYYYMMDD}_validation.json"
   format: "json"
@@ -156,12 +156,12 @@ primary_output:
   path: "{DATA_OUTPUTS}/output_directory/{IDENTIFIER}_{YYYYMMDD}.md"
   format: "markdown"
   description: "Main output file"
-  
+
 metadata_output:
   path: "{DATA_OUTPUTS}/output_directory/{IDENTIFIER}_{YYYYMMDD}_metadata.json"
   format: "json"
   description: "Execution metadata and quality scores"
-  
+
 validation_output:
   path: "{DATA_OUTPUTS}/output_directory/validation/{IDENTIFIER}_{YYYYMMDD}_validation.json"
   format: "json"
@@ -174,7 +174,7 @@ authority_hierarchy:
   primary: "service_name_1"  # Highest authority for conflicts
   secondary: "service_name_2"  # Fallback source
   validation: "service_name_3"  # Cross-validation source
-  
+
 conflict_resolution:
   threshold: "2%"  # Maximum variance before flag
   action: "use_primary"  # Resolution strategy
@@ -287,7 +287,7 @@ validation_script:
   path: "{SCRIPTS_BASE}/validation/command_validation.py"
   class: "CommandValidationScript"
   methodology: "comprehensive_validation_framework"
-  
+
 test_files:
   unit_tests: "{SCRIPTS_BASE}/tests/test_{command_name}.py"
   integration_tests: "{SCRIPTS_BASE}/tests/integration/test_{command_name}_integration.py"
@@ -314,7 +314,7 @@ python -m pytest {SCRIPTS_BASE}/tests/integration/ -k {command_name}
 - `upstream_command_1`: Provides data type A via {DATA_OUTPUTS}/source_a/
 - `upstream_command_2`: Provides data type B via {DATA_OUTPUTS}/source_b/
 
-### Downstream Dependencies  
+### Downstream Dependencies
 **Commands that consume this command's outputs**:
 - `downstream_command_1`: Consumes output for purpose A
 - `downstream_command_2`: Transforms output for platform B
