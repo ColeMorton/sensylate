@@ -15,7 +15,7 @@ import re
 import sys
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional
 
 # Add project root to Python path
 project_root = Path(__file__).parent.parent
@@ -24,8 +24,6 @@ sys.path.insert(0, str(project_root))
 import matplotlib
 
 matplotlib.use("Agg")  # Use non-interactive backend
-import matplotlib.pyplot as plt
-import numpy as np
 
 from scripts.dashboard_generator import DashboardGenerator
 from scripts.utils.chart_generators import create_chart_generator
@@ -317,12 +315,10 @@ class TradeHistoryImageGenerator:
         Returns:
             Target path for the generated image
         """
-        # Extract date from report filename
-        date_match = re.search(r"(\d{8})", report_path.name)
-        date_str = date_match.group(1) if date_match else "unknown"
+        # Extract date from report filename (for potential future use)
+        # date_match = re.search(r"(\d{8})", report_path.name)
 
         # Create filename based on report type
-        report_type = self._identify_report_type(str(report_path))
         base_name = report_path.stem  # filename without .md extension
 
         if mode == "dark":

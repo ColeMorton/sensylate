@@ -22,11 +22,9 @@ Usage:
 
 import json
 import logging
-import math
-import re
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Tuple
 
 import numpy as np
 import pandas as pd
@@ -160,7 +158,7 @@ class TradeHistoryAnalysis:
             }
 
         # Group by strategy type
-        strategy_groups = {}
+        strategy_groups: Dict[str, List[Dict[str, Any]]] = {}
         for trade in closed_trades:
             strategy = trade.get("Strategy_Type", "Unknown")
             if strategy not in strategy_groups:
@@ -208,9 +206,6 @@ class TradeHistoryAnalysis:
             }
 
         # Exit signal analysis (using all closed trades)
-        valid_mfe_trades = [
-            t for t in closed_trades if t.get("Max_Favourable_Excursion") is not None
-        ]
         valid_exit_eff_trades = [
             t for t in closed_trades if t.get("Exit_Efficiency") is not None
         ]
@@ -442,7 +437,7 @@ class TradeHistoryAnalysis:
                     trade_copy["entry_month"] = entry_date.month
                     trade_copy["entry_quarter"] = entry_date.quarter
                     trades_with_dates.append(trade_copy)
-                except:
+                except (ValueError, TypeError):
                     continue
 
             if trades_with_dates:

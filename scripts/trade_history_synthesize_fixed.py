@@ -20,6 +20,8 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List
 
+import pandas as pd
+
 # Configure logging
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
@@ -148,8 +150,6 @@ class DASVPhase3SynthesizerFixed:
                 # Calculate total return from closed trades data
                 # Get the actual returns from the raw trades data
                 if "raw_trades" in data:
-                    import pandas as pd
-
                     df = data["raw_trades"]
                     closed_trades = df[df["Status"] == "Closed"]
                     if not closed_trades.empty:
@@ -212,8 +212,6 @@ class DASVPhase3SynthesizerFixed:
 
     def generate_complete_trade_history_table(self, data: Dict[str, Any]) -> str:
         """Generate the complete closed trade history table with original correct format."""
-        import pandas as pd
-
         # Get closed trades from raw CSV data
         df = data["raw_trades"]
         closed_trades = df[df["Status"] == "Closed"].copy()
@@ -273,8 +271,6 @@ class DASVPhase3SynthesizerFixed:
 
     def generate_monthly_performance_section(self, data: Dict[str, Any]) -> str:
         """Generate monthly performance breakdown section in parser-compatible format."""
-        import pandas as pd
-
         df = data["raw_trades"]
         closed_trades = df[df["Status"] == "Closed"].copy()
 
@@ -332,8 +328,6 @@ class DASVPhase3SynthesizerFixed:
 
     def generate_duration_analysis_section(self, data: Dict[str, Any]) -> str:
         """Generate duration analysis section."""
-        import pandas as pd
-
         df = data["raw_trades"]
         closed_trades = df[df["Status"] == "Closed"].copy()
 
@@ -405,8 +399,6 @@ class DASVPhase3SynthesizerFixed:
 
     def generate_quality_distribution_section(self, data: Dict[str, Any]) -> str:
         """Generate quality distribution section in parser-compatible format."""
-        import pandas as pd
-
         df = data["raw_trades"]
         closed_trades = df[df["Status"] == "Closed"].copy()
 
@@ -977,13 +969,13 @@ class DASVPhase3SynthesizerFixed:
         analysis = []
 
         analysis.append(
-            f"**Strong Momentum**: Positions showing positive trends (monitoring required)"
+            "**Strong Momentum**: Positions showing positive trends (monitoring required)"
         )
         analysis.append(
-            f"**Developing Positions**: Early stage signals requiring observation"
+            "**Developing Positions**: Early stage signals requiring observation"
         )
         analysis.append(
-            f"**Watch List**: Underperforming positions with risk considerations"
+            "**Watch List**: Underperforming positions with risk considerations"
         )
 
         return "\n".join([f"- {item}" for item in analysis])
