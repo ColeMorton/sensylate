@@ -128,8 +128,8 @@ class DASVPhase3Synthesizer:
 
 ### Overall Results
 - **Total Closed Trades**: {data['discovery']['portfolio_summary']['closed_trades']} ✅ **ADEQUATE** for basic analysis (minimum 25 achieved)
-- **Win Rate**: {data['analysis']['overall_performance']['closed_trades_metrics'].get('win_rate', 0):.2%}
-- **Total P&L**: ${data['analysis']['overall_performance']['closed_trades_metrics'].get('total_pnl', 0):.2f}
+- **Win Rate**: {data['analysis']['statistical_analysis']['performance_metrics'].get('win_rate', 0):.2%}
+- **Total P&L**: ${data['analysis']['statistical_analysis']['performance_metrics'].get('total_pnl', 0):.2f}
 - **Average Duration**: {data['discovery']['performance_metrics'].get('total_closed_trades', 0)} days
 - **Strategy Mix**: Based on discovery data distribution
 
