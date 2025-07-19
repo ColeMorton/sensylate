@@ -5,7 +5,7 @@ Trade History Synthesize - DASV Phase 3 Implementation (Fixed Version)
 Generates comprehensive report synthesis following trade_history:synthesize command requirements:
 - Multi-audience document generation (internal, live, historical reports)
 - Live Signals context automatic inclusion for live_signals portfolio
-- Template compliance and formatting consistency  
+- Template compliance and formatting consistency
 - Executive dashboard synthesis
 - Robust data structure handling
 
@@ -51,7 +51,9 @@ class DASVPhase3SynthesizerFixed:
         analysis_files = list(analysis_dir.glob(f"{self.portfolio_name}_*.json"))
 
         if not discovery_files or not analysis_files:
-            raise FileNotFoundError(f"Missing required data files for {self.portfolio_name}")
+            raise FileNotFoundError(
+                f"Missing required data files for {self.portfolio_name}"
+            )
 
         discovery_file = max(discovery_files, key=lambda f: f.stat().st_mtime)
         analysis_file = max(analysis_files, key=lambda f: f.stat().st_mtime)
@@ -59,28 +61,29 @@ class DASVPhase3SynthesizerFixed:
         logger.info(f"Loaded discovery data from: {discovery_file}")
         logger.info(f"Loaded analysis data from: {analysis_file}")
 
-        with open(discovery_file, 'r') as f:
+        with open(discovery_file, "r") as f:
             discovery_data = json.load(f)
-        
-        with open(analysis_file, 'r') as f:
+
+        with open(analysis_file, "r") as f:
             analysis_data = json.load(f)
 
         # Load raw CSV data for individual trade details
-        csv_path = discovery_data['discovery_metadata']['data_source']
+        csv_path = discovery_data["discovery_metadata"]["data_source"]
         import pandas as pd
+
         df = pd.read_csv(csv_path)
-        
+
         return {
-            'discovery': discovery_data,
-            'analysis': analysis_data,
-            'raw_trades': df
+            "discovery": discovery_data,
+            "analysis": analysis_data,
+            "raw_trades": df,
         }
 
     def generate_live_signals_overview(self) -> str:
         """Generate standardized Live Signals Overview section."""
         if self.portfolio_name.lower() != "live_signals":
             return ""
-        
+
         return """## 📡 Live Signals Overview
 
 ### Trading Signal Platform
@@ -108,315 +111,368 @@ class DASVPhase3SynthesizerFixed:
     def extract_safe_metrics(self, data: Dict[str, Any]) -> Dict[str, Any]:
         """Safely extract metrics from the data structure."""
         metrics = {}
-        
+
         # Discovery data metrics
-        if 'discovery' in data and 'portfolio_summary' in data['discovery']:
-            portfolio = data['discovery']['portfolio_summary']
-            metrics.update({
-                'total_trades': portfolio.get('total_trades', 0),
-                'closed_trades': portfolio.get('closed_trades', 0),
-                'active_trades': portfolio.get('active_trades', 0),
-                'unique_tickers': portfolio.get('unique_tickers', 0)
-            })
+        if "discovery" in data and "portfolio_summary" in data["discovery"]:
+            portfolio = data["discovery"]["portfolio_summary"]
+            metrics.update(
+                {
+                    "total_trades": portfolio.get("total_trades", 0),
+                    "closed_trades": portfolio.get("closed_trades", 0),
+                    "active_trades": portfolio.get("active_trades", 0),
+                    "unique_tickers": portfolio.get("unique_tickers", 0),
+                }
+            )
 
         # Analysis data metrics
-        if 'analysis' in data:
-            analysis = data['analysis']
-            
+        if "analysis" in data:
+            analysis = data["analysis"]
+
             # Performance metrics
-            if 'statistical_analysis' in analysis and 'performance_metrics' in analysis['statistical_analysis']:
-                perf = analysis['statistical_analysis']['performance_metrics']
-                metrics.update({
-                    'win_rate': perf.get('win_rate', 0),
-                    'total_pnl': perf.get('total_pnl', 0),
-                    'profit_factor': perf.get('profit_factor', 0),
-                    'total_wins': perf.get('total_wins', 0),
-                    'total_losses': perf.get('total_losses', 0),
-                    'expectancy': perf.get('expectancy', 0)
-                })
-                
+            if (
+                "statistical_analysis" in analysis
+                and "performance_metrics" in analysis["statistical_analysis"]
+            ):
+                perf = analysis["statistical_analysis"]["performance_metrics"]
+                metrics.update(
+                    {
+                        "win_rate": perf.get("win_rate", 0),
+                        "total_pnl": perf.get("total_pnl", 0),
+                        "profit_factor": perf.get("profit_factor", 0),
+                        "total_wins": perf.get("total_wins", 0),
+                        "total_losses": perf.get("total_losses", 0),
+                        "expectancy": perf.get("expectancy", 0),
+                    }
+                )
+
                 # Calculate total return from closed trades data
                 # Get the actual returns from the raw trades data
-                if 'raw_trades' in data:
+                if "raw_trades" in data:
                     import pandas as pd
-                    df = data['raw_trades']
-                    closed_trades = df[df['Status'] == 'Closed']
+
+                    df = data["raw_trades"]
+                    closed_trades = df[df["Status"] == "Closed"]
                     if not closed_trades.empty:
                         # Calculate weighted average return (by position size if available, or simple average)
-                        total_return = closed_trades['Return'].mean()
-                        metrics['total_return'] = total_return
+                        total_return = closed_trades["Return"].mean()
+                        metrics["total_return"] = total_return
                     else:
-                        metrics['total_return'] = 0.0
+                        metrics["total_return"] = 0.0
                 else:
-                    metrics['total_return'] = 0.0
+                    metrics["total_return"] = 0.0
 
             # Statistical significance
-            if 'statistical_analysis' in analysis:
-                stats = analysis['statistical_analysis']['statistical_analysis']
-                if 'statistical_significance' in stats:
-                    sig = stats['statistical_significance']['return_vs_zero']
-                    metrics.update({
-                        'p_value': sig.get('p_value', 1.0),
-                        'significant': sig.get('significant_at_95', False),
-                        'confidence_interval': sig.get('confidence_interval_95', [0, 0])
-                    })
+            if "statistical_analysis" in analysis:
+                stats = analysis["statistical_analysis"]["statistical_analysis"]
+                if "statistical_significance" in stats:
+                    sig = stats["statistical_significance"]["return_vs_zero"]
+                    metrics.update(
+                        {
+                            "p_value": sig.get("p_value", 1.0),
+                            "significant": sig.get("significant_at_95", False),
+                            "confidence_interval": sig.get(
+                                "confidence_interval_95", [0, 0]
+                            ),
+                        }
+                    )
 
                 # Risk-adjusted metrics
-                if 'risk_adjusted_metrics' in stats:
-                    risk = stats['risk_adjusted_metrics']
-                    metrics.update({
-                        'sharpe_ratio': risk.get('sharpe_ratio', 0),
-                        'sortino_ratio': risk.get('sortino_ratio', 0)
-                    })
+                if "risk_adjusted_metrics" in stats:
+                    risk = stats["risk_adjusted_metrics"]
+                    metrics.update(
+                        {
+                            "sharpe_ratio": risk.get("sharpe_ratio", 0),
+                            "sortino_ratio": risk.get("sortino_ratio", 0),
+                        }
+                    )
 
             # Sample validation
-            if 'sample_validation' in analysis:
-                sample = analysis['sample_validation']
-                metrics.update({
-                    'minimum_sample_met': sample.get('minimum_sample_met', False),
-                    'statistical_power': sample.get('statistical_power', 0)
-                })
+            if "sample_validation" in analysis:
+                sample = analysis["sample_validation"]
+                metrics.update(
+                    {
+                        "minimum_sample_met": sample.get("minimum_sample_met", False),
+                        "statistical_power": sample.get("statistical_power", 0),
+                    }
+                )
 
             # Confidence scores
-            if 'analysis_metadata' in analysis:
-                meta = analysis['analysis_metadata']
-                metrics.update({
-                    'overall_confidence': meta.get('confidence_score', 0),
-                    'statistical_significance_conf': meta.get('statistical_significance', 0)
-                })
+            if "analysis_metadata" in analysis:
+                meta = analysis["analysis_metadata"]
+                metrics.update(
+                    {
+                        "overall_confidence": meta.get("confidence_score", 0),
+                        "statistical_significance_conf": meta.get(
+                            "statistical_significance", 0
+                        ),
+                    }
+                )
 
         return metrics
 
     def generate_complete_trade_history_table(self, data: Dict[str, Any]) -> str:
         """Generate the complete closed trade history table with original correct format."""
         import pandas as pd
-        
+
         # Get closed trades from raw CSV data
-        df = data['raw_trades']
-        closed_trades = df[df['Status'] == 'Closed'].copy()
-        
+        df = data["raw_trades"]
+        closed_trades = df[df["Status"] == "Closed"].copy()
+
         if closed_trades.empty:
             return "No closed trades available for table generation."
-        
+
         # Sort by PnL descending for ranking
-        closed_trades = closed_trades.sort_values('PnL', ascending=False).reset_index(drop=True)
-        
+        closed_trades = closed_trades.sort_values("PnL", ascending=False).reset_index(
+            drop=True
+        )
+
         # Generate the table header - Original correct format
         table_lines = [
             "## 📋 Complete Closed Trade History",
             "",
             "| **Rank** | **Ticker** | **P&L ($)** | **Return (%)** | **Duration** | **Strategy** | **Quality** | **X/Twitter Link** |",
-            "|------|--------|---------|------------|----------|----------|---------|----------------|"
+            "|------|--------|---------|------------|----------|----------|---------|----------------|",
         ]
-        
+
         # Generate table rows
         for idx, row in closed_trades.iterrows():
             rank = idx + 1
-            ticker = row['Ticker']
-            pnl = row['PnL']
-            return_pct = row['Return'] * 100  # Convert to percentage
+            ticker = row["Ticker"]
+            pnl = row["PnL"]
+            return_pct = row["Return"] * 100  # Convert to percentage
             duration = f"{int(row['Duration_Days'])}d"
-            
+
             # Format strategy
-            if row['Strategy_Type'] == 'SMA':
+            if row["Strategy_Type"] == "SMA":
                 strategy = f"SMA {row['Short_Window']}/{row['Long_Window']}"
             else:
                 strategy = f"EMA {row['Short_Window']}/{row['Long_Window']}"
-            
-            quality = row['Trade_Quality'] if pd.notna(row['Trade_Quality']) else 'Unknown'
-            
+
+            quality = (
+                row["Trade_Quality"] if pd.notna(row["Trade_Quality"]) else "Unknown"
+            )
+
             # Format X/Twitter link
-            x_status = row['X_Status'] if pd.notna(row['X_Status']) else ''
+            x_status = row["X_Status"] if pd.notna(row["X_Status"]) else ""
             if x_status:
                 x_link = f"[Signal](https://x.com/colemorton7/status/{x_status})"
             else:
                 x_link = "No Signal"
-            
+
             # Format PnL with proper sign
             pnl_str = f"+${pnl:.2f}" if pnl >= 0 else f"-${abs(pnl):.2f}"
-            return_str = f"+{return_pct:.2f}%" if return_pct >= 0 else f"{return_pct:.2f}%"
-            
+            return_str = (
+                f"+{return_pct:.2f}%" if return_pct >= 0 else f"{return_pct:.2f}%"
+            )
+
             table_lines.append(
                 f"| {rank} | {ticker} | {pnl_str} | {return_str} | {duration} | {strategy} | {quality} | {x_link} |"
             )
-        
+
         return "\n".join(table_lines)
 
     def generate_monthly_performance_section(self, data: Dict[str, Any]) -> str:
         """Generate monthly performance breakdown section in parser-compatible format."""
         import pandas as pd
-        
-        df = data['raw_trades']
-        closed_trades = df[df['Status'] == 'Closed'].copy()
-        
+
+        df = data["raw_trades"]
+        closed_trades = df[df["Status"] == "Closed"].copy()
+
         if closed_trades.empty:
             return "No closed trades available for monthly analysis."
-        
+
         # Parse entry dates and group by month
-        closed_trades['entry_date'] = pd.to_datetime(closed_trades['Entry_Timestamp'])
-        closed_trades['month_year'] = closed_trades['entry_date'].dt.to_period('M')
-        
+        closed_trades["entry_date"] = pd.to_datetime(closed_trades["Entry_Timestamp"])
+        closed_trades["month_year"] = closed_trades["entry_date"].dt.to_period("M")
+
         monthly_sections = ["## 📅 Monthly Performance Breakdown", ""]
-        
+
         # Group by month and generate performance data
-        monthly_groups = closed_trades.groupby('month_year')
-        
+        monthly_groups = closed_trades.groupby("month_year")
+
         for period, group in monthly_groups:
-            month_name = period.strftime('%B')
+            month_name = period.strftime("%B")
             year = period.year
-            
+
             # Calculate monthly metrics
             total_trades = len(group)
-            winners = group[group['Return'] > 0]
+            winners = group[group["Return"] > 0]
             win_rate = len(winners) / total_trades if total_trades > 0 else 0
-            avg_return = group['Return'].mean() * 100  # Convert to percentage
-            
+            avg_return = group["Return"].mean() * 100  # Convert to percentage
+
             # Format section header to match parser regex: ### Month YYYY - Market Context
-            monthly_sections.extend([
-                f"### {month_name} {year} - Trading Performance",
-                f"**Trades Closed**: {total_trades}",
-                f"**Win Rate**: {win_rate:.1%}",
-                f"**Average Return**: {avg_return:+.2f}%",
-                f"**Market Context**: {month_name} {year} market performance analysis",
-                ""
-            ])
-            
+            monthly_sections.extend(
+                [
+                    f"### {month_name} {year} - Trading Performance",
+                    f"**Trades Closed**: {total_trades}",
+                    f"**Win Rate**: {win_rate:.1%}",
+                    f"**Average Return**: {avg_return:+.2f}%",
+                    f"**Market Context**: {month_name} {year} market performance analysis",
+                    "",
+                ]
+            )
+
             # Add additional details for context
             if not winners.empty:
-                top_winner = winners.loc[winners['PnL'].idxmax()]
-                monthly_sections.append(f"- **Best Trade**: {top_winner['Ticker']} (+{top_winner['Return']*100:.2f}%)")
-            
-            losers = group[group['Return'] < 0]
+                top_winner = winners.loc[winners["PnL"].idxmax()]
+                monthly_sections.append(
+                    f"- **Best Trade**: {top_winner['Ticker']} (+{top_winner['Return']*100:.2f}%)"
+                )
+
+            losers = group[group["Return"] < 0]
             if not losers.empty:
-                worst_loser = losers.loc[losers['PnL'].idxmin()]
-                monthly_sections.append(f"- **Worst Trade**: {worst_loser['Ticker']} ({worst_loser['Return']*100:.2f}%)")
-            
+                worst_loser = losers.loc[losers["PnL"].idxmin()]
+                monthly_sections.append(
+                    f"- **Worst Trade**: {worst_loser['Ticker']} ({worst_loser['Return']*100:.2f}%)"
+                )
+
             monthly_sections.extend(["", ""])
-        
+
         return "\n".join(monthly_sections)
 
     def generate_duration_analysis_section(self, data: Dict[str, Any]) -> str:
         """Generate duration analysis section."""
         import pandas as pd
-        
-        df = data['raw_trades']
-        closed_trades = df[df['Status'] == 'Closed'].copy()
-        
+
+        df = data["raw_trades"]
+        closed_trades = df[df["Status"] == "Closed"].copy()
+
         if closed_trades.empty:
             return "No closed trades available for duration analysis."
-        
+
         # Categorize by duration
-        short_term = closed_trades[closed_trades['Duration_Days'] <= 7]
-        medium_term = closed_trades[(closed_trades['Duration_Days'] > 7) & (closed_trades['Duration_Days'] <= 30)]
-        long_term = closed_trades[closed_trades['Duration_Days'] > 30]
-        
+        short_term = closed_trades[closed_trades["Duration_Days"] <= 7]
+        medium_term = closed_trades[
+            (closed_trades["Duration_Days"] > 7)
+            & (closed_trades["Duration_Days"] <= 30)
+        ]
+        long_term = closed_trades[closed_trades["Duration_Days"] > 30]
+
         duration_sections = ["## ⏰ Duration Analysis", ""]
-        
+
         # Short-term analysis
         if not short_term.empty:
-            st_winners = short_term[short_term['Return'] > 0]
+            st_winners = short_term[short_term["Return"] > 0]
             st_win_rate = len(st_winners) / len(short_term)
-            best_st = short_term.loc[short_term['PnL'].idxmax()]
-            
-            duration_sections.extend([
-                "### Short-Term Effectiveness (≤7 days)",
-                f"- **Trade Count**: {len(short_term)} trades",
-                f"- **Win Rate**: {st_win_rate:.1%} ({len(st_winners)}W, {len(short_term) - len(st_winners)}L)",
-                f"- **Best Performer**: {best_st['Ticker']} {best_st['Return']*100:+.2f}% ({int(best_st['Duration_Days'])} days)",
-                "- **Insights**: Quick exits analysis",
-                ""
-            ])
-        
-        # Medium-term analysis  
+            best_st = short_term.loc[short_term["PnL"].idxmax()]
+
+            duration_sections.extend(
+                [
+                    "### Short-Term Effectiveness (≤7 days)",
+                    f"- **Trade Count**: {len(short_term)} trades",
+                    f"- **Win Rate**: {st_win_rate:.1%} ({len(st_winners)}W, {len(short_term) - len(st_winners)}L)",
+                    f"- **Best Performer**: {best_st['Ticker']} {best_st['Return']*100:+.2f}% ({int(best_st['Duration_Days'])} days)",
+                    "- **Insights**: Quick exits analysis",
+                    "",
+                ]
+            )
+
+        # Medium-term analysis
         if not medium_term.empty:
-            mt_winners = medium_term[medium_term['Return'] > 0]
+            mt_winners = medium_term[medium_term["Return"] > 0]
             mt_win_rate = len(mt_winners) / len(medium_term)
-            best_mt = medium_term.loc[medium_term['PnL'].idxmax()]
-            
-            duration_sections.extend([
-                "### Medium-Term Performance (8-30 days)",
-                f"- **Trade Count**: {len(medium_term)} trades",
-                f"- **Win Rate**: {mt_win_rate:.1%} ({len(mt_winners)}W, {len(medium_term) - len(mt_winners)}L)",
-                f"- **Best Performer**: {best_mt['Ticker']} {best_mt['Return']*100:+.2f}% ({int(best_mt['Duration_Days'])} days)",
-                "- **Insights**: Optimal holding period analysis",
-                ""
-            ])
-        
+            best_mt = medium_term.loc[medium_term["PnL"].idxmax()]
+
+            duration_sections.extend(
+                [
+                    "### Medium-Term Performance (8-30 days)",
+                    f"- **Trade Count**: {len(medium_term)} trades",
+                    f"- **Win Rate**: {mt_win_rate:.1%} ({len(mt_winners)}W, {len(medium_term) - len(mt_winners)}L)",
+                    f"- **Best Performer**: {best_mt['Ticker']} {best_mt['Return']*100:+.2f}% ({int(best_mt['Duration_Days'])} days)",
+                    "- **Insights**: Optimal holding period analysis",
+                    "",
+                ]
+            )
+
         # Long-term analysis
         if not long_term.empty:
-            lt_winners = long_term[long_term['Return'] > 0]
+            lt_winners = long_term[long_term["Return"] > 0]
             lt_win_rate = len(lt_winners) / len(long_term)
-            best_lt = long_term.loc[long_term['PnL'].idxmax()]
-            
-            duration_sections.extend([
-                "### Long-Term Holdings (>30 days)",
-                f"- **Trade Count**: {len(long_term)} trades",
-                f"- **Win Rate**: {lt_win_rate:.1%} ({len(lt_winners)}W, {len(long_term) - len(lt_winners)}L)",
-                f"- **Best Performer**: {best_lt['Ticker']} {best_lt['Return']*100:+.2f}% ({int(best_lt['Duration_Days'])} days)",
-                "- **Insights**: Extended holding effectiveness",
-                ""
-            ])
-        
+            best_lt = long_term.loc[long_term["PnL"].idxmax()]
+
+            duration_sections.extend(
+                [
+                    "### Long-Term Holdings (>30 days)",
+                    f"- **Trade Count**: {len(long_term)} trades",
+                    f"- **Win Rate**: {lt_win_rate:.1%} ({len(lt_winners)}W, {len(long_term) - len(lt_winners)}L)",
+                    f"- **Best Performer**: {best_lt['Ticker']} {best_lt['Return']*100:+.2f}% ({int(best_lt['Duration_Days'])} days)",
+                    "- **Insights**: Extended holding effectiveness",
+                    "",
+                ]
+            )
+
         return "\n".join(duration_sections)
 
     def generate_quality_distribution_section(self, data: Dict[str, Any]) -> str:
         """Generate quality distribution section in parser-compatible format."""
         import pandas as pd
-        
-        df = data['raw_trades']
-        closed_trades = df[df['Status'] == 'Closed'].copy()
-        
+
+        df = data["raw_trades"]
+        closed_trades = df[df["Status"] == "Closed"].copy()
+
         if closed_trades.empty:
             return "No closed trades available for quality analysis."
-        
+
         # Clean up quality categories
         closed_trades = closed_trades.copy()
-        closed_trades.loc[closed_trades['Trade_Quality'].str.contains('Poor Setup', na=False), 'Trade_Quality'] = 'Poor'
-        closed_trades.loc[closed_trades['Trade_Quality'].str.contains('Failed to Capture', na=False), 'Trade_Quality'] = 'Poor'
-        closed_trades.loc[closed_trades['Trade_Quality'].isna(), 'Trade_Quality'] = 'Unknown'
-        
+        closed_trades.loc[
+            closed_trades["Trade_Quality"].str.contains("Poor Setup", na=False),
+            "Trade_Quality",
+        ] = "Poor"
+        closed_trades.loc[
+            closed_trades["Trade_Quality"].str.contains("Failed to Capture", na=False),
+            "Trade_Quality",
+        ] = "Poor"
+        closed_trades.loc[
+            closed_trades["Trade_Quality"].isna(), "Trade_Quality"
+        ] = "Unknown"
+
         quality_sections = ["## 📊 Quality Distribution Analysis", ""]
-        
+
         # Group by quality and generate statistics
-        quality_groups = closed_trades.groupby('Trade_Quality')
+        quality_groups = closed_trades.groupby("Trade_Quality")
         total_trades = len(closed_trades)
-        
+
         # Define order for quality categories
-        quality_order = ['Excellent', 'Good', 'Poor', 'Unknown']
-        
+        quality_order = ["Excellent", "Good", "Poor", "Unknown"]
+
         for quality in quality_order:
             if quality not in quality_groups.groups:
                 continue
-                
+
             group = quality_groups.get_group(quality)
             trade_count = len(group)
             percentage = (trade_count / total_trades) * 100
-            
+
             # Calculate metrics
-            winners = group[group['Return'] > 0]
+            winners = group[group["Return"] > 0]
             win_rate = len(winners) / trade_count if trade_count > 0 else 0
-            avg_return = group['Return'].mean() * 100  # Convert to percentage
-            
+            avg_return = group["Return"].mean() * 100  # Convert to percentage
+
             # Format section header to match parser regex: ### Quality Trades (X trades - Y%)
-            quality_sections.extend([
-                f"### {quality} Trades ({trade_count} trades - {percentage:.1f}%)",
-                f"**Win Rate**: {win_rate:.1%}",
-                f"**Average Return**: {avg_return:+.2f}%",
-                ""
-            ])
-            
+            quality_sections.extend(
+                [
+                    f"### {quality} Trades ({trade_count} trades - {percentage:.1f}%)",
+                    f"**Win Rate**: {win_rate:.1%}",
+                    f"**Average Return**: {avg_return:+.2f}%",
+                    "",
+                ]
+            )
+
             # Add top performer for this quality category
             if not group.empty:
-                best_trade = group.loc[group['Return'].idxmax()]
-                quality_sections.append(f"- **Best {quality} Trade**: {best_trade['Ticker']} ({best_trade['Return']*100:+.2f}%)")
+                best_trade = group.loc[group["Return"].idxmax()]
+                quality_sections.append(
+                    f"- **Best {quality} Trade**: {best_trade['Ticker']} ({best_trade['Return']*100:+.2f}%)"
+                )
                 quality_sections.append("")
-        
+
         return "\n".join(quality_sections)
 
     def generate_historical_report(self, data: Dict[str, Any]) -> str:
         """Generate comprehensive historical performance report."""
         metrics = self.extract_safe_metrics(data)
-        
+
         report_content = f"""# Live Signals Historical Performance Report
 **Portfolio**: {self.portfolio_name} | **Date**: {self.execution_date.strftime("%B %d, %Y")} | **Type**: Closed Positions Analysis
 
@@ -496,7 +552,7 @@ class DASVPhase3SynthesizerFixed:
 ### What Worked
 {self._generate_what_worked(data, metrics)}
 
-### What Failed  
+### What Failed
 {self._generate_what_failed(data, metrics)}
 
 ### Critical Insights
@@ -511,104 +567,152 @@ class DASVPhase3SynthesizerFixed:
     def _generate_statistical_limitations(self, metrics: Dict[str, Any]) -> str:
         """Generate statistical limitations section."""
         limitations = []
-        
-        if metrics.get('closed_trades', 0) < 25:
-            limitations.append(f"⚠️ **SAMPLE SIZE LIMITED**: {metrics.get('closed_trades', 0)} closed trades below recommended minimum of 25 for robust statistical analysis")
-        
-        if metrics.get('closed_trades', 0) < 15:
-            limitations.append("⚠️ **LOW STATISTICAL POWER**: Limited ability to detect meaningful performance differences due to small sample")
-            
-        if not metrics.get('significant', False):
-            limitations.append("⚠️ **STATISTICAL INSIGNIFICANCE**: Returns not statistically different from zero - larger sample needed for validation")
-            
+
+        if metrics.get("closed_trades", 0) < 25:
+            limitations.append(
+                f"⚠️ **SAMPLE SIZE LIMITED**: {metrics.get('closed_trades', 0)} closed trades below recommended minimum of 25 for robust statistical analysis"
+            )
+
+        if metrics.get("closed_trades", 0) < 15:
+            limitations.append(
+                "⚠️ **LOW STATISTICAL POWER**: Limited ability to detect meaningful performance differences due to small sample"
+            )
+
+        if not metrics.get("significant", False):
+            limitations.append(
+                "⚠️ **STATISTICAL INSIGNIFICANCE**: Returns not statistically different from zero - larger sample needed for validation"
+            )
+
         if not limitations:
-            limitations.append("✅ **STATISTICALLY ROBUST**: Sample size and significance meet institutional analysis standards")
-            
+            limitations.append(
+                "✅ **STATISTICALLY ROBUST**: Sample size and significance meet institutional analysis standards"
+            )
+
         return "\n".join([f"- {limitation}" for limitation in limitations])
 
-    def _generate_performance_insights(self, data: Dict[str, Any], metrics: Dict[str, Any]) -> str:
+    def _generate_performance_insights(
+        self, data: Dict[str, Any], metrics: Dict[str, Any]
+    ) -> str:
         """Generate performance insights section."""
         insights = []
-        
-        win_rate = metrics.get('win_rate', 0)
+
+        win_rate = metrics.get("win_rate", 0)
         if win_rate > 0.6:
-            insights.append(f"✅ **STRONG WIN RATE**: {win_rate:.1%} indicates effective signal quality")
+            insights.append(
+                f"✅ **STRONG WIN RATE**: {win_rate:.1%} indicates effective signal quality"
+            )
         elif win_rate > 0.5:
-            insights.append(f"→ **ADEQUATE WIN RATE**: {win_rate:.1%} shows baseline effectiveness")
+            insights.append(
+                f"→ **ADEQUATE WIN RATE**: {win_rate:.1%} shows baseline effectiveness"
+            )
         else:
-            insights.append(f"⚠️ **BELOW AVERAGE WIN RATE**: {win_rate:.1%} suggests signal refinement needed")
-            
-        profit_factor = metrics.get('profit_factor', 0)
+            insights.append(
+                f"⚠️ **BELOW AVERAGE WIN RATE**: {win_rate:.1%} suggests signal refinement needed"
+            )
+
+        profit_factor = metrics.get("profit_factor", 0)
         if profit_factor > 2.0:
-            insights.append(f"✅ **EXCELLENT PROFIT FACTOR**: {profit_factor:.2f} shows strong risk-reward management")
+            insights.append(
+                f"✅ **EXCELLENT PROFIT FACTOR**: {profit_factor:.2f} shows strong risk-reward management"
+            )
         elif profit_factor > 1.5:
-            insights.append(f"→ **GOOD PROFIT FACTOR**: {profit_factor:.2f} indicates positive expectancy")
+            insights.append(
+                f"→ **GOOD PROFIT FACTOR**: {profit_factor:.2f} indicates positive expectancy"
+            )
         else:
-            insights.append(f"⚠️ **LOW PROFIT FACTOR**: {profit_factor:.2f} suggests risk-reward optimization needed")
-            
+            insights.append(
+                f"⚠️ **LOW PROFIT FACTOR**: {profit_factor:.2f} suggests risk-reward optimization needed"
+            )
+
         return "\n".join([f"- {insight}" for insight in insights])
 
-    def _generate_what_worked(self, data: Dict[str, Any], metrics: Dict[str, Any]) -> str:
+    def _generate_what_worked(
+        self, data: Dict[str, Any], metrics: Dict[str, Any]
+    ) -> str:
         """Generate what worked section."""
         worked_items = []
-        
-        if metrics.get('win_rate', 0) > 0.5:
+
+        if metrics.get("win_rate", 0) > 0.5:
             worked_items.append("Signal timing and entry quality showing positive edge")
-        
-        if metrics.get('profit_factor', 0) > 1.5:
-            worked_items.append("Risk-reward management maintaining positive expectancy")
-            
-        if metrics.get('significant', False):
-            worked_items.append("Statistical significance achieved - returns measurably above zero")
-            
+
+        if metrics.get("profit_factor", 0) > 1.5:
+            worked_items.append(
+                "Risk-reward management maintaining positive expectancy"
+            )
+
+        if metrics.get("significant", False):
+            worked_items.append(
+                "Statistical significance achieved - returns measurably above zero"
+            )
+
         if not worked_items:
-            worked_items.append("Limited positive patterns identified - requires larger sample for validation")
-            
+            worked_items.append(
+                "Limited positive patterns identified - requires larger sample for validation"
+            )
+
         return "\n".join([f"- {item}" for item in worked_items])
 
-    def _generate_what_failed(self, data: Dict[str, Any], metrics: Dict[str, Any]) -> str:
+    def _generate_what_failed(
+        self, data: Dict[str, Any], metrics: Dict[str, Any]
+    ) -> str:
         """Generate what failed section."""
         failed_items = []
-        
-        if metrics.get('win_rate', 0) < 0.5:
-            failed_items.append("Win rate below 50% baseline - signal quality improvement needed")
-            
-        if metrics.get('profit_factor', 0) < 1.0:
-            failed_items.append("Negative expectancy - average losses exceed average wins")
-            
-        if not metrics.get('significant', False):
-            failed_items.append("Lack of statistical significance - performance not measurably different from random")
-            
+
+        if metrics.get("win_rate", 0) < 0.5:
+            failed_items.append(
+                "Win rate below 50% baseline - signal quality improvement needed"
+            )
+
+        if metrics.get("profit_factor", 0) < 1.0:
+            failed_items.append(
+                "Negative expectancy - average losses exceed average wins"
+            )
+
+        if not metrics.get("significant", False):
+            failed_items.append(
+                "Lack of statistical significance - performance not measurably different from random"
+            )
+
         if not failed_items:
-            failed_items.append("No major systematic failures identified in current sample")
-            
+            failed_items.append(
+                "No major systematic failures identified in current sample"
+            )
+
         return "\n".join([f"- {item}" for item in failed_items])
 
-    def _generate_critical_insights(self, data: Dict[str, Any], metrics: Dict[str, Any]) -> str:
+    def _generate_critical_insights(
+        self, data: Dict[str, Any], metrics: Dict[str, Any]
+    ) -> str:
         """Generate critical insights section."""
         insights = []
-        
-        confidence = metrics.get('overall_confidence', 0)
+
+        confidence = metrics.get("overall_confidence", 0)
         if confidence > 0.8:
             insights.append("High-confidence analysis enables reliable decision-making")
         elif confidence > 0.6:
-            insights.append("Moderate confidence - recommendations require careful validation")
+            insights.append(
+                "Moderate confidence - recommendations require careful validation"
+            )
         else:
-            insights.append("Low confidence - significant limitations require conservative interpretation")
-            
-        if metrics.get('closed_trades', 0) < 15:
-            insights.append("Priority: Increase sample size for robust statistical conclusions")
-            
-        if metrics.get('profit_factor', 0) > 2.0:
+            insights.append(
+                "Low confidence - significant limitations require conservative interpretation"
+            )
+
+        if metrics.get("closed_trades", 0) < 15:
+            insights.append(
+                "Priority: Increase sample size for robust statistical conclusions"
+            )
+
+        if metrics.get("profit_factor", 0) > 2.0:
             insights.append("Exceptional profit factor suggests scalable methodology")
-            
+
         return "\n".join([f"- {item}" for item in insights])
 
     def generate_live_signals_platform_footer(self) -> str:
         """Generate standardized platform footer for live_signals portfolio."""
         if self.portfolio_name.lower() != "live_signals":
             return ""
-            
+
         return """## 📱 Live Signals Platform
 
 ### Follow Live Signals
@@ -629,7 +733,7 @@ class DASVPhase3SynthesizerFixed:
     def generate_internal_report(self, data: Dict[str, Any]) -> str:
         """Generate internal trading report with comprehensive analysis."""
         metrics = self.extract_safe_metrics(data)
-        
+
         return f"""# Live Signals Internal Trading Report
 **Portfolio**: {self.portfolio_name} | **Date**: {self.execution_date.strftime("%B %d, %Y")} | **Type**: Internal Analysis
 
@@ -682,7 +786,7 @@ class DASVPhase3SynthesizerFixed:
     def generate_live_monitor(self, data: Dict[str, Any]) -> str:
         """Generate live signals monitor with real-time position tracking."""
         metrics = self.extract_safe_metrics(data)
-        
+
         return f"""# Live Signals Monitor
 **Portfolio**: {self.portfolio_name} | **Date**: {self.execution_date.strftime("%B %d, %Y")} | **Type**: Active Position Tracking
 
@@ -733,161 +837,227 @@ class DASVPhase3SynthesizerFixed:
     def _calculate_portfolio_health_score(self, metrics: Dict[str, Any]) -> float:
         """Calculate composite portfolio health score (0-100)."""
         score = 0
-        
+
         # Win rate component (30 points max)
-        win_rate = metrics.get('win_rate', 0)
+        win_rate = metrics.get("win_rate", 0)
         score += min(30, win_rate * 50)
-        
-        # Profit factor component (25 points max)  
-        profit_factor = metrics.get('profit_factor', 0)
+
+        # Profit factor component (25 points max)
+        profit_factor = metrics.get("profit_factor", 0)
         score += min(25, profit_factor * 12.5)
-        
+
         # Statistical significance (20 points max)
-        if metrics.get('significant', False):
+        if metrics.get("significant", False):
             score += 20
-        
+
         # Sample size adequacy (15 points max)
-        if metrics.get('minimum_sample_met', False):
+        if metrics.get("minimum_sample_met", False):
             score += 15
-        
+
         # Overall confidence (10 points max)
-        confidence = metrics.get('overall_confidence', 0)
+        confidence = metrics.get("overall_confidence", 0)
         score += confidence * 10
-        
+
         return min(100, score)
 
-    def _generate_critical_issues(self, data: Dict[str, Any], metrics: Dict[str, Any]) -> str:
+    def _generate_critical_issues(
+        self, data: Dict[str, Any], metrics: Dict[str, Any]
+    ) -> str:
         """Generate critical issues section."""
         issues = []
-        
-        if not metrics.get('significant', False):
-            issues.append("🔴 **P1 CRITICAL**: Returns not statistically significant - require signal quality improvement")
-            
-        if metrics.get('win_rate', 0) < 0.5:
-            issues.append("🔴 **P1 CRITICAL**: Win rate below 50% baseline - immediate signal review required")
-            
-        if metrics.get('profit_factor', 0) < 1.0:
+
+        if not metrics.get("significant", False):
+            issues.append(
+                "🔴 **P1 CRITICAL**: Returns not statistically significant - require signal quality improvement"
+            )
+
+        if metrics.get("win_rate", 0) < 0.5:
+            issues.append(
+                "🔴 **P1 CRITICAL**: Win rate below 50% baseline - immediate signal review required"
+            )
+
+        if metrics.get("profit_factor", 0) < 1.0:
             issues.append("🔴 **P1 CRITICAL**: Negative expectancy - losses exceed wins")
-            
-        if not metrics.get('minimum_sample_met', False):
-            issues.append("🟡 **P2 PRIORITY**: Sample size below minimum for statistical confidence")
-            
+
+        if not metrics.get("minimum_sample_met", False):
+            issues.append(
+                "🟡 **P2 PRIORITY**: Sample size below minimum for statistical confidence"
+            )
+
         if not issues:
-            issues.append("🟢 **NO CRITICAL ISSUES**: Portfolio operating within acceptable parameters")
-            
+            issues.append(
+                "🟢 **NO CRITICAL ISSUES**: Portfolio operating within acceptable parameters"
+            )
+
         return "\n".join([f"- {issue}" for issue in issues])
 
-    def _generate_action_requirements(self, data: Dict[str, Any], metrics: Dict[str, Any]) -> str:
+    def _generate_action_requirements(
+        self, data: Dict[str, Any], metrics: Dict[str, Any]
+    ) -> str:
         """Generate action requirements section."""
         actions = []
-        
-        if not metrics.get('significant', False):
-            actions.append("**IMMEDIATE**: Review signal quality parameters - target statistical significance within 30 days")
-            
-        if metrics.get('profit_factor', 0) < 1.5:
-            actions.append("**THIS WEEK**: Optimize risk-reward ratios - target 1.50+ profit factor")
-            
-        if not metrics.get('minimum_sample_met', False):
-            actions.append("**ONGOING**: Increase signal frequency to achieve 25+ closed trades for statistical validity")
-            
+
+        if not metrics.get("significant", False):
+            actions.append(
+                "**IMMEDIATE**: Review signal quality parameters - target statistical significance within 30 days"
+            )
+
+        if metrics.get("profit_factor", 0) < 1.5:
+            actions.append(
+                "**THIS WEEK**: Optimize risk-reward ratios - target 1.50+ profit factor"
+            )
+
+        if not metrics.get("minimum_sample_met", False):
+            actions.append(
+                "**ONGOING**: Increase signal frequency to achieve 25+ closed trades for statistical validity"
+            )
+
         if not actions:
-            actions.append("**MAINTAIN**: Continue current methodology while monitoring performance metrics")
-            
+            actions.append(
+                "**MAINTAIN**: Continue current methodology while monitoring performance metrics"
+            )
+
         return "\n".join([f"- {action}" for action in actions])
 
-    def _generate_performance_attribution(self, data: Dict[str, Any], metrics: Dict[str, Any]) -> str:
+    def _generate_performance_attribution(
+        self, data: Dict[str, Any], metrics: Dict[str, Any]
+    ) -> str:
         """Generate performance attribution section."""
         attribution = []
-        
-        pnl = metrics.get('total_pnl', 0)
-        trades = metrics.get('closed_trades', 1)
+
+        pnl = metrics.get("total_pnl", 0)
+        trades = metrics.get("closed_trades", 1)
         avg_trade = pnl / trades
-        
+
         attribution.append(f"**Average Trade P&L**: ${avg_trade:,.2f}")
-        attribution.append(f"**Win Contribution**: {metrics.get('total_wins', 0)} winning trades")
-        attribution.append(f"**Loss Impact**: {metrics.get('total_losses', 0)} losing trades")
-        attribution.append(f"**Risk-Adjusted Performance**: Sharpe {metrics.get('sharpe_ratio', 0):.2f}")
-        
+        attribution.append(
+            f"**Win Contribution**: {metrics.get('total_wins', 0)} winning trades"
+        )
+        attribution.append(
+            f"**Loss Impact**: {metrics.get('total_losses', 0)} losing trades"
+        )
+        attribution.append(
+            f"**Risk-Adjusted Performance**: Sharpe {metrics.get('sharpe_ratio', 0):.2f}"
+        )
+
         return "\n".join([f"- {item}" for item in attribution])
 
-    def _generate_optimization_roadmap(self, data: Dict[str, Any], metrics: Dict[str, Any]) -> str:
+    def _generate_optimization_roadmap(
+        self, data: Dict[str, Any], metrics: Dict[str, Any]
+    ) -> str:
         """Generate optimization roadmap section."""
         roadmap = []
-        
-        if metrics.get('win_rate', 0) < 0.6:
-            roadmap.append("**Signal Quality Enhancement**: Improve entry criteria and timing - target 60%+ win rate")
-            
-        if metrics.get('profit_factor', 0) < 2.0:
-            roadmap.append("**Risk-Reward Optimization**: Enhance exit strategies - target 2.0+ profit factor")
-            
-        if not metrics.get('significant', False):
-            roadmap.append("**Statistical Validation**: Achieve statistical significance through improved signal quality")
-            
-        if metrics.get('closed_trades', 0) < 50:
-            roadmap.append("**Sample Size Expansion**: Increase trading frequency for robust statistical analysis")
-            
+
+        if metrics.get("win_rate", 0) < 0.6:
+            roadmap.append(
+                "**Signal Quality Enhancement**: Improve entry criteria and timing - target 60%+ win rate"
+            )
+
+        if metrics.get("profit_factor", 0) < 2.0:
+            roadmap.append(
+                "**Risk-Reward Optimization**: Enhance exit strategies - target 2.0+ profit factor"
+            )
+
+        if not metrics.get("significant", False):
+            roadmap.append(
+                "**Statistical Validation**: Achieve statistical significance through improved signal quality"
+            )
+
+        if metrics.get("closed_trades", 0) < 50:
+            roadmap.append(
+                "**Sample Size Expansion**: Increase trading frequency for robust statistical analysis"
+            )
+
         return "\n".join([f"- {item}" for item in roadmap])
 
-    def _generate_signal_strength_analysis(self, data: Dict[str, Any], metrics: Dict[str, Any]) -> str:
+    def _generate_signal_strength_analysis(
+        self, data: Dict[str, Any], metrics: Dict[str, Any]
+    ) -> str:
         """Generate signal strength analysis."""
         analysis = []
-        
-        analysis.append(f"**Strong Momentum**: Positions showing positive trends (monitoring required)")
-        analysis.append(f"**Developing Positions**: Early stage signals requiring observation")
-        analysis.append(f"**Watch List**: Underperforming positions with risk considerations")
-        
+
+        analysis.append(
+            f"**Strong Momentum**: Positions showing positive trends (monitoring required)"
+        )
+        analysis.append(
+            f"**Developing Positions**: Early stage signals requiring observation"
+        )
+        analysis.append(
+            f"**Watch List**: Underperforming positions with risk considerations"
+        )
+
         return "\n".join([f"- {item}" for item in analysis])
 
-    def _generate_risk_indicators(self, data: Dict[str, Any], metrics: Dict[str, Any]) -> str:
+    def _generate_risk_indicators(
+        self, data: Dict[str, Any], metrics: Dict[str, Any]
+    ) -> str:
         """Generate risk indicators section."""
         indicators = []
-        
-        indicators.append(f"**Portfolio Exposure**: {metrics.get('active_trades', 0)} active positions")
-        indicators.append(f"**Historical Volatility**: Based on {metrics.get('closed_trades', 0)} closed trades")
-        indicators.append(f"**Risk-Adjusted Returns**: Sharpe {metrics.get('sharpe_ratio', 0):.2f}, Sortino {metrics.get('sortino_ratio', 0):.2f}")
-        
+
+        indicators.append(
+            f"**Portfolio Exposure**: {metrics.get('active_trades', 0)} active positions"
+        )
+        indicators.append(
+            f"**Historical Volatility**: Based on {metrics.get('closed_trades', 0)} closed trades"
+        )
+        indicators.append(
+            f"**Risk-Adjusted Returns**: Sharpe {metrics.get('sharpe_ratio', 0):.2f}, Sortino {metrics.get('sortino_ratio', 0):.2f}"
+        )
+
         return "\n".join([f"- {item}" for item in indicators])
 
     def synthesize_reports(self, report_types: List[str]) -> Dict[str, str]:
         """Synthesize requested report types."""
         logger.info(f"Starting synthesis for report types: {report_types}")
-        
+
         # Load data from previous phases
         data = self.load_phase_data()
-        
+
         reports = {}
-        
-        if 'internal' in report_types:
+
+        if "internal" in report_types:
             logger.info("Generating internal trading report...")
             internal_content = self.generate_internal_report(data)
-            internal_file = self.output_dir / "internal" / f"{self.portfolio_name}_{self.execution_date.strftime('%Y%m%d')}.md"
-            
-            with open(internal_file, 'w', encoding='utf-8') as f:
+            internal_file = (
+                self.output_dir
+                / "internal"
+                / f"{self.portfolio_name}_{self.execution_date.strftime('%Y%m%d')}.md"
+            )
+
+            with open(internal_file, "w", encoding="utf-8") as f:
                 f.write(internal_content)
-            
-            reports['internal'] = str(internal_file)
+
+            reports["internal"] = str(internal_file)
             logger.info(f"Internal report saved to: {internal_file}")
 
-        if 'live' in report_types:
+        if "live" in report_types:
             logger.info("Generating live signals monitor...")
             live_content = self.generate_live_monitor(data)
-            live_file = self.output_dir / "live" / f"{self.portfolio_name}_{self.execution_date.strftime('%Y%m%d')}.md"
-            
-            with open(live_file, 'w', encoding='utf-8') as f:
+            live_file = (
+                self.output_dir
+                / "live"
+                / f"{self.portfolio_name}_{self.execution_date.strftime('%Y%m%d')}.md"
+            )
+
+            with open(live_file, "w", encoding="utf-8") as f:
                 f.write(live_content)
-            
-            reports['live'] = str(live_file)
+
+            reports["live"] = str(live_file)
             logger.info(f"Live monitor saved to: {live_file}")
 
-        if 'historical' in report_types:
+        if "historical" in report_types:
             logger.info("Generating historical performance report...")
             historical_content = self.generate_historical_report(data)
-            historical_file = self.output_dir / "historical" / f"{self.portfolio_name}_{self.execution_date.strftime('%Y%m%d')}.md"
-            
-            with open(historical_file, 'w', encoding='utf-8') as f:
+            historical_file = (
+                self.output_dir
+                / "historical"
+                / f"{self.portfolio_name}_{self.execution_date.strftime('%Y%m%d')}.md"
+            )
+
+            with open(historical_file, "w", encoding="utf-8") as f:
                 f.write(historical_content)
-            
-            reports['historical'] = str(historical_file)
+
+            reports["historical"] = str(historical_file)
             logger.info(f"Historical report saved to: {historical_file}")
 
         return reports
@@ -903,7 +1073,7 @@ def main():
         "--report-type",
         choices=["internal", "live", "historical", "all"],
         default="all",
-        help="Report type to generate (default: all)"
+        help="Report type to generate (default: all)",
     )
     parser.add_argument("--verbose", action="store_true", help="Enable verbose logging")
 
@@ -922,22 +1092,22 @@ def main():
     # Execute synthesis
     logger.info(f"Starting DASV Phase 3 Synthesis for portfolio: {args.portfolio}")
     synthesizer = DASVPhase3SynthesizerFixed(portfolio_name=args.portfolio)
-    
+
     try:
         reports = synthesizer.synthesize_reports(report_types)
-        
+
         # Print summary
         print("\n" + "=" * 60)
         print("TRADE HISTORY SYNTHESIS COMPLETE")
         print("=" * 60)
         print(f"Portfolio: {args.portfolio}")
         print(f"Reports Generated: {len(reports)}")
-        
+
         for report_type, file_path in reports.items():
             print(f"  {report_type.capitalize()}: {file_path}")
-        
+
         print("=" * 60)
-        
+
     except Exception as e:
         logger.error(f"Synthesis failed: {e}")
         raise

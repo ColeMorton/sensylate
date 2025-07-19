@@ -218,7 +218,7 @@ class TradeHistoryImageGenerator:
         # Check if it's in the historical directory
         if "historical/" in filepath:
             return "HISTORICAL_PERFORMANCE_REPORT"
-        
+
         # Check other patterns by filename
         filename = Path(filepath).name
         for report_type in self.REPORT_PATTERNS.keys():

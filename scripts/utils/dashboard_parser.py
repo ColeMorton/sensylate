@@ -188,7 +188,7 @@ class DashboardDataParser:
                         rank = int(parts[0])
                         ticker = parts[1].replace("**", "").strip()
                         # parts[2] is P&L ($) - skip for now
-                        
+
                         # Extract return percentage from column 3
                         return_str = (
                             parts[3].replace("**", "").replace("%", "").replace("+", "")
@@ -201,7 +201,7 @@ class DashboardDataParser:
 
                         # Strategy is in column 5
                         strategy = parts[5]
-                        
+
                         # Quality is in column 6
                         quality = parts[6]
 
@@ -249,7 +249,9 @@ class DashboardDataParser:
             trades_match = re.search(r"\*\*Trades Closed\*\*:\s*(\d+)", section_content)
             trades_closed = int(trades_match.group(1)) if trades_match else 0
             if not trades_match:
-                self.logger.warning(f"Could not extract trades closed for {month} {year}")
+                self.logger.warning(
+                    f"Could not extract trades closed for {month} {year}"
+                )
 
             win_rate_match = re.search(
                 r"\*\*Win Rate\*\*:\s*([\d.]+)%?", section_content
@@ -263,7 +265,9 @@ class DashboardDataParser:
             )
             avg_return = float(avg_return_match.group(1)) if avg_return_match else 0.0
             if not avg_return_match:
-                self.logger.warning(f"Could not extract average return for {month} {year}")
+                self.logger.warning(
+                    f"Could not extract average return for {month} {year}"
+                )
 
             # Extract market context
             context_match = re.search(
@@ -272,7 +276,9 @@ class DashboardDataParser:
             market_context = context_match.group(1).strip() if context_match else ""
 
             # Log extracted values for validation
-            self.logger.debug(f"Extracted: {month} {year} - Trades: {trades_closed}, Win Rate: {win_rate}%, Avg Return: {avg_return}%")
+            self.logger.debug(
+                f"Extracted: {month} {year} - Trades: {trades_closed}, Win Rate: {win_rate}%, Avg Return: {avg_return}%"
+            )
 
             monthly_data.append(
                 MonthlyPerformance(
