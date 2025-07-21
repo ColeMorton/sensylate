@@ -9,7 +9,7 @@
 
 /* container */
 .container {
-  @apply mx-auto px-4 xl:!max-w-[1320px];
+  @apply mx-auto px-4 xl:!max-w-[1320px] 2xl:!max-w-[1600px];
 }
 
 /* social icons */
@@ -66,22 +66,22 @@
 }
 
 .notice.note {
-  @apply text-[#1B83E2];
+  @apply text-tertiary-data;
   @apply border-current;
 }
 
 .notice.tip {
-  @apply text-[#40D294];
+  @apply text-primary-data;
   @apply border-current;
 }
 
 .notice.info {
-  @apply text-[#E3A72C];
+  @apply text-neutral-data;
   @apply border-current;
 }
 
 .notice.warning {
-  @apply text-[#DB2C23];
+  @apply text-quaternary;
   @apply border-current;
 }
 

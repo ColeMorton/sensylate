@@ -11,9 +11,22 @@ export async function getStaticPaths() {
 
   const pages = await getSinglePage(COLLECTION_FOLDER);
 
+  // DEBUG: Log all detected pages for static site generation
+  console.log(
+    "🔍 [STATIC BUILD] Pages detected in collection:",
+    pages.map((p) => ({
+      id: p.id,
+      slug: p.slug,
+      data: { title: p.data.title, draft: p.data.draft },
+    })),
+  );
+
   // Filter out elements page if feature flag is disabled
   const filteredPages = pages.filter((page) => {
     if (page.id === "elements" && !isFeatureEnabled("elements_page")) {
+      return false;
+    }
+    if (page.id === "charts" && !isFeatureEnabled("charts_page")) {
       return false;
     }
     return true;
@@ -25,10 +38,36 @@ export async function getStaticPaths() {
     },
     props: { page },
   }));
+
+  // DEBUG: Log generated static paths
+  console.log(
+    "🔍 [STATIC BUILD] Generated static paths:",
+    paths.map((p) => p.params.regular),
+  );
+
   return paths;
 }
 
-const { page } = Astro.props;
+// In server mode (development), get page from params. In static mode, get from props.
+let page;
+if (import.meta.env.DEV && !Astro.props.page) {
+  // Server mode: fetch page data based on route params
+  const { regular } = Astro.params;
+  const allPages = await getSinglePage("pages");
+  page = allPages.find((p) => p.id === regular);
+
+  if (!page) {
+    return Astro.redirect("/404");
+  }
+} else {
+  // Static mode: use props from getStaticPaths
+  page = Astro.props.page;
+}
+
+if (!page) {
+  return Astro.redirect("/404");
+}
+
 const { title, meta_title, description, image } = page.data;
 const { Content } = await render(page);
 ---
@@ -42,8 +81,8 @@ const { Content } = await render(page);
   <PageHeader title={title} />
   <section class="section-sm">
     <div class="container">
-      <div class="row justify-center">
-        <div class="lg:col-10">
+      <div class="row">
+        <div class="lg:col-12">
           <div class="content">
             <Content />
           </div>

@@ -17,6 +17,7 @@ const fontFamilies = Object.entries(themeConfig.fonts.font_family)
 const defaultColorGroups = [
   { colors: themeConfig.colors.default.theme_color, prefix: "" },
   { colors: themeConfig.colors.default.text_color, prefix: "" },
+  { colors: themeConfig.colors.data, prefix: "" },
 ];
 const darkColorGroups = [];
 if (themeConfig.colors.darkmode?.theme_color) {

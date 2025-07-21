@@ -64,8 +64,8 @@ const GalaxyAnimation: React.FC<GalaxyAnimationProps> = ({
       spin: 1,
       randomness: 0.2,
       randomnessPower: 3,
-      insideColor: "#4dd0e1", // Cyan for inner core
-      outsideColor: "#7e57c2", // Purple for outer edges
+      insideColor: "#00BCD4", // Cyan for inner core
+      outsideColor: "#9575CD", // Purple for outer edges
     };
 
     // Create galaxy

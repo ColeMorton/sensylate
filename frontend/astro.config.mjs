@@ -14,6 +14,7 @@ import config from "./src/config/config.json";
 // Build-time feature flag optimization
 const getFeatureFlags = () => {
   const envToBoolean = (value) => value?.toLowerCase() === 'true';
+  const isDevelopment = process.env.NODE_ENV === 'development';
   return {
     search: envToBoolean(process.env.PUBLIC_FEATURE_SEARCH) ?? config.settings.search,
     theme_switcher: envToBoolean(process.env.PUBLIC_FEATURE_THEME_SWITCHER) ?? config.settings.theme_switcher,
@@ -22,7 +23,8 @@ const getFeatureFlags = () => {
     calculators: envToBoolean(process.env.PUBLIC_FEATURE_CALCULATORS) ?? true,
     calculator_advanced: envToBoolean(process.env.PUBLIC_FEATURE_CALCULATOR_ADVANCED) ?? false,
     elements_page: envToBoolean(process.env.PUBLIC_FEATURE_ELEMENTS_PAGE) ?? true,
-    authors_page: envToBoolean(process.env.PUBLIC_FEATURE_AUTHORS_PAGE) ?? true
+    authors_page: envToBoolean(process.env.PUBLIC_FEATURE_AUTHORS_PAGE) ?? true,
+    charts_page: envToBoolean(process.env.PUBLIC_FEATURE_CHARTS_PAGE) ?? isDevelopment
   };
 };
 
@@ -31,9 +33,12 @@ const buildTimeFlags = getFeatureFlags();
 // Use Netlify adapter only for Netlify builds
 const adapter = process.env.NETLIFY ? netlify() : undefined;
 
+// Use server mode in development to fix route detection issues, static in production
+const outputMode = process.env.NODE_ENV === "development" ? "server" : "static";
+
 // https://astro.build/config
 export default defineConfig({
-  output: "static",
+  output: outputMode,
   ...(adapter && { adapter }),
   site: config.site.base_url ? config.site.base_url : "http://examplesite.com",
   base: config.site.base_path ? config.site.base_path : "/",
@@ -65,6 +70,7 @@ export default defineConfig({
       __FEATURE_CALCULATOR_ADVANCED__: buildTimeFlags.calculator_advanced,
       __FEATURE_ELEMENTS_PAGE__: buildTimeFlags.elements_page,
       __FEATURE_AUTHORS_PAGE__: buildTimeFlags.authors_page,
+      __FEATURE_CHARTS_PAGE__: buildTimeFlags.charts_page,
     },
     resolve: {
       alias: {
@@ -93,6 +99,7 @@ export default defineConfig({
         "@/shortcodes/Youtube",
         "@/shortcodes/Tabs",
         "@/shortcodes/Tab",
+        "@/shortcodes/ChartDisplay",
       ],
     }),
     mdx(),
