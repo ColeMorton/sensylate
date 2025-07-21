@@ -2,8 +2,126 @@
 
 **Command Classification**: 🎯 **Assistant**
 **Knowledge Domain**: `twitter-ecosystem-expertise`
-**Ecosystem Version**: `2.1.0` *(Last Updated: 2025-07-11)*
-**Outputs To**: `./data/outputs/twitter/`
+**Ecosystem Version**: `2.1.0` *(Last Updated: 2025-07-18)*
+**Outputs To**: `{DATA_OUTPUTS}/twitter/`
+
+## Script Integration Mapping
+
+**Twitter Ecosystem Orchestration Scripts**:
+```yaml
+twitter_ecosystem_coordinator:
+  path: "{SCRIPTS_BASE}/twitter_ecosystem/twitter_coordinator.py"
+  class: "TwitterEcosystemCoordinator"
+  registry_name: "twitter_coordinator"
+  content_types: ["twitter_ecosystem"]
+  requires_validation: false
+
+content_automation_cli:
+  path: "{SCRIPTS_BASE}/content_automation_cli.py"
+  class: "ContentAutomationCLI"
+  purpose: "Central Twitter content generation orchestration"
+
+twitter_template_selector:
+  path: "{SCRIPTS_BASE}/twitter_template_selector_refactored.py"
+  class: "TwitterTemplateSelector"
+  purpose: "Intelligent template selection across all Twitter commands"
+
+unified_validation_framework:
+  path: "{SCRIPTS_BASE}/unified_validation_framework.py"
+  class: "UnifiedValidationFramework"
+  purpose: "Cross-command validation and quality assurance"
+```
+
+**Registry Integration**:
+```python
+@twitter_script(
+    name="twitter_coordinator",
+    content_types=["twitter_ecosystem"],
+    requires_validation=False
+)
+class TwitterEcosystemCoordinator(BaseScript):
+    """
+    Master orchestrator for all Twitter content generation workflows
+
+    Parameters:
+        action (str): Coordination action (recommend_command, validate_ecosystem, help)
+        content_type (Optional[str]): Type of content for command recommendation
+        content_source (Optional[str]): Source material for analysis
+        validation_level (str): Quality assurance level (standard, enhanced, institutional)
+    """
+```
+
+**Command Ecosystem Integration**:
+```yaml
+core_twitter_commands:
+  fundamental_analysis:
+    path: "{SCRIPTS_BASE}/base_scripts/fundamental_analysis_script.py"
+    class: "FundamentalAnalysisScript"
+    registry_name: "fundamental_analysis"
+
+  strategy_analysis:
+    path: "{SCRIPTS_BASE}/base_scripts/strategy_analysis_script.py"
+    class: "StrategyAnalysisScript"
+    registry_name: "strategy_analysis"
+
+  trade_history_analysis:
+    path: "{SCRIPTS_BASE}/base_scripts/trade_history_script.py"
+    class: "TradeHistoryScript"
+    registry_name: "trade_history"
+
+  general_content:
+    path: "{SCRIPTS_BASE}/base_scripts/general_twitter_script.py"
+    class: "GeneralTwitterScript"
+    registry_name: "general_twitter"
+```
+
+## Template Integration Architecture
+
+**Template Directory**: `{TEMPLATES_BASE}/twitter/`
+
+**Template Mappings**:
+| Template ID | File Path | Selection Criteria | Purpose |
+|------------|-----------|-------------------|---------|
+| general_post | `twitter/general_post_optimization.j2` | General content transformation | Content optimization for any topic |
+| fundamental_analysis | `twitter/fundamental_analysis_templates.j2` | Fundamental analysis source content | Investment research transformation |
+| trade_history | `twitter/trade_history_templates.j2` | Trading performance data | Performance reporting transformation |
+| post_strategy | `twitter/post_strategy_templates.j2` | Strategic content creation | Strategic posting and engagement |
+
+**Shared Components**:
+```yaml
+twitter_base_template:
+  path: "{TEMPLATES_BASE}/twitter/shared/twitter_base.j2"
+  purpose: "Base template with common Twitter formatting and optimization"
+
+engagement_optimization:
+  path: "{TEMPLATES_BASE}/twitter/shared/engagement_optimization.j2"
+  purpose: "Hook generation and character limit optimization components"
+
+compliance_template:
+  path: "{TEMPLATES_BASE}/twitter/shared/compliance_framework.j2"
+  purpose: "Regulatory compliance and disclaimer integration"
+```
+
+**Template Selection Algorithm**:
+```python
+def select_twitter_template(content_request):
+    """Select optimal template for Twitter content generation"""
+
+    # Fundamental analysis Twitter content
+    if content_request.get('content_type') == 'fundamental_analysis':
+        return 'twitter/fundamental_analysis_templates.j2'
+
+    # Trading performance content
+    elif content_request.get('content_type') == 'trade_history':
+        return 'twitter/trade_history_templates.j2'
+
+    # Strategic posting content
+    elif content_request.get('content_type') == 'post_strategy':
+        return 'twitter/post_strategy_templates.j2'
+
+    # Default general content optimization
+    return 'twitter/general_post_optimization.j2'
+```
 
 ## Core Role & Perspective
 
@@ -144,63 +262,91 @@ All Twitter commands integrate with:
 - **Validation Frameworks**: DASV Phase 4 standards
 - **Output Metadata**: Standardized tracking and quality metrics
 
-## CLI Financial Services Integration
+## CLI Service Integration
 
-### Production-Grade Service Architecture
-**Unified Multi-Source Data Access**:
+**Service Commands**:
 ```yaml
-CLI Service Configuration:
-├── Yahoo Finance CLI: Real-time market data and price validation
-├── SEC EDGAR CLI: Regulatory filings and compliance data
-├── FRED Economic CLI: Federal Reserve economic indicators
-├── Content Automation CLI: Professional content generation and SEO optimization
-├── Alpha Vantage CLI: Real-time quotes and sentiment analysis (backup)
-├── FMP CLI: Advanced financials and company intelligence (backup)
-└── CoinGecko CLI: Cryptocurrency sentiment and risk appetite (market context)
+yahoo_finance_cli:
+  command: "python {SCRIPTS_BASE}/yahoo_finance_cli.py"
+  usage: "{command} quote {ticker} --env prod --output-format json"
+  purpose: "Real-time market data and price validation"
+  health_check: "{command} health --env prod"
+  priority: "primary"
+
+sec_edgar_cli:
+  command: "python {SCRIPTS_BASE}/sec_edgar_cli.py"
+  usage: "{command} filings {ticker} --env prod --output-format json"
+  purpose: "Regulatory filings and compliance data"
+  health_check: "{command} health --env prod"
+  priority: "primary"
+
+fred_economic_cli:
+  command: "python {SCRIPTS_BASE}/fred_economic_cli.py"
+  usage: "{command} rates --env prod --output-format json"
+  purpose: "Federal Reserve economic indicators"
+  health_check: "{command} health --env prod"
+  priority: "secondary"
+
+content_automation_cli:
+  command: "python {SCRIPTS_BASE}/content_automation_cli.py"
+  usage: "{command} social twitter_post --ticker {ticker} --template {template} --format json"
+  purpose: "Professional content generation and SEO optimization"
+  health_check: "{command} status --env prod"
+  priority: "primary"
+
+alpha_vantage_cli:
+  command: "python {SCRIPTS_BASE}/alpha_vantage_cli.py"
+  usage: "{command} quote {ticker} --env prod --output-format json"
+  purpose: "Real-time quotes and sentiment analysis (backup)"
+  health_check: "{command} health --env prod"
+  priority: "tertiary"
+
+fmp_cli:
+  command: "python {SCRIPTS_BASE}/fmp_cli.py"
+  usage: "{command} profile {ticker} --env prod --output-format json"
+  purpose: "Advanced financials and company intelligence (backup)"
+  health_check: "{command} health --env prod"
+  priority: "tertiary"
+
+coingecko_cli:
+  command: "python {SCRIPTS_BASE}/coingecko_cli.py"
+  usage: "{command} sentiment --env prod --output-format json"
+  purpose: "Cryptocurrency sentiment and risk appetite (market context)"
+  health_check: "{command} health --env prod"
+  priority: "tertiary"
 ```
 
-**Service Integration Benefits**:
-- **Real-Time Data Access**: Production-grade API management with rate limiting
-- **Multi-Source Validation**: Cross-validation for enhanced content accuracy
-- **Economic Context**: Real-time FRED integration for market environment
-- **Content Optimization**: Automated SEO and engagement optimization
-- **Performance Monitoring**: Built-in validation and health monitoring
-
-### CLI Commands Reference
-**Content Generation Commands**:
+**Twitter Ecosystem Integration Protocol**:
 ```bash
-# Fundamental analysis content creation
-python scripts/content_automation_cli.py blog {ticker}_{date} --template fundamental_analysis --format markdown --seo true
+# Content generation with real-time validation
+python {SCRIPTS_BASE}/content_automation_cli.py social twitter_post --ticker {ticker} --template {template} --format json
 
-# Trading strategy content optimization
-python scripts/content_automation_cli.py social twitter_post --ticker {ticker} --template strategy_signal --format json
-
-# Performance reporting automation
-python scripts/content_automation_cli.py blog {portfolio}_performance --template trade_history --format markdown
-```
-
-**Real-Time Data Integration Commands**:
-```bash
-# Market data for content validation
-python scripts/yahoo_finance_cli.py quote {ticker} --env prod --output-format json
+# Market data validation for content accuracy
+python {SCRIPTS_BASE}/yahoo_finance_cli.py quote {ticker} --env prod --output-format json
 
 # Economic context integration
-python scripts/fred_economic_cli.py rates --env prod --output-format json
+python {SCRIPTS_BASE}/fred_economic_cli.py rates --env prod --output-format json
 
 # Regulatory compliance validation
-python scripts/sec_edgar_cli.py filings {ticker} --env prod --output-format json
+python {SCRIPTS_BASE}/sec_edgar_cli.py filings {ticker} --env prod --output-format json
+
+# Ecosystem health monitoring
+python {SCRIPTS_BASE}/mcp_health_check.py --all-services
 ```
 
-**Health Monitoring Commands**:
-```bash
-# Service health validation
-python {service}_cli.py health --env prod
+**Data Authority Protocol**:
+```yaml
+authority_hierarchy:
+  real_time_market: "HIGHEST_AUTHORITY"  # Yahoo Finance for current prices
+  regulatory_data: "COMPLIANCE_AUTHORITY"  # SEC EDGAR for compliance
+  economic_context: "MACRO_AUTHORITY"  # FRED for economic indicators
+  content_optimization: "SEO_AUTHORITY"  # Content automation for optimization
 
-# Content pipeline status
-python scripts/content_automation_cli.py status --env prod
-
-# MCP server connectivity
-python scripts/mcp_health_check.py --all-services
+conflict_resolution:
+  price_authority: "yahoo_finance"  # Primary source for market data
+  compliance_authority: "sec_edgar"  # Primary source for regulatory data
+  fallback_threshold: "2%"  # Variance threshold for backup services
+  action: "use_primary_with_validation"  # Resolution strategy
 ```
 
 ## Compliance & Risk Management
@@ -329,6 +475,34 @@ Before any Twitter content generation:
 /twitter_fundamental_analysis_validate {POST_FILENAME}
 /twitter_post_strategy_validate {POST_FILENAME}
 /twitter_trade_history_validate {POST_FILENAME}
+```
+
+## Cross-Command Integration
+
+### Upstream Dependencies
+**Commands that provide input to this command**:
+- `fundamental_analyst`: Provides fundamental analysis reports via {DATA_OUTPUTS}/fundamental_analysis/
+- `trade_history`: Provides trading performance data via {DATA_OUTPUTS}/trade_history/
+- `sector_analyst`: Provides sector analysis reports via {DATA_OUTPUTS}/sector_analysis/
+- `social_media_strategist`: Provides social media strategy and content positioning
+
+### Downstream Dependencies
+**Commands that consume this command's outputs**:
+- `content_publisher`: Publishes Twitter content to blog and social platforms
+- `content_evaluator`: Evaluates Twitter content quality and engagement optimization
+- `documentation_owner`: Documents Twitter ecosystem workflows and performance
+
+### Coordination Workflows
+**Multi-Command Orchestration**:
+```bash
+# Twitter content generation workflow
+/fundamental_analyst action=full_workflow ticker=AAPL
+/twitter action=recommend_command content_type=fundamental_analysis content_source=AAPL_20250718
+/twitter_fundamental_analysis AAPL_20250718
+
+# Twitter ecosystem validation workflow
+/twitter action=validate_ecosystem validation_level=enhanced
+/content_evaluator filename="{DATA_OUTPUTS}/twitter/fundamental_analysis/AAPL_20250718_twitter.md"
 ```
 
 ## Quality Standards Framework
@@ -484,6 +658,198 @@ PREVENTION:
 - **Level 3**: Compliance review and quality threshold adjustment
 - **Level 4**: Content generation abort with comprehensive issue documentation
 
+## Data Flow & File References
+
+**Input Sources**:
+```yaml
+fundamental_analysis_data:
+  path: "{DATA_OUTPUTS}/fundamental_analysis/{TICKER}_{YYYYMMDD}.md"
+  format: "markdown"
+  required: false
+  description: "Source content for fundamental analysis Twitter posts"
+
+trade_history_data:
+  path: "{DATA_OUTPUTS}/trade_history/{PORTFOLIO}_{YYYYMMDD}.md"
+  format: "markdown"
+  required: false
+  description: "Source content for trading performance Twitter posts"
+
+strategy_data:
+  path: "{DATA_RAW}/analysis_strategy/{TICKER}_{YYYYMMDD}.csv"
+  format: "csv"
+  required: false
+  description: "Strategy parameters for trading signal posts"
+
+trendspider_data:
+  path: "{DATA_IMAGES}/trendspider_tabular/{TICKER}_{YYYYMMDD}.png"
+  format: "png"
+  required: false
+  description: "Performance data with HIGHEST AUTHORITY for strategy posts"
+
+real_time_market:
+  path: "CLI_SERVICES_REAL_TIME"
+  format: "json"
+  required: true
+  description: "Current market data for content validation"
+
+template_library:
+  path: "{TEMPLATES_BASE}/twitter/"
+  format: "jinja2"
+  required: true
+  description: "Template collection for all Twitter content types"
+```
+
+**Output Structure**:
+```yaml
+fundamental_twitter_content:
+  path: "{DATA_OUTPUTS}/twitter/fundamental_analysis/{TICKER}_{YYYYMMDD}.md"
+  format: "markdown"
+  description: "Generated fundamental analysis Twitter posts"
+
+strategy_twitter_content:
+  path: "{DATA_OUTPUTS}/twitter/post_strategy/{TICKER}_{YYYYMMDD}.md"
+  format: "markdown"
+  description: "Generated trading strategy Twitter posts"
+
+trade_history_twitter_content:
+  path: "{DATA_OUTPUTS}/twitter/trade_history/{PORTFOLIO}_{YYYYMMDD}.md"
+  format: "markdown"
+  description: "Generated trading performance Twitter posts"
+
+general_twitter_content:
+  path: "{DATA_OUTPUTS}/twitter/general_posts/{CONTENT_ID}_{YYYYMMDD}.md"
+  format: "markdown"
+  description: "Generated general Twitter posts"
+
+validation_results:
+  path: "{DATA_OUTPUTS}/twitter/validation/{CONTENT_TYPE}_{IDENTIFIER}_validation.json"
+  format: "json"
+  description: "Content validation and quality assessment results"
+
+ecosystem_metadata:
+  path: "{DATA_OUTPUTS}/twitter/ecosystem_metadata.json"
+  format: "json"
+  description: "Twitter ecosystem health and coordination metadata"
+```
+
+**Command Dependencies**:
+```yaml
+command_ecosystem_flow:
+  input_commands:
+    - "fundamental_analyst → twitter_fundamental_analysis"
+    - "trade_history → twitter_trade_history"
+    - "strategy_analysis → twitter_post_strategy"
+
+  validation_flow:
+    - "twitter_*_generate → twitter_*_validate → enhanced_content"
+
+  ecosystem_coordination:
+    - "social_media_strategist → twitter ecosystem positioning"
+    - "content_evaluator → twitter content quality assessment"
+```
+
+## Execution Examples
+
+### Direct Python Execution
+```python
+from script_registry import get_global_registry
+from script_config import ScriptConfig
+
+# Initialize
+config = ScriptConfig.from_environment()
+registry = get_global_registry(config)
+
+# Execute Twitter ecosystem command recommendation
+result = registry.execute_script(
+    "twitter_coordinator",
+    action="recommend_command",
+    content_type="fundamental_analysis",
+    content_source="AAPL_20250718",
+    validation_level="institutional"
+)
+
+# Execute specific Twitter content generation
+result = registry.execute_script(
+    "fundamental_analysis",
+    ticker="AAPL",
+    date="20250718",
+    validate_content=True,
+    output_format="twitter"
+)
+
+# Execute Twitter ecosystem validation
+result = registry.execute_script(
+    "twitter_coordinator",
+    action="validate_ecosystem",
+    validation_level="enhanced"
+)
+```
+
+### Command Line Execution
+```bash
+# Via content automation CLI - Twitter ecosystem coordination
+python {SCRIPTS_BASE}/content_automation_cli.py \
+    --ecosystem twitter \
+    --action recommend_command \
+    --content-type fundamental_analysis \
+    --content-source AAPL_20250718
+
+# Via Twitter ecosystem coordinator
+python {SCRIPTS_BASE}/twitter_ecosystem/twitter_coordinator.py \
+    --action recommend_command \
+    --content-type fundamental_analysis \
+    --validation-level institutional
+
+# Via direct Twitter content generation
+python {SCRIPTS_BASE}/content_automation_cli.py \
+    social twitter_post \
+    --ticker AAPL \
+    --template fundamental_analysis \
+    --format json \
+    --validate true
+
+# Ecosystem health monitoring
+python {SCRIPTS_BASE}/mcp_health_check.py --all-services
+python {SCRIPTS_BASE}/twitter_ecosystem/ecosystem_health.py --full-report
+```
+
+### Claude Command Execution
+```
+# Twitter ecosystem command recommendation
+/twitter action=recommend_command content_type=fundamental_analysis content_source=AAPL_20250718
+
+# Twitter ecosystem validation
+/twitter action=validate_ecosystem validation_level=enhanced
+
+# Help with Twitter command selection
+/twitter action=help content_type=trading_strategy
+
+# Specific Twitter content generation (delegates to appropriate command)
+/twitter action=generate content_type=fundamental_analysis ticker=AAPL date=20250718
+
+# Twitter ecosystem health check
+/twitter action=ecosystem_health
+```
+
+### Twitter Command Coordination Examples
+```
+# Fundamental analysis Twitter workflow
+/twitter action=recommend_command content_type=fundamental_analysis content_source=AAPL_20250718
+# → Recommends: /twitter_fundamental_analysis AAPL_20250718
+
+# Trading strategy Twitter workflow
+/twitter action=recommend_command content_type=trading_signal content_source=TSLA_20250718
+# → Recommends: /twitter_post_strategy TSLA_20250718
+
+# Performance reporting Twitter workflow
+/twitter action=recommend_command content_type=trade_performance content_source=portfolio_20250718
+# → Recommends: /twitter_trade_history portfolio_20250718
+
+# Content quality enhancement workflow
+/twitter action=recommend_command content_type=validation enhancement_target=institutional
+# → Recommends: /twitter_*_validate {validation_file_path}
+```
+
 ## Output Management
 
 ### File Organization
@@ -512,34 +878,30 @@ PREVENTION:
 - **Metadata Inheritance**: Quality scores and validation status propagation
 - **File Naming**: Consistent {TYPE}_{IDENTIFIER}_{DATE} patterns
 
-## Expert Tips & Best Practices
+## Usage Examples
 
-1. **Always verify data source availability before command execution**
-2. **Use validation commands when reliability <9.0/10**
-3. **Apply TrendSpider authority protocol for data conflicts**
-4. **Ensure MCP server connectivity for real-time data**
-5. **Review compliance requirements for your content type**
-6. **Optimize hooks for platform-specific engagement**
-7. **Monitor character counts for Twitter constraints**
-8. **Leverage template flexibility for narrative variety**
+### Basic Usage
+```
+/twitter action=recommend_command content_type=fundamental_analysis content_source=AAPL_20250718
+/twitter action=validate_ecosystem validation_level=standard
+```
 
----
+### Advanced Usage
+```
+/twitter action=recommend_command content_type=fundamental_analysis content_source=AAPL_20250718 validation_level=institutional
+```
 
-## Ecosystem Version History
-
-### Version 2.1.0 (2025-07-11)
-- **Added**: Social media strategist command integration
-- **Enhanced**: Cross-command dependencies documentation
-- **Added**: Shared validation framework documentation
-- **Improved**: Performance tracking integration points
-- **Enhanced**: Ecosystem health monitoring capabilities
-
-### Version 2.0.0 (Previous)
-- **Established**: 7 specialized Twitter commands
-- **Implemented**: DASV Phase 4 validation methodology
-- **Added**: Institutional quality standards (>9.0/10 reliability)
-- **Created**: Meta-command orchestration system
+### Validation Enhancement
+```
+/twitter action=ecosystem_health
+/twitter action=validate_ecosystem validation_level=enhanced
+```
 
 ---
 
-**Ready to assist with expert Twitter command selection and optimization. Provide your content or describe your Twitter posting needs, and I'll recommend the optimal command with detailed guidance for institutional-quality social media content generation.**
+**Integration with Framework**: This command integrates with the broader Sensylate ecosystem through standardized script registry, template system, CLI service integration, and validation framework protocols.
+
+**Author**: Cole Morton
+**Framework**: Twitter Ecosystem Coordination Framework
+**Confidence**: High - Comprehensive Twitter command orchestration with institutional-quality content generation
+**Data Quality**: High - Multi-command integration with validated content workflows

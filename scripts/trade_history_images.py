@@ -15,7 +15,7 @@ import re
 import sys
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional
 
 # Add project root to Python path
 project_root = Path(__file__).parent.parent
@@ -24,8 +24,6 @@ sys.path.insert(0, str(project_root))
 import matplotlib
 
 matplotlib.use("Agg")  # Use non-interactive backend
-import matplotlib.pyplot as plt
-import numpy as np
 
 from scripts.dashboard_generator import DashboardGenerator
 from scripts.utils.chart_generators import create_chart_generator
@@ -140,19 +138,28 @@ class TradeHistoryImageGenerator:
 
         if report_type:
             if report_type in self.REPORT_PATTERNS:
-                patterns.append(f"{report_type}*{date_str}.md")
+                if report_type == "HISTORICAL_PERFORMANCE_REPORT":
+                    # Look for historical reports in the historical subdirectory
+                    patterns.append(f"historical/*{date_str}.md")
+                else:
+                    patterns.append(f"{report_type}*{date_str}.md")
             else:
                 self.logger.warning(f"Unknown report type: {report_type}")
                 return []
         else:
             # Search for all known report types
             for report_prefix in self.REPORT_PATTERNS.keys():
-                patterns.append(f"{report_prefix}*{date_str}.md")
+                if report_prefix == "HISTORICAL_PERFORMANCE_REPORT":
+                    patterns.append(f"historical/*{date_str}.md")
+                else:
+                    patterns.append(f"{report_prefix}*{date_str}.md")
 
-        # Find matching files
+        # Find matching files (search recursively in subdirectories)
         found_reports = []
         for pattern in patterns:
             found_reports.extend(self.reports_dir.glob(pattern))
+            # Also search in subdirectories
+            found_reports.extend(self.reports_dir.glob(f"*/{pattern}"))
 
         # Sort by filename for consistent processing order
         return sorted(found_reports)
@@ -170,7 +177,7 @@ class TradeHistoryImageGenerator:
         self.logger.info(f"Processing report: {report_path.name}")
 
         # Determine report type
-        report_type = self._identify_report_type(report_path.name)
+        report_type = self._identify_report_type(str(report_path))
         if not report_type:
             self.logger.warning(
                 f"Could not identify report type for: {report_path.name}"
@@ -196,16 +203,22 @@ class TradeHistoryImageGenerator:
             )
             return []
 
-    def _identify_report_type(self, filename: str) -> Optional[str]:
+    def _identify_report_type(self, filepath: str) -> Optional[str]:
         """
-        Identify the report type from filename.
+        Identify the report type from file path.
 
         Args:
-            filename: Report filename
+            filepath: Report file path (can be filename or full path)
 
         Returns:
             Report type identifier or None
         """
+        # Check if it's in the historical directory
+        if "historical/" in filepath:
+            return "HISTORICAL_PERFORMANCE_REPORT"
+
+        # Check other patterns by filename
+        filename = Path(filepath).name
         for report_type in self.REPORT_PATTERNS.keys():
             if filename.startswith(report_type):
                 return report_type
@@ -302,12 +315,10 @@ class TradeHistoryImageGenerator:
         Returns:
             Target path for the generated image
         """
-        # Extract date from report filename
-        date_match = re.search(r"(\d{8})", report_path.name)
-        date_str = date_match.group(1) if date_match else "unknown"
+        # Extract date from report filename (for potential future use)
+        # date_match = re.search(r"(\d{8})", report_path.name)
 
         # Create filename based on report type
-        report_type = self._identify_report_type(report_path.name)
         base_name = report_path.stem  # filename without .md extension
 
         if mode == "dark":

@@ -48,6 +48,9 @@ function getFeatureFlags(): FeatureFlags {
       envToBoolean(import.meta.env.PUBLIC_FEATURE_ELEMENTS_PAGE) ?? true,
     authors_page:
       envToBoolean(import.meta.env.PUBLIC_FEATURE_AUTHORS_PAGE) ?? true,
+    charts_page:
+      envToBoolean(import.meta.env.PUBLIC_FEATURE_CHARTS_PAGE) ??
+      isDevelopment(),
   };
 }
 
@@ -64,6 +67,7 @@ function validateFeatureFlags(flags: FeatureFlags): void {
     "calculator_advanced",
     "elements_page",
     "authors_page",
+    "charts_page",
   ];
 
   for (const flag of requiredFlags) {

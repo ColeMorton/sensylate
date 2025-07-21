@@ -23,20 +23,12 @@ class ColorPalette:
     secondary_data: str = "#7e57c2"  # Purple
     tertiary_data: str = "#3179f5"  # Blue
 
-    # Extended palette
-    quaternary: str = "#ff7043"  # Orange
-    quinary: str = "#66bb6a"  # Green
-    senary: str = "#ec407a"  # Pink
-
     def get_extended_palette(self) -> list:
         """Get the full extended color palette as a list."""
         return [
             self.primary_data,
             self.secondary_data,
             self.tertiary_data,
-            self.quaternary,
-            self.quinary,
-            self.senary,
         ]
 
 
@@ -114,11 +106,6 @@ class ThemeManager:
                     "primary_data": "#26c6da",
                     "secondary_data": "#7e57c2",
                     "tertiary_data": "#3179f5",
-                    "extended_palette": {
-                        "quaternary": "#ff7043",
-                        "quinary": "#66bb6a",
-                        "senary": "#ec407a",
-                    },
                 },
                 "light_mode": {
                     "background": "#fff",
@@ -160,15 +147,11 @@ class ThemeManager:
     def _create_color_palette(self) -> ColorPalette:
         """Create color palette from configuration."""
         colors_config = self.config.get("design_system", {}).get("colors", {})
-        extended = colors_config.get("extended_palette", {})
 
         return ColorPalette(
             primary_data=colors_config.get("primary_data", "#26c6da"),
             secondary_data=colors_config.get("secondary_data", "#7e57c2"),
             tertiary_data=colors_config.get("tertiary_data", "#3179f5"),
-            quaternary=extended.get("quaternary", "#ff7043"),
-            quinary=extended.get("quinary", "#66bb6a"),
-            senary=extended.get("senary", "#ec407a"),
         )
 
     def _create_light_theme(self) -> ThemeColors:
@@ -234,8 +217,6 @@ class ThemeManager:
             "Excellent": self.color_palette.primary_data,  # Cyan
             "Good": self.color_palette.tertiary_data,  # Blue
             "Poor": self.color_palette.secondary_data,  # Purple
-            "Failed": self.color_palette.quaternary,  # Orange
-            "Poor Setup": self.color_palette.quinary,  # Green
         }
 
     def get_performance_colors(self) -> Dict[str, str]:

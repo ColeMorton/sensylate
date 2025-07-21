@@ -14,7 +14,7 @@
 
 🎯 Beating 48.5% breakeven threshold ✅
 
-📋 Full analysis: https://www.colemorton.com/blog/trading-performance-historical-20250626/
+📋 Full analysis: https://www.colemorton.com/blog/trading-performance-live-signals-20250716/
 
 • Total Trades: 15 completed signals
 • Win Rate: 53.33% (8 wins, 7 losses)

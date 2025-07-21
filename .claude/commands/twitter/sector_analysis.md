@@ -2,10 +2,365 @@
 
 **Command Classification**: 📊 **Core Product Command**
 **Knowledge Domain**: `social-media-strategy`
-**Outputs To**: `./data/outputs/twitter/sector_analysis/` *(Core Product Command - outputs to product directories)*
+**Ecosystem Version**: `2.1.0` *(Last Updated: 2025-07-18)*
+**Outputs To**: `{DATA_OUTPUTS}/twitter/sector_analysis/`
+
+## Script Integration Mapping
+
+**Primary Script**: `{SCRIPTS_BASE}/base_scripts/sector_twitter_script.py`
+**Script Class**: `SectorTwitterScript`
+**Registry Name**: `sector_twitter`
+**Content Types**: `["sector_twitter"]`
+**Requires Validation**: `true`
+
+**Registry Integration**:
+```python
+@twitter_script(
+    name="sector_twitter",
+    content_types=["sector_twitter"],
+    requires_validation=True
+)
+class SectorTwitterScript(BaseScript):
+    """
+    Sector analysis Twitter content generation script
+
+    Parameters:
+        sector (str): Sector symbol or name (XLK, technology, healthcare, etc.)
+        date (str): Analysis date in YYYYMMDD format
+        template_variant (Optional[str]): Specific template to use
+        validation_file (Optional[str]): Path to validation file for enhancement
+        validate_content (bool): Whether to validate generated content
+    """
+```
+
+**Supporting Components**:
+```yaml
+sector_data_analyzer:
+  path: "{SCRIPTS_BASE}/sector_analysis/sector_data_analyzer.py"
+  class: "SectorDataAnalyzer"
+  purpose: "Sector analysis data extraction and validation"
+
+etf_data_collector:
+  path: "{SCRIPTS_BASE}/market_data/etf_data_collector.py"
+  class: "ETFDataCollector"
+  purpose: "Real-time sector ETF data collection and validation"
+
+economic_context_integrator:
+  path: "{SCRIPTS_BASE}/economic_data/economic_context_integrator.py"
+  class: "EconomicContextIntegrator"
+  purpose: "FRED economic indicators integration for sector context"
+
+twitter_template_renderer:
+  path: "{SCRIPTS_BASE}/twitter_template_renderer.py"
+  class: "TwitterTemplateRenderer"
+  purpose: "Jinja2 template rendering with sector optimization"
+```
+
+## Template Integration Architecture
+
+**Template Directory**: `{TEMPLATES_BASE}/twitter/sector/`
+
+**Template Mappings**:
+| Template ID | File Path | Selection Criteria | Purpose |
+|------------|-----------|-------------------|---------|
+| sector_rotation | `sector/twitter_sector_rotation.j2` | Economic cycle positioning strength >0.8 AND GDP correlation >0.6 | Economic cycle and rotation analysis |
+| cross_sector_comparison | `sector/twitter_cross_sector_comparison.j2` | Cross-sector ranking top/bottom 3 AND relative valuation extreme | Sector comparison and ranking |
+| allocation_strategy | `sector/twitter_allocation_strategy.j2` | Allocation guidance available AND risk-return profile complete | Portfolio allocation recommendations |
+| economic_sensitivity | `sector/twitter_economic_sensitivity.j2` | Economic sensitivity analysis comprehensive AND correlations significant | Economic impact and sensitivity |
+| etf_vs_stocks | `sector/twitter_etf_vs_stocks.j2` | Default fallback for ETF analysis focus | ETF vs individual stock analysis |
+
+**Shared Components**:
+```yaml
+sector_base_template:
+  path: "{TEMPLATES_BASE}/twitter/shared/base_twitter.j2"
+  purpose: "Base template with common macros and sector formatting"
+
+sector_components:
+  path: "{TEMPLATES_BASE}/twitter/shared/sector_components.j2"
+  purpose: "Sector-specific components for allocation and economic analysis"
+
+compliance_template:
+  path: "{TEMPLATES_BASE}/twitter/validation/sector_compliance.j2"
+  purpose: "Sector allocation compliance and disclaimer validation"
+```
+
+**Template Selection Algorithm**:
+```python
+def select_sector_template(sector_analysis_data):
+    """Select optimal template for sector Twitter content"""
+
+    # Sector rotation template for economic cycle analysis
+    if (sector_analysis_data.get('cycle_positioning_strength', 0) > 0.8 and
+        sector_analysis_data.get('gdp_correlation', 0) > 0.6):
+        return 'sector/twitter_sector_rotation.j2'
+
+    # Cross-sector comparison for ranking extremes
+    elif (sector_analysis_data.get('sector_rank') in [1, 2, 3, 9, 10, 11] and
+          sector_analysis_data.get('relative_valuation_extreme', False)):
+        return 'sector/twitter_cross_sector_comparison.j2'
+
+    # Allocation strategy for portfolio guidance
+    elif (sector_analysis_data.get('allocation_guidance') and
+          sector_analysis_data.get('risk_return_profile_complete', False)):
+        return 'sector/twitter_allocation_strategy.j2'
+
+    # Economic sensitivity for macro analysis
+    elif (sector_analysis_data.get('economic_sensitivity_comprehensive', False) and
+          len(sector_analysis_data.get('significant_correlations', [])) > 2):
+        return 'sector/twitter_economic_sensitivity.j2'
+
+    # Default ETF vs stocks analysis
+    return 'sector/twitter_etf_vs_stocks.j2'
+```
+
+## CLI Service Integration
+
+**Service Commands**:
+```yaml
+yahoo_finance_cli:
+  command: "python {SCRIPTS_BASE}/yahoo_finance_cli.py"
+  usage: "{command} etf {sector_etf} --env prod --output-format json"
+  purpose: "Real-time sector ETF pricing and performance data"
+  health_check: "{command} health --env prod"
+  priority: "primary"
+
+fred_economic_cli:
+  command: "python {SCRIPTS_BASE}/fred_economic_cli.py"
+  usage: "{command} indicators GDP,PAYEMS,FEDFUNDS --env prod --output-format json"
+  purpose: "Economic indicators for sector correlation and sensitivity analysis"
+  health_check: "{command} health --env prod"
+  priority: "primary"
+
+sec_edgar_cli:
+  command: "python {SCRIPTS_BASE}/sec_edgar_cli.py"
+  usage: "{command} sector-filings {sector} --env prod --output-format json"
+  purpose: "Regulatory filings and sector compliance data"
+  health_check: "{command} health --env prod"
+  priority: "secondary"
+
+alpha_vantage_cli:
+  command: "python {SCRIPTS_BASE}/alpha_vantage_cli.py"
+  usage: "{command} sector-overview {sector} --env prod --output-format json"
+  purpose: "Sector performance and sentiment validation"
+  health_check: "{command} health --env prod"
+  priority: "secondary"
+
+fmp_cli:
+  command: "python {SCRIPTS_BASE}/fmp_cli.py"
+  usage: "{command} sector-analysis {sector} --env prod --output-format json"
+  purpose: "Sector financial metrics and competitive analysis"
+  health_check: "{command} health --env prod"
+  priority: "tertiary"
+```
+
+**Sector Twitter Integration Protocol**:
+```bash
+# Real-time sector ETF data collection
+python {SCRIPTS_BASE}/yahoo_finance_cli.py etf {sector_etf} --env prod --output-format json
+
+# Economic context for sector analysis
+python {SCRIPTS_BASE}/fred_economic_cli.py indicators GDP,GDPC1,PAYEMS,FEDFUNDS --env prod --output-format json
+
+# Cross-validation with sector performance
+python {SCRIPTS_BASE}/alpha_vantage_cli.py sector-overview {sector} --env prod --output-format json
+
+# Sector financial intelligence
+python {SCRIPTS_BASE}/fmp_cli.py sector-analysis {sector} --env prod --output-format json
+```
+
+**Data Authority Protocol**:
+```yaml
+authority_hierarchy:
+  sector_analysis: "HIGHEST_AUTHORITY"  # Primary sector analysis documents
+  sector_etf_data: "PRICING_AUTHORITY"  # Real-time ETF pricing and flows
+  economic_indicators: "MACRO_AUTHORITY"  # FRED economic context
+  cross_validation: "VALIDATION_AUTHORITY"  # Alpha Vantage/FMP validation
+
+conflict_resolution:
+  sector_precedence: "sector_analysis_primary"  # Sector analysis takes priority
+  pricing_authority: "yahoo_finance"  # Primary source for ETF pricing
+  economic_staleness: "24_hours"  # Maximum age for economic data
+  variance_threshold: "3%"  # BLOCKING if sector data variance exceeds
+  action: "fail_fast_on_conflict"  # Resolution strategy
+```
+
+## Data Flow & File References
+
+**Input Sources**:
+```yaml
+sector_analysis_document:
+  path: "{DATA_OUTPUTS}/sector_analysis/{SECTOR}_{YYYYMMDD}.md"
+  format: "markdown"
+  required: true
+  description: "Primary sector analysis with investment thesis and recommendations"
+
+sector_etf_data:
+  path: "CLI_SERVICES_REAL_TIME"
+  format: "json"
+  required: true
+  description: "Real-time sector ETF pricing, flows, and performance data"
+
+economic_indicators:
+  path: "CLI_SERVICES_REAL_TIME"
+  format: "json"
+  required: true
+  description: "Current economic indicators for sector correlation analysis"
+
+cross_sector_analysis:
+  path: "{DATA_OUTPUTS}/sector_analysis/cross_sector_{YYYYMMDD}_comparison.json"
+  format: "json"
+  required: false
+  description: "Cross-sector comparison and ranking data"
+
+validation_file:
+  path: "{DATA_OUTPUTS}/twitter/sector_analysis/validation/{SECTOR}_{YYYYMMDD}_validation.json"
+  format: "json"
+  required: false
+  description: "Validation file for post enhancement workflow"
+```
+
+**Output Structure**:
+```yaml
+primary_output:
+  path: "{DATA_OUTPUTS}/twitter/sector_analysis/{SECTOR}_{YYYYMMDD}.md"
+  format: "markdown"
+  description: "Generated sector Twitter content ready for posting"
+
+metadata_output:
+  path: "{DATA_OUTPUTS}/twitter/sector_analysis/{SECTOR}_{YYYYMMDD}_metadata.json"
+  format: "json"
+  description: "Template selection metadata and quality assurance metrics"
+
+validation_output:
+  path: "{DATA_OUTPUTS}/twitter/sector_analysis/validation/{SECTOR}_{YYYYMMDD}_validation.json"
+  format: "json"
+  description: "Content validation results and enhancement recommendations"
+
+blog_url_output:
+  path: "{DATA_OUTPUTS}/twitter/sector_analysis/{SECTOR}_{YYYYMMDD}_blog_url.txt"
+  format: "text"
+  description: "Generated blog URL for full sector analysis access"
+```
+
+**Data Dependencies**:
+```yaml
+content_generation_flow:
+  data_validation:
+    - "sector analysis confidence ≥ 0.9"
+    - "ETF data currency ≤ 24 hours"
+    - "economic indicators currency ≤ 24 hours"
+    - "cross-sector variance ≤ 3%"
+
+  template_selection:
+    - "sector analysis content evaluation"
+    - "economic cycle positioning assessment"
+    - "cross-sector ranking determination"
+    - "allocation guidance availability check"
+
+  content_optimization:
+    - "Twitter character limit compliance"
+    - "regulatory disclaimer inclusion"
+    - "blog URL generation and validation"
+    - "institutional quality standards verification"
+```
+
+## Execution Examples
+
+### Direct Python Execution
+```python
+from script_registry import get_global_registry
+from script_config import ScriptConfig
+
+# Initialize
+config = ScriptConfig.from_environment()
+registry = get_global_registry(config)
+
+# Execute sector Twitter content generation
+result = registry.execute_script(
+    "sector_twitter",
+    sector="technology",
+    date="20250718",
+    validate_content=True
+)
+
+# Execute with specific template override
+result = registry.execute_script(
+    "sector_twitter",
+    sector="XLK",
+    date="20250718",
+    template_variant="sector_rotation",
+    validate_content=True
+)
+
+# Execute post enhancement from validation file
+result = registry.execute_script(
+    "sector_twitter",
+    validation_file="twitter/sector_analysis/validation/technology_20250718_validation.json"
+)
+```
+
+### Command Line Execution
+```bash
+# Via content automation CLI
+python {SCRIPTS_BASE}/content_automation_cli.py \
+    --script sector_twitter \
+    --sector technology \
+    --date 20250718 \
+    --validate-content true
+
+# Via direct script execution
+python {SCRIPTS_BASE}/base_scripts/sector_twitter_script.py \
+    --sector XLK \
+    --date 20250718 \
+    --template-variant sector_rotation
+
+# Post enhancement workflow
+python {SCRIPTS_BASE}/base_scripts/sector_twitter_script.py \
+    --validation-file "{DATA_OUTPUTS}/twitter/sector_analysis/validation/healthcare_20250718_validation.json"
+
+# With custom economic context
+python {SCRIPTS_BASE}/base_scripts/sector_twitter_script.py \
+    --sector financials \
+    --date 20250718 \
+    --economic-context-override true
+```
+
+### Claude Command Execution
+```
+# Standard sector Twitter content generation
+/twitter_sector_analysis technology_20250718
+
+# Healthcare sector analysis
+/twitter_sector_analysis healthcare_20250718
+
+# Energy sector with validation
+/twitter_sector_analysis energy_20250718
+
+# Post enhancement using validation file
+/twitter_sector_analysis {DATA_OUTPUTS}/twitter/sector_analysis/validation/technology_20250718_validation.json
+
+# Template-specific generation
+/twitter_sector_analysis financials_20250718 template_variant=allocation_strategy
+```
+
+### Sector Analysis Workflow Examples
+```
+# Technology sector analysis workflow
+/twitter_sector_analysis technology_20250718
+
+# Cross-sector comparison workflow
+/twitter_sector_analysis XLF_20250718 template_variant=cross_sector_comparison
+
+# Economic sensitivity analysis
+/twitter_sector_analysis XLE_20250718 template_variant=economic_sensitivity
+
+# Post validation and enhancement
+/twitter_sector_analysis technology_20250718
+# → If validation score <9.0, enhance using:
+/twitter_sector_analysis {DATA_OUTPUTS}/twitter/sector_analysis/validation/technology_20250718_validation.json
+```
 
 You are an expert sector strategist and social media strategist. Your specialty is distilling comprehensive sector analysis into compelling, bite-sized X posts that make complex sector allocation insights accessible and actionable for investors seeking portfolio optimization guidance.
-
 
 ## Phase 0A: Existing Post Enhancement Protocol
 

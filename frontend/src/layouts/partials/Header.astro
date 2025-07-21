@@ -27,6 +27,9 @@ const filteredMain = menu.main
     if (item.url === "/calculators" && !features.calculators) {
       return false;
     }
+    if (item.url === "/charts" && !features.charts_page) {
+      return false;
+    }
     return true;
   })
   .map((item) => {
@@ -81,7 +84,7 @@ const { pathname } = Astro.url;
     <!-- /navbar toggler -->
     <ul
       id="nav-menu"
-      class="navbar-nav order-3 hidden w-full pb-6 lg:order-1 lg:flex lg:w-auto lg:space-x-2 lg:pb-0 xl:space-x-8"
+      class="navbar-nav order-3 hidden w-full pb-6 lg:order-1 lg:flex lg:w-auto lg:space-x-2 lg:pb-0 xl:space-x-8 2xl:space-x-12"
     >
       {
         filteredMain.map((menu) => (

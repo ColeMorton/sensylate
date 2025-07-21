@@ -3,7 +3,107 @@
 **Command Classification**: 🎯 **Assistant**
 **Knowledge Domain**: `fundamental-analysis-expertise`
 **Ecosystem Version**: `2.1.0` *(Last Updated: 2025-07-11)*
-**Outputs To**: `./data/outputs/fundamental_analysis/`
+**Outputs To**: `{DATA_OUTPUTS}/fundamental_analysis/`
+
+## Script Integration Mapping
+
+**DASV Workflow Scripts**:
+```yaml
+discovery_script:
+  path: "{SCRIPTS_BASE}/fundamental_analysis/fundamental_discovery.py"
+  class: "FundamentalDiscoveryScript"
+  phase: "Phase 1 - Multi-Source Data Collection"
+  registry_name: "fundamental_discovery"
+
+analysis_script:
+  path: "{SCRIPTS_BASE}/fundamental_analysis/fundamental_analysis.py"
+  class: "FundamentalAnalysisScript"
+  phase: "Phase 2 - Analytical Intelligence Transformation"
+  registry_name: "fundamental_analysis"
+
+synthesis_script:
+  path: "{SCRIPTS_BASE}/fundamental_analysis/investment_synthesis.py"
+  class: "InvestmentSynthesisScript"
+  phase: "Phase 3 - Institutional Document Generation"
+  registry_name: "investment_synthesis"
+
+validation_script:
+  path: "{SCRIPTS_BASE}/fundamental_analysis/analysis_validation.py"
+  class: "AnalysisValidationScript"
+  phase: "Phase 4 - Comprehensive Quality Assurance"
+  registry_name: "analysis_validation"
+```
+
+**Registry Integration**:
+```python
+# Individual phase scripts
+@twitter_script(
+    name="fundamental_discovery",
+    content_types=["fundamental_discovery"],
+    requires_validation=True
+)
+class FundamentalDiscoveryScript(BaseScript):
+
+@twitter_script(
+    name="fundamental_analysis",
+    content_types=["fundamental_analysis"],
+    requires_validation=True
+)
+class FundamentalAnalysisScript(BaseScript):
+
+@twitter_script(
+    name="investment_synthesis",
+    content_types=["investment_synthesis"],
+    requires_validation=True
+)
+class InvestmentSynthesisScript(BaseScript):
+
+@twitter_script(
+    name="analysis_validation",
+    content_types=["analysis_validation"],
+    requires_validation=False
+)
+class AnalysisValidationScript(BaseScript):
+```
+
+**Workflow Orchestration**:
+```python
+# Execute complete DASV workflow
+from script_registry import get_global_registry
+from script_config import ScriptConfig
+
+config = ScriptConfig.from_environment()
+registry = get_global_registry(config)
+
+# Full workflow execution
+phases = ["fundamental_discovery", "fundamental_analysis",
+          "investment_synthesis", "analysis_validation"]
+
+for phase in phases:
+    result = registry.execute_script(
+        phase,
+        ticker="AAPL",
+        date="20250718",
+        confidence_threshold=9.0
+    )
+```
+
+## Template Integration Architecture
+
+**Analysis Templates**:
+```yaml
+fundamental_analysis_template:
+  path: "{SCRIPTS_BASE}/templates/fundamental_analysis_enhanced.j2"
+  purpose: "Primary analysis document generation"
+
+validation_template:
+  path: "{SCRIPTS_BASE}/templates/validation_framework.j2"
+  purpose: "Quality assurance and validation scoring"
+
+sector_analysis_template:
+  path: "{SCRIPTS_BASE}/templates/analysis/sector_analysis_template.md"
+  purpose: "Sector-wide analysis specification"
+```
 
 ## Core Role & Perspective
 
@@ -208,32 +308,89 @@ CLI Service Configuration:
 - **Quality Assurance**: Built-in validation and health monitoring
 - **Performance Optimization**: Caching and error handling
 
-### CLI Commands Reference
-**Discovery Phase Commands**:
-```bash
-# Core market data validation
-python scripts/yahoo_finance_cli.py analyze {ticker} --env prod --output-format json
-python scripts/alpha_vantage_cli.py quote {ticker} --env prod --output-format json
-python scripts/fmp_cli.py profile {ticker} --env prod --output-format json
+## CLI Service Integration
 
-# Financial statements integration
-python scripts/fmp_cli.py financials {ticker} --statement-type cash-flow-statement --env prod --output-format json
-python scripts/fmp_cli.py insider {ticker} --env prod --output-format json
+**Service Commands**:
+```yaml
+yahoo_finance_cli:
+  command: "python {SCRIPTS_BASE}/yahoo_finance_cli.py"
+  usage: "{command} analyze {ticker} --env prod --output-format json"
+  purpose: "Core market data and financial statements"
+  health_check: "{command} health --env prod"
 
-# Economic context integration
-python scripts/fred_economic_cli.py rates --env prod --output-format json
-python scripts/coingecko_cli.py sentiment --env prod --output-format json
+alpha_vantage_cli:
+  command: "python {SCRIPTS_BASE}/alpha_vantage_cli.py"
+  usage: "{command} quote {ticker} --env prod --output-format json"
+  purpose: "Real-time quotes and sentiment analysis"
+  health_check: "{command} health --env prod"
+
+fmp_cli:
+  command: "python {SCRIPTS_BASE}/fmp_cli.py"
+  usage: "{command} profile {ticker} --env prod --output-format json"
+  purpose: "Advanced financials and company intelligence"
+  health_check: "{command} health --env prod"
+  additional_commands:
+    financials: "{command} financials {ticker} --statement-type cash-flow-statement --env prod --output-format json"
+    insider: "{command} insider {ticker} --env prod --output-format json"
+
+sec_edgar_cli:
+  command: "python {SCRIPTS_BASE}/sec_edgar_cli.py"
+  usage: "{command} filings {ticker} --env prod --output-format json"
+  purpose: "Regulatory filings and compliance data"
+  health_check: "{command} health --env prod"
+
+fred_economic_cli:
+  command: "python {SCRIPTS_BASE}/fred_economic_cli.py"
+  usage: "{command} rates --env prod --output-format json"
+  purpose: "Federal Reserve economic indicators"
+  health_check: "{command} health --env prod"
+
+coingecko_cli:
+  command: "python {SCRIPTS_BASE}/coingecko_cli.py"
+  usage: "{command} sentiment --env prod --output-format json"
+  purpose: "Cryptocurrency sentiment and risk appetite"
+  health_check: "{command} health --env prod"
+
+imf_cli:
+  command: "python {SCRIPTS_BASE}/imf_cli.py"
+  usage: "{command} global-indicators --env prod --output-format json"
+  purpose: "Global economic indicators and country risk"
+  health_check: "{command} health --env prod"
 ```
 
-**Validation Commands**:
+**Service Integration Protocol**:
 ```bash
-# Service health monitoring
-python {service}_cli.py health --env prod
+# Pre-execution health check (all services)
+for service in yahoo_finance alpha_vantage fmp sec_edgar fred_economic coingecko imf; do
+    python {SCRIPTS_BASE}/${service}_cli.py health --env prod
+done
 
-# Multi-source cross-validation
-python scripts/yahoo_finance_cli.py analyze {ticker} --env prod --output-format json
-python scripts/alpha_vantage_cli.py quote {ticker} --env prod --output-format json
-python scripts/fmp_cli.py profile {ticker} --env prod --output-format json
+# Discovery phase data collection
+python {SCRIPTS_BASE}/yahoo_finance_cli.py analyze {ticker} --env prod --output-format json
+python {SCRIPTS_BASE}/alpha_vantage_cli.py quote {ticker} --env prod --output-format json
+python {SCRIPTS_BASE}/fmp_cli.py profile {ticker} --env prod --output-format json
+
+# Economic context integration
+python {SCRIPTS_BASE}/fred_economic_cli.py rates --env prod --output-format json
+python {SCRIPTS_BASE}/coingecko_cli.py sentiment --env prod --output-format json
+
+# Validation cross-checks
+python {SCRIPTS_BASE}/yahoo_finance_cli.py analyze {ticker} --env prod --output-format json
+python {SCRIPTS_BASE}/alpha_vantage_cli.py quote {ticker} --env prod --output-format json
+```
+
+**Data Authority Protocol**:
+```yaml
+authority_hierarchy:
+  primary: "yahoo_finance"  # Highest authority for price data
+  secondary: "alpha_vantage"  # Backup quote source
+  validation: "fmp"  # Cross-validation source
+  economic_context: "fred_economic"  # Economic indicators
+
+conflict_resolution:
+  threshold: "2%"  # Maximum price variance before flag
+  action: "use_primary"  # Use Yahoo Finance for conflicts
+  logging: "comprehensive"  # Document all data conflicts
 ```
 
 ## Quality Standards Framework
@@ -427,44 +584,184 @@ PREVENTION:
 - **Level 3**: Manual review and validation enhancement
 - **Level 4**: Workflow abort with comprehensive issue documentation
 
-## Output Management
+## Data Flow & File References
 
-### File Organization
-**DASV Output Structure**:
-```
-./data/outputs/fundamental_analysis/
-├── discovery/{TICKER}_{YYYYMMDD}_discovery.json
-├── analysis/{TICKER}_{YYYYMMDD}_analysis.json
-├── {TICKER}_{YYYYMMDD}.md (synthesis)
-└── validation/{TICKER}_{YYYYMMDD}_validation.json
-```
+**Input Sources**:
+```yaml
+market_data:
+  path: "CLI_SERVICES_REAL_TIME"
+  format: "json"
+  required: true
+  description: "Real-time market data from 7 CLI financial services"
 
-### Quality Metadata
-**Comprehensive Tracking**:
-- **Confidence Scores**: Phase-by-phase confidence tracking
-- **CLI Service Health**: Real-time operational status
-- **Data Quality Metrics**: Completeness, freshness, consistency
-- **Economic Context**: FRED/CoinGecko integration status
-- **Validation Status**: Institutional certification status
+configuration:
+  path: "{SCRIPTS_BASE}/config/financial_services.yaml"
+  format: "yaml"
+  required: true
+  description: "API keys and service configuration"
 
-## Usage Examples
-
-### Single Phase Execution
-```
-Parameters: action=discover, ticker=AAPL, confidence_threshold=9.0
-Result: Discovery JSON with multi-source validation
+economic_indicators:
+  path: "FRED_API_REAL_TIME"
+  format: "json"
+  required: false
+  description: "Real-time Federal Reserve economic indicators"
 ```
 
-### Full Workflow Execution
-```
-Parameters: action=full_workflow, ticker=MSFT, validation_enhancement=true
-Result: Complete DASV cycle with institutional certification
+**Output Structure**:
+```yaml
+discovery_output:
+  path: "{DATA_OUTPUTS}/fundamental_analysis/discovery/{TICKER}_{YYYYMMDD}_discovery.json"
+  format: "json"
+  description: "Phase 1 - Multi-source data collection results"
+
+analysis_output:
+  path: "{DATA_OUTPUTS}/fundamental_analysis/analysis/{TICKER}_{YYYYMMDD}_analysis.json"
+  format: "json"
+  description: "Phase 2 - Analytical intelligence transformation"
+
+synthesis_output:
+  path: "{DATA_OUTPUTS}/fundamental_analysis/{TICKER}_{YYYYMMDD}.md"
+  format: "markdown"
+  description: "Phase 3 - Institutional-quality document"
+
+validation_output:
+  path: "{DATA_OUTPUTS}/fundamental_analysis/validation/{TICKER}_{YYYYMMDD}_validation.json"
+  format: "json"
+  description: "Phase 4 - Quality assurance results"
+
+metadata_output:
+  path: "{DATA_OUTPUTS}/fundamental_analysis/{TICKER}_{YYYYMMDD}_metadata.json"
+  format: "json"
+  description: "Execution metadata and quality tracking"
 ```
 
-### Troubleshooting Support
+**Data Dependencies**:
+```yaml
+phase_dependencies:
+  discovery: []  # No dependencies - source phase
+  analysis: ["discovery"]  # Requires discovery output
+  synthesis: ["discovery", "analysis"]  # Requires both previous phases
+  validation: ["discovery", "analysis", "synthesis"]  # Requires all phases
+
+file_inheritance:
+  analysis_references_discovery: "{DATA_OUTPUTS}/fundamental_analysis/discovery/{TICKER}_{YYYYMMDD}_discovery.json"
+  synthesis_references_both: ["discovery_file", "analysis_file"]
+  validation_references_all: ["discovery_file", "analysis_file", "synthesis_file"]
 ```
-Parameters: action=troubleshoot, ticker=GOOGL, date=20250708
-Result: Diagnostic analysis with resolution recommendations
+
+**Quality Metadata Structure**:
+```json
+{
+  "metadata": {
+    "command_name": "fundamental_analyst",
+    "execution_timestamp": "ISO_8601_format",
+    "framework_phase": "discover|analyze|synthesize|validate|full_workflow",
+    "ticker": "TICKER_SYMBOL",
+    "analysis_date": "YYYYMMDD",
+    "methodology": "DASV_framework_institutional_quality"
+  },
+  "execution_context": {
+    "cli_services_health": {
+      "yahoo_finance": "healthy|degraded|failed",
+      "alpha_vantage": "healthy|degraded|failed",
+      "fmp": "healthy|degraded|failed",
+      "sec_edgar": "healthy|degraded|failed",
+      "fred_economic": "healthy|degraded|failed",
+      "coingecko": "healthy|degraded|failed",
+      "imf": "healthy|degraded|failed"
+    },
+    "data_quality_metrics": {
+      "completeness": "percentage",
+      "freshness": "timestamp_age",
+      "consistency": "cross_source_variance"
+    }
+  },
+  "quality_assessment": {
+    "phase_confidence_scores": {
+      "discovery": "9.X/10.0",
+      "analysis": "9.X/10.0",
+      "synthesis": "9.X/10.0",
+      "validation": "9.X/10.0"
+    },
+    "overall_confidence": "9.X/10.0",
+    "institutional_ready": "true|false",
+    "validation_status": "PASSED|FLAGGED|FAILED"
+  }
+}
+
+## Execution Examples
+
+### Direct Python Execution
+```python
+from script_registry import get_global_registry
+from script_config import ScriptConfig
+
+# Initialize
+config = ScriptConfig.from_environment()
+registry = get_global_registry(config)
+
+# Execute single phase
+discovery_result = registry.execute_script(
+    "fundamental_discovery",
+    ticker="AAPL",
+    date="20250718",
+    confidence_threshold=9.0
+)
+
+# Execute full DASV workflow
+phases = ["fundamental_discovery", "fundamental_analysis",
+          "investment_synthesis", "analysis_validation"]
+
+workflow_results = {}
+for phase in phases:
+    workflow_results[phase] = registry.execute_script(
+        phase,
+        ticker="MSFT",
+        date="20250718",
+        validation_enhancement=True
+    )
+```
+
+### Command Line Execution
+```bash
+# Via content automation CLI
+python {SCRIPTS_BASE}/content_automation_cli.py \
+    --script fundamental_discovery \
+    --ticker AAPL \
+    --date 20250718 \
+    --confidence-threshold 9.0
+
+# Via direct script execution
+python {SCRIPTS_BASE}/fundamental_analysis/fundamental_discovery.py \
+    --ticker AAPL \
+    --date 20250718 \
+    --config-file {SCRIPTS_BASE}/config/fundamental_analysis.yaml
+
+# Full workflow execution
+for phase in fundamental_discovery fundamental_analysis investment_synthesis analysis_validation; do
+    python {SCRIPTS_BASE}/fundamental_analysis/${phase}.py \
+        --ticker MSFT \
+        --date 20250718 \
+        --validation-enhancement true
+done
+```
+
+### Claude Command Execution
+```
+# Single phase execution
+/fundamental_analyst action=discover ticker=AAPL date=20250718
+
+# Full workflow with enhanced validation
+/fundamental_analyst action=full_workflow ticker=MSFT validation_enhancement=true
+
+# Troubleshooting specific issue
+/fundamental_analyst action=troubleshoot ticker=GOOGL date=20250708
+
+# Phase-specific execution
+/fundamental_analyst action=analyze ticker=TSLA confidence_threshold=9.5
+
+# Validation-only execution
+/fundamental_analyst action=validate ticker=NFLX date=20250715
 ```
 
 ## Integration Benefits

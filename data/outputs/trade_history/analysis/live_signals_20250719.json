@@ -1,0 +1,245 @@
+{
+  "portfolio": "live_signals",
+  "analysis_metadata": {
+    "execution_timestamp": "2025-07-19T10:29:16.164782",
+    "protocol_version": "DASV_Phase_2_Statistical_Analysis",
+    "confidence_score": 0.8,
+    "sample_size_adequacy": 0.95,
+    "statistical_significance": 0.5,
+    "signal_effectiveness_confidence": 0.9
+  },
+  "sample_validation": {
+    "total_trades": 38,
+    "closed_trades_analyzed": 29,
+    "active_trades_portfolio": 9,
+    "minimum_sample_met": true,
+    "statistical_power": 0.9,
+    "methodology_compliance": "Closed trades only for performance calculations"
+  },
+  "signal_effectiveness": {
+    "entry_signal_analysis": {
+      "win_rate_by_strategy": {
+        "EMA": {
+          "win_rate": 0.6666666666666666,
+          "total_trades": 6,
+          "winners": 4,
+          "losers": 2,
+          "average_return_winners": 0.24242500000000003,
+          "average_return_losers": -0.0225,
+          "sample_size_adequacy": false,
+          "confidence": 0.7
+        },
+        "SMA": {
+          "win_rate": 0.5217391304347826,
+          "total_trades": 23,
+          "winners": 12,
+          "losers": 11,
+          "average_return_winners": 0.10322633333333335,
+          "average_return_losers": -0.05322754545454545,
+          "sample_size_adequacy": true,
+          "confidence": 0.95
+        }
+      },
+      "total_strategies_analyzed": 2,
+      "strategies_excluded": 0
+    },
+    "exit_signal_analysis": {
+      "exit_efficiency_metrics": {
+        "overall_exit_efficiency": -0.7771720000000001,
+        "mfe_capture_rate": 11.391806603984294,
+        "sample_size": 17,
+        "confidence": 0.95
+      }
+    }
+  },
+  "statistical_analysis": {
+    "statistical_analysis": {
+      "return_distribution": {
+        "mean_return": 0.05441079310344828,
+        "median_return": 0.017825,
+        "std_deviation": 0.13253100198346568,
+        "skewness": 0.8929949481705036,
+        "kurtosis": 0.1789254034568888,
+        "normality_test_p_value": 0.028174340102902852,
+        "sample_size": 29,
+        "confidence": 0.95
+      },
+      "statistical_significance": {
+        "return_vs_zero": {
+          "t_statistic": 2.210887141602702,
+          "p_value": 0.035381503468608654,
+          "significant_at_95": true,
+          "confidence_interval_95": [
+            0.00399869603771958,
+            0.10482289016917698
+          ]
+        }
+      },
+      "risk_adjusted_metrics": {
+        "sharpe_ratio": 0.41055143543120926,
+        "sortino_ratio": 1.117306691082126,
+        "downside_deviation": 0.04869817171751716,
+        "confidence": 0.9
+      }
+    },
+    "performance_metrics": {
+      "win_rate": 0.5517241379310345,
+      "total_wins": 16,
+      "total_losses": 13,
+      "total_pnl": 647.4145120000003,
+      "profit_factor": 5.111613097573193,
+      "expectancy": 0.05441079310344828,
+      "sample_size": 29,
+      "confidence": 0.95
+    }
+  },
+  "performance_measurement": {},
+  "pattern_recognition": {
+    "trade_quality_classification": {
+      "Excellent": {
+        "count": 14,
+        "percentage": 0.4827586206896552,
+        "avg_return": 0.13460699999999998,
+        "characteristics": [
+          "long_duration",
+          "high_performance",
+          "optimal_timing"
+        ]
+      },
+      "Poor": {
+        "count": 7,
+        "percentage": 0.2413793103448276,
+        "avg_return": -0.009493857142857142,
+        "characteristics": [
+          "medium_duration",
+          "poor_timing",
+          "suboptimal_execution"
+        ]
+      },
+      "Poor Setup - High Risk, Low Reward": {
+        "count": 2,
+        "percentage": 0.06896551724137931,
+        "avg_return": -0.0855695,
+        "characteristics": [
+          "medium_duration",
+          "poor_timing",
+          "suboptimal_execution"
+        ]
+      },
+      "Failed to Capture Upside": {
+        "count": 4,
+        "percentage": 0.13793103448275862,
+        "avg_return": -0.08587975,
+        "characteristics": [
+          "medium_duration",
+          "poor_timing",
+          "suboptimal_execution"
+        ]
+      },
+      "Good": {
+        "count": 2,
+        "percentage": 0.06896551724137931,
+        "avg_return": 0.137265,
+        "characteristics": [
+          "long_duration",
+          "high_performance",
+          "optimal_timing"
+        ]
+      }
+    },
+    "pattern_recognition": {
+      "signal_temporal_patterns": {
+        "monthly_effectiveness": {
+          "month_4": {
+            "trade_count": 11,
+            "win_rate": 0.5454545454545454,
+            "avg_return": 0.06018372727272728
+          },
+          "month_5": {
+            "trade_count": 12,
+            "win_rate": 0.6666666666666666,
+            "avg_return": 0.06469841666666667
+          },
+          "month_6": {
+            "trade_count": 6,
+            "win_rate": 0.3333333333333333,
+            "avg_return": 0.023251833333333336
+          }
+        }
+      },
+      "sample_size": 29,
+      "confidence": 0.85
+    }
+  },
+  "optimization_opportunities": {
+    "entry_signal_enhancements": [
+      {
+        "opportunity": "Improve SMA signal quality",
+        "current_win_rate": 0.5217391304347826,
+        "potential_improvement": "10-15% win rate increase through signal refinement",
+        "implementation": "Add confirmation filters for SMA signals",
+        "confidence": 0.8
+      }
+    ],
+    "exit_signal_refinements": [
+      {
+        "opportunity": "Improve exit timing efficiency",
+        "current_efficiency": -0.7771720000000001,
+        "potential_improvement": "157.7% efficiency improvement",
+        "implementation": "Implement trailing stop optimization",
+        "confidence": 0.95
+      }
+    ],
+    "strategy_parameter_optimization": [
+      {
+        "opportunity": "Increase statistical significance",
+        "current_p_value": 1.0,
+        "requirement": "P-value < 0.05 for statistical significance",
+        "implementation": "Increase sample size or improve signal quality",
+        "confidence": 0.9
+      }
+    ]
+  },
+  "risk_assessment": {
+    "drawdown_analysis": {
+      "max_drawdown": -0.47295700000000007,
+      "avg_drawdown": -0.19747752380952394,
+      "downside_deviation": 0.04869817171751716,
+      "confidence": 0.9
+    },
+    "portfolio_risk_metrics": {
+      "active_positions": 9,
+      "sector_concentration": {
+        "Technology": 0.4444444444444444,
+        "Other": 0.3333333333333333,
+        "Financials": 0.1111111111111111,
+        "Healthcare": 0.1111111111111111
+      },
+      "position_diversification": 0.4444444444444444,
+      "confidence": 0.8
+    }
+  },
+  "analysis_quality_assessment": {
+    "overall_confidence": 0.8,
+    "sample_size_confidence": 0.95,
+    "statistical_robustness": 0.5,
+    "signal_analysis_confidence": 0.9,
+    "methodology_compliance": true,
+    "conservative_scoring": true,
+    "limitations": []
+  },
+  "next_phase_inputs": {
+    "synthesis_ready": true,
+    "confidence_threshold_met": false,
+    "analysis_package_path": "/Users/colemorton/Projects/sensylate/data/outputs/trade_history/analysis/live_signals_20250719.json",
+    "critical_findings": [
+      "Strategy returns lack statistical significance - require larger sample or improved signals"
+    ],
+    "report_focus_areas": [
+      "signal_effectiveness_optimization",
+      "statistical_performance_validation",
+      "risk_management_enhancement",
+      "strategy_parameter_tuning"
+    ]
+  }
+}
