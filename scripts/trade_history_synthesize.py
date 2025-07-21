@@ -134,7 +134,7 @@ class DASVPhase3Synthesizer:
 - **Strategy Mix**: Based on discovery data distribution
 
 ### Key Performance Metrics
-- **EXPECTANCY**: Risk-adjusted expectancy calculation from analysis data
+- **Expectancy**: Risk-adjusted expectancy calculation from analysis data
 - **Best Trade**: Top performer from closed trades
 - **Worst Trade**: Largest loss from closed trades
 - **Profit Factor**: {data['analysis']['risk_analysis'].get('profit_factor', 0):.2f}

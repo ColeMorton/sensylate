@@ -16,17 +16,30 @@ import ImageMod from "./components/ImageMod.astro";
 
 const { post } = Astro.props;
 
+// Validate post exists
+if (!post) {
+  throw new Error("Post not found: Unable to render undefined post entry");
+}
+
 // Determine collection type from post.collection
-const collectionType = post.collection;
+const collectionType = post.collection || "blog";
 const COLLECTION_FOLDER = collectionType;
 
 const posts = await getSinglePage(COLLECTION_FOLDER);
 const similarPosts = similarItems(post, posts);
 const { Content } = await render(post);
-const { title, description, categories, image, date, tags, author } = post.data;
+const {
+  title,
+  description,
+  categories = [],
+  image,
+  date,
+  tags = [],
+  author,
+} = post.data || {};
 
 // Get raw content for meta analysis
-const rawContent = post.body;
+const rawContent = post.body || "";
 
 // Generate appropriate URLs based on collection type
 const getCategoryUrl = (category: string) => {
