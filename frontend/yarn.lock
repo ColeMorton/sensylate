@@ -7917,6 +7917,11 @@ picomatch@^4.0.2:
   resolved "https://registry.npmjs.org/picomatch/-/picomatch-4.0.2.tgz"
   integrity sha512-M7BAV6Rlcy5u+m6oPhAPFgJTzAioX/6B0DxyvDlo9l8+T3nLKbrczg2WLUyzd45L8RqfUMyGPzekbMvX2Ldkwg==
 
+plotly.js-basic-dist@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/plotly.js-basic-dist/-/plotly.js-basic-dist-3.0.1.tgz#a053d32c195e8500839c670ce2ca07958e1e36e7"
+  integrity sha512-TFhJjbCdOSp8IhxThlcaE9doaiBQ8gdFkBoyJ1UrsnLjJzsSGkNfVd2jl51WtOMiAxMSW0F1dtELEju4/cicnQ==
+
 plotly.js@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/plotly.js/-/plotly.js-3.0.1.tgz#59372295302e8a9f93c70ccc9920ad54b9859886"

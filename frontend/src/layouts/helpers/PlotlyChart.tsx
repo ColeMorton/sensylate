@@ -22,7 +22,7 @@ const Plot = lazy(() => {
   }
 
   return import("react-plotly.js/factory").then((factory) => {
-    const Plotly = require("plotly.js-basic-dist-min");
+    const Plotly = require("plotly.js-basic-dist");
     return { default: factory.default(Plotly) };
   });
 });
