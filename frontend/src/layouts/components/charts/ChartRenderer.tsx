@@ -17,7 +17,7 @@ const Plot = lazy(() => {
   }
 
   return import("react-plotly.js/factory").then(async (factory) => {
-    const Plotly = await import("plotly.js-basic-dist-min");
+    const Plotly = await import("plotly.js-basic-dist");
     return { default: factory.default(Plotly) };
   });
 });
