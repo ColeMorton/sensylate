@@ -184,23 +184,30 @@ class DashboardDataParser:
 
                 if len(parts) >= 8:
                     try:
+                        # Original table format: | Rank | Ticker | P&L ($) | Return (%) | Duration | Strategy | Quality | X/Twitter Link |
                         rank = int(parts[0])
                         ticker = parts[1].replace("**", "").strip()
-                        strategy = parts[2]
-                        entry_date = parts[3]
-                        exit_date = parts[4]
+                        # parts[2] is P&L ($) - skip for now
 
-                        # Extract return percentage
+                        # Extract return percentage from column 3
                         return_str = (
-                            parts[5].replace("**", "").replace("%", "").replace("+", "")
+                            parts[3].replace("**", "").replace("%", "").replace("+", "")
                         )
                         return_pct = float(return_str)
 
-                        # Extract duration
-                        duration_str = parts[6].replace("d", "").strip()
+                        # Extract duration from column 4
+                        duration_str = parts[4].replace("d", "").strip()
                         duration_days = int(duration_str)
 
-                        quality = parts[7]
+                        # Strategy is in column 5
+                        strategy = parts[5]
+
+                        # Quality is in column 6
+                        quality = parts[6]
+
+                        # Use placeholder dates since original format doesn't include them
+                        entry_date = "N/A"
+                        exit_date = "N/A"
 
                         trades.append(
                             TradeData(
@@ -225,33 +232,53 @@ class DashboardDataParser:
         """Extract monthly performance data."""
         monthly_data = []
 
-        # Pattern to match monthly sections
-        monthly_pattern = r"###\s*(\w+)\s*(\d{4})\s*-[^#]+(.*?)(?=###|\n---|\Z)"
+        # Fixed pattern to match monthly sections - properly captures section content
+        monthly_pattern = r"###\s*(\w+)\s*(\d+)\s*-\s*[^\n]+\n(.*?)(?=###|\Z)"
 
         for match in re.finditer(monthly_pattern, content, re.DOTALL):
             month = match.group(1)
             year = int(match.group(2))
             section_content = match.group(3)
 
-            # Extract metrics from the section
+            # Debug logging for troubleshooting
+            self.logger.debug(f"Parsing monthly section: {month} {year}")
+            self.logger.debug(f"Section content length: {len(section_content)}")
+            self.logger.debug(f"Section content preview: {repr(section_content[:100])}")
+
+            # Extract metrics from the section with improved patterns
             trades_match = re.search(r"\*\*Trades Closed\*\*:\s*(\d+)", section_content)
             trades_closed = int(trades_match.group(1)) if trades_match else 0
+            if not trades_match:
+                self.logger.warning(
+                    f"Could not extract trades closed for {month} {year}"
+                )
 
             win_rate_match = re.search(
-                r"\*\*Win Rate\*\*:\s*([\d.]+)%", section_content
+                r"\*\*Win Rate\*\*:\s*([\d.]+)%?", section_content
             )
             win_rate = float(win_rate_match.group(1)) if win_rate_match else 0.0
+            if not win_rate_match:
+                self.logger.warning(f"Could not extract win rate for {month} {year}")
 
             avg_return_match = re.search(
-                r"\*\*Average Return\*\*:\s*([+-]?[\d.]+)%", section_content
+                r"\*\*Average Return\*\*:\s*([+-]?[\d.]+)%?", section_content
             )
             avg_return = float(avg_return_match.group(1)) if avg_return_match else 0.0
+            if not avg_return_match:
+                self.logger.warning(
+                    f"Could not extract average return for {month} {year}"
+                )
 
             # Extract market context
             context_match = re.search(
                 r"\*\*Market Context\*\*:\s*([^\n]*)", section_content
             )
             market_context = context_match.group(1).strip() if context_match else ""
+
+            # Log extracted values for validation
+            self.logger.debug(
+                f"Extracted: {month} {year} - Trades: {trades_closed}, Win Rate: {win_rate}%, Avg Return: {avg_return}%"
+            )
 
             monthly_data.append(
                 MonthlyPerformance(

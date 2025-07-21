@@ -1,0 +1,56 @@
+import React from "react";
+import type { ChartDisplayProps } from "@/types/ChartTypes";
+import ChartContainer from "@/components/charts/ChartContainer";
+import PortfolioChart from "@/components/charts/PortfolioChart";
+
+const ChartDisplay: React.FC<ChartDisplayProps> = ({
+  title,
+  category,
+  description,
+  chartType = "apple-stock",
+  className = "",
+}) => {
+  // Handle unsupported chart types
+  const supportedChartTypes = [
+    "apple-stock",
+    "portfolio-value-comparison",
+    "returns-comparison",
+    "portfolio-drawdowns",
+    "normalized-performance",
+  ];
+
+  if (!supportedChartTypes.includes(chartType)) {
+    return (
+      <ChartContainer
+        title={title}
+        category={category}
+        description={description}
+        className={className}
+      >
+        <div className="flex min-h-[400px] items-center justify-center rounded-lg bg-blue-100 p-8 text-center dark:bg-blue-900">
+          <div>
+            <p className="font-semibold text-blue-700 dark:text-blue-300">
+              📊 Charts Foundation Ready
+            </p>
+            <p className="mt-2 text-sm text-blue-600 dark:text-blue-400">
+              More visualizations coming soon
+            </p>
+          </div>
+        </div>
+      </ChartContainer>
+    );
+  }
+
+  return (
+    <ChartContainer
+      title={title}
+      category={category}
+      description={description}
+      className={className}
+    >
+      <PortfolioChart chartType={chartType} title={title} />
+    </ChartContainer>
+  );
+};
+
+export default ChartDisplay;

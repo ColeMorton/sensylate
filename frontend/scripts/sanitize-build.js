@@ -58,6 +58,22 @@ const IGNORE_PATTERNS = [
 
   // CSS selectors
   /input\[type=password\]/i,
+
+  // Plotly.js library patterns (legitimate library code)
+  /plotly.*api_key/i, // Plotly mapbox integration
+  /stamen.*api_key/i, // Plotly stamen map tiles
+  /mapbox.*access_token/i, // Plotly mapbox integration
+  /StructArrayLayout.*[A-Za-z0-9]{32,}/i, // Plotly WebGL struct layouts
+  /plotly.*access_token/i, // Plotly access token examples
+  /EVENTS_URL.*access_token/i, // Plotly analytics
+  /"0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"/i, // Plotly character set
+  /StructArrayLayout[0-9a-zA-Z]+/i, // Plotly WebGL layouts
+  /'my-access-token'/i, // Plotly documentation example
+  /slice\(-9\).*api_key/i, // Plotly API key slice check
+  /indexOf.*access_token/i, // Plotly access token index check
+  /\.params\.push.*access_token/i, // Plotly URL parameter building
+  /_mapboxAccessToken/i, // Plotly mapbox token variable
+  /styleValueDflt/i, // Plotly style defaults
 ];
 
 // Allowed public prefixes (these are safe to expose)

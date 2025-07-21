@@ -1,7 +1,7 @@
 ---
 title: "Live Signals Historical Performance Report - July 2025"
-meta_title: "Live Signals Trading Performance Analysis - 62.1% Win Rate | July 2025"
-description: "Comprehensive analysis of 29 closed live signal trades with 62.1% win rate and $572.21 total return. EMA strategies outperformed SMA with 85.7% win rate. Live signals posted on X/Twitter @colemorton7 with single unit position sizing."
+meta_title: "Live Signals Trading Performance Analysis - 55.17% Win Rate | July 2025"
+description: "Comprehensive analysis of 29 closed live signal trades with 55.17% win rate and $572.21 total return. EMA strategies outperformed SMA with 85.7% win rate. Live signals posted on X/Twitter @colemorton7 with single unit position sizing."
 date: 2025-07-18T10:00:00Z
 image: "/images/tradingview/HISTORICAL_PERFORMANCE_REPORT_20250717.png"
 authors: ["Cole Morton", "Claude"]

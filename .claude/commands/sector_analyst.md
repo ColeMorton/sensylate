@@ -2,8 +2,110 @@
 
 **Command Classification**: 🎯 **Assistant**
 **Knowledge Domain**: `sector-analysis-expertise`
-**Ecosystem Version**: `2.1.0` *(Last Updated: 2025-07-11)*
-**Outputs To**: `./data/outputs/sector_analysis/`
+**Ecosystem Version**: `2.1.0` *(Last Updated: 2025-07-18)*
+**Outputs To**: `{DATA_OUTPUTS}/sector_analysis/`
+
+## Script Integration Mapping
+
+**DASV Sector Workflow Scripts**:
+```yaml
+sector_discovery_script:
+  path: "{SCRIPTS_BASE}/sector_analysis/sector_discovery.py"
+  class: "SectorDiscoveryScript"
+  phase: "Phase 1 - Multi-Company Data Collection"
+  registry_name: "sector_discovery"
+
+sector_analysis_script:
+  path: "{SCRIPTS_BASE}/sector_analysis/sector_analysis.py"
+  class: "SectorAnalysisScript"
+  phase: "Phase 2 - Sector-Wide Intelligence Transformation"
+  registry_name: "sector_analysis"
+
+sector_synthesis_script:
+  path: "{SCRIPTS_BASE}/sector_analysis/sector_synthesis.py"
+  class: "SectorSynthesisScript"
+  phase: "Phase 3 - Institutional Sector Allocation"
+  registry_name: "sector_synthesis"
+
+sector_validation_script:
+  path: "{SCRIPTS_BASE}/sector_analysis/sector_validation.py"
+  class: "SectorValidationScript"
+  phase: "Phase 4 - Comprehensive Sector Validation"
+  registry_name: "sector_validation"
+```
+
+**Registry Integration**:
+```python
+# Multi-company sector workflow scripts
+@twitter_script(
+    name="sector_discovery",
+    content_types=["sector_discovery"],
+    requires_validation=True
+)
+class SectorDiscoveryScript(BaseScript):
+
+@twitter_script(
+    name="sector_analysis",
+    content_types=["sector_analysis"],
+    requires_validation=True
+)
+class SectorAnalysisScript(BaseScript):
+
+@twitter_script(
+    name="sector_synthesis",
+    content_types=["sector_synthesis"],
+    requires_validation=True
+)
+class SectorSynthesisScript(BaseScript):
+
+@twitter_script(
+    name="sector_validation",
+    content_types=["sector_validation"],
+    requires_validation=False
+)
+class SectorValidationScript(BaseScript):
+```
+
+**Multi-Company Orchestration**:
+```python
+# Execute sector analysis across multiple companies
+from script_registry import get_global_registry
+from script_config import ScriptConfig
+
+config = ScriptConfig.from_environment()
+registry = get_global_registry(config)
+
+# Sector workflow with 5-15 companies
+sector_companies = ["AAPL", "MSFT", "GOOGL", "AMZN", "META"]  # Technology sector example
+phases = ["sector_discovery", "sector_analysis", "sector_synthesis", "sector_validation"]
+
+for phase in phases:
+    result = registry.execute_script(
+        phase,
+        sector="technology",
+        companies=sector_companies,
+        date="20250718",
+        companies_count=len(sector_companies),
+        confidence_threshold=9.0
+    )
+```
+
+## Template Integration Architecture
+
+**Sector Analysis Templates**:
+```yaml
+sector_analysis_template:
+  path: "{SCRIPTS_BASE}/templates/analysis/sector_analysis_template.md"
+  purpose: "Primary sector allocation document generation"
+
+sector_validation_template:
+  path: "{SCRIPTS_BASE}/templates/validation_framework.j2"
+  purpose: "Multi-company quality assurance and validation scoring"
+
+etf_analysis_template:
+  path: "{SCRIPTS_BASE}/templates/sector/etf_composition_analysis.j2"
+  purpose: "Sector ETF consistency verification"
+```
 
 ## Core Role & Perspective
 
@@ -334,19 +436,170 @@ PREVENTION:
 - **Level 3**: Manual review and data quality documentation
 - **Level 4**: Workflow abort with comprehensive issue documentation
 
-## Sector-Specific CLI Integration
+## CLI Service Integration
 
-### Multi-Company Data Architecture
-**Sector-Wide 7-Source Integration**:
+**Service Commands**:
 ```yaml
-Sector CLI Service Configuration:
-├── Yahoo Finance CLI: Multi-company market data + sector ETF analysis
-├── Alpha Vantage CLI: Real-time quotes across sector companies
-├── FMP CLI: Sector financial intelligence + competitive metrics
-├── SEC EDGAR CLI: Regulatory environment affecting sector
-├── FRED Economic CLI: Sector-sensitive economic indicators
-├── CoinGecko CLI: Risk appetite + sector correlation analysis
-└── IMF CLI: Global context + sector international exposure
+yahoo_finance_cli:
+  command: "python {SCRIPTS_BASE}/yahoo_finance_cli.py"
+  usage: "{command} analyze {sector_etf} {companies} --env prod --output-format json"
+  purpose: "Multi-company market data + sector ETF analysis"
+  health_check: "{command} health --env prod"
+  priority: "primary"
+
+alpha_vantage_cli:
+  command: "python {SCRIPTS_BASE}/alpha_vantage_cli.py"
+  usage: "{command} quote {companies} --env prod --output-format json"
+  purpose: "Real-time quotes across sector companies"
+  health_check: "{command} health --env prod"
+  priority: "secondary"
+
+fmp_cli:
+  command: "python {SCRIPTS_BASE}/fmp_cli.py"
+  usage: "{command} sector-analysis {sector} --env prod --output-format json"
+  purpose: "Sector financial intelligence + competitive metrics"
+  health_check: "{command} health --env prod"
+  priority: "primary"
+
+sec_edgar_cli:
+  command: "python {SCRIPTS_BASE}/sec_edgar_cli.py"
+  usage: "{command} sector-filings {sector} --env prod --output-format json"
+  purpose: "Regulatory environment affecting sector"
+  health_check: "{command} health --env prod"
+  priority: "secondary"
+
+fred_economic_cli:
+  command: "python {SCRIPTS_BASE}/fred_economic_cli.py"
+  usage: "{command} indicator {indicators} --env prod --output-format json"
+  purpose: "Sector-sensitive economic indicators (GDP, employment)"
+  health_check: "{command} health --env prod"
+  priority: "primary"
+
+coingecko_cli:
+  command: "python {SCRIPTS_BASE}/coingecko_cli.py"
+  usage: "{command} risk-sentiment --env prod --output-format json"
+  purpose: "Risk appetite + sector correlation analysis"
+  health_check: "{command} health --env prod"
+  priority: "tertiary"
+
+imf_cli:
+  command: "python {SCRIPTS_BASE}/imf_cli.py"
+  usage: "{command} global-context {sector} --env prod --output-format json"
+  purpose: "Global context + sector international exposure"
+  health_check: "{command} health --env prod"
+  priority: "tertiary"
+```
+
+**Multi-Company Data Collection Protocol**:
+```bash
+# Core sector ETF and company data collection
+python {SCRIPTS_BASE}/yahoo_finance_cli.py analyze {sector_etf} {companies} --env prod --output-format json
+
+# Cross-validation with competitive intelligence
+python {SCRIPTS_BASE}/fmp_cli.py sector-analysis {sector} --env prod --output-format json
+
+# Economic context integration
+python {SCRIPTS_BASE}/fred_economic_cli.py indicator GDP,GDPC1,PAYEMS,CIVPART --env prod --output-format json
+
+# Risk sentiment overlay
+python {SCRIPTS_BASE}/coingecko_cli.py risk-sentiment --env prod --output-format json
+```
+
+**Data Authority Protocol**:
+```yaml
+authority_hierarchy:
+  sector_etf_data: "HIGHEST_AUTHORITY"  # Sector ETF composition and performance
+  multi_company_aggregation: "PRIMARY"  # Aggregated company fundamentals
+  economic_indicators: "MACRO_CONTEXT"  # GDP/employment integration
+  competitive_intelligence: "SECTOR_CONTEXT"  # FMP sector analysis
+
+conflict_resolution:
+  etf_precedence: "absolute"  # ETF data always takes priority
+  company_threshold: "80%"  # Minimum company coverage required
+  economic_staleness: "7_days"  # Maximum age for economic data
+  action: "use_authoritative_source"  # Resolution strategy
+```
+
+## Data Flow & File References
+
+**Input Sources**:
+```yaml
+sector_companies_list:
+  path: "{CONFIG_BASE}/sector_companies/{SECTOR}_companies.json"
+  format: "json"
+  required: true
+  description: "List of sector companies by market cap and sector exposure"
+
+sector_etf_composition:
+  path: "{DATA_OUTPUTS}/etf_analysis/{SECTOR_ETF}_{YYYYMMDD}_composition.json"
+  format: "json"
+  required: true
+  description: "Sector ETF holdings and weightings"
+
+fundamental_analyses:
+  path: "{DATA_OUTPUTS}/fundamental_analysis/{TICKER}_{YYYYMMDD}.md"
+  format: "markdown"
+  required: false
+  description: "Individual company fundamental analyses for aggregation"
+
+economic_indicators:
+  path: "CLI_SERVICES_REAL_TIME"
+  format: "json"
+  required: true
+  description: "GDP, employment, and sector-sensitive economic data"
+
+sector_etf_data:
+  path: "CLI_SERVICES_REAL_TIME"
+  format: "json"
+  required: true
+  description: "Sector ETF price, volume, and performance data"
+```
+
+**Output Structure**:
+```yaml
+discovery_output:
+  path: "{DATA_OUTPUTS}/sector_analysis/discovery/{SECTOR}_{YYYYMMDD}_discovery.json"
+  format: "json"
+  description: "Multi-company data collection and sector ETF analysis"
+
+analysis_output:
+  path: "{DATA_OUTPUTS}/sector_analysis/analysis/{SECTOR}_{YYYYMMDD}_analysis.json"
+  format: "json"
+  description: "Sector-wide analytical intelligence and competitive landscape"
+
+synthesis_output:
+  path: "{DATA_OUTPUTS}/sector_analysis/{SECTOR}_{YYYYMMDD}.md"
+  format: "markdown"
+  description: "Sector allocation strategy following sector_analysis_template.md"
+
+validation_output:
+  path: "{DATA_OUTPUTS}/sector_analysis/validation/{SECTOR}_{YYYYMMDD}_validation.json"
+  format: "json"
+  description: "Comprehensive sector quality assurance results"
+
+metadata_output:
+  path: "{DATA_OUTPUTS}/sector_analysis/{SECTOR}_{YYYYMMDD}_metadata.json"
+  format: "json"
+  description: "Sector workflow execution metadata and confidence scores"
+```
+
+**Data Dependencies**:
+```yaml
+phase_dependencies:
+  discovery_to_analysis:
+    - "discovery confidence ≥ 9.0/10"
+    - "company coverage ≥ 80%"
+    - "ETF data integrity validated"
+
+  analysis_to_synthesis:
+    - "template gap coverage 100%"
+    - "business cycle positioning confidence ≥ 9.0/10"
+    - "economic integration statistical significance"
+
+  synthesis_to_validation:
+    - "template compliance verified"
+    - "investment recommendation quality validated"
+    - "cross-sector analysis completed"
 ```
 
 ### Sector ETF Integration Benefits
@@ -438,40 +691,110 @@ Sector CLI Service Configuration:
 - Ensure institutional presentation standards for portfolio decisions
 - Maintain comprehensive sector audit trails
 
-## Practical Usage Examples
+## Execution Examples
 
-### Example 1: Complete Technology Sector Analysis
+### Direct Python Execution
+```python
+from script_registry import get_global_registry
+from script_config import ScriptConfig
+
+# Initialize
+config = ScriptConfig.from_environment()
+registry = get_global_registry(config)
+
+# Execute full sector DASV workflow
+result = registry.execute_script(
+    "sector_discovery",
+    sector="technology",
+    companies=["AAPL", "MSFT", "GOOGL", "AMZN", "META"],
+    date="20250718",
+    companies_count=5,
+    confidence_threshold=9.0
+)
+
+# Execute sector analysis phase
+result = registry.execute_script(
+    "sector_analysis",
+    sector="technology",
+    discovery_file="technology_20250718_discovery.json",
+    date="20250718",
+    validation_enhancement=True
+)
+
+# Execute sector synthesis
+result = registry.execute_script(
+    "sector_synthesis",
+    sector="technology",
+    analysis_file="technology_20250718_analysis.json",
+    date="20250718",
+    template_compliance=True
+)
+```
+
+### Command Line Execution
 ```bash
-# Execute full DASV workflow for technology sector
-/sector_analyst action=full_workflow sector=XLK confidence_threshold=9.5 validation_enhancement=true economic_context=true
+# Via content automation CLI - Full workflow
+python {SCRIPTS_BASE}/content_automation_cli.py \
+    --script sector_discovery \
+    --sector technology \
+    --companies AAPL,MSFT,GOOGL,AMZN,META \
+    --date 20250718 \
+    --companies-count 5
 
-# Alternative: Step-by-step execution
+# Via direct script execution - Individual phases
+python {SCRIPTS_BASE}/sector_analysis/sector_discovery.py \
+    --sector technology \
+    --companies AAPL,MSFT,GOOGL,AMZN,META \
+    --date 20250718
+
+python {SCRIPTS_BASE}/sector_analysis/sector_analysis.py \
+    --sector technology \
+    --discovery-file technology_20250718_discovery.json \
+    --date 20250718
+
+python {SCRIPTS_BASE}/sector_analysis/sector_synthesis.py \
+    --sector technology \
+    --analysis-file technology_20250718_analysis.json \
+    --template-compliance true
+
+# Healthcare sector with custom parameters
+python {SCRIPTS_BASE}/sector_analysis/sector_discovery.py \
+    --sector healthcare \
+    --companies-count 10 \
+    --market-cap-range large \
+    --date 20250718
+```
+
+### Claude Command Execution
+```
+# Complete sector DASV workflow
+/sector_analyst action=full_workflow sector=XLK confidence_threshold=9.5 validation_enhancement=true
+
+# Individual phase execution
 /sector_analyst action=discover sector=technology companies_count=15 market_cap_range=large
-/sector_analyst action=analyze discovery_file=technology_20250710_discovery.json business_cycle_analysis=true
-/sector_analyst action=synthesize discovery_file=technology_20250710_discovery.json analysis_file=technology_20250710_analysis.json
-/sector_analyst action=validate synthesis_filename=technology_20250710.md confidence_threshold=9.5
-```
+/sector_analyst action=analyze discovery_file=technology_20250718_discovery.json
+/sector_analyst action=synthesize analysis_file=technology_20250718_analysis.json
+/sector_analyst action=validate synthesis_filename=technology_20250718.md
 
-### Example 2: Healthcare Sector Quick Analysis
-```bash
-# Standard comprehensive analysis
-/sector_analyst action=full_workflow sector=XLV companies_count=10 depth=comprehensive timeframe=5y
+# Sector-specific examples
+/sector_analyst action=full_workflow sector=XLV companies_count=10 depth=comprehensive
+/sector_analyst action=full_workflow sector=XLF confidence_threshold=9.8 validation_enhancement=true
 
-# Executive summary focus
-/sector_analyst action=full_workflow sector=healthcare synthesis_depth=executive confidence_threshold=9.0
-```
-
-### Example 3: Financial Sector with Enhanced Validation
-```bash
-# High-confidence analysis with validation optimization
-/sector_analyst action=full_workflow sector=XLF confidence_threshold=9.8 validation_enhancement=true real_time_validation=true etf_validation=true
-```
-
-### Example 4: Troubleshooting Workflow Issues
-```bash
-# Diagnostic and resolution support
+# Troubleshooting workflows
 /sector_analyst action=troubleshoot sector=XLE issue_type=discovery_validation
 /sector_analyst action=help section=cli_integration
+```
+
+### Multi-Company Orchestration Examples
+```
+# Technology sector with 15 companies
+/sector_analyst action=full_workflow sector=technology companies_count=15 market_cap_range=large
+
+# Healthcare sector focused analysis
+/sector_analyst action=full_workflow sector=healthcare companies_count=10 depth=comprehensive timeframe=5y
+
+# Financial sector with enhanced validation
+/sector_analyst action=full_workflow sector=financials confidence_threshold=9.8 validation_enhancement=true
 ```
 
 ## Best Practices & Guidelines
@@ -702,6 +1025,29 @@ sector_analysis_outputs:
 /portfolio_allocation action=strategic_comparison sectors=technology,healthcare
 ```
 
+## Usage Examples
+
+### Basic Usage
+```
+/sector_analyst action=full_workflow sector=technology
+/sector_analyst action=discover sector=XLF companies_count=10
+```
+
+### Advanced Usage
+```
+/sector_analyst action=full_workflow sector=technology confidence_threshold=9.5 economic_context=true validation_enhancement=true
+```
+
+### Validation Enhancement
+```
+/sector_analyst action=validate sector=technology cli_validation=true confidence_threshold=9.8
+```
+
+---
+
+**Integration with Framework**: This command integrates with the broader Sensylate ecosystem through standardized script registry, template system, CLI service integration, and validation framework protocols.
+
 **Author**: Cole Morton
-**Confidence**: [Master command confidence reflects comprehensive sector framework integration and institutional-quality standards with template compliance]
-**Data Quality**: [Institutional-grade data quality through multi-company CLI validation, sector-specific context integration, and centralized template adherence]
+**Framework**: Sector Analysis DASV Framework
+**Confidence**: High - Comprehensive sector framework integration and institutional-quality standards
+**Data Quality**: High - Multi-company CLI validation, sector-specific context integration, and centralized template adherence

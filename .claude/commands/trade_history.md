@@ -2,8 +2,407 @@
 
 **Command Classification**: 🎯 **Assistant**
 **Knowledge Domain**: `quantitative-trading-performance-analysis`
-**Ecosystem Version**: `2.1.0` *(Last Updated: 2025-07-11)*
-**Outputs To**: `./data/outputs/trade_history/`
+**Ecosystem Version**: `2.1.0` *(Last Updated: 2025-07-18)*
+**Outputs To**: `{DATA_OUTPUTS}/trade_history/`
+
+## Script Integration Mapping
+
+**Trading Performance Analysis Scripts**:
+```yaml
+trade_history_analyzer:
+  path: "{SCRIPTS_BASE}/base_scripts/trade_history_script.py"
+  class: "TradeHistoryScript"
+  registry_name: "trade_history"
+  content_types: ["trade_history"]
+  requires_validation: true
+
+comprehensive_trade_analyzer:
+  path: "{SCRIPTS_BASE}/trade_history/comprehensive_trade_analyzer.py"
+  class: "ComprehensiveTradeAnalyzer"
+  purpose: "Statistical analysis and performance measurement"
+
+trade_performance_calculator:
+  path: "{SCRIPTS_BASE}/trade_history/trade_performance_calculator.py"
+  class: "TradePerformanceCalculator"
+  purpose: "Risk-adjusted returns and signal quality metrics"
+
+trade_history_cli:
+  path: "{SCRIPTS_BASE}/trade_history_cli.py"
+  class: "TradeHistoryCLI"
+  purpose: "Trade data access and portfolio analysis"
+```
+
+**Registry Integration**:
+```python
+@twitter_script(
+    name="trade_history",
+    content_types=["trade_history"],
+    requires_validation=True
+)
+class TradeHistoryScript(BaseScript):
+    """
+    Comprehensive trade history and performance analysis script
+
+    Parameters:
+        portfolio (str): Portfolio to analyze (live_signals, momentum_strategy, etc.)
+        date (Optional[str]): Analysis date in YYYYMMDD format
+        timeframe (str): Analysis period (1m, 3m, 6m, 1y, ytd, all)
+        strategy_filter (str): Strategy type filter (SMA, EMA, all)
+        status_filter (str): Position status filter (open, closed, all)
+        benchmark (str): Performance comparison benchmark (SPY, QQQ, VTI)
+        confidence_threshold (float): Minimum confidence requirement (9.0-10.0)
+    """
+```
+
+**Supporting Components**:
+```yaml
+signal_quality_analyzer:
+  path: "{SCRIPTS_BASE}/trade_history/signal_quality_analyzer.py"
+  class: "SignalQualityAnalyzer"
+  purpose: "Entry/exit signal effectiveness evaluation"
+
+statistical_validator:
+  path: "{SCRIPTS_BASE}/trade_history/statistical_validator.py"
+  class: "StatisticalValidator"
+  purpose: "Statistical significance testing and confidence scoring"
+
+performance_reporter:
+  path: "{SCRIPTS_BASE}/trade_history/performance_reporter.py"
+  class: "PerformanceReporter"
+  purpose: "Multi-audience report generation (internal, live, historical)"
+
+market_context_integrator:
+  path: "{SCRIPTS_BASE}/trade_history/market_context_integrator.py"
+  class: "MarketContextIntegrator"
+  purpose: "Economic and market environment analysis integration"
+```
+
+## Template Integration Architecture
+
+**Template Directory**: `{TEMPLATES_BASE}/trade_history/`
+
+**Template Mappings**:
+| Template ID | File Path | Selection Criteria | Purpose |
+|------------|-----------|-------------------|---------|
+| internal_trading_report | `trade_history/internal_trading_report.j2` | Comprehensive analysis AND internal audience | Operational analysis with action plans |
+| live_signals_monitor | `trade_history/live_signals_monitor.j2` | Active positions available AND real-time context | Live performance monitoring |
+| historical_performance | `trade_history/historical_performance_report.j2` | Closed positions focus AND trend analysis | Historical pattern identification |
+| quarterly_review | `trade_history/quarterly_review.j2` | Quarterly timeframe AND comprehensive metrics | Periodic strategy assessment |
+| statistical_validation | `trade_history/statistical_validation.j2` | Statistical analysis focus AND significance testing | Performance validation and confidence |
+
+**Shared Components**:
+```yaml
+performance_base_template:
+  path: "{TEMPLATES_BASE}/trade_history/shared/performance_base.j2"
+  purpose: "Base template with common performance metrics and formatting"
+
+statistical_components:
+  path: "{TEMPLATES_BASE}/trade_history/shared/statistical_components.j2"
+  purpose: "Statistical analysis components and significance testing"
+
+risk_management_template:
+  path: "{TEMPLATES_BASE}/trade_history/shared/risk_management.j2"
+  purpose: "Risk metrics, drawdown analysis, and portfolio health scoring"
+
+market_context_template:
+  path: "{TEMPLATES_BASE}/trade_history/shared/market_context.j2"
+  purpose: "Economic environment and market regime analysis integration"
+```
+
+**Template Selection Algorithm**:
+```python
+def select_trade_history_template(analysis_request):
+    """Select optimal template for trade history analysis"""
+
+    # Internal trading report for comprehensive operational analysis
+    if (analysis_request.get('audience') == 'internal' and
+        analysis_request.get('depth') == 'comprehensive'):
+        return 'trade_history/internal_trading_report.j2'
+
+    # Live signals monitor for active position tracking
+    elif (analysis_request.get('status_filter') == 'open' and
+          analysis_request.get('real_time_context', False)):
+        return 'trade_history/live_signals_monitor.j2'
+
+    # Historical performance for closed position analysis
+    elif (analysis_request.get('status_filter') == 'closed' and
+          analysis_request.get('trend_analysis', False)):
+        return 'trade_history/historical_performance_report.j2'
+
+    # Quarterly review for periodic assessment
+    elif analysis_request.get('timeframe') in ['3m', 'quarterly']:
+        return 'trade_history/quarterly_review.j2'
+
+    # Statistical validation for significance testing
+    elif (analysis_request.get('statistical_focus', False) and
+          analysis_request.get('confidence_threshold', 0) >= 9.5):
+        return 'trade_history/statistical_validation.j2'
+
+    # Default to internal trading report
+    return 'trade_history/internal_trading_report.j2'
+```
+
+## CLI Service Integration
+
+**Service Commands**:
+```yaml
+trade_history_cli:
+  command: "python {SCRIPTS_BASE}/trade_history_cli.py"
+  usage: "{command} generate {date} --format json"
+  purpose: "Trade history data generation and portfolio analysis"
+  health_check: "{command} health --env prod"
+  priority: "primary"
+
+yahoo_finance_cli:
+  command: "python {SCRIPTS_BASE}/yahoo_finance_cli.py"
+  usage: "{command} history SPY --period 1y --summary --format json"
+  purpose: "Benchmark performance data and market context"
+  health_check: "{command} health --env prod"
+  priority: "primary"
+
+fred_economic_cli:
+  command: "python {SCRIPTS_BASE}/fred_economic_cli.py"
+  usage: "{command} indicator GDP --env prod --format json"
+  purpose: "Economic indicators for market environment assessment"
+  health_check: "{command} health --env prod"
+  priority: "secondary"
+
+content_automation_cli:
+  command: "python {SCRIPTS_BASE}/content_automation_cli.py"
+  usage: "{command} blog {analysis_data} --template trade_history --format markdown"
+  purpose: "Professional report generation and analysis documentation"
+  health_check: "{command} status --env prod"
+  priority: "secondary"
+
+comprehensive_trade_analyzer:
+  command: "python {SCRIPTS_BASE}/comprehensive_trade_analysis.py"
+  usage: "{command} --portfolio {portfolio} --format json"
+  purpose: "Advanced statistical analysis and performance calculation"
+  health_check: "{command} health --env prod"
+  priority: "primary"
+```
+
+**Trade History Analysis Integration Protocol**:
+```bash
+# Trade performance data generation
+python {SCRIPTS_BASE}/trade_history_cli.py generate {date} --format json
+
+# Comprehensive portfolio analysis
+python {SCRIPTS_BASE}/comprehensive_trade_analysis.py --portfolio {portfolio} --format json
+
+# Market context and benchmark data
+python {SCRIPTS_BASE}/yahoo_finance_cli.py history SPY --period 1y --summary --format json
+
+# Economic environment assessment
+python {SCRIPTS_BASE}/fred_economic_cli.py indicator GDP --env prod --format json
+
+# Professional report generation
+python {SCRIPTS_BASE}/content_automation_cli.py blog {analysis_data} --template trade_history --format markdown
+```
+
+**Data Authority Protocol**:
+```yaml
+authority_hierarchy:
+  trade_history_csv: "ULTIMATE_TRUTH"  # Trade data is 100% accurate, no validation needed
+  fundamental_analysis: "INVESTMENT_CONTEXT"  # Supporting investment thesis integration
+  market_context: "BENCHMARK_AUTHORITY"  # Yahoo Finance for benchmark comparison
+  economic_indicators: "MACRO_CONTEXT"  # FRED for economic environment
+
+conflict_resolution:
+  csv_precedence: "absolute"  # CSV data takes absolute precedence in any conflicts
+  supplemental_alignment: "supportive_only"  # External data must support, not contradict CSV
+  narrative_consistency: "csv_authority"  # 100% coherent analysis respecting trade history truth
+  validation_approach: "trust_and_enhance"  # Trust CSV data, enhance with context
+```
+
+## Data Flow & File References
+
+**Input Sources**:
+```yaml
+portfolio_trade_data:
+  path: "{DATA_RAW}/trade_history/{PORTFOLIO}_{YYYYMMDD}.csv"
+  format: "csv"
+  required: true
+  description: "ULTIMATE TRUTH - Portfolio trade data with entry/exit signals (100% accurate)"
+
+fundamental_analysis_files:
+  path: "{DATA_OUTPUTS}/fundamental_analysis/"
+  format: "markdown"
+  required: false
+  description: "Investment thesis and analysis for traded stocks/tickers"
+
+benchmark_data:
+  path: "CLI_SERVICES_REAL_TIME"
+  format: "json"
+  required: true
+  description: "Market benchmarks (SPY, QQQ, sector ETFs) for relative analysis"
+
+economic_indicators:
+  path: "CLI_SERVICES_REAL_TIME"
+  format: "json"
+  required: false
+  description: "Economic context and market regime assessment"
+
+market_context_data:
+  path: "WEB_SEARCH_REAL_TIME"
+  format: "json"
+  required: false
+  description: "Economic calendar events and market commentary"
+```
+
+**Output Structure**:
+```yaml
+internal_trading_report:
+  path: "{DATA_OUTPUTS}/trade_history/internal/{PORTFOLIO}_INTERNAL_TRADING_REPORT_{TIMEFRAME}_{YYYYMMDD}.md"
+  format: "markdown"
+  description: "Comprehensive operational analysis for trading team"
+
+live_signals_monitor:
+  path: "{DATA_OUTPUTS}/trade_history/live/{PORTFOLIO}_LIVE_SIGNALS_MONITOR_{YYYYMMDD}.md"
+  format: "markdown"
+  description: "Real-time performance monitoring and position tracking"
+
+historical_performance_report:
+  path: "{DATA_OUTPUTS}/trade_history/historical/{PORTFOLIO}_HISTORICAL_PERFORMANCE_REPORT_{YYYYMMDD}.md"
+  format: "markdown"
+  description: "Closed positions analysis and pattern identification"
+
+performance_metadata:
+  path: "{DATA_OUTPUTS}/trade_history/analysis/{PORTFOLIO}_{YYYYMMDD}_metrics.json"
+  format: "json"
+  description: "Statistical analysis results and confidence scoring"
+
+signal_analysis:
+  path: "{DATA_OUTPUTS}/trade_history/analysis/{PORTFOLIO}_{YYYYMMDD}_signal_analysis.json"
+  format: "json"
+  description: "Signal quality assessment and effectiveness measurement"
+```
+
+**Data Dependencies**:
+```yaml
+analysis_generation_flow:
+  data_ingestion:
+    - "portfolio trade history CSV loading (ULTIMATE TRUTH)"
+    - "fundamental analysis integration via ticker matching"
+    - "benchmark data collection for relative performance"
+    - "economic context gathering for market environment"
+
+  statistical_analysis:
+    - "signal quality metrics calculation"
+    - "performance attribution and risk-adjusted returns"
+    - "statistical significance testing and confidence scoring"
+    - "market regime analysis and condition-specific performance"
+
+  report_generation:
+    - "multi-audience report generation (internal, live, historical)"
+    - "institutional quality standards enforcement"
+    - "statistical validation and confidence documentation"
+    - "actionable recommendations and optimization insights"
+```
+
+## Execution Examples
+
+### Direct Python Execution
+```python
+from script_registry import get_global_registry
+from script_config import ScriptConfig
+
+# Initialize
+config = ScriptConfig.from_environment()
+registry = get_global_registry(config)
+
+# Execute comprehensive trade history analysis
+result = registry.execute_script(
+    "trade_history",
+    portfolio="live_signals",
+    timeframe="all",
+    confidence_threshold=9.0
+)
+
+# Execute specific portfolio with filters
+result = registry.execute_script(
+    "trade_history",
+    portfolio="momentum_strategy",
+    date="20250718",
+    strategy_filter="SMA",
+    status_filter="closed",
+    benchmark="QQQ"
+)
+
+# Execute with high statistical confidence
+result = registry.execute_script(
+    "trade_history",
+    portfolio="live_signals_20250626",
+    timeframe="6m",
+    confidence_threshold=9.8,
+    statistical_confidence=0.99
+)
+```
+
+### Command Line Execution
+```bash
+# Via trade history CLI - latest portfolio data
+python {SCRIPTS_BASE}/trade_history_cli.py generate latest --portfolio live_signals --format json
+
+# Via comprehensive analysis script
+python {SCRIPTS_BASE}/comprehensive_trade_analysis.py \
+    --portfolio live_signals \
+    --timeframe all \
+    --confidence-threshold 9.0
+
+# Via direct script execution with filters
+python {SCRIPTS_BASE}/base_scripts/trade_history_script.py \
+    --portfolio momentum_strategy \
+    --strategy-filter SMA \
+    --status-filter closed \
+    --benchmark QQQ
+
+# Quarterly analysis with high confidence
+python {SCRIPTS_BASE}/base_scripts/trade_history_script.py \
+    --portfolio live_signals \
+    --timeframe 3m \
+    --confidence-threshold 9.5 \
+    --statistical-confidence 0.99
+```
+
+### Claude Command Execution
+```
+# Default portfolio - latest date (generates all 3 documents)
+/trade_history live_signals
+
+# Specific portfolio and date
+/trade_history live_signals_20250626
+
+# Different portfolio - latest date
+/trade_history momentum_strategy
+
+# Quarterly SMA strategy focus with high confidence
+/trade_history live_signals timeframe=3m strategy_filter=SMA confidence_threshold=9.5
+
+# All-time closed positions analysis vs QQQ benchmark
+/trade_history sector_rotation timeframe=all status_filter=closed benchmark=QQQ
+
+# Recent performance with minimum 20 trades for significance
+/trade_history value_picks timeframe=6m min_trades=20
+```
+
+### Portfolio Analysis Workflow Examples
+```
+# Comprehensive performance analysis
+/trade_history live_signals
+
+# Strategy-specific analysis
+/trade_history live_signals strategy_filter=SMA
+/trade_history algo_trades strategy_filter=EMA timeframe=3m
+
+# Real-time monitoring
+/trade_history live_signals status_filter=open
+/trade_history momentum_strategy status_filter=open
+
+# Historical evaluation
+/trade_history live_signals status_filter=closed benchmark=QQQ
+/trade_history value_picks timeframe=all status_filter=closed
+```
 
 ## Core Role & Perspective
 
@@ -1376,6 +1775,53 @@ incident_response:
     - Trading team feedback integration and methodology refinement
 ```
 
+## Quality Standards Framework
+
+### Confidence Scoring
+**Quantitative Trading Performance Thresholds**:
+- **Baseline Quality**: 9.0/10 minimum for trading system validation
+- **Enhanced Quality**: 9.5/10 target for portfolio optimization decisions
+- **Premium Quality**: 9.8/10 for institutional-grade performance reporting
+- **Statistical Significance**: >95% confidence in performance metrics
+
+### Validation Protocols
+**Multi-Source Validation Standards**:
+- **Trade Data Accuracy**: ≤1% variance from actual execution records
+- **Performance Calculation**: Double-verified risk-adjusted returns
+- **Statistical Significance**: Bootstrapped confidence intervals
+- **Market Context**: Validated against benchmark performance
+
+### Quality Gate Enforcement
+**Critical Validation Points**:
+1. **Data Phase**: Trade data completeness and accuracy verification
+2. **Analysis Phase**: Statistical calculation verification and significance testing
+3. **Reporting Phase**: Performance metric validation and benchmark comparison
+4. **Output Phase**: Final review and institutional certification
+
+## Cross-Command Integration
+
+### Upstream Dependencies
+**Commands that provide input to this command**:
+- `trade_history_cli`: Provides trading data via CLI service integration
+- `market_data_services`: Provides benchmark and market context data
+
+### Downstream Dependencies
+**Commands that consume this command's outputs**:
+- `content_publisher`: Publishes trading performance reports to blog
+- `twitter_trade_history`: Transforms trading results into social media content
+- `documentation_owner`: Documents trading strategy performance
+
+### Coordination Workflows
+**Multi-Command Orchestration**:
+```bash
+# Trading performance analysis workflow
+/trade_history portfolio=live_signals timeframe=3m
+/content_publisher content_type=trade_history priority=high
+
+# Performance validation workflow
+/trade_history portfolio=momentum_strategy status_filter=closed confidence_threshold=9.5
+```
+
 ## Usage Examples
 
 ### Comprehensive Performance Analysis
@@ -1438,9 +1884,12 @@ incident_response:
 
 ---
 
-**Implementation Status**: ✅ **READY FOR DEPLOYMENT**
-**Authority Level**: Core Product Command with complete trading performance authority
-**Integration**: Team-workspace, trading systems, market data, content pipeline
+**Integration with Framework**: This command integrates with the broader Sensylate ecosystem through standardized script registry, template system, CLI service integration, and validation framework protocols.
+
+**Author**: Cole Morton
+**Framework**: Quantitative Trading Performance Analysis Framework
+**Confidence**: High - Comprehensive trading performance analysis with statistical validation
+**Data Quality**: High - Multi-source trade data validation and performance verification
 
 ## Post-Execution Protocol
 

@@ -1,0 +1,45 @@
+---
+export interface Props {
+  title: string;
+  description?: string;
+  category?: string;
+  chartComponent?: string; // Optional identifier for the chart
+}
+
+const { title, description, category, chartComponent } = Astro.props;
+---
+
+<div
+  class="bg-body dark:bg-darkmode-body rounded-lg p-6 shadow-sm transition-all duration-300 hover:shadow-lg"
+>
+  {
+    category && (
+      <div class="mb-4">
+        <span class="text-text/80 text-xs font-medium tracking-wider uppercase dark:text-gray-400">
+          {category}
+        </span>
+      </div>
+    )
+  }
+
+  <h3 class="text-dark mb-3 text-xl font-semibold dark:text-white">
+    {title}
+  </h3>
+
+  {
+    description && (
+      <p class="text-text mb-6 dark:text-gray-300">{description}</p>
+    )
+  }
+
+  <div class="chart-container min-h-[400px] w-full">
+    <slot name="chart">
+      <!-- Default chart placeholder if no chart slot is provided -->
+      <div
+        class="flex h-full w-full items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-800"
+      >
+        <p class="text-text/60 dark:text-gray-500">Chart content goes here</p>
+      </div>
+    </slot>
+  </div>
+</div>

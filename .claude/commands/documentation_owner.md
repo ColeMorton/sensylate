@@ -1,12 +1,103 @@
-# Documentation Owner: Documentation Lifecycle & Quality Management
+# Documentation Owner
 
-**Command Classification**: 📚 **Infrastructure Command**
-**Knowledge Domain**: `documentation-quality`
-**Framework**: DQEM (Document-Quality-Enforce-Maintain)
-**Outputs To**: `./data/outputs/documentation/`
+**Command Classification**: 🔧 **Tool**
+**Knowledge Domain**: `documentation-lifecycle-quality-management`
+**Ecosystem Version**: `2.1.0` *(Last Updated: 2025-07-18)*
+**Outputs To**: `{DATA_OUTPUTS}/documentation/`
 
-You are the Documentation Owner, responsible for maintaining documentation quality, consistency, and lifecycle management across the entire Sensylate AI Command ecosystem. You ensure all documentation meets institutional standards and serves as the authoritative source for documentation governance.
+## Script Integration Mapping
 
+**Primary Script**: `{SCRIPTS_BASE}/documentation/documentation_owner_script.py`
+**Script Class**: `DocumentationOwnerScript`
+**Registry Name**: `documentation_owner`
+**Content Types**: `["documentation_management"]`
+**Requires Validation**: `true`
+
+**Registry Decorator**:
+```python
+@twitter_script(
+    name="documentation_owner",
+    content_types=["documentation_management"],
+    requires_validation=True
+)
+class DocumentationOwnerScript(BaseScript):
+    """Documentation lifecycle and quality management system"""
+```
+
+**Additional Scripts** (DQEM framework workflow):
+```yaml
+discovery_script:
+  path: "{SCRIPTS_BASE}/documentation/documentation_discovery.py"
+  class: "DocumentationDiscoveryScript"
+  phase: "Phase 1 - Document Discovery and Inventory"
+
+quality_script:
+  path: "{SCRIPTS_BASE}/documentation/quality_assessment.py"
+  class: "QualityAssessmentScript"
+  phase: "Phase 2 - Quality Standards Assessment"
+
+enforcement_script:
+  path: "{SCRIPTS_BASE}/documentation/quality_enforcement.py"
+  class: "QualityEnforcementScript"
+  phase: "Phase 3 - Quality Implementation and Standardization"
+
+maintenance_script:
+  path: "{SCRIPTS_BASE}/documentation/lifecycle_maintenance.py"
+  class: "LifecycleMaintenanceScript"
+  phase: "Phase 4 - Continuous Improvement and Lifecycle Management"
+```
+
+## Template Integration Architecture
+
+**Template Directory**: `{TEMPLATES_BASE}/documentation/`
+
+**Template Mappings**:
+| Template ID | File Path | Selection Criteria | Purpose |
+|------------|-----------|-------------------|---------|
+| quality_report | `documentation/quality_report.j2` | Quality assessment focus | Documentation quality analysis |
+| standardization_guide | `documentation/standardization_guide.j2` | Standardization requirements | Documentation format standardization |
+| lifecycle_plan | `documentation/lifecycle_plan.j2` | Lifecycle management focus | Documentation maintenance planning |
+| integration_guide | `documentation/integration_guide.j2` | Cross-system integration | System integration documentation |
+
+**Shared Components**:
+```yaml
+documentation_base:
+  path: "{TEMPLATES_BASE}/documentation/shared/documentation_base.j2"
+  purpose: "Base template with common documentation standards and formatting"
+
+quality_framework:
+  path: "{TEMPLATES_BASE}/documentation/shared/quality_framework.j2"
+  purpose: "Quality assessment framework and metrics templates"
+
+lifecycle_management:
+  path: "{TEMPLATES_BASE}/documentation/shared/lifecycle_management.j2"
+  purpose: "Documentation lifecycle and maintenance workflow templates"
+```
+
+**Template Selection Algorithm**:
+```python
+def select_documentation_template(request_analysis):
+    """Select optimal template for documentation management"""
+
+    # Quality assessment template
+    if request_analysis.get('focus') == 'quality_assessment':
+        return 'documentation/quality_report.j2'
+
+    # Standardization guide template
+    elif request_analysis.get('focus') == 'standardization':
+        return 'documentation/standardization_guide.j2'
+
+    # Lifecycle management template
+    elif request_analysis.get('focus') == 'lifecycle_management':
+        return 'documentation/lifecycle_plan.j2'
+
+    # Integration guide template
+    elif request_analysis.get('focus') == 'integration':
+        return 'documentation/integration_guide.j2'
+
+    # Default quality report
+    return 'documentation/quality_report.j2'
+```
 
 ## Core Identity & Expertise
 
@@ -405,32 +496,181 @@ incident_response:
     - Stakeholder training and awareness programs
 ```
 
+## CLI Service Integration
+
+**Service Commands**:
+```yaml
+documentation_validator:
+  command: "python {SCRIPTS_BASE}/documentation/documentation_validator.py"
+  usage: "{command} validate {docs_path} --quality-threshold {threshold} --env prod"
+  purpose: "Documentation quality validation and compliance checking"
+  health_check: "{command} health --env prod"
+  priority: "primary"
+
+content_formatter:
+  command: "python {SCRIPTS_BASE}/documentation/content_formatter.py"
+  usage: "{command} format {docs_path} --standard {standard} --env prod"
+  purpose: "Automated documentation formatting and standardization"
+  health_check: "{command} health --env prod"
+  priority: "primary"
+
+cross_reference_checker:
+  command: "python {SCRIPTS_BASE}/documentation/cross_reference_checker.py"
+  usage: "{command} check {docs_path} --deep-scan --env prod"
+  purpose: "Cross-reference integrity and link validation"
+  health_check: "{command} health --env prod"
+  priority: "secondary"
+```
+
+**Documentation Management Integration Protocol**:
+```bash
+# Documentation quality validation
+python {SCRIPTS_BASE}/documentation/documentation_validator.py validate {docs_path} --quality-threshold 9.0 --env prod
+
+# Automated formatting and standardization
+python {SCRIPTS_BASE}/documentation/content_formatter.py format {docs_path} --standard institutional --env prod
+
+# Cross-reference integrity checking
+python {SCRIPTS_BASE}/documentation/cross_reference_checker.py check {docs_path} --deep-scan --env prod
+```
+
+## Data Flow & File References
+
+**Input Sources**:
+```yaml
+documentation_inventory:
+  path: "{CONFIG_BASE}/documentation/inventory.json"
+  format: "json"
+  required: true
+  description: "Complete documentation inventory and classification"
+
+quality_standards:
+  path: "{CONFIG_BASE}/documentation/quality_standards.yaml"
+  format: "yaml"
+  required: true
+  description: "Documentation quality standards and compliance requirements"
+
+existing_docs:
+  path: "{PROJECT_ROOT}/**/*.md"
+  format: "markdown"
+  required: true
+  description: "All existing documentation files for analysis and management"
+```
+
+**Output Structure**:
+```yaml
+quality_report:
+  path: "{DATA_OUTPUTS}/documentation/quality/{DATE}_quality_report.md"
+  format: "markdown"
+  description: "Comprehensive documentation quality assessment report"
+
+standardization_guide:
+  path: "{DATA_OUTPUTS}/documentation/standards/{DATE}_standardization_guide.md"
+  format: "markdown"
+  description: "Documentation standardization guidelines and requirements"
+
+lifecycle_plan:
+  path: "{DATA_OUTPUTS}/documentation/lifecycle/{DATE}_lifecycle_plan.md"
+  format: "markdown"
+  description: "Documentation lifecycle management and maintenance plan"
+
+management_metadata:
+  path: "{DATA_OUTPUTS}/documentation/metadata/{DATE}_management_metadata.json"
+  format: "json"
+  description: "Documentation management execution metadata and quality metrics"
+```
+
+## Parameters
+
+### Core Parameters
+- `action`: Documentation action - `audit` | `standardize` | `maintain` | `integrate` | `validate` (required)
+- `scope`: Documentation scope - `comprehensive` | `targeted` | `quality_focused` | `lifecycle_focused` (optional, default: comprehensive)
+- `focus`: Management focus - `quality_assessment` | `standardization` | `lifecycle_management` | `integration` (optional)
+- `quality_threshold`: Minimum quality requirement - `9.0` | `9.5` | `9.8` (optional, default: 9.0)
+
+### Advanced Parameters
+- `validation_level`: Documentation validation depth - `basic` | `standard` | `institutional` (optional, default: standard)
+- `standardization_target`: Target documentation standard - `institutional` | `enterprise` | `collaborative` (optional, default: institutional)
+- `lifecycle_phase`: Lifecycle management phase - `discovery` | `quality` | `enforcement` | `maintenance` (optional)
+- `integration_scope`: Integration scope - `cross_command` | `framework` | `ecosystem` (optional, default: ecosystem)
+
+### Workflow Parameters (DQEM Framework)
+- `phase_start`: Starting DQEM phase - `document` | `quality` | `enforce` | `maintain` (optional)
+- `phase_end`: Ending DQEM phase - `document` | `quality` | `enforce` | `maintain` (optional)
+- `continue_on_error`: Continue workflow despite errors - `true` | `false` (optional, default: false)
+- `output_format`: Output format preference - `markdown` | `json` | `both` (optional, default: markdown)
+
+## Quality Standards Framework
+
+### Confidence Scoring
+**Documentation Quality Thresholds**:
+- **Baseline Quality**: 9.0/10 minimum for institutional documentation
+- **Enhanced Quality**: 9.5/10 target for critical system documentation
+- **Premium Quality**: 9.8/10 for compliance-critical documentation
+- **Perfect Quality**: 10.0/10 for regulatory and legal documentation
+
+### Validation Protocols
+**Multi-Phase Validation Standards**:
+- **Content Accuracy**: Technical correctness and factual validation
+- **Structural Consistency**: Format standardization and template compliance
+- **Integration Quality**: Cross-reference integrity and system consistency
+- **Lifecycle Health**: Currency, maintenance status, and evolution tracking
+
+### Quality Gate Enforcement
+**Critical Validation Points**:
+1. **Discovery Phase**: Documentation inventory completeness and classification
+2. **Quality Phase**: Standards assessment and gap analysis
+3. **Enforcement Phase**: Standardization implementation and compliance verification
+4. **Maintenance Phase**: Lifecycle management and continuous improvement
+
+## Cross-Command Integration
+
+### Upstream Dependencies
+**Commands that provide input to this command**:
+- `fundamental_analyst`: Provides analysis documentation for quality assessment
+- `content_publisher`: Provides published content for documentation lifecycle management
+- `content_evaluator`: Provides content quality metrics for documentation standards
+
+### Downstream Dependencies
+**Commands that consume this command's outputs**:
+- `content_evaluator`: Uses documentation standards for content quality assessment
+- `content_publisher`: Uses documentation guidelines for publication standards
+- `twitter`: Uses documentation framework for command ecosystem management
+
+### Coordination Workflows
+**Multi-Command Orchestration**:
+```bash
+# Documentation quality assessment workflow
+/documentation_owner action=audit scope=comprehensive quality_threshold=9.5
+/content_evaluator filename="{DATA_OUTPUTS}/documentation/quality/{DATE}_quality_report.md"
+
+# Documentation standardization workflow
+/documentation_owner action=standardize focus=standardization validation_level=institutional
+```
+
 ## Usage Examples
 
-### Documentation Quality Audit
-```bash
-/documentation-owner audit comprehensive "complete ecosystem documentation quality assessment"
+### Basic Usage
+```
+/documentation_owner action=audit scope=comprehensive
+/documentation_owner action=standardize focus=quality_assessment
 ```
 
-### Template Standardization
-```bash
-/documentation-owner standardize templates "update all command files to latest template standards"
+### Advanced Usage
+```
+/documentation_owner action=audit scope=comprehensive quality_threshold=9.8 validation_level=institutional
 ```
 
-### Cross-Reference Validation
-```bash
-/documentation-owner validate cross-references "verify all documentation links and dependencies"
+### Validation Enhancement
 ```
-
-### Quality Standards Update
-```bash
-/documentation-owner update standards "implement new institutional documentation requirements"
+/documentation_owner action=validate integration_scope=ecosystem lifecycle_phase=maintenance
 ```
 
 ---
 
-**Implementation Status**: ✅ **READY FOR DEPLOYMENT**
-**Authority Level**: Infrastructure Command with complete documentation quality authority
-**Integration**: Team-workspace, command registry, lifecycle management systems
+**Integration with Framework**: This command integrates with the broader Sensylate ecosystem through standardized script registry, template system, CLI service integration, and validation framework protocols.
 
-*This command establishes comprehensive documentation governance while respecting existing Infrastructure command authorities and enhancing overall system documentation quality.*
+**Author**: Cole Morton
+**Framework**: Documentation Lifecycle Quality Management (DQEM) Framework
+**Confidence**: High - Comprehensive documentation governance with institutional-quality standards
+**Data Quality**: High - Multi-phase validation and quality enforcement protocols

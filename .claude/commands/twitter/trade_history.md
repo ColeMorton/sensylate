@@ -2,8 +2,373 @@
 
 **Command Classification**: 📊 **Core Product Command**
 **Knowledge Domain**: `social-media-strategy`
-**Outputs To**: `./data/outputs/twitter/trade_history/` *(Core Product Command - outputs to product directories)*
+**Ecosystem Version**: `2.1.0` *(Last Updated: 2025-07-18)*
+**Outputs To**: `{DATA_OUTPUTS}/twitter/trade_history/`
 
+## Script Integration Mapping
+
+**Primary Script**: `{SCRIPTS_BASE}/base_scripts/trade_history_twitter_script.py`
+**Script Class**: `TradeHistoryTwitterScript`
+**Registry Name**: `trade_history_twitter`
+**Content Types**: `["trade_history_twitter"]`
+**Requires Validation**: `true`
+
+**Registry Integration**:
+```python
+@twitter_script(
+    name="trade_history_twitter",
+    content_types=["trade_history_twitter"],
+    requires_validation=True
+)
+class TradeHistoryTwitterScript(BaseScript):
+    """
+    Trade history performance Twitter content generation script
+
+    Parameters:
+        analysis_file (str): Trade history analysis identifier
+        date (str): Analysis date in YYYYMMDD format
+        template_variant (Optional[str]): Specific template to use
+        validation_file (Optional[str]): Path to validation file for enhancement
+        validate_content (bool): Whether to validate generated content
+    """
+```
+
+**Supporting Components**:
+```yaml
+trade_performance_analyzer:
+  path: "{SCRIPTS_BASE}/trade_history/trade_performance_analyzer.py"
+  class: "TradePerformanceAnalyzer"
+  purpose: "Trade history data extraction and performance metrics calculation"
+
+market_context_collector:
+  path: "{SCRIPTS_BASE}/market_data/market_context_collector.py"
+  class: "MarketContextCollector"
+  purpose: "Real-time market context for performance validation"
+
+twitter_command_processor:
+  path: "{SCRIPTS_BASE}/twitter_command_processor.py"
+  class: "TwitterCommandProcessor"
+  purpose: "Unified Twitter content processing and validation"
+
+unified_validation_framework:
+  path: "{SCRIPTS_BASE}/unified_validation_framework.py"
+  class: "UnifiedValidationFramework"
+  purpose: "Institutional quality standards for trading content"
+```
+
+## Template Integration Architecture
+
+**Template Directory**: `{TEMPLATES_BASE}/twitter/trade_history/`
+
+**Template Mappings**:
+| Template ID | File Path | Selection Criteria | Purpose |
+|------------|-----------|-------------------|---------|
+| performance_summary | `trade_history/twitter_performance_summary.j2` | YTD performance focus AND comprehensive metrics available | Overall performance overview |
+| top_trades_showcase | `trade_history/twitter_top_trades.j2` | Best performing trades >3 AND detailed trade data | Highlight winning trades |
+| learning_transparency | `trade_history/twitter_learning_transparency.j2` | Both wins and losses available AND educational focus | Transparent performance analysis |
+| real_time_performance | `trade_history/twitter_real_time_performance.j2` | Active positions available AND current market context | Live trading performance |
+| statistical_validation | `trade_history/twitter_statistical_validation.j2` | Signal quality data available AND statistical analysis | Strategy validation focus |
+
+**Shared Components**:
+```yaml
+trade_base_template:
+  path: "{TEMPLATES_BASE}/twitter/shared/base_twitter.j2"
+  purpose: "Base template with common macros and trading formatting"
+
+performance_components:
+  path: "{TEMPLATES_BASE}/twitter/shared/performance_components.j2"
+  purpose: "Performance metrics components and risk disclaimers"
+
+validation_template:
+  path: "{TEMPLATES_BASE}/twitter/validation/trade_performance_validation.j2"
+  purpose: "Trading performance compliance and transparency validation"
+```
+
+**Template Selection Algorithm**:
+```python
+def select_trade_history_template(trade_data):
+    """Select optimal template for trade history Twitter content"""
+
+    # Performance summary for comprehensive YTD metrics
+    if (trade_data.get('ytd_metrics_available', False) and
+        trade_data.get('comprehensive_data', False)):
+        return 'trade_history/twitter_performance_summary.j2'
+
+    # Top trades showcase for highlighting wins
+    elif (len(trade_data.get('best_trades', [])) >= 3 and
+          trade_data.get('detailed_trade_data', False)):
+        return 'trade_history/twitter_top_trades.j2'
+
+    # Learning transparency for balanced narrative
+    elif (trade_data.get('wins_and_losses_available', False) and
+          trade_data.get('educational_focus', False)):
+        return 'trade_history/twitter_learning_transparency.j2'
+
+    # Real-time performance for current context
+    elif (trade_data.get('active_positions', False) and
+          trade_data.get('current_market_context', False)):
+        return 'trade_history/twitter_real_time_performance.j2'
+
+    # Statistical validation for strategy analysis
+    elif (trade_data.get('signal_quality_data', False) and
+          trade_data.get('statistical_analysis', False)):
+        return 'trade_history/twitter_statistical_validation.j2'
+
+    # Default to performance summary
+    return 'trade_history/twitter_performance_summary.j2'
+```
+
+## CLI Service Integration
+
+**Service Commands**:
+```yaml
+yahoo_finance_cli:
+  command: "python {SCRIPTS_BASE}/yahoo_finance_cli.py"
+  usage: "{command} quote {ticker} --env prod --output-format json"
+  purpose: "Real-time market data for performance validation and context"
+  health_check: "{command} health --env prod"
+  priority: "primary"
+
+market_data_cli:
+  command: "python {SCRIPTS_BASE}/market_data_cli.py"
+  usage: "{command} market-overview --env prod --output-format json"
+  purpose: "Current market context and sentiment analysis"
+  health_check: "{command} health --env prod"
+  priority: "primary"
+
+fred_economic_cli:
+  command: "python {SCRIPTS_BASE}/fred_economic_cli.py"
+  usage: "{command} indicators VIX,DXY,TNX --env prod --output-format json"
+  purpose: "Economic indicators for market environment context"
+  health_check: "{command} health --env prod"
+  priority: "secondary"
+
+trade_analyzer_cli:
+  command: "python {SCRIPTS_BASE}/trade_analyzer_cli.py"
+  usage: "{command} performance-metrics {analysis_file} --env prod"
+  purpose: "Trade performance analysis and metrics calculation"
+  health_check: "{command} health --env prod"
+  priority: "primary"
+
+alpha_vantage_cli:
+  command: "python {SCRIPTS_BASE}/alpha_vantage_cli.py"
+  usage: "{command} market-sentiment --env prod --output-format json"
+  purpose: "Market sentiment validation for performance context"
+  health_check: "{command} health --env prod"
+  priority: "tertiary"
+```
+
+**Trade History Twitter Integration Protocol**:
+```bash
+# Real-time market context validation
+python {SCRIPTS_BASE}/yahoo_finance_cli.py quote SPY --env prod --output-format json
+
+# Market environment assessment
+python {SCRIPTS_BASE}/market_data_cli.py market-overview --env prod --output-format json
+
+# Trade performance analysis
+python {SCRIPTS_BASE}/trade_analyzer_cli.py performance-metrics {analysis_file} --env prod
+
+# Economic context for performance interpretation
+python {SCRIPTS_BASE}/fred_economic_cli.py indicators VIX,DXY,TNX --env prod --output-format json
+```
+
+**Data Authority Protocol**:
+```yaml
+authority_hierarchy:
+  trade_history_analysis: "HIGHEST_AUTHORITY"  # Primary trade history documents
+  real_time_market: "CONTEXT_AUTHORITY"  # Current market data for validation
+  performance_calculations: "METRICS_AUTHORITY"  # Trade analyzer for accurate metrics
+  economic_indicators: "ENVIRONMENT_AUTHORITY"  # Economic context for interpretation
+
+conflict_resolution:
+  trade_data_precedence: "analysis_document_primary"  # Trade analysis takes priority
+  market_context_authority: "yahoo_finance"  # Primary source for current market
+  performance_validation: "trade_analyzer_cli"  # Authoritative performance calculations
+  staleness_threshold: "24_hours"  # Maximum age for market context data
+  action: "validate_and_contextualize"  # Resolution strategy
+```
+
+## Data Flow & File References
+
+**Input Sources**:
+```yaml
+trade_history_analysis:
+  path: "{DATA_OUTPUTS}/trade_history/{ANALYSIS_FILE_NAME}_{YYYYMMDD}.md"
+  format: "markdown"
+  required: true
+  description: "Primary trade history analysis with performance metrics and insights"
+
+real_time_market_data:
+  path: "CLI_SERVICES_REAL_TIME"
+  format: "json"
+  required: true
+  description: "Current market context for performance validation"
+
+trade_performance_metrics:
+  path: "{DATA_OUTPUTS}/trade_analysis/{ANALYSIS_FILE_NAME}_{YYYYMMDD}_metrics.json"
+  format: "json"
+  required: false
+  description: "Calculated performance metrics and statistical analysis"
+
+market_context_data:
+  path: "CLI_SERVICES_REAL_TIME"
+  format: "json"
+  required: true
+  description: "Market environment and sentiment for performance interpretation"
+
+validation_file:
+  path: "{DATA_OUTPUTS}/twitter/trade_history/validation/{ANALYSIS_FILE_NAME}_{YYYYMMDD}_validation.json"
+  format: "json"
+  required: false
+  description: "Validation file for post enhancement workflow"
+```
+
+**Output Structure**:
+```yaml
+primary_output:
+  path: "{DATA_OUTPUTS}/twitter/trade_history/{ANALYSIS_FILE_NAME}_{YYYYMMDD}.md"
+  format: "markdown"
+  description: "Generated trading performance Twitter content"
+
+metadata_output:
+  path: "{DATA_OUTPUTS}/twitter/trade_history/{ANALYSIS_FILE_NAME}_{YYYYMMDD}_metadata.json"
+  format: "json"
+  description: "Template selection and performance validation metadata"
+
+validation_output:
+  path: "{DATA_OUTPUTS}/twitter/trade_history/validation/{ANALYSIS_FILE_NAME}_{YYYYMMDD}_validation.json"
+  format: "json"
+  description: "Content validation results and enhancement recommendations"
+
+blog_url_output:
+  path: "{DATA_OUTPUTS}/twitter/trade_history/{ANALYSIS_FILE_NAME}_{YYYYMMDD}_blog_url.txt"
+  format: "text"
+  description: "Generated blog URL for full trade history analysis access"
+
+performance_summary:
+  path: "{DATA_OUTPUTS}/twitter/trade_history/{ANALYSIS_FILE_NAME}_{YYYYMMDD}_summary.json"
+  format: "json"
+  description: "Performance metrics summary for content tracking"
+```
+
+**Data Dependencies**:
+```yaml
+content_generation_flow:
+  data_validation:
+    - "trade history analysis loaded and validated"
+    - "current market context ≤ 24 hours"
+    - "performance metrics calculated and verified"
+    - "market environment assessment completed"
+
+  template_selection:
+    - "trade performance data evaluation"
+    - "market context integration"
+    - "transparency and educational value assessment"
+    - "engagement optimization criteria check"
+
+  content_optimization:
+    - "Twitter character limit compliance"
+    - "performance transparency standards"
+    - "educational value maximization"
+    - "blog URL generation and validation"
+```
+
+## Execution Examples
+
+### Direct Python Execution
+```python
+from script_registry import get_global_registry
+from script_config import ScriptConfig
+
+# Initialize
+config = ScriptConfig.from_environment()
+registry = get_global_registry(config)
+
+# Execute trade history Twitter content generation
+result = registry.execute_script(
+    "trade_history_twitter",
+    analysis_file="HISTORICAL_PERFORMANCE_REPORT",
+    date="20250718",
+    validate_content=True
+)
+
+# Execute with specific template override
+result = registry.execute_script(
+    "trade_history_twitter",
+    analysis_file="TRADE_HISTORY_ANALYSIS_YTD",
+    date="20250718",
+    template_variant="performance_summary",
+    validate_content=True
+)
+
+# Execute post enhancement from validation file
+result = registry.execute_script(
+    "trade_history_twitter",
+    validation_file="twitter/trade_history/validation/LIVE_SIGNALS_MONITOR_20250718_validation.json"
+)
+```
+
+### Command Line Execution
+```bash
+# Via content automation CLI
+python {SCRIPTS_BASE}/content_automation_cli.py \
+    --script trade_history_twitter \
+    --analysis-file HISTORICAL_PERFORMANCE_REPORT \
+    --date 20250718 \
+    --validate-content true
+
+# Via direct script execution
+python {SCRIPTS_BASE}/base_scripts/trade_history_twitter_script.py \
+    --analysis-file TRADE_HISTORY_ANALYSIS_YTD \
+    --date 20250718 \
+    --template-variant performance_summary
+
+# Post enhancement workflow
+python {SCRIPTS_BASE}/base_scripts/trade_history_twitter_script.py \
+    --validation-file "{DATA_OUTPUTS}/twitter/trade_history/validation/LIVE_SIGNALS_MONITOR_20250718_validation.json"
+
+# With custom market context
+python {SCRIPTS_BASE}/base_scripts/trade_history_twitter_script.py \
+    --analysis-file INTERNAL_TRADING_REPORTS \
+    --date 20250718 \
+    --market-context-override true
+```
+
+### Claude Command Execution
+```
+# Historical performance report
+/twitter_trade_history HISTORICAL_PERFORMANCE_REPORT_20250718
+
+# Live signals monitoring
+/twitter_trade_history LIVE_SIGNALS_MONITOR_20250718
+
+# YTD performance analysis
+/twitter_trade_history TRADE_HISTORY_ANALYSIS_YTD_20250718
+
+# Post enhancement using validation file
+/twitter_trade_history {DATA_OUTPUTS}/twitter/trade_history/validation/HISTORICAL_PERFORMANCE_REPORT_20250718_validation.json
+
+# Template-specific generation
+/twitter_trade_history STRATEGY_OPTIMIZATION_ANALYSIS_20250718 template_variant=statistical_validation
+```
+
+### Trade Performance Workflow Examples
+```
+# Performance transparency workflow
+/twitter_trade_history HISTORICAL_PERFORMANCE_REPORT_20250718
+
+# Top trades showcase
+/twitter_trade_history TRADE_HISTORY_ANALYSIS_YTD_20250718 template_variant=top_trades_showcase
+
+# Real-time performance update
+/twitter_trade_history LIVE_SIGNALS_MONITOR_20250718 template_variant=real_time_performance
+
+# Post validation and enhancement
+/twitter_trade_history HISTORICAL_PERFORMANCE_REPORT_20250718
+# → If validation score <9.0, enhance using:
+/twitter_trade_history {DATA_OUTPUTS}/twitter/trade_history/validation/HISTORICAL_PERFORMANCE_REPORT_20250718_validation.json
+```
 
 You are an expert trading performance analyst and social media strategist. Your specialty is transforming comprehensive trade history analysis into engaging X posts that showcase trading strategy results, market insights, and portfolio performance with credible data storytelling.
 
