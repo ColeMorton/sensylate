@@ -33,3 +33,19 @@ DISABLE_MISE = "true"
 
     Submitted at: {{created_at}}
     """
+
+# Environment Variables by Deploy Context
+# Production context (main branch)
+[context.production.environment]
+  PUBLIC_ENV = "production"
+  PUBLIC_FEATURE_CHARTS_PAGE = "false"
+
+# Branch deploy context (staging and other branches)
+[context.branch-deploy.environment]
+  PUBLIC_ENV = "staging"
+  PUBLIC_FEATURE_CHARTS_PAGE = "true"
+
+# Deploy preview context (pull requests)
+[context.deploy-preview.environment]
+  PUBLIC_ENV = "staging"
+  PUBLIC_FEATURE_CHARTS_PAGE = "true"
