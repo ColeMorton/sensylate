@@ -1,21 +1,10 @@
-import React, { lazy, Suspense } from "react";
+import React, { lazy, Suspense, useRef, useEffect } from "react";
 import type { ChartRendererProps } from "@/types/ChartTypes";
 import ChartLoadingSkeleton from "./shared/ChartLoadingSkeleton";
 import ChartErrorBoundary from "./shared/ChartErrorBoundary";
 
-// Lazy load the plot component to avoid SSR issues
+// Simple lazy loading for client-only rendering
 const Plot = lazy(() => {
-  if (typeof window === "undefined") {
-    // Return a mock component for SSR
-    return Promise.resolve({
-      default: () =>
-        React.createElement("div", {
-          className: "plotly-loading",
-          children: "Loading chart...",
-        }),
-    });
-  }
-
   return import("react-plotly.js/factory").then(async (factory) => {
     const Plotly = await import("plotly.js-basic-dist");
     return { default: factory.default(Plotly) };
@@ -29,6 +18,26 @@ const ChartRenderer: React.FC<ChartRendererProps> = ({
   loading = false,
   error = null,
 }) => {
+  const plotRef = useRef<any>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const handleInitialized = (figure: any, graphDiv: HTMLDivElement) => {
+    plotRef.current = graphDiv;
+  };
+
+  // Cleanup effect to properly destroy Plotly instances
+  useEffect(() => {
+    return () => {
+      if (plotRef.current && typeof window !== "undefined" && window.Plotly) {
+        try {
+          window.Plotly.purge(plotRef.current);
+        } catch {
+          // Ignore cleanup errors
+        }
+      }
+    };
+  }, []);
+
   if (loading) {
     return <ChartLoadingSkeleton />;
   }
@@ -53,14 +62,27 @@ const ChartRenderer: React.FC<ChartRendererProps> = ({
   }
 
   return (
-    <div className="h-full min-h-[400px] w-full">
+    <div
+      ref={containerRef}
+      className="h-full min-h-[400px] w-full"
+      style={{
+        position: "relative",
+        overflow: "hidden",
+        minHeight: "400px",
+      }}
+    >
       <Suspense fallback={<ChartLoadingSkeleton />}>
         <Plot
           data={data}
           layout={layout}
           config={config}
-          useResizeHandler={true}
-          style={{ width: "100%", height: "100%" }}
+          onInitialized={handleInitialized}
+          useResizeHandler={false}
+          style={{
+            width: "100%",
+            height: "100%",
+            position: "relative",
+          }}
           className="plotly-chart"
         />
       </Suspense>
