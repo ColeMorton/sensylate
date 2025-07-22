@@ -2,6 +2,8 @@ import { useState, useEffect, useCallback } from "react";
 import type {
   PortfolioDataRow,
   StockDataRow,
+  LiveSignalsDataRow,
+  TradeHistoryDataRow,
   ChartType,
   DataServiceResponse,
 } from "@/types/ChartTypes";
@@ -82,6 +84,21 @@ export function usePortfolioData(chartType: ChartType): DataServiceResponse<{
           break;
         }
 
+        case "live-signals-equity-curve":
+        case "live-signals-drawdowns":
+        case "live-signals-performance-metrics":
+        case "live-signals-weekly-candlestick": {
+          // Live signals charts are handled by useLiveSignalsData hook
+          setData({});
+          break;
+        }
+
+        case "trade-pnl-waterfall": {
+          // Trade history charts are handled by useTradeHistoryData hook
+          setData({});
+          break;
+        }
+
         default:
           setData({});
       }
@@ -95,7 +112,11 @@ export function usePortfolioData(chartType: ChartType): DataServiceResponse<{
   }, [chartType]);
 
   useEffect(() => {
-    if (chartType !== "apple-stock") {
+    if (
+      chartType !== "apple-stock" &&
+      !chartType.startsWith("live-signals-") &&
+      chartType !== "trade-pnl-waterfall"
+    ) {
       fetchDataForChartType();
     } else {
       setLoading(false);
@@ -182,6 +203,70 @@ export function useBuyHoldValue(): DataServiceResponse<PortfolioDataRow[]> {
       } catch (err) {
         setError(
           err instanceof Error ? err.message : "Failed to load buy-hold data",
+        );
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  return { data, loading, error };
+}
+
+// Hook for live signals data
+export function useLiveSignalsData(): DataServiceResponse<
+  LiveSignalsDataRow[]
+> {
+  const [data, setData] = useState<LiveSignalsDataRow[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        const result = await chartDataService.getLiveSignalsData();
+        setData(result);
+      } catch (err) {
+        setError(
+          err instanceof Error
+            ? err.message
+            : "Failed to load live signals data",
+        );
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  return { data, loading, error };
+}
+
+// Hook for trade history data
+export function useTradeHistoryData(): DataServiceResponse<
+  TradeHistoryDataRow[]
+> {
+  const [data, setData] = useState<TradeHistoryDataRow[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        const result = await chartDataService.getClosedTrades();
+        setData(result);
+      } catch (err) {
+        setError(
+          err instanceof Error
+            ? err.message
+            : "Failed to load trade history data",
         );
       } finally {
         setLoading(false);

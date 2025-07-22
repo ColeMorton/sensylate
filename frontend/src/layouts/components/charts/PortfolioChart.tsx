@@ -4,8 +4,16 @@ import type {
   ChartType,
   PortfolioDataRow,
   StockDataRow,
+  LiveSignalsDataRow,
+  WeeklyOHLCDataRow,
+  TradeHistoryDataRow,
 } from "@/types/ChartTypes";
-import { usePortfolioData, useAppleStockData } from "@/hooks/usePortfolioData";
+import {
+  usePortfolioData,
+  useAppleStockData,
+  useLiveSignalsData,
+  useTradeHistoryData,
+} from "@/hooks/usePortfolioData";
 import { getChartColors, getPlotlyThemeColors } from "@/utils/chartTheme";
 import ChartRenderer from "./ChartRenderer";
 
@@ -23,10 +31,18 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
   // Data hooks
   const portfolioData = usePortfolioData(chartType);
   const appleData = useAppleStockData();
+  const liveSignalsData = useLiveSignalsData();
+  const tradeHistoryData = useTradeHistoryData();
 
   // Use appropriate data source based on chart type
   const { data, loading, error } =
-    chartType === "apple-stock" ? appleData : portfolioData;
+    chartType === "apple-stock"
+      ? appleData
+      : chartType.startsWith("live-signals-")
+        ? liveSignalsData
+        : chartType === "trade-pnl-waterfall"
+          ? tradeHistoryData
+          : portfolioData;
 
   // Dark mode detection
   useEffect(() => {
@@ -71,6 +87,98 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
       const value = row[key];
       return value !== undefined ? value : "";
     });
+  };
+
+  const unpackLiveSignals = (
+    rows: LiveSignalsDataRow[],
+    key: keyof LiveSignalsDataRow,
+  ): (string | number)[] => {
+    return rows.map((row) => {
+      const value = row[key];
+      return value !== undefined ? value : "";
+    });
+  };
+
+  // Convert daily equity data to weekly OHLC for candlestick charts
+  const convertToWeeklyOHLC = (
+    rows: LiveSignalsDataRow[],
+  ): WeeklyOHLCDataRow[] => {
+    if (!rows || rows.length === 0) {
+      return [];
+    }
+
+    const weeklyData: WeeklyOHLCDataRow[] = [];
+    let currentWeek: LiveSignalsDataRow[] = [];
+    let currentWeekStart: Date | null = null;
+
+    for (const row of rows) {
+      const date = new Date(row.timestamp);
+      const equity = parseFloat(row.equity);
+
+      // Skip invalid data
+      if (isNaN(equity)) {
+        continue;
+      }
+
+      // Start of week is Monday (getDay() returns 0 for Sunday, 1 for Monday, etc.)
+      const monday = new Date(date);
+      monday.setDate(date.getDate() - ((date.getDay() + 6) % 7));
+      monday.setHours(0, 0, 0, 0);
+
+      // If this is a new week, process the previous week
+      if (currentWeekStart && monday.getTime() !== currentWeekStart.getTime()) {
+        if (currentWeek.length > 0) {
+          const weekOHLC = processWeekData(currentWeek, currentWeekStart);
+          if (weekOHLC) {
+            weeklyData.push(weekOHLC);
+          }
+        }
+        currentWeek = [];
+      }
+
+      // Update current week
+      currentWeekStart = monday;
+      currentWeek.push(row);
+    }
+
+    // Process the final week
+    if (currentWeek.length > 0 && currentWeekStart) {
+      const weekOHLC = processWeekData(currentWeek, currentWeekStart);
+      if (weekOHLC) {
+        weeklyData.push(weekOHLC);
+      }
+    }
+
+    return weeklyData;
+  };
+
+  const processWeekData = (
+    weekData: LiveSignalsDataRow[],
+    weekStart: Date,
+  ): WeeklyOHLCDataRow | null => {
+    if (weekData.length === 0) {
+      return null;
+    }
+
+    const equities = weekData
+      .map((row) => parseFloat(row.equity))
+      .filter((val) => !isNaN(val));
+
+    if (equities.length === 0) {
+      return null;
+    }
+
+    // Get the Friday of this week (or last available day)
+    const friday = new Date(weekStart);
+    friday.setDate(weekStart.getDate() + 4);
+
+    return {
+      date: friday.toISOString().split("T")[0], // YYYY-MM-DD format
+      open: equities[0],
+      high: Math.max(...equities),
+      low: Math.min(...equities),
+      close: equities[equities.length - 1],
+    };
   };
 
   // Chart data generation
@@ -218,10 +326,144 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
         ];
       }
 
+      case "live-signals-equity-curve": {
+        const liveSignalsRows = data as LiveSignalsDataRow[];
+        if (!liveSignalsRows || liveSignalsRows.length === 0) {
+          return [];
+        }
+
+        return [
+          {
+            type: "scatter",
+            mode: "lines",
+            x: unpackLiveSignals(liveSignalsRows, "timestamp"),
+            y: unpackLiveSignals(liveSignalsRows, "equity"),
+            line: { color: colors.primary, width: 2 },
+            name: "Live Signals Equity",
+          },
+        ];
+      }
+
+      case "live-signals-drawdowns": {
+        const liveSignalsRows = data as LiveSignalsDataRow[];
+        if (!liveSignalsRows || liveSignalsRows.length === 0) {
+          return [];
+        }
+
+        return [
+          {
+            type: "scatter",
+            mode: "lines",
+            x: unpackLiveSignals(liveSignalsRows, "timestamp"),
+            y: unpackLiveSignals(liveSignalsRows, "drawdown"),
+            line: { color: colors.drawdown, width: 2 },
+            fill: "tozeroy",
+            fillcolor: `rgba(255, 112, 67, 0.1)`,
+            name: "Drawdown ($)",
+          },
+        ];
+      }
+
+      case "live-signals-performance-metrics": {
+        const liveSignalsRows = data as LiveSignalsDataRow[];
+        if (!liveSignalsRows || liveSignalsRows.length === 0) {
+          return [];
+        }
+
+        return [
+          {
+            type: "scatter",
+            mode: "lines",
+            x: unpackLiveSignals(liveSignalsRows, "timestamp"),
+            y: unpackLiveSignals(liveSignalsRows, "peak_equity"),
+            line: { color: colors.secondary, width: 2 },
+            name: "Peak Equity",
+          },
+          {
+            type: "scatter",
+            mode: "lines",
+            x: unpackLiveSignals(liveSignalsRows, "timestamp"),
+            y: unpackLiveSignals(liveSignalsRows, "mfe"),
+            line: { color: colors.tertiary, width: 2 },
+            name: "MFE (Maximum Favorable Excursion)",
+          },
+          {
+            type: "scatter",
+            mode: "lines",
+            x: unpackLiveSignals(liveSignalsRows, "timestamp"),
+            y: unpackLiveSignals(liveSignalsRows, "mae"),
+            line: { color: colors.neutral, width: 2 },
+            name: "MAE (Maximum Adverse Excursion)",
+          },
+        ];
+      }
+
+      case "live-signals-weekly-candlestick": {
+        const liveSignalsRows = data as LiveSignalsDataRow[];
+        if (!liveSignalsRows || liveSignalsRows.length === 0) {
+          return [];
+        }
+
+        const weeklyOHLC = convertToWeeklyOHLC(liveSignalsRows);
+        if (weeklyOHLC.length === 0) {
+          return [];
+        }
+
+        return [
+          {
+            type: "candlestick",
+            x: weeklyOHLC.map((row) => row.date),
+            open: weeklyOHLC.map((row) => row.open),
+            high: weeklyOHLC.map((row) => row.high),
+            low: weeklyOHLC.map((row) => row.low),
+            close: weeklyOHLC.map((row) => row.close),
+            increasing: { line: { color: "#17BECF" } },
+            decreasing: { line: { color: "#7F7F7F" } },
+            name: "Weekly Equity",
+          },
+        ];
+      }
+
+      case "trade-pnl-waterfall": {
+        const tradeHistoryRows = data as TradeHistoryDataRow[];
+        if (!tradeHistoryRows || tradeHistoryRows.length === 0) {
+          return [];
+        }
+
+        const pnlValues = tradeHistoryRows.map((trade) =>
+          parseFloat(trade.PnL),
+        );
+        const tickers = tradeHistoryRows.map((trade) => trade.Ticker);
+
+        const waterfallData = {
+          type: "waterfall" as const,
+          orientation: "v" as const,
+          measure: tradeHistoryRows.map(() => "relative"),
+          x: tickers,
+          y: pnlValues,
+          textposition: "outside" as const,
+          text: pnlValues.map((pnl) =>
+            pnl > 0 ? `+${pnl.toFixed(2)}` : `${pnl.toFixed(2)}`,
+          ),
+          increasing: { marker: { color: colors.multiStrategy } },
+          decreasing: { marker: { color: colors.buyHold } },
+          connector: {
+            line: {
+              color: colors.neutral,
+              width: 0,
+            },
+          },
+          name: "Trade PnL",
+          hovertemplate: "<b>%{x}</b><br>PnL: $%{y}<br><extra></extra>",
+        };
+
+        return [waterfallData];
+      }
+
       default:
         return [];
     }
-  }, [chartType, data, isDarkMode, loading, error]);
+  }, [chartType, data, isDarkMode, loading, error, convertToWeeklyOHLC]);
 
   // Chart layout
   const layout: Partial<Layout> = useMemo(() => {
@@ -243,6 +485,16 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
           return "Portfolio Drawdown Analysis";
         case "normalized-performance":
           return "Normalized Performance Comparison";
+        case "live-signals-equity-curve":
+          return "Live Signals Portfolio Equity Curve";
+        case "live-signals-drawdowns":
+          return "Live Signals Portfolio Drawdowns";
+        case "live-signals-performance-metrics":
+          return "Live Signals Performance Metrics";
+        case "live-signals-weekly-candlestick":
+          return "Live Signals Weekly Candlestick Chart";
+        case "trade-pnl-waterfall":
+          return "Trade PnL Waterfall Chart";
         default:
           return "Chart";
       }
@@ -260,6 +512,16 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
           return "Drawdown (%)";
         case "normalized-performance":
           return "Normalized Value";
+        case "live-signals-equity-curve":
+          return "Equity ($)";
+        case "live-signals-drawdowns":
+          return "Drawdown ($)";
+        case "live-signals-performance-metrics":
+          return "Value ($)";
+        case "live-signals-weekly-candlestick":
+          return "Equity ($)";
+        case "trade-pnl-waterfall":
+          return "PnL ($)";
         default:
           return "Value";
       }
@@ -294,15 +556,22 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
         range:
           chartType === "apple-stock"
             ? ["2016-07-01", "2016-12-31"]
-            : undefined,
-        type: "date",
+            : chartType === "trade-pnl-waterfall"
+              ? undefined
+              : undefined,
+        type: chartType === "trade-pnl-waterfall" ? "category" : "date",
         title: {
-          text: "Date",
+          text: chartType === "trade-pnl-waterfall" ? "Ticker" : "Date",
           font: themeColors.font,
         },
         gridcolor: themeColors.gridColor,
         tickcolor: themeColors.tickColor,
         tickfont: themeColors.font,
+        rangeslider:
+          chartType === "live-signals-weekly-candlestick" ||
+          chartType === "trade-pnl-waterfall"
+            ? { visible: false }
+            : undefined,
       },
       yaxis: {
         autorange: true,
@@ -319,7 +588,7 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
         tickcolor: themeColors.tickColor,
         tickfont: themeColors.font,
       },
-      hovermode: "x unified",
+      hovermode: chartType === "trade-pnl-waterfall" ? "closest" : "x unified",
     };
   }, [isDarkMode, chartType, title]);
 

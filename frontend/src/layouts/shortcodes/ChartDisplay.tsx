@@ -17,6 +17,11 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({
     "returns-comparison",
     "portfolio-drawdowns",
     "normalized-performance",
+    "live-signals-equity-curve",
+    "live-signals-drawdowns",
+    "live-signals-performance-metrics",
+    "live-signals-weekly-candlestick",
+    "trade-pnl-waterfall",
   ];
 
   if (!supportedChartTypes.includes(chartType)) {

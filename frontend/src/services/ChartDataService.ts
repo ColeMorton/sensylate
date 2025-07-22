@@ -1,11 +1,21 @@
 import type {
   PortfolioDataRow,
   StockDataRow,
+  LiveSignalsDataRow,
+  TradeHistoryDataRow,
   PortfolioDataCache,
 } from "@/types/ChartTypes";
 
 class ChartDataService {
   private cache: Partial<PortfolioDataCache> = {};
+  private liveSignalsCache: {
+    data?: LiveSignalsDataRow[];
+    lastFetched?: number;
+  } = {};
+  private tradeHistoryCache: {
+    data?: TradeHistoryDataRow[];
+    lastFetched?: number;
+  } = {};
   private readonly CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
 
   // CSV parsing utilities
@@ -29,11 +39,42 @@ class ChartDataService {
 
     return lines.slice(1).map((line) => {
       const values = line.split(",");
-      const row: PortfolioDataRow = {};
+      const row: Partial<PortfolioDataRow> = {};
       headers.forEach((header, index) => {
-        row[header.trim()] = values[index]?.trim() || "";
+        row[header.trim() as keyof PortfolioDataRow] =
+          values[index]?.trim() || "";
       });
-      return row;
+      return row as PortfolioDataRow;
+    });
+  }
+
+  private parseLiveSignalsCSV(csvText: string): LiveSignalsDataRow[] {
+    const lines = csvText.trim().split("\n");
+    const headers = lines[0].split(",");
+
+    return lines.slice(1).map((line) => {
+      const values = line.split(",");
+      const row: Partial<LiveSignalsDataRow> = {};
+      headers.forEach((header, index) => {
+        row[header.trim() as keyof LiveSignalsDataRow] =
+          values[index]?.trim() || "";
+      });
+      return row as LiveSignalsDataRow;
+    });
+  }
+
+  private parseTradeHistoryCSV(csvText: string): TradeHistoryDataRow[] {
+    const lines = csvText.trim().split("\n");
+    const headers = lines[0].split(",");
+
+    return lines.slice(1).map((line) => {
+      const values = line.split(",");
+      const row: Partial<TradeHistoryDataRow> = {};
+      headers.forEach((header, index) => {
+        row[header.trim() as keyof TradeHistoryDataRow] =
+          values[index]?.trim() || "";
+      });
+      return row as TradeHistoryDataRow;
     });
   }
 
@@ -47,6 +88,20 @@ class ChartDataService {
 
   private setCacheTimestamp(): void {
     this.cache.lastFetched = Date.now();
+  }
+
+  private isLiveSignalsCacheValid(): boolean {
+    return (
+      this.liveSignalsCache.lastFetched !== undefined &&
+      Date.now() - this.liveSignalsCache.lastFetched < this.CACHE_DURATION
+    );
+  }
+
+  private isTradeHistoryCacheValid(): boolean {
+    return (
+      this.tradeHistoryCache.lastFetched !== undefined &&
+      Date.now() - this.tradeHistoryCache.lastFetched < this.CACHE_DURATION
+    );
   }
 
   // Data fetching methods
@@ -145,6 +200,72 @@ class ChartDataService {
     }
   }
 
+  async fetchLiveSignalsData(): Promise<LiveSignalsDataRow[]> {
+    // Return cached data if valid
+    if (this.liveSignalsCache.data && this.isLiveSignalsCacheValid()) {
+      return this.liveSignalsCache.data;
+    }
+
+    try {
+      const response = await fetch(
+        "/data/portfolio/live-signals/live_signals_equity.csv",
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const csvText = await response.text();
+      const data = this.parseLiveSignalsCSV(csvText);
+
+      // Update cache
+      this.liveSignalsCache = {
+        data,
+        lastFetched: Date.now(),
+      };
+
+      return data;
+    } catch (error) {
+      throw new Error(
+        error instanceof Error
+          ? error.message
+          : "Failed to load live signals data",
+      );
+    }
+  }
+
+  async fetchTradeHistoryData(): Promise<TradeHistoryDataRow[]> {
+    // Return cached data if valid
+    if (this.tradeHistoryCache.data && this.isTradeHistoryCacheValid()) {
+      return this.tradeHistoryCache.data;
+    }
+
+    try {
+      const response = await fetch("/data/trade-history/live_signals.csv");
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const csvText = await response.text();
+      const data = this.parseTradeHistoryCSV(csvText);
+
+      // Update cache
+      this.tradeHistoryCache = {
+        data,
+        lastFetched: Date.now(),
+      };
+
+      return data;
+    } catch (error) {
+      throw new Error(
+        error instanceof Error
+          ? error.message
+          : "Failed to load trade history data",
+      );
+    }
+  }
+
   // Specific data getters
   async getMultiStrategyValue(): Promise<PortfolioDataRow[]> {
     if (this.cache.multiStrategyValue && this.isCacheValid()) {
@@ -186,6 +307,18 @@ class ChartDataService {
     return data.multiStrategyDrawdowns;
   }
 
+  async getLiveSignalsData(): Promise<LiveSignalsDataRow[]> {
+    return await this.fetchLiveSignalsData();
+  }
+
+  async getClosedTrades(): Promise<TradeHistoryDataRow[]> {
+    const allTrades = await this.fetchTradeHistoryData();
+
+    // Filter for closed trades only and sort by PnL (highest to lowest)
+    const closedTrades = allTrades.filter((trade) => trade.Status === "Closed");
+    return closedTrades.sort((a, b) => parseFloat(b.PnL) - parseFloat(a.PnL));
+  }
+
   // Utility methods
   private isPortfolioCacheComplete(): boolean {
     return !!(
@@ -200,6 +333,8 @@ class ChartDataService {
   // Clear cache (useful for development or forced refresh)
   clearCache(): void {
     this.cache = {};
+    this.liveSignalsCache = {};
+    this.tradeHistoryCache = {};
   }
 
   // Get cache status
