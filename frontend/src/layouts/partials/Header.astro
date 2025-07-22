@@ -128,6 +128,7 @@ const { pathname } = Astro.url;
               <li class="nav-item">
                 <a
                   href={menu.url}
+                  data-astro-reload={menu.url === "/charts" ? true : undefined}
                   class={`nav-link hover:text-text-light dark:hover:text-text block cursor-pointer transition-colors duration-200 ${
                     (pathname === `${menu.url}/` || pathname === menu.url) &&
                     "active"

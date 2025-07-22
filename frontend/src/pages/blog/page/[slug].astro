@@ -55,21 +55,18 @@ export async function getStaticPaths() {
   <PageHeader title={postIndex.data.title} />
   <section class="section">
     <div class="container">
-      <div class="row gx-5">
-        <!-- blog posts -->
-        <div class="lg:col-8">
-          <div class="row">
-            {
-              currentPosts.map((post) => (
-                <div class="mb-14 md:col-6">
-                  <BlogCard data={post} />
-                </div>
-              ))
-            }
-          </div>
-        </div>
+      <div class="row">
+        {
+          currentPosts.map((post) => (
+            <div class="mb-8 md:col-6">
+              <BlogCard data={post} />
+            </div>
+          ))
+        }
+      </div>
 
-        <!-- sidebar -->
+      <!-- sidebar -->
+      <div class="mt-16">
         <PostSidebar
           categories={categories}
           tags={tags}

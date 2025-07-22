@@ -66,7 +66,7 @@ trading_data:
 
 ### Key Performance Metrics
 
-- **EXPECTANCY**: +1.57 (Risk-adjusted expectancy calculation: excellent performance vs +1.00 target)
+- **Expectancy**: +1.57 (Risk-adjusted expectancy calculation: excellent performance vs +1.00 target)
 - **Best Trade**: NFLX +$342.61 (+36.73%, 86-day hold)
 - **Worst Trade**: UHS -$27.76 (-15.02%, 19-day hold)
 - **Longest Hold**: CRWD 91 days (+26.11%, +$101.05)

@@ -481,7 +481,7 @@ class DASVPhase3SynthesizerFixed:
 - **Strategy Mix**: Based on {metrics.get('total_trades', 0)} total positions
 
 ### Key Performance Metrics
-- **EXPECTANCY**: {metrics.get('expectancy', 0):.4f} (Risk-adjusted expectancy per trade)
+- **Expectancy**: {metrics.get('expectancy', 0):.4f} (Risk-adjusted expectancy per trade)
 - **Statistical Significance**: {'✅ **SIGNIFICANT**' if metrics.get('significant', False) else '⚠️ **NOT SIGNIFICANT**'} (p-value: {metrics.get('p_value', 1.0):.4f})
 - **Confidence Interval**: [{metrics.get('confidence_interval', [0, 0])[0]:.2%}, {metrics.get('confidence_interval', [0, 0])[1]:.2%}] (95% CI)
 - **Risk-Adjusted Performance**: Sharpe {metrics.get('sharpe_ratio', 0):.2f}, Sortino {metrics.get('sortino_ratio', 0):.2f}

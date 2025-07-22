@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import * as THREE from "three";
+import { getThemeColors } from "@/utils/chartTheme";
 
 interface GalaxyAnimationProps {
   className?: string;
@@ -55,6 +56,10 @@ const GalaxyAnimation: React.FC<GalaxyAnimationProps> = ({
     refs.renderer.setClearColor(0x000000, 0); // Transparent background
     container.appendChild(refs.renderer.domElement);
 
+    // Detect theme mode
+    const isDarkMode = document.documentElement.classList.contains("dark");
+    const themeColors = getThemeColors(isDarkMode);
+
     // Galaxy parameters
     const parameters = {
       count: 20000,
@@ -64,8 +69,9 @@ const GalaxyAnimation: React.FC<GalaxyAnimationProps> = ({
       spin: 1,
       randomness: 0.2,
       randomnessPower: 3,
-      insideColor: "#00BCD4", // Cyan for inner core
-      outsideColor: "#9575CD", // Purple for outer edges
+      insideColor: themeColors.primaryData, // Primary data color for inner core
+      neutralColor: themeColors.tertiaryData, // Neutral data color for middle
+      outsideColor: themeColors.secondaryData, // Secondary data color for outer edges
     };
 
     // Create galaxy
@@ -83,6 +89,7 @@ const GalaxyAnimation: React.FC<GalaxyAnimationProps> = ({
       const colors = new Float32Array(parameters.count * 3);
 
       const colorInside = new THREE.Color(parameters.insideColor);
+      const colorNeutral = new THREE.Color(parameters.neutralColor);
       const colorOutside = new THREE.Color(parameters.outsideColor);
 
       for (let i = 0; i < parameters.count; i++) {
@@ -115,9 +122,21 @@ const GalaxyAnimation: React.FC<GalaxyAnimationProps> = ({
         positions[i3 + 2] =
           Math.sin(branchAngle + spinAngle) * radius + randomZ;
 
-        // Color
-        const mixedColor = colorInside.clone();
-        mixedColor.lerp(colorOutside, radius / parameters.radius);
+        // Color - Three-color gradient: primary_data → neutral_data → secondary_data
+        const normalizedRadius = radius / parameters.radius;
+        let mixedColor;
+
+        if (normalizedRadius <= 0.5) {
+          // Inner segment: primary_data to neutral_data
+          const innerLerpFactor = normalizedRadius * 2; // Scale 0-0.5 to 0-1
+          mixedColor = colorInside.clone();
+          mixedColor.lerp(colorNeutral, innerLerpFactor);
+        } else {
+          // Outer segment: neutral_data to secondary_data
+          const outerLerpFactor = (normalizedRadius - 0.5) * 2; // Scale 0.5-1 to 0-1
+          mixedColor = colorNeutral.clone();
+          mixedColor.lerp(colorOutside, outerLerpFactor);
+        }
 
         colors[i3] = mixedColor.r;
         colors[i3 + 1] = mixedColor.g;
