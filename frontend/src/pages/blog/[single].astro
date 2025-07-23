@@ -5,81 +5,48 @@ import { getSinglePage } from "@/lib/contentParser.astro";
 
 export async function getStaticPaths() {
   const BLOG_FOLDER = "blog";
+  const posts = await getSinglePage(BLOG_FOLDER);
 
-  try {
-    const posts = await getSinglePage(BLOG_FOLDER);
+  const paths = posts.map((post) => ({
+    params: {
+      single: post.id,
+    },
+    props: { post },
+  }));
+  return paths;
+}
 
-    if (!posts || posts.length === 0) {
-      console.warn(`No posts found in ${BLOG_FOLDER} collection`);
-      return [];
-    }
+// In server mode (development), get post from params. In static mode, get from props.
+let post;
+if (import.meta.env.DEV && !Astro.props.post) {
+  // Server mode: fetch post data based on route params
+  const { single } = Astro.params;
+  const allPosts = await getSinglePage("blog");
+  post = allPosts.find((p) => p.id === single);
 
-    // Filter out invalid posts and add validation
-    const validPosts = posts.filter((post) => {
-      if (!post || !post.id || !post.data) {
-        console.warn(`Invalid post found:`, post);
-        return false;
-      }
-      return true;
-    });
-
-    const paths = validPosts.map((post) => ({
-      params: {
-        single: post.id,
-      },
-      props: { post },
-    }));
-
-    console.log(`Generated ${paths.length} static paths for blog posts`);
-    return paths;
-  } catch (error) {
-    console.error(`Error generating static paths for ${BLOG_FOLDER}:`, error);
-    return [];
+  if (!post) {
+    throw new Error(
+      `Blog post not found - no post with ID '${single}'. Available posts: ${allPosts.map((p) => p.id).join(", ")}`,
+    );
   }
+} else {
+  // Static mode: use props from getStaticPaths
+  post = Astro.props.post;
 }
 
-const { post } = Astro.props;
-
-// DEBUG: Route handler identification
-console.log(
-  `🔍 [ROUTE DEBUG] [single].astro processing URL: ${Astro.url.pathname}`,
-);
-console.log(`🔍 [ROUTE DEBUG] Route params:`, Astro.params);
-
-// VALIDATION: Ensure this is actually a blog request
-const urlPath = Astro.url.pathname;
-if (
-  !urlPath.startsWith("/blog/") ||
-  urlPath === "/blog" ||
-  urlPath === "/blog/"
-) {
-  console.error(
-    `❌ [ROUTE ERROR] [single].astro incorrectly handling non-blog route: ${urlPath}`,
-  );
-  console.error(`❌ This should be handled by [regular].astro instead`);
-  return Astro.redirect("/404");
-}
-
-// Debug logging to track post data flow
 if (!post) {
-  console.error(
-    `❌ [POST ERROR] Post is undefined in [single].astro for URL: ${urlPath}`,
+  throw new Error(
+    `Blog post not found - post prop is undefined. Route: ${Astro.url.pathname}`,
   );
-  console.error(
-    "This indicates a routing collision - non-blog requests reaching blog handler",
-  );
-} else if (!post.data) {
-  console.warn("Post exists but post.data is undefined:", post.id);
 }
 
-console.log(
-  `✅ [ROUTE DEBUG] Successfully processing blog post: ${post?.id || "undefined"}`,
-);
-console.log(
-  `✅ [ROUTE DEBUG] Post collection: ${post?.collection || "undefined"}`,
-);
+if (!post.data) {
+  throw new Error(
+    `Blog post data is missing - post.data is undefined. Post ID: ${post.id || "unknown"}, Route: ${Astro.url.pathname}`,
+  );
+}
 
-const { title, meta_title, description, image } = post?.data || {};
+const { title, meta_title, description, image } = post.data;
 ---
 
 <Base

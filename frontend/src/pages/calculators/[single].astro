@@ -34,6 +34,19 @@ export async function getStaticPaths() {
 const { calculator } = Astro.props as {
   calculator: CollectionEntry<"calculators">;
 };
+
+if (!calculator) {
+  throw new Error(
+    `Calculator not found - calculator prop is undefined. Route: ${Astro.url.pathname}`,
+  );
+}
+
+if (!calculator.data) {
+  throw new Error(
+    `Calculator data is missing - calculator.data is undefined. Calculator ID: ${calculator.id || "unknown"}, Route: ${Astro.url.pathname}`,
+  );
+}
+
 const { title, meta_title, description, image, calculator_id } =
   calculator.data;
 

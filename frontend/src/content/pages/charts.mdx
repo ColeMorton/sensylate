@@ -19,7 +19,7 @@ draft: false
   client:only="react"
   title="Bitcoin Returns Comparison"
   category="Bitcoin Performance"
-  description="Cumulative returns comparison: multi-strategy Bitcoin trading vs passive buy-and-hold over 3,960 days of market data."
+  description="Daily returns comparison: multi-strategy Bitcoin trading vs passive buy-and-hold showing day-to-day percentage changes over 3,960 days of market data."
   chartType="returns-comparison"
 />
 
@@ -31,12 +31,54 @@ draft: false
   chartType="portfolio-drawdowns"
 />
 
+</div>
+
+## Live Signals Portfolio
+
+<div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
+
 <ChartDisplay
   client:only="react"
-  title="Bitcoin Normalized Performance"
-  category="Bitcoin Relative Performance"
-  description="Normalized Bitcoin portfolio comparison starting at 1.0. Shows relative outperformance of multi-strategy vs buy-and-hold approaches."
-  chartType="normalized-performance"
+  title="Live Signals Equity Curve"
+  category="Live Trading Performance"
+  description="Comprehensive live trading analysis showing equity curve, MFE (Maximum Favorable Excursion), and MAE (Maximum Adverse Excursion). Real-time performance from April to August 2025 with risk management insights."
+  chartType="live-signals-equity-curve"
+/>
+
+<ChartDisplay
+  client:only="react"
+  title="Live Signals Drawdown Analysis"
+  category="Live Trading Risk"
+  description="Live portfolio drawdown periods showing risk management during real trading. Peak drawdown of $69.23 with successful recovery to profitability."
+  chartType="live-signals-drawdowns"
+/>
+
+</div>
+
+<div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
+
+<ChartDisplay
+  client:only="react"
+  title="Live Signals Weekly Candlestick Chart"
+  category="Live Trading Technical Analysis"
+  description="Weekly OHLC candlestick view of live signals equity performance. Aggregates daily equity data into weekly candles for technical analysis."
+  chartType="live-signals-weekly-candlestick"
+/>
+
+<ChartDisplay
+  client:only="react"
+  title="Trade PnL Waterfall Chart"
+  category="Live Trading Individual Trades"
+  description="Waterfall chart showing individual trade profits and losses from closed positions, sorted from highest to lowest PnL. Visualizes contribution of each trade to overall portfolio performance."
+  chartType="trade-pnl-waterfall"
+/>
+
+<ChartDisplay
+  client:only="react"
+  title="Open Positions Cumulative PnL Time Series"
+  category="Live Trading Open Positions"
+  description="Multi-line time series showing cumulative PnL for each open position, indexed to $0 at entry date. Track real-time performance across the live portfolio with individual lines for each ticker."
+  chartType="open-positions-pnl-timeseries"
 />
 
 </div>
