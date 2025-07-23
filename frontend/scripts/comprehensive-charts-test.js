@@ -2,7 +2,7 @@
  * Comprehensive Charts Functionality Test
  *
  * This script performs exhaustive testing of the charts page functionality:
- * - All 5 chart types validation
+ * - All 9 chart types validation
  * - Data integrity and rendering accuracy
  * - Theme switching behavior
  * - Interactive features (hover, zoom, pan)
@@ -175,7 +175,11 @@ class ComprehensiveChartsValidator {
       { type: 'portfolio-value-comparison', title: 'Bitcoin Portfolio Value Comparison' },
       { type: 'returns-comparison', title: 'Bitcoin Returns Comparison' },
       { type: 'portfolio-drawdowns', title: 'Bitcoin Portfolio Drawdown Analysis' },
-      { type: 'normalized-performance', title: 'Bitcoin Normalized Performance' },
+      { type: 'live-signals-equity-curve', title: 'Live Signals Equity Curve' },
+      { type: 'live-signals-drawdowns', title: 'Live Signals Drawdown Analysis' },
+      { type: 'live-signals-weekly-candlestick', title: 'Live Signals Weekly Candlestick Chart' },
+      { type: 'trade-pnl-waterfall', title: 'Trade PnL Waterfall Chart' },
+      { type: 'open-positions-pnl-timeseries', title: 'Open Positions Cumulative PnL Time Series' },
       { type: 'apple-stock', title: 'Apple Stock Reference' }
     ];
 

@@ -1,0 +1,29 @@
+{
+  "ticker": "ADBE",
+  "date": "20250723",
+  "template_selected": "A_valuation",
+  "selection_criteria": {
+    "fair_value_gap": 18.0,
+    "valuation_confidence": 0.84,
+    "template_match_reason": "Valuation disconnect >15% with confidence >0.8"
+  },
+  "market_data": {
+    "current_price": 372.87,
+    "fair_value": 440,
+    "upside_potential": 18.0,
+    "data_source": "yahoo_finance_cli",
+    "timestamp": "2025-07-23T21:04:43.314355"
+  },
+  "content_metrics": {
+    "character_count": 880,
+    "twitter_compliant": false,
+    "validation_status": "requires_optimization",
+    "institutional_quality": true
+  },
+  "quality_scores": {
+    "data_freshness": 1.0,
+    "content_confidence": 0.84,
+    "economic_integration": 0.98,
+    "overall_confidence": 0.91
+  }
+}

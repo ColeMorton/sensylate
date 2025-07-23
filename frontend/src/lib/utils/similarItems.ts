@@ -4,12 +4,12 @@ const similarItems = (currentItem: any, allItems: any[]) => {
   let tags: string[] = [];
 
   // set categories
-  if (currentItem.data.categories && currentItem.data.categories.length > 0) {
+  if (currentItem?.data?.categories && currentItem.data.categories.length > 0) {
     categories = currentItem.data.categories;
   }
 
   // set tags
-  if (currentItem.data.tags && currentItem.data.tags.length > 0) {
+  if (currentItem?.data?.tags && currentItem.data.tags.length > 0) {
     tags = currentItem.data.tags;
   }
 
@@ -34,7 +34,7 @@ const similarItems = (currentItem: any, allItems: any[]) => {
 
   // filter by slug
   const filterBySlug = mergedItems.filter(
-    (product) => product.id !== currentItem.id,
+    (product) => product.id !== currentItem?.id,
   );
 
   return filterBySlug;

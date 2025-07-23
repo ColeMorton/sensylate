@@ -48,15 +48,42 @@ export async function getStaticPaths() {
   return paths;
 }
 
+// DEBUG: Route handler identification
+console.log(
+  `🔍 [ROUTE DEBUG] [regular].astro processing URL: ${Astro.url.pathname}`,
+);
+console.log(`🔍 [ROUTE DEBUG] Route params:`, Astro.params);
+console.log(`🔍 [ROUTE DEBUG] Development mode: ${import.meta.env.DEV}`);
+console.log(`🔍 [ROUTE DEBUG] Props page exists: ${!!Astro.props.page}`);
+
 // In server mode (development), get page from params. In static mode, get from props.
 let page;
 if (import.meta.env.DEV && !Astro.props.page) {
   // Server mode: fetch page data based on route params
   const { regular } = Astro.params;
-  const allPages = await getSinglePage("pages");
-  page = allPages.find((p) => p.id === regular);
+  console.log(`🔍 [DEV MODE] Fetching page data for: ${regular}`);
 
-  if (!page) {
+  try {
+    const allPages = await getSinglePage("pages");
+    console.log(
+      `🔍 [DEV MODE] Available pages:`,
+      allPages.map((p) => ({ id: p.id, slug: p.slug })),
+    );
+
+    page = allPages.find((p) => p.id === regular);
+
+    if (!page) {
+      console.error(`❌ [PAGE ERROR] No page found for route: ${regular}`);
+      console.error(
+        `❌ Available page IDs:`,
+        allPages.map((p) => p.id),
+      );
+      return Astro.redirect("/404");
+    }
+
+    console.log(`✅ [DEV MODE] Successfully found page: ${page.id}`);
+  } catch (error) {
+    console.error(`❌ [DEV MODE ERROR] Failed to fetch pages:`, error);
     return Astro.redirect("/404");
   }
 
@@ -69,6 +96,9 @@ if (import.meta.env.DEV && !Astro.props.page) {
   }
 } else {
   // Static mode: use props from getStaticPaths
+  console.log(
+    `🔍 [STATIC MODE] Using page from props: ${Astro.props.page?.id}`,
+  );
   page = Astro.props.page;
 }
 
@@ -87,7 +117,7 @@ const { Content } = await render(page);
   image={image}
 >
   <PageHeader title={title} />
-  <section class="section-sm">
+  <section class="section-sm py-8">
     <div class="container">
       <div class="row">
         <div class="lg:col-12">

@@ -5,6 +5,7 @@ import React, {
   lazy,
   Suspense,
   useEffect,
+  useRef,
 } from "react";
 import type { Data, Layout, Config } from "plotly.js";
 
@@ -22,7 +23,7 @@ const Plot = lazy(() => {
   }
 
   return import("react-plotly.js/factory").then((factory) => {
-    const Plotly = require("plotly.js-basic-dist-min");
+    const Plotly = require("plotly.js-basic-dist");
     return { default: factory.default(Plotly) };
   });
 });
@@ -44,6 +45,8 @@ const PlotlyChart: React.FC<PlotlyChartProps> = ({
 }) => {
   const [chartData, setChartData] = useState<Data[]>(data);
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const plotRef = useRef<any>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   // Detect dark mode
   useEffect(() => {
@@ -77,72 +80,87 @@ const PlotlyChart: React.FC<PlotlyChartProps> = ({
     };
   }, []);
 
-  // Default layout with responsive and dark mode support
-  const defaultLayout: Partial<Layout> = useMemo(
+  // Stable base layout configuration (without theme dependencies)
+  const baseLayout: Partial<Layout> = useMemo(
     () => ({
       autosize: true,
       responsive: true,
       margin: { l: 50, r: 50, t: 50, b: 50 },
       paper_bgcolor: "rgba(0,0,0,0)",
       plot_bgcolor: "rgba(0,0,0,0)",
-      font: {
-        family: '"Inter", ui-sans-serif, system-ui, -apple-system, sans-serif',
-        size: 12,
-        color: isDarkMode ? "#E5E7EB" : "#374151",
-      },
       showlegend: true,
       legend: {
         x: 0,
         xanchor: "left",
         y: 1,
         yanchor: "top",
-        bgcolor: isDarkMode
-          ? "rgba(31, 41, 55, 0.8)"
-          : "rgba(255, 255, 255, 0.8)",
-        bordercolor: isDarkMode
-          ? "rgba(156, 163, 175, 0.3)"
-          : "rgba(0, 0, 0, 0.2)",
+        orientation: "v",
         borderwidth: 1,
+      },
+      ...initialLayout,
+    }),
+    [initialLayout],
+  );
+
+  // Dynamic theme-aware layout (applied separately)
+  const defaultLayout: Partial<Layout> = useMemo(() => {
+    const themeColors = {
+      font: isDarkMode ? "#E5E7EB" : "#374151",
+      legendBg: isDarkMode
+        ? "rgba(31, 41, 55, 0.8)"
+        : "rgba(255, 255, 255, 0.8)",
+      legendBorder: isDarkMode
+        ? "rgba(156, 163, 175, 0.3)"
+        : "rgba(0, 0, 0, 0.2)",
+      gridColor: isDarkMode ? "rgba(156, 163, 175, 0.2)" : "rgba(0, 0, 0, 0.1)",
+      tickColor: isDarkMode ? "#9CA3AF" : "#6B7280",
+    };
+
+    return {
+      ...baseLayout,
+      font: {
+        family: '"Inter", ui-sans-serif, system-ui, -apple-system, sans-serif',
+        size: 12,
+        color: themeColors.font,
+      },
+      legend: {
+        ...baseLayout.legend,
+        bgcolor: themeColors.legendBg,
+        bordercolor: themeColors.legendBorder,
         font: {
-          color: isDarkMode ? "#E5E7EB" : "#374151",
+          color: themeColors.font,
         },
       },
       xaxis: {
-        ...initialLayout?.xaxis,
-        gridcolor: isDarkMode
-          ? "rgba(156, 163, 175, 0.2)"
-          : "rgba(0, 0, 0, 0.1)",
-        tickcolor: isDarkMode ? "#9CA3AF" : "#6B7280",
+        ...baseLayout.xaxis,
+        gridcolor: themeColors.gridColor,
+        tickcolor: themeColors.tickColor,
         tickfont: {
-          color: isDarkMode ? "#E5E7EB" : "#374151",
+          color: themeColors.font,
         },
         title: {
-          ...initialLayout?.xaxis?.title,
+          ...baseLayout.xaxis?.title,
           font: {
-            color: isDarkMode ? "#E5E7EB" : "#374151",
+            color: themeColors.font,
           },
         },
       },
       yaxis: {
-        ...initialLayout?.yaxis,
-        gridcolor: isDarkMode
-          ? "rgba(156, 163, 175, 0.2)"
-          : "rgba(0, 0, 0, 0.1)",
-        tickcolor: isDarkMode ? "#9CA3AF" : "#6B7280",
+        ...baseLayout.yaxis,
+        gridcolor: themeColors.gridColor,
+        tickcolor: themeColors.tickColor,
         tickfont: {
-          color: isDarkMode ? "#E5E7EB" : "#374151",
+          color: themeColors.font,
         },
         title: {
-          ...initialLayout?.yaxis?.title,
+          ...baseLayout.yaxis?.title,
           font: {
-            color: isDarkMode ? "#E5E7EB" : "#374151",
+            color: themeColors.font,
           },
         },
       },
-      ...initialLayout,
-    }),
-    [initialLayout, isDarkMode],
-  );
+    };
+  }, [baseLayout, isDarkMode]);
 
   // Default config for better user experience
   const defaultConfig: Partial<Config> = useMemo(
@@ -173,18 +191,177 @@ const PlotlyChart: React.FC<PlotlyChartProps> = ({
     [],
   );
 
-  // Handle plot initialization
+  // Handle plot initialization with aggressive layout fixing
   const handleInitialized = useCallback(
-    (figure: Partial<{ layout: Layout; data: Data[] }>) => {
+    (
+      figure: Partial<{ layout: Layout; data: Data[] }>,
+      graphDiv: HTMLDivElement,
+    ) => {
+      plotRef.current = graphDiv;
+
       if (figure.data) {
         setChartData(figure.data);
       }
+
+      // Aggressive legend position fixing with multiple attempts
+      const fixLegendPosition = () => {
+        if (typeof window !== "undefined" && window.Plotly && graphDiv) {
+          const legendUpdate = {
+            "legend.x": 0,
+            "legend.y": 1,
+            "legend.xanchor": "left",
+            "legend.yanchor": "top",
+            "legend.orientation": "v",
+          };
+
+          // Multiple attempts to ensure positioning sticks
+          window.Plotly.relayout(graphDiv, legendUpdate)
+            .then(() => {
+              // Second attempt after 50ms
+              setTimeout(() => {
+                if (window.Plotly && graphDiv) {
+                  window.Plotly.relayout(graphDiv, legendUpdate).catch(
+                    () => {},
+                  );
+                }
+              }, 50);
+            })
+            .catch(() => {
+              // Fallback attempt
+              setTimeout(() => {
+                if (window.Plotly && graphDiv) {
+                  window.Plotly.relayout(graphDiv, legendUpdate).catch(
+                    () => {},
+                  );
+                }
+              }, 200);
+            });
+        }
+      };
+
+      // Immediate fix
+      setTimeout(fixLegendPosition, 10);
+      // Delayed fix for navigation scenarios
+      setTimeout(fixLegendPosition, 100);
+      // Final fix attempt
+      setTimeout(fixLegendPosition, 500);
     },
     [],
   );
 
+  // Cleanup effect to properly destroy Plotly instances
+  useEffect(() => {
+    return () => {
+      if (plotRef.current && typeof window !== "undefined" && window.Plotly) {
+        try {
+          window.Plotly.purge(plotRef.current);
+        } catch {
+          // Ignore cleanup errors
+        }
+      }
+    };
+  }, []);
+
+  // Comprehensive layout fixing on any state change
+  useEffect(() => {
+    if (plotRef.current && typeof window !== "undefined" && window.Plotly) {
+      const fixLayout = () => {
+        try {
+          const legendUpdate = {
+            "legend.x": 0,
+            "legend.y": 1,
+            "legend.xanchor": "left",
+            "legend.yanchor": "top",
+            "legend.orientation": "v",
+          };
+
+          window.Plotly.relayout(plotRef.current, legendUpdate)
+            .then(() => {
+              // Verify the fix worked by checking DOM
+              setTimeout(() => {
+                if (plotRef.current) {
+                  const legendElement =
+                    plotRef.current.querySelector(".legend");
+                  if (legendElement) {
+                    const rect = legendElement.getBoundingClientRect();
+                    const chartRect = plotRef.current.getBoundingClientRect();
+
+                    // If legend is still displaced, force another fix
+                    if (rect.top > chartRect.bottom + 100) {
+                      window.Plotly.relayout(
+                        plotRef.current,
+                        legendUpdate,
+                      ).catch(() => {});
+                    }
+                  }
+                }
+              }, 100);
+            })
+            .catch(() => {
+              // Fallback relayout attempt
+              setTimeout(() => {
+                if (window.Plotly && plotRef.current) {
+                  window.Plotly.relayout(plotRef.current, legendUpdate).catch(
+                    () => {},
+                  );
+                }
+              }, 300);
+            });
+        } catch {
+          // Silent error handling
+        }
+      };
+
+      // Immediate fix
+      const timeoutId1 = setTimeout(fixLayout, 50);
+      // Secondary fix for stubborn cases
+      const timeoutId2 = setTimeout(fixLayout, 200);
+      // Final fix attempt
+      const timeoutId3 = setTimeout(fixLayout, 500);
+
+      return () => {
+        clearTimeout(timeoutId1);
+        clearTimeout(timeoutId2);
+        clearTimeout(timeoutId3);
+      };
+    }
+  }, [data, isDarkMode]);
+
+  // Navigation-specific layout reset
+  useEffect(() => {
+    const handleNavigationFix = () => {
+      if (plotRef.current && typeof window !== "undefined" && window.Plotly) {
+        setTimeout(() => {
+          const legendUpdate = {
+            "legend.x": 0,
+            "legend.y": 1,
+            "legend.xanchor": "left",
+            "legend.yanchor": "top",
+            "legend.orientation": "v",
+          };
+          window.Plotly.relayout(plotRef.current, legendUpdate).catch(() => {});
+        }, 100);
+      }
+    };
+
+    // Listen for navigation events
+    window.addEventListener("popstate", handleNavigationFix);
+
+    return () => {
+      window.removeEventListener("popstate", handleNavigationFix);
+    };
+  }, []);
+
   return (
-    <div className={`plotly-chart-container h-full w-full ${className}`}>
+    <div
+      ref={containerRef}
+      className={`plotly-chart-container h-full w-full ${className}`}
+      style={{
+        position: "relative",
+        overflow: "hidden",
+        minHeight: "400px",
+      }}
+    >
       <Suspense
         fallback={
           <div className="flex h-full min-h-[400px] items-center justify-center">
@@ -203,8 +380,12 @@ const PlotlyChart: React.FC<PlotlyChartProps> = ({
           config={defaultConfig}
           onInitialized={handleInitialized}
           onUpdate={handleUpdate}
-          useResizeHandler={true}
-          style={{ width: "100%", height: "100%" }}
+          useResizeHandler={false}
+          style={{
+            width: "100%",
+            height: "100%",
+            position: "relative",
+          }}
           className="plotly-chart"
         />
       </Suspense>
