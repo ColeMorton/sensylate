@@ -3,6 +3,7 @@ import type {
   StockDataRow,
   LiveSignalsDataRow,
   TradeHistoryDataRow,
+  OpenPositionPnLDataRow,
   PortfolioDataCache,
 } from "@/types/ChartTypes";
 
@@ -14,6 +15,10 @@ class ChartDataService {
   } = {};
   private tradeHistoryCache: {
     data?: TradeHistoryDataRow[];
+    lastFetched?: number;
+  } = {};
+  private openPositionsPnLCache: {
+    data?: OpenPositionPnLDataRow[];
     lastFetched?: number;
   } = {};
   private readonly CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
@@ -78,6 +83,21 @@ class ChartDataService {
     });
   }
 
+  private parseOpenPositionsPnLCSV(csvText: string): OpenPositionPnLDataRow[] {
+    const lines = csvText.trim().split("\n");
+    const headers = lines[0].split(",");
+
+    return lines.slice(1).map((line) => {
+      const values = line.split(",");
+      const row: Partial<OpenPositionPnLDataRow> = {};
+      headers.forEach((header, index) => {
+        row[header.trim() as keyof OpenPositionPnLDataRow] =
+          values[index]?.trim() || "";
+      });
+      return row as OpenPositionPnLDataRow;
+    });
+  }
+
   // Cache management
   private isCacheValid(): boolean {
     return (
@@ -101,6 +121,13 @@ class ChartDataService {
     return (
       this.tradeHistoryCache.lastFetched !== undefined &&
       Date.now() - this.tradeHistoryCache.lastFetched < this.CACHE_DURATION
+    );
+  }
+
+  private isOpenPositionsPnLCacheValid(): boolean {
+    return (
+      this.openPositionsPnLCache.lastFetched !== undefined &&
+      Date.now() - this.openPositionsPnLCache.lastFetched < this.CACHE_DURATION
     );
   }
 
@@ -138,6 +165,7 @@ class ChartDataService {
         multiStrategyValueResponse,
         buyHoldValueResponse,
         multiStrategyCumulativeResponse,
+        multiStrategyReturnsResponse,
         buyHoldReturnsResponse,
         multiStrategyDrawdownsResponse,
       ] = await Promise.all([
@@ -146,6 +174,7 @@ class ChartDataService {
         fetch(
           "/data/portfolio/multi_strategy_portfolio_cumulative_returns.csv",
         ),
+        fetch("/data/portfolio/multi_strategy_portfolio_returns.csv"),
         fetch("/data/portfolio/portfolio_buy_and_hold_returns.csv"),
         fetch("/data/portfolio/multi_strategy_portfolio_drawdowns.csv"),
       ]);
@@ -155,6 +184,7 @@ class ChartDataService {
         multiStrategyValueResponse,
         buyHoldValueResponse,
         multiStrategyCumulativeResponse,
+        multiStrategyReturnsResponse,
         buyHoldReturnsResponse,
         multiStrategyDrawdownsResponse,
       ];
@@ -168,6 +198,7 @@ class ChartDataService {
         multiStrategyValueCsv,
         buyHoldValueCsv,
         multiStrategyCumulativeCsv,
+        multiStrategyReturnsCsv,
         buyHoldReturnsCsv,
         multiStrategyDrawdownsCsv,
       ] = await Promise.all(responses.map((response) => response.text()));
@@ -179,6 +210,7 @@ class ChartDataService {
         multiStrategyCumulative: this.parsePortfolioCSV(
           multiStrategyCumulativeCsv,
         ),
+        multiStrategyReturns: this.parsePortfolioCSV(multiStrategyReturnsCsv),
         buyHoldReturns: this.parsePortfolioCSV(buyHoldReturnsCsv),
         multiStrategyDrawdowns: this.parsePortfolioCSV(
           multiStrategyDrawdownsCsv,
@@ -299,6 +331,14 @@ class ChartDataService {
     return data.buyHoldReturns;
   }
 
+  async getMultiStrategyReturns(): Promise<PortfolioDataRow[]> {
+    if (this.cache.multiStrategyReturns && this.isCacheValid()) {
+      return this.cache.multiStrategyReturns;
+    }
+    const data = await this.fetchPortfolioData();
+    return data.multiStrategyReturns;
+  }
+
   async getMultiStrategyDrawdowns(): Promise<PortfolioDataRow[]> {
     if (this.cache.multiStrategyDrawdowns && this.isCacheValid()) {
       return this.cache.multiStrategyDrawdowns;
@@ -319,12 +359,54 @@ class ChartDataService {
     return closedTrades.sort((a, b) => parseFloat(b.PnL) - parseFloat(a.PnL));
   }
 
+  async fetchOpenPositionsPnLData(): Promise<OpenPositionPnLDataRow[]> {
+    // Return cached data if valid
+    if (
+      this.openPositionsPnLCache.data &&
+      this.isOpenPositionsPnLCacheValid()
+    ) {
+      return this.openPositionsPnLCache.data;
+    }
+
+    try {
+      const response = await fetch(
+        "/data/open-positions/live_signals_open_positions_pnl.csv",
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const csvText = await response.text();
+      const data = this.parseOpenPositionsPnLCSV(csvText);
+
+      // Update cache
+      this.openPositionsPnLCache = {
+        data,
+        lastFetched: Date.now(),
+      };
+
+      return data;
+    } catch (error) {
+      throw new Error(
+        error instanceof Error
+          ? error.message
+          : "Failed to load open positions PnL data",
+      );
+    }
+  }
+
+  async getOpenPositionsPnLData(): Promise<OpenPositionPnLDataRow[]> {
+    return await this.fetchOpenPositionsPnLData();
+  }
+
   // Utility methods
   private isPortfolioCacheComplete(): boolean {
     return !!(
       this.cache.multiStrategyValue &&
       this.cache.buyHoldValue &&
       this.cache.multiStrategyCumulative &&
+      this.cache.multiStrategyReturns &&
       this.cache.buyHoldReturns &&
       this.cache.multiStrategyDrawdowns
     );
@@ -335,6 +417,7 @@ class ChartDataService {
     this.cache = {};
     this.liveSignalsCache = {};
     this.tradeHistoryCache = {};
+    this.openPositionsPnLCache = {};
   }
 
   // Get cache status

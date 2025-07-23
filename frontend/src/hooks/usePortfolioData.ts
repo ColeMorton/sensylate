@@ -4,6 +4,7 @@ import type {
   StockDataRow,
   LiveSignalsDataRow,
   TradeHistoryDataRow,
+  OpenPositionPnLDataRow,
   ChartType,
   DataServiceResponse,
 } from "@/types/ChartTypes";
@@ -59,8 +60,7 @@ export function usePortfolioData(chartType: ChartType): DataServiceResponse<{
       setError(null);
 
       switch (chartType) {
-        case "portfolio-value-comparison":
-        case "normalized-performance": {
+        case "portfolio-value-comparison": {
           const [multiStrategy, buyHold] = await Promise.all([
             chartDataService.getMultiStrategyValue(),
             chartDataService.getBuyHoldValue(),
@@ -71,7 +71,7 @@ export function usePortfolioData(chartType: ChartType): DataServiceResponse<{
 
         case "returns-comparison": {
           const [multiStrategy, buyHold] = await Promise.all([
-            chartDataService.getMultiStrategyCumulative(),
+            chartDataService.getMultiStrategyReturns(),
             chartDataService.getBuyHoldReturns(),
           ]);
           setData({ multiStrategy, buyHold });
@@ -99,6 +99,12 @@ export function usePortfolioData(chartType: ChartType): DataServiceResponse<{
           break;
         }
 
+        case "open-positions-pnl-timeseries": {
+          // Open positions PnL charts are handled by useOpenPositionsPnLData hook
+          setData({});
+          break;
+        }
+
         default:
           setData({});
       }
@@ -115,7 +121,8 @@ export function usePortfolioData(chartType: ChartType): DataServiceResponse<{
     if (
       chartType !== "apple-stock" &&
       !chartType.startsWith("live-signals-") &&
-      chartType !== "trade-pnl-waterfall"
+      chartType !== "trade-pnl-waterfall" &&
+      chartType !== "open-positions-pnl-timeseries"
     ) {
       fetchDataForChartType();
     } else {
@@ -267,6 +274,38 @@ export function useTradeHistoryData(): DataServiceResponse<
           err instanceof Error
             ? err.message
             : "Failed to load trade history data",
+        );
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  return { data, loading, error };
+}
+
+// Hook for open positions PnL data
+export function useOpenPositionsPnLData(): DataServiceResponse<
+  OpenPositionPnLDataRow[]
+> {
+  const [data, setData] = useState<OpenPositionPnLDataRow[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        const result = await chartDataService.getOpenPositionsPnLData();
+        setData(result);
+      } catch (err) {
+        setError(
+          err instanceof Error
+            ? err.message
+            : "Failed to load open positions PnL data",
         );
       } finally {
         setLoading(false);

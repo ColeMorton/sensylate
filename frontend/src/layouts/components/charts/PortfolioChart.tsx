@@ -7,12 +7,14 @@ import type {
   LiveSignalsDataRow,
   WeeklyOHLCDataRow,
   TradeHistoryDataRow,
+  OpenPositionPnLDataRow,
 } from "@/types/ChartTypes";
 import {
   usePortfolioData,
   useAppleStockData,
   useLiveSignalsData,
   useTradeHistoryData,
+  useOpenPositionsPnLData,
 } from "@/hooks/usePortfolioData";
 import { getChartColors, getPlotlyThemeColors } from "@/utils/chartTheme";
 import ChartRenderer from "./ChartRenderer";
@@ -33,6 +35,7 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
   const appleData = useAppleStockData();
   const liveSignalsData = useLiveSignalsData();
   const tradeHistoryData = useTradeHistoryData();
+  const openPositionsPnLData = useOpenPositionsPnLData();
 
   // Use appropriate data source based on chart type
   const { data, loading, error } =
@@ -42,7 +45,9 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
         ? liveSignalsData
         : chartType === "trade-pnl-waterfall"
           ? tradeHistoryData
-          : portfolioData;
+          : chartType === "open-positions-pnl-timeseries"
+            ? openPositionsPnLData
+            : portfolioData;
 
   // Dark mode detection
   useEffect(() => {
@@ -259,10 +264,7 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
             type: "scatter",
             mode: "lines",
             x: unpackPortfolio(portfolioRows.multiStrategy, "Date"),
-            y: unpackPortfolio(
-              portfolioRows.multiStrategy,
-              "Cumulative_Returns_Pct",
-            ),
+            y: unpackPortfolio(portfolioRows.multiStrategy, "Returns_Pct"),
             line: { color: colors.multiStrategy, width: 2 },
             name: "Multi-Strategy Returns (%)",
           },
@@ -297,35 +299,6 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
         ];
       }
 
-      case "normalized-performance": {
-        const portfolioRows = data as {
-          multiStrategy?: PortfolioDataRow[];
-          buyHold?: PortfolioDataRow[];
-        };
-        if (!portfolioRows.multiStrategy || !portfolioRows.buyHold) {
-          return [];
-        }
-
-        return [
-          {
-            type: "scatter",
-            mode: "lines",
-            x: unpackPortfolio(portfolioRows.multiStrategy, "Date"),
-            y: unpackPortfolio(portfolioRows.multiStrategy, "Normalized_Value"),
-            line: { color: colors.multiStrategy, width: 2 },
-            name: "Multi-Strategy (Normalized)",
-          },
-          {
-            type: "scatter",
-            mode: "lines",
-            x: unpackPortfolio(portfolioRows.buyHold, "Date"),
-            y: unpackPortfolio(portfolioRows.buyHold, "Normalized_Value"),
-            line: { color: colors.buyHold, width: 2 },
-            name: "Buy & Hold (Normalized)",
-          },
-        ];
-      }
-
       case "live-signals-equity-curve": {
         const liveSignalsRows = data as LiveSignalsDataRow[];
         if (!liveSignalsRows || liveSignalsRows.length === 0) {
@@ -338,8 +311,24 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
             mode: "lines",
             x: unpackLiveSignals(liveSignalsRows, "timestamp"),
             y: unpackLiveSignals(liveSignalsRows, "equity"),
-            line: { color: colors.primary, width: 2 },
+            line: { color: colors.tertiary, width: 2 },
             name: "Live Signals Equity",
+          },
+          {
+            type: "scatter",
+            mode: "lines",
+            x: unpackLiveSignals(liveSignalsRows, "timestamp"),
+            y: unpackLiveSignals(liveSignalsRows, "mfe"),
+            line: { color: colors.multiStrategy, width: 2 },
+            name: "MFE (Maximum Favorable Excursion)",
+          },
+          {
+            type: "scatter",
+            mode: "lines",
+            x: unpackLiveSignals(liveSignalsRows, "timestamp"),
+            y: unpackLiveSignals(liveSignalsRows, "mae"),
+            line: { color: colors.buyHold, width: 2 },
+            name: "MAE (Maximum Adverse Excursion)",
           },
         ];
       }
@@ -360,40 +349,6 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
             fill: "tozeroy",
             fillcolor: `rgba(255, 112, 67, 0.1)`,
             name: "Drawdown ($)",
-          },
-        ];
-      }
-
-      case "live-signals-performance-metrics": {
-        const liveSignalsRows = data as LiveSignalsDataRow[];
-        if (!liveSignalsRows || liveSignalsRows.length === 0) {
-          return [];
-        }
-
-        return [
-          {
-            type: "scatter",
-            mode: "lines",
-            x: unpackLiveSignals(liveSignalsRows, "timestamp"),
-            y: unpackLiveSignals(liveSignalsRows, "peak_equity"),
-            line: { color: colors.secondary, width: 2 },
-            name: "Peak Equity",
-          },
-          {
-            type: "scatter",
-            mode: "lines",
-            x: unpackLiveSignals(liveSignalsRows, "timestamp"),
-            y: unpackLiveSignals(liveSignalsRows, "mfe"),
-            line: { color: colors.tertiary, width: 2 },
-            name: "MFE (Maximum Favorable Excursion)",
-          },
-          {
-            type: "scatter",
-            mode: "lines",
-            x: unpackLiveSignals(liveSignalsRows, "timestamp"),
-            y: unpackLiveSignals(liveSignalsRows, "mae"),
-            line: { color: colors.neutral, width: 2 },
-            name: "MAE (Maximum Adverse Excursion)",
           },
         ];
       }
@@ -460,6 +415,73 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
         return [waterfallData];
       }
 
+      case "open-positions-pnl-timeseries": {
+        const openPositionsPnLRows = data as OpenPositionPnLDataRow[];
+        if (!openPositionsPnLRows || openPositionsPnLRows.length === 0) {
+          return [];
+        }
+
+        // Group data by ticker to create separate time series for each position
+        const positionMap: { [ticker: string]: OpenPositionPnLDataRow[] } = {};
+        openPositionsPnLRows.forEach((row) => {
+          if (!positionMap[row.Ticker]) {
+            positionMap[row.Ticker] = [];
+          }
+          positionMap[row.Ticker].push(row);
+        });
+
+        // Create a line for each position using different colors
+        const chartColors = [
+          colors.multiStrategy, // #00BCD4 - Cyan
+          colors.buyHold, // #9575CD - Purple
+          colors.tertiary, // #4285F4 - Blue
+          colors.drawdown, // #FF7043 - Orange
+          colors.neutral, // #90A4AE - Gray
+          "#FF6B6B", // Red
+          "#4ECDC4", // Teal
+          "#45B7D1", // Sky Blue
+          "#96CEB4", // Mint Green
+        ];
+
+        const chartData: Data[] = [];
+        let colorIndex = 0;
+
+        Object.entries(positionMap).forEach(([ticker, rows]) => {
+          // Sort rows by date
+          const sortedRows = rows.sort(
+            (a, b) => new Date(a.Date).getTime() - new Date(b.Date).getTime(),
+          );
+
+          const dates = sortedRows.map((row) => row.Date);
+          const pnlValues = sortedRows.map((row) => parseFloat(row.PnL));
+
+          chartData.push({
+            type: "scatter",
+            mode: "lines+markers",
+            x: dates,
+            y: pnlValues,
+            name: ticker,
+            line: {
+              color: chartColors[colorIndex % chartColors.length],
+              width: 2,
+            },
+            marker: {
+              size: 4,
+              color: chartColors[colorIndex % chartColors.length],
+            },
+            hovertemplate:
+              "<b>%{fullData.name}</b><br>" +
+              "Date: %{x}<br>" +
+              "PnL: $%{y:.2f}<br>" +
+              "<extra></extra>",
+          });
+
+          colorIndex++;
+        });
+
+        return chartData;
+      }
+
       default:
         return [];
     }
@@ -480,21 +502,19 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
         case "portfolio-value-comparison":
           return "Portfolio Value Comparison";
         case "returns-comparison":
-          return "Cumulative Returns Comparison";
+          return "Daily Returns Comparison";
         case "portfolio-drawdowns":
           return "Portfolio Drawdown Analysis";
-        case "normalized-performance":
-          return "Normalized Performance Comparison";
         case "live-signals-equity-curve":
           return "Live Signals Portfolio Equity Curve";
         case "live-signals-drawdowns":
           return "Live Signals Portfolio Drawdowns";
-        case "live-signals-performance-metrics":
-          return "Live Signals Performance Metrics";
         case "live-signals-weekly-candlestick":
           return "Live Signals Weekly Candlestick Chart";
         case "trade-pnl-waterfall":
           return "Trade PnL Waterfall Chart";
+        case "open-positions-pnl-timeseries":
+          return "Open Positions Cumulative PnL Time Series";
         default:
           return "Chart";
       }
@@ -510,18 +530,16 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
           return "Returns (%)";
         case "portfolio-drawdowns":
           return "Drawdown (%)";
-        case "normalized-performance":
-          return "Normalized Value";
         case "live-signals-equity-curve":
           return "Equity ($)";
         case "live-signals-drawdowns":
           return "Drawdown ($)";
-        case "live-signals-performance-metrics":
-          return "Value ($)";
         case "live-signals-weekly-candlestick":
           return "Equity ($)";
         case "trade-pnl-waterfall":
           return "PnL ($)";
+        case "open-positions-pnl-timeseries":
+          return "Cumulative PnL ($)";
         default:
           return "Value";
       }
