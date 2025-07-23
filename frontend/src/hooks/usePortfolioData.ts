@@ -18,17 +18,19 @@ export function useAppleStockData(): DataServiceResponse<StockDataRow[]> {
 
   useEffect(() => {
     const abortController = new AbortController();
-    
+
     const fetchData = async () => {
       try {
         setLoading(true);
         setError(null);
-        const stockData = await chartDataService.fetchAppleStockData(abortController.signal);
+        const stockData = await chartDataService.fetchAppleStockData(
+          abortController.signal,
+        );
         setData(stockData);
       } catch (err) {
         // Don't set error if request was aborted (component unmounting)
-        if (err instanceof Error && err.name !== 'AbortError') {
-          console.error('Apple stock data loading error:', err);
+        if (err instanceof Error && err.name !== "AbortError") {
+          console.error("Apple stock data loading error:", err);
           setError(
             err instanceof Error
               ? err.message
@@ -43,7 +45,7 @@ export function useAppleStockData(): DataServiceResponse<StockDataRow[]> {
     };
 
     fetchData();
-    
+
     // Cleanup function to abort fetch requests
     return () => {
       abortController.abort();
@@ -67,81 +69,93 @@ export function usePortfolioData(chartType: ChartType): DataServiceResponse<{
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchDataForChartType = useCallback(async (signal?: AbortSignal) => {
-    try {
-      setLoading(true);
-      setError(null);
+  const fetchDataForChartType = useCallback(
+    async (signal?: AbortSignal) => {
+      try {
+        setLoading(true);
+        setError(null);
 
-      switch (chartType) {
-        case "portfolio-value-comparison": {
-          const [multiStrategy, buyHold] = await Promise.all([
-            chartDataService.getMultiStrategyValue(),
-            chartDataService.getBuyHoldValue(),
-          ]);
-          if (signal?.aborted) return;
-          setData({ multiStrategy, buyHold });
-          break;
+        switch (chartType) {
+          case "portfolio-value-comparison": {
+            const [multiStrategy, buyHold] = await Promise.all([
+              chartDataService.getMultiStrategyValue(),
+              chartDataService.getBuyHoldValue(),
+            ]);
+            if (signal?.aborted) {
+              return;
+            }
+            setData({ multiStrategy, buyHold });
+            break;
+          }
+
+          case "returns-comparison": {
+            const [multiStrategy, buyHold] = await Promise.all([
+              chartDataService.getMultiStrategyReturns(),
+              chartDataService.getBuyHoldReturns(),
+            ]);
+            if (signal?.aborted) {
+              return;
+            }
+            setData({ multiStrategy, buyHold });
+            break;
+          }
+
+          case "portfolio-drawdowns": {
+            const drawdowns =
+              await chartDataService.getMultiStrategyDrawdowns();
+            if (signal?.aborted) {
+              return;
+            }
+            setData({ drawdowns });
+            break;
+          }
+
+          case "live-signals-equity-curve":
+          case "live-signals-drawdowns":
+          case "live-signals-performance-metrics":
+          case "live-signals-weekly-candlestick": {
+            // Live signals charts are handled by useLiveSignalsData hook
+            setData({});
+            break;
+          }
+
+          case "trade-pnl-waterfall": {
+            // Trade history charts are handled by useTradeHistoryData hook
+            setData({});
+            break;
+          }
+
+          case "open-positions-pnl-timeseries": {
+            // Open positions PnL charts are handled by useOpenPositionsPnLData hook
+            setData({});
+            break;
+          }
+
+          default:
+            setData({});
         }
-
-        case "returns-comparison": {
-          const [multiStrategy, buyHold] = await Promise.all([
-            chartDataService.getMultiStrategyReturns(),
-            chartDataService.getBuyHoldReturns(),
-          ]);
-          if (signal?.aborted) return;
-          setData({ multiStrategy, buyHold });
-          break;
+      } catch (err) {
+        // Don't set error if request was aborted (component unmounting)
+        if (err instanceof Error && err.name !== "AbortError") {
+          console.error("Portfolio data loading error:", err);
+          setError(
+            err instanceof Error
+              ? err.message
+              : "Failed to load portfolio data",
+          );
         }
-
-        case "portfolio-drawdowns": {
-          const drawdowns = await chartDataService.getMultiStrategyDrawdowns();
-          if (signal?.aborted) return;
-          setData({ drawdowns });
-          break;
+      } finally {
+        if (!signal?.aborted) {
+          setLoading(false);
         }
-
-        case "live-signals-equity-curve":
-        case "live-signals-drawdowns":
-        case "live-signals-performance-metrics":
-        case "live-signals-weekly-candlestick": {
-          // Live signals charts are handled by useLiveSignalsData hook
-          setData({});
-          break;
-        }
-
-        case "trade-pnl-waterfall": {
-          // Trade history charts are handled by useTradeHistoryData hook
-          setData({});
-          break;
-        }
-
-        case "open-positions-pnl-timeseries": {
-          // Open positions PnL charts are handled by useOpenPositionsPnLData hook
-          setData({});
-          break;
-        }
-
-        default:
-          setData({});
       }
-    } catch (err) {
-      // Don't set error if request was aborted (component unmounting)
-      if (err instanceof Error && err.name !== 'AbortError') {
-        console.error('Portfolio data loading error:', err);
-        setError(
-          err instanceof Error ? err.message : "Failed to load portfolio data",
-        );
-      }
-    } finally {
-      if (!signal?.aborted) {
-        setLoading(false);
-      }
-    }
-  }, [chartType]);
+    },
+    [chartType],
+  );
 
   useEffect(() => {
     const abortController = new AbortController();
-    
+
     if (
       chartType !== "apple-stock" &&
       !chartType.startsWith("live-signals-") &&
@@ -152,7 +166,7 @@ export function usePortfolioData(chartType: ChartType): DataServiceResponse<{
     } else {
       setLoading(false);
     }
-    
+
     // Cleanup function to abort fetch requests
     return () => {
       abortController.abort();

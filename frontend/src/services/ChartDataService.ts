@@ -136,7 +136,7 @@ class ChartDataService {
     try {
       const response = await fetch(
         "https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv",
-        { signal }
+        { signal },
       );
 
       if (!response.ok) {
@@ -147,7 +147,7 @@ class ChartDataService {
       return this.parseCSV(csvText);
     } catch (error) {
       // Re-throw AbortError without wrapping to preserve abort handling
-      if (error instanceof Error && error.name === 'AbortError') {
+      if (error instanceof Error && error.name === "AbortError") {
         throw error;
       }
       throw new Error(
@@ -174,15 +174,23 @@ class ChartDataService {
         buyHoldReturnsResponse,
         multiStrategyDrawdownsResponse,
       ] = await Promise.all([
-        fetch("/data/portfolio/multi_strategy_portfolio_portfolio_value.csv", { signal }),
-        fetch("/data/portfolio/portfolio_buy_and_hold_portfolio_value.csv", { signal }),
+        fetch("/data/portfolio/multi_strategy_portfolio_portfolio_value.csv", {
+          signal,
+        }),
+        fetch("/data/portfolio/portfolio_buy_and_hold_portfolio_value.csv", {
+          signal,
+        }),
         fetch(
           "/data/portfolio/multi_strategy_portfolio_cumulative_returns.csv",
-          { signal }
+          { signal },
         ),
-        fetch("/data/portfolio/multi_strategy_portfolio_returns.csv", { signal }),
+        fetch("/data/portfolio/multi_strategy_portfolio_returns.csv", {
+          signal,
+        }),
         fetch("/data/portfolio/portfolio_buy_and_hold_returns.csv", { signal }),
-        fetch("/data/portfolio/multi_strategy_portfolio_drawdowns.csv", { signal }),
+        fetch("/data/portfolio/multi_strategy_portfolio_drawdowns.csv", {
+          signal,
+        }),
       ]);
 
       // Check all responses
