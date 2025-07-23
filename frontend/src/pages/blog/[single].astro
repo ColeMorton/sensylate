@@ -16,7 +16,30 @@ export async function getStaticPaths() {
   return paths;
 }
 
-const { post } = Astro.props;
+// In server mode (development), get post from params. In static mode, get from props.
+let post;
+if (import.meta.env.DEV && !Astro.props.post) {
+  // Server mode: fetch post data based on route params
+  const { single } = Astro.params;
+  const allPosts = await getSinglePage("blog");
+  post = allPosts.find((p) => p.id === single);
+
+  if (!post) {
+    throw new Error(`Blog post not found - no post with ID '${single}'. Available posts: ${allPosts.map(p => p.id).join(', ')}`);
+  }
+} else {
+  // Static mode: use props from getStaticPaths
+  post = Astro.props.post;
+}
+
+if (!post) {
+  throw new Error(`Blog post not found - post prop is undefined. Route: ${Astro.url.pathname}`);
+}
+
+if (!post.data) {
+  throw new Error(`Blog post data is missing - post.data is undefined. Post ID: ${post.id || 'unknown'}, Route: ${Astro.url.pathname}`);
+}
+
 const { title, meta_title, description, image } = post.data;
 ---
 

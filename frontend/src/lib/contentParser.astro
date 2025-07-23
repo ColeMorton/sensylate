@@ -16,19 +16,67 @@ type PageData = {
 export const getSinglePage = async <C extends CollectionKey>(
   collectionName: C,
 ): Promise<CollectionEntry<C>[]> => {
-  const allPages = await getCollection(collectionName);
+  const maxAttempts = 3;
+  
+  for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+    try {
+      console.log(`🔍 [CONTENT] Loading ${collectionName} collection (attempt ${attempt}/${maxAttempts})...`);
+      const startTime = Date.now();
+      
+      const allPages = await getCollection(collectionName);
+      
+      if (!allPages) {
+        throw new Error(`Collection ${collectionName} returned null/undefined`);
+      }
+      
+      if (!Array.isArray(allPages)) {
+        throw new Error(`Collection ${collectionName} is not an array: ${typeof allPages}`);
+      }
 
-  const removeIndex = allPages.filter((data) => data.id.match(/^(?!-)/));
+      const removeIndex = allPages.filter((data) => {
+        if (!data || !data.id) {
+          console.warn(`⚠️ [CONTENT] Invalid entry in ${collectionName}:`, data);
+          return false;
+        }
+        return data.id.match(/^(?!-)/);
+      });
 
-  const removeDrafts = removeIndex.filter((data) => {
-    const pageData = data.data as PageData;
-    // Show drafts in development, hide in production
-    if (import.meta.env.DEV) {
-      return true; // Show all posts in development
+      const removeDrafts = removeIndex.filter((data) => {
+        if (!data || !data.data) {
+          console.warn(`⚠️ [CONTENT] Entry missing data in ${collectionName}:`, data?.id);
+          return false;
+        }
+        
+        const pageData = data.data as PageData;
+        // Show drafts in development, hide in production
+        if (import.meta.env.DEV) {
+          return true; // Show all posts in development
+        }
+        return pageData.draft !== true; // Hide drafts in production
+      });
+
+      const loadTime = Date.now() - startTime;
+      console.log(`✅ [CONTENT] Loaded ${removeDrafts.length} entries from ${collectionName} in ${loadTime}ms`);
+
+      return removeDrafts;
+      
+    } catch (error) {
+      console.error(`💥 [CONTENT ERROR] Attempt ${attempt}/${maxAttempts} failed for ${collectionName}:`, error);
+      
+      if (attempt < maxAttempts) {
+        // Wait before retry
+        const delay = attempt * 1000; // 1s, 2s, 3s...
+        console.log(`⏳ [RETRY] Waiting ${delay}ms before retry...`);
+        await new Promise(resolve => setTimeout(resolve, delay));
+        continue;
+      }
+      
+      // All attempts failed - fail fast with meaningful error
+      throw new Error(`Content loading failed for collection '${collectionName}' after ${maxAttempts} attempts: ${error instanceof Error ? error.message : String(error)}`);
     }
-    return pageData.draft !== true; // Hide drafts in production
-  });
-
-  return removeDrafts;
+  }
+  
+  // This should never be reached, but TypeScript requires it
+  throw new Error(`Unexpected error in getSinglePage for ${collectionName}`);
 };
 ---

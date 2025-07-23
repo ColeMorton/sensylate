@@ -1,0 +1,737 @@
+{
+  "timestamp": "2025-07-23T05:15:24.378Z",
+  "tests": {
+    "chartsEnabled": {
+      "testName": "charts-enabled",
+      "chartsEnabled": true,
+      "blogTests": [
+        {
+          "path": "/blog/post-1",
+          "accessible": false,
+          "statusCode": 500,
+          "loadTime": 619,
+          "hasContent": false,
+          "errorDetected": false
+        },
+        {
+          "path": "/blog/adbe-fundamental-analysis-20250723",
+          "accessible": false,
+          "statusCode": 500,
+          "loadTime": 616,
+          "hasContent": false,
+          "errorDetected": false
+        },
+        {
+          "path": "/blog/amzn-fundamental-analysis-20250618",
+          "accessible": false,
+          "statusCode": 500,
+          "loadTime": 630,
+          "hasContent": false,
+          "errorDetected": false
+        }
+      ],
+      "chartsPageTest": {
+        "accessible": true,
+        "loadTime": 1993,
+        "status": "success"
+      },
+      "memoryUsage": [
+        {
+          "usedJSHeapSize": 13640865,
+          "totalJSHeapSize": 18727241,
+          "jsHeapSizeLimit": 4294705152,
+          "timestamp": 1753247728614,
+          "phase": "after-charts-load"
+        },
+        {
+          "usedJSHeapSize": 15259792,
+          "totalJSHeapSize": 19579284,
+          "jsHeapSizeLimit": 4294705152,
+          "timestamp": 1753247733693,
+          "phase": "test-end"
+        }
+      ],
+      "networkRequests": [
+        {
+          "url": "http://localhost:4321/charts",
+          "status": 200,
+          "timestamp": 1753247726835
+        },
+        {
+          "url": "http://localhost:4321/fonts/heebo/heebo.css",
+          "status": 200,
+          "timestamp": 1753247726865
+        },
+        {
+          "url": "http://localhost:4321/styles/main.css",
+          "status": 404,
+          "timestamp": 1753247727039
+        },
+        {
+          "url": "http://localhost:4321/fonts/heebo/heebo-400.ttf",
+          "status": 200,
+          "timestamp": 1753247727052
+        },
+        {
+          "url": "http://localhost:4321/fonts/heebo/heebo-600.ttf",
+          "status": 200,
+          "timestamp": 1753247727070
+        },
+        {
+          "url": "http://localhost:4321/@vite/client",
+          "status": 200,
+          "timestamp": 1753247727070
+        },
+        {
+          "url": "http://localhost:4321/node_modules/yet-another-react-lightbox/dist/styles.css",
+          "status": 200,
+          "timestamp": 1753247727157
+        },
+        {
+          "url": "http://localhost:4321/@id/astro:scripts/before-hydration.js",
+          "status": 200,
+          "timestamp": 1753247727158
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/components/ClientRouter.astro?astro&type=style&index=0&lang.css",
+          "status": 200,
+          "timestamp": 1753247727158
+        },
+        {
+          "url": "http://localhost:4321/src/styles/main.css",
+          "status": 200,
+          "timestamp": 1753247727159
+        },
+        {
+          "url": "http://localhost:4321/src/layouts/components/seo/WebVitals.astro?astro&type=style&index=0&lang.css",
+          "status": 200,
+          "timestamp": 1753247727159
+        },
+        {
+          "url": "http://localhost:4321/@fs/Users/colemorton/Projects/sensylate-command-system-enhancements/frontend/node_modules/astro/dist/runtime/client/dev-toolbar/entrypoint.js?v=d585347c",
+          "status": 200,
+          "timestamp": 1753247727159
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/components/ClientRouter.astro?v=d585347c&astro&type=script&index=0&lang.ts",
+          "status": 200,
+          "timestamp": 1753247727159
+        },
+        {
+          "url": "http://localhost:4321/node_modules/vite/dist/client/env.mjs",
+          "status": 200,
+          "timestamp": 1753247727160
+        },
+        {
+          "url": "http://localhost:4321/@react-refresh",
+          "status": 200,
+          "timestamp": 1753247727165
+        },
+        {
+          "url": "http://localhost:4321/fonts/heebo/heebo-800.ttf",
+          "status": 200,
+          "timestamp": 1753247727174
+        },
+        {
+          "url": "http://localhost:4321/fonts/heebo/heebo-700.ttf",
+          "status": 200,
+          "timestamp": 1753247727175
+        },
+        {
+          "url": "http://localhost:4321/@id/__x00__astro:toolbar:internal",
+          "status": 200,
+          "timestamp": 1753247727175
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/runtime/client/dev-toolbar/helpers.js?v=d585347c",
+          "status": 200,
+          "timestamp": 1753247727176
+        },
+        {
+          "url": "http://localhost:4321/@id/__x00__astro:transitions/client",
+          "status": 200,
+          "timestamp": 1753247727181
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/virtual-modules/prefetch.js?v=d585347c",
+          "status": 200,
+          "timestamp": 1753247727182
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/runtime/client/dev-toolbar/settings.js?v=d585347c",
+          "status": 200,
+          "timestamp": 1753247727182
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/virtual-modules/transitions-router.js?v=d585347c",
+          "status": 200,
+          "timestamp": 1753247727191
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/virtual-modules/transitions-types.js?v=d585347c",
+          "status": 200,
+          "timestamp": 1753247727191
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/virtual-modules/transitions-events.js?v=d585347c",
+          "status": 200,
+          "timestamp": 1753247727193
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/virtual-modules/transitions-swap-functions.js?v=d585347c",
+          "status": 200,
+          "timestamp": 1753247727193
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/prefetch/index.js?v=d585347c",
+          "status": 200,
+          "timestamp": 1753247727204
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/transitions/router.js?v=d585347c",
+          "status": 200,
+          "timestamp": 1753247727215
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/transitions/types.js?v=d585347c",
+          "status": 200,
+          "timestamp": 1753247727215
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/transitions/events.js?v=d585347c",
+          "status": 200,
+          "timestamp": 1753247727218
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/transitions/swap-functions.js?v=d585347c",
+          "status": 200,
+          "timestamp": 1753247727311
+        },
+        {
+          "url": "http://localhost:4321/node_modules/.vite/deps/@astrojs_react_client__js.js?v=d585347c",
+          "status": 200,
+          "timestamp": 1753247727323
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/runtime/client/dev-toolbar/apps/astro.js?v=d585347c",
+          "status": 200,
+          "timestamp": 1753247727340
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/runtime/client/dev-toolbar/apps/audit/index.js?v=d585347c",
+          "status": 200,
+          "timestamp": 1753247727343
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/runtime/client/dev-toolbar/apps/xray.js?v=d585347c",
+          "status": 200,
+          "timestamp": 1753247727361
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/runtime/client/dev-toolbar/apps/settings.js?v=d585347c",
+          "status": 200,
+          "timestamp": 1753247727367
+        },
+        {
+          "url": "https://fonts.googleapis.com/css2?family=Paytone+One:wght@400&display=swap",
+          "status": 200,
+          "timestamp": 1753247727368
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/runtime/client/dev-toolbar/toolbar.js?v=d585347c",
+          "status": 200,
+          "timestamp": 1753247727372
+        },
+        {
+          "url": "http://localhost:4321/node_modules/.vite/deps/chunk-A7ECLLTJ.js?v=d585347c",
+          "status": 200,
+          "timestamp": 1753247727380
+        },
+        {
+          "url": "http://localhost:4321/node_modules/.vite/deps/chunk-HSUUC2QV.js?v=d585347c",
+          "status": 200,
+          "timestamp": 1753247727381
+        },
+        {
+          "url": "http://localhost:4321/node_modules/.vite/deps/chunk-DC5AMYBS.js?v=d585347c",
+          "status": 200,
+          "timestamp": 1753247727381
+        },
+        {
+          "url": "http://localhost:4321/src/layouts/helpers/SearchModal.tsx",
+          "status": 200,
+          "timestamp": 1753247727383
+        },
+        {
+          "url": "http://localhost:4321/node_modules/.vite/deps/chunk-KSWEDLFI.js?v=d585347c",
+          "status": 200,
+          "timestamp": 1753247727385
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/runtime/client/dev-toolbar/ui-library/icons.js?v=d585347c",
+          "status": 200,
+          "timestamp": 1753247727408
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/runtime/client/dev-toolbar/apps/utils/icons.js?v=d585347c",
+          "status": 200,
+          "timestamp": 1753247727408
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/runtime/client/dev-toolbar/apps/utils/window.js?v=d585347c",
+          "status": 200,
+          "timestamp": 1753247727408
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/runtime/client/dev-toolbar/ui-library/index.js?v=d585347c",
+          "status": 200,
+          "timestamp": 1753247727408
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/runtime/client/dev-toolbar/apps/utils/highlight.js?v=d585347c",
+          "status": 200,
+          "timestamp": 1753247727409
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/runtime/client/dev-toolbar/apps/audit/annotations.js?v=d585347c",
+          "status": 200,
+          "timestamp": 1753247727409
+        },
+        {
+          "url": "http://localhost:4321/src/layouts/shortcodes/ChartDisplay.tsx",
+          "status": 500,
+          "timestamp": 1753247727419
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/runtime/client/dev-toolbar/apps/audit/rules/index.js?v=d585347c",
+          "status": 200,
+          "timestamp": 1753247727419
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/runtime/client/dev-toolbar/apps/audit/ui/audit-list-item.js?v=d585347c",
+          "status": 200,
+          "timestamp": 1753247727419
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/runtime/client/dev-toolbar/apps/audit/ui/audit-list-window.js?v=d585347c",
+          "status": 200,
+          "timestamp": 1753247727420
+        },
+        {
+          "url": "http://localhost:4321/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=d585347c",
+          "status": 200,
+          "timestamp": 1753247727420
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/runtime/client/dev-toolbar/apps/audit/ui/audit-ui.js?v=d585347c",
+          "status": 200,
+          "timestamp": 1753247727434
+        },
+        {
+          "url": "http://localhost:4321/node_modules/html-escaper/esm/index.js?v=d585347c",
+          "status": 200,
+          "timestamp": 1753247727435
+        },
+        {
+          "url": "http://localhost:4321/.json/search.json?t=1753247219335&import",
+          "status": 200,
+          "timestamp": 1753247727436
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/runtime/client/dev-toolbar/ui-library/window.js?v=d585347c",
+          "status": 200,
+          "timestamp": 1753247727437
+        },
+        {
+          "url": "http://localhost:4321/src/layouts/helpers/SearchResult.tsx",
+          "status": 200,
+          "timestamp": 1753247727438
+        },
+        {
+          "url": "http://localhost:4321/src/hooks/useFeatureFlag.ts",
+          "status": 200,
+          "timestamp": 1753247727438
+        },
+        {
+          "url": "http://localhost:4321/node_modules/.vite/deps/react.js?v=d585347c",
+          "status": 200,
+          "timestamp": 1753247727438
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/runtime/client/dev-toolbar/ui-library/badge.js?v=d585347c",
+          "status": 200,
+          "timestamp": 1753247727439
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/runtime/client/dev-toolbar/ui-library/button.js?v=d585347c",
+          "status": 200,
+          "timestamp": 1753247727441
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/runtime/client/dev-toolbar/ui-library/highlight.js?v=d585347c",
+          "status": 200,
+          "timestamp": 1753247727443
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/runtime/client/dev-toolbar/ui-library/icon.js?v=d585347c",
+          "status": 200,
+          "timestamp": 1753247727447
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/runtime/client/dev-toolbar/ui-library/card.js?v=d585347c",
+          "status": 200,
+          "timestamp": 1753247727448
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/runtime/client/dev-toolbar/ui-library/radio-checkbox.js?v=d585347c",
+          "status": 200,
+          "timestamp": 1753247727449
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/runtime/client/dev-toolbar/ui-library/select.js?v=d585347c",
+          "status": 200,
+          "timestamp": 1753247727450
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/runtime/client/dev-toolbar/ui-library/toggle.js?v=d585347c",
+          "status": 200,
+          "timestamp": 1753247727450
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/runtime/client/dev-toolbar/ui-library/tooltip.js?v=d585347c",
+          "status": 200,
+          "timestamp": 1753247727450
+        },
+        {
+          "url": "http://localhost:4321/src/lib/utils/textConverter.ts",
+          "status": 200,
+          "timestamp": 1753247727452
+        },
+        {
+          "url": "http://localhost:4321/src/lib/config.ts",
+          "status": 200,
+          "timestamp": 1753247727454
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/runtime/client/dev-toolbar/apps/audit/rules/a11y.js?v=d585347c",
+          "status": 200,
+          "timestamp": 1753247727456
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/runtime/client/dev-toolbar/apps/audit/rules/perf.js?v=d585347c",
+          "status": 200,
+          "timestamp": 1753247727457
+        },
+        {
+          "url": "http://localhost:4321/node_modules/.vite/deps/github-slugger.js?v=d585347c",
+          "status": 200,
+          "timestamp": 1753247727464
+        },
+        {
+          "url": "http://localhost:4321/src/config/config.json?import",
+          "status": 200,
+          "timestamp": 1753247727464
+        },
+        {
+          "url": "http://localhost:4321/node_modules/.vite/deps/marked.js?v=d585347c",
+          "status": 200,
+          "timestamp": 1753247727466
+        },
+        {
+          "url": "http://localhost:4321/node_modules/.vite/deps/astro___aria-query.js?v=d585347c",
+          "status": 200,
+          "timestamp": 1753247727477
+        },
+        {
+          "url": "http://localhost:4321/node_modules/.vite/deps/astro___axobject-query.js?v=d585347c",
+          "status": 200,
+          "timestamp": 1753247727480
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/paytoneone/v24/0nksC9P7MfYHj2oFtYm2ChTtgPvfiwq-.woff2",
+          "status": 200,
+          "timestamp": 1753247728329
+        },
+        {
+          "url": "http://localhost:4321/images/favicon.ico",
+          "status": 200,
+          "timestamp": 1753247728335
+        },
+        {
+          "url": "http://localhost:4321/blog/post-1",
+          "status": 500,
+          "timestamp": 1753247728747
+        },
+        {
+          "url": "http://localhost:4321/@vite/client",
+          "status": 304,
+          "timestamp": 1753247728756
+        },
+        {
+          "url": "http://localhost:4321/node_modules/vite/dist/client/env.mjs",
+          "status": 304,
+          "timestamp": 1753247728757
+        },
+        {
+          "url": "http://localhost:4321/favicon.ico",
+          "status": 302,
+          "timestamp": 1753247728766
+        },
+        {
+          "url": "http://localhost:4321/404",
+          "status": 404,
+          "timestamp": 1753247728773
+        },
+        {
+          "url": "http://localhost:4321/blog/adbe-fundamental-analysis-20250723",
+          "status": 500,
+          "timestamp": 1753247730424
+        },
+        {
+          "url": "http://localhost:4321/@vite/client",
+          "status": 304,
+          "timestamp": 1753247730431
+        },
+        {
+          "url": "http://localhost:4321/node_modules/vite/dist/client/env.mjs",
+          "status": 304,
+          "timestamp": 1753247730431
+        },
+        {
+          "url": "http://localhost:4321/blog/amzn-fundamental-analysis-20250618",
+          "status": 500,
+          "timestamp": 1753247732092
+        },
+        {
+          "url": "http://localhost:4321/@vite/client",
+          "status": 304,
+          "timestamp": 1753247732101
+        },
+        {
+          "url": "http://localhost:4321/node_modules/vite/dist/client/env.mjs",
+          "status": 304,
+          "timestamp": 1753247732101
+        }
+      ],
+      "errors": [
+        {
+          "type": "page-error",
+          "message": "Unexpected token ':'",
+          "stack": "SyntaxError: Unexpected token ':'",
+          "timestamp": 1753247727030
+        },
+        {
+          "type": "console-error",
+          "message": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+          "timestamp": 1753247727039
+        },
+        {
+          "type": "console-error",
+          "message": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+          "timestamp": 1753247727419
+        },
+        {
+          "type": "console-error",
+          "message": "[astro-island] Error hydrating /src/layouts/shortcodes/ChartDisplay.tsx JSHandle@error",
+          "timestamp": 1753247727421
+        },
+        {
+          "type": "console-error",
+          "message": "[astro-island] Error hydrating /src/layouts/shortcodes/ChartDisplay.tsx JSHandle@error",
+          "timestamp": 1753247727421
+        },
+        {
+          "type": "console-error",
+          "message": "[astro-island] Error hydrating /src/layouts/shortcodes/ChartDisplay.tsx JSHandle@error",
+          "timestamp": 1753247727421
+        },
+        {
+          "type": "console-error",
+          "message": "[astro-island] Error hydrating /src/layouts/shortcodes/ChartDisplay.tsx JSHandle@error",
+          "timestamp": 1753247727421
+        },
+        {
+          "type": "console-error",
+          "message": "[astro-island] Error hydrating /src/layouts/shortcodes/ChartDisplay.tsx JSHandle@error",
+          "timestamp": 1753247727421
+        },
+        {
+          "type": "console-error",
+          "message": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+          "timestamp": 1753247728750
+        },
+        {
+          "type": "console-error",
+          "message": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+          "timestamp": 1753247728773
+        },
+        {
+          "type": "console-error",
+          "message": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+          "timestamp": 1753247730425
+        },
+        {
+          "type": "console-error",
+          "message": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+          "timestamp": 1753247732094
+        }
+      ],
+      "startTime": 1753247726620,
+      "endTime": 1753247733758
+    },
+    "chartsDisabled": {
+      "testName": "charts-skipped",
+      "chartsEnabled": false,
+      "blogTests": [
+        {
+          "path": "/blog/post-1",
+          "accessible": false,
+          "statusCode": 500,
+          "loadTime": 697,
+          "hasContent": false,
+          "errorDetected": false
+        },
+        {
+          "path": "/blog/adbe-fundamental-analysis-20250723",
+          "accessible": false,
+          "statusCode": 500,
+          "loadTime": 908,
+          "hasContent": false,
+          "errorDetected": false
+        },
+        {
+          "path": "/blog/amzn-fundamental-analysis-20250618",
+          "accessible": false,
+          "statusCode": 500,
+          "loadTime": 901,
+          "hasContent": false,
+          "errorDetected": false
+        }
+      ],
+      "chartsPageTest": null,
+      "memoryUsage": [
+        {
+          "usedJSHeapSize": 2983346,
+          "totalJSHeapSize": 4033546,
+          "jsHeapSizeLimit": 4294705152,
+          "timestamp": 1753247745003,
+          "phase": "test-end"
+        }
+      ],
+      "networkRequests": [
+        {
+          "url": "http://localhost:4321/blog/post-1",
+          "status": 500,
+          "timestamp": 1753247739369
+        },
+        {
+          "url": "http://localhost:4321/@vite/client",
+          "status": 200,
+          "timestamp": 1753247739405
+        },
+        {
+          "url": "http://localhost:4321/node_modules/vite/dist/client/env.mjs",
+          "status": 304,
+          "timestamp": 1753247739406
+        },
+        {
+          "url": "http://localhost:4321/blog/adbe-fundamental-analysis-20250723",
+          "status": 500,
+          "timestamp": 1753247741164
+        },
+        {
+          "url": "http://localhost:4321/@vite/client",
+          "status": 304,
+          "timestamp": 1753247741175
+        },
+        {
+          "url": "http://localhost:4321/node_modules/vite/dist/client/env.mjs",
+          "status": 304,
+          "timestamp": 1753247741178
+        },
+        {
+          "url": "http://localhost:4321/blog/amzn-fundamental-analysis-20250618",
+          "status": 500,
+          "timestamp": 1753247743203
+        },
+        {
+          "url": "http://localhost:4321/@vite/client",
+          "status": 304,
+          "timestamp": 1753247743232
+        },
+        {
+          "url": "http://localhost:4321/node_modules/vite/dist/client/env.mjs",
+          "status": 304,
+          "timestamp": 1753247743237
+        }
+      ],
+      "errors": [
+        {
+          "type": "console-error",
+          "message": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+          "timestamp": 1753247739371
+        },
+        {
+          "type": "console-error",
+          "message": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+          "timestamp": 1753247741166
+        },
+        {
+          "type": "console-error",
+          "message": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+          "timestamp": 1753247743214
+        }
+      ],
+      "startTime": 1753247739265,
+      "endTime": 1753247745057
+    },
+    "concurrentAccess": {
+      "totalTime": 2004,
+      "results": [
+        {
+          "pageIndex": 1,
+          "path": "/blog/post-1",
+          "accessible": false,
+          "statusCode": 500,
+          "loadTime": 2001
+        },
+        {
+          "pageIndex": 2,
+          "path": "/blog/adbe-fundamental-analysis-20250723",
+          "accessible": false,
+          "statusCode": 500,
+          "loadTime": 1999
+        },
+        {
+          "pageIndex": 3,
+          "path": "/blog/amzn-fundamental-analysis-20250618",
+          "accessible": false,
+          "statusCode": 500,
+          "loadTime": 1002
+        }
+      ],
+      "successCount": 0,
+      "failureCount": 3
+    },
+    "memoryAnalysis": null
+  },
+  "comparison": {
+    "blogSuccessRate": {
+      "withCharts": 0,
+      "withoutCharts": 0
+    },
+    "averageLoadTime": {
+      "withCharts": 621.6666666666666,
+      "withoutCharts": 835.3333333333334
+    },
+    "errorCount": {
+      "withCharts": 12,
+      "withoutCharts": 3
+    },
+    "nullSafetyErrors": {
+      "withCharts": 0,
+      "withoutCharts": 0
+    }
+  },
+  "hypothesis": "Charts page causes memory pressure leading to blog route failures"
+}

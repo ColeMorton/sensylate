@@ -94,6 +94,16 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({
     };
   }, []);
 
+  // Cleanup on unmount to prevent memory leaks
+  useEffect(() => {
+    return () => {
+      // Clear any pending timeouts or intervals
+      setChartData([]);
+      setLoading(false);
+      setError(null);
+    };
+  }, []);
+
   // Helper function to parse CSV data
   const parseCSV = (csvText: string): StockDataRow[] => {
     const lines = csvText.trim().split("\n");
@@ -142,6 +152,8 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({
 
   // Load chart data based on chart type
   useEffect(() => {
+    let abortController = new AbortController();
+    
     const fetchData = async () => {
       try {
         setLoading(true);
@@ -150,6 +162,7 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({
         if (chartType === "apple-stock") {
           const response = await fetch(
             "https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv",
+            { signal: abortController.signal }
           );
 
           if (!response.ok) {
@@ -182,8 +195,11 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({
           const [multiStrategyResponse, buyHoldResponse] = await Promise.all([
             fetch(
               "/data/portfolio/multi_strategy_portfolio_portfolio_value.csv",
+              { signal: abortController.signal }
             ),
-            fetch("/data/portfolio/portfolio_buy_and_hold_portfolio_value.csv"),
+            fetch("/data/portfolio/portfolio_buy_and_hold_portfolio_value.csv", 
+              { signal: abortController.signal }
+            ),
           ]);
 
           if (!multiStrategyResponse.ok || !buyHoldResponse.ok) {
@@ -222,8 +238,11 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({
             await Promise.all([
               fetch(
                 "/data/portfolio/multi_strategy_portfolio_cumulative_returns.csv",
+                { signal: abortController.signal }
               ),
-              fetch("/data/portfolio/portfolio_buy_and_hold_returns.csv"),
+              fetch("/data/portfolio/portfolio_buy_and_hold_returns.csv",
+                { signal: abortController.signal }
+              ),
             ]);
 
           if (!cumulativeReturnsResponse.ok || !buyHoldReturnsResponse.ok) {
@@ -260,6 +279,7 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({
         } else if (chartType === "portfolio-drawdowns") {
           const response = await fetch(
             "/data/portfolio/multi_strategy_portfolio_drawdowns.csv",
+            { signal: abortController.signal }
           );
 
           if (!response.ok) {
@@ -285,8 +305,11 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({
           const [multiStrategyResponse, buyHoldResponse] = await Promise.all([
             fetch(
               "/data/portfolio/multi_strategy_portfolio_portfolio_value.csv",
+              { signal: abortController.signal }
             ),
-            fetch("/data/portfolio/portfolio_buy_and_hold_portfolio_value.csv"),
+            fetch("/data/portfolio/portfolio_buy_and_hold_portfolio_value.csv",
+              { signal: abortController.signal }
+            ),
           ]);
 
           if (!multiStrategyResponse.ok || !buyHoldResponse.ok) {
@@ -325,19 +348,31 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({
           return;
         }
       } catch (err) {
-        setError(
-          err instanceof Error ? err.message : "Failed to load chart data",
-        );
+        // Don't set error if request was aborted (component unmounting)
+        if (err instanceof Error && err.name !== 'AbortError') {
+          console.error(`Chart data loading error for ${chartType}:`, err);
+          setError(
+            err instanceof Error ? err.message : "Failed to load chart data",
+          );
+        }
       } finally {
-        setLoading(false);
+        if (!abortController.signal.aborted) {
+          setLoading(false);
+        }
       }
     };
 
     fetchData();
+    
+    // Cleanup function to abort fetch requests
+    return () => {
+      abortController.abort();
+    };
   }, [chartType]);
 
-  // Helper function to get chart title
-  const getChartTitle = () => {
+
+  // Memoized chart title and Y-axis title to prevent recalculation
+  const chartTitle = useMemo(() => {
     switch (chartType) {
       case "apple-stock":
         return "Apple Stock Price Range (Custom Range)";
@@ -352,10 +387,9 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({
       default:
         return title;
     }
-  };
+  }, [chartType, title]);
 
-  // Helper function to get Y-axis title
-  const getYAxisTitle = () => {
+  const yAxisTitle = useMemo(() => {
     switch (chartType) {
       case "apple-stock":
         return "Price ($)";
@@ -370,7 +404,7 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({
       default:
         return "Value";
     }
-  };
+  }, [chartType]);
 
   // Layout configuration with dark mode support
   const layout: Partial<Layout> = useMemo(
@@ -386,7 +420,7 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({
         color: isDarkMode ? "#E5E7EB" : "#374151",
       },
       title: {
-        text: getChartTitle(),
+        text: chartTitle,
         font: { size: 16, color: isDarkMode ? "#E5E7EB" : "#374151" },
       },
       modebar: {
@@ -437,7 +471,7 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({
             : undefined,
         type: "linear",
         title: {
-          text: getYAxisTitle(),
+          text: yAxisTitle,
           font: {
             color: isDarkMode ? "#E5E7EB" : "#374151",
           },
@@ -452,7 +486,7 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({
       },
       hovermode: "x unified",
     }),
-    [isDarkMode, chartType, title, getChartTitle, getYAxisTitle],
+    [isDarkMode, chartType, chartTitle, yAxisTitle],
   );
 
   // Config for better user experience

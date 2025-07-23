@@ -1,0 +1,671 @@
+{
+  "timestamp": "2025-07-23T06:38:32.012Z",
+  "summary": {
+    "totalTests": 0,
+    "passedTests": 0,
+    "failedTests": 0,
+    "successRate": "NaN",
+    "timestamp": "2025-07-23T06:39:10.817Z"
+  },
+  "chartTests": {
+    "pageValidation": {
+      "accessible": true,
+      "loadTime": 1541,
+      "chartsFound": 5,
+      "plotlyLoaded": true,
+      "errors": [
+        {
+          "type": "console-error",
+          "message": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+          "timestamp": 1753252715104
+        }
+      ],
+      "networkRequests": [
+        {
+          "url": "http://localhost:4321/charts",
+          "status": 200,
+          "size": 0,
+          "type": "text/html"
+        },
+        {
+          "url": "http://localhost:4321/fonts/heebo/heebo.css",
+          "status": 200,
+          "size": "615",
+          "type": "text/css"
+        },
+        {
+          "url": "http://localhost:4321/styles/main.css",
+          "status": 404,
+          "size": 0,
+          "type": "text/html"
+        },
+        {
+          "url": "http://localhost:4321/fonts/heebo/heebo-400.ttf",
+          "status": 200,
+          "size": "43956",
+          "type": "font/ttf"
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/components/ClientRouter.astro?v=972ef6a6&astro&type=script&index=0&lang.ts",
+          "status": 200,
+          "size": "13961",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/fonts/heebo/heebo-600.ttf",
+          "status": 200,
+          "size": "44308",
+          "type": "font/ttf"
+        },
+        {
+          "url": "http://localhost:4321/@vite/client",
+          "status": 200,
+          "size": "287545",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/src/layouts/components/seo/WebVitals.astro?astro&type=style&index=0&lang.css",
+          "status": 200,
+          "size": "937",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/node_modules/yet-another-react-lightbox/dist/styles.css",
+          "status": 200,
+          "size": "6180",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/@fs/Users/colemorton/Projects/sensylate-command-system-enhancements/frontend/node_modules/astro/dist/runtime/client/dev-toolbar/entrypoint.js?v=972ef6a6",
+          "status": 200,
+          "size": "52465",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/components/ClientRouter.astro?astro&type=style&index=0&lang.css",
+          "status": 200,
+          "size": "885",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/@id/__x00__astro:transitions/client",
+          "status": 200,
+          "size": "3564",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/virtual-modules/prefetch.js?v=972ef6a6",
+          "status": 200,
+          "size": "518",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/@id/astro:scripts/before-hydration.js",
+          "status": 200,
+          "size": "988",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/src/styles/main.css",
+          "status": 200,
+          "size": "122738",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/node_modules/vite/dist/client/env.mjs",
+          "status": 200,
+          "size": "5804",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/@id/__x00__astro:toolbar:internal",
+          "status": 200,
+          "size": "8955",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/runtime/client/dev-toolbar/helpers.js?v=972ef6a6",
+          "status": 200,
+          "size": "14267",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/runtime/client/dev-toolbar/settings.js?v=972ef6a6",
+          "status": 200,
+          "size": "6640",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/fonts/heebo/heebo-800.ttf",
+          "status": 200,
+          "size": "44528",
+          "type": "font/ttf"
+        },
+        {
+          "url": "http://localhost:4321/fonts/heebo/heebo-700.ttf",
+          "status": 200,
+          "size": "44304",
+          "type": "font/ttf"
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/virtual-modules/transitions-router.js?v=972ef6a6",
+          "status": 200,
+          "size": "542",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/virtual-modules/transitions-types.js?v=972ef6a6",
+          "status": 200,
+          "size": "537",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/virtual-modules/transitions-events.js?v=972ef6a6",
+          "status": 200,
+          "size": "542",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/virtual-modules/transitions-swap-functions.js?v=972ef6a6",
+          "status": 200,
+          "size": "582",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/prefetch/index.js?v=972ef6a6",
+          "status": 200,
+          "size": "37890",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/@react-refresh",
+          "status": 200,
+          "size": "109802",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/transitions/types.js?v=972ef6a6",
+          "status": 200,
+          "size": "179",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/transitions/router.js?v=972ef6a6",
+          "status": 200,
+          "size": "95268",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/transitions/events.js?v=972ef6a6",
+          "status": 200,
+          "size": "20161",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/transitions/swap-functions.js?v=972ef6a6",
+          "status": 200,
+          "size": "20040",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/node_modules/.vite/deps/@astrojs_react_client__js.js?v=972ef6a6",
+          "status": 200,
+          "size": "4303",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/src/layouts/shortcodes/ChartDisplay.tsx",
+          "status": 200,
+          "size": "69549",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/runtime/client/dev-toolbar/apps/astro.js?v=972ef6a6",
+          "status": 200,
+          "size": "109355",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/runtime/client/dev-toolbar/apps/audit/index.js?v=972ef6a6",
+          "status": 200,
+          "size": "37694",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/runtime/client/dev-toolbar/apps/xray.js?v=972ef6a6",
+          "status": 200,
+          "size": "30990",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/runtime/client/dev-toolbar/apps/settings.js?v=972ef6a6",
+          "status": 200,
+          "size": "34170",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/runtime/client/dev-toolbar/toolbar.js?v=972ef6a6",
+          "status": 200,
+          "size": "86326",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/runtime/client/dev-toolbar/ui-library/index.js?v=972ef6a6",
+          "status": 200,
+          "size": "6537",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/node_modules/.vite/deps/chunk-A7ECLLTJ.js?v=972ef6a6",
+          "status": 200,
+          "size": "16533",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/node_modules/.vite/deps/chunk-HSUUC2QV.js?v=972ef6a6",
+          "status": 200,
+          "size": "43608",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/node_modules/.vite/deps/chunk-KSWEDLFI.js?v=972ef6a6",
+          "status": 200,
+          "size": "902038",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/runtime/client/dev-toolbar/ui-library/icons.js?v=972ef6a6",
+          "status": 200,
+          "size": "277585",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/runtime/client/dev-toolbar/apps/utils/icons.js?v=972ef6a6",
+          "status": 200,
+          "size": "5650",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/node_modules/.vite/deps/chunk-DC5AMYBS.js?v=972ef6a6",
+          "status": 200,
+          "size": "9510",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/node_modules/.vite/deps/react.js?v=972ef6a6",
+          "status": 200,
+          "size": "1024",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=972ef6a6",
+          "status": 200,
+          "size": "12298",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/runtime/client/dev-toolbar/apps/utils/highlight.js?v=972ef6a6",
+          "status": 200,
+          "size": "11750",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/runtime/client/dev-toolbar/apps/audit/annotations.js?v=972ef6a6",
+          "status": 200,
+          "size": "3862",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/runtime/client/dev-toolbar/apps/audit/rules/index.js?v=972ef6a6",
+          "status": 200,
+          "size": "7035",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/runtime/client/dev-toolbar/apps/audit/ui/audit-list-window.js?v=972ef6a6",
+          "status": 200,
+          "size": "52020",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/runtime/client/dev-toolbar/apps/audit/ui/audit-list-item.js?v=972ef6a6",
+          "status": 200,
+          "size": "16740",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/runtime/client/dev-toolbar/apps/utils/window.js?v=972ef6a6",
+          "status": 200,
+          "size": "7595",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/runtime/client/dev-toolbar/apps/audit/ui/audit-ui.js?v=972ef6a6",
+          "status": 200,
+          "size": "28018",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/node_modules/html-escaper/esm/index.js?v=972ef6a6",
+          "status": 200,
+          "size": "12896",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/runtime/client/dev-toolbar/ui-library/window.js?v=972ef6a6",
+          "status": 200,
+          "size": "19284",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/runtime/client/dev-toolbar/ui-library/badge.js?v=972ef6a6",
+          "status": 200,
+          "size": "16480",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/runtime/client/dev-toolbar/ui-library/button.js?v=972ef6a6",
+          "status": 200,
+          "size": "25195",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/runtime/client/dev-toolbar/ui-library/highlight.js?v=972ef6a6",
+          "status": 200,
+          "size": "21660",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/runtime/client/dev-toolbar/ui-library/icon.js?v=972ef6a6",
+          "status": 200,
+          "size": "5667",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/runtime/client/dev-toolbar/ui-library/select.js?v=972ef6a6",
+          "status": 200,
+          "size": "18147",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/runtime/client/dev-toolbar/ui-library/toggle.js?v=972ef6a6",
+          "status": 200,
+          "size": "19016",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/runtime/client/dev-toolbar/ui-library/card.js?v=972ef6a6",
+          "status": 200,
+          "size": "19839",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/runtime/client/dev-toolbar/ui-library/radio-checkbox.js?v=972ef6a6",
+          "status": 200,
+          "size": "16332",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/src/layouts/helpers/SearchModal.tsx",
+          "status": 200,
+          "size": "42735",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/runtime/client/dev-toolbar/ui-library/tooltip.js?v=972ef6a6",
+          "status": 200,
+          "size": "23080",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/runtime/client/dev-toolbar/apps/audit/rules/a11y.js?v=972ef6a6",
+          "status": 200,
+          "size": "121883",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/node_modules/astro/dist/runtime/client/dev-toolbar/apps/audit/rules/perf.js?v=972ef6a6",
+          "status": 200,
+          "size": "23282",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/src/hooks/useFeatureFlag.ts",
+          "status": 200,
+          "size": "2282",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/src/layouts/helpers/SearchResult.tsx",
+          "status": 200,
+          "size": "41838",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/.json/search.json?import",
+          "status": 200,
+          "size": "482092",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/node_modules/.vite/deps/astro___aria-query.js?v=972ef6a6",
+          "status": 200,
+          "size": "205280",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/src/lib/config.ts",
+          "status": 200,
+          "size": "9776",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/node_modules/.vite/deps/astro___axobject-query.js?v=972ef6a6",
+          "status": 200,
+          "size": "112534",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/src/lib/utils/textConverter.ts",
+          "status": 200,
+          "size": "5096",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/data/portfolio/multi_strategy_portfolio_cumulative_returns.csv",
+          "status": 200,
+          "size": "189540",
+          "type": "text/csv"
+        },
+        {
+          "url": "http://localhost:4321/src/config/config.json?import",
+          "status": 200,
+          "size": "1129",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/data/portfolio/multi_strategy_portfolio_drawdowns.csv",
+          "status": 200,
+          "size": "335606",
+          "type": "text/csv"
+        },
+        {
+          "url": "http://localhost:4321/data/portfolio/portfolio_buy_and_hold_portfolio_value.csv",
+          "status": 200,
+          "size": "189575",
+          "type": "text/csv"
+        },
+        {
+          "url": "http://localhost:4321/data/portfolio/multi_strategy_portfolio_portfolio_value.csv",
+          "status": 200,
+          "size": "187338",
+          "type": "text/csv"
+        },
+        {
+          "url": "http://localhost:4321/data/portfolio/portfolio_buy_and_hold_returns.csv",
+          "status": 200,
+          "size": "204139",
+          "type": "text/csv"
+        },
+        {
+          "url": "http://localhost:4321/data/portfolio/portfolio_buy_and_hold_portfolio_value.csv",
+          "status": 304,
+          "size": 0,
+          "type": "unknown"
+        },
+        {
+          "url": "http://localhost:4321/data/portfolio/multi_strategy_portfolio_portfolio_value.csv",
+          "status": 304,
+          "size": 0,
+          "type": "unknown"
+        },
+        {
+          "url": "http://localhost:4321/node_modules/.vite/deps/github-slugger.js?v=972ef6a6",
+          "status": 200,
+          "size": "9698",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/node_modules/.vite/deps/marked.js?v=972ef6a6",
+          "status": 200,
+          "size": "73202",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/node_modules/.vite/deps/react-plotly__js_factory.js?v=972ef6a6",
+          "status": 200,
+          "size": "16149",
+          "type": "text/javascript"
+        },
+        {
+          "url": "http://localhost:4321/node_modules/.vite/deps/chunk-IEEFXWTP.js?v=972ef6a6",
+          "status": 200,
+          "size": "33831",
+          "type": "text/javascript"
+        },
+        {
+          "url": "https://fonts.googleapis.com/css2?family=Paytone+One:wght@400&display=swap",
+          "status": 200,
+          "size": 0,
+          "type": "text/css; charset=utf-8"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv",
+          "status": 200,
+          "size": "21019",
+          "type": "text/plain; charset=utf-8"
+        },
+        {
+          "url": "http://localhost:4321/node_modules/.vite/deps/plotly__js-basic-dist-min.js?v=972ef6a6",
+          "status": 200,
+          "size": "1597335",
+          "type": "text/javascript"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/paytoneone/v24/0nksC9P7MfYHj2oFtYm2ChTtgPvfiwq-.woff2",
+          "status": 200,
+          "size": "15868",
+          "type": "font/woff2"
+        },
+        {
+          "url": "http://localhost:4321/images/favicon.ico",
+          "status": 200,
+          "size": "15406",
+          "type": "image/x-icon"
+        }
+      ],
+      "performanceMetrics": {
+        "domContentLoaded": 3.700000047683716,
+        "loadComplete": 0.8999999761581421,
+        "firstPaint": 440,
+        "memoryUsage": {
+          "usedJSHeapSize": 29716578,
+          "totalJSHeapSize": 46823950,
+          "jsHeapSizeLimit": 4294705152
+        }
+      }
+    },
+    "individualCharts": {
+      "portfolio-value-comparison": {
+        "found": false,
+        "error": "Chart container not found"
+      },
+      "returns-comparison": {
+        "found": false,
+        "error": "Chart container not found"
+      },
+      "portfolio-drawdowns": {
+        "found": false,
+        "error": "Chart container not found"
+      },
+      "normalized-performance": {
+        "found": false,
+        "error": "Chart container not found"
+      },
+      "apple-stock": {
+        "found": false,
+        "error": "Chart container not found"
+      }
+    }
+  },
+  "themeTests": {
+    "themeSwitcherFound": true,
+    "lightModeTest": {
+      "isDarkMode": false,
+      "chartCount": 5,
+      "backgroundColors": [
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)"
+      ]
+    },
+    "darkModeTest": {
+      "isDarkMode": true,
+      "chartCount": 5,
+      "backgroundColors": [
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)"
+      ]
+    },
+    "switchingTest": {
+      "switchTime": 927,
+      "success": true
+    }
+  },
+  "interactionTests": {
+    "hoverTest": {
+      "hoverLayerFound": true,
+      "hoverTextFound": false,
+      "hoverContent": null
+    },
+    "zoomTest": {},
+    "panTest": {},
+    "legendTest": {
+      "legendFound": true
+    }
+  },
+  "integrationTests": {
+    "chartsToBlogs": {
+      "navigationTime": 3485,
+      "memoryBefore": 26051628,
+      "memoryAfter": 30664275,
+      "memoryDiff": 4612647,
+      "success": true
+    },
+    "blogsToCharts": {
+      "navigationTime": 3805,
+      "memoryFinal": 26377478,
+      "success": true
+    },
+    "memoryLeakTest": {},
+    "navigationTest": {}
+  },
+  "performanceMetrics": {},
+  "dataValidation": {},
+  "errors": []
+}

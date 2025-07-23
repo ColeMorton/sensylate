@@ -50,7 +50,7 @@ function getFeatureFlags(): FeatureFlags {
       envToBoolean(import.meta.env.PUBLIC_FEATURE_AUTHORS_PAGE) ?? true,
     charts_page:
       envToBoolean(import.meta.env.PUBLIC_FEATURE_CHARTS_PAGE) ??
-      isDevelopment(),
+      isDevelopment(), // Re-enabled after fixing server mode routing
   };
 }
 
