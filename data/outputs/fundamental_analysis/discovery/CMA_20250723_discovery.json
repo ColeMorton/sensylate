@@ -189,7 +189,7 @@
   "cli_service_validation": {
     "service_health": {
       "yahoo_finance": "healthy",
-      "alpha_vantage": "healthy", 
+      "alpha_vantage": "healthy",
       "fmp": "healthy",
       "fred_economic": "healthy",
       "coingecko": "healthy",
@@ -242,7 +242,7 @@
         "rationale": "Similar asset size regional bank"
       },
       {
-        "name": "First Horizon Corporation", 
+        "name": "First Horizon Corporation",
         "ticker": "FHN",
         "asset_size": "80B_range",
         "rationale": "Regional bank in same asset class"
@@ -250,7 +250,7 @@
       {
         "name": "Western Alliance Bancorporation",
         "ticker": "WAL",
-        "asset_size": "80B_range", 
+        "asset_size": "80B_range",
         "rationale": "Western US regional bank peer"
       },
       {
@@ -291,7 +291,7 @@
     ],
     "research_priorities": [
       "Asset quality and loan loss provisions analysis",
-      "Net interest margin trend evaluation", 
+      "Net interest margin trend evaluation",
       "Deposit composition and stability assessment",
       "Competitive positioning within regional banking",
       "Interest rate sensitivity analysis"
@@ -317,7 +317,7 @@
     },
     "quality_flags": [
       "comprehensive_financial_statement_data_including_cash_flow",
-      "enhanced_financial_metrics_with_calculated_ratios", 
+      "enhanced_financial_metrics_with_calculated_ratios",
       "multi_source_price_validation_perfect_consistency",
       "real_time_economic_and_cryptocurrency_integration",
       "all_cli_services_operational_excellent_health"

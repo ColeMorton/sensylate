@@ -130,7 +130,7 @@
     ]
   },
   "usage_recommendations": {
-    "safe_for_decision_making": "true",  
+    "safe_for_decision_making": "true",
     "price_accuracy_blocking_issue": "false",
     "required_corrections": [
       "Update economic indicators to reflect latest FRED CLI data",

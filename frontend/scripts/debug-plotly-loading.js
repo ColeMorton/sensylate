@@ -1,6 +1,6 @@
 /**
  * Debug Plotly Loading Issues
- * 
+ *
  * Simple script to debug why Plotly.js is not loading on the charts page
  */
 
@@ -42,9 +42,9 @@ async function debugPlotlyLoading() {
 
   try {
     console.log('📍 Loading charts page...');
-    await page.goto(`${DEV_SERVER_URL}/charts`, { 
+    await page.goto(`${DEV_SERVER_URL}/charts`, {
       waitUntil: 'networkidle2',
-      timeout: 30000 
+      timeout: 30000
     });
 
     console.log('✅ Page loaded, analyzing chart containers...');
@@ -59,7 +59,7 @@ async function debugPlotlyLoading() {
       const loadingElements = document.querySelectorAll('.animate-spin');
       const errorElements = document.querySelectorAll('.text-red-500');
       const plotlyElements = document.querySelectorAll('.plotly');
-      
+
       return {
         chartContainers: chartContainers.length,
         chartDisplayComponents: chartDisplayComponents.length,
@@ -117,7 +117,7 @@ async function debugPlotlyLoading() {
     console.log(`   Window.Plotly: ${finalState.windowPlotly}`);
     console.log(`   Still Loading: ${finalState.loadingElements}`);
     console.log(`   Errors: ${finalState.errorElements}`);
-    
+
     if (finalState.errorMessages.length > 0) {
       console.log('\n❌ Error Messages:');
       finalState.errorMessages.forEach((msg, index) => {

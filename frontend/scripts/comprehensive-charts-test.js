@@ -1,9 +1,9 @@
 /**
  * Comprehensive Charts Functionality Test
- * 
+ *
  * This script performs exhaustive testing of the charts page functionality:
  * - All 5 chart types validation
- * - Data integrity and rendering accuracy  
+ * - Data integrity and rendering accuracy
  * - Theme switching behavior
  * - Interactive features (hover, zoom, pan)
  * - Performance metrics and memory usage
@@ -62,12 +62,12 @@ class ComprehensiveChartsValidator {
 
   async validateChartsPage() {
     console.log('🎯 Phase 1: Charts Page Basic Validation');
-    
+
     const page = await this.browser.newPage();
-    
+
     // Enable performance monitoring
     await page.coverage.startJSCoverage();
-    
+
     const pageTest = {
       accessible: false,
       loadTime: null,
@@ -100,31 +100,31 @@ class ComprehensiveChartsValidator {
 
     try {
       const startTime = Date.now();
-      
+
       console.log('   📍 Loading charts page...');
       await page.goto(`${DEV_SERVER_URL}/charts`, {
         waitUntil: 'networkidle2',
         timeout: 30000
       });
-      
+
       pageTest.loadTime = Date.now() - startTime;
       pageTest.accessible = true;
-      
+
       console.log(`   ✅ Page loaded in ${pageTest.loadTime}ms`);
-      
+
       // Wait for charts to initialize
       await page.waitForSelector('.chart-container', { timeout: 10000 });
-      
+
       // Count chart containers
       const chartContainers = await page.$$('.chart-container');
       pageTest.chartsFound = chartContainers.length;
       console.log(`   📊 Found ${pageTest.chartsFound} chart containers`);
-      
+
       // Wait for Plotly to load
       await page.waitForFunction(() => window.Plotly !== undefined, { timeout: 15000 });
       pageTest.plotlyLoaded = true;
       console.log('   ✅ Plotly.js loaded successfully');
-      
+
       // Get performance metrics
       const performanceData = await page.evaluate(() => {
         const perfEntries = performance.getEntriesByType('navigation')[0];
@@ -139,11 +139,11 @@ class ComprehensiveChartsValidator {
           } : null
         };
       });
-      
+
       pageTest.performanceMetrics = performanceData;
       console.log(`   📈 DOM Content Loaded: ${performanceData.domContentLoaded.toFixed(0)}ms`);
       console.log(`   📈 Memory Usage: ${(performanceData.memoryUsage?.usedJSHeapSize / 1024 / 1024).toFixed(1)}MB`);
-      
+
     } catch (error) {
       pageTest.errors.push({
         type: 'page-load-error',
@@ -160,14 +160,14 @@ class ComprehensiveChartsValidator {
 
   async validateIndividualCharts() {
     console.log('\n🔍 Phase 2: Individual Chart Validation');
-    
+
     const page = await this.browser.newPage();
     await page.goto(`${DEV_SERVER_URL}/charts`, { waitUntil: 'networkidle2' });
-    
+
     // Wait for all charts to load
     await page.waitForSelector('.chart-container', { timeout: 10000 });
     await page.waitForFunction(() => window.Plotly !== undefined, { timeout: 15000 });
-    
+
     // Give charts time to render
     await new Promise(resolve => setTimeout(resolve, 5000));
 
@@ -183,14 +183,14 @@ class ComprehensiveChartsValidator {
 
     for (const expectedChart of expectedCharts) {
       console.log(`   📊 Testing: ${expectedChart.title}`);
-      
+
       const chartTest = await page.evaluate((chartTitle) => {
         // Find chart by title
         const chartElements = Array.from(document.querySelectorAll('.chart-container'));
-        const chartContainer = chartElements.find(el => 
+        const chartContainer = chartElements.find(el =>
           el.textContent.includes(chartTitle)
         );
-        
+
         if (!chartContainer) {
           return { found: false, error: 'Chart container not found' };
         }
@@ -214,7 +214,7 @@ class ComprehensiveChartsValidator {
           isLoading: !!loadingSpinner,
           hasError: !!errorMessage,
           errorText: errorMessage?.textContent || null,
-          dataPoints: traceElements.length > 0 ? 
+          dataPoints: traceElements.length > 0 ?
             Array.from(traceElements).map(trace => ({
               className: trace.className.baseVal || trace.className,
               pointCount: trace.querySelectorAll('.point').length || 0
@@ -226,7 +226,7 @@ class ComprehensiveChartsValidator {
       if (chartTest.hasPlotlyChart && !chartTest.hasError) {
         console.log(`     ✅ Chart rendered: ${chartTest.svgCount} SVG(s), ${chartTest.traceCount} trace(s)`);
         console.log(`     📏 Dimensions: ${chartTest.dimensions?.width}x${chartTest.dimensions?.height}px`);
-        
+
         if (chartTest.dataPoints.length > 0) {
           const totalPoints = chartTest.dataPoints.reduce((sum, trace) => sum + trace.pointCount, 0);
           console.log(`     📊 Data points: ${totalPoints} total across ${chartTest.dataPoints.length} traces`);
@@ -249,7 +249,7 @@ class ComprehensiveChartsValidator {
 
   async testThemeSwitching() {
     console.log('\n🎨 Phase 3: Theme Switching Validation');
-    
+
     const page = await this.browser.newPage();
     await page.goto(`${DEV_SERVER_URL}/charts`, { waitUntil: 'networkidle2' });
     await page.waitForSelector('.chart-container', { timeout: 10000 });
@@ -266,10 +266,10 @@ class ComprehensiveChartsValidator {
       // Check if theme switcher exists
       const themeSwitcher = await page.$('[data-theme-switcher]');
       themeTest.themeSwitcherFound = !!themeSwitcher;
-      
+
       if (themeTest.themeSwitcherFound) {
         console.log('   🔘 Theme switcher found');
-        
+
         // Test light mode
         console.log('   ☀️  Testing light mode...');
         await page.evaluate(() => {
@@ -277,7 +277,7 @@ class ComprehensiveChartsValidator {
           localStorage.setItem('theme', 'light');
         });
         await new Promise(resolve => setTimeout(resolve, 1000));
-        
+
         themeTest.lightModeTest = await page.evaluate(() => {
           const isDark = document.documentElement.classList.contains('dark');
           const charts = document.querySelectorAll('.plotly');
@@ -285,16 +285,16 @@ class ComprehensiveChartsValidator {
             const style = window.getComputedStyle(chart);
             return style.backgroundColor;
           });
-          
+
           return {
             isDarkMode: isDark,
             chartCount: charts.length,
             backgroundColors: chartBackgrounds
           };
         });
-        
+
         console.log(`     📊 Light mode: ${themeTest.lightModeTest.chartCount} charts, dark=${themeTest.lightModeTest.isDarkMode}`);
-        
+
         // Test dark mode
         console.log('   🌙 Testing dark mode...');
         await page.evaluate(() => {
@@ -302,7 +302,7 @@ class ComprehensiveChartsValidator {
           localStorage.setItem('theme', 'dark');
         });
         await new Promise(resolve => setTimeout(resolve, 1000));
-        
+
         themeTest.darkModeTest = await page.evaluate(() => {
           const isDark = document.documentElement.classList.contains('dark');
           const charts = document.querySelectorAll('.plotly');
@@ -310,34 +310,34 @@ class ComprehensiveChartsValidator {
             const style = window.getComputedStyle(chart);
             return style.backgroundColor;
           });
-          
+
           return {
             isDarkMode: isDark,
             chartCount: charts.length,
             backgroundColors: chartBackgrounds
           };
         });
-        
+
         console.log(`     📊 Dark mode: ${themeTest.darkModeTest.chartCount} charts, dark=${themeTest.darkModeTest.isDarkMode}`);
-        
+
         // Test actual theme switching
         console.log('   🔄 Testing theme switching interaction...');
         const switchingStart = Date.now();
-        
+
         await themeSwitcher.click();
         await new Promise(resolve => setTimeout(resolve, 500));
-        
+
         themeTest.switchingTest = {
           switchTime: Date.now() - switchingStart,
           success: true
         };
-        
+
         console.log(`     ✅ Theme switching completed in ${themeTest.switchingTest.switchTime}ms`);
-        
+
       } else {
         console.log('   ⚠️  Theme switcher not found');
       }
-      
+
     } catch (error) {
       themeTest.switchingTest.error = error.message;
       console.log(`   ❌ Theme switching error: ${error.message}`);
@@ -350,7 +350,7 @@ class ComprehensiveChartsValidator {
 
   async testChartInteractions() {
     console.log('\n🖱️  Phase 4: Chart Interaction Testing');
-    
+
     const page = await this.browser.newPage();
     await page.goto(`${DEV_SERVER_URL}/charts`, { waitUntil: 'networkidle2' });
     await page.waitForSelector('.chart-container', { timeout: 10000 });
@@ -367,29 +367,29 @@ class ComprehensiveChartsValidator {
       // Test hover interactions
       console.log('   👆 Testing hover interactions...');
       const firstChart = await page.$('.plotly');
-      
+
       if (firstChart) {
         await firstChart.hover();
-        
+
         // Check for hover elements
         const hoverResult = await page.evaluate(() => {
           const hoverLayer = document.querySelector('.hoverlayer');
           const hoverText = document.querySelector('.hovertext');
-          
+
           return {
             hoverLayerFound: !!hoverLayer,
             hoverTextFound: !!hoverText,
             hoverContent: hoverText?.textContent || null
           };
         });
-        
+
         interactionTests.hoverTest = hoverResult;
         console.log(`     ${hoverResult.hoverLayerFound ? '✅' : '❌'} Hover layer: ${hoverResult.hoverLayerFound}`);
-        
+
         // Test legend interactions
         console.log('   📊 Testing legend interactions...');
         const legend = await page.$('.legend');
-        
+
         if (legend) {
           await legend.click();
           interactionTests.legendTest.legendFound = true;
@@ -398,11 +398,11 @@ class ComprehensiveChartsValidator {
           interactionTests.legendTest.legendFound = false;
           console.log('     ⚠️  Legend not found');
         }
-        
+
       } else {
         console.log('     ❌ No charts found for interaction testing');
       }
-      
+
     } catch (error) {
       interactionTests.error = error.message;
       console.log(`   ❌ Interaction testing error: ${error.message}`);
@@ -415,9 +415,9 @@ class ComprehensiveChartsValidator {
 
   async testBlogIntegration() {
     console.log('\n🔗 Phase 5: Blog Integration Testing');
-    
+
     const page = await this.browser.newPage();
-    
+
     const integrationTest = {
       chartsToBlogs: {},
       blogsToCharts: {},
@@ -429,22 +429,22 @@ class ComprehensiveChartsValidator {
       // Test navigation from charts to blog
       console.log('   📊➡️📝 Testing charts → blog navigation...');
       const chartsStart = Date.now();
-      
+
       await page.goto(`${DEV_SERVER_URL}/charts`, { waitUntil: 'networkidle2' });
       await page.waitForSelector('.chart-container', { timeout: 10000 });
-      
-      const chartsMemoryBefore = await page.evaluate(() => 
+
+      const chartsMemoryBefore = await page.evaluate(() =>
         performance.memory ? performance.memory.usedJSHeapSize : 0
       );
-      
+
       // Navigate to blog
       await page.goto(`${DEV_SERVER_URL}/blog/post-1`, { waitUntil: 'networkidle2' });
-      
+
       const blogLoadTime = Date.now() - chartsStart;
-      const blogMemoryAfter = await page.evaluate(() => 
+      const blogMemoryAfter = await page.evaluate(() =>
         performance.memory ? performance.memory.usedJSHeapSize : 0
       );
-      
+
       integrationTest.chartsToBlogs = {
         navigationTime: blogLoadTime,
         memoryBefore: chartsMemoryBefore,
@@ -452,30 +452,30 @@ class ComprehensiveChartsValidator {
         memoryDiff: blogMemoryAfter - chartsMemoryBefore,
         success: true
       };
-      
+
       console.log(`     ✅ Charts→Blog: ${blogLoadTime}ms, Memory: ${(integrationTest.chartsToBlogs.memoryDiff / 1024 / 1024).toFixed(1)}MB diff`);
-      
+
       // Test navigation from blog to charts
       console.log('   📝➡️📊 Testing blog → charts navigation...');
       const blogStart = Date.now();
-      
+
       await page.goto(`${DEV_SERVER_URL}/charts`, { waitUntil: 'networkidle2' });
       await page.waitForSelector('.chart-container', { timeout: 10000 });
       await new Promise(resolve => setTimeout(resolve, 2000));
-      
+
       const chartsLoadTime = Date.now() - blogStart;
-      const chartsMemoryFinal = await page.evaluate(() => 
+      const chartsMemoryFinal = await page.evaluate(() =>
         performance.memory ? performance.memory.usedJSHeapSize : 0
       );
-      
+
       integrationTest.blogsToCharts = {
         navigationTime: chartsLoadTime,
         memoryFinal: chartsMemoryFinal,
         success: true
       };
-      
+
       console.log(`     ✅ Blog→Charts: ${chartsLoadTime}ms, Final Memory: ${(chartsMemoryFinal / 1024 / 1024).toFixed(1)}MB`);
-      
+
     } catch (error) {
       integrationTest.error = error.message;
       console.log(`   ❌ Integration testing error: ${error.message}`);
@@ -488,7 +488,7 @@ class ComprehensiveChartsValidator {
 
   async generateReport() {
     console.log('\n📋 Generating Comprehensive Test Report...');
-    
+
     // Calculate summary statistics
     const allTests = [
       this.results.chartTests,
@@ -496,10 +496,10 @@ class ComprehensiveChartsValidator {
       this.results.interactionTests,
       this.results.integrationTests
     ];
-    
+
     let totalTests = 0;
     let passedTests = 0;
-    
+
     // Count individual test results
     Object.values(this.results.chartTests).forEach(test => {
       if (typeof test === 'object' && test.found !== undefined) {
@@ -507,7 +507,7 @@ class ComprehensiveChartsValidator {
         if (test.found && test.hasPlotlyChart && !test.hasError) passedTests++;
       }
     });
-    
+
     this.results.summary = {
       totalTests,
       passedTests,
@@ -525,7 +525,7 @@ class ComprehensiveChartsValidator {
     console.log(`✅ Passed Tests: ${this.results.summary.passedTests}`);
     console.log(`❌ Failed Tests: ${this.results.summary.failedTests}`);
     console.log(`📊 Total Tests: ${this.results.summary.totalTests}`);
-    
+
     // Performance summary
     if (this.results.chartTests.pageValidation?.performanceMetrics) {
       const perf = this.results.chartTests.pageValidation.performanceMetrics;
@@ -534,9 +534,9 @@ class ComprehensiveChartsValidator {
       console.log(`   Memory Usage: ${(perf.memoryUsage?.usedJSHeapSize / 1024 / 1024).toFixed(1)}MB`);
       console.log(`   Charts Found: ${this.results.chartTests.pageValidation.chartsFound}`);
     }
-    
+
     console.log(`\n📄 Full report: ${reportPath}`);
-    
+
     if (this.results.summary.failedTests === 0) {
       console.log('\n🎉 ALL CHARTS TESTS PASSED - Charts functionality is fully operational!');
     } else {

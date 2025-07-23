@@ -65,7 +65,7 @@
   "cli_service_validation": {
     "service_health": {
       "yahoo_finance": "healthy",
-      "alpha_vantage": "healthy", 
+      "alpha_vantage": "healthy",
       "fmp": "healthy",
       "sec_edgar": "healthy",
       "fred_economic": "healthy",
@@ -96,7 +96,7 @@
       },
       {
         "company": "Autodesk Inc.",
-        "ticker": "ADSK", 
+        "ticker": "ADSK",
         "market_cap_estimate": 60000000000,
         "annual_revenue_estimate": 6130000000,
         "business_overlap": "Creative/design software, subscription-based SaaS model, professional tools"
@@ -109,7 +109,7 @@
         "business_overlap": "Enterprise digital experience, customer experience management, subscription model"
       },
       {
-        "company": "Oracle Corporation", 
+        "company": "Oracle Corporation",
         "ticker": "ORCL",
         "market_cap_estimate": 689430000000,
         "annual_revenue_estimate": 57400000000,
@@ -182,7 +182,7 @@
         "contingencies": "Standard technology company litigation reserves"
       },
       "grade": "A+",
-      "trend": "improving", 
+      "trend": "improving",
       "confidence": 0.94
     },
     "cash_flow_analysis": {
@@ -476,7 +476,7 @@
       },
       "sensitivity_analysis": {
         "revenue_growth_sensitivity": "±10% change in growth rate = ±$15-20 fair value impact",
-        "margin_sensitivity": "±100 bps margin change = ±$25-30 fair value impact", 
+        "margin_sensitivity": "±100 bps margin change = ±$25-30 fair value impact",
         "discount_rate_sensitivity": "±50 bps WACC change = ±$35-45 fair value impact",
         "terminal_value_sensitivity": "±0.5% terminal growth = ±$40-50 fair value impact"
       },

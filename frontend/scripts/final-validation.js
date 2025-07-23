@@ -1,6 +1,6 @@
 /**
  * Final Validation Script
- * 
+ *
  * Comprehensive test to validate that the blog post timing issue has been resolved
  * with charts enabled and all functionality working properly.
  */
@@ -42,7 +42,7 @@ class FinalValidator {
 
   async testRoute(route, description, expectedStatus = 200) {
     console.log(`📍 Testing: ${route} (${description})`);
-    
+
     const page = await this.browser.newPage();
     const test = {
       route,
@@ -72,7 +72,7 @@ class FinalValidator {
         const hasTitle = await page.$('h1, h2, .h2, title');
         const hasContent = await page.$('.content, article, main, .chart-container');
         test.hasContent = !!(hasTitle && hasContent);
-        
+
         console.log(`   ✅ ${test.actualStatus} (${test.loadTime}ms) - Content: ${test.hasContent}`);
       } else {
         console.log(`   ❌ ${test.actualStatus} (expected ${expectedStatus}) (${test.loadTime}ms)`);
@@ -99,7 +99,7 @@ class FinalValidator {
 
   async testConcurrentBlogAccess() {
     console.log('🔄 Testing Concurrent Blog Access (Stress Test)...');
-    
+
     const blogRoutes = [
       '/blog/post-1',
       '/blog/adbe-fundamental-analysis-20250723',
@@ -120,7 +120,7 @@ class FinalValidator {
       const startTime = Date.now();
 
       // Launch concurrent requests
-      promises.push(...pages.map((page, index) => 
+      promises.push(...pages.map((page, index) =>
         page.goto(`${DEV_SERVER_URL}${blogRoutes[index]}`, {
           waitUntil: 'networkidle2',
           timeout: 20000
@@ -184,7 +184,7 @@ class FinalValidator {
     const avgLoadTime = this.results.tests
       .filter(t => t.loadTime)
       .reduce((sum, t) => sum + t.loadTime, 0) / this.results.tests.filter(t => t.loadTime).length;
-    
+
     console.log(`   Average Load Time: ${avgLoadTime.toFixed(0)}ms`);
 
     console.log(`\n📄 Full report: ${reportPath}`);
@@ -212,19 +212,19 @@ class FinalValidator {
       await this.testRoute('/', 'Homepage');
       await this.testRoute('/blog', 'Blog index page');
       await this.testRoute('/charts', 'Charts page (with ChartDisplay components)');
-      
+
       // Test individual blog posts that were previously failing
       await this.testRoute('/blog/post-1', 'Blog post 1');
       await this.testRoute('/blog/adbe-fundamental-analysis-20250723', 'Recent analysis post');
       await this.testRoute('/blog/amzn-fundamental-analysis-20250618', 'Historical analysis post');
-      
+
       // Test other routes for regression
       await this.testRoute('/about', 'About page');
       await this.testRoute('/contact', 'Contact page');
 
       // Stress test concurrent blog access
       const concurrentResults = await this.testConcurrentBlogAccess();
-      
+
       // Add concurrent test to summary
       this.results.concurrentTest = concurrentResults;
 

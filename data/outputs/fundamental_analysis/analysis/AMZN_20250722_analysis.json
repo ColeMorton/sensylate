@@ -43,7 +43,7 @@
     "website": "amazon.com",
     "business_segments": {
       "north_america": "Primary e-commerce operations",
-      "international": "Global retail expansion", 
+      "international": "Global retail expansion",
       "aws": "Cloud computing and enterprise services"
     }
   },
@@ -69,7 +69,7 @@
   "cli_service_validation": {
     "service_health": {
       "yahoo_finance": "healthy",
-      "alpha_vantage": "healthy", 
+      "alpha_vantage": "healthy",
       "fmp": "healthy",
       "sec_edgar": "healthy",
       "fred_economic": "healthy",

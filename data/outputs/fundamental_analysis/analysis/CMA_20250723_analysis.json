@@ -109,7 +109,7 @@
       },
       {
         "name": "First Horizon Corporation",
-        "ticker": "FHN", 
+        "ticker": "FHN",
         "asset_size": "80B_range",
         "rationale": "Regional bank in same asset class"
       },
@@ -444,7 +444,7 @@
           "catalyst": "commercial_loan_demand_recovery",
           "probability": 0.6,
           "impact": 3,
-          "timeline": "6_18_months", 
+          "timeline": "6_18_months",
           "description": "economic_recovery_business_investment"
         },
         {

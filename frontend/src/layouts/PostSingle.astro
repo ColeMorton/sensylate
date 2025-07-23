@@ -17,15 +17,21 @@ import ImageMod from "./components/ImageMod.astro";
 const { post } = Astro.props;
 
 if (!post) {
-  throw new Error(`PostSingle component error - post prop is undefined. Route: ${Astro.url.pathname}`);
+  throw new Error(
+    `PostSingle component error - post prop is undefined. Route: ${Astro.url.pathname}`,
+  );
 }
 
 if (!post.data) {
-  throw new Error(`PostSingle component error - post.data is undefined. Post ID: ${post.id || 'unknown'}, Route: ${Astro.url.pathname}`);
+  throw new Error(
+    `PostSingle component error - post.data is undefined. Post ID: ${post.id || "unknown"}, Route: ${Astro.url.pathname}`,
+  );
 }
 
 if (!post.collection) {
-  throw new Error(`PostSingle component error - post.collection is undefined. Post ID: ${post.id || 'unknown'}, Route: ${Astro.url.pathname}`);
+  throw new Error(
+    `PostSingle component error - post.collection is undefined. Post ID: ${post.id || "unknown"}, Route: ${Astro.url.pathname}`,
+  );
 }
 
 // Determine collection type from post.collection

@@ -154,7 +154,7 @@
       },
       {
         "company": "Autodesk Inc.",
-        "ticker": "ADSK", 
+        "ticker": "ADSK",
         "market_cap_estimate": 60000000000,
         "annual_revenue_estimate": 6130000000,
         "business_overlap": "Creative/design software, subscription-based SaaS model, professional tools"
@@ -167,7 +167,7 @@
         "business_overlap": "Enterprise digital experience, customer experience management, subscription model"
       },
       {
-        "company": "Oracle Corporation", 
+        "company": "Oracle Corporation",
         "ticker": "ORCL",
         "market_cap_estimate": 689430000000,
         "annual_revenue_estimate": 57400000000,
@@ -222,7 +222,7 @@
     },
     "quality_flags": [
       "excellent_multi_source_price_validation_1.000_confidence",
-      "comprehensive_financial_statement_data_including_cash_flow", 
+      "comprehensive_financial_statement_data_including_cash_flow",
       "enhanced_financial_metrics_with_calculated_ratios",
       "real_time_economic_context_integration",
       "institutional_grade_data_quality_97.3_percent"

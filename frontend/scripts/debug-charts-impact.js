@@ -61,12 +61,12 @@ class ChartsImpactDebugger {
 
   async testBlogWithChartsStatus(chartsEnabled = true, testName = 'charts-enabled') {
     console.log(`📊 Testing Blog Functionality - Charts ${chartsEnabled ? 'ENABLED' : 'DISABLED'}`);
-    
+
     const page = await this.browser.newPage();
-    
+
     // Monitor performance and memory
     await page.setViewport({ width: 1200, height: 800 });
-    
+
     const testResult = {
       testName,
       chartsEnabled,
@@ -112,24 +112,24 @@ class ChartsImpactDebugger {
       if (chartsEnabled) {
         console.log('   🔍 Testing charts page access...');
         const chartsStart = Date.now();
-        
+
         try {
-          await page.goto(`${DEV_SERVER_URL}/charts`, { 
-            waitUntil: 'networkidle2', 
-            timeout: 30000 
+          await page.goto(`${DEV_SERVER_URL}/charts`, {
+            waitUntil: 'networkidle2',
+            timeout: 30000
           });
-          
+
           // Wait for charts to load
           await page.waitForSelector('.chart-container', { timeout: 20000 });
-          
+
           testResult.chartsPageTest = {
             accessible: true,
             loadTime: Date.now() - chartsStart,
             status: 'success'
           };
-          
+
           console.log(`   ✅ Charts page loaded in ${testResult.chartsPageTest.loadTime}ms`);
-          
+
           // Take memory measurement after charts load
           const memoryUsage = await page.evaluate(() => {
             if (performance.memory) {
@@ -142,14 +142,14 @@ class ChartsImpactDebugger {
             }
             return null;
           });
-          
+
           if (memoryUsage) {
             testResult.memoryUsage.push({
               ...memoryUsage,
               phase: 'after-charts-load'
             });
           }
-          
+
         } catch (error) {
           testResult.chartsPageTest = {
             accessible: false,
@@ -172,13 +172,13 @@ class ChartsImpactDebugger {
       for (const blogPath of blogPosts) {
         console.log(`   📝 Testing blog post: ${blogPath}`);
         const blogStart = Date.now();
-        
+
         try {
-          const response = await page.goto(`${DEV_SERVER_URL}${blogPath}`, { 
-            waitUntil: 'networkidle2', 
-            timeout: 15000 
+          const response = await page.goto(`${DEV_SERVER_URL}${blogPath}`, {
+            waitUntil: 'networkidle2',
+            timeout: 15000
           });
-          
+
           const blogTest = {
             path: blogPath,
             accessible: response.status() === 200,
@@ -193,24 +193,24 @@ class ChartsImpactDebugger {
             const hasTitle = await page.$('h1, h2, .h2');
             const hasContent = await page.$('.content, article, main');
             blogTest.hasContent = !!(hasTitle && hasContent);
-            
+
             console.log(`   ✅ ${blogPath}: ${blogTest.statusCode} (${blogTest.loadTime}ms) - Content: ${blogTest.hasContent}`);
           } else {
             console.log(`   ❌ ${blogPath}: ${blogTest.statusCode} (${blogTest.loadTime}ms)`);
-            
+
             // Check for our specific error
             const errorMessage = await page.evaluate(() => {
               return document.body.textContent || '';
             });
-            
+
             if (errorMessage.includes('post prop is undefined') || errorMessage.includes('post.data is undefined')) {
               blogTest.errorDetected = true;
               console.log(`   🎯 DETECTED: Our null safety error triggered!`);
             }
           }
-          
+
           testResult.blogTests.push(blogTest);
-          
+
         } catch (error) {
           testResult.blogTests.push({
             path: blogPath,
@@ -220,7 +220,7 @@ class ChartsImpactDebugger {
           });
           console.log(`   💥 ${blogPath}: Error - ${error.message}`);
         }
-        
+
         // Brief pause between tests
         await new Promise(resolve => setTimeout(resolve, 1000));
       }
@@ -237,7 +237,7 @@ class ChartsImpactDebugger {
         }
         return null;
       });
-      
+
       if (finalMemory) {
         testResult.memoryUsage.push({
           ...finalMemory,
@@ -262,35 +262,35 @@ class ChartsImpactDebugger {
 
   async testConcurrentAccess() {
     console.log('🔄 Testing Concurrent Blog Access...');
-    
+
     const pages = [];
     const results = [];
-    
+
     try {
       // Create multiple pages for concurrent testing
       for (let i = 0; i < 3; i++) {
         pages.push(await this.browser.newPage());
       }
-      
+
       // Concurrent blog post access
       const blogPosts = [
         '/blog/post-1',
         '/blog/adbe-fundamental-analysis-20250723',
         '/blog/amzn-fundamental-analysis-20250618'
       ];
-      
+
       const startTime = Date.now();
-      
+
       const promises = pages.map(async (page, index) => {
         const blogPath = blogPosts[index];
         console.log(`   🔗 Concurrent access ${index + 1}: ${blogPath}`);
-        
+
         try {
-          const response = await page.goto(`${DEV_SERVER_URL}${blogPath}`, { 
-            waitUntil: 'networkidle2', 
-            timeout: 20000 
+          const response = await page.goto(`${DEV_SERVER_URL}${blogPath}`, {
+            waitUntil: 'networkidle2',
+            timeout: 20000
           });
-          
+
           return {
             pageIndex: index + 1,
             path: blogPath,
@@ -308,9 +308,9 @@ class ChartsImpactDebugger {
           };
         }
       });
-      
+
       const concurrentResults = await Promise.all(promises);
-      
+
       console.log('   📊 Concurrent Access Results:');
       concurrentResults.forEach(result => {
         if (result.accessible) {
@@ -319,14 +319,14 @@ class ChartsImpactDebugger {
           console.log(`   ❌ Page ${result.pageIndex}: Failed - ${result.error || 'Unknown error'}`);
         }
       });
-      
+
       return {
         totalTime: Date.now() - startTime,
         results: concurrentResults,
         successCount: concurrentResults.filter(r => r.accessible).length,
         failureCount: concurrentResults.filter(r => !r.accessible).length
       };
-      
+
     } finally {
       // Clean up pages
       for (const page of pages) {
@@ -341,15 +341,15 @@ class ChartsImpactDebugger {
 
   compareResults() {
     console.log('📈 Analyzing Results...\n');
-    
+
     const chartsEnabled = this.results.tests.chartsEnabled;
     const chartsDisabled = this.results.tests.chartsDisabled;
-    
+
     if (!chartsEnabled || !chartsDisabled) {
       console.log('⚠️  Cannot compare - missing test results');
       return;
     }
-    
+
     const comparison = {
       blogSuccessRate: {
         withCharts: chartsEnabled.blogTests.filter(t => t.accessible && t.hasContent).length / chartsEnabled.blogTests.length,
@@ -368,9 +368,9 @@ class ChartsImpactDebugger {
         withoutCharts: chartsDisabled.blogTests.filter(t => t.errorDetected).length
       }
     };
-    
+
     this.results.comparison = comparison;
-    
+
     console.log('📊 COMPARISON RESULTS:');
     console.log(`   Blog Success Rate:`);
     console.log(`     With Charts:    ${(comparison.blogSuccessRate.withCharts * 100).toFixed(1)}%`);
@@ -384,29 +384,29 @@ class ChartsImpactDebugger {
     console.log(`   Null Safety Errors:`);
     console.log(`     With Charts:    ${comparison.nullSafetyErrors.withCharts}`);
     console.log(`     Without Charts: ${comparison.nullSafetyErrors.withoutCharts}`);
-    
+
     // Hypothesis validation
     const hypothesisValid = (
       comparison.blogSuccessRate.withoutCharts > comparison.blogSuccessRate.withCharts ||
       comparison.nullSafetyErrors.withCharts > comparison.nullSafetyErrors.withoutCharts ||
       comparison.errorCount.withCharts > comparison.errorCount.withoutCharts
     );
-    
+
     console.log(`\n🔬 HYPOTHESIS VALIDATION:`);
     console.log(`   "${this.results.hypothesis}"`);
     console.log(`   Status: ${hypothesisValid ? '✅ CONFIRMED' : '❌ REJECTED'}`);
-    
+
     return comparison;
   }
 
   async generateReport() {
     console.log('\n📝 Generating Comprehensive Report...');
-    
+
     const reportPath = path.join(DEBUG_OUTPUT_DIR, 'charts-impact-analysis.json');
     fs.writeFileSync(reportPath, JSON.stringify(this.results, null, 2));
-    
+
     console.log(`📄 Full report saved to: ${reportPath}`);
-    
+
     return reportPath;
   }
 
@@ -423,24 +423,24 @@ class ChartsImpactDebugger {
       // Test 1: With charts enabled (current state)
       console.log('='.repeat(60));
       this.results.tests.chartsEnabled = await this.testBlogWithChartsStatus(true, 'charts-enabled');
-      
+
       console.log('\n' + '='.repeat(60));
       console.log('⏳ Waiting 5 seconds before next test...');
       await new Promise(resolve => setTimeout(resolve, 5000));
-      
+
       // Test 2: Simulate charts disabled (note: we can't actually disable them without restart)
       // Instead, we'll test blog access without visiting charts page first
       console.log('\n' + '='.repeat(60));
       this.results.tests.chartsDisabled = await this.testBlogWithChartsStatus(false, 'charts-skipped');
-      
+
       // Test 3: Concurrent access test
       console.log('\n' + '='.repeat(60));
       this.results.tests.concurrentAccess = await this.testConcurrentAccess();
-      
+
       // Analysis
       console.log('\n' + '='.repeat(60));
       this.compareResults();
-      
+
       // Generate report
       await this.generateReport();
 

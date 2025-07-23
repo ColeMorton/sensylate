@@ -1,6 +1,6 @@
 /**
  * Debug Server Errors Script
- * 
+ *
  * This script starts a new dev server and captures detailed error output
  * to understand what's causing the blog post failures.
  */
@@ -25,14 +25,14 @@ class ServerErrorDebugger {
     return new Promise((resolve, reject) => {
       // Kill any existing servers on our test port
       spawn('pkill', ['-f', 'astro dev.*4322'], { stdio: 'inherit' });
-      
+
       setTimeout(() => {
         this.serverProcess = spawn('yarn', ['dev', '--port', '4322'], {
           cwd: process.cwd(),
-          env: { 
-            ...process.env, 
+          env: {
+            ...process.env,
             NODE_ENV: 'development',
-            PUBLIC_FEATURE_CHARTS_PAGE: 'false' 
+            PUBLIC_FEATURE_CHARTS_PAGE: 'false'
           }
         });
 
@@ -40,7 +40,7 @@ class ServerErrorDebugger {
           const output = data.toString();
           this.outputLogs.push({ type: 'stdout', message: output, timestamp: Date.now() });
           console.log('📝 [SERVER]', output.trim());
-          
+
           if (output.includes('ready in')) {
             console.log('✅ Dev server ready!');
             resolve();
@@ -71,7 +71,7 @@ class ServerErrorDebugger {
 
   async testBlogRoutes() {
     console.log('🧪 Testing blog routes...');
-    
+
     const testRoutes = [
       '/blog',
       '/blog/post-1',
@@ -80,16 +80,16 @@ class ServerErrorDebugger {
 
     for (const route of testRoutes) {
       console.log(`📍 Testing: ${route}`);
-      
+
       try {
         const response = await fetch(`${DEV_SERVER_URL}${route}`);
         const content = await response.text();
-        
+
         console.log(`   Status: ${response.status}`);
-        
+
         if (!response.ok) {
           console.log(`   Error content preview: ${content.substring(0, 200)}...`);
-          
+
           this.errorLogs.push({
             type: 'http_error',
             route,
@@ -100,7 +100,7 @@ class ServerErrorDebugger {
         } else {
           console.log(`   ✅ Success`);
         }
-        
+
       } catch (error) {
         console.log(`   💥 Request failed: ${error.message}`);
         this.errorLogs.push({
@@ -110,7 +110,7 @@ class ServerErrorDebugger {
           timestamp: Date.now()
         });
       }
-      
+
       // Wait for any server-side errors to be logged
       await new Promise(resolve => setTimeout(resolve, 2000));
     }
@@ -131,7 +131,7 @@ class ServerErrorDebugger {
     writeFileSync(reportPath, JSON.stringify(report, null, 2));
 
     console.log(`📄 Debug report saved to: ${reportPath}`);
-    
+
     // Show recent errors
     console.log('\n🔍 Recent Errors:');
     this.errorLogs.slice(-5).forEach((log, index) => {
@@ -145,7 +145,7 @@ class ServerErrorDebugger {
     if (this.serverProcess) {
       console.log('🧹 Cleaning up dev server...');
       this.serverProcess.kill('SIGTERM');
-      
+
       // Force kill if it doesn't stop
       setTimeout(() => {
         if (this.serverProcess && !this.serverProcess.killed) {

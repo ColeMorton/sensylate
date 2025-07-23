@@ -65,7 +65,7 @@
   "cli_service_validation": {
     "service_health": {
       "yahoo_finance": "healthy",
-      "alpha_vantage": "healthy", 
+      "alpha_vantage": "healthy",
       "fmp": "healthy",
       "sec_edgar": "healthy",
       "fred_economic": "healthy",
@@ -87,7 +87,7 @@
     "peer_companies": [
       {
         "symbol": "NVDA",
-        "name": "NVIDIA Corporation", 
+        "name": "NVIDIA Corporation",
         "market_cap_ratio": 38.5,
         "business_focus": "GPU and AI acceleration"
       },
@@ -98,7 +98,7 @@
         "business_focus": "CPU and GPU competition"
       },
       {
-        "symbol": "TSM", 
+        "symbol": "TSM",
         "name": "Taiwan Semiconductor",
         "market_cap_ratio": 6.2,
         "business_focus": "Pure-play foundry services"
@@ -114,7 +114,7 @@
     "comparative_metrics": {
       "intc_vs_peers": {
         "revenue_size": "largest_among_cpu_focused_peers",
-        "profitability": "significantly_underperforming_due_to_losses", 
+        "profitability": "significantly_underperforming_due_to_losses",
         "market_valuation": "trading_at_discount_to_profitable_peers"
       }
     },
@@ -222,7 +222,7 @@
         "future_productivity": "High uncertainty on manufacturing investment returns"
       },
       "grade": "F",
-      "trend": "declining", 
+      "trend": "declining",
       "confidence": 0.93
     }
   },
@@ -500,7 +500,7 @@
       },
       "mitigation_strategies": {
         "operational": "Process technology partnerships and external foundry usage",
-        "financial": "Asset sales and cost reduction programs", 
+        "financial": "Asset sales and cost reduction programs",
         "competitive": "Focus on differentiated high-value segments",
         "strategic": "Foundry services diversification"
       },

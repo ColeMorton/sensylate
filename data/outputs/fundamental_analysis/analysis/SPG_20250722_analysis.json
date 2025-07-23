@@ -266,7 +266,7 @@
     "moat_assessment": {
       "identified_moats": [
         "premium_location_portfolio",
-        "tenant_relationship_network", 
+        "tenant_relationship_network",
         "development_expertise",
         "scale_advantages",
         "capital_access_capabilities"
@@ -280,7 +280,7 @@
         },
         "tenant_relationship_network": {
           "strength": "Moderate",
-          "durability": "Moderate", 
+          "durability": "Moderate",
           "evidence": "Long-standing retailer partnerships",
           "rating": 3.5
         },
@@ -344,7 +344,7 @@
       "growth_drivers": {
         "revenue_growth_sources": [
           "rent_escalations_and_renewals",
-          "occupancy_improvements", 
+          "occupancy_improvements",
           "new_property_developments",
           "mixed_use_expansion"
         ],
@@ -376,7 +376,7 @@
           "description": "Residential and office integration at existing properties"
         },
         {
-          "catalyst": "experiential_retail_transformation", 
+          "catalyst": "experiential_retail_transformation",
           "probability": 0.65,
           "impact": 3.0,
           "timeline": "1-3 years",
@@ -386,7 +386,7 @@
           "catalyst": "interest_rate_normalization",
           "probability": 0.60,
           "impact": 4.0,
-          "timeline": "1-2 years", 
+          "timeline": "1-2 years",
           "description": "Lower rates improve property valuations and financing"
         },
         {
@@ -448,7 +448,7 @@
         },
         {
           "risk": "declining_foot_traffic",
-          "probability": 0.45, 
+          "probability": 0.45,
           "impact": 3,
           "evidence": "Shift to online shopping and changing consumer habits"
         },
@@ -596,7 +596,7 @@
         "assumptions": "Economic growth, rate cuts, successful mixed-use development",
         "revenue_impact": "+6% to +10% annually",
         "margin_impact": "Margin expansion from mixed-use",
-        "valuation_impact": "+25% to +40%", 
+        "valuation_impact": "+25% to +40%",
         "dividend_sustainability": "Potential dividend growth",
         "probability": 0.25
       },
@@ -669,7 +669,7 @@
     ],
     "analysis_limitations": [
       "Limited detailed property-level performance data",
-      "Peer group analysis could benefit from more retail REIT comparisons", 
+      "Peer group analysis could benefit from more retail REIT comparisons",
       "Insider trading data unavailable for management assessment",
       "Development pipeline details not available in discovery data",
       "Local market dynamics and geographic exposure not analyzed"

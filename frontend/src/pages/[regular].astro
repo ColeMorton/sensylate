@@ -59,7 +59,7 @@ if (import.meta.env.DEV && !Astro.props.page) {
   if (!page) {
     return Astro.redirect("/404");
   }
-  
+
   // Apply feature flag filtering in development mode too
   if (page.id === "elements" && !isFeatureEnabled("elements_page")) {
     return Astro.redirect("/404");

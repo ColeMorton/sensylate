@@ -78,15 +78,15 @@ class BlogTimingDebugger {
         text: msg.text(),
         timestamp: Date.now()
       };
-      
+
       this.results.console.push(logEntry);
-      
+
       // Check for our specific error
       if (msg.type() === 'error' && msg.text().includes("Cannot read properties of undefined (reading 'data')")) {
         console.log('🎯 TARGET ERROR DETECTED!');
         console.log(`   Time: ${new Date().toLocaleTimeString()}`);
         console.log(`   Message: ${msg.text()}`);
-        
+
         this.results.targetError = {
           ...logEntry,
           detectedAt: Date.now()
@@ -97,22 +97,22 @@ class BlogTimingDebugger {
     // Listen for page errors
     this.page.on('pageerror', (error) => {
       console.log('💥 Page Error:', error.message);
-      
+
       const errorEntry = {
         type: 'pageerror',
         message: error.message,
         stack: error.stack,
         timestamp: Date.now()
       };
-      
+
       this.results.errors.push(errorEntry);
-      
+
       // Check if this is our target error
       if (error.message.includes("Cannot read properties of undefined (reading 'data')")) {
         console.log('🎯 TARGET PAGE ERROR DETECTED!');
         console.log(`   Time: ${new Date().toLocaleTimeString()}`);
         console.log(`   Message: ${error.message}`);
-        
+
         this.results.targetError = {
           ...errorEntry,
           detectedAt: Date.now()
@@ -181,9 +181,9 @@ class BlogTimingDebugger {
             path: periodicScreenshot,
             fullPage: false
           });
-          testResult.screenshots.push({ 
-            type: 'periodic', 
-            path: periodicScreenshot, 
+          testResult.screenshots.push({
+            type: 'periodic',
+            path: periodicScreenshot,
             timestamp: Date.now(),
             secondsElapsed: intervalCount * 5
           });
@@ -195,7 +195,7 @@ class BlogTimingDebugger {
             testResult.errorDetected = true;
             testResult.errorTime = this.results.targetError.detectedAt - startWait;
             console.log(`   🎯 ERROR DETECTED after ${testResult.errorTime}ms!`);
-            
+
             // Take error screenshot
             const errorScreenshot = path.join(DEBUG_OUTPUT_DIR, `${routePath.replace(/\//g, '_')}_error.png`);
             await this.page.screenshot({
@@ -246,7 +246,7 @@ class BlogTimingDebugger {
 
     for (const blogPath of blogPosts) {
       await this.testBlogRoute(blogPath, 'Individual blog post', 20000);
-      
+
       // Brief pause between tests
       await new Promise(resolve => setTimeout(resolve, 2000));
     }
@@ -290,7 +290,7 @@ class BlogTimingDebugger {
     fs.writeFileSync(reportPath, JSON.stringify(this.results, null, 2));
 
     console.log(`📄 Full report saved to: ${reportPath}`);
-    
+
     // Show screenshot locations
     console.log('\n📸 Screenshots captured:');
     this.results.testRuns.forEach(test => {
@@ -317,7 +317,7 @@ class BlogTimingDebugger {
 
       // Test blog main page first
       await this.testBlogRoute('/blog', 'Blog index page', 15000);
-      
+
       // Test individual blog posts
       await this.testMultipleBlogPosts();
 

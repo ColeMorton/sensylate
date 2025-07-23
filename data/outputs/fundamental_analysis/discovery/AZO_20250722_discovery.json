@@ -136,7 +136,7 @@
   "cli_service_validation": {
     "service_health": {
       "yahoo_finance": "healthy",
-      "alpha_vantage": "healthy", 
+      "alpha_vantage": "healthy",
       "fmp": "healthy",
       "fred_economic": "healthy",
       "coingecko": "healthy"
@@ -167,7 +167,7 @@
         "market_cap_estimate": "similar_scale_primary_competitor"
       },
       {
-        "symbol": "AAP", 
+        "symbol": "AAP",
         "name": "Advance Auto Parts",
         "industry": "Specialty Retail - Auto Parts",
         "market_cap_estimate": "smaller_scale_direct_competitor"

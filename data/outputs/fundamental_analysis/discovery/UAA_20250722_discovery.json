@@ -144,7 +144,7 @@
   "cli_service_validation": {
     "service_health": {
       "yahoo_finance": "healthy",
-      "alpha_vantage": "healthy", 
+      "alpha_vantage": "healthy",
       "fmp": "healthy",
       "fred_economic": "healthy",
       "coingecko": "healthy",
@@ -177,7 +177,7 @@
         "relationship": "primary_competitor_market_leader"
       },
       {
-        "symbol": "ADDYY", 
+        "symbol": "ADDYY",
         "name": "Adidas AG",
         "market_cap_estimate": 25000000000,
         "relationship": "major_global_competitor"
@@ -207,7 +207,7 @@
   "discovery_insights": {
     "initial_observations": [
       "under_armour_facing_significant_financial_challenges_with_negative_earnings",
-      "company_trading_at_substantial_discount_to_peers_reflecting_operational_difficulties", 
+      "company_trading_at_substantial_discount_to_peers_reflecting_operational_difficulties",
       "positive_free_cash_flow_generation_despite_net_losses_indicating_working_capital_management",
       "substantial_scale_disadvantage_versus_nike_adidas_creates_competitive_pressure",
       "recent_revenue_decline_indicates_market_share_losses_in_competitive_athletic_apparel_sector"

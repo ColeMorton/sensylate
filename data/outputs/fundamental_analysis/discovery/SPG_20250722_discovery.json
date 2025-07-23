@@ -128,7 +128,7 @@
   "cli_service_validation": {
     "service_health": {
       "yahoo_finance": "healthy",
-      "alpha_vantage": "healthy", 
+      "alpha_vantage": "healthy",
       "fmp": "healthy",
       "fred_economic": "healthy",
       "coingecko": "healthy",
@@ -179,7 +179,7 @@
         "industry": "REIT - Office"
       },
       {
-        "ticker": "REG", 
+        "ticker": "REG",
         "name": "Regency Centers Corp",
         "sector": "Real Estate",
         "industry": "REIT - Retail"
@@ -187,7 +187,7 @@
       {
         "ticker": "KIM",
         "name": "Kimco Realty Corp",
-        "sector": "Real Estate", 
+        "sector": "Real Estate",
         "industry": "REIT - Retail"
       }
     ],

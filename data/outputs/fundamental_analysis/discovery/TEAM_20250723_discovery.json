@@ -152,7 +152,7 @@
     "institutional_grade": true,
     "data_sources_via_cli": [
       "yahoo_finance_cli",
-      "alpha_vantage_cli", 
+      "alpha_vantage_cli",
       "fmp_cli",
       "fred_economic_cli",
       "coingecko_cli",
@@ -199,7 +199,7 @@
       },
       {
         "company": "Asana Inc",
-        "ticker": "ASAN", 
+        "ticker": "ASAN",
         "business_overlap": "Work management platform, project collaboration",
         "market_cap_category": "Mid Cap",
         "competitive_position": "Direct competitor"
@@ -208,7 +208,7 @@
         "company": "GitLab Inc",
         "ticker": "GTLB",
         "business_overlap": "DevSecOps platform, CI/CD, project management",
-        "market_cap_category": "Mid Cap", 
+        "market_cap_category": "Mid Cap",
         "competitive_position": "Developer-focused competitor"
       },
       {
@@ -275,7 +275,7 @@
     },
     "quality_flags": [
       "perfect_price_validation_across_three_sources",
-      "comprehensive_financial_statement_data_including_cash_flow", 
+      "comprehensive_financial_statement_data_including_cash_flow",
       "enhanced_financial_metrics_with_calculated_ratios",
       "real_time_economic_context_integration",
       "institutional_grade_multi_source_validation"

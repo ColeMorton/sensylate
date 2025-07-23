@@ -152,8 +152,8 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({
 
   // Load chart data based on chart type
   useEffect(() => {
-    let abortController = new AbortController();
-    
+    const abortController = new AbortController();
+
     const fetchData = async () => {
       try {
         setLoading(true);
@@ -162,7 +162,7 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({
         if (chartType === "apple-stock") {
           const response = await fetch(
             "https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv",
-            { signal: abortController.signal }
+            { signal: abortController.signal },
           );
 
           if (!response.ok) {
@@ -195,10 +195,11 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({
           const [multiStrategyResponse, buyHoldResponse] = await Promise.all([
             fetch(
               "/data/portfolio/multi_strategy_portfolio_portfolio_value.csv",
-              { signal: abortController.signal }
+              { signal: abortController.signal },
             ),
-            fetch("/data/portfolio/portfolio_buy_and_hold_portfolio_value.csv", 
-              { signal: abortController.signal }
+            fetch(
+              "/data/portfolio/portfolio_buy_and_hold_portfolio_value.csv",
+              { signal: abortController.signal },
             ),
           ]);
 
@@ -238,11 +239,11 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({
             await Promise.all([
               fetch(
                 "/data/portfolio/multi_strategy_portfolio_cumulative_returns.csv",
-                { signal: abortController.signal }
+                { signal: abortController.signal },
               ),
-              fetch("/data/portfolio/portfolio_buy_and_hold_returns.csv",
-                { signal: abortController.signal }
-              ),
+              fetch("/data/portfolio/portfolio_buy_and_hold_returns.csv", {
+                signal: abortController.signal,
+              }),
             ]);
 
           if (!cumulativeReturnsResponse.ok || !buyHoldReturnsResponse.ok) {
@@ -279,7 +280,7 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({
         } else if (chartType === "portfolio-drawdowns") {
           const response = await fetch(
             "/data/portfolio/multi_strategy_portfolio_drawdowns.csv",
-            { signal: abortController.signal }
+            { signal: abortController.signal },
           );
 
           if (!response.ok) {
@@ -305,10 +306,11 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({
           const [multiStrategyResponse, buyHoldResponse] = await Promise.all([
             fetch(
               "/data/portfolio/multi_strategy_portfolio_portfolio_value.csv",
-              { signal: abortController.signal }
+              { signal: abortController.signal },
             ),
-            fetch("/data/portfolio/portfolio_buy_and_hold_portfolio_value.csv",
-              { signal: abortController.signal }
+            fetch(
+              "/data/portfolio/portfolio_buy_and_hold_portfolio_value.csv",
+              { signal: abortController.signal },
             ),
           ]);
 
@@ -349,8 +351,7 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({
         }
       } catch (err) {
         // Don't set error if request was aborted (component unmounting)
-        if (err instanceof Error && err.name !== 'AbortError') {
-          console.error(`Chart data loading error for ${chartType}:`, err);
+        if (err instanceof Error && err.name !== "AbortError") {
           setError(
             err instanceof Error ? err.message : "Failed to load chart data",
           );
@@ -363,13 +364,12 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({
     };
 
     fetchData();
-    
+
     // Cleanup function to abort fetch requests
     return () => {
       abortController.abort();
     };
   }, [chartType]);
-
 
   // Memoized chart title and Y-axis title to prevent recalculation
   const chartTitle = useMemo(() => {
