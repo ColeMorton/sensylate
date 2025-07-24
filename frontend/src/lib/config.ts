@@ -66,28 +66,50 @@ function getFeatureFlags(): FeatureFlags {
   try {
     return {
       search:
-        envToBoolean(import.meta.env.PUBLIC_FEATURE_SEARCH, "PUBLIC_FEATURE_SEARCH") ??
-        config.settings.search,
+        envToBoolean(
+          import.meta.env.PUBLIC_FEATURE_SEARCH,
+          "PUBLIC_FEATURE_SEARCH",
+        ) ?? config.settings.search,
       themeSwitcher:
-        envToBoolean(import.meta.env.PUBLIC_FEATURE_THEME_SWITCHER, "PUBLIC_FEATURE_THEME_SWITCHER") ??
-        config.settings.theme_switcher,
+        envToBoolean(
+          import.meta.env.PUBLIC_FEATURE_THEME_SWITCHER,
+          "PUBLIC_FEATURE_THEME_SWITCHER",
+        ) ?? config.settings.theme_switcher,
       comments:
-        envToBoolean(import.meta.env.PUBLIC_FEATURE_COMMENTS, "PUBLIC_FEATURE_COMMENTS") ??
-        (isDevelopment() ? config.disqus.enable : false),
+        envToBoolean(
+          import.meta.env.PUBLIC_FEATURE_COMMENTS,
+          "PUBLIC_FEATURE_COMMENTS",
+        ) ?? (isDevelopment() ? config.disqus.enable : false),
       gtm:
-        envToBoolean(import.meta.env.PUBLIC_FEATURE_GTM, "PUBLIC_FEATURE_GTM") ??
-        config.google_tag_manager.enable,
+        envToBoolean(
+          import.meta.env.PUBLIC_FEATURE_GTM,
+          "PUBLIC_FEATURE_GTM",
+        ) ?? config.google_tag_manager.enable,
       calculators:
-        envToBoolean(import.meta.env.PUBLIC_FEATURE_CALCULATORS, "PUBLIC_FEATURE_CALCULATORS") ?? true,
+        envToBoolean(
+          import.meta.env.PUBLIC_FEATURE_CALCULATORS,
+          "PUBLIC_FEATURE_CALCULATORS",
+        ) ?? true,
       calculatorAdvanced:
-        envToBoolean(import.meta.env.PUBLIC_FEATURE_CALCULATOR_ADVANCED, "PUBLIC_FEATURE_CALCULATOR_ADVANCED") ?? false,
+        envToBoolean(
+          import.meta.env.PUBLIC_FEATURE_CALCULATOR_ADVANCED,
+          "PUBLIC_FEATURE_CALCULATOR_ADVANCED",
+        ) ?? false,
       elementsPage:
-        envToBoolean(import.meta.env.PUBLIC_FEATURE_ELEMENTS_PAGE, "PUBLIC_FEATURE_ELEMENTS_PAGE") ?? true,
+        envToBoolean(
+          import.meta.env.PUBLIC_FEATURE_ELEMENTS_PAGE,
+          "PUBLIC_FEATURE_ELEMENTS_PAGE",
+        ) ?? true,
       authorsPage:
-        envToBoolean(import.meta.env.PUBLIC_FEATURE_AUTHORS_PAGE, "PUBLIC_FEATURE_AUTHORS_PAGE") ?? true,
+        envToBoolean(
+          import.meta.env.PUBLIC_FEATURE_AUTHORS_PAGE,
+          "PUBLIC_FEATURE_AUTHORS_PAGE",
+        ) ?? true,
       chartsPage:
-        envToBoolean(import.meta.env.PUBLIC_FEATURE_CHARTS_PAGE, "PUBLIC_FEATURE_CHARTS_PAGE") ??
-        isDevelopment(), // Re-enabled after fixing server mode routing
+        envToBoolean(
+          import.meta.env.PUBLIC_FEATURE_CHARTS_PAGE,
+          "PUBLIC_FEATURE_CHARTS_PAGE",
+        ) ?? isDevelopment(), // Re-enabled after fixing server mode routing
     };
   } catch (error) {
     if (error instanceof FeatureFlagValidationError) {
