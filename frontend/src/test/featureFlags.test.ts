@@ -6,11 +6,9 @@ const mockEnv = {
   PUBLIC_FEATURE_THEME_SWITCHER: "false",
   PUBLIC_FEATURE_COMMENTS: "true",
   PUBLIC_FEATURE_GTM: "false",
-  PUBLIC_FEATURE_CALCULATORS: "true",
   PUBLIC_FEATURE_CALCULATOR_ADVANCED: "true",
   PUBLIC_FEATURE_ELEMENTS_PAGE: "true",
   PUBLIC_FEATURE_AUTHORS_PAGE: "true",
-  PUBLIC_FEATURE_CHARTS_PAGE: "true",
   PUBLIC_ENV: "test",
 };
 
@@ -26,7 +24,7 @@ vi.mock("@/config/config.json", () => ({
   default: {
     settings: {
       search: false,
-      theme_switcher: true, // Keep original snake_case for compatibility
+      theme_switcher: true,
       sticky_header: true,
       default_theme: "system",
       pagination: 2,
@@ -57,12 +55,12 @@ describe("Feature Flags Configuration", () => {
 
       // Environment variables should override static config
       expect(enhancedConfig.features.search).toBe(true); // env: true, config: false
-      expect(enhancedConfig.features.themeSwitcher).toBe(false); // env: false, config: true
+      expect(enhancedConfig.features.theme_switcher).toBe(false); // env: false, config: true
       expect(enhancedConfig.features.comments).toBe(true); // env: true, config: false
       expect(enhancedConfig.features.gtm).toBe(false); // env: false, config: false
-      expect(enhancedConfig.features.calculatorAdvanced).toBe(true); // env: true, config: undefined
-      expect(enhancedConfig.features.elementsPage).toBe(true); // env: true, config: undefined
-      expect(enhancedConfig.features.authorsPage).toBe(true); // env: true, config: undefined
+      expect(enhancedConfig.features.calculator_advanced).toBe(true); // env: true, config: undefined
+      expect(enhancedConfig.features.elements_page).toBe(true); // env: true, config: undefined
+      expect(enhancedConfig.features.authors_page).toBe(true); // env: true, config: undefined
     });
 
     it("should fall back to static config when environment variable is undefined", async () => {
@@ -81,7 +79,7 @@ describe("Feature Flags Configuration", () => {
 
       // Should fall back to static config for search
       expect(enhancedConfig.features.search).toBe(false); // fallback to config
-      expect(enhancedConfig.features.themeSwitcher).toBe(false); // env override
+      expect(enhancedConfig.features.theme_switcher).toBe(false); // env override
     });
   });
 
@@ -90,15 +88,15 @@ describe("Feature Flags Configuration", () => {
       const { isFeatureEnabled, features } = await import("@/lib/featureFlags");
 
       expect(isFeatureEnabled("search")).toBe(true);
-      expect(isFeatureEnabled("themeSwitcher")).toBe(false);
-      expect(isFeatureEnabled("calculatorAdvanced")).toBe(true);
-      expect(isFeatureEnabled("elementsPage")).toBe(true);
-      expect(isFeatureEnabled("authorsPage")).toBe(true);
+      expect(isFeatureEnabled("theme_switcher")).toBe(false);
+      expect(isFeatureEnabled("calculator_advanced")).toBe(true);
+      expect(isFeatureEnabled("elements_page")).toBe(true);
+      expect(isFeatureEnabled("authors_page")).toBe(true);
 
       expect(features.search).toBe(true);
-      expect(features.themeSwitcher).toBe(false);
-      expect(features.elementsPage).toBe(true);
-      expect(features.authorsPage).toBe(true);
+      expect(features.theme_switcher).toBe(false);
+      expect(features.elements_page).toBe(true);
+      expect(features.authors_page).toBe(true);
     });
 
     it("should handle multiple feature flag checks", async () => {
@@ -107,10 +105,10 @@ describe("Feature Flags Configuration", () => {
       );
 
       expect(areAllFeaturesEnabled(["search", "comments"])).toBe(true);
-      expect(areAllFeaturesEnabled(["search", "themeSwitcher"])).toBe(false);
+      expect(areAllFeaturesEnabled(["search", "theme_switcher"])).toBe(false);
 
-      expect(isAnyFeatureEnabled(["search", "themeSwitcher"])).toBe(true);
-      expect(isAnyFeatureEnabled(["themeSwitcher", "gtm"])).toBe(false);
+      expect(isAnyFeatureEnabled(["search", "theme_switcher"])).toBe(true);
+      expect(isAnyFeatureEnabled(["theme_switcher", "gtm"])).toBe(false);
     });
   });
 
@@ -130,12 +128,12 @@ describe("Feature Flags Configuration", () => {
 
       const requiredFlags = [
         "search",
-        "themeSwitcher",
+        "theme_switcher",
         "comments",
         "gtm",
-        "calculatorAdvanced",
-        "elementsPage",
-        "authorsPage",
+        "calculator_advanced",
+        "elements_page",
+        "authors_page",
       ];
 
       requiredFlags.forEach((flag) => {

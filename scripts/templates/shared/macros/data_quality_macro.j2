@@ -4,11 +4,11 @@ Shared component for multi-source validation used in both fundamental and sector
 Reduces template duplication by 95% for data quality sections
 #}
 
-{% macro data_sources_quality(data, timestamp="2025-07-24") %}
+{% macro data_sources_quality(data) %}
 ### Data Sources & Quality
 - **Primary APIs**: Yahoo Finance ({{ data.yahoo_confidence | default("0.95") }}), Alpha Vantage ({{ data.alpha_vantage_confidence | default("0.90") }}), FMP ({{ data.fmp_confidence | default("0.88") }}), FRED ({{ data.fred_confidence_score | default("1.00") }})
 - **Secondary Sources**: SEC EDGAR ({{ data.sec_confidence | default("0.85") }}), CoinGecko ({{ data.coingecko_confidence | default("0.75") }}), IMF ({{ data.imf_confidence | default("0.80") }})
-- **Data Completeness**: {{ data.data_completeness | default("95") }}% threshold achieved | **Latest Data Point**: {{ data.latest_data_date | default(timestamp[:10] if timestamp else "2025-07-24") }} validated
+- **Data Completeness**: {{ data.data_completeness | default("95") }}% threshold achieved | **Latest Data Point**: {{ data.latest_data_date | default(timestamp[:10]) }} validated
 - **Cross-Validation**: All major price points within {{ data.price_variance | default("1.2") }}% variance tolerance
 {% endmacro %}
 

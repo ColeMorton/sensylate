@@ -22,7 +22,7 @@ vi.mock("@/config/config.json", () => ({
   default: {
     settings: {
       search: false,
-      themeSwitcher: true,
+      theme_switcher: true,
     },
     disqus: {
       enable: false,
@@ -76,7 +76,7 @@ describe("useFeatureFlag Hook", () => {
       );
     };
 
-    const { getByTestId } = render(<TestComponent flag="themeSwitcher" />);
+    const { getByTestId } = render(<TestComponent flag="theme_switcher" />);
     expect(getByTestId("feature-status")).toHaveTextContent("disabled");
   });
 
@@ -89,7 +89,7 @@ describe("useFeatureFlag Hook", () => {
     const TestMultipleComponent = () => {
       const allFlags = useFeatureFlags();
       const allEnabled = useAllFeatures(["search", "comments"]);
-      const anyEnabled = useAnyFeature(["themeSwitcher", "gtm"]);
+      const anyEnabled = useAnyFeature(["theme_switcher", "gtm"]);
 
       return (
         <div>
@@ -108,9 +108,9 @@ describe("useFeatureFlag Hook", () => {
 
     const allFlags = JSON.parse(getByTestId("all-flags").textContent || "{}");
     expect(allFlags.search).toBe(true);
-    expect(allFlags.themeSwitcher).toBe(false);
+    expect(allFlags.theme_switcher).toBe(false);
 
     expect(getByTestId("all-enabled")).toHaveTextContent("all-true"); // search and comments both true
-    expect(getByTestId("any-enabled")).toHaveTextContent("all-false"); // themeSwitcher and gtm both false
+    expect(getByTestId("any-enabled")).toHaveTextContent("all-false"); // theme_switcher and gtm both false
   });
 });

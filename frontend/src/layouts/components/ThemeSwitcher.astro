@@ -6,7 +6,7 @@ const { className }: { className?: string } = Astro.props;
 ---
 
 {
-  features.themeSwitcher && (
+  features.theme_switcher && (
     <div class={`theme-switcher ${className}`}>
       <input id="theme-switcher" data-theme-switcher type="checkbox" />
       <label for="theme-switcher">
@@ -43,7 +43,7 @@ const { className }: { className?: string } = Astro.props;
 
 <script
   define:vars={{
-    themeSwitcherEnabled: features.themeSwitcher,
+    themeSwitcherEnabled: features.theme_switcher,
     config: enhancedConfig,
   }}
 >

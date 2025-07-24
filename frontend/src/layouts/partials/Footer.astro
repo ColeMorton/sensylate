@@ -9,7 +9,7 @@ import { features } from "@/lib/featureFlags";
 
 // Filter footer menu items based on feature flags
 const filteredFooter = menu.footer.filter((item) => {
-  if (item.url === "/elements" && !features.elementsPage) {
+  if (item.url === "/elements" && !features.elements_page) {
     return false;
   }
   return true;

@@ -21,13 +21,13 @@ export interface NavigationLink {
 // Filter menu items based on feature flags
 const filteredMain = menu.main
   .filter((item) => {
-    if (item.url === "/elements" && !features.elementsPage) {
+    if (item.url === "/elements" && !features.elements_page) {
       return false;
     }
     if (item.url === "/calculators" && !features.calculators) {
       return false;
     }
-    if (item.url === "/charts" && !features.chartsPage) {
+    if (item.url === "/charts" && !features.charts_page) {
       return false;
     }
     return true;
@@ -36,10 +36,7 @@ const filteredMain = menu.main
     // Filter children menu items based on feature flags
     if (item.hasChildren && item.children) {
       const filteredChildren = item.children.filter((child) => {
-        if (child.url === "/authors" && !features.authorsPage) {
-          return false;
-        }
-        if (child.url === "/calculators" && !features.calculators) {
+        if (child.url === "/authors" && !features.authors_page) {
           return false;
         }
         // Always hide 404 page from menu navigation (it should only be accessible via direct URL for actual 404 errors)

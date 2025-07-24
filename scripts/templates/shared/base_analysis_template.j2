@@ -101,7 +101,7 @@ tags:
 
 {% block data_sources %}
 {% from 'shared/macros/data_quality_macro.j2' import data_sources_quality %}
-{{ data_sources_quality(data, timestamp) }}
+{{ data_sources_quality(data) }}
 {% endblock %}
 
 {% block methodology_notes %}
