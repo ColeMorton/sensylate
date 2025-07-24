@@ -2,13 +2,48 @@ import config from "@/config/config.json";
 import type { FeatureFlags, EnhancedConfig } from "@/types";
 
 /**
- * Environment variable utilities
+ * Feature flag validation error class
  */
-function envToBoolean(value: string | undefined): boolean | undefined {
+export class FeatureFlagValidationError extends Error {
+  constructor(
+    public readonly field: string,
+    public readonly value: unknown,
+    public readonly expectedType: string,
+    message?: string,
+  ) {
+    super(
+      message ||
+        `Invalid feature flag: ${field}. Expected ${expectedType}, got ${typeof value}`,
+    );
+    this.name = "FeatureFlagValidationError";
+  }
+}
+
+/**
+ * Enhanced environment variable utilities
+ */
+function envToBoolean(
+  value: string | undefined,
+  fieldName?: string,
+): boolean | undefined {
   if (value === undefined || value === "") {
     return undefined;
   }
-  return value.toLowerCase() === "true";
+
+  const normalized = value.toLowerCase().trim();
+  if (["true", "1", "yes", "on"].includes(normalized)) {
+    return true;
+  }
+  if (["false", "0", "no", "off"].includes(normalized)) {
+    return false;
+  }
+
+  throw new FeatureFlagValidationError(
+    fieldName || "feature_flag",
+    value,
+    "boolean",
+    `Invalid boolean value: "${value}". Expected: true/false, 1/0, yes/no, on/off`,
+  );
 }
 
 function isDevelopment(): boolean {
@@ -28,52 +63,70 @@ function isStaging(): boolean {
  * Environment variables take precedence over static configuration
  */
 function getFeatureFlags(): FeatureFlags {
-  return {
-    search:
-      envToBoolean(import.meta.env.PUBLIC_FEATURE_SEARCH) ??
-      config.settings.search,
-    theme_switcher:
-      envToBoolean(import.meta.env.PUBLIC_FEATURE_THEME_SWITCHER) ??
-      config.settings.theme_switcher,
-    comments:
-      envToBoolean(import.meta.env.PUBLIC_FEATURE_COMMENTS) ??
-      (isDevelopment() ? config.disqus.enable : false),
-    gtm:
-      envToBoolean(import.meta.env.PUBLIC_FEATURE_GTM) ??
-      config.google_tag_manager.enable,
-    calculators: true, // Always enabled - critical feature
-    calculator_advanced:
-      envToBoolean(import.meta.env.PUBLIC_FEATURE_CALCULATOR_ADVANCED) ?? false,
-    elements_page:
-      envToBoolean(import.meta.env.PUBLIC_FEATURE_ELEMENTS_PAGE) ?? true,
-    authors_page:
-      envToBoolean(import.meta.env.PUBLIC_FEATURE_AUTHORS_PAGE) ?? true,
-    charts_page:
-      envToBoolean(import.meta.env.PUBLIC_FEATURE_CHARTS_PAGE) ??
-      isDevelopment(), // Re-enabled after fixing server mode routing
-  };
+  try {
+    return {
+      search:
+        envToBoolean(import.meta.env.PUBLIC_FEATURE_SEARCH, "PUBLIC_FEATURE_SEARCH") ??
+        config.settings.search,
+      themeSwitcher:
+        envToBoolean(import.meta.env.PUBLIC_FEATURE_THEME_SWITCHER, "PUBLIC_FEATURE_THEME_SWITCHER") ??
+        config.settings.theme_switcher,
+      comments:
+        envToBoolean(import.meta.env.PUBLIC_FEATURE_COMMENTS, "PUBLIC_FEATURE_COMMENTS") ??
+        (isDevelopment() ? config.disqus.enable : false),
+      gtm:
+        envToBoolean(import.meta.env.PUBLIC_FEATURE_GTM, "PUBLIC_FEATURE_GTM") ??
+        config.google_tag_manager.enable,
+      calculators:
+        envToBoolean(import.meta.env.PUBLIC_FEATURE_CALCULATORS, "PUBLIC_FEATURE_CALCULATORS") ?? true,
+      calculatorAdvanced:
+        envToBoolean(import.meta.env.PUBLIC_FEATURE_CALCULATOR_ADVANCED, "PUBLIC_FEATURE_CALCULATOR_ADVANCED") ?? false,
+      elementsPage:
+        envToBoolean(import.meta.env.PUBLIC_FEATURE_ELEMENTS_PAGE, "PUBLIC_FEATURE_ELEMENTS_PAGE") ?? true,
+      authorsPage:
+        envToBoolean(import.meta.env.PUBLIC_FEATURE_AUTHORS_PAGE, "PUBLIC_FEATURE_AUTHORS_PAGE") ?? true,
+      chartsPage:
+        envToBoolean(import.meta.env.PUBLIC_FEATURE_CHARTS_PAGE, "PUBLIC_FEATURE_CHARTS_PAGE") ??
+        isDevelopment(), // Re-enabled after fixing server mode routing
+    };
+  } catch (error) {
+    if (error instanceof FeatureFlagValidationError) {
+      // Re-throw with enhanced context
+      throw new FeatureFlagValidationError(
+        error.field,
+        error.value,
+        error.expectedType,
+        `Feature flag validation failed: ${error.message}`,
+      );
+    }
+    throw error;
+  }
 }
 
 /**
- * Validate feature flag configuration
+ * Validate feature flag configuration with fail-fast approach
  */
 function validateFeatureFlags(flags: FeatureFlags): void {
-  const requiredFlags = [
+  const requiredFlags: (keyof FeatureFlags)[] = [
     "search",
-    "theme_switcher",
+    "themeSwitcher",
     "comments",
     "gtm",
     "calculators",
-    "calculator_advanced",
-    "elements_page",
-    "authors_page",
-    "charts_page",
+    "calculatorAdvanced",
+    "elementsPage",
+    "authorsPage",
+    "chartsPage",
   ];
 
   for (const flag of requiredFlags) {
-    if (typeof flags[flag as keyof FeatureFlags] !== "boolean") {
-      throw new Error(
-        `Invalid feature flag configuration: ${flag} must be boolean`,
+    const value = flags[flag];
+    if (typeof value !== "boolean") {
+      throw new FeatureFlagValidationError(
+        flag,
+        value,
+        "boolean",
+        `Invalid feature flag configuration: ${flag} must be boolean, got ${typeof value}`,
       );
     }
   }
@@ -81,14 +134,13 @@ function validateFeatureFlags(flags: FeatureFlags): void {
 
 /**
  * Enhanced configuration object with feature flags
+ * Uses fail-fast validation in all environments
  */
 function createEnhancedConfig(): EnhancedConfig {
   const features = getFeatureFlags();
 
-  // Validate configuration in development
-  if (isDevelopment()) {
-    validateFeatureFlags(features);
-  }
+  // Always validate configuration for fail-fast approach
+  validateFeatureFlags(features);
 
   return {
     ...config,
