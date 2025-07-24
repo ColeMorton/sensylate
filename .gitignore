@@ -109,3 +109,4 @@ yarn-error.log*
 .next/
 out/
 dist/
+data/cache/
