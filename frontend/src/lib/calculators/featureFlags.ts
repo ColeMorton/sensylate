@@ -11,7 +11,7 @@ import { features } from "@/lib/featureFlags";
 export function getAvailableCalculators(): string[] {
   const baseCalculators = ["pocket", "dca", "mortgage"];
 
-  if (features.calculator_advanced) {
+  if (features.calculatorAdvanced) {
     return [
       ...baseCalculators,
       "compound-interest",
@@ -27,7 +27,7 @@ export function getAvailableCalculators(): string[] {
  * Check if advanced calculator features are enabled
  */
 export function isAdvancedCalculatorEnabled(): boolean {
-  return features.calculator_advanced;
+  return features.calculatorAdvanced;
 }
 
 /**
@@ -35,9 +35,9 @@ export function isAdvancedCalculatorEnabled(): boolean {
  */
 export function getCalculatorConfig() {
   return {
-    enableAdvancedFeatures: features.calculator_advanced,
-    enableGraphicalDisplay: features.calculator_advanced,
-    enableExportFunctions: features.calculator_advanced,
-    enableHistoryTracking: features.calculator_advanced,
+    enableAdvancedFeatures: features.calculatorAdvanced,
+    enableGraphicalDisplay: features.calculatorAdvanced,
+    enableExportFunctions: features.calculatorAdvanced,
+    enableHistoryTracking: features.calculatorAdvanced,
   };
 }
