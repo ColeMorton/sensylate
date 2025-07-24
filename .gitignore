@@ -123,6 +123,5 @@ scripts/data/cache/*
 data/cache/*
 # Image files for analysis
 data/images/**/*.png
-frontend/public/images/**/*.png
 *.gz
 scripts/.hypothesis/
