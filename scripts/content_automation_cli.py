@@ -310,39 +310,60 @@ class ContentAutomationCLI(BaseFinancialCLI):
 
         @self.app.command("industry")
         def industry_analysis_workflow(
-            action: str = typer.Argument(..., help="Workflow action (discover, analyze, synthesize, validate, full_workflow)"),
+            action: str = typer.Argument(
+                ...,
+                help="Workflow action (discover, analyze, synthesize, validate, full_workflow)",
+            ),
             industry: str = typer.Argument(..., help="Industry identifier"),
             sector: str = typer.Option(None, "--sector", help="Parent sector context"),
             date: str = typer.Option(None, "--date", help="Analysis date (YYYYMMDD)"),
-            confidence_threshold: float = typer.Option(9.0, "--confidence-threshold", help="Minimum confidence requirement"),
-            output_format: str = typer.Option("json", "--output-format", help="Output format (json, yaml, table, csv)"),
+            confidence_threshold: float = typer.Option(
+                9.0, "--confidence-threshold", help="Minimum confidence requirement"
+            ),
+            output_format: str = typer.Option(
+                "json", "--output-format", help="Output format (json, yaml, table, csv)"
+            ),
         ):
             """Execute industry analysis DASV workflow"""
             try:
                 from datetime import datetime
-                
+
                 # Set default date if not provided
                 if not date:
                     date = datetime.now().strftime("%Y%m%d")
-                
+
                 if action == "discover":
-                    result = self._execute_industry_discovery(industry, sector, confidence_threshold)
+                    result = self._execute_industry_discovery(
+                        industry, sector, confidence_threshold
+                    )
                 elif action == "analyze":
-                    result = self._execute_industry_analysis(industry, date, confidence_threshold)
+                    result = self._execute_industry_analysis(
+                        industry, date, confidence_threshold
+                    )
                 elif action == "synthesize":
-                    result = self._execute_industry_synthesis(industry, date, confidence_threshold)
+                    result = self._execute_industry_synthesis(
+                        industry, date, confidence_threshold
+                    )
                 elif action == "validate":
-                    result = self._execute_industry_validation(industry, date, confidence_threshold)
+                    result = self._execute_industry_validation(
+                        industry, date, confidence_threshold
+                    )
                 elif action == "full_workflow":
-                    result = self._execute_full_industry_workflow(industry, sector, confidence_threshold)
+                    result = self._execute_full_industry_workflow(
+                        industry, sector, confidence_threshold
+                    )
                 else:
                     raise ValidationError(f"Invalid action: {action}")
-                
+
                 # Output result
-                self._output_result(result, output_format, f"Industry {action.title()}: {industry}")
-                
+                self._output_result(
+                    result, output_format, f"Industry {action.title()}: {industry}"
+                )
+
             except Exception as e:
-                self._handle_error(e, f"Failed to execute industry {action}: {industry}")
+                self._handle_error(
+                    e, f"Failed to execute industry {action}: {industry}"
+                )
 
     def _load_data_source(self, file_path: str) -> Dict[str, Any]:
         """Load data from various file formats"""
@@ -2391,106 +2412,118 @@ Generated: {{ timestamp }}"""
             "creation_timestamp": datetime.now().isoformat(),
         }
 
-    def _execute_industry_discovery(self, industry: str, sector: Optional[str], confidence_threshold: float) -> Dict[str, Any]:
+    def _execute_industry_discovery(
+        self, industry: str, sector: Optional[str], confidence_threshold: float
+    ) -> Dict[str, Any]:
         """Execute industry discovery workflow"""
         try:
             import subprocess
             import sys
-            
+
             # Build command
             cmd = [
-                sys.executable, 
+                sys.executable,
                 "scripts/industry_analysis/industry_discovery.py",
-                industry
+                industry,
             ]
-            
+
             if sector:
                 cmd.extend(["--sector", sector])
             cmd.extend(["--confidence-threshold", str(confidence_threshold)])
-            
+
             # Execute discovery script
             result = subprocess.run(cmd, capture_output=True, text=True, check=True)
-            
+
             # Load discovery results
             from datetime import datetime
+
             date_str = datetime.now().strftime("%Y%m%d")
             discovery_file = f"./data/outputs/industry_analysis/discovery/{industry}_{date_str}_discovery.json"
-            
+
             try:
-                with open(discovery_file, 'r') as f:
+                with open(discovery_file, "r") as f:
                     import json
+
                     discovery_data = json.load(f)
                     return {
                         "status": "completed",
                         "phase": "discovery",
                         "industry": industry,
                         "output_file": discovery_file,
-                        "confidence": discovery_data.get("discovery_quality_metrics", {}).get("discovery_confidence", 9.0),
-                        "summary": f"Industry discovery completed with {len(discovery_data.get('representative_companies', []))} representative companies analyzed"
+                        "confidence": discovery_data.get(
+                            "discovery_quality_metrics", {}
+                        ).get("discovery_confidence", 9.0),
+                        "summary": f"Industry discovery completed with {len(discovery_data.get('representative_companies', []))} representative companies analyzed",
                     }
             except FileNotFoundError:
                 return {
                     "status": "completed",
-                    "phase": "discovery", 
+                    "phase": "discovery",
                     "industry": industry,
                     "message": "Discovery completed successfully",
-                    "stdout": result.stdout
+                    "stdout": result.stdout,
                 }
-                
+
         except subprocess.CalledProcessError as e:
             raise ServiceError(f"Industry discovery failed: {e.stderr}")
 
-    def _execute_industry_analysis(self, industry: str, date: str, confidence_threshold: float) -> Dict[str, Any]:
+    def _execute_industry_analysis(
+        self, industry: str, date: str, confidence_threshold: float
+    ) -> Dict[str, Any]:
         """Execute industry analysis workflow"""
         try:
             import subprocess
             import sys
-            
+
             # Build command
             analysis_file = f"./data/outputs/industry_analysis/discovery/{industry}_{date}_discovery.json"
             cmd = [
                 sys.executable,
-                "scripts/industry_analysis/industry_analysis.py", 
+                "scripts/industry_analysis/industry_analysis.py",
                 analysis_file,
-                "--confidence-threshold", str(confidence_threshold)
+                "--confidence-threshold",
+                str(confidence_threshold),
             ]
-            
+
             # Execute analysis script
             result = subprocess.run(cmd, capture_output=True, text=True, check=True)
-            
+
             return {
                 "status": "completed",
                 "phase": "analysis",
                 "industry": industry,
                 "date": date,
                 "message": "Industry analysis completed successfully",
-                "stdout": result.stdout
+                "stdout": result.stdout,
             }
-            
+
         except subprocess.CalledProcessError as e:
             raise ServiceError(f"Industry analysis failed: {e.stderr}")
 
-    def _execute_industry_synthesis(self, industry: str, date: str, confidence_threshold: float) -> Dict[str, Any]:
+    def _execute_industry_synthesis(
+        self, industry: str, date: str, confidence_threshold: float
+    ) -> Dict[str, Any]:
         """Execute industry synthesis workflow"""
         try:
             import subprocess
             import sys
-            
-            # Build command  
+
+            # Build command
             analysis_file = f"./data/outputs/industry_analysis/analysis/{industry}_{date}_analysis.json"
             cmd = [
                 sys.executable,
                 "scripts/industry_analysis/industry_synthesis.py",
                 analysis_file,
-                "--confidence-threshold", str(confidence_threshold)
+                "--confidence-threshold",
+                str(confidence_threshold),
             ]
-            
+
             # Execute synthesis script
             result = subprocess.run(cmd, capture_output=True, text=True, check=True)
-            
+
             # Check for output file
             output_file = f"./data/outputs/industry_analysis/{industry}_{date}.md"
-            
+
             return {
                 "status": "completed",
                 "phase": "synthesis",
@@ -2498,66 +2531,80 @@ Generated: {{ timestamp }}"""
                 "date": date,
                 "output_file": output_file,
                 "message": "Industry synthesis completed successfully",
-                "stdout": result.stdout
+                "stdout": result.stdout,
             }
-            
+
         except subprocess.CalledProcessError as e:
             raise ServiceError(f"Industry synthesis failed: {e.stderr}")
 
-    def _execute_industry_validation(self, industry: str, date: str, confidence_threshold: float) -> Dict[str, Any]:
+    def _execute_industry_validation(
+        self, industry: str, date: str, confidence_threshold: float
+    ) -> Dict[str, Any]:
         """Execute industry validation workflow"""
         try:
             import subprocess
             import sys
-            
+
             # Build command
             cmd = [
                 sys.executable,
                 "scripts/industry_analysis/industry_validation.py",
                 industry,
                 date,
-                "--confidence-threshold", str(confidence_threshold)
+                "--confidence-threshold",
+                str(confidence_threshold),
             ]
-            
+
             # Execute validation script
             result = subprocess.run(cmd, capture_output=True, text=True, check=True)
-            
+
             return {
-                "status": "completed", 
+                "status": "completed",
                 "phase": "validation",
                 "industry": industry,
                 "date": date,
                 "message": "Industry validation completed successfully",
-                "stdout": result.stdout
+                "stdout": result.stdout,
             }
-            
+
         except subprocess.CalledProcessError as e:
             raise ServiceError(f"Industry validation failed: {e.stderr}")
 
-    def _execute_full_industry_workflow(self, industry: str, sector: Optional[str], confidence_threshold: float) -> Dict[str, Any]:
+    def _execute_full_industry_workflow(
+        self, industry: str, sector: Optional[str], confidence_threshold: float
+    ) -> Dict[str, Any]:
         """Execute complete industry DASV workflow"""
         try:
             from datetime import datetime
+
             date = datetime.now().strftime("%Y%m%d")
-            
+
             workflow_results = []
-            
+
             # Phase 1: Discovery
-            discovery_result = self._execute_industry_discovery(industry, sector, confidence_threshold)
+            discovery_result = self._execute_industry_discovery(
+                industry, sector, confidence_threshold
+            )
             workflow_results.append(discovery_result)
-            
+
             # Phase 2: Analysis
-            analysis_result = self._execute_industry_analysis(industry, date, confidence_threshold)
+            analysis_result = self._execute_industry_analysis(
+                industry, date, confidence_threshold
+            )
             workflow_results.append(analysis_result)
-            
+
             # Phase 3: Synthesis
-            synthesis_result = self._execute_industry_synthesis(industry, date, confidence_threshold)
+            synthesis_result = self._execute_industry_synthesis(
+                industry, date, confidence_threshold
+            )
             workflow_results.append(synthesis_result)
-            
+
             # Phase 4: Validation
-            validation_result = self._execute_industry_validation(industry, date, confidence_threshold)
+            validation_result = self._execute_industry_validation(
+                industry, date, confidence_threshold
+            )
             workflow_results.append(validation_result)
-            
+
             return {
                 "status": "completed",
                 "workflow": "full_industry_dasv",
@@ -2566,9 +2613,9 @@ Generated: {{ timestamp }}"""
                 "phases_completed": len(workflow_results),
                 "results": workflow_results,
                 "final_output": f"./data/outputs/industry_analysis/{industry}_{date}.md",
-                "message": f"Complete industry DASV workflow completed for {industry}"
+                "message": f"Complete industry DASV workflow completed for {industry}",
             }
-            
+
         except Exception as e:
             raise ServiceError(f"Full industry workflow failed: {e}")
 

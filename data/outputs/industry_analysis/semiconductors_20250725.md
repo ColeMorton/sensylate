@@ -222,7 +222,7 @@ Semiconductors industry offers superior risk-adjusted returns through AI content
 
 **Risk-Adjusted Recommendation**: BUY with 15-25% of Communication Services Allocation.
 
-**Author**: Cole Morton  
-**Analysis Framework**: Industry DASV Methodology  
-**Data Sources**: 7-Source CLI Financial Services Integration  
+**Author**: Cole Morton
+**Analysis Framework**: Industry DASV Methodology
+**Data Sources**: 7-Source CLI Financial Services Integration
 **Confidence**: 9.0/10.0 | **Quality**: Institutional-Grade Analysis

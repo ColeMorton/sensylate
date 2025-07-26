@@ -800,7 +800,7 @@
       "type": "string",
       "enum": [
         "yahoo_finance_cli",
-        "alpha_vantage_cli", 
+        "alpha_vantage_cli",
         "fmp_cli",
         "fred_economic_cli",
         "coingecko_cli",

@@ -47,7 +47,7 @@
     "business_model": {
       "revenue_streams": [
         "Financial Management Applications",
-        "Human Capital Management (HCM) Solutions", 
+        "Human Capital Management (HCM) Solutions",
         "Cloud Spend Management Solutions",
         "Analytics and Reporting Applications",
         "Planning Applications"
@@ -152,7 +152,7 @@
     "institutional_grade": true,
     "data_sources_via_cli": [
       "yahoo_finance_cli",
-      "alpha_vantage_cli", 
+      "alpha_vantage_cli",
       "fmp_cli",
       "fred_economic_cli",
       "coingecko_cli",
@@ -276,7 +276,7 @@
     },
     "quality_flags": [
       "comprehensive_financial_statement_data_including_cash_flow",
-      "enhanced_financial_metrics_with_calculated_ratios", 
+      "enhanced_financial_metrics_with_calculated_ratios",
       "multi_source_price_validation_1.000_confidence",
       "real_time_economic_context_integration",
       "institutional_grade_data_quality_achieved"

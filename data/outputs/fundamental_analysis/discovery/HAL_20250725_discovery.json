@@ -147,7 +147,7 @@
   "cli_service_validation": {
     "service_health": {
       "yahoo_finance": "healthy",
-      "alpha_vantage": "healthy", 
+      "alpha_vantage": "healthy",
       "fmp": "healthy",
       "fred": "healthy",
       "coingecko": "healthy"
@@ -199,7 +199,7 @@
       },
       {
         "company": "Baker Hughes (BKR)",
-        "market_cap_estimate": "~22B", 
+        "market_cap_estimate": "~22B",
         "description": "Major integrated oilfield services and equipment provider",
         "competitive_position": "Direct competitor with broader equipment portfolio"
       },

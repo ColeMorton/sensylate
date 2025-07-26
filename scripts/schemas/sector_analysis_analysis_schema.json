@@ -253,7 +253,7 @@
               "description": "Nominal GDP in trillions"
             },
             "real_gdp": {
-              "type": "string", 
+              "type": "string",
               "description": "Real GDP growth assessment"
             },
             "gdp_growth_rate": {
@@ -365,7 +365,7 @@
               "description": "Money supply growth analysis"
             },
             "financial_conditions_index": {
-              "type": "string", 
+              "type": "string",
               "description": "Financial conditions assessment"
             },
             "liquidity_regime": {
@@ -455,7 +455,7 @@
           "type": "string",
           "enum": [
             "early_cycle",
-            "mid_cycle", 
+            "mid_cycle",
             "late_cycle",
             "recession"
           ],
@@ -1098,7 +1098,7 @@
       }
     },
     "quantified_risk_assessment": {
-      "type": "object",   
+      "type": "object",
       "description": "Comprehensive quantified risk analysis",
       "required": [
         "risk_matrix",
@@ -1558,7 +1558,7 @@
                 {"type": "string"},
                 {"type": "object", "additionalProperties": true}
               ],
-              "description": "Economic cycle rotation strategy"  
+              "description": "Economic cycle rotation strategy"
             },
             "risk_adjusted_positioning": {
               "oneOf": [
@@ -1672,7 +1672,7 @@
                 {"type": "string"},
                 {"type": "object", "additionalProperties": true}
               ],
-              "description": "Investment thesis confidence methodology"  
+              "description": "Investment thesis confidence methodology"
             },
             "economic_factor_weighting": {
               "oneOf": [
@@ -2132,7 +2132,7 @@
           "minItems": 3
         },
         "sector_investment_implications": {
-          "type": "array", 
+          "type": "array",
           "items": {"type": "string"},
           "minItems": 3
         },

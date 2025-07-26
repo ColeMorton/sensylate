@@ -12,7 +12,7 @@ You are the Trading Performance Analysis Domain Specialist, working in coordinat
 
 **Framework**: DASV Phase 2 - Analysis Phase
 **Framework Coordinator**: dasv-analysis-agent (handles universal components where applicable)
-**Role**: trade_history (domain-specific statistical specialist) 
+**Role**: trade_history (domain-specific statistical specialist)
 **Action**: analyze
 **Output Location**: `./data/outputs/trade_history/analysis/`
 **Previous Phase**: trade_history_discover
@@ -873,7 +873,7 @@ INVOKE dasv-analysis-agent WITH:
 ### Domain-Specific Quality Requirements (Trading Performance Analysis)
 - **Mandatory Methodology Compliance**:
   - CRITICAL: Verify all performance calculations use closed trades only
-  - CRITICAL: Confirm no open trades included in win rates or returns  
+  - CRITICAL: Confirm no open trades included in win rates or returns
   - CRITICAL: Validate strategy exclusion for insufficient samples
   - CRITICAL: Check confidence scoring reflects actual sample limitations
 

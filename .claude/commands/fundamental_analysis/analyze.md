@@ -275,7 +275,7 @@ COMPREHENSIVE FINANCIAL HEALTH FRAMEWORK:
        ├── Industry benchmarking and peer comparison
        └── Confidence level: 0.0-1.0 with risk assessment
 
-3. Cash Flow Analysis (Comprehensive Flow Assessment) 
+3. Cash Flow Analysis (Comprehensive Flow Assessment)
    ├── Operating Cash Flow Quality
    │   ├── Operating CF generation and sustainability
    │   ├── CF margin analysis and peer comparison
@@ -1254,7 +1254,7 @@ AGGREGATE RISK SCORE: CLI-weighted probability × economic impact
     "moat_assessment": {
       "identified_moats": [
         "scale_advantages_and_network_effects",
-        "cost_advantages_and_operational_efficiency", 
+        "cost_advantages_and_operational_efficiency",
         "switching_costs_and_customer_lock_in",
         "brand_loyalty_and_recognition_value",
         "regulatory_protection_and_compliance_barriers",
@@ -1353,7 +1353,7 @@ AGGREGATE RISK SCORE: CLI-weighted probability × economic impact
       "dcf_modeling": {
         "free_cash_flow_projections": {
           "year_1_fcf": "currency_projection",
-          "year_2_fcf": "currency_projection", 
+          "year_2_fcf": "currency_projection",
           "year_3_fcf": "currency_projection",
           "year_4_fcf": "currency_projection",
           "year_5_fcf": "currency_projection",
@@ -1401,14 +1401,14 @@ AGGREGATE RISK SCORE: CLI-weighted probability × economic impact
             "value_per_share": "currency_base_case_fair_value"
           },
           "bull_case": {
-            "probability": "decimal_0.25_bull_case_likelihood", 
+            "probability": "decimal_0.25_bull_case_likelihood",
             "enterprise_value": "currency_bull_case_ev",
             "equity_value": "currency_bull_case_equity_value",
             "value_per_share": "currency_bull_case_fair_value"
           },
           "bear_case": {
             "probability": "decimal_0.25_bear_case_likelihood",
-            "enterprise_value": "currency_bear_case_ev", 
+            "enterprise_value": "currency_bear_case_ev",
             "equity_value": "currency_bear_case_equity_value",
             "value_per_share": "currency_bear_case_fair_value"
           },
@@ -1505,7 +1505,7 @@ AGGREGATE RISK SCORE: CLI-weighted probability × economic impact
     "integrated_valuation_synthesis": {
       "methodology_weighting": {
         "dcf_weight": "decimal_0.5_to_0.6_intrinsic_value_weight",
-        "relative_weight": "decimal_0.3_to_0.4_peer_comparison_weight", 
+        "relative_weight": "decimal_0.3_to_0.4_peer_comparison_weight",
         "market_based_weight": "decimal_0.1_to_0.2_technical_sentiment_weight",
         "weighting_rationale": "justification_for_methodology_weights"
       },
@@ -1516,7 +1516,7 @@ AGGREGATE RISK SCORE: CLI-weighted probability × economic impact
           "upper_bound": "currency_90pct_confidence_upper_bound"
         },
         "confidence_interval_95pct": {
-          "lower_bound": "currency_95pct_confidence_lower_bound", 
+          "lower_bound": "currency_95pct_confidence_lower_bound",
           "upper_bound": "currency_95pct_confidence_upper_bound"
         }
       },
@@ -1582,7 +1582,7 @@ AGGREGATE RISK SCORE: CLI-weighted probability × economic impact
     "financial_risk_analysis": {
       "liquidity_risks": {
         "cash_flow_volatility": {
-          "risk": "cash_flow_predictability_and_volatility_risk", 
+          "risk": "cash_flow_predictability_and_volatility_risk",
           "probability": "0.0-1.0_likelihood_of_cash_flow_stress",
           "impact": "1-5_liquidity_impact_severity",
           "evidence": "historical_cash_flow_variability_analysis",
@@ -1684,7 +1684,7 @@ AGGREGATE RISK SCORE: CLI-weighted probability × economic impact
           "mitigation": "sustainability_strategy_and_esg_investment"
         }
       },
-      "grade": "A+/A/A-/B+/B/B-/C+/C/C-/D+/D/F", 
+      "grade": "A+/A/A-/B+/B/B-/C+/C/C-/D+/D/F",
       "confidence": "0.0-1.0_macro_risk_assessment_confidence"
     },
     "integrated_risk_summary": {
@@ -1693,7 +1693,7 @@ AGGREGATE RISK SCORE: CLI-weighted probability × economic impact
         "risk_grade": "A+/A/A-/B+/B/B-/C+/C/C-/D+/D/F_overall_risk_grade",
         "risk_category_breakdown": {
           "operational_risk_weight": "decimal_operational_risk_contribution",
-          "financial_risk_weight": "decimal_financial_risk_contribution", 
+          "financial_risk_weight": "decimal_financial_risk_contribution",
           "competitive_risk_weight": "decimal_competitive_risk_contribution",
           "macro_risk_weight": "decimal_macro_risk_contribution"
         }
@@ -1711,7 +1711,7 @@ AGGREGATE RISK SCORE: CLI-weighted probability × economic impact
             "recovery_timeline": "expected_recovery_duration"
           },
           "competitive_disruption": {
-            "probability": "decimal_disruption_scenario_likelihood", 
+            "probability": "decimal_disruption_scenario_likelihood",
             "market_share_impact": "share_loss_in_disruption_scenario",
             "adaptation_timeline": "business_model_adaptation_timeframe"
           }

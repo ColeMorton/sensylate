@@ -6,7 +6,7 @@
   "type": "object",
   "required": [
     "metadata",
-    "cli_comprehensive_analysis", 
+    "cli_comprehensive_analysis",
     "market_data",
     "financial_metrics",
     "company_intelligence",
@@ -27,7 +27,7 @@
       "description": "Core metadata about the discovery analysis execution",
       "required": [
         "command_name",
-        "execution_timestamp", 
+        "execution_timestamp",
         "framework_phase",
         "ticker",
         "data_collection_methodology",
@@ -47,7 +47,7 @@
           "description": "ISO 8601 timestamp with optional microseconds and timezone"
         },
         "framework_phase": {
-          "type": "string", 
+          "type": "string",
           "const": "cli_enhanced_discover_7_source",
           "description": "Must indicate the 7-source discovery phase"
         },
@@ -70,7 +70,7 @@
             "type": "string",
             "enum": [
               "yahoo_finance_cli",
-              "alpha_vantage_cli", 
+              "alpha_vantage_cli",
               "fmp_cli",
               "fred_economic_cli",
               "coingecko_cli",
@@ -88,12 +88,12 @@
       }
     },
     "cli_comprehensive_analysis": {
-      "type": "object", 
+      "type": "object",
       "description": "High-level analysis summary and methodology overview",
       "required": [
         "metadata",
         "company_overview",
-        "market_data", 
+        "market_data",
         "analyst_intelligence",
         "data_validation",
         "quality_metrics"
@@ -162,7 +162,7 @@
           "description": "Current stock price in USD"
         },
         "market_cap": {
-          "type": "number", 
+          "type": "number",
           "minimum": 0,
           "description": "Market capitalization in USD"
         },
@@ -170,7 +170,7 @@
           "type": "object",
           "required": [
             "yahoo_finance_price",
-            "alpha_vantage_price", 
+            "alpha_vantage_price",
             "fmp_price",
             "price_consistency",
             "confidence_score"
@@ -182,7 +182,7 @@
               "minimum": 0
             },
             "alpha_vantage_price": {
-              "type": "number", 
+              "type": "number",
               "minimum": 0
             },
             "fmp_price": {
@@ -216,7 +216,7 @@
           "description": "52-week high price"
         },
         "52_week_low": {
-          "type": "number", 
+          "type": "number",
           "minimum": 0,
           "description": "52-week low price"
         },
@@ -234,7 +234,7 @@
       "required": [
         "revenue_ttm",
         "net_income",
-        "earnings_per_share", 
+        "earnings_per_share",
         "pe_ratio",
         "profit_margin",
         "return_on_equity",
@@ -350,7 +350,7 @@
               "description": "Income statement data"
             },
             "balance_sheet": {
-              "type": "object", 
+              "type": "object",
               "description": "Balance sheet data"
             },
             "cash_flow": {
@@ -424,7 +424,7 @@
         },
         "cryptocurrency_market": {
           "oneOf": [
-            {"type": "string"},  
+            {"type": "string"},
             {"type": "object"}
           ]
         },
@@ -437,7 +437,7 @@
       }
     },
     "economic_analysis": {
-      "type": "object", 
+      "type": "object",
       "description": "Economic environment analysis and sector implications",
       "required": [
         "interest_rate_environment",
@@ -475,7 +475,7 @@
       "description": "Regulatory analysis and SEC filing information",
       "required": [
         "insider_trading_data",
-        "sec_edgar_integration", 
+        "sec_edgar_integration",
         "regulatory_analysis"
       ],
       "additionalProperties": true,
@@ -502,7 +502,7 @@
       "description": "CLI service health and operational status validation",
       "required": [
         "service_health",
-        "health_score", 
+        "health_score",
         "services_operational",
         "services_healthy"
       ],
@@ -556,7 +556,7 @@
           "description": "Must be 1.0 for operational services"
         },
         "institutional_grade": {
-          "type": "boolean", 
+          "type": "boolean",
           "const": true,
           "description": "Must be true for high-quality analysis"
         },
@@ -665,7 +665,7 @@
       "description": "Discovery phase insights and next phase readiness assessment",
       "required": [
         "initial_observations",
-        "data_gaps_identified", 
+        "data_gaps_identified",
         "research_priorities",
         "next_phase_readiness"
       ],
@@ -722,7 +722,7 @@
               "maximum": 1.0
             },
             "^[a-z_]+$": {
-              "type": "number", 
+              "type": "number",
               "minimum": 0.90,
               "maximum": 1.0
             }
@@ -755,7 +755,7 @@
     {
       "metadata": {
         "command_name": "cli_enhanced_fundamental_analyst_discover",
-        "execution_timestamp": "2025-07-25T12:57:40.000000Z", 
+        "execution_timestamp": "2025-07-25T12:57:40.000000Z",
         "framework_phase": "cli_enhanced_discover_7_source",
         "ticker": "AAPL",
         "data_collection_methodology": "production_cli_services_unified_access",

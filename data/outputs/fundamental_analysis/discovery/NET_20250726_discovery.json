@@ -187,7 +187,7 @@
   "cli_service_validation": {
     "service_health": {
       "yahoo_finance_cli": "operational",
-      "alpha_vantage_cli": "operational", 
+      "alpha_vantage_cli": "operational",
       "fmp_cli": "operational",
       "fred_economic_cli": "operational",
       "coingecko_cli": "operational"
@@ -243,7 +243,7 @@
       },
       {
         "company": "CrowdStrike",
-        "ticker": "CRWD", 
+        "ticker": "CRWD",
         "market_cap": 118630000000,
         "ttm_revenue": 3950000000,
         "revenue_growth": 0.29,

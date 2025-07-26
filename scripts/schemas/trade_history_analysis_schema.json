@@ -791,7 +791,7 @@
             "type": "string",
             "enum": [
               "signal_effectiveness_optimization",
-              "statistical_performance_validation", 
+              "statistical_performance_validation",
               "risk_management_enhancement",
               "strategy_parameter_tuning"
             ]

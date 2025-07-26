@@ -74,7 +74,7 @@ Macro Version: 1.0
 #### Economic Context
 - **Interest Rate Environment**: {{ economic_data.interest_rate_environment if economic_data.interest_rate_environment else "Restrictive" }}
 - **Economic Sensitivity**: {{ economic_data.sector_sensitivity if economic_data.sector_sensitivity else "Moderate sensitivity" }}
-- **Policy Implications**: 
+- **Policy Implications**:
 {% for implication in economic_data.policy_implications if economic_data.policy_implications %}
   - {{ implication }}
 {% endfor %}

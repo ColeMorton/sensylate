@@ -221,9 +221,9 @@ tags:
 
 **Risk-Adjusted Recommendation**: [BUY/HOLD/SELL] with [allocation recommendation].
 
-**Author**: Cole Morton  
-**Analysis Framework**: Industry DASV Methodology  
-**Data Sources**: 7-Source CLI Financial Services Integration  
+**Author**: Cole Morton
+**Analysis Framework**: Industry DASV Methodology
+**Data Sources**: 7-Source CLI Financial Services Integration
 **Confidence**: [X.X/10.0] | **Quality**: Institutional-Grade Analysis
 ```
 

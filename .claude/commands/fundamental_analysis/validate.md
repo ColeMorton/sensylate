@@ -31,7 +31,7 @@ You are the Fundamental Analysis Validation Specialist, functioning similarly to
 - `validation_depth`: Validation rigor - `standard` | `comprehensive` | `institutional` (optional, default: institutional)
 - `real_time_validation`: Use current market data for validation - `true` | `false` (optional, default: true)
 
-### Mode 2: DASV Phase Cross-Analysis  
+### Mode 2: DASV Phase Cross-Analysis
 **Trigger**: Phase argument matching `discovery|analysis|synthesis|validation`
 - `dasv_phase`: DASV phase for cross-analysis (required) - `discovery` | `analysis` | `synthesis` | `validation`
 - `file_count`: Number of latest files to analyze (optional, default: 7)
@@ -165,7 +165,7 @@ CLI INTEGRATION VALIDATION:
   ],
   "cross_analysis_results": {
     "structural_consistency_score": "9.X/10.0",
-    "hardcoded_values_score": "9.X/10.0", 
+    "hardcoded_values_score": "9.X/10.0",
     "ticker_specificity_score": "9.X/10.0",
     "cli_integration_score": "9.X/10.0",
     "overall_cross_analysis_score": "9.X/10.0"
@@ -200,7 +200,7 @@ CLI INTEGRATION VALIDATION:
     "cli_integration_inconsistencies": [
       {
         "service_name": "cli_service_name",
-        "inconsistency_type": "missing_service|inconsistent_usage|data_quality_variation", 
+        "inconsistency_type": "missing_service|inconsistent_usage|data_quality_variation",
         "files_affected": ["filename_array"],
         "recommendation": "standardization_approach"
       }
