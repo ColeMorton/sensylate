@@ -50,13 +50,17 @@ vi.mock("@/lib/config", () => {
 
   const createMockFeatures = () => ({
     search: import.meta.env?.PUBLIC_FEATURE_SEARCH === "true" || false,
-    themeSwitcher: import.meta.env?.PUBLIC_FEATURE_THEME_SWITCHER === "true" || false,
+    themeSwitcher:
+      import.meta.env?.PUBLIC_FEATURE_THEME_SWITCHER === "true" || false,
     comments: import.meta.env?.PUBLIC_FEATURE_COMMENTS === "true" || false,
     gtm: import.meta.env?.PUBLIC_FEATURE_GTM === "true" || false,
     calculators: import.meta.env?.PUBLIC_FEATURE_CALCULATORS === "true" || true,
-    calculatorAdvanced: import.meta.env?.PUBLIC_FEATURE_CALCULATOR_ADVANCED === "true" || false,
-    elementsPage: import.meta.env?.PUBLIC_FEATURE_ELEMENTS_PAGE === "true" || true,
-    authorsPage: import.meta.env?.PUBLIC_FEATURE_AUTHORS_PAGE === "true" || true,
+    calculatorAdvanced:
+      import.meta.env?.PUBLIC_FEATURE_CALCULATOR_ADVANCED === "true" || false,
+    elementsPage:
+      import.meta.env?.PUBLIC_FEATURE_ELEMENTS_PAGE === "true" || true,
+    authorsPage:
+      import.meta.env?.PUBLIC_FEATURE_AUTHORS_PAGE === "true" || true,
     chartsPage: import.meta.env?.PUBLIC_FEATURE_CHARTS_PAGE === "true" || false,
   });
 
@@ -79,21 +83,38 @@ vi.mock("@/lib/config", () => {
 vi.mock("@/lib/featureFlags", () => {
   const createMockFeatures = () => ({
     search: import.meta.env?.PUBLIC_FEATURE_SEARCH === "true" || false,
-    themeSwitcher: import.meta.env?.PUBLIC_FEATURE_THEME_SWITCHER === "true" || false,
+    themeSwitcher:
+      import.meta.env?.PUBLIC_FEATURE_THEME_SWITCHER === "true" || false,
     comments: import.meta.env?.PUBLIC_FEATURE_COMMENTS === "true" || false,
     gtm: import.meta.env?.PUBLIC_FEATURE_GTM === "true" || false,
     calculators: import.meta.env?.PUBLIC_FEATURE_CALCULATORS === "true" || true,
-    calculatorAdvanced: import.meta.env?.PUBLIC_FEATURE_CALCULATOR_ADVANCED === "true" || false,
-    elementsPage: import.meta.env?.PUBLIC_FEATURE_ELEMENTS_PAGE === "true" || true,
-    authorsPage: import.meta.env?.PUBLIC_FEATURE_AUTHORS_PAGE === "true" || true,
+    calculatorAdvanced:
+      import.meta.env?.PUBLIC_FEATURE_CALCULATOR_ADVANCED === "true" || false,
+    elementsPage:
+      import.meta.env?.PUBLIC_FEATURE_ELEMENTS_PAGE === "true" || true,
+    authorsPage:
+      import.meta.env?.PUBLIC_FEATURE_AUTHORS_PAGE === "true" || true,
     chartsPage: import.meta.env?.PUBLIC_FEATURE_CHARTS_PAGE === "true" || false,
   });
 
   return {
     features: createMockFeatures(),
-    isFeatureEnabled: (flag: string) => createMockFeatures()[flag as keyof ReturnType<typeof createMockFeatures>],
-    areAllFeaturesEnabled: (flags: string[]) => flags.every(flag => createMockFeatures()[flag as keyof ReturnType<typeof createMockFeatures>]),
-    isAnyFeatureEnabled: (flags: string[]) => flags.some(flag => createMockFeatures()[flag as keyof ReturnType<typeof createMockFeatures>]),
+    isFeatureEnabled: (flag: string) =>
+      createMockFeatures()[flag as keyof ReturnType<typeof createMockFeatures>],
+    areAllFeaturesEnabled: (flags: string[]) =>
+      flags.every(
+        (flag) =>
+          createMockFeatures()[
+            flag as keyof ReturnType<typeof createMockFeatures>
+          ],
+      ),
+    isAnyFeatureEnabled: (flags: string[]) =>
+      flags.some(
+        (flag) =>
+          createMockFeatures()[
+            flag as keyof ReturnType<typeof createMockFeatures>
+          ],
+      ),
   };
 });
 

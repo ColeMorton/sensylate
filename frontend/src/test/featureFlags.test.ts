@@ -21,7 +21,7 @@ vi.stubGlobal("import.meta.env", {
   ...mockEnv,
 });
 
-// Mock config.json  
+// Mock config.json
 vi.mock("@/config/config.json", () => ({
   default: {
     settings: {
