@@ -1,0 +1,891 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sensylate.com/schemas/sector_analysis_discovery.json",
+  "title": "Sector Analysis Discovery Schema",
+  "description": "JSON Schema for validating sector analysis discovery phase outputs with institutional-grade quality standards",
+  "type": "object",
+  "required": [
+    "metadata",
+    "sector_companies_data"
+  ],
+  "additionalProperties": true,
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "description": "Command execution metadata and framework context",
+      "required": ["command_name", "execution_timestamp", "framework_phase", "sector", "companies_analyzed", "sector_etfs_analyzed", "data_collection_methodology", "cli_services_utilized"],
+      "additionalProperties": false,
+      "properties": {
+        "command_name": {
+          "type": "string",
+          "pattern": "^cli_enhanced_sector_analyst_discover$"
+        },
+        "execution_timestamp": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "framework_phase": {
+          "type": "string",
+          "pattern": "^cli_enhanced_sector_discover_7_source$"
+        },
+        "sector": {
+          "type": "string",
+          "minLength": 1
+        },
+        "companies_analyzed": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Z]{1,5}$"
+          },
+          "minItems": 5,
+          "maxItems": 15
+        },
+        "sector_etfs_analyzed": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^XL[A-Z]$|^XLRE$"
+          },
+          "minItems": 1,
+          "maxItems": 3
+        },
+        "data_collection_methodology": {
+          "type": "string",
+          "pattern": "^production_cli_services_multi_company_access$"
+        },
+        "cli_services_utilized": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["yahoo_finance_cli", "alpha_vantage_cli", "fmp_cli", "fred_economic_cli", "coingecko_cli"]
+          },
+          "minItems": 3,
+          "maxItems": 5
+        },
+        "api_keys_configured": {
+          "type": "string"
+        }
+      }
+    },
+    "cli_comprehensive_sector_analysis": {
+      "type": "object",
+      "description": "High-level sector analysis overview and methodology",
+      "required": ["metadata", "sector_overview", "sector_market_data", "competitive_landscape", "sector_etf_analysis", "data_validation", "quality_metrics"],
+      "additionalProperties": false,
+      "properties": {
+        "metadata": {
+          "type": "string"
+        },
+        "sector_overview": {
+          "type": "string"
+        },
+        "sector_market_data": {
+          "type": "string"
+        },
+        "competitive_landscape": {
+          "type": "string"
+        },
+        "sector_etf_analysis": {
+          "type": "string"
+        },
+        "data_validation": {
+          "type": "string"
+        },
+        "quality_metrics": {
+          "type": "string"
+        }
+      }
+    },
+    "sector_companies_data": {
+      "type": "object",
+      "description": "Individual company data within the sector",
+      "required": ["companies"],
+      "additionalProperties": true,
+      "properties": {
+        "companies": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["ticker", "current_price", "market_cap"],
+            "additionalProperties": true,
+            "anyOf": [
+              {"required": ["company_name"]},
+              {"required": ["name"]}
+            ],
+            "properties": {
+              "ticker": {
+                "type": "string",
+                "pattern": "^[A-Z]{1,5}$"
+              },
+              "company_name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "current_price": {
+                "type": "number",
+                "minimum": 0
+              },
+              "market_cap": {
+                "type": "number",
+                "minimum": 0
+              },
+              "pe_ratio": {
+                "oneOf": [
+                  {"type": "number", "minimum": 0},
+                  {"type": "null"}
+                ]
+              },
+              "sector": {
+                "type": "string"
+              },
+              "industry": {
+                "type": "string"
+              },
+              "confidence": {
+                "type": "number",
+                "minimum": 0.5,
+                "maximum": 1.0
+              }
+            }
+          },
+          "minItems": 5,
+          "maxItems": 15
+        },
+        "sector_aggregates": {
+          "type": "object",
+          "required": ["total_market_cap", "average_pe_ratio"],
+          "additionalProperties": true,
+          "properties": {
+            "total_market_cap": {
+              "type": "number",
+              "minimum": 0
+            },
+            "average_pe_ratio": {
+              "type": "number",
+              "minimum": 0
+            },
+            "confidence": {
+              "type": "number",
+              "minimum": 0.8,
+              "maximum": 1.0
+            }
+          }
+        },
+        "price_validation_summary": {
+          "type": "object",
+          "required": ["companies_validated", "average_confidence_score"],
+          "additionalProperties": true,
+          "properties": {
+            "companies_validated": {
+              "type": "integer",
+              "minimum": 5
+            },
+            "average_confidence_score": {
+              "type": "number",
+              "minimum": 0.8,
+              "maximum": 1.0
+            },
+            "consistency_issues": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "sector_etf_data": {
+      "type": "object",
+      "description": "Primary sector ETF analysis and validation",
+      "required": ["primary_etf", "etf_current_price", "etf_price_validation", "confidence"],
+      "additionalProperties": true,
+      "properties": {
+        "primary_etf": {
+          "type": "object",
+          "required": ["ticker", "current_price"],
+          "additionalProperties": true,
+          "properties": {
+            "ticker": {
+              "type": "string",
+              "pattern": "^XL[A-Z]$|^XLRE$"
+            },
+            "current_price": {
+              "type": "number",
+              "minimum": 0
+            },
+            "market_cap": {
+              "type": "number",
+              "minimum": 0
+            },
+            "pe_ratio": {
+              "type": "number",
+              "minimum": 0
+            }
+          }
+        },
+        "etf_current_price": {
+          "type": "number",
+          "minimum": 0
+        },
+        "etf_price_validation": {
+          "type": "object",
+          "required": ["price_collected", "price_accuracy", "data_freshness"],
+          "additionalProperties": true,
+          "properties": {
+            "price_collected": {
+              "type": "boolean",
+              "const": true
+            },
+            "price_accuracy": {
+              "type": "number",
+              "minimum": 0.95,
+              "maximum": 1.0
+            },
+            "data_freshness": {
+              "type": "string",
+              "enum": ["real_time", "current", "recent"]
+            },
+            "blocking_issues": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0.9,
+          "maximum": 1.0
+        }
+      }
+    },
+    "cross_sector_analysis": {
+      "type": "object",
+      "description": "Comparison with other sector ETFs and market indices",
+      "required": ["all_sector_etfs", "sector_relative_performance"],
+      "additionalProperties": true,
+      "properties": {
+        "all_sector_etfs": {
+          "type": "object",
+          "patternProperties": {
+            "^(SPY|XL[A-Z]|XLRE)$": {
+              "type": "object",
+              "additionalProperties": true,
+              "properties": {
+                "ticker": {
+                  "type": "string"
+                },
+                "current_price": {
+                  "type": "number",
+                  "minimum": 0
+                }
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        "sector_relative_performance": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0.8,
+          "maximum": 1.0
+        }
+      }
+    },
+    "sector_financial_metrics": {
+      "type": "object",
+      "description": "Aggregated sector financial metrics and health distribution",
+      "additionalProperties": true,
+      "properties": {
+        "weighted_average_pe_ratio": {
+          "type": "number",
+          "minimum": 0
+        },
+        "financial_health_distribution": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0.7,
+          "maximum": 1.0
+        }
+      }
+    },
+    "sector_intelligence": {
+      "type": "object",
+      "description": "Business models, competitive landscape, and sector-specific metrics",
+      "required": ["sector_business_models", "competitive_landscape", "sector_key_metrics"],
+      "additionalProperties": true,
+      "properties": {
+        "sector_business_models": {
+          "type": "object",
+          "required": ["dominant_revenue_streams", "business_model_diversity", "sector_operational_characteristics"],
+          "additionalProperties": true,
+          "properties": {
+            "dominant_revenue_streams": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "minItems": 2
+            },
+            "business_model_diversity": {
+              "type": "string"
+            },
+            "sector_operational_characteristics": {
+              "type": "string"
+            },
+            "confidence": {
+              "type": "number",
+              "minimum": 0.8,
+              "maximum": 1.0
+            }
+          }
+        },
+        "competitive_landscape": {
+          "type": "object",
+          "required": ["market_concentration", "competitive_intensity", "barriers_to_entry", "disruption_risk"],
+          "additionalProperties": true,
+          "properties": {
+            "market_concentration": {
+              "type": "string"
+            },
+            "competitive_intensity": {
+              "type": "string"
+            },
+            "barriers_to_entry": {
+              "type": "string"
+            },
+            "disruption_risk": {
+              "type": "string"
+            },
+            "confidence": {
+              "type": "number",
+              "minimum": 0.8,
+              "maximum": 1.0
+            }
+          }
+        },
+        "sector_key_metrics": {
+          "type": "object",
+          "required": ["sector_specific_kpis"],
+          "additionalProperties": true,
+          "properties": {
+            "sector_specific_kpis": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "minItems": 3
+            },
+            "confidence": {
+              "type": "number",
+              "minimum": 0.8,
+              "maximum": 1.0
+            }
+          }
+        }
+      }
+    },
+    "vix_volatility_analysis": {
+      "type": "object",
+      "description": "Market volatility analysis using VIX proxy",
+      "required": ["vix_proxy_ticker", "vix_proxy_name", "vix_proxy_current_price", "sector_vix_correlation", "data_source", "data_validation"],
+      "additionalProperties": true,
+      "properties": {
+        "vix_proxy_ticker": {
+          "type": "string",
+          "const": "VIXY"
+        },
+        "vix_proxy_name": {
+          "type": "string",
+          "const": "ProShares VIX Short-Term Futures ETF"
+        },
+        "vix_proxy_current_price": {
+          "type": "number",
+          "minimum": 10,
+          "maximum": 200
+        },
+        "sector_vix_correlation": {
+          "oneOf": [
+            {"type": "string"},
+            {"type": "number", "minimum": -1, "maximum": 1}
+          ]
+        },
+        "data_source": {
+          "type": "string",
+          "const": "yahoo_finance_cli_vixy_as_vix_proxy"
+        },
+        "data_validation": {
+          "type": "object",
+          "required": ["proxy_rationale"],
+          "additionalProperties": true,
+          "properties": {
+            "proxy_rationale": {
+              "type": "string"
+            }
+          }
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0.7,
+          "maximum": 1.0
+        }
+      }
+    },
+    "cli_sector_market_context": {
+      "type": "object",
+      "description": "Economic indicators and cryptocurrency correlation context",
+      "required": ["metadata", "sector_economic_indicators"],
+      "additionalProperties": true,
+      "properties": {
+        "metadata": {
+          "type": "string"
+        },
+        "sector_economic_indicators": {
+          "type": "string"
+        },
+        "cryptocurrency_correlation": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "bitcoin_correlation": {
+              "oneOf": [
+                {"type": "string"},
+                {"type": "number", "minimum": -1, "maximum": 1}
+              ]
+            },
+            "bitcoin_current_price": {
+              "type": "number",
+              "minimum": 1000
+            },
+            "confidence": {
+              "type": "number",
+              "minimum": 0.7,
+              "maximum": 1.0
+            }
+          }
+        }
+      }
+    },
+    "sector_economic_analysis": {
+      "type": "object",
+      "description": "Comprehensive economic environment analysis",
+      "required": ["interest_rate_environment", "fed_funds_rate", "unemployment_rate", "gdp_analysis", "employment_analysis", "dollar_strength"],
+      "additionalProperties": true,
+      "properties": {
+        "interest_rate_environment": {
+          "type": "string",
+          "enum": ["restrictive", "neutral", "accommodative", "restrictive_but_peaking", "restrictive_but_moderating", "restrictive_trending_toward_neutral"]
+        },
+        "fed_funds_rate": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 20
+        },
+        "unemployment_rate": {
+          "type": "number",
+          "minimum": 2,
+          "maximum": 15
+        },
+        "gdp_analysis": {
+          "type": "object",
+          "required": ["nominal_gdp"],
+          "additionalProperties": true,
+          "properties": {
+            "nominal_gdp": {
+              "oneOf": [
+                {"type": "number", "minimum": 20000},
+                {"type": "string"}
+              ]
+            }
+          }
+        },
+        "employment_analysis": {
+          "type": "object",
+          "required": ["nonfarm_payrolls"],
+          "additionalProperties": true,
+          "properties": {
+            "nonfarm_payrolls": {
+              "oneOf": [
+                {"type": "number", "minimum": 140000},
+                {"type": "string"}
+              ]
+            }
+          }
+        },
+        "dollar_strength": {
+          "type": "object",
+          "required": ["dxy_proxy_ticker", "dxy_proxy_name", "dxy_proxy_current_price", "data_source", "data_validation"],
+          "additionalProperties": true,
+          "properties": {
+            "dxy_proxy_ticker": {
+              "type": "string",
+              "const": "UUP"
+            },
+            "dxy_proxy_name": {
+              "type": "string",
+              "const": "Invesco DB US Dollar Index Bullish Fund"
+            },
+            "dxy_proxy_current_price": {
+              "type": "number",
+              "minimum": 20,
+              "maximum": 35
+            },
+            "data_source": {
+              "type": "string",
+              "const": "yahoo_finance_cli_uup_as_dxy_proxy"
+            },
+            "data_validation": {
+              "type": "object",
+              "required": ["proxy_rationale"],
+              "additionalProperties": true,
+              "properties": {
+                "proxy_rationale": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "sector_macroeconomic_context": {
+      "type": "object",
+      "description": "GDP and employment impact analysis for the sector",
+      "required": ["gdp_impact_analysis", "employment_impact_analysis", "macroeconomic_risk_assessment"],
+      "additionalProperties": true,
+      "properties": {
+        "gdp_impact_analysis": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "confidence": {
+              "type": "number",
+              "minimum": 0.7,
+              "maximum": 1.0
+            }
+          }
+        },
+        "employment_impact_analysis": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "confidence": {
+              "type": "number",
+              "minimum": 0.7,
+              "maximum": 1.0
+            }
+          }
+        },
+        "macroeconomic_risk_assessment": {
+          "type": "object",
+          "required": ["recession_vulnerability"],
+          "additionalProperties": true,
+          "properties": {
+            "recession_vulnerability": {
+              "type": "string"
+            },
+            "confidence": {
+              "type": "number",
+              "minimum": 0.7,
+              "maximum": 1.0
+            }
+          }
+        }
+      }
+    },
+    "sector_regulatory_intelligence": {
+      "type": "object",
+      "description": "Regulatory environment and risk assessment",
+      "additionalProperties": true,
+      "properties": {
+        "sector_regulatory_environment": {
+          "type": "string"
+        },
+        "regulatory_risk_assessment": {
+          "type": "string"
+        }
+      }
+    },
+    "cli_service_validation": {
+      "type": "object",
+      "description": "Health check and validation of CLI services used",
+      "required": ["service_health", "health_score", "services_operational", "services_healthy"],
+      "additionalProperties": true,
+      "properties": {
+        "service_health": {
+          "type": "string"
+        },
+        "health_score": {
+          "type": "number",
+          "minimum": 0.8,
+          "maximum": 1.0
+        },
+        "services_operational": {
+          "type": "integer",
+          "minimum": 3,
+          "maximum": 5
+        },
+        "services_healthy": {
+          "type": "boolean",
+          "const": true
+        }
+      }
+    },
+    "cli_data_quality": {
+      "type": "object",
+      "description": "Overall data quality metrics and CLI integration status",
+      "required": ["overall_data_quality", "cli_service_health", "institutional_grade", "data_sources_via_cli", "cli_integration_status"],
+      "additionalProperties": true,
+      "properties": {
+        "overall_data_quality": {
+          "type": "number",
+          "minimum": 0.85,
+          "maximum": 1.0
+        },
+        "cli_service_health": {
+          "type": "number",
+          "minimum": 0.8,
+          "maximum": 1.0
+        },
+        "institutional_grade": {
+          "type": "boolean",
+          "const": true
+        },
+        "data_sources_via_cli": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["yahoo_finance_cli", "alpha_vantage_cli", "fmp_cli", "fred_economic_cli", "coingecko_cli"]
+          },
+          "minItems": 3,
+          "maxItems": 5
+        },
+        "cli_integration_status": {
+          "type": "string",
+          "const": "operational"
+        }
+      }
+    },
+    "cli_insights": {
+      "type": "object",
+      "description": "Observations and insights from CLI integration and data collection",
+      "required": ["cli_integration_observations", "data_quality_insights", "market_context_insights", "service_performance_insights"],
+      "additionalProperties": true,
+      "properties": {
+        "cli_integration_observations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 3
+        },
+        "data_quality_insights": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 3
+        },
+        "market_context_insights": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 3
+        },
+        "service_performance_insights": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 3
+        }
+      }
+    },
+    "seasonality_analysis": {
+      "type": "object",
+      "description": "Historical seasonal patterns and economic cycle analysis",
+      "additionalProperties": true,
+      "properties": {
+        "historical_data_period": {
+          "type": "string"
+        },
+        "monthly_patterns": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "quarterly_patterns": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "economic_cycle_patterns": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0.7,
+          "maximum": 1.0
+        }
+      }
+    },
+    "sector_comparative_data": {
+      "type": "object",
+      "description": "Sector performance comparison with market and peers",
+      "required": ["sector_vs_market"],
+      "additionalProperties": true,
+      "properties": {
+        "sector_vs_market": {
+          "type": "string"
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0.8,
+          "maximum": 1.0
+        }
+      }
+    },
+    "sector_discovery_insights": {
+      "type": "object",
+      "description": "Initial observations, data gaps, and research priorities for the sector",
+      "required": ["sector_initial_observations", "sector_data_gaps", "sector_research_priorities", "sector_themes", "investment_recommendation_readiness", "next_phase_readiness"],
+      "additionalProperties": true,
+      "properties": {
+        "sector_initial_observations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 4
+        },
+        "sector_data_gaps": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 3
+        },
+        "sector_research_priorities": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 3
+        },
+        "sector_themes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 4
+        },
+        "investment_recommendation_readiness": {
+          "type": "object",
+          "required": ["portfolio_allocation_data", "economic_cycle_positioning", "risk_adjusted_metrics", "cross_sector_comparative"],
+          "additionalProperties": true,
+          "properties": {
+            "portfolio_allocation_data": {
+              "type": "string"
+            },
+            "economic_cycle_positioning": {
+              "type": "string"
+            },
+            "risk_adjusted_metrics": {
+              "type": "string"
+            },
+            "cross_sector_comparative": {
+              "type": "string"
+            }
+          }
+        },
+        "next_phase_readiness": {
+          "type": "boolean",
+          "const": true
+        }
+      }
+    },
+    "sector_data_quality_assessment": {
+      "type": "object",
+      "description": "Comprehensive data quality assessment and ETF validation",
+      "required": ["multi_company_reliability_scores", "sector_data_completeness", "sector_data_freshness", "sector_quality_flags", "etf_data_quality", "etf_price_validation"],
+      "additionalProperties": true,
+      "properties": {
+        "multi_company_reliability_scores": {
+          "type": "object",
+          "patternProperties": {
+            "^(yahoo_finance_cli|alpha_vantage_cli|fmp_cli|fred_economic_cli|coingecko_cli)$": {
+              "type": "number",
+              "minimum": 0.6,
+              "maximum": 1.0
+            }
+          },
+          "additionalProperties": false,
+          "minProperties": 3
+        },
+        "sector_data_completeness": {
+          "type": "number",
+          "minimum": 0.85,
+          "maximum": 1.0
+        },
+        "sector_data_freshness": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "sector_quality_flags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 4
+        },
+        "etf_data_quality": {
+          "type": "string"
+        },
+        "etf_price_validation": {
+          "type": "object",
+          "required": ["etf_price_collected", "etf_price_accuracy", "etf_price_blocking_issues", "institutional_grade_certification"],
+          "additionalProperties": true,
+          "properties": {
+            "etf_price_collected": {
+              "type": "boolean",
+              "const": true
+            },
+            "etf_price_accuracy": {
+              "type": "number",
+              "minimum": 0.95,
+              "maximum": 1.0
+            },
+            "etf_price_variance": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 0.01
+            },
+            "etf_price_blocking_issues": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "institutional_grade_certification": {
+              "type": "boolean",
+              "const": true
+            }
+          }
+        }
+      }
+    }
+  }
+}

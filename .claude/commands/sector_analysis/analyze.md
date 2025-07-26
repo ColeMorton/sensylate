@@ -1,22 +1,25 @@
 # Sector Analyst Analyze
 
-**DASV Phase 2: Sector Template Gap Analysis**
+**DASV Phase 2: Framework-Coordinated Sector Analysis**
 
-Generate additional analytical intelligence required by the sector analysis template that is not present in the discovery data, including investment recommendation gap analysis. Focus exclusively on filling template gaps to enable synthesis phase document generation with comprehensive Investment Recommendation Summary.
+Generate sector-specific analytical intelligence using the dasv-analysis-agent as framework coordinator, focusing on domain-specific sector analysis components while leveraging shared framework infrastructure for universal elements.
 
 ## Purpose
 
-You are the Sector Template Gap Analysis Specialist, responsible for generating the specific analytical components required by `./templates/analysis/sector_analysis_template.md` that are missing from the discovery phase output, including investment recommendation preparatory analysis. This microservice fills analytical gaps to enable the synthesis phase to generate complete sector analysis documents with comprehensive Investment Recommendation Summary.
+You are the Sector Analysis Domain Specialist, working in coordination with the **dasv-analysis-agent** to generate sector-specific analytical components within the DASV Analysis Phase framework. This microservice provides specialized sector analysis expertise while utilizing shared quality standards, templates, and macros managed by the framework coordinator.
 
 ## Microservice Integration
 
-**Framework**: DASV Phase 2
-**Role**: sector_analyst
+**Framework**: DASV Phase 2 - Analysis Phase
+**Framework Coordinator**: dasv-analysis-agent (handles universal components)
+**Role**: sector_analyst (domain-specific specialist)
 **Action**: analyze
 **Input Source**: cli_enhanced_sector_analyst_discover
 **Output Location**: `./data/outputs/sector_analysis/analysis/`
 **Next Phase**: sector_analyst_synthesize
-**Focus**: Template gap analysis only - no data duplication
+**Template Foundation**: `./scripts/templates/shared/base_analysis_template.j2` (managed by dasv-analysis-agent)
+**Shared Macros**: `./scripts/templates/shared/macros/` (framework components)
+**Domain Focus**: Sector-specific analysis components within framework structure
 
 ## Parameters
 
@@ -31,25 +34,39 @@ You are the Sector Template Gap Analysis Specialist, responsible for generating 
 - `valuation_framework`: Enable multi-method valuation - `true` | `false` (optional, default: true)
 - `risk_quantification`: Enable quantified risk matrices - `true` | `false` (optional, default: true)
 
-## Discovery Data Integration
+## DASV Analysis Phase Framework Integration
 
-**Load Discovery Data**
+### Framework Coordination Protocol
+
+**Agent Integration**: This command leverages the **dasv-analysis-agent** as the DASV Analysis Phase Framework Coordinator to handle universal framework components while maintaining domain-specific sector analysis expertise.
+
+**Execution Pattern**:
+1. **Framework Initialization**: dasv-analysis-agent validates discovery data and initializes universal JSON structure
+2. **Domain Analysis**: Sector analyst executes specialized sector analysis components
+3. **Framework Integration**: dasv-analysis-agent applies shared quality metrics, risk assessment, and economic context
+4. **Output Coordination**: dasv-analysis-agent manages final JSON output using base_analysis_template.j2
+
+### Discovery Data Integration (Framework-Coordinated)
+
+**Framework-Managed Discovery Integration**:
 ```
-DISCOVERY DATA INTEGRATION:
-1. Load Sector Discovery Data
-   → Load sector discovery JSON: {SECTOR}_{YYYYMMDD}_discovery.json
-   → Extract sector aggregates, financial metrics, and economic context
-   → Reference existing data - do not duplicate
+FRAMEWORK-COORDINATED DATA INTEGRATION:
+1. Load Sector Discovery Data (dasv-analysis-agent)
+   → Validate sector discovery JSON: {SECTOR}_{YYYYMMDD}_discovery.json
+   → Ensure complete data preservation with fail-fast validation
+   → Initialize universal framework structure
 
-2. Identify Template Gaps
-   → Compare discovery data against ./templates/analysis/sector_analysis_template.md requirements
-   → Focus only on missing analytical components
-   → Build upon existing economic context and sector intelligence
+2. Domain-Specific Analysis Preparation (sector_analyst)
+   → Extract sector aggregates and financial metrics for domain analysis
+   → Identify sector-specific analytical components needed
+   → Build upon framework-managed economic context and sector intelligence
 ```
 
-## Template Gap Analysis Framework
+## Domain-Specific Analytical Framework
 
-### Phase 1: Business Cycle Positioning Analysis
+**Framework Note**: Universal components (economic context, risk assessment, quality metrics) are handled by dasv-analysis-agent using shared macros. This section focuses on sector analysis domain expertise.
+
+### Phase 1: Business Cycle Positioning Analysis (Domain-Specific)
 
 **Economic Cycle Assessment**
 ```
@@ -80,7 +97,7 @@ BUSINESS CYCLE POSITIONING FRAMEWORK:
    → Leading vs lagging indicator relationships with GDP data
 ```
 
-### Phase 2: Liquidity Cycle Positioning Analysis
+### Phase 2: Liquidity Cycle Positioning Analysis (Domain-Specific)
 
 **Liquidity Environment Assessment**
 ```
@@ -111,7 +128,7 @@ LIQUIDITY CYCLE FRAMEWORK:
    → Consumer discretionary spending relationship with employment trends
 ```
 
-### Phase 3: Industry Dynamics Scorecard (A-F Grading)
+### Phase 3: Industry Dynamics Scorecard (Domain-Specific)
 
 **Comprehensive Industry Assessment**
 ```
@@ -141,7 +158,7 @@ INDUSTRY SCORECARD METHODOLOGY:
    → International regulatory coordination impact
 ```
 
-### Phase 4: Multi-Method Valuation Framework
+### Phase 4: Multi-Method Valuation Framework (Domain-Specific)
 
 **Comprehensive Valuation Analysis**
 ```
@@ -181,7 +198,7 @@ VALUATION FRAMEWORK:
    → ETF price consistency validation across sources
 ```
 
-### Phase 5: Quantified Risk Assessment Matrix
+### Phase 5: Sector-Specific Risk Analysis (Domain-Specific)
 
 **Comprehensive Risk Quantification**
 ```
@@ -322,10 +339,14 @@ INVESTMENT RECOMMENDATION GAP ANALYSIS FRAMEWORK:
    → ETF price-based risk assessment and opportunity identification
 ```
 
-## Output Structure
+## Framework-Coordinated Output Structure
 
-**File Naming**: `{SECTOR}_{YYYYMMDD}_analysis.json`
+**File Naming**: `{SECTOR}_{YYYYMMDD}_analysis.json` (managed by dasv-analysis-agent)
 **Primary Location**: `./data/outputs/sector_analysis/analysis/`
+**Template Foundation**: Uses `base_analysis_template.j2` with sector-specific extensions
+**Shared Macros**: Leverages confidence_scoring_macro.j2, risk_assessment_macro.j2, economic_sensitivity_macro.j2
+
+**Framework Integration**: The dasv-analysis-agent manages universal framework sections while this command provides domain-specific sector analysis content.
 
 ```json
 {
@@ -333,39 +354,82 @@ INVESTMENT RECOMMENDATION GAP ANALYSIS FRAMEWORK:
     "command_name": "sector_analyst_analyze",
     "execution_timestamp": "ISO_8601_format",
     "framework_phase": "analyze",
+    "framework_coordinator": "dasv-analysis-agent",
+    "domain_specialist": "sector_analyst",
     "sector": "SECTOR_SYMBOL",
-    "analysis_methodology": "template_gap_analysis",
+    "analysis_methodology": "dasv_framework_coordinated_sector_analysis",
     "discovery_file_reference": "path_to_discovery_file",
-    "confidence_threshold": "threshold_value"
+    "target_confidence_threshold": "threshold_value",
+    "discovery_confidence_inherited": "discovery_data_quality_score",
+    "economic_context_integration": "boolean",
+    "cli_services_utilized": "array_of_operational_cli_services"
   },
-  "business_cycle_positioning": {
-    "current_phase": "early/mid/late_cycle",
-    "recession_probability": "0.0-1.0",
-    "historical_performance_by_phase": {
-      "early_cycle": "performance_metrics",
-      "mid_cycle": "performance_metrics",
-      "late_cycle": "performance_metrics",
-      "recession": "performance_metrics"
-    },
-    "interest_rate_sensitivity": {
-      "duration_analysis": "sector_duration_estimate",
-      "leverage_impact": "debt_sensitivity_analysis",
-      "rate_coefficients": "correlation_values"
-    },
-    "inflation_hedge_assessment": {
-      "pricing_power": "ability_to_pass_through_costs",
-      "real_return_protection": "historical_inflation_correlation",
-      "cost_structure_flexibility": "variable_vs_fixed_cost_analysis"
-    },
-    "gdp_growth_correlation": {
-      "gdp_elasticity": "sector_sensitivity_to_gdp_growth_changes",
-      "historical_correlation": "correlation_coefficient_with_quarterly_gdp",
-      "expansion_performance": "sector_performance_during_gdp_expansions",
-      "contraction_performance": "sector_performance_during_gdp_contractions",
-      "leading_lagging_relationship": "sector_timing_relative_to_gdp_cycles"
-    },
-    "confidence": "0.0-1.0"
+  "discovery_data_inheritance": {
+    "metadata": "framework_managed_discovery_preservation",
+    "data_completeness": "percentage_of_discovery_data_preserved",
+    "inheritance_validation": "dasv_analysis_agent_validation_status",
+    "critical_data_preserved": {
+      "market_data": "boolean",
+      "entity_overview": "boolean",
+      "economic_context": "boolean",
+      "cli_validation": "boolean",
+      "peer_data": "boolean"
+    }
   },
+  "economic_context": {
+    "metadata": "framework_managed_by_dasv_analysis_agent",
+    "interest_rate_environment": "restrictive/neutral/accommodative",
+    "yield_curve_signal": "normal/inverted/flat",
+    "economic_indicators": {
+      "fed_funds_rate": "value",
+      "unemployment_rate": "value",
+      "gdp_growth": "value",
+      "inflation_rate": "value"
+    },
+    "policy_implications": "array_of_policy_impacts",
+    "economic_sensitivity": "framework_managed_sensitivity_analysis"
+  },
+  "cli_service_validation": {
+    "metadata": "framework_managed_by_dasv_analysis_agent",
+    "service_health": {
+      "service_name": "healthy/degraded/unavailable"
+    },
+    "health_score": "0.0-1.0_aggregate_health",
+    "services_operational": "integer_count",
+    "services_healthy": "boolean_overall_status",
+    "data_quality_scores": {
+      "service_name": "0.0-1.0_per_service"
+    }
+  },
+  "sector_analysis": {
+    "business_cycle_positioning": {
+      "current_phase": "early/mid/late_cycle",
+      "recession_probability": "0.0-1.0",
+      "historical_performance_by_phase": {
+        "early_cycle": "performance_metrics",
+        "mid_cycle": "performance_metrics",
+        "late_cycle": "performance_metrics",
+        "recession": "performance_metrics"
+      },
+      "interest_rate_sensitivity": {
+        "duration_analysis": "sector_duration_estimate",
+        "leverage_impact": "debt_sensitivity_analysis",
+        "rate_coefficients": "correlation_values"
+      },
+      "inflation_hedge_assessment": {
+        "pricing_power": "ability_to_pass_through_costs",
+        "real_return_protection": "historical_inflation_correlation",
+        "cost_structure_flexibility": "variable_vs_fixed_cost_analysis"
+      },
+      "gdp_growth_correlation": {
+        "gdp_elasticity": "sector_sensitivity_to_gdp_growth_changes",
+        "historical_correlation": "correlation_coefficient_with_quarterly_gdp",
+        "expansion_performance": "sector_performance_during_gdp_expansions",
+        "contraction_performance": "sector_performance_during_gdp_contractions",
+        "leading_lagging_relationship": "sector_timing_relative_to_gdp_cycles"
+      },
+      "confidence": "0.0-1.0"
+    },
   "liquidity_cycle_positioning": {
     "fed_policy_stance": "accommodative/neutral/restrictive",
     "credit_market_conditions": {
@@ -456,27 +520,35 @@ INVESTMENT RECOMMENDATION GAP ANALYSIS FRAMEWORK:
     },
     "confidence": "0.0-1.0"
   },
-  "quantified_risk_assessment": {
+    }
+  },
+  "risk_assessment": {
+    "metadata": "framework_managed_using_risk_assessment_macro",
     "risk_matrix": {
-      "economic_recession": {"probability": "0.0-1.0", "impact": "1-5", "risk_score": "calculated"},
-      "interest_rate_shock": {"probability": "0.0-1.0", "impact": "1-5", "risk_score": "calculated"},
-      "dollar_strength": {"probability": "0.0-1.0", "impact": "1-5", "risk_score": "calculated"},
-      "regulatory_changes": {"probability": "0.0-1.0", "impact": "1-5", "risk_score": "calculated"},
-      "market_volatility": {"probability": "0.0-1.0", "impact": "1-5", "risk_score": "calculated"}
+      "risk_category": [{
+        "risk": "string",
+        "probability": "0.0-1.0",
+        "impact": "1-5",
+        "risk_score": "probability_x_impact",
+        "evidence": "string",
+        "monitoring_kpis": ["string"]
+      }]
     },
-    "stress_testing": {
-      "bear_market_scenario": {"probability": "percentage", "sector_impact": "decline_estimate", "recovery_timeline": "quarters"},
-      "recession_scenario": {"probability": "percentage", "sector_impact": "performance_analysis", "recovery_phases": "timeline"},
-      "policy_shock_scenario": {"probability": "percentage", "regulatory_impact": "implementation_analysis"}
+    "quantified_assessment": {
+      "aggregate_risk_score": "number",
+      "risk_probability_distribution": "object",
+      "detailed_probability_impact_matrix": "object",
+      "mitigation_strategies": "object",
+      "monitoring_metrics": "object"
     },
-    "sensitivity_analysis": {
-      "key_variables": "most_impactful_assumptions",
-      "elasticity_calculations": "percentage_change_impacts",
-      "break_even_analysis": "critical_threshold_identification",
-      "tornado_diagram": "variable_importance_ranking"
-    },
-    "aggregate_risk_score": "weighted_total_risk_assessment",
-    "confidence": "0.0-1.0"
+    "scenario_analysis": {
+      "scenario_name": {
+        "probability": "number",
+        "impact": "string",
+        "recovery_timeline": "string",
+        "confidence": "number"
+      }
+    }
   },
   "enhanced_economic_sensitivity": {
     "fed_funds_correlation": "correlation_coefficient_with_fed_rates",
@@ -562,130 +634,172 @@ INVESTMENT RECOMMENDATION GAP ANALYSIS FRAMEWORK:
       "confidence": "0.0-1.0"
     }
   },
-  "analysis_quality_metrics": {
-    "gap_coverage": "percentage_of_template_gaps_filled",
-    "confidence_propagation": "discovery_confidence_inheritance",
-    "analytical_rigor": "methodology_quality_score",
-    "evidence_strength": "supporting_data_quality"
+  "analytical_insights": {
+    "metadata": "framework_managed_structured_findings",
+    "key_findings": "array_minimum_3_findings",
+    "investment_implications": "array_minimum_3_implications",
+    "analysis_limitations": "array_minimum_2_limitations",
+    "follow_up_research": "array_minimum_3_recommendations"
+  },
+  "quality_metrics": {
+    "metadata": "framework_managed_using_confidence_scoring_macro",
+    "analysis_confidence": "0.0-1.0_overall_confidence",
+    "data_quality_impact": "0.0-1.0_data_influence",
+    "methodology_rigor": "0.0-1.0_process_quality",
+    "evidence_strength": "0.0-1.0_support_quality",
+    "statistical_significance": "0.0-1.0_where_applicable",
+    "sample_adequacy": "0.0-1.0_where_applicable"
   }
 }
 ```
 
-## Analysis Execution Protocol
+## DASV Analysis Phase Execution Protocol (Framework-Coordinated)
 
-### Pre-Execution
-1. **Load Discovery Data**
-   - Load sector discovery JSON: {SECTOR}_{YYYYMMDD}_discovery.json
-   - Extract relevant data sections for reference (do not duplicate)
-   - Validate discovery data completeness and quality
+### Framework Integration Approach
 
-2. **Identify Template Gaps**
-   - Compare discovery data against sector_analysis_template.md requirements
-   - Map missing analytical components needed for synthesis
-   - Prioritize gaps based on template criticality
+**Execution Coordination**: This protocol leverages the **dasv-analysis-agent** to handle universal framework components while maintaining sector analysis domain expertise.
 
-3. **Initialize Analysis Framework**
-   - Set confidence thresholds for analytical conclusions
-   - Prepare economic context from discovery data
-   - Load sector aggregates and financial metrics
+**10-Step DASV Analysis Process Integration**:
+1. **Initialize Framework Structure** (dasv-analysis-agent)
+2. **Populate Universal Metadata** (dasv-analysis-agent)
+3. **Validate Discovery Data Inheritance** (dasv-analysis-agent)
+4. **Integrate Economic Context** (dasv-analysis-agent)
+5. **Perform Domain-Specific Analysis** (sector_analyst)
+6. **Apply Risk Assessment Framework** (dasv-analysis-agent using risk_assessment_macro.j2)
+7. **Generate Analytical Insights** (coordinated)
+8. **Calculate Quality Metrics** (dasv-analysis-agent using confidence_scoring_macro.j2)
+9. **Validate Against Schema** (dasv-analysis-agent)
+10. **Export JSON Output** (dasv-analysis-agent using base_analysis_template.j2)
 
-### Main Execution
+### Pre-Execution (Framework-Coordinated)
+
+**Agent Invocation**:
+```
+INVOKE dasv-analysis-agent WITH:
+- discovery_file: {SECTOR}_{YYYYMMDD}_discovery.json
+- analysis_type: sector
+- confidence_threshold: 0.9
+- framework_phase: initialize
+```
+
+**Framework Validation** (Steps 1-4):
+1. **Initialize Framework Structure**: dasv-analysis-agent sets up universal JSON architecture
+2. **Populate Universal Metadata**: Framework execution context and methodology tracking
+3. **Validate Discovery Data Inheritance**: Complete data preservation verification with fail-fast
+4. **Integrate Economic Context**: Economic regime and indicator integration using economic_sensitivity_macro.j2
+
+**Domain Preparation**:
+- Load sector-specific parameters and thresholds
+- Initialize sector analysis frameworks and metrics
+- Prepare sector aggregates and financial data
+- Set up domain-specific quality gates
+
+### Main Execution (Domain-Specific Analysis - Step 5)
+
+**Sector Analysis Domain Expertise**:
 1. **Business Cycle Positioning Analysis**
-   - Classify current economic cycle phase
-   - Calculate recession probability using yield curve data
+   - Classify current economic cycle phase for sector impact
+   - Calculate recession probability using sector-specific factors
    - Quantify interest rate sensitivity and inflation hedge capability
+   - Analyze GDP growth correlation and sector elasticity
 
 2. **Liquidity Cycle Assessment**
-   - Analyze Fed policy stance impact on sector
-   - Evaluate credit market conditions and capital access
+   - Analyze Fed policy stance impact on sector dynamics
+   - Evaluate credit market conditions and sector capital access
    - Assess money supply impact and liquidity preferences
+   - Calculate employment sensitivity and consumer spending linkage
 
 3. **Industry Dynamics Scorecard**
-   - Generate A-F grades for profitability and balance sheet strength
-   - Score competitive moats on 1-10 scale
+   - Generate A-F grades for sector profitability and balance sheet strength
+   - Score competitive moats on 1-10 scale with sector context
    - Rate regulatory environment as favorable/neutral/hostile
+   - Assess sector-specific competitive dynamics
 
 4. **Multi-Method Valuation Framework**
-   - Calculate DCF fair values with sensitivity analysis
-   - Perform relative comparables analysis
-   - Integrate technical analysis for target prices
-   - Generate probability-weighted blended valuations
+   - Calculate DCF fair values with sector-specific assumptions
+   - Perform relative sector comparables analysis
+   - Integrate technical analysis for sector target prices
+   - Generate probability-weighted blended sector valuations
+   - Analyze ETF price vs fair value positioning
 
-5. **Quantified Risk Assessment**
-   - Build probability/impact risk matrices
-   - Model stress testing scenarios
-   - Perform sensitivity analysis on key variables
-   - Calculate aggregate risk scores
-
-6. **Enhanced Economic Sensitivity**
-   - Quantify correlations with key economic indicators
-   - Measure currency and volatility sensitivities
-   - Analyze crypto correlation for risk appetite
-
-7. **GDP/Employment Macroeconomic Integration**
-   - Integrate GDP analysis data from discovery phase (GDP, GDPC1, A191RL1Q225SBEA)
-   - Incorporate employment indicators from discovery (PAYEMS, CIVPART, ICSA)
-   - Calculate GDP growth correlation and employment sensitivity coefficients
-   - Generate macroeconomic risk scoring using GDP/employment composite indicators
-
-8. **ETF Price vs Fair Value Recommendation Analysis**
-   - Validate current ETF price from discovery data
-   - Calculate ETF price vs fair value range gap analysis
-   - Apply BUY/SELL/HOLD recommendation validation logic
-   - Assess ETF price positioning and recommendation consistency
-   - Generate ETF price-based risk assessment and opportunity identification
-
-8. **Investment Recommendation Gap Analysis**
+5. **Investment Recommendation Analysis**
    - Develop portfolio allocation context and sector weighting recommendations
    - Analyze economic cycle investment positioning and rotation probabilities
-   - Calculate risk-adjusted investment metrics with economic context
+   - Calculate risk-adjusted investment metrics with sector context
    - Establish investment conclusion confidence framework
    - Define sector investment characteristics and risk-reward profiles
 
-### Post-Execution
-1. **Generate Analysis Output**
-   - Create JSON output with only NEW analytical insights
-   - Reference discovery data without duplication
-   - Include confidence scores for all conclusions
+**Framework Integration Points**:
+- Risk assessment handled by dasv-analysis-agent (Step 6)
+- Economic context provided by framework coordination
+- Quality metrics calculated using shared confidence scoring
 
-2. **Quality Validation**
-   - Verify all template gaps are addressed
-   - Validate analytical rigor and evidence backing
-   - Confirm synthesis phase readiness
+### Post-Execution (Framework-Coordinated - Steps 6-10)
 
-3. **Save and Signal**
-   - Save output to ./data/outputs/sector_analysis/analysis/
-   - Signal readiness for sector_analyst_synthesize phase
+**Agent Coordination**:
+```
+INVOKE dasv-analysis-agent WITH:
+- domain_analysis: sector_analysis_results
+- framework_phase: finalize
+- output_template: base_analysis_template.j2
+```
 
-## Quality Standards
+**Framework Completion** (Steps 6-10):
+6. **Apply Risk Assessment Framework**: Generate quantified risk matrices using risk_assessment_macro.j2
+7. **Generate Analytical Insights**: Structured findings and implications with minimum requirements
+8. **Calculate Quality Metrics**: Institutional-grade confidence scoring using confidence_scoring_macro.j2
+9. **Validate Against Schema**: Framework compliance verification with fail-fast
+10. **Export JSON Output**: File generation using base_analysis_template.j2 with proper naming conventions
 
-### Template Gap Coverage
-- All template requirements not in discovery must be addressed
-- Business cycle and liquidity cycle analysis completed
-- Industry scorecard with A-F grades generated
-- Multi-method valuation framework implemented
-- Quantified risk assessment with probability/impact matrices
+**Final Validation**:
+- Verify >90% institutional confidence threshold
+- Confirm framework schema compliance
+- Validate synthesis phase readiness
+- Log performance metrics and quality scores
 
-### Analytical Rigor
-- All conclusions must have confidence scores ≥ confidence_threshold
-- Quantitative support for all grading and scoring decisions
-- Clear methodology documentation for calculations
-- Evidence backing for all probability and impact assignments
+## Framework-Coordinated Quality Standards
 
-### Discovery Data Integration
-- Reference discovery data without duplication
-- Build upon existing economic context and sector intelligence
-- Inherit and propagate discovery confidence scores
-- Maintain data continuity for synthesis phase
+### Institutional-Grade Framework Standards (Managed by dasv-analysis-agent)
+- **Confidence Threshold**: >90% minimum for institutional grade (targeting >95% for enhanced)
+- **Service Health**: >80% CLI service operational status requirement
+- **Data Completeness**: >85% for comprehensive analysis certification
+- **Multi-Source Validation**: <2% variance tolerance across data sources
+- **Schema Compliance**: 100% validation against Analysis phase output specification
 
-### Synthesis Phase Readiness
-- Output structure compatible with template generation
-- All template gaps filled with institutional-quality analysis
-- Quality metrics that inform synthesis confidence
-- Clear analytical handoff for document generation
+### Domain-Specific Quality Requirements (Sector Analysis)
+- **Business Cycle Analysis**: Quantified correlations and elasticity measurements
+- **Valuation Framework**: Multi-method approach with probability weighting
+- **Industry Scorecard**: A-F grades with quantitative support and evidence
+- **Investment Analysis**: Portfolio allocation guidance with confidence intervals
 
-**Integration with DASV Framework**: This microservice fills specific analytical gaps required by `./templates/analysis/sector_analysis_template.md`, including investment recommendation preparatory analysis, enabling the synthesis phase to generate complete sector analysis documents with comprehensive Investment Recommendation Summary without additional data collection.
+### Framework Validation Requirements (Enforced by dasv-analysis-agent)
+- **Required Field Presence**: All universal framework sections must be populated
+- **Data Type Conformance**: Confidence scores 0.0-1.0, risk probabilities decimal format
+- **Value Range Constraints**: Impact scores 1-5, timestamps ISO 8601 format
+- **Minimum Array Lengths**: Key findings (3+), implications (3+), limitations (2+), research (3+)
+- **File Organization**: Correct naming `{SECTOR}_{YYYYMMDD}_analysis.json` in appropriate directory
+
+### Fail-Fast Quality Enforcement (Framework-Managed)
+- Discovery data inheritance below 100% for critical data points triggers immediate failure
+- CLI service health below 80% operational threshold triggers immediate failure
+- Confidence scores not meeting 90% institutional minimum triggers immediate failure
+- Missing required framework sections triggers immediate failure
+- Schema validation failures trigger immediate failure with specific violation details
+
+### Integration Requirements (Framework-Coordinated)
+- **Template Utilization**: Uses base_analysis_template.j2 with sector-specific inheritance blocks
+- **Macro Integration**: Leverages shared macros for confidence scoring, risk assessment, economic sensitivity
+- **Quality Propagation**: Framework confidence scores feed into overall analysis confidence
+- **Synthesis Readiness**: Structured output compatible with synthesis phase requirements
+
+**Integration with DASV Framework**: This domain-specific microservice works in coordination with the dasv-analysis-agent to provide sector-specific analytical components within the DASV Analysis Phase framework, utilizing shared framework components while maintaining specialized sector analysis expertise. The analysis provides domain-specific input for sector investment recommendations and synthesis phase document generation.
+
+**Framework Coordination**: dasv-analysis-agent
+**Domain Expertise**: Sector Analysis Specialist
+**Template Foundation**: base_analysis_template.j2 with sector inheritance blocks
+**Shared Components**: confidence_scoring_macro.j2, risk_assessment_macro.j2, economic_sensitivity_macro.j2
+**Quality Standards**: Institutional-grade framework compliance (>90% confidence threshold)
 
 **Author**: Cole Morton
-**Confidence**: [Gap analysis confidence based on discovery data quality and analytical methodology rigor]
-**Data Quality**: [Template coverage completeness and analytical evidence strength]
+**Confidence**: [Framework-coordinated analysis confidence calculated from discovery data quality, economic context validation, and institutional-grade quality standards]
+**Data Quality**: [Framework-managed data quality score based on CLI service reliability, economic context freshness, and comprehensive validation protocols]

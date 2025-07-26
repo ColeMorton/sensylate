@@ -257,11 +257,14 @@ class ContentAutomationCLI(BaseFinancialCLI):
             analysis_type: str = typer.Option(
                 "fundamental",
                 "--type",
-                help="Analysis type (fundamental, sector)",
+                help="Analysis type (fundamental, sector, industry)",
             ),
             ticker: str = typer.Option(None, "--ticker", help="Stock ticker symbol"),
             sector: str = typer.Option(
                 None, "--sector", help="Sector symbol (for sector analysis)"
+            ),
+            industry: str = typer.Option(
+                None, "--industry", help="Industry identifier (for industry analysis)"
             ),
             output_format: str = typer.Option(
                 "markdown", "--format", help="Output format (markdown, html, json)"
@@ -276,7 +279,7 @@ class ContentAutomationCLI(BaseFinancialCLI):
             """Generate institutional-quality analysis document"""
             try:
                 # Validate analysis type
-                if analysis_type not in ["fundamental", "sector"]:
+                if analysis_type not in ["fundamental", "sector", "industry"]:
                     raise ValidationError(f"Invalid analysis type: {analysis_type}")
 
                 # Load analysis data
@@ -288,6 +291,7 @@ class ContentAutomationCLI(BaseFinancialCLI):
                     analysis_type=analysis_type,
                     ticker=ticker,
                     sector=sector,
+                    industry=industry,
                     validate_compliance=validate_compliance,
                 )
 
@@ -303,6 +307,42 @@ class ContentAutomationCLI(BaseFinancialCLI):
                 self._handle_error(
                     e, f"Failed to generate analysis document: {analysis_type}"
                 )
+
+        @self.app.command("industry")
+        def industry_analysis_workflow(
+            action: str = typer.Argument(..., help="Workflow action (discover, analyze, synthesize, validate, full_workflow)"),
+            industry: str = typer.Argument(..., help="Industry identifier"),
+            sector: str = typer.Option(None, "--sector", help="Parent sector context"),
+            date: str = typer.Option(None, "--date", help="Analysis date (YYYYMMDD)"),
+            confidence_threshold: float = typer.Option(9.0, "--confidence-threshold", help="Minimum confidence requirement"),
+            output_format: str = typer.Option("json", "--output-format", help="Output format (json, yaml, table, csv)"),
+        ):
+            """Execute industry analysis DASV workflow"""
+            try:
+                from datetime import datetime
+                
+                # Set default date if not provided
+                if not date:
+                    date = datetime.now().strftime("%Y%m%d")
+                
+                if action == "discover":
+                    result = self._execute_industry_discovery(industry, sector, confidence_threshold)
+                elif action == "analyze":
+                    result = self._execute_industry_analysis(industry, date, confidence_threshold)
+                elif action == "synthesize":
+                    result = self._execute_industry_synthesis(industry, date, confidence_threshold)
+                elif action == "validate":
+                    result = self._execute_industry_validation(industry, date, confidence_threshold)
+                elif action == "full_workflow":
+                    result = self._execute_full_industry_workflow(industry, sector, confidence_threshold)
+                else:
+                    raise ValidationError(f"Invalid action: {action}")
+                
+                # Output result
+                self._output_result(result, output_format, f"Industry {action.title()}: {industry}")
+                
+            except Exception as e:
+                self._handle_error(e, f"Failed to execute industry {action}: {industry}")
 
     def _load_data_source(self, file_path: str) -> Dict[str, Any]:
         """Load data from various file formats"""
@@ -535,6 +575,7 @@ class ContentAutomationCLI(BaseFinancialCLI):
         analysis_type: str,
         ticker: Optional[str],
         sector: Optional[str] = None,
+        industry: Optional[str] = None,
         validate_compliance: bool = True,
     ) -> Dict[str, Any]:
         """Generate institutional-quality analysis document using enhanced templates"""
@@ -546,6 +587,9 @@ class ContentAutomationCLI(BaseFinancialCLI):
             elif analysis_type == "sector":
                 template_name = "sector_analysis_enhanced.j2"
                 content_type = "sector_analysis"
+            elif analysis_type == "industry":
+                template_name = "industry_analysis_enhanced.j2"
+                content_type = "industry_analysis"
             else:
                 raise ValidationError(f"Unsupported analysis type: {analysis_type}")
 
@@ -560,6 +604,7 @@ class ContentAutomationCLI(BaseFinancialCLI):
                 "data": mapped_data,
                 "ticker": ticker,
                 "sector": sector,
+                "industry": industry,
                 "timestamp": datetime.now().isoformat(),
                 "analysis_type": analysis_type,
             }
@@ -602,7 +647,7 @@ class ContentAutomationCLI(BaseFinancialCLI):
 
             # Generate enhanced metadata
             metadata = self._generate_analysis_metadata(
-                data, ticker, sector, analysis_type
+                data, ticker, sector, industry, analysis_type
             )
 
             return {
@@ -611,6 +656,7 @@ class ContentAutomationCLI(BaseFinancialCLI):
                 "analysis_type": analysis_type,
                 "ticker": ticker,
                 "sector": sector,
+                "industry": industry,
                 "template_name": template_name,
                 "word_count": len(content.split()),
                 "institutional_compliance": compliance_validation.get(
@@ -2324,6 +2370,7 @@ Generated: {{ timestamp }}"""
         data: Dict[str, Any],
         ticker: Optional[str],
         sector: Optional[str],
+        industry: Optional[str],
         analysis_type: str,
     ) -> Dict[str, Any]:
         """Generate enhanced metadata for institutional analysis"""
@@ -2331,6 +2378,7 @@ Generated: {{ timestamp }}"""
             "document_type": f"{analysis_type}_analysis",
             "ticker": ticker,
             "sector": sector,
+            "industry": industry,
             "overall_confidence": data.get("overall_confidence", 0.9),
             "data_quality": data.get("data_quality", 0.9),
             "institutional_certified": data.get("overall_confidence", 0.9) >= 0.9,
@@ -2342,6 +2390,187 @@ Generated: {{ timestamp }}"""
             "author": "Cole Morton",
             "creation_timestamp": datetime.now().isoformat(),
         }
+
+    def _execute_industry_discovery(self, industry: str, sector: Optional[str], confidence_threshold: float) -> Dict[str, Any]:
+        """Execute industry discovery workflow"""
+        try:
+            import subprocess
+            import sys
+            
+            # Build command
+            cmd = [
+                sys.executable, 
+                "scripts/industry_analysis/industry_discovery.py",
+                industry
+            ]
+            
+            if sector:
+                cmd.extend(["--sector", sector])
+            cmd.extend(["--confidence-threshold", str(confidence_threshold)])
+            
+            # Execute discovery script
+            result = subprocess.run(cmd, capture_output=True, text=True, check=True)
+            
+            # Load discovery results
+            from datetime import datetime
+            date_str = datetime.now().strftime("%Y%m%d")
+            discovery_file = f"./data/outputs/industry_analysis/discovery/{industry}_{date_str}_discovery.json"
+            
+            try:
+                with open(discovery_file, 'r') as f:
+                    import json
+                    discovery_data = json.load(f)
+                    return {
+                        "status": "completed",
+                        "phase": "discovery",
+                        "industry": industry,
+                        "output_file": discovery_file,
+                        "confidence": discovery_data.get("discovery_quality_metrics", {}).get("discovery_confidence", 9.0),
+                        "summary": f"Industry discovery completed with {len(discovery_data.get('representative_companies', []))} representative companies analyzed"
+                    }
+            except FileNotFoundError:
+                return {
+                    "status": "completed",
+                    "phase": "discovery", 
+                    "industry": industry,
+                    "message": "Discovery completed successfully",
+                    "stdout": result.stdout
+                }
+                
+        except subprocess.CalledProcessError as e:
+            raise ServiceError(f"Industry discovery failed: {e.stderr}")
+
+    def _execute_industry_analysis(self, industry: str, date: str, confidence_threshold: float) -> Dict[str, Any]:
+        """Execute industry analysis workflow"""
+        try:
+            import subprocess
+            import sys
+            
+            # Build command
+            analysis_file = f"./data/outputs/industry_analysis/discovery/{industry}_{date}_discovery.json"
+            cmd = [
+                sys.executable,
+                "scripts/industry_analysis/industry_analysis.py", 
+                analysis_file,
+                "--confidence-threshold", str(confidence_threshold)
+            ]
+            
+            # Execute analysis script
+            result = subprocess.run(cmd, capture_output=True, text=True, check=True)
+            
+            return {
+                "status": "completed",
+                "phase": "analysis",
+                "industry": industry,
+                "date": date,
+                "message": "Industry analysis completed successfully",
+                "stdout": result.stdout
+            }
+            
+        except subprocess.CalledProcessError as e:
+            raise ServiceError(f"Industry analysis failed: {e.stderr}")
+
+    def _execute_industry_synthesis(self, industry: str, date: str, confidence_threshold: float) -> Dict[str, Any]:
+        """Execute industry synthesis workflow"""
+        try:
+            import subprocess
+            import sys
+            
+            # Build command  
+            analysis_file = f"./data/outputs/industry_analysis/analysis/{industry}_{date}_analysis.json"
+            cmd = [
+                sys.executable,
+                "scripts/industry_analysis/industry_synthesis.py",
+                analysis_file,
+                "--confidence-threshold", str(confidence_threshold)
+            ]
+            
+            # Execute synthesis script
+            result = subprocess.run(cmd, capture_output=True, text=True, check=True)
+            
+            # Check for output file
+            output_file = f"./data/outputs/industry_analysis/{industry}_{date}.md"
+            
+            return {
+                "status": "completed",
+                "phase": "synthesis",
+                "industry": industry,
+                "date": date,
+                "output_file": output_file,
+                "message": "Industry synthesis completed successfully",
+                "stdout": result.stdout
+            }
+            
+        except subprocess.CalledProcessError as e:
+            raise ServiceError(f"Industry synthesis failed: {e.stderr}")
+
+    def _execute_industry_validation(self, industry: str, date: str, confidence_threshold: float) -> Dict[str, Any]:
+        """Execute industry validation workflow"""
+        try:
+            import subprocess
+            import sys
+            
+            # Build command
+            cmd = [
+                sys.executable,
+                "scripts/industry_analysis/industry_validation.py",
+                industry,
+                date,
+                "--confidence-threshold", str(confidence_threshold)
+            ]
+            
+            # Execute validation script
+            result = subprocess.run(cmd, capture_output=True, text=True, check=True)
+            
+            return {
+                "status": "completed", 
+                "phase": "validation",
+                "industry": industry,
+                "date": date,
+                "message": "Industry validation completed successfully",
+                "stdout": result.stdout
+            }
+            
+        except subprocess.CalledProcessError as e:
+            raise ServiceError(f"Industry validation failed: {e.stderr}")
+
+    def _execute_full_industry_workflow(self, industry: str, sector: Optional[str], confidence_threshold: float) -> Dict[str, Any]:
+        """Execute complete industry DASV workflow"""
+        try:
+            from datetime import datetime
+            date = datetime.now().strftime("%Y%m%d")
+            
+            workflow_results = []
+            
+            # Phase 1: Discovery
+            discovery_result = self._execute_industry_discovery(industry, sector, confidence_threshold)
+            workflow_results.append(discovery_result)
+            
+            # Phase 2: Analysis
+            analysis_result = self._execute_industry_analysis(industry, date, confidence_threshold)
+            workflow_results.append(analysis_result)
+            
+            # Phase 3: Synthesis
+            synthesis_result = self._execute_industry_synthesis(industry, date, confidence_threshold)
+            workflow_results.append(synthesis_result)
+            
+            # Phase 4: Validation
+            validation_result = self._execute_industry_validation(industry, date, confidence_threshold)
+            workflow_results.append(validation_result)
+            
+            return {
+                "status": "completed",
+                "workflow": "full_industry_dasv",
+                "industry": industry,
+                "date": date,
+                "phases_completed": len(workflow_results),
+                "results": workflow_results,
+                "final_output": f"./data/outputs/industry_analysis/{industry}_{date}.md",
+                "message": f"Complete industry DASV workflow completed for {industry}"
+            }
+            
+        except Exception as e:
+            raise ServiceError(f"Full industry workflow failed: {e}")
 
 
 def main():

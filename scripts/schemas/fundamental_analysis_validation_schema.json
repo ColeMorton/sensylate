@@ -1,0 +1,823 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sensylate.com/schemas/fundamental_analysis_validation.json",
+  "title": "Fundamental Analysis Validation Schema",
+  "description": "Comprehensive validation schema for fundamental analysis validation JSON outputs from CLI-enhanced DASV framework",
+  "type": "object",
+  "required": [
+    "metadata",
+    "overall_assessment",
+    "dasv_validation_breakdown",
+    "critical_findings_matrix",
+    "decision_impact_assessment",
+    "usage_recommendations",
+    "methodology_notes"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "description": "Core metadata about the validation execution",
+      "required": [
+        "command_name",
+        "execution_timestamp",
+        "framework_phase",
+        "ticker",
+        "validation_date",
+        "validation_methodology"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "command_name": {
+          "type": "string",
+          "enum": [
+            "cli_enhanced_fundamental_analyst_validate",
+            "fundamental_analyst_validate"
+          ],
+          "description": "Must be the standardized validation command name"
+        },
+        "execution_timestamp": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d{6})?Z?$",
+          "description": "ISO 8601 timestamp with optional microseconds and timezone"
+        },
+        "framework_phase": {
+          "type": "string",
+          "enum": [
+            "cli_enhanced_validate_7_source",
+            "validate",
+            "institutional_dasv_workflow_validation"
+          ],
+          "description": "Must indicate the validation phase methodology"
+        },
+        "ticker": {
+          "type": "string",
+          "pattern": "^[A-Z]{1,5}$",
+          "description": "Valid stock ticker symbol (1-5 uppercase letters)"
+        },
+        "validation_date": {
+          "type": "string",
+          "pattern": "^\\d{8}$",
+          "description": "Validation date in YYYYMMDD format"
+        },
+        "validation_methodology": {
+          "type": "string",
+          "enum": [
+            "comprehensive_dasv_workflow_validation_via_cli_services",
+            "institutional_dasv_workflow_validation"
+          ],
+          "description": "Systematic validation methodology identifier"
+        },
+        "cli_services_utilized": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 7,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": [
+              "yahoo_finance_cli",
+              "alpha_vantage_cli",
+              "fmp_cli",
+              "fred_economic_cli",
+              "coingecko_cli",
+              "sec_edgar_cli",
+              "imf_cli"
+            ]
+          },
+          "description": "CLI services utilized for validation (minimum 3 required)"
+        },
+        "api_keys_configured": {
+          "type": "string",
+          "description": "API key configuration reference"
+        },
+        "confidence_threshold": {
+          "type": "number",
+          "minimum": 1.0,
+          "maximum": 10.0,
+          "description": "Minimum confidence threshold for institutional certification"
+        }
+      }
+    },
+    "overall_assessment": {
+      "type": "object",
+      "description": "High-level validation assessment and certification status",
+      "required": [
+        "overall_reliability_score",
+        "decision_confidence",
+        "minimum_threshold_met",
+        "institutional_quality_certified"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "overall_reliability_score": {
+          "type": "string",
+          "pattern": "^\\d{1,2}\\.\\d{1,2}/10\\.0$",
+          "description": "Overall reliability score in X.Y/10.0 format"
+        },
+        "decision_confidence": {
+          "type": "string",
+          "enum": ["High", "Medium", "Low", "Do_Not_Use"],
+          "description": "Decision confidence level based on validation results"
+        },
+        "minimum_threshold_met": {
+          "oneOf": [
+            {"type": "boolean"},
+            {"type": "string", "enum": ["true", "false"]}
+          ],
+          "description": "Whether minimum quality threshold is met"
+        },
+        "institutional_quality_certified": {
+          "oneOf": [
+            {"type": "boolean"},
+            {"type": "string", "enum": ["true", "false"]}
+          ],
+          "description": "Institutional quality certification status"
+        },
+        "price_accuracy_validated": {
+          "oneOf": [
+            {"type": "boolean"},
+            {"type": "string", "enum": ["true", "false"]}
+          ],
+          "description": "Price accuracy validation status"
+        },
+        "price_consistency_blocking_issue": {
+          "oneOf": [
+            {"type": "boolean"},
+            {"type": "string", "enum": ["true", "false"]}
+          ],
+          "description": "Whether price consistency creates blocking issues"
+        },
+        "cli_validation_quality": {
+          "type": "string",
+          "pattern": "^\\d{1,2}\\.\\d{1,2}/10\\.0$",
+          "description": "CLI service validation quality score"
+        },
+        "cli_services_health": {
+          "type": "string",
+          "enum": ["operational", "degraded", "failed"],
+          "description": "Overall CLI services health status"
+        },
+        "multi_source_consistency": {
+          "oneOf": [
+            {"type": "boolean"},
+            {"type": "string", "enum": ["true", "false"]}
+          ],
+          "description": "Multi-source data consistency validation"
+        }
+      }
+    },
+    "dasv_validation_breakdown": {
+      "type": "object",
+      "description": "Detailed validation breakdown across DASV phases",
+      "required": [
+        "discovery_validation",
+        "analysis_validation",
+        "synthesis_validation"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "discovery_validation": {
+          "type": "object",
+          "required": [
+            "market_data_accuracy",
+            "financial_statements_integrity",
+            "data_quality_assessment",
+            "overall_discovery_score",
+            "evidence_quality"
+          ],
+          "additionalProperties": true,
+          "properties": {
+            "market_data_accuracy": {
+              "oneOf": [
+                {"type": "string", "pattern": "^\\d{1,2}\\.\\d{1,2}/10\\.0$"},
+                {"type": "number", "minimum": 0.0, "maximum": 10.0}
+              ],
+              "description": "Market data accuracy validation score"
+            },
+            "financial_statements_integrity": {
+              "oneOf": [
+                {"type": "string", "pattern": "^\\d{1,2}\\.\\d{1,2}/10\\.0$"},
+                {"type": "number", "minimum": 0.0, "maximum": 10.0}
+              ],
+              "description": "Financial statements integrity validation score"
+            },
+            "data_quality_assessment": {
+              "oneOf": [
+                {"type": "string", "pattern": "^\\d{1,2}\\.\\d{1,2}/10\\.0$"},
+                {"type": "number", "minimum": 0.0, "maximum": 10.0}
+              ],
+              "description": "Overall data quality assessment score"
+            },
+            "cli_multi_source_validation": {
+              "oneOf": [
+                {"type": "string", "pattern": "^\\d{1,2}\\.\\d{1,2}/10\\.0$"},
+                {"type": "number", "minimum": 0.0, "maximum": 10.0}
+              ],
+              "description": "CLI multi-source validation score"
+            },
+            "enhanced_financial_metrics_accuracy": {
+              "oneOf": [
+                {"type": "string", "pattern": "^\\d{1,2}\\.\\d{1,2}/10\\.0$"},
+                {"type": "number", "minimum": 0.0, "maximum": 10.0}
+              ],
+              "description": "Enhanced financial metrics accuracy score"
+            },
+            "cli_service_health_validation": {
+              "oneOf": [
+                {"type": "string", "pattern": "^\\d{1,2}\\.\\d{1,2}/10\\.0$"},
+                {"type": "number", "minimum": 0.0, "maximum": 10.0}
+              ],
+              "description": "CLI service health validation score"
+            },
+            "overall_discovery_score": {
+              "oneOf": [
+                {"type": "string", "pattern": "^\\d{1,2}\\.\\d{1,2}/10\\.0$"},
+                {"type": "number", "minimum": 0.0, "maximum": 10.0}
+              ],
+              "description": "Overall discovery phase validation score"
+            },
+            "evidence_quality": {
+              "type": "string",
+              "enum": ["CLI_Primary", "CLI_Secondary", "Unverified", "Mixed"],
+              "description": "Quality level of evidence sources"
+            },
+            "key_issues": {
+              "type": "array",
+              "items": {"type": "string"},
+              "description": "Key issues identified during discovery validation"
+            }
+          }
+        },
+        "analysis_validation": {
+          "type": "object",
+          "required": [
+            "financial_health_verification",
+            "competitive_position_assessment",
+            "risk_assessment_validation",
+            "overall_analysis_score",
+            "evidence_quality"
+          ],
+          "additionalProperties": true,
+          "properties": {
+            "financial_health_verification": {
+              "oneOf": [
+                {"type": "string", "pattern": "^\\d{1,2}\\.\\d{1,2}/10\\.0$"},
+                {"type": "number", "minimum": 0.0, "maximum": 10.0}
+              ],
+              "description": "Financial health analysis verification score"
+            },
+            "competitive_position_assessment": {
+              "oneOf": [
+                {"type": "string", "pattern": "^\\d{1,2}\\.\\d{1,2}/10\\.0$"},
+                {"type": "number", "minimum": 0.0, "maximum": 10.0}
+              ],
+              "description": "Competitive position assessment validation score"
+            },
+            "risk_assessment_validation": {
+              "oneOf": [
+                {"type": "string", "pattern": "^\\d{1,2}\\.\\d{1,2}/10\\.0$"},
+                {"type": "number", "minimum": 0.0, "maximum": 10.0}
+              ],
+              "description": "Risk assessment validation score"
+            },
+            "cli_economic_context_validation": {
+              "oneOf": [
+                {"type": "string", "pattern": "^\\d{1,2}\\.\\d{1,2}/10\\.0$"},
+                {"type": "number", "minimum": 0.0, "maximum": 10.0}
+              ],
+              "description": "CLI economic context validation score"
+            },
+            "enhanced_metrics_calculation_accuracy": {
+              "oneOf": [
+                {"type": "string", "pattern": "^\\d{1,2}\\.\\d{1,2}/10\\.0$"},
+                {"type": "number", "minimum": 0.0, "maximum": 10.0}
+              ],
+              "description": "Enhanced metrics calculation accuracy score"
+            },
+            "overall_analysis_score": {
+              "oneOf": [
+                {"type": "string", "pattern": "^\\d{1,2}\\.\\d{1,2}/10\\.0$"},
+                {"type": "number", "minimum": 0.0, "maximum": 10.0}
+              ],
+              "description": "Overall analysis phase validation score"
+            },
+            "evidence_quality": {
+              "type": "string",
+              "enum": ["CLI_Primary", "CLI_Secondary", "Unverified", "Mixed"],
+              "description": "Quality level of evidence sources"
+            },
+            "key_issues": {
+              "type": "array",
+              "items": {"type": "string"},
+              "description": "Key issues identified during analysis validation"
+            }
+          }
+        },
+        "synthesis_validation": {
+          "type": "object",
+          "required": [
+            "investment_thesis_coherence",
+            "valuation_model_verification",
+            "professional_presentation",
+            "overall_synthesis_score",
+            "evidence_quality"
+          ],
+          "additionalProperties": true,
+          "properties": {
+            "investment_thesis_coherence": {
+              "oneOf": [
+                {"type": "string", "pattern": "^\\d{1,2}\\.\\d{1,2}/10\\.0$"},
+                {"type": "number", "minimum": 0.0, "maximum": 10.0}
+              ],
+              "description": "Investment thesis coherence validation score"
+            },
+            "valuation_model_verification": {
+              "oneOf": [
+                {"type": "string", "pattern": "^\\d{1,2}\\.\\d{1,2}/10\\.0$"},
+                {"type": "number", "minimum": 0.0, "maximum": 10.0}
+              ],
+              "description": "Valuation model verification score"
+            },
+            "professional_presentation": {
+              "oneOf": [
+                {"type": "string", "pattern": "^\\d{1,2}\\.\\d{1,2}/10\\.0$"},
+                {"type": "number", "minimum": 0.0, "maximum": 10.0}
+              ],
+              "description": "Professional presentation quality score"
+            },
+            "cli_data_integration_quality": {
+              "oneOf": [
+                {"type": "string", "pattern": "^\\d{1,2}\\.\\d{1,2}/10\\.0$"},
+                {"type": "number", "minimum": 0.0, "maximum": 10.0}
+              ],
+              "description": "CLI data integration quality score"
+            },
+            "multi_source_evidence_strength": {
+              "oneOf": [
+                {"type": "string", "pattern": "^\\d{1,2}\\.\\d{1,2}/10\\.0$"},
+                {"type": "number", "minimum": 0.0, "maximum": 10.0}
+              ],
+              "description": "Multi-source evidence strength score"
+            },
+            "overall_synthesis_score": {
+              "oneOf": [
+                {"type": "string", "pattern": "^\\d{1,2}\\.\\d{1,2}/10\\.0$"},
+                {"type": "number", "minimum": 0.0, "maximum": 10.0}
+              ],
+              "description": "Overall synthesis phase validation score"
+            },
+            "evidence_quality": {
+              "type": "string",
+              "enum": ["CLI_Primary", "CLI_Secondary", "Unverified", "Mixed"],
+              "description": "Quality level of evidence sources"
+            },
+            "key_issues": {
+              "type": "array",
+              "items": {"type": "string"},
+              "description": "Key issues identified during synthesis validation"
+            }
+          }
+        }
+      }
+    },
+    "enhanced_validation_breakdown": {
+      "type": "object",
+      "description": "Additional enhanced validation metrics for comprehensive validation",
+      "additionalProperties": true,
+      "properties": {
+        "sector_analysis_integration": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "economic_indicators_validation": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "stress_testing_validation": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "institutional_standards": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "sector_cross_reference": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "cli_service_validation": {
+      "type": "object",
+      "description": "CLI service operational status and health validation",
+      "required": [
+        "service_health",
+        "health_score",
+        "services_operational",
+        "services_healthy",
+        "multi_source_consistency"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "service_health": {
+          "type": "object",
+          "description": "Individual CLI service health status",
+          "additionalProperties": false,
+          "patternProperties": {
+            "^(yahoo_finance|alpha_vantage|fmp|sec_edgar|fred_economic|coingecko|imf)$": {
+              "type": "string",
+              "enum": ["healthy", "degraded", "unhealthy", "not_utilized"]
+            }
+          }
+        },
+        "health_score": {
+          "oneOf": [
+            {"type": "number", "minimum": 0.0, "maximum": 1.0},
+            {"type": "string", "pattern": "^[01]\\.\\d+$"}
+          ],
+          "description": "Overall health score (0.0-1.0)"
+        },
+        "services_operational": {
+          "oneOf": [
+            {"type": "number", "minimum": 0, "maximum": 7},
+            {"type": "string", "pattern": "^[0-7]$"}
+          ],
+          "description": "Number of operational services"
+        },
+        "services_healthy": {
+          "oneOf": [
+            {"type": "boolean"},
+            {"type": "string", "enum": ["true", "false"]}
+          ],
+          "description": "Overall service health status"
+        },
+        "multi_source_consistency": {
+          "oneOf": [
+            {"type": "number", "minimum": 0.0, "maximum": 1.0},
+            {"type": "string", "pattern": "^[01]\\.\\d+$"},
+            {"type": "boolean"},
+            {"type": "string", "enum": ["true", "false"]}
+          ],
+          "description": "Multi-source data consistency score"
+        },
+        "data_quality_scores": {
+          "type": "object",
+          "description": "Data quality scores for each CLI service",
+          "additionalProperties": false,
+          "patternProperties": {
+            "^(yahoo_finance_cli|alpha_vantage_cli|fmp_cli|fred_economic_cli|coingecko_cli|sec_edgar_cli|imf_cli)$": {
+              "oneOf": [
+                {"type": "number", "minimum": 0.0, "maximum": 1.0},
+                {"type": "string", "pattern": "^[01]\\.\\d+$"}
+              ]
+            }
+          }
+        }
+      }
+    },
+    "critical_findings_matrix": {
+      "type": "object",
+      "description": "Categorized validation findings by confidence level",
+      "required": [
+        "verified_claims_high_confidence",
+        "questionable_claims_medium_confidence",
+        "inaccurate_claims_low_confidence",
+        "unverifiable_claims"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "verified_claims_high_confidence": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 10},
+          "description": "Claims with high confidence verification"
+        },
+        "questionable_claims_medium_confidence": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 10},
+          "description": "Claims requiring additional verification"
+        },
+        "inaccurate_claims_low_confidence": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 10},
+          "description": "Claims identified as potentially inaccurate"
+        },
+        "unverifiable_claims": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 10},
+          "description": "Claims that cannot be verified with available data"
+        }
+      }
+    },
+    "decision_impact_assessment": {
+      "type": "object",
+      "description": "Assessment of validation impact on investment decisions",
+      "required": [
+        "thesis_breaking_issues",
+        "material_concerns",
+        "refinement_needed"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "thesis_breaking_issues": {
+          "oneOf": [
+            {"type": "string", "enum": ["none"]},
+            {"type": "array", "items": {"type": "string"}}
+          ],
+          "description": "Issues that invalidate the investment thesis"
+        },
+        "material_concerns": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Material concerns affecting investment decision"
+        },
+        "refinement_needed": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Areas requiring refinement or correction"
+        }
+      }
+    },
+    "usage_recommendations": {
+      "type": "object",
+      "description": "Recommendations for safe usage of the analysis",
+      "required": [
+        "safe_for_decision_making",
+        "required_corrections",
+        "follow_up_research",
+        "monitoring_requirements"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "safe_for_decision_making": {
+          "oneOf": [
+            {"type": "boolean"},
+            {"type": "string", "enum": ["true", "false"]}
+          ],
+          "description": "Whether analysis is safe for investment decisions"
+        },
+        "price_accuracy_blocking_issue": {
+          "oneOf": [
+            {"type": "boolean"},
+            {"type": "string", "enum": ["true", "false"]}
+          ],
+          "description": "Whether price accuracy creates blocking issues"
+        },
+        "required_corrections": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Corrections required before usage"
+        },
+        "follow_up_research": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Additional research recommendations"
+        },
+        "monitoring_requirements": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Ongoing monitoring requirements"
+        }
+      }
+    },
+    "methodology_notes": {
+      "type": "object",
+      "description": "Validation methodology details and limitations",
+      "required": [
+        "validation_standards_applied"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "cli_services_consulted": {
+          "type": "string",
+          "description": "CLI services consultation summary"
+        },
+        "sources_consulted": {
+          "type": "string",
+          "description": "Data sources consulted (alternative field name)"
+        },
+        "validation_approach": {
+          "type": "string",
+          "description": "Validation approach methodology"
+        },
+        "multi_source_validation": {
+          "type": "string",
+          "description": "Multi-source validation methodology"
+        },
+        "economic_context_validation": {
+          "type": "string",
+          "description": "Economic context validation approach"
+        },
+        "enhanced_metrics_validation": {
+          "type": "string",
+          "description": "Enhanced metrics validation methodology"
+        },
+        "cli_health_monitoring": {
+          "type": "string",
+          "description": "CLI health monitoring approach"
+        },
+        "research_limitations": {
+          "oneOf": [
+            {"type": "string"},
+            {"type": "array", "items": {"type": "string"}}
+          ],
+          "description": "Research limitations and constraints"
+        },
+        "confidence_intervals": {
+          "type": "string",
+          "description": "Confidence interval methodology"
+        },
+        "validation_standards_applied": {
+          "oneOf": [
+            {"type": "string"},
+            {"type": "object"}
+          ],
+          "description": "Validation standards and thresholds applied"
+        }
+      }
+    },
+    "enhanced_validation_features": {
+      "type": "object",
+      "description": "Enhanced validation feature results",
+      "additionalProperties": true,
+      "properties": {
+        "price_consistency_validation": {
+          "type": "string",
+          "description": "Price consistency validation results"
+        },
+        "price_accuracy_blocking_validation": {
+          "type": "string",
+          "description": "Price accuracy blocking validation results"
+        },
+        "synthesis_price_reference_validation": {
+          "type": "string",
+          "description": "Synthesis price reference validation results"
+        },
+        "financial_metrics_calculation_verification": {
+          "type": "string",
+          "description": "Financial metrics calculation verification results"
+        },
+        "economic_context_integration": {
+          "type": "string",
+          "description": "Economic context integration validation results"
+        },
+        "peer_group_analysis_validation": {
+          "type": "string",
+          "description": "Peer group analysis validation results"
+        },
+        "regulatory_intelligence_validation": {
+          "type": "string",
+          "description": "Regulatory intelligence validation results"
+        }
+      }
+    },
+    "price_validation_details": {
+      "type": "object",
+      "description": "Detailed price validation metrics",
+      "additionalProperties": true,
+      "properties": {
+        "yahoo_finance_price": {
+          "type": "number",
+          "minimum": 0
+        },
+        "alpha_vantage_price": {
+          "type": "number",
+          "minimum": 0
+        },
+        "fmp_price": {
+          "type": "number",
+          "minimum": 0
+        },
+        "price_deviation_percentage": {
+          "type": "number",
+          "minimum": 0
+        },
+        "consistency_score": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0
+        },
+        "validation_timestamp": {
+          "type": "string"
+        },
+        "blocking_threshold": {
+          "type": "number"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["PASSED", "FAILED", "WARNING"]
+        }
+      }
+    },
+    "financial_statements_validation": {
+      "type": "object",
+      "description": "Financial statements validation details",
+      "additionalProperties": true
+    },
+    "economic_context_validation": {
+      "type": "object",
+      "description": "Economic context validation details",
+      "additionalProperties": true
+    },
+    "institutional_quality_certification": {
+      "type": "object",
+      "description": "Institutional quality certification details",
+      "additionalProperties": true,
+      "properties": {
+        "threshold_requirement": {
+          "type": "string",
+          "pattern": "^\\d{1,2}\\.\\d{1,2}/10\\.0$"
+        },
+        "achieved_score": {
+          "type": "string",
+          "pattern": "^\\d{1,2}\\.\\d{1,2}/10\\.0$"
+        },
+        "certification_status": {
+          "type": "string",
+          "enum": ["CERTIFIED", "NOT_CERTIFIED", "PENDING"]
+        },
+        "areas_of_excellence": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "improvement_opportunities": {
+          "type": "array",
+          "items": {"type": "string"}
+        }
+      }
+    },
+    "cli_validation_summary": {
+      "type": "object",
+      "description": "Comprehensive CLI validation summary",
+      "additionalProperties": true
+    }
+  },
+  "examples": [
+    {
+      "metadata": {
+        "command_name": "cli_enhanced_fundamental_analyst_validate",
+        "execution_timestamp": "2025-07-25T14:25:30.000000Z",
+        "framework_phase": "cli_enhanced_validate_7_source",
+        "ticker": "AAPL",
+        "validation_date": "20250725",
+        "validation_methodology": "comprehensive_dasv_workflow_validation_via_cli_services",
+        "cli_services_utilized": ["yahoo_finance_cli", "alpha_vantage_cli", "fmp_cli", "fred_economic_cli", "coingecko_cli"]
+      },
+      "overall_assessment": {
+        "overall_reliability_score": "9.6/10.0",
+        "decision_confidence": "High",
+        "minimum_threshold_met": true,
+        "institutional_quality_certified": true
+      }
+    }
+  ],
+  "definitions": {
+    "validation_score": {
+      "oneOf": [
+        {"type": "string", "pattern": "^\\d{1,2}\\.\\d{1,2}/10\\.0$"},
+        {"type": "number", "minimum": 0.0, "maximum": 10.0}
+      ],
+      "description": "Validation score in either string X.Y/10.0 or numeric 0.0-10.0 format"
+    },
+    "confidence_score": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0,
+      "description": "Confidence score between 0.0 and 1.0"
+    },
+    "institutional_grade_threshold": {
+      "type": "number",
+      "minimum": 9.0,
+      "maximum": 10.0,
+      "description": "Institutional grade requires minimum 9.0/10.0 score"
+    },
+    "ticker_symbol": {
+      "type": "string",
+      "pattern": "^[A-Z]{1,5}$",
+      "description": "Valid stock ticker symbol (1-5 uppercase letters)"
+    },
+    "cli_service_name": {
+      "type": "string",
+      "enum": [
+        "yahoo_finance_cli",
+        "alpha_vantage_cli", 
+        "fmp_cli",
+        "fred_economic_cli",
+        "coingecko_cli",
+        "sec_edgar_cli",
+        "imf_cli"
+      ],
+      "description": "Supported CLI service names"
+    },
+    "evidence_quality_level": {
+      "type": "string",
+      "enum": ["CLI_Primary", "CLI_Secondary", "Unverified", "Mixed"],
+      "description": "Quality classification for evidence sources"
+    },
+    "decision_confidence_level": {
+      "type": "string",
+      "enum": ["High", "Medium", "Low", "Do_Not_Use"],
+      "description": "Decision confidence classification"
+    }
+  }
+}
