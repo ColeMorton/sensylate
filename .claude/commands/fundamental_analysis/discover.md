@@ -2,11 +2,14 @@
 
 **DASV Phase 1: Data Collection and Context Gathering**
 
-Execute comprehensive financial data collection and market intelligence gathering for institutional-quality fundamental analysis using systematic discovery protocols and production-grade CLI data acquisition methodologies.
+Comprehensive financial data collection and market intelligence gathering context for institutional-quality fundamental analysis using systematic discovery protocols and production-grade CLI data acquisition methodologies.
 
 ## Purpose
 
-You are the Fundamental Analysis Discovery Specialist, responsible for the systematic collection and initial structuring of all data required for comprehensive fundamental analysis. This microservice implements the "Discover" phase of the DASV (Discover → Analyze → Synthesize → Validate) framework, focusing on data acquisition, quality assessment, and foundational research using production-grade CLI financial services.
+The Fundamental Analysis Discovery phase represents the systematic collection and initial structuring of all data required for comprehensive fundamental analysis. This context guide provides the requirements for the "Discover" phase of the DASV (Discover → Analyze → Synthesize → Validate) framework, focusing on data acquisition standards, quality assessment criteria, and foundational research requirements using production-grade CLI financial services.
+
+**Expected Output Schema**: `/scripts/schemas/fundamental_analysis_discovery_schema.json`
+**Researcher Sub Task**: Use the researcher sub-agent to execute fundamental analysis discovery. Ensure output conforms to `/scripts/schemas/fundamental_analysis_discovery_schema.json`.
 
 ## Microservice Integration
 
@@ -362,224 +365,96 @@ CRITICAL MULTI-SOURCE VALIDATION PROTOCOL:
 - Quality Scoring: Automatic confidence calculation based on multi-source consistency
 ```
 
-## Enhanced Output Structure via CLI Services
+## Output Structure and Schema
 
 **File Naming**: `{TICKER}_{YYYYMMDD}_discovery.json`
 **Primary Location**: `./data/outputs/fundamental_analysis/discovery/`
+**Schema Definition**: `/scripts/schemas/fundamental_analysis_discovery_schema.json`
 
-```json
-{
-  "metadata": {
-    "command_name": "cli_enhanced_fundamental_analyst_discover",
-    "execution_timestamp": "ISO_8601_format",
-    "framework_phase": "cli_enhanced_discover_7_source",
-    "ticker": "TICKER_SYMBOL",
-    "data_collection_methodology": "production_cli_services_unified_access",
-    "cli_services_utilized": "dynamic_array_of_successfully_utilized_services",
-    "api_keys_configured": "production_keys_from_config/financial_services.yaml"
-  },
-  "cli_comprehensive_analysis": {
-    "metadata": "complete_cli_response_aggregation_from_multi_source_collection",
-    "company_overview": "integrated_company_intelligence_multi_source",
-    "market_data": "cross_validated_pricing_and_trading_data",
-    "analyst_intelligence": "sentiment_and_recommendations_integrated",
-    "data_validation": "multi_source_price_validation_with_confidence",
-    "quality_metrics": "institutional_grade_assessment"
-  },
-  "market_data": {
-    "current_price": "cross_validated_price_from_3_sources",
-    "market_cap": "multi_source_validated_market_cap",
-    "price_validation": {
-      "yahoo_finance_price": "decimal_value",
-      "alpha_vantage_price": "decimal_value",
-      "fmp_price": "decimal_value",
-      "price_consistency": "boolean",
-      "confidence_score": "0.0-1.0_targeting_1.000"
-    },
-    "volume": "current_trading_volume",
-    "beta": "decimal_value_2_places",
-    "52_week_high": "exact_decimal_value",
-    "52_week_low": "exact_decimal_value",
-    "confidence": "multi_source_confidence_0.0-1.0"
-  },
-  "financial_metrics": {
-    "revenue_ttm": "exact_integer_value",
-    "net_income": "exact_integer_value",
-    "earnings_per_share": "decimal_value_2_places",
-    "pe_ratio": "decimal_value_2_places_exact",
-    "profit_margin": "decimal_format_for_validation_0_to_1",
-    "return_on_equity": "decimal_format_for_validation_0_to_1",
-    "free_cash_flow": "exact_integer_value",
-    "revenue_growth": "decimal_format_for_validation",
-    "confidence": "0.0-1.0"
-  },
-  "company_intelligence": {
-    "business_model": {
-      "revenue_streams": "array",
-      "business_segments": "object",
-      "operational_model": "string",
-      "confidence": "0.0-1.0"
-    },
-    "financial_statements": {
-      "income_statement": "object",
-      "balance_sheet": "object",
-      "cash_flow": "object",
-      "total_liquid_assets": "cash_and_equivalents + short_term_investments",
-      "cash_position_breakdown": {
-        "cash_and_equivalents": "from_yahoo_finance_cli",
-        "short_term_investments": "from_yahoo_finance_cli",
-        "total_liquid_assets": "sum_of_above"
-      },
-      "investment_portfolio_breakdown": {
-        "investments_and_advances": "total_investment_portfolio_from_yahoo_finance_cli",
-        "cash_and_short_term_investments": "liquid_assets_subset",
-        "definition_note": "investments_and_advances_is_total_portfolio_including_illiquid_assets"
-      },
-      "confidence": "0.0-1.0"
-    },
-    "key_metrics": {
-      "business_specific_kpis": "array",
-      "financial_ratios": "object",
-      "valuation_multiples": "object",
-      "confidence": "0.0-1.0"
-    }
-  },
-  "cli_market_context": {
-    "metadata": "complete_cli_response_aggregation_from_fred_and_coingecko",
-    "economic_indicators": "fred_cli_economic_data_real_time",
-    "cryptocurrency_market": "coingecko_cli_sentiment_analysis",
-    "market_summary": "economic_regime_assessment",
-    "sector_implications": "business_model_specific_analysis"
-  },
-  "economic_analysis": {
-    "interest_rate_environment": "restrictive_neutral_accommodative",
-    "yield_curve_signal": "inverted_flat_normal",
-    "policy_implications": "array_of_fed_policy_impacts",
-    "sector_sensitivity": "industry_specific_rate_sensitivity"
-  },
-  "regulatory_intelligence": {
-    "insider_trading_data": "fmp_cli_insider_activity_analysis",
-    "sec_edgar_integration": "cli_framework_status_and_capabilities",
-    "regulatory_analysis": "compliance_and_risk_assessment"
-  },
-  "cli_service_validation": {
-    "service_health": "complete_health_check_response_all_7_services",
-    "health_score": "0.0-1.0_operational_assessment",
-    "services_operational": "count_of_working_cli_services",
-    "services_healthy": "boolean_overall_status"
-  },
-  "cli_data_quality": {
-    "overall_data_quality": "0.0-1.0_multi_source_weighted",
-    "cli_service_health": "0.0-1.0_service_reliability",
-    "institutional_grade": "boolean_targeting_true",
-    "data_sources_via_cli": "array_of_7_sources",
-    "cli_integration_status": "operational_or_degraded"
-  },
-  "cli_insights": {
-    "cli_integration_observations": "array_unified_cli_benefits",
-    "data_quality_insights": "array_multi_source_validation_results",
-    "market_context_insights": "array_economic_and_crypto_analysis",
-    "service_performance_insights": "array_cli_efficiency_observations"
-  },
-  "peer_group_data": {
-    "peer_companies": "array_of_peer_company_objects_with_metrics",
-    "peer_selection_rationale": "explanation_of_peer_selection_methodology",
-    "comparative_metrics": "object_comparing_target_vs_peers",
-    "confidence": "0.0-1.0_peer_analysis_confidence"
-  },
-  "discovery_insights": {
-    "initial_observations": "array_key_business_and_financial_insights",
-    "data_gaps_identified": "array_missing_data_points_for_analysis",
-    "research_priorities": "array_next_phase_focus_areas",
-    "next_phase_readiness": "boolean_analysis_phase_readiness"
-  },
-  "data_quality_assessment": {
-    "source_reliability_scores": "object_cli_service_reliability_scoring",
-    "data_completeness": "0.0-1.0_overall_completeness_score",
-    "data_freshness": "object_data_recency_assessment",
-    "quality_flags": "array_data_quality_observations"
-  }
-}
-```
+The discovery output must conform to the comprehensive JSON schema that defines:
+- Required metadata fields for command execution tracking
+- CLI service integration validation requirements
+- Multi-source data validation with confidence scoring
+- Financial metrics with appropriate null handling for loss-making companies
+- Company intelligence including business model and financial statements
+- Economic context and market analysis integration
+- Peer group comparative analysis
+- Data quality assessment with institutional-grade thresholds
 
-## Discovery Execution Protocol
+All outputs are validated against the schema to ensure:
+- Minimum 5 CLI services utilized for institutional-grade analysis
+- Price consistency validation across multiple sources (targeting 1.0 confidence)
+- Overall data quality ≥ 0.90 for institutional standards
+- Complete discovery insights with research priorities identified
 
-### Pre-Execution
+## Discovery Requirements and Standards
+
+### Pre-Execution Requirements
 1. **Phase 0A Validation Check** (if validation_enhancement enabled)
    - Check for existing validation file: {TICKER}_{YYYYMMDD}_validation.json
-   - If found, execute Phase 0A Enhancement Protocol for discovery optimization
+   - If found, apply Phase 0A Enhancement Protocol for discovery optimization
    - If not found, proceed with standard discovery workflow
-2. Validate ticker symbol format and existence
-3. Initialize CLI data collection frameworks and quality gates
-4. Set confidence thresholds for data acceptance (9.5+ target if validation enhancement active)
-5. Prepare production CLI service integrations
+2. Ticker symbol format validation (1-5 uppercase letters)
+3. CLI data collection framework initialization with quality gates
+4. Confidence threshold configuration (9.5+ target if validation enhancement active)
+5. Production CLI service integration preparation
 
-### Main Execution - CLI-Enhanced Protocol
-1. **Comprehensive Multi-Source Analysis**
-   - Execute `python scripts/yahoo_finance_cli.py analyze {ticker} --env prod --output-format json` for core market data
-   - Execute `python scripts/yahoo_finance_cli.py financials {ticker} --env prod --output-format json` for financial statements
-   - Execute `python scripts/alpha_vantage_cli.py quote {ticker} --env prod --output-format json` for real-time data
-   - Execute `python scripts/fmp_cli.py profile {ticker} --env prod --output-format json` for advanced intelligence
-   - Execute `python scripts/fmp_cli.py financials {ticker} --statement-type cash-flow-statement --env prod --output-format json` for cash flow
-   - Attempt `python scripts/fmp_cli.py insider {ticker} --env prod --output-format json` for insider trading (handle gracefully if unavailable)
-   - Automatic cross-validation across Yahoo Finance, Alpha Vantage, and FMP CLIs
-   - Real-time sentiment analysis and complete financial statement integration
+### Data Collection Requirements - CLI-Enhanced Standards
+1. **Comprehensive Multi-Source Analysis Requirements**
+   - Core market data from Yahoo Finance CLI (analyze and financials commands)
+   - Real-time quotes from Alpha Vantage CLI for cross-validation
+   - Advanced company intelligence from FMP CLI (profile, financials, insider)
+   - Automatic cross-validation across multiple sources
    - Company profile integration with detailed business descriptions
-   - Track successful CLI service responses in cli_services_utilized (only include services that provided data)
+   - Track successful CLI service responses dynamically
 
-2. **Economic Context Integration**
-   - Execute `python scripts/fred_economic_cli.py rates --env prod --output-format json` for comprehensive interest rates
-   - Execute `python scripts/fred_economic_cli.py indicator UNRATE --env prod --output-format json` for unemployment
-   - Execute `python scripts/coingecko_cli.py sentiment --env prod --output-format json` for crypto sentiment
-   - Gather Fed funds rate, unemployment, yield curve data from unified FRED CLI
-   - Economic context is integrated across multiple CLI sources with real-time indicators
+2. **Economic Context Integration Requirements**
+   - Federal Reserve economic indicators via FRED CLI
+   - Cryptocurrency sentiment analysis via CoinGecko CLI
+   - Interest rate environment and yield curve analysis
+   - Economic regime assessment (restrictive/neutral/accommodative)
 
-3. **CLI Service Health Validation**
-   - Execute health checks on all 7 CLI services to ensure operational status
-   - Real-time validation of service availability and API configurations
-   - Data source reliability assessment and performance metrics
-   - Automatic quality scoring based on service health and data completeness
+3. **CLI Service Health Validation Standards**
+   - Health checks required for all 7 CLI services
+   - Minimum 5 operational services for institutional grade
+   - Service reliability assessment and performance metrics
+   - Automatic quality scoring based on service health
 
-4. **Enhanced Financial Metrics Calculation**
-   - **Calculate missing EPS**: Use FMP CLI actual data or derive from market cap and price
-   - **Calculate missing ROE**: Net Income ÷ Stockholders Equity for comprehensive ratio analysis
-   - **Calculate revenue growth**: YoY percentage change using multi-year income statement data
-   - **Integrate complete cash flow**: Operating, investing, financing, and free cash flow from FMP CLI
-   - **Handle unavailable data appropriately**: Mark insider trading as unavailable for German ADRs
-   - **Validate calculations**: Cross-reference calculated values with authoritative sources
+4. **Enhanced Financial Metrics Calculation Standards**
+   - Calculate missing metrics when possible (EPS, ROE, revenue growth)
+   - Integrate complete cash flow statements from FMP CLI
+   - Handle null values appropriately (P/E for negative earnings)
+   - Validate calculations against authoritative sources
 
-5. **Multi-Source Data Quality Assessment**
-   - Automatic cross-validation of key metrics across multiple CLI sources
-   - Price consistency verification targeting 1.000 confidence score
-   - Institutional-grade confidence scoring based on multi-source validation
-   - Economic context freshness validation and cryptocurrency sentiment analysis
+5. **Multi-Source Data Quality Assessment Criteria**
+   - Price consistency verification (targeting 1.000 confidence)
+   - Institutional-grade confidence scoring (≥0.90 overall)
+   - Economic context freshness validation
+   - Data completeness assessment across all sources
 
-### Post-Execution - CLI-Enhanced Protocol
-1. Generate enhanced CLI discovery output in JSON format with comprehensive multi-source sections
-2. **Apply Multi-Source Validation Optimization**:
-   - Verify price consistency across Yahoo Finance, Alpha Vantage, and FMP CLIs (targeting 1.000 confidence)
-   - Validate market_cap cross-validation between Yahoo Finance and FMP CLI sources
-   - Ensure economic indicators freshness from FRED CLI with automatic timestamp validation
-   - Verify cryptocurrency sentiment data currency from CoinGecko CLI integration
-   - Cross-validate company profile data between Yahoo Finance basics and FMP detailed descriptions
-3. **Apply Enhanced Financial Metrics Protocol**:
-   - **Calculate Missing EPS**: Use FMP CLI actual EPS data if available, or calculate using Net Income ÷ Shares Outstanding
-   - **Calculate Missing ROE**: Net Income ÷ Stockholders Equity for return on equity calculation
-   - **Calculate Revenue Growth**: (Current Year Revenue - Previous Year Revenue) ÷ Previous Year Revenue
-   - **Integrate Cash Flow Data**: Use FMP CLI cash flow statement for operating, investing, financing, and free cash flow
-   - **Handle Null Values Appropriately**: P/E ratio remains null for negative earnings, insider trading marked as unavailable for German ADRs
-   - **Fallback Logic**: Use historical data (2024 → 2023 → 2022 → 2021) for missing current-year values only when calculation not possible
-   - Update confidence scores to reflect enhanced metric completeness (target 95%+ for financial statements)
-4. **Generate Comprehensive Analysis Sections**:
-   - Add peer group analysis with industry-specific competitor identification
-   - Generate discovery insights with initial observations and research priorities
-   - Implement source reliability scoring for all CLI services
-   - Create data quality assessment with completeness and freshness metrics
-5. **Save enhanced output to ./data/outputs/fundamental_analysis/discovery/**
-6. Calculate institutional-grade confidence scores across all 7 CLI data sources (targeting >95%)
-7. Validate CLI service health scores and integration status for next phase readiness
-8. Log CLI service performance metrics and caching efficiency statistics
-9. Signal readiness for fundamental_analyst_analyze phase with enhanced data package
+### Post-Execution Quality Standards
+1. **Schema Compliance Validation**
+   - Output must validate against fundamental_analysis_discovery_schema.json
+   - All required fields must be present with appropriate data types
+   - Confidence scores must meet minimum thresholds
+
+2. **Multi-Source Validation Requirements**
+   - Price consistency across Yahoo Finance, Alpha Vantage, and FMP
+   - Market cap cross-validation between sources
+   - Economic indicators freshness verification
+   - Company profile data consistency checks
+
+3. **Enhanced Analysis Requirements**
+   - Peer group analysis with 3-10 comparable companies
+   - Discovery insights with minimum 3 initial observations
+   - Data gaps identification for next phase planning
+   - Source reliability scoring for all CLI services
+
+4. **Output Standards**
+   - Save to ./data/outputs/fundamental_analysis/discovery/
+   - Institutional-grade confidence scores (>95% target)
+   - CLI service health validation for phase readiness
+   - Performance metrics logging for optimization
 
 ## Security and Implementation Notes
 

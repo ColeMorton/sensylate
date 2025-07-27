@@ -1,0 +1,786 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sensylate.com/schemas/fundamental_analysis_discovery.json",
+  "title": "Fundamental Analysis Discovery Schema",
+  "description": "Comprehensive validation schema for fundamental analysis discovery JSON outputs from CLI-enhanced analyst framework",
+  "type": "object",
+  "required": [
+    "metadata",
+    "cli_comprehensive_analysis",
+    "market_data",
+    "financial_metrics",
+    "company_intelligence",
+    "cli_market_context",
+    "economic_analysis",
+    "regulatory_intelligence",
+    "cli_service_validation",
+    "cli_data_quality",
+    "cli_insights",
+    "peer_group_data",
+    "discovery_insights",
+    "data_quality_assessment"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "description": "Core metadata about the discovery analysis execution",
+      "required": [
+        "command_name",
+        "execution_timestamp",
+        "framework_phase",
+        "ticker",
+        "data_collection_methodology",
+        "cli_services_utilized",
+        "api_keys_configured"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "command_name": {
+          "type": "string",
+          "const": "cli_enhanced_fundamental_analyst_discover",
+          "description": "Must be the standardized discovery command name"
+        },
+        "execution_timestamp": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d{6})?Z?$",
+          "description": "ISO 8601 timestamp with optional microseconds and timezone"
+        },
+        "framework_phase": {
+          "type": "string",
+          "const": "cli_enhanced_discover_7_source",
+          "description": "Must indicate the 7-source discovery phase"
+        },
+        "ticker": {
+          "type": "string",
+          "pattern": "^[A-Z]{1,5}$",
+          "description": "Valid stock ticker symbol (1-5 uppercase letters)"
+        },
+        "data_collection_methodology": {
+          "type": "string",
+          "const": "production_cli_services_unified_access",
+          "description": "Must use production CLI services methodology"
+        },
+        "cli_services_utilized": {
+          "type": "array",
+          "minItems": 5,
+          "maxItems": 10,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": [
+              "yahoo_finance_cli",
+              "alpha_vantage_cli",
+              "fmp_cli",
+              "fred_economic_cli",
+              "coingecko_cli",
+              "sec_edgar_cli",
+              "imf_cli"
+            ]
+          },
+          "description": "Minimum 5 CLI services required for institutional grade analysis"
+        },
+        "api_keys_configured": {
+          "type": "string",
+          "const": "production_keys_from_config/financial_services.yaml",
+          "description": "Must reference production API keys configuration"
+        }
+      }
+    },
+    "cli_comprehensive_analysis": {
+      "type": "object",
+      "description": "High-level analysis summary and methodology overview",
+      "required": [
+        "metadata",
+        "company_overview",
+        "market_data",
+        "analyst_intelligence",
+        "data_validation",
+        "quality_metrics"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "metadata": {
+          "type": "string",
+          "description": "Analysis methodology description"
+        },
+        "company_overview": {
+          "oneOf": [
+            {"type": "string"},
+            {"type": "object"}
+          ],
+          "description": "Company overview - can be string or structured object"
+        },
+        "market_data": {
+          "oneOf": [
+            {"type": "string"},
+            {"type": "object"}
+          ],
+          "description": "Market data validation summary - can be string description or structured data object"
+        },
+        "analyst_intelligence": {
+          "oneOf": [
+            {"type": "string"},
+            {"type": "object"}
+          ],
+          "description": "Analyst intelligence methodology - can be string description or structured intelligence object"
+        },
+        "data_validation": {
+          "oneOf": [
+            {"type": "string"},
+            {"type": "object"}
+          ],
+          "description": "Data validation approach summary - can be string description or structured validation object"
+        },
+        "quality_metrics": {
+          "oneOf": [
+            {"type": "string"},
+            {"type": "object"}
+          ],
+          "description": "Quality assessment methodology - can be string description or structured metrics object"
+        }
+      }
+    },
+    "market_data": {
+      "type": "object",
+      "description": "Cross-validated market data with pricing consistency verification",
+      "required": [
+        "current_price",
+        "market_cap",
+        "price_validation",
+        "volume",
+        "beta",
+        "52_week_high",
+        "52_week_low",
+        "confidence"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "current_price": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Current stock price in USD"
+        },
+        "market_cap": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Market capitalization in USD"
+        },
+        "price_validation": {
+          "type": "object",
+          "required": [
+            "yahoo_finance_price",
+            "alpha_vantage_price",
+            "fmp_price",
+            "price_consistency",
+            "confidence_score"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "yahoo_finance_price": {
+              "type": "number",
+              "minimum": 0
+            },
+            "alpha_vantage_price": {
+              "type": "number",
+              "minimum": 0
+            },
+            "fmp_price": {
+              "type": "number",
+              "minimum": 0
+            },
+            "price_consistency": {
+              "type": "boolean",
+              "const": true,
+              "description": "Must be true for institutional grade data"
+            },
+            "confidence_score": {
+              "type": "number",
+              "const": 1.0,
+              "description": "Must be 1.0 for perfect price consistency"
+            }
+          }
+        },
+        "volume": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Trading volume"
+        },
+        "beta": {
+          "type": "number",
+          "description": "Stock beta (volatility relative to market)"
+        },
+        "52_week_high": {
+          "type": "number",
+          "minimum": 0,
+          "description": "52-week high price"
+        },
+        "52_week_low": {
+          "type": "number",
+          "minimum": 0,
+          "description": "52-week low price"
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Confidence score for market data quality (0.0-1.0)"
+        }
+      }
+    },
+    "financial_metrics": {
+      "type": "object",
+      "description": "Core financial metrics with null handling for loss-making companies",
+      "required": [
+        "revenue_ttm",
+        "net_income",
+        "earnings_per_share",
+        "pe_ratio",
+        "profit_margin",
+        "return_on_equity",
+        "free_cash_flow",
+        "revenue_growth",
+        "confidence"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "revenue_ttm": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Trailing twelve months revenue"
+        },
+        "net_income": {
+          "type": "number",
+          "description": "Net income (can be negative for losses)"
+        },
+        "earnings_per_share": {
+          "type": "number",
+          "description": "Earnings per share (can be negative)"
+        },
+        "pe_ratio": {
+          "oneOf": [
+            {
+              "type": "number",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Price-to-earnings ratio (null for loss-making companies)"
+        },
+        "profit_margin": {
+          "type": "number",
+          "minimum": -1.0,
+          "maximum": 1.0,
+          "description": "Profit margin as decimal (-1.0 to 1.0)"
+        },
+        "return_on_equity": {
+          "type": "number",
+          "description": "Return on equity (can be negative)"
+        },
+        "free_cash_flow": {
+          "type": "number",
+          "description": "Free cash flow (can be negative)"
+        },
+        "revenue_growth": {
+          "type": "number",
+          "description": "Revenue growth rate (can be negative for declining revenue)"
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Confidence score for financial metrics (0.0-1.0)"
+        }
+      }
+    },
+    "company_intelligence": {
+      "type": "object",
+      "description": "Comprehensive company analysis including business model and financial statements",
+      "required": [
+        "business_model",
+        "financial_statements",
+        "key_metrics"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "business_model": {
+          "type": "object",
+          "required": [
+            "revenue_streams",
+            "business_segments",
+            "operational_model",
+            "confidence"
+          ],
+          "additionalProperties": true,
+          "properties": {
+            "revenue_streams": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "string"
+              },
+              "description": "List of primary revenue streams"
+            },
+            "business_segments": {
+              "type": "object",
+              "description": "Business segment breakdown"
+            },
+            "operational_model": {
+              "type": "string",
+              "description": "Description of operational model"
+            },
+            "confidence": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0
+            }
+          }
+        },
+        "financial_statements": {
+          "type": "object",
+          "required": [
+            "confidence"
+          ],
+          "additionalProperties": true,
+          "properties": {
+            "income_statement": {
+              "type": "object",
+              "description": "Income statement data"
+            },
+            "balance_sheet": {
+              "type": "object",
+              "description": "Balance sheet data"
+            },
+            "cash_flow": {
+              "type": "object",
+              "description": "Cash flow statement data"
+            },
+            "total_liquid_assets": {
+              "type": "number",
+              "minimum": 0
+            },
+            "cash_position_breakdown": {
+              "type": "object"
+            },
+            "investment_portfolio_breakdown": {
+              "type": "object"
+            },
+            "confidence": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0
+            }
+          }
+        },
+        "key_metrics": {
+          "type": "object",
+          "required": [
+            "business_specific_kpis",
+            "financial_ratios",
+            "valuation_multiples",
+            "confidence"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "business_specific_kpis": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "financial_ratios": {
+              "type": "object"
+            },
+            "valuation_multiples": {
+              "type": "object"
+            },
+            "confidence": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0
+            }
+          }
+        }
+      }
+    },
+    "cli_market_context": {
+      "type": "object",
+      "description": "Economic and market context from CLI services integration",
+      "required": [
+        "metadata"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "metadata": {
+          "type": "string"
+        },
+        "economic_indicators": {
+          "oneOf": [
+            {"type": "string"},
+            {"type": "object"}
+          ]
+        },
+        "cryptocurrency_market": {
+          "oneOf": [
+            {"type": "string"},
+            {"type": "object"}
+          ]
+        },
+        "market_summary": {
+          "type": "string"
+        },
+        "sector_implications": {
+          "type": "string"
+        }
+      }
+    },
+    "economic_analysis": {
+      "type": "object",
+      "description": "Economic environment analysis and sector implications",
+      "required": [
+        "interest_rate_environment",
+        "yield_curve_signal",
+        "policy_implications",
+        "sector_sensitivity"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "interest_rate_environment": {
+          "type": "string",
+          "enum": ["restrictive", "neutral", "accommodative", "moderately_restrictive"],
+          "description": "Current interest rate environment classification"
+        },
+        "yield_curve_signal": {
+          "type": "string",
+          "enum": ["normal", "inverted", "flat", "normal_slight_inversion"],
+          "description": "Yield curve shape indicator"
+        },
+        "policy_implications": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of policy implications"
+        },
+        "sector_sensitivity": {
+          "type": "string",
+          "description": "Sector sensitivity to economic conditions"
+        }
+      }
+    },
+    "regulatory_intelligence": {
+      "type": "object",
+      "description": "Regulatory analysis and SEC filing information",
+      "required": [
+        "insider_trading_data",
+        "sec_edgar_integration",
+        "regulatory_analysis"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "insider_trading_data": {
+          "type": "string",
+          "description": "Insider trading data availability status"
+        },
+        "sec_edgar_integration": {
+          "oneOf": [
+            {"type": "string"},
+            {"type": "object"}
+          ],
+          "description": "SEC EDGAR integration status and details"
+        },
+        "regulatory_analysis": {
+          "type": "string",
+          "description": "Regulatory environment analysis"
+        }
+      }
+    },
+    "cli_service_validation": {
+      "type": "object",
+      "description": "CLI service health and operational status validation",
+      "required": [
+        "service_health",
+        "health_score",
+        "services_operational",
+        "services_healthy"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "service_health": {
+          "oneOf": [
+            {"type": "string"},
+            {"type": "object"}
+          ],
+          "description": "Service health status summary or detailed breakdown"
+        },
+        "health_score": {
+          "type": "number",
+          "const": 1.0,
+          "description": "Must be 1.0 for production-grade analysis"
+        },
+        "services_operational": {
+          "type": "number",
+          "minimum": 5,
+          "description": "Number of operational services (minimum 5 required)"
+        },
+        "services_healthy": {
+          "type": "boolean",
+          "const": true,
+          "description": "Must be true for institutional grade analysis"
+        }
+      }
+    },
+    "cli_data_quality": {
+      "type": "object",
+      "description": "Overall data quality assessment from CLI integration",
+      "required": [
+        "overall_data_quality",
+        "cli_service_health",
+        "institutional_grade",
+        "data_sources_via_cli",
+        "cli_integration_status"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "overall_data_quality": {
+          "type": "number",
+          "minimum": 0.90,
+          "maximum": 1.0,
+          "description": "Must be >= 0.90 for institutional grade"
+        },
+        "cli_service_health": {
+          "type": "number",
+          "const": 1.0,
+          "description": "Must be 1.0 for operational services"
+        },
+        "institutional_grade": {
+          "type": "boolean",
+          "const": true,
+          "description": "Must be true for high-quality analysis"
+        },
+        "data_sources_via_cli": {
+          "type": "array",
+          "minItems": 5,
+          "uniqueItems": true,
+          "items": {
+            "type": "string"
+          },
+          "description": "List of CLI data sources utilized"
+        },
+        "cli_integration_status": {
+          "type": "string",
+          "const": "operational",
+          "description": "Must be operational for valid analysis"
+        }
+      }
+    },
+    "cli_insights": {
+      "type": "object",
+      "description": "Insights from CLI integration and data quality analysis",
+      "required": [
+        "cli_integration_observations",
+        "data_quality_insights",
+        "market_context_insights",
+        "service_performance_insights"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "cli_integration_observations": {
+          "type": "array",
+          "minItems": 3,
+          "items": {
+            "type": "string"
+          },
+          "description": "Key observations from CLI integration"
+        },
+        "data_quality_insights": {
+          "type": "array",
+          "minItems": 3,
+          "items": {
+            "type": "string"
+          },
+          "description": "Data quality assessment insights"
+        },
+        "market_context_insights": {
+          "type": "array",
+          "minItems": 3,
+          "items": {
+            "type": "string"
+          },
+          "description": "Market context and economic insights"
+        },
+        "service_performance_insights": {
+          "type": "array",
+          "minItems": 3,
+          "items": {
+            "type": "string"
+          },
+          "description": "CLI service performance insights"
+        }
+      }
+    },
+    "peer_group_data": {
+      "type": "object",
+      "description": "Peer company analysis and comparative metrics",
+      "required": [
+        "peer_companies",
+        "peer_selection_rationale",
+        "comparative_metrics",
+        "confidence"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "peer_companies": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 10,
+          "items": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "Peer company information"
+          },
+          "description": "Minimum 3 peer companies required for meaningful comparison"
+        },
+        "peer_selection_rationale": {
+          "type": "string",
+          "minLength": 20,
+          "description": "Rationale for peer selection"
+        },
+        "comparative_metrics": {
+          "type": "object",
+          "description": "Comparative analysis metrics"
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Confidence in peer analysis"
+        }
+      }
+    },
+    "discovery_insights": {
+      "type": "object",
+      "description": "Discovery phase insights and next phase readiness assessment",
+      "required": [
+        "initial_observations",
+        "data_gaps_identified",
+        "research_priorities",
+        "next_phase_readiness"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "initial_observations": {
+          "type": "array",
+          "minItems": 3,
+          "items": {
+            "type": "string"
+          },
+          "description": "Key initial observations from discovery analysis"
+        },
+        "data_gaps_identified": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "type": "string"
+          },
+          "description": "Identified gaps requiring further research"
+        },
+        "research_priorities": {
+          "type": "array",
+          "minItems": 3,
+          "items": {
+            "type": "string"
+          },
+          "description": "Priority areas for next phase analysis"
+        },
+        "next_phase_readiness": {
+          "type": "boolean",
+          "const": true,
+          "description": "Must be true to proceed to next analysis phase"
+        }
+      }
+    },
+    "data_quality_assessment": {
+      "type": "object",
+      "description": "Comprehensive data quality assessment and reliability scoring",
+      "required": [
+        "source_reliability_scores",
+        "data_completeness",
+        "data_freshness",
+        "quality_flags"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "source_reliability_scores": {
+          "type": "object",
+          "patternProperties": {
+            "^[a-z_]+_cli$": {
+              "type": "number",
+              "minimum": 0.90,
+              "maximum": 1.0
+            },
+            "^[a-z_]+$": {
+              "type": "number",
+              "minimum": 0.90,
+              "maximum": 1.0
+            }
+          },
+          "additionalProperties": false,
+          "description": "Reliability scores for each data source (minimum 0.90)"
+        },
+        "data_completeness": {
+          "type": "number",
+          "minimum": 0.90,
+          "maximum": 1.0,
+          "description": "Data completeness score (minimum 0.90 for institutional grade)"
+        },
+        "data_freshness": {
+          "type": "object",
+          "description": "Data freshness indicators by category"
+        },
+        "quality_flags": {
+          "type": "array",
+          "minItems": 3,
+          "items": {
+            "type": "string"
+          },
+          "description": "Quality assurance flags and confirmations"
+        }
+      }
+    }
+  },
+  "examples": [
+    {
+      "metadata": {
+        "command_name": "cli_enhanced_fundamental_analyst_discover",
+        "execution_timestamp": "2025-07-25T12:57:40.000000Z",
+        "framework_phase": "cli_enhanced_discover_7_source",
+        "ticker": "AAPL",
+        "data_collection_methodology": "production_cli_services_unified_access",
+        "cli_services_utilized": ["yahoo_finance_cli", "alpha_vantage_cli", "fmp_cli", "fred_economic_cli", "coingecko_cli"],
+        "api_keys_configured": "production_keys_from_config/financial_services.yaml"
+      }
+    }
+  ],
+  "definitions": {
+    "confidence_score": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0,
+      "description": "Confidence score between 0.0 and 1.0"
+    },
+    "institutional_grade_confidence": {
+      "type": "number",
+      "minimum": 0.90,
+      "maximum": 1.0,
+      "description": "High confidence score required for institutional grade analysis"
+    },
+    "ticker_symbol": {
+      "type": "string",
+      "pattern": "^[A-Z]{1,5}$",
+      "description": "Valid stock ticker symbol (1-5 uppercase letters)"
+    }
+  }
+}

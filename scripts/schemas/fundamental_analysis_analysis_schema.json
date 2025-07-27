@@ -1,0 +1,921 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sensylate.com/schemas/fundamental_analysis_analysis.json",
+  "title": "Fundamental Analysis Analysis Phase Schema",
+  "description": "Comprehensive validation schema for fundamental analysis analysis JSON outputs from CLI-enhanced analyst framework",
+  "type": "object",
+  "required": [
+    "metadata",
+    "discovery_data_inheritance",
+    "market_data",
+    "company_overview",
+    "economic_context",
+    "cli_service_validation",
+    "peer_group_analysis",
+    "financial_health_analysis",
+    "competitive_position_assessment",
+    "risk_assessment"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "description": "Core metadata about the analysis phase execution",
+      "required": [
+        "command_name",
+        "execution_timestamp",
+        "framework_phase",
+        "ticker",
+        "analysis_methodology",
+        "validation_enhanced",
+        "target_confidence_threshold",
+        "discovery_confidence_inherited",
+        "economic_context_integration",
+        "cli_services_utilized"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "command_name": {
+          "type": "string",
+          "const": "fundamental_analyst_analyze",
+          "description": "Must be the standardized analysis command name"
+        },
+        "execution_timestamp": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d{6})?Z?$",
+          "description": "ISO 8601 timestamp with optional microseconds and timezone"
+        },
+        "framework_phase": {
+          "type": "string",
+          "const": "analyze",
+          "description": "Must indicate the analysis phase"
+        },
+        "ticker": {
+          "type": "string",
+          "pattern": "^[A-Z]{1,5}$",
+          "description": "Valid stock ticker symbol (1-5 uppercase letters)"
+        },
+        "analysis_methodology": {
+          "type": "string",
+          "const": "cli_enhanced_systematic_evaluation_framework",
+          "description": "Must use the systematic evaluation framework"
+        },
+        "validation_enhanced": {
+          "type": "boolean",
+          "description": "Indicates if validation enhancements are applied"
+        },
+        "target_confidence_threshold": {
+          "oneOf": [
+            {"type": "number"},
+            {"type": "string"}
+          ],
+          "description": "Target confidence threshold (can be number or string)"
+        },
+        "discovery_confidence_inherited": {
+          "oneOf": [
+            {"type": "number"},
+            {"type": "string"}
+          ],
+          "description": "Confidence inherited from discovery phase"
+        },
+        "economic_context_integration": {
+          "type": "boolean",
+          "description": "Indicates if economic context is integrated"
+        },
+        "cli_services_utilized": {
+          "type": "array",
+          "minItems": 5,
+          "maxItems": 10,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": [
+              "yahoo_finance_cli",
+              "alpha_vantage_cli",
+              "fmp_cli",
+              "fred_economic_cli",
+              "coingecko_cli",
+              "sec_edgar_cli",
+              "imf_cli"
+            ]
+          },
+          "description": "Minimum 5 CLI services required for analysis"
+        }
+      }
+    },
+    "discovery_data_inheritance": {
+      "type": "object",
+      "description": "Data inheritance tracking from discovery phase",
+      "required": [
+        "metadata",
+        "data_completeness",
+        "inheritance_validation"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "metadata": {
+          "type": "string",
+          "description": "Inheritance metadata description"
+        },
+        "data_completeness": {
+          "oneOf": [
+            {"type": "string"},
+            {"type": "number"}
+          ],
+          "description": "Data completeness indicator"
+        },
+        "inheritance_validation": {
+          "type": "string",
+          "description": "Validation status of data inheritance"
+        }
+      }
+    },
+    "market_data": {
+      "type": "object",
+      "description": "Current market data with cross-validation",
+      "required": [
+        "current_price",
+        "market_cap",
+        "price_validation",
+        "volume",
+        "beta",
+        "52_week_high",
+        "52_week_low",
+        "confidence"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "current_price": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Current stock price"
+        },
+        "market_cap": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Market capitalization"
+        },
+        "price_validation": {
+          "type": "object",
+          "required": [
+            "yahoo_finance_price",
+            "alpha_vantage_price",
+            "fmp_price",
+            "price_consistency",
+            "confidence_score"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "yahoo_finance_price": {
+              "type": "number",
+              "minimum": 0
+            },
+            "alpha_vantage_price": {
+              "type": "number",
+              "minimum": 0
+            },
+            "fmp_price": {
+              "type": "number",
+              "minimum": 0
+            },
+            "price_consistency": {
+              "type": "boolean",
+              "const": true,
+              "description": "Must be true for institutional grade data"
+            },
+            "confidence_score": {
+              "type": "number",
+              "const": 1.0,
+              "description": "Must be 1.0 for perfect price consistency"
+            }
+          }
+        },
+        "volume": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Trading volume"
+        },
+        "beta": {
+          "type": "number",
+          "description": "Stock beta (volatility relative to market)"
+        },
+        "52_week_high": {
+          "type": "number",
+          "minimum": 0,
+          "description": "52-week high price"
+        },
+        "52_week_low": {
+          "type": "number",
+          "minimum": 0,
+          "description": "52-week low price"
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Confidence score for market data quality"
+        }
+      }
+    },
+    "company_overview": {
+      "type": "object",
+      "description": "Basic company information and profile",
+      "required": [
+        "name",
+        "sector",
+        "industry",
+        "description"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Company name"
+        },
+        "sector": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Business sector"
+        },
+        "industry": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Industry classification"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 10,
+          "description": "Company description"
+        },
+        "ceo": {
+          "type": "string",
+          "description": "Chief Executive Officer name"
+        },
+        "employees": {
+          "oneOf": [
+            {"type": "string"},
+            {"type": "number"}
+          ],
+          "description": "Number of employees"
+        },
+        "headquarters": {
+          "type": "string",
+          "description": "Headquarters location"
+        },
+        "website": {
+          "type": "string",
+          "description": "Company website"
+        },
+        "ipo_date": {
+          "type": "string",
+          "description": "IPO date"
+        },
+        "founded": {
+          "oneOf": [
+            {"type": "string"},
+            {"type": "number"}
+          ],
+          "description": "Founded year"
+        },
+        "exchange": {
+          "type": "string",
+          "description": "Stock exchange"
+        }
+      }
+    },
+    "economic_context": {
+      "type": "object",
+      "description": "Economic environment and macro analysis",
+      "required": [
+        "interest_rate_environment",
+        "yield_curve_signal",
+        "economic_indicators",
+        "cryptocurrency_market",
+        "policy_implications",
+        "sector_sensitivity"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "interest_rate_environment": {
+          "type": "string",
+          "enum": ["restrictive", "neutral", "accommodative", "moderately_restrictive"],
+          "description": "Current interest rate environment classification"
+        },
+        "yield_curve_signal": {
+          "type": "string",
+          "enum": ["normal", "inverted", "flat", "normal_slight_inversion"],
+          "description": "Yield curve shape indicator"
+        },
+        "economic_indicators": {
+          "type": "object",
+          "description": "Key economic indicators"
+        },
+        "cryptocurrency_market": {
+          "type": "object",
+          "description": "Cryptocurrency market sentiment and data"
+        },
+        "policy_implications": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of policy implications"
+        },
+        "sector_sensitivity": {
+          "type": "string",
+          "description": "Sector sensitivity to economic conditions"
+        }
+      }
+    },
+    "cli_service_validation": {
+      "type": "object",
+      "description": "CLI service health and operational status validation",
+      "required": [
+        "service_health",
+        "health_score",
+        "services_operational",
+        "services_healthy",
+        "data_quality_scores"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "service_health": {
+          "type": "object",
+          "description": "Individual service health status"
+        },
+        "health_score": {
+          "type": "number",
+          "const": 1.0,
+          "description": "Must be 1.0 for production-grade analysis"
+        },
+        "services_operational": {
+          "type": "number",
+          "minimum": 5,
+          "description": "Number of operational services (minimum 5 required)"
+        },
+        "services_healthy": {
+          "type": "boolean",
+          "const": true,
+          "description": "Must be true for institutional grade analysis"
+        },
+        "data_quality_scores": {
+          "type": "object",
+          "patternProperties": {
+            "^[a-z_]+_cli$": {
+              "type": "number",
+              "minimum": 0.90,
+              "maximum": 1.0
+            },
+            "^[a-z_]+$": {
+              "type": "number",
+              "minimum": 0.90,
+              "maximum": 1.0
+            }
+          },
+          "additionalProperties": false,
+          "description": "Data quality scores for each service (minimum 0.90)"
+        }
+      }
+    },
+    "peer_group_analysis": {
+      "type": "object",
+      "description": "Peer company analysis and comparative metrics",
+      "required": [
+        "peer_companies",
+        "peer_selection_rationale",
+        "comparative_metrics",
+        "confidence"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "peer_companies": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 10,
+          "items": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "Peer company information"
+          },
+          "description": "Minimum 3 peer companies required for meaningful comparison"
+        },
+        "peer_selection_rationale": {
+          "type": "string",
+          "minLength": 20,
+          "description": "Rationale for peer selection"
+        },
+        "comparative_metrics": {
+          "type": "object",
+          "description": "Comparative analysis metrics"
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Confidence in peer analysis"
+        }
+      }
+    },
+    "financial_health_analysis": {
+      "type": "object",
+      "description": "Comprehensive financial health assessment with 4 required subsections",
+      "required": [
+        "profitability_assessment",
+        "balance_sheet_strength",
+        "cash_flow_analysis",
+        "capital_efficiency"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "profitability_assessment": {
+          "type": "object",
+          "required": [
+            "gross_margin_analysis",
+            "operating_leverage",
+            "ebitda_quality",
+            "cash_conversion",
+            "grade",
+            "trend",
+            "confidence"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "gross_margin_analysis": {
+              "type": "object",
+              "description": "Gross margin analysis and quality assessment"
+            },
+            "operating_leverage": {
+              "type": "object",
+              "description": "Operating leverage analysis"
+            },
+            "ebitda_quality": {
+              "type": "object",
+              "description": "EBITDA quality assessment"
+            },
+            "cash_conversion": {
+              "type": "object",
+              "description": "Cash conversion analysis"
+            },
+            "grade": {
+              "$ref": "#/definitions/grade"
+            },
+            "trend": {
+              "$ref": "#/definitions/trend"
+            },
+            "confidence": {
+              "$ref": "#/definitions/confidence_score"
+            }
+          }
+        },
+        "balance_sheet_strength": {
+          "type": "object",
+          "required": [
+            "liquidity_analysis",
+            "leverage_metrics",
+            "working_capital",
+            "off_balance_sheet",
+            "grade",
+            "trend",
+            "confidence"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "liquidity_analysis": {
+              "type": "object",
+              "description": "Liquidity position analysis"
+            },
+            "leverage_metrics": {
+              "type": "object",
+              "description": "Debt and leverage analysis"
+            },
+            "working_capital": {
+              "type": "object",
+              "description": "Working capital analysis"
+            },
+            "off_balance_sheet": {
+              "type": "object",
+              "description": "Off-balance sheet items assessment"
+            },
+            "grade": {
+              "$ref": "#/definitions/grade"
+            },
+            "trend": {
+              "$ref": "#/definitions/trend"
+            },
+            "confidence": {
+              "$ref": "#/definitions/confidence_score"
+            }
+          }
+        },
+        "cash_flow_analysis": {
+          "type": "object",
+          "required": [
+            "operating_cash_flow",
+            "free_cash_flow",
+            "capital_allocation",
+            "sustainability",
+            "grade",
+            "trend",
+            "confidence"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "operating_cash_flow": {
+              "type": "object",
+              "description": "Operating cash flow analysis"
+            },
+            "free_cash_flow": {
+              "type": "object",
+              "description": "Free cash flow analysis"
+            },
+            "capital_allocation": {
+              "type": "object",
+              "description": "Capital allocation analysis"
+            },
+            "sustainability": {
+              "type": "object",
+              "description": "Cash flow sustainability assessment"
+            },
+            "grade": {
+              "$ref": "#/definitions/grade"
+            },
+            "trend": {
+              "$ref": "#/definitions/trend"
+            },
+            "confidence": {
+              "$ref": "#/definitions/confidence_score"
+            }
+          }
+        },
+        "capital_efficiency": {
+          "type": "object",
+          "required": [
+            "roic_analysis",
+            "asset_utilization",
+            "management_execution",
+            "reinvestment_quality",
+            "grade",
+            "trend",
+            "confidence"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "roic_analysis": {
+              "type": "object",
+              "description": "Return on invested capital analysis"
+            },
+            "asset_utilization": {
+              "type": "object",
+              "description": "Asset utilization efficiency"
+            },
+            "management_execution": {
+              "type": "object",
+              "description": "Management execution assessment"
+            },
+            "reinvestment_quality": {
+              "type": "object",
+              "description": "Quality of reinvestment decisions"
+            },
+            "grade": {
+              "$ref": "#/definitions/grade"
+            },
+            "trend": {
+              "$ref": "#/definitions/trend"
+            },
+            "confidence": {
+              "$ref": "#/definitions/confidence_score"
+            }
+          }
+        }
+      }
+    },
+    "competitive_position_assessment": {
+      "type": "object",
+      "description": "Competitive position and moat analysis",
+      "required": [
+        "market_position",
+        "moat_assessment"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "market_position": {
+          "type": "object",
+          "required": ["confidence"],
+          "additionalProperties": true,
+          "properties": {
+            "confidence": {
+              "$ref": "#/definitions/confidence_score"
+            }
+          }
+        },
+        "moat_assessment": {
+          "type": "object",
+          "required": ["confidence"],
+          "additionalProperties": true,
+          "properties": {
+            "confidence": {
+              "$ref": "#/definitions/confidence_score"
+            }
+          }
+        },
+        "industry_dynamics": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "confidence": {
+              "$ref": "#/definitions/confidence_score"
+            }
+          }
+        },
+        "innovation_capabilities": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "confidence": {
+              "$ref": "#/definitions/confidence_score"
+            }
+          }
+        }
+      }
+    },
+    "risk_assessment": {
+      "type": "object",
+      "description": "Comprehensive risk analysis with quantified assessment",
+      "additionalProperties": true,
+      "properties": {
+        "risk_matrix": {
+          "type": "object",
+          "description": "Risk matrix by category",
+          "patternProperties": {
+            "^[a-z_]+_risks$": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["risk", "probability", "impact"],
+                "additionalProperties": true,
+                "properties": {
+                  "risk": {
+                    "type": "string",
+                    "minLength": 5
+                  },
+                  "probability": {
+                    "type": "number",
+                    "minimum": 0.0,
+                    "maximum": 1.0
+                  },
+                  "impact": {
+                    "type": "number",
+                    "minimum": 1,
+                    "maximum": 5
+                  }
+                }
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        "quantified_assessment": {
+          "type": "object",
+          "description": "Quantified risk assessment"
+        },
+        "scenario_analysis": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "confidence": {
+              "$ref": "#/definitions/confidence_score"
+            }
+          }
+        }
+      },
+      "patternProperties": {
+        "^[a-z_]+_risks$": {
+          "type": "object",
+          "description": "Risk category analysis",
+          "additionalProperties": true
+        }
+      }
+    },
+    "valuation_model_inputs": {
+      "type": "object",
+      "description": "Financial projections and valuation parameters",
+      "required": [
+        "financial_projections",
+        "valuation_parameters"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "financial_projections": {
+          "type": "object",
+          "required": ["confidence"],
+          "additionalProperties": true,
+          "properties": {
+            "confidence": {
+              "$ref": "#/definitions/confidence_score"
+            }
+          }
+        },
+        "valuation_parameters": {
+          "type": "object",
+          "required": ["confidence"],
+          "additionalProperties": true,
+          "properties": {
+            "confidence": {
+              "$ref": "#/definitions/confidence_score"
+            }
+          }
+        }
+      }
+    },
+    "analytical_insights": {
+      "type": "object",
+      "description": "Key findings and investment implications",
+      "required": [
+        "key_findings",
+        "investment_implications",
+        "analysis_limitations",
+        "follow_up_research"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "key_findings": {
+          "type": "array",
+          "minItems": 3,
+          "items": {
+            "type": "string",
+            "minLength": 20
+          },
+          "description": "Key findings from analysis"
+        },
+        "investment_implications": {
+          "type": "array",
+          "minItems": 3,
+          "items": {
+            "type": "string",
+            "minLength": 20
+          },
+          "description": "Investment implications"
+        },
+        "analysis_limitations": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "type": "string",
+            "minLength": 15
+          },
+          "description": "Analysis limitations"
+        },
+        "follow_up_research": {
+          "type": "array",
+          "minItems": 3,
+          "items": {
+            "type": "string",
+            "minLength": 15
+          },
+          "description": "Follow-up research recommendations"
+        }
+      }
+    },
+    "quality_metrics": {
+      "type": "object",
+      "description": "Analysis quality and confidence metrics",
+      "required": [
+        "analysis_confidence",
+        "data_quality_impact",
+        "methodology_rigor",
+        "evidence_strength"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "analysis_confidence": {
+          "$ref": "#/definitions/institutional_grade_confidence"
+        },
+        "data_quality_impact": {
+          "$ref": "#/definitions/institutional_grade_confidence"
+        },
+        "methodology_rigor": {
+          "$ref": "#/definitions/institutional_grade_confidence"
+        },
+        "evidence_strength": {
+          "$ref": "#/definitions/institutional_grade_confidence"
+        }
+      }
+    },
+    "growth_analysis": {
+      "type": "object",
+      "description": "Growth drivers and future catalyst analysis",
+      "required": [
+        "historical_decomposition",
+        "future_catalysts",
+        "management_assessment"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "historical_decomposition": {
+          "type": "object",
+          "required": ["confidence"],
+          "additionalProperties": true,
+          "properties": {
+            "confidence": {
+              "$ref": "#/definitions/confidence_score"
+            }
+          }
+        },
+        "future_catalysts": {
+          "type": "object",
+          "required": ["confidence"],
+          "additionalProperties": true,
+          "properties": {
+            "confidence": {
+              "$ref": "#/definitions/confidence_score"
+            }
+          }
+        },
+        "management_assessment": {
+          "type": "object",
+          "required": ["credibility_score", "confidence"],
+          "additionalProperties": true,
+          "properties": {
+            "credibility_score": {
+              "$ref": "#/definitions/confidence_score"
+            },
+            "confidence": {
+              "$ref": "#/definitions/confidence_score"
+            }
+          }
+        }
+      }
+    },
+    "growth_drivers_analysis": {
+      "type": "object",
+      "description": "Alternative growth analysis structure",
+      "additionalProperties": true
+    },
+    "valuation_analysis": {
+      "type": "object",
+      "description": "Valuation analysis and multiples",
+      "additionalProperties": true
+    },
+    "investment_thesis": {
+      "type": "object",
+      "description": "Investment thesis with bull/bear cases",
+      "additionalProperties": true
+    },
+    "key_metrics_summary": {
+      "type": "object",
+      "description": "Summary of key financial and operational metrics",
+      "additionalProperties": true
+    },
+    "analyst_summary": {
+      "type": "object",
+      "description": "Analyst summary and recommendations",
+      "additionalProperties": true
+    }
+  },
+  "examples": [
+    {
+      "metadata": {
+        "command_name": "fundamental_analyst_analyze",
+        "execution_timestamp": "2025-07-25T12:57:40.000000Z",
+        "framework_phase": "analyze",
+        "ticker": "AAPL",
+        "analysis_methodology": "cli_enhanced_systematic_evaluation_framework",
+        "validation_enhanced": false,
+        "target_confidence_threshold": 0.9,
+        "discovery_confidence_inherited": 0.97,
+        "economic_context_integration": true,
+        "cli_services_utilized": ["yahoo_finance_cli", "alpha_vantage_cli", "fmp_cli", "fred_economic_cli", "coingecko_cli"]
+      }
+    }
+  ],
+  "definitions": {
+    "confidence_score": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0,
+      "description": "Confidence score between 0.0 and 1.0"
+    },
+    "institutional_grade_confidence": {
+      "type": "number",
+      "minimum": 0.80,
+      "maximum": 1.0,
+      "description": "High confidence score required for institutional grade analysis"
+    },
+    "grade": {
+      "type": "string",
+      "enum": ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "D-", "F"],
+      "description": "Letter grade assessment"
+    },
+    "trend": {
+      "type": "string",
+      "enum": ["improving", "stable", "declining", "volatile", "uncertain"],
+      "description": "Trend direction assessment"
+    },
+    "ticker_symbol": {
+      "type": "string",
+      "pattern": "^[A-Z]{1,5}$",
+      "description": "Valid stock ticker symbol (1-5 uppercase letters)"
+    }
+  }
+}
