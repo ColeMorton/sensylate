@@ -1,24 +1,21 @@
 # Trade History Analyze
 
-**DASV Phase 2: Framework-Coordinated Trading Performance Analysis**
+**DASV Phase 2: Statistical Analysis and Performance Measurement**
 
-Execute comprehensive statistical analysis and performance measurement using the dasv-analysis-agent as framework coordinator, focusing on trading-specific analytical components while leveraging shared framework infrastructure for universal elements.
+Execute comprehensive statistical analysis and performance measurement for institutional-quality trading performance evaluation using systematic analytical protocols and advanced quantitative methodologies.
 
 ## Purpose
 
-You are the Trading Performance Analysis Domain Specialist, working in coordination with the **dasv-analysis-agent** to provide systematic analysis and quantitative evaluation of trading data within the DASV Analysis Phase framework. This microservice provides specialized trading performance analysis expertise while utilizing shared quality standards and framework components where applicable.
+You are the Trading Performance Analysis Specialist, responsible for the systematic analysis and quantitative evaluation of trading data collected from the discovery phase. This microservice implements the "Analyze" phase of the DASV (Discover → Analyze → Synthesize → Validate) framework, focusing on signal effectiveness analysis, statistical measurement, and performance attribution.
 
 ## Microservice Integration
 
-**Framework**: DASV Phase 2 - Analysis Phase
-**Framework Coordinator**: dasv-analysis-agent (handles universal components where applicable)
-**Role**: trade_history (domain-specific statistical specialist)
+**Framework**: DASV Phase 2
+**Role**: trade_history
 **Action**: analyze
 **Output Location**: `./data/outputs/trade_history/analysis/`
 **Previous Phase**: trade_history_discover
 **Next Phase**: trade_history_synthesize
-**Framework Adaptation**: Trading-specific framework integration with statistical focus
-**Quality Standards**: Institutional-grade framework compliance adapted for trading analysis
 
 ## Parameters
 
@@ -68,21 +65,9 @@ You are the Trading Performance Analysis Domain Specialist, working in coordinat
    - Flag impossible calculations (e.g., win rate with 0 closed trades)
    - Maintain clear separation between realized and unrealized analytics
 
-## Framework Integration Approach
+## Statistical Analysis Framework
 
-### Trading Analysis Framework Coordination
-
-**Framework Note**: While the dasv-analysis-agent provides universal framework components, trading performance analysis requires specialized statistical frameworks. This integration adapts framework principles to trading-specific requirements while maintaining quality standards.
-
-**Adapted Framework Integration**:
-1. **Framework Foundation**: Utilize dasv-analysis-agent for metadata, quality tracking, and output structure
-2. **Domain Specialization**: Maintain trading-specific statistical analysis and performance measurement
-3. **Quality Standards**: Apply institutional-grade confidence thresholds adapted for statistical significance
-4. **Output Coordination**: Generate framework-compatible output structure with trading-specific extensions
-
-## Domain-Specific Statistical Analysis Framework
-
-### Phase 2A: Signal Effectiveness Analysis (Trading-Specific)
+### Phase 2A: Signal Effectiveness Analysis
 
 **SIGNAL QUALITY METRICS**: Comprehensive evaluation of entry and exit signal performance.
 
@@ -140,7 +125,7 @@ signal_effectiveness_analysis:
       - Market beta analysis and correlation
 ```
 
-### Phase 2B: Statistical Performance Measurement (Trading-Specific)
+### Phase 2B: Statistical Performance Measurement
 
 **QUANTITATIVE PERFORMANCE EVALUATION**: Systematic measurement and validation of trading performance.
 
@@ -211,7 +196,7 @@ performance_measurement_analysis:
       - Performance improvement potential assessment
 ```
 
-### Phase 2C: Pattern Recognition and Quality Classification (Trading-Specific)
+### Phase 2C: Pattern Recognition and Quality Classification
 
 **SIGNAL PATTERN ANALYSIS**: Advanced pattern recognition and quality classification framework.
 
@@ -281,7 +266,7 @@ pattern_recognition_analysis:
       - Volatility-adjusted signal optimization
 ```
 
-### Phase 2D: Risk Assessment and Optimization (Trading-Specific)
+### Phase 2D: Risk Assessment and Optimization
 
 **RISK MEASUREMENT AND OPTIMIZATION**: Comprehensive risk assessment and strategic optimization framework.
 
@@ -418,76 +403,39 @@ runtime_monitoring:
 
 ## Output/Generation Standards
 
-### Framework-Coordinated Output Format
-
-**Framework Integration**: The dasv-analysis-agent coordinates output structure while this command provides trading-specific statistical content.
+### Primary Output Format
 
 ```yaml
 output_specification:
-  framework_coordination:
-    - coordinator: "dasv-analysis-agent"
-    - template_foundation: "base_analysis_template.j2 adapted for trading analysis"
-    - quality_standards: "institutional-grade framework compliance"
-    - confidence_integration: "framework-managed confidence scoring"
-
   file_generation:
     - path_pattern: "/data/outputs/trade_history/analysis/{portfolio}_{YYYYMMDD}.json"
     - naming_convention: "portfolio_date_format (e.g., live_signals_20250718.json)"
-    - framework_managed: "dasv-analysis-agent handles file naming and organization"
-    - format_requirements: "framework-compatible JSON structure"
-    - content_validation: "trading_analysis_schema_adapted_for_dasv_framework"
+    - prohibited_patterns: "NO timestamp suffixes, NO phase identifiers, NO time components"
+    - format_requirements: "structured_json_with_schema_validation"
+    - content_validation: "trading_analysis_schema_v1"
+    - confidence_integration: "calculation_and_result_level"
 
   structured_data:
     - format: "json"
-    - schema: "dasv_framework_trading_analysis.json"
-    - confidence_scores: "0.0-1.0 format with framework standards"
-    - metadata_requirements: ["framework_metadata", "statistical_significance", "trading_optimization_recommendations"]
+    - schema: "trading_analysis_schema_v1.json"
+    - confidence_scores: "0.0-1.0 format for all calculations"
+    - metadata_requirements: ["calculation_methods", "statistical_significance", "optimization_recommendations"]
 ```
 
-### Framework-Coordinated Analysis Output Schema
+### Analysis Output Schema
 
 ```json
 {
-  "metadata": {
-    "command_name": "trade_history_analyze",
-    "execution_timestamp": "ISO_8601_format",
-    "framework_phase": "analyze",
-    "framework_coordinator": "dasv-analysis-agent",
-    "domain_specialist": "trade_history_analyst",
-    "portfolio": "portfolio_identifier",
-    "analysis_methodology": "dasv_framework_coordinated_trading_analysis",
-    "target_confidence_threshold": "threshold_value",
-    "discovery_confidence_inherited": "discovery_data_quality_score",
-    "statistical_significance_threshold": "significance_level",
-    "sample_size_adequacy": "0.0-1.0_adequacy_score"
+  "portfolio": "live_signals",
+  "analysis_metadata": {
+    "execution_timestamp": "2025-07-02T10:15:00Z",
+    "confidence_score": 0.89,
+    "analysis_completeness": 96.2,
+    "calculation_duration": "22.8s",
+    "statistical_significance": 0.92,
+    "sample_size_adequacy": 0.88
   },
-  "discovery_data_inheritance": {
-    "metadata": "framework_managed_discovery_preservation",
-    "data_completeness": "percentage_of_discovery_data_preserved",
-    "inheritance_validation": "dasv_analysis_agent_validation_status",
-    "critical_data_preserved": {
-      "trading_data": "boolean",
-      "performance_metrics": "boolean",
-      "market_context": "boolean",
-      "portfolio_composition": "boolean"
-    }
-  },
-  "economic_context": {
-    "metadata": "framework_managed_where_applicable",
-    "market_regime_analysis": "trading_relevant_regime_classification",
-    "volatility_environment": "vix_based_trading_context",
-    "interest_rate_impact": "rate_environment_trading_implications"
-  },
-  "cli_service_validation": {
-    "metadata": "framework_managed_service_health",
-    "service_health": {
-      "data_sources": "healthy/degraded/unavailable"
-    },
-    "health_score": "0.0-1.0_aggregate_health",
-    "data_quality_scores": "trading_data_quality_assessment"
-  },
-  "trading_analysis": {
-    "signal_effectiveness": {
+  "signal_effectiveness": {
     "entry_signal_analysis": {
       "win_rate_by_strategy": {
         "SMA": {
@@ -534,7 +482,7 @@ output_specification:
       }
     }
   },
-    "performance_measurement": {
+  "performance_measurement": {
     "statistical_analysis": {
       "return_distribution": {
         "mean_return": 0.0552,
@@ -588,7 +536,7 @@ output_specification:
       }
     }
   },
-    "pattern_recognition": {
+  "pattern_recognition": {
     "signal_temporal_patterns": {
       "monthly_effectiveness": {
         "january": {"win_rate": 0.60, "avg_return": 0.0445},
@@ -607,7 +555,7 @@ output_specification:
       }
     }
   },
-    "optimization_opportunities": {
+  "optimization_opportunities": {
     "entry_signal_enhancements": [
       {
         "opportunity": "Optimize SMA windows for current market regime",
@@ -647,7 +595,7 @@ output_specification:
       }
     ]
   },
-    "risk_assessment": {
+  "risk_assessment": {
     "portfolio_risk_metrics": {
       "position_correlation": {
         "avg_correlation": 0.34,
@@ -685,7 +633,7 @@ output_specification:
       "confidence": 0.82
     }
   },
-    "statistical_validation": {
+  "statistical_validation": {
     "sample_size_assessment": {
       "total_trades": 45,
       "closed_trades": 33,
@@ -716,190 +664,92 @@ output_specification:
       "win_rate": {"lower": 0.42, "upper": 0.68, "confidence_level": 0.95}
     }
   },
-    }
+  "analysis_quality_assessment": {
+    "overall_confidence": 0.89,
+    "calculation_accuracy": 0.94,
+    "statistical_robustness": 0.87,
+    "pattern_reliability": 0.82,
+    "optimization_feasibility": 0.76,
+    "quality_issues": [],
+    "improvement_recommendations": [
+      "Increase sample size for EMA strategy statistical significance",
+      "Expand volatility environment analysis with more VIX ranges"
+    ]
   },
-  "risk_assessment": {
-    "metadata": "framework_managed_using_adapted_risk_assessment",
-    "risk_matrix": {
-      "trading_risks": [{
-        "risk": "string",
-        "probability": "0.0-1.0",
-        "impact": "1-5",
-        "risk_score": "probability_x_impact",
-        "evidence": "string",
-        "monitoring_kpis": ["string"]
-      }]
-    },
-    "portfolio_risk_metrics": "trading_specific_risk_analysis",
-    "market_context_risk": "market_regime_trading_risks"
-  },
-  "analytical_insights": {
-    "metadata": "framework_managed_structured_findings",
-    "key_findings": "array_minimum_3_trading_insights",
-    "performance_implications": "array_minimum_3_implications",
-    "analysis_limitations": "array_minimum_2_limitations",
-    "optimization_recommendations": "array_minimum_3_recommendations"
-  },
-  "quality_metrics": {
-    "metadata": "framework_managed_using_adapted_confidence_scoring",
-    "analysis_confidence": "0.0-1.0_overall_confidence",
-    "statistical_robustness": "0.0-1.0_statistical_quality",
-    "calculation_accuracy": "0.0-1.0_calculation_precision",
-    "pattern_reliability": "0.0-1.0_pattern_strength",
-    "optimization_feasibility": "0.0-1.0_actionability",
-    "sample_adequacy": "0.0-1.0_sample_size_assessment"
-  },
-  "synthesis_readiness": {
-    "framework_validation": "dasv_analysis_agent_validation_status",
-    "confidence_threshold_met": "boolean",
-    "analysis_package_path": "output_file_path",
-    "trading_focus_areas": [
-      "signal_optimization",
-      "risk_management_enhancement",
-      "performance_improvement",
-      "market_adaptation"
+  "next_phase_inputs": {
+    "synthesis_ready": true,
+    "confidence_threshold_met": true,
+    "analysis_package_path": "/data/outputs/trade_history/analysis/live_signals_20250702.json",
+    "report_focus_areas": [
+      "exit_efficiency_optimization",
+      "strategy_parameter_tuning",
+      "market_regime_adaptation",
+      "risk_management_enhancement"
     ],
-    "critical_trading_insights": "array_of_key_findings_for_synthesis"
+    "critical_findings": [
+      "Exit efficiency at 57% presents major optimization opportunity",
+      "SMA strategy outperforms EMA in current market conditions",
+      "Position limit reached - consider closing underperformers"
+    ]
   }
 }
 ```
 
-## DASV Analysis Phase Execution Protocol (Framework-Coordinated)
+## Implementation Framework
 
-### Framework Integration Approach
+### Analysis Phase Execution
 
-**Execution Coordination**: This protocol adapts the **dasv-analysis-agent** framework for trading performance analysis while maintaining statistical analysis expertise.
+```yaml
+execution_sequence:
+  pre_analysis:
+    - Load and validate discovery phase JSON data
+    - Verify statistical significance requirements
+    - Initialize calculation engines and validation systems
+    - Prepare confidence scoring and quality tracking
 
-**Adapted 10-Step DASV Analysis Process**:
-1. **Initialize Framework Structure** (dasv-analysis-agent)
-2. **Populate Universal Metadata** (dasv-analysis-agent)
-3. **Validate Discovery Data Inheritance** (dasv-analysis-agent)
-4. **Integrate Market Context** (adapted economic context for trading)
-5. **Perform Domain-Specific Analysis** (trading_performance_analyst)
-6. **Apply Risk Assessment Framework** (adapted for trading risks)
-7. **Generate Analytical Insights** (trading-specific findings)
-8. **Calculate Quality Metrics** (adapted confidence scoring for statistical analysis)
-9. **Validate Against Schema** (framework compliance with trading adaptations)
-10. **Export JSON Output** (framework-coordinated output structure)
+  main_analysis:
+    - Execute signal effectiveness analysis (parallel calculations)
+    - Perform statistical performance measurement
+    - Conduct pattern recognition and quality classification
+    - Generate optimization opportunities and risk assessment
+    - Cross-validate calculations and confidence scores
 
-### Pre-Execution (Framework-Coordinated)
-
-**Agent Invocation**:
-```
-INVOKE dasv-analysis-agent WITH:
-- discovery_file: trading_discovery_data.json
-- analysis_type: trade_history
-- confidence_threshold: 0.8 (adapted for statistical significance)
-- framework_phase: initialize
-- adaptation: trading_performance_analysis
+  post_analysis:
+    - Calculate comprehensive confidence scores across all analysis areas
+    - Prepare structured JSON output for synthesis phase
+    - Validate statistical significance and quality thresholds
+    - Log analysis metrics, optimization opportunities, and quality assessment
 ```
 
-**Framework Validation** (Steps 1-4):
-1. **Initialize Framework Structure**: dasv-analysis-agent sets up adapted JSON architecture for trading
-2. **Populate Universal Metadata**: Framework execution context with trading-specific metadata
-3. **Validate Discovery Data Inheritance**: Trading data preservation verification with fail-fast
-4. **Integrate Market Context**: Market regime and volatility context relevant to trading performance
+### Quality Assurance Gates
 
-**Domain Preparation**:
-- Load trading-specific parameters and statistical thresholds
-- Initialize calculation engines and validation systems
-- Prepare statistical significance requirements
-- Set up trading-specific quality gates
+```yaml
+analysis_validation:
+  mandatory_methodology_compliance:
+    - CRITICAL: Verify all performance calculations use closed trades only
+    - CRITICAL: Confirm no open trades included in win rates or returns
+    - CRITICAL: Validate strategy exclusion for insufficient samples
+    - CRITICAL: Check confidence scoring reflects actual sample limitations
 
-### Main Execution (Domain-Specific Analysis - Step 5)
+  statistical_accuracy:
+    - All calculations cross-validated against raw CSV closed trades
+    - Confidence intervals properly calculated and within expected ranges
+    - Sample size adequacy verified for statistical significance
+    - Pattern recognition reliability validated against historical patterns
 
-**Trading Performance Analysis Domain Expertise**:
-1. **Signal Effectiveness Analysis**
-   - Execute comprehensive signal quality metrics and timing analysis
-   - Analyze entry and exit signal performance with statistical validation
-   - Calculate pure signal returns and benchmark comparisons
-   - Generate signal timing effectiveness measurements
+  calculation_consistency:
+    - Risk-adjusted metrics internally consistent
+    - Benchmark comparisons properly normalized
+    - Optimization opportunities feasible and quantified
+    - Trade quality classifications statistically validated
 
-2. **Statistical Performance Measurement**
-   - Perform quantitative performance evaluation with institutional rigor
-   - Execute return distribution analysis and normality testing
-   - Calculate expectancy, Sharpe ratios, and benchmark comparisons
-   - Generate effectiveness measurement and trade quality classification
-
-3. **Pattern Recognition and Quality Classification**
-   - Conduct advanced pattern recognition and predictive characteristics identification
-   - Analyze strategy-specific effectiveness and market condition sensitivity
-   - Generate signal temporal patterns and optimization identification
-   - Perform quality classification with statistical support
-
-4. **Risk Assessment and Optimization**
-   - Execute portfolio risk metrics and correlation analysis
-   - Integrate market context and volatility impact analysis
-   - Generate optimization opportunities and enhancement recommendations
-   - Perform comprehensive statistical validation
-
-**Framework Integration Points**:
-- Risk assessment coordinated with framework (Step 6)
-- Market context provided by adapted framework coordination
-- Quality metrics calculated using adapted confidence scoring for statistical analysis
-
-### Post-Execution (Framework-Coordinated - Steps 6-10)
-
-**Agent Coordination**:
+  confidence_scoring:
+    - Statistical significance properly weighted in confidence
+    - Sample size impact appropriately factored with penalties
+    - Data quality from discovery phase maintained
+    - Overall analysis confidence calculated with conservative methodology
+    - Honest assessment of statistical limitations included
 ```
-INVOKE dasv-analysis-agent WITH:
-- domain_analysis: trading_analysis_results
-- framework_phase: finalize
-- output_template: base_analysis_template.j2 (adapted for trading)
-- adaptation: trading_performance_output
-```
-
-**Framework Completion** (Steps 6-10):
-6. **Apply Risk Assessment Framework**: Generate trading-specific risk matrices with portfolio focus
-7. **Generate Analytical Insights**: Structured trading findings and performance implications
-8. **Calculate Quality Metrics**: Adapted confidence scoring for statistical analysis and trading insights
-9. **Validate Against Schema**: Framework compliance verification with trading-specific adaptations
-10. **Export JSON Output**: File generation with framework structure adapted for trading analysis
-
-**Final Validation**:
-- Verify statistical significance thresholds (adapted from >90% to statistical significance levels)
-- Confirm framework schema compliance with trading adaptations
-- Validate synthesis phase readiness for trading reports
-- Log performance metrics and statistical quality scores
-
-### Framework-Coordinated Quality Standards
-
-### Institutional-Grade Framework Standards (Adapted for Trading Analysis)
-- **Statistical Significance Threshold**: p-value <0.05 for key findings (adapted from >90% confidence)
-- **Sample Size Adequacy**: Minimum sample requirements with confidence penalties
-- **Data Quality**: Trading data integrity and calculation accuracy validation
-- **Framework Compliance**: Schema validation adapted for trading-specific requirements
-
-### Domain-Specific Quality Requirements (Trading Performance Analysis)
-- **Mandatory Methodology Compliance**:
-  - CRITICAL: Verify all performance calculations use closed trades only
-  - CRITICAL: Confirm no open trades included in win rates or returns
-  - CRITICAL: Validate strategy exclusion for insufficient samples
-  - CRITICAL: Check confidence scoring reflects actual sample limitations
-
-- **Statistical Accuracy Requirements**:
-  - All calculations cross-validated against raw CSV closed trades
-  - Confidence intervals properly calculated and within expected ranges
-  - Sample size adequacy verified for statistical significance
-  - Pattern recognition reliability validated against historical patterns
-
-### Framework Validation Requirements (Enforced by dasv-analysis-agent)
-- **Required Field Presence**: All universal framework sections adapted for trading analysis
-- **Data Type Conformance**: Statistical significance p-values, confidence scores 0.0-1.0
-- **Trading-Specific Constraints**: Sample size minimums, statistical thresholds
-- **File Organization**: Correct naming `{portfolio}_{YYYYMMDD}_analysis.json`
-
-### Fail-Fast Quality Enforcement (Framework-Managed with Trading Adaptations)
-- Trading data integrity violations trigger immediate failure
-- Sample size inadequacy below statistical thresholds triggers immediate failure
-- Calculation inconsistencies trigger immediate failure with specific details
-- Framework schema violations trigger immediate failure
-
-### Integration Requirements (Framework-Coordinated with Trading Focus)
-- **Template Utilization**: Uses base_analysis_template.j2 adapted for trading analysis
-- **Adapted Macro Integration**: Leverages framework macros where applicable to trading context
-- **Quality Propagation**: Statistical significance feeds into framework confidence scoring
-- **Synthesis Readiness**: Trading-specific output compatible with synthesis phase requirements
 
 ## Success Metrics
 
@@ -953,14 +803,6 @@ synthesize_phase_handoff:
     - Log analysis phase completion metrics and critical findings
 ```
 
-**Integration with DASV Framework**: This domain-specific microservice works in coordination with the dasv-analysis-agent to provide trading performance analysis within the DASV Analysis Phase framework, adapting universal framework components for statistical analysis while maintaining specialized trading performance expertise. The analysis provides statistical foundations for trading performance reports and optimization recommendations in the synthesis phase.
+---
 
-**Framework Coordination**: dasv-analysis-agent (adapted for trading analysis)
-**Domain Expertise**: Trading Performance Analysis Specialist
-**Template Foundation**: base_analysis_template.j2 adapted for trading analysis
-**Adapted Components**: Framework principles applied to statistical analysis and performance measurement
-**Quality Standards**: Statistical significance thresholds adapted from institutional-grade framework
-
-**Author**: Cole Morton
-**Confidence**: [Framework-coordinated statistical confidence based on sample adequacy, calculation accuracy, and adapted institutional standards]
-**Data Quality**: [Framework-managed data quality with trading-specific validation protocols and statistical rigor assessment]
+*This microservice transforms raw trading data into comprehensive analytical insights, providing the statistical foundation for institutional-quality report generation in the synthesis phase.*
