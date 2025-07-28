@@ -9,7 +9,7 @@ import json
 import os
 import sys
 from datetime import datetime
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List
 
 from sector_cross_reference import SectorCrossReference
 
@@ -1185,17 +1185,673 @@ class AnalysisValidator:
         return filepath
 
 
+class DasvPhaseValidator:
+    """DASV Phase Cross-Analysis Validator for systematic consistency validation"""
+
+    def __init__(
+        self,
+        dasv_phase: str,
+        file_count: int = 7,
+        confidence_threshold: float = 9.0,
+        validation_depth: str = "institutional",
+        output_dir: str = "./data/outputs/fundamental_analysis/validation",
+    ):
+        """
+        Initialize DASV phase cross-validator
+
+        Args:
+            dasv_phase: DASV phase to analyze ('discovery', 'analysis', 'synthesis', 'validation')
+            file_count: Number of latest files to analyze (default: 7)
+            confidence_threshold: Minimum confidence requirement (9.0-9.8)
+            validation_depth: Validation rigor ('standard', 'comprehensive', 'institutional')
+            output_dir: Directory to save validation outputs
+        """
+        self.dasv_phase = dasv_phase
+        self.file_count = file_count
+        self.confidence_threshold = confidence_threshold
+        self.validation_depth = validation_depth
+        self.output_dir = output_dir
+        self.timestamp = datetime.now()
+
+        # Phase-specific directory mapping
+        self.phase_directories = {
+            "discovery": "./data/outputs/fundamental_analysis/discovery/",
+            "analysis": "./data/outputs/fundamental_analysis/analysis/",
+            "synthesis": "./data/outputs/fundamental_analysis/",
+            "validation": "./data/outputs/fundamental_analysis/validation/",
+        }
+
+        # Phase-specific file patterns
+        self.file_patterns = {
+            "discovery": "*_discovery.json",
+            "analysis": "*_analysis.json",
+            "synthesis": "*.md",
+            "validation": "*_validation.json",
+        }
+
+        self.analyzed_files = []
+        self.cross_analysis_results = {}
+
+    def discover_phase_files(self) -> List[str]:
+        """Discover and select latest files for the specified DASV phase"""
+        phase_dir = self.phase_directories[self.dasv_phase]
+        file_pattern = self.file_patterns[self.dasv_phase]
+
+        if not os.path.exists(phase_dir):
+            raise FileNotFoundError(f"Phase directory not found: {phase_dir}")
+
+        # Find all files matching the phase pattern
+        import glob
+
+        pattern_path = os.path.join(phase_dir, file_pattern)
+        all_files = glob.glob(pattern_path)
+
+        if not all_files:
+            raise FileNotFoundError(f"No files found matching pattern: {pattern_path}")
+
+        # Sort by modification time (newest first) and take the requested count
+        all_files.sort(key=lambda x: os.path.getmtime(x), reverse=True)
+        selected_files = all_files[: self.file_count]
+
+        print(
+            f"📁 Found {len(all_files)} {self.dasv_phase} files, analyzing latest {len(selected_files)}"
+        )
+
+        return selected_files
+
+    def execute_cross_analysis(self) -> Dict[str, Any]:
+        """Execute comprehensive cross-analysis validation"""
+        try:
+            # Discover phase files
+            files_to_analyze = self.discover_phase_files()
+
+            # Load and parse all files
+            self.analyzed_files = self._load_files(files_to_analyze)
+
+            # Execute core validation dimensions
+            structural_score = self._analyze_structural_consistency()
+            hardcoded_score = self._detect_hardcoded_values()
+            specificity_score = self._validate_ticker_specificity()
+            cli_integration_score = self._validate_cli_integration()
+
+            # Calculate overall score
+            overall_score = (
+                structural_score
+                + hardcoded_score
+                + specificity_score
+                + cli_integration_score
+            ) / 4
+
+            # Generate comprehensive results
+            return self._generate_cross_analysis_results(
+                structural_score,
+                hardcoded_score,
+                specificity_score,
+                cli_integration_score,
+                overall_score,
+            )
+
+        except Exception as e:
+            return {"error": f"Cross-analysis execution failed: {str(e)}"}
+
+    def _load_files(self, file_paths: List[str]) -> List[Dict[str, Any]]:
+        """Load all files and extract relevant data"""
+        loaded_files = []
+
+        for file_path in file_paths:
+            try:
+                file_info = {
+                    "filename": os.path.basename(file_path),
+                    "full_path": file_path,
+                    "modification_timestamp": datetime.fromtimestamp(
+                        os.path.getmtime(file_path)
+                    ).isoformat(),
+                    "file_size_bytes": os.path.getsize(file_path),
+                }
+
+                if self.dasv_phase == "synthesis":
+                    # Synthesis files are markdown
+                    with open(file_path, "r", encoding="utf-8") as f:
+                        file_info["content"] = f.read()
+                        file_info["content_type"] = "markdown"
+                else:
+                    # Other phases are JSON
+                    with open(file_path, "r", encoding="utf-8") as f:
+                        file_info["content"] = json.load(f)
+                        file_info["content_type"] = "json"
+
+                # Extract ticker from filename
+                basename = os.path.basename(file_path)
+                if "_" in basename:
+                    file_info["ticker"] = basename.split("_")[0]
+                else:
+                    file_info["ticker"] = "unknown"
+
+                loaded_files.append(file_info)
+
+            except Exception as e:
+                print(f"⚠️  Warning: Failed to load {file_path}: {str(e)}")
+                continue
+
+        return loaded_files
+
+    def _analyze_structural_consistency(self) -> float:
+        """Analyze structural consistency across files"""
+        if not self.analyzed_files:
+            return 0.0
+
+        print("🔍 Analyzing structural consistency...")
+
+        # For JSON files, analyze schema consistency
+        if self.dasv_phase != "synthesis":
+            return self._analyze_json_schema_consistency()
+        else:
+            return self._analyze_markdown_structure_consistency()
+
+    def _analyze_json_schema_consistency(self) -> float:
+        """Analyze JSON schema consistency"""
+        if len(self.analyzed_files) < 2:
+            return 10.0  # Single file is perfectly consistent
+
+        # Extract schema structure from first file
+        reference_schema = self._extract_json_schema(self.analyzed_files[0]["content"])
+
+        consistency_scores = []
+        for file_info in self.analyzed_files[1:]:
+            file_schema = self._extract_json_schema(file_info["content"])
+            similarity = self._compare_schemas(reference_schema, file_schema)
+            consistency_scores.append(similarity)
+
+        # Convert to 0-10 scale
+        return sum(consistency_scores) / len(consistency_scores) * 10
+
+    def _extract_json_schema(self, json_data: Dict[str, Any]) -> Dict[str, Any]:
+        """Extract schema structure from JSON data"""
+
+        def get_schema_structure(obj, path=""):
+            if isinstance(obj, dict):
+                schema = {}
+                for key, value in obj.items():
+                    current_path = f"{path}.{key}" if path else key
+                    schema[key] = {
+                        "type": type(value).__name__,
+                        "path": current_path,
+                        "has_children": isinstance(value, (dict, list)),
+                    }
+                    if isinstance(value, dict):
+                        schema[key]["children"] = get_schema_structure(
+                            value, current_path
+                        )
+                    elif (
+                        isinstance(value, list) and value and isinstance(value[0], dict)
+                    ):
+                        schema[key]["children"] = get_schema_structure(
+                            value[0], current_path
+                        )
+                return schema
+            return {"type": type(obj).__name__}
+
+        return get_schema_structure(json_data)
+
+    def _compare_schemas(
+        self, schema1: Dict[str, Any], schema2: Dict[str, Any]
+    ) -> float:
+        """Compare two schemas and return similarity score (0.0-1.0)"""
+
+        def compare_recursive(s1, s2):
+            if not isinstance(s1, dict) or not isinstance(s2, dict):
+                return 1.0 if s1 == s2 else 0.0
+
+            all_keys = set(s1.keys()) | set(s2.keys())
+            if not all_keys:
+                return 1.0
+
+            matches = 0
+            for key in all_keys:
+                if key in s1 and key in s2:
+                    if s1[key].get("type") == s2[key].get("type"):
+                        matches += 1
+                        if "children" in s1[key] and "children" in s2[key]:
+                            matches += compare_recursive(
+                                s1[key]["children"], s2[key]["children"]
+                            )
+
+            return matches / len(all_keys)
+
+        return compare_recursive(schema1, schema2)
+
+    def _analyze_markdown_structure_consistency(self) -> float:
+        """Analyze markdown structure consistency for synthesis files"""
+        if len(self.analyzed_files) < 2:
+            return 10.0
+
+        # Extract heading structure from all files
+        heading_structures = []
+        for file_info in self.analyzed_files:
+            headings = self._extract_markdown_headings(file_info["content"])
+            heading_structures.append(headings)
+
+        # Compare heading structures
+        reference_structure = heading_structures[0]
+        consistency_scores = []
+
+        for structure in heading_structures[1:]:
+            similarity = self._compare_heading_structures(
+                reference_structure, structure
+            )
+            consistency_scores.append(similarity)
+
+        return sum(consistency_scores) / len(consistency_scores) * 10
+
+    def _extract_markdown_headings(self, content: str) -> List[str]:
+        """Extract heading structure from markdown content"""
+        import re
+
+        headings = re.findall(r"^#+\s+(.+)$", content, re.MULTILINE)
+        return headings
+
+    def _compare_heading_structures(
+        self, struct1: List[str], struct2: List[str]
+    ) -> float:
+        """Compare two heading structures"""
+        if not struct1 and not struct2:
+            return 1.0
+        if not struct1 or not struct2:
+            return 0.0
+
+        common_headings = set(struct1) & set(struct2)
+        total_headings = set(struct1) | set(struct2)
+
+        return len(common_headings) / len(total_headings) if total_headings else 1.0
+
+    def _detect_hardcoded_values(self) -> float:
+        """Detect hardcoded/magic values across files"""
+        print("🔍 Detecting hardcoded/magic values...")
+
+        # Extract all string and numeric values from files
+        all_values = []
+        for file_info in self.analyzed_files:
+            if file_info["content_type"] == "json":
+                values = self._extract_json_values(
+                    file_info["content"], file_info["ticker"]
+                )
+            else:
+                values = self._extract_markdown_values(
+                    file_info["content"], file_info["ticker"]
+                )
+
+            all_values.extend(values)
+
+        # Analyze value repetition patterns
+        value_counts = {}
+        for value in all_values:
+            if value["value"] not in value_counts:
+                value_counts[value["value"]] = []
+            value_counts[value["value"]].append(value)
+
+        # Calculate hardcoded value score
+        total_values = len(all_values)
+        suspicious_values = 0
+
+        for value, occurrences in value_counts.items():
+            if len(occurrences) > 1 and not self._is_ticker_specific(
+                value, occurrences
+            ):
+                suspicious_values += len(occurrences)
+
+        if total_values == 0:
+            return 10.0
+
+        hardcoded_ratio = suspicious_values / total_values
+        return max(0.0, (1.0 - hardcoded_ratio) * 10)
+
+    def _extract_json_values(
+        self, json_data: Dict[str, Any], ticker: str
+    ) -> List[Dict[str, Any]]:
+        """Extract values from JSON data for hardcoded detection"""
+        values = []
+
+        def extract_recursive(obj, path=""):
+            if isinstance(obj, dict):
+                for key, value in obj.items():
+                    current_path = f"{path}.{key}" if path else key
+                    if isinstance(value, (dict, list)):
+                        extract_recursive(value, current_path)
+                    else:
+                        values.append(
+                            {
+                                "value": str(value),
+                                "path": current_path,
+                                "type": type(value).__name__,
+                                "ticker": ticker,
+                            }
+                        )
+            elif isinstance(obj, list):
+                for i, item in enumerate(obj):
+                    current_path = f"{path}[{i}]"
+                    extract_recursive(item, current_path)
+
+        extract_recursive(json_data)
+        return values
+
+    def _extract_markdown_values(
+        self, content: str, ticker: str
+    ) -> List[Dict[str, Any]]:
+        """Extract values from markdown content for hardcoded detection"""
+        import re
+
+        values = []
+
+        # Extract numeric values
+        numbers = re.findall(r"\b\d+\.?\d*\b", content)
+        for num in numbers:
+            values.append(
+                {
+                    "value": num,
+                    "path": "markdown_content",
+                    "type": "number",
+                    "ticker": ticker,
+                }
+            )
+
+        # Extract quoted strings
+        quoted_strings = re.findall(r'"([^"]*)"', content)
+        for string in quoted_strings:
+            if len(string) > 3:  # Ignore very short strings
+                values.append(
+                    {
+                        "value": string,
+                        "path": "markdown_content",
+                        "type": "string",
+                        "ticker": ticker,
+                    }
+                )
+
+        return values
+
+    def _is_ticker_specific(
+        self, value: str, occurrences: List[Dict[str, Any]]
+    ) -> bool:
+        """Check if a value is ticker-specific or a template artifact"""
+        # If the value appears across different tickers, it might be hardcoded
+        tickers = set(occ["ticker"] for occ in occurrences)
+
+        # Common non-ticker-specific patterns that are acceptable
+        acceptable_patterns = [
+            "fundamental_analyst",
+            "cli_enhanced",
+            "production_keys",
+            "9.0",
+            "10.0",
+            "true",
+            "false",
+            "institutional",
+            "comprehensive",
+        ]
+
+        if any(pattern in value.lower() for pattern in acceptable_patterns):
+            return True
+
+        # If it appears in multiple different tickers, it's suspicious
+        return len(tickers) <= 1
+
+    def _validate_ticker_specificity(self) -> float:
+        """Validate that data is ticker-specific"""
+        print("🔍 Validating ticker specificity...")
+
+        specificity_scores = []
+
+        for file_info in self.analyzed_files:
+            score = self._calculate_file_specificity(file_info)
+            specificity_scores.append(score)
+
+        return (
+            sum(specificity_scores) / len(specificity_scores)
+            if specificity_scores
+            else 0.0
+        )
+
+    def _calculate_file_specificity(self, file_info: Dict[str, Any]) -> float:
+        """Calculate specificity score for a single file"""
+        ticker = file_info["ticker"]
+
+        if file_info["content_type"] == "json":
+            return self._calculate_json_specificity(file_info["content"], ticker)
+        else:
+            return self._calculate_markdown_specificity(file_info["content"], ticker)
+
+    def _calculate_json_specificity(
+        self, json_data: Dict[str, Any], ticker: str
+    ) -> float:
+        """Calculate specificity for JSON content"""
+        specificity_checks = []
+
+        # Check if ticker appears in metadata
+        if "metadata" in json_data and "ticker" in json_data["metadata"]:
+            specificity_checks.append(json_data["metadata"]["ticker"] == ticker)
+
+        # Check for company-specific financial data variations
+        if "market_data" in json_data:
+            market_data = json_data["market_data"]
+            # Prices should vary significantly between companies
+            if "current_price" in market_data:
+                price = float(market_data["current_price"])
+                specificity_checks.append(price > 0)  # Basic sanity check
+
+        # Check for ticker-specific content in company descriptions
+        if "cli_comprehensive_analysis" in json_data:
+            analysis = json_data["cli_comprehensive_analysis"]
+            if "company_overview" in analysis:
+                overview = str(analysis["company_overview"]).lower()
+                # Should not contain generic template language
+                generic_terms = ["example", "template", "placeholder", "todo", "fixme"]
+                has_generic = any(term in overview for term in generic_terms)
+                specificity_checks.append(not has_generic)
+
+        return (
+            (sum(specificity_checks) / len(specificity_checks)) * 10
+            if specificity_checks
+            else 5.0
+        )
+
+    def _calculate_markdown_specificity(self, content: str, ticker: str) -> float:
+        """Calculate specificity for markdown content"""
+        specificity_checks = []
+
+        # Check if ticker appears in the content
+        ticker_appears = ticker.upper() in content.upper()
+        specificity_checks.append(ticker_appears)
+
+        # Check for generic template language
+        generic_terms = [
+            "example",
+            "template",
+            "placeholder",
+            "todo",
+            "fixme",
+            "[company]",
+            "[ticker]",
+        ]
+        has_generic = any(term in content.lower() for term in generic_terms)
+        specificity_checks.append(not has_generic)
+
+        # Check for specific financial data
+        import re
+
+        has_numbers = bool(re.search(r"\$[\d,]+|\d+\.\d+%|\d+\.?\d*[BM]", content))
+        specificity_checks.append(has_numbers)
+
+        return (
+            (sum(specificity_checks) / len(specificity_checks)) * 10
+            if specificity_checks
+            else 5.0
+        )
+
+    def _validate_cli_integration(self) -> float:
+        """Validate CLI services integration consistency"""
+        print("🔍 Validating CLI services integration...")
+
+        cli_scores = []
+
+        for file_info in self.analyzed_files:
+            if file_info["content_type"] == "json":
+                score = self._check_cli_integration_json(file_info["content"])
+                cli_scores.append(score)
+
+        return sum(cli_scores) / len(cli_scores) if cli_scores else 10.0
+
+    def _check_cli_integration_json(self, json_data: Dict[str, Any]) -> float:
+        """Check CLI integration in JSON files"""
+        integration_checks = []
+
+        # Check for CLI services utilization field
+        if "metadata" in json_data and "cli_services_utilized" in json_data["metadata"]:
+            services = json_data["metadata"]["cli_services_utilized"]
+            integration_checks.append(isinstance(services, list) and len(services) > 0)
+
+        # Check for API keys configuration reference
+        if "metadata" in json_data and "api_keys_configured" in json_data["metadata"]:
+            api_ref = json_data["metadata"]["api_keys_configured"]
+            integration_checks.append("config/financial_services.yaml" in str(api_ref))
+
+        # Check for price validation structure
+        if (
+            "market_data" in json_data
+            and "price_validation" in json_data["market_data"]
+        ):
+            price_val = json_data["market_data"]["price_validation"]
+            if isinstance(price_val, dict):
+                expected_sources = [
+                    "yahoo_finance_price",
+                    "alpha_vantage_price",
+                    "fmp_price",
+                ]
+                has_sources = any(source in price_val for source in expected_sources)
+                integration_checks.append(has_sources)
+
+        return (
+            (sum(integration_checks) / len(integration_checks)) * 10
+            if integration_checks
+            else 5.0
+        )
+
+    def _generate_cross_analysis_results(
+        self,
+        structural_score: float,
+        hardcoded_score: float,
+        specificity_score: float,
+        cli_integration_score: float,
+        overall_score: float,
+    ) -> Dict[str, Any]:
+        """Generate comprehensive cross-analysis results"""
+
+        # Determine quality grade
+        if overall_score >= 9.5:
+            grade = "A+"
+        elif overall_score >= 9.0:
+            grade = "A"
+        elif overall_score >= 8.5:
+            grade = "A-"
+        elif overall_score >= 8.0:
+            grade = "B+"
+        elif overall_score >= 7.0:
+            grade = "B"
+        elif overall_score >= 6.0:
+            grade = "B-"
+        elif overall_score >= 5.0:
+            grade = "C+"
+        elif overall_score >= 4.0:
+            grade = "C"
+        else:
+            grade = "F"
+
+        return {
+            "metadata": {
+                "command_name": "fundamental_analyst_validate_dasv_cross_analysis",
+                "execution_timestamp": self.timestamp.isoformat(),
+                "framework_phase": "dasv_phase_cross_analysis",
+                "dasv_phase_analyzed": self.dasv_phase,
+                "files_analyzed_count": len(self.analyzed_files),
+                "analysis_methodology": "comprehensive_cross_phase_consistency_validation",
+            },
+            "files_analyzed": [
+                {
+                    "filename": f["filename"],
+                    "ticker": f["ticker"],
+                    "modification_timestamp": f["modification_timestamp"],
+                    "file_size_bytes": f["file_size_bytes"],
+                    "structural_compliance": f"{structural_score:.1f}/10.0",
+                }
+                for f in self.analyzed_files
+            ],
+            "cross_analysis_results": {
+                "structural_consistency_score": f"{structural_score:.1f}/10.0",
+                "hardcoded_values_score": f"{hardcoded_score:.1f}/10.0",
+                "ticker_specificity_score": f"{specificity_score:.1f}/10.0",
+                "cli_integration_score": f"{cli_integration_score:.1f}/10.0",
+                "overall_cross_analysis_score": f"{overall_score:.1f}/10.0",
+            },
+            "quality_assessment": {
+                "institutional_quality_certified": overall_score
+                >= self.confidence_threshold,
+                "minimum_threshold_met": overall_score >= self.confidence_threshold,
+                "phase_consistency_grade": grade,
+                "ready_for_production": overall_score >= 9.0,
+            },
+            "detected_issues": {
+                "structural_inconsistencies": [],
+                "hardcoded_values": [],
+                "ticker_specificity_violations": [],
+                "cli_integration_inconsistencies": [],
+            },
+            "recommendations": {
+                "immediate_fixes": [],
+                "template_improvements": [],
+                "validation_enhancements": [],
+                "cli_integration_optimizations": [],
+            },
+        }
+
+    def save_results(self, results: Dict[str, Any]) -> str:
+        """Save cross-analysis results to file"""
+        timestamp_str = self.timestamp.strftime("%Y%m%d")
+        filename = f"{self.dasv_phase}_cross_analysis_{timestamp_str}_validation.json"
+        output_path = os.path.join(self.output_dir, filename)
+
+        # Ensure output directory exists
+        os.makedirs(self.output_dir, exist_ok=True)
+
+        with open(output_path, "w", encoding="utf-8") as f:
+            json.dump(results, f, indent=2, ensure_ascii=False)
+
+        return output_path
+
+
 def main():
     """Command-line interface for analysis validation"""
     parser = argparse.ArgumentParser(
         description="Execute DASV workflow validation for any stock ticker"
     )
-    parser.add_argument(
-        "synthesis_file", help="Path to synthesis output file (.md or .json)"
+    # Mutually exclusive group for validation modes
+    mode_group = parser.add_mutually_exclusive_group(required=True)
+    mode_group.add_argument(
+        "synthesis_file", nargs="?", help="Path to synthesis output file (.md or .json)"
     )
+    mode_group.add_argument(
+        "--dasv-phase",
+        choices=["discovery", "analysis", "synthesis", "validation"],
+        help="DASV phase for cross-analysis validation",
+    )
+
     parser.add_argument(
         "--ticker",
         help="Stock ticker symbol (will extract from filename if not provided)",
+    )
+    parser.add_argument(
+        "--file-count",
+        type=int,
+        default=7,
+        help="Number of latest files to analyze in DASV phase mode (default: 7)",
     )
     parser.add_argument(
         "--confidence-threshold",
@@ -1243,36 +1899,70 @@ def main():
 
     args = parser.parse_args()
 
-    # Extract ticker from filename if not provided
-    ticker = args.ticker
-    if not ticker:
-        basename = os.path.basename(args.synthesis_file)
-        if "_" in basename:
-            ticker = basename.split("_")[0]
-        else:
-            print(
-                "❌ Could not extract ticker from filename. Please provide --ticker argument."
-            )
+    # Execute validation based on mode
+    if args.dasv_phase:
+        # DASV Phase Cross-Analysis Mode
+        print(f"🔍 Executing DASV Phase Cross-Analysis for {args.dasv_phase} phase...")
+
+        cross_validator = DasvPhaseValidator(
+            dasv_phase=args.dasv_phase,
+            file_count=args.file_count,
+            confidence_threshold=args.confidence_threshold,
+            validation_depth=args.validation_depth,
+            output_dir=args.output_dir,
+        )
+
+        result = cross_validator.execute_cross_analysis()
+
+        if "error" in result:
+            print(f"❌ DASV Cross-Analysis failed: {result['error']}")
             sys.exit(1)
+        else:
+            overall_score = result["cross_analysis_results"][
+                "overall_cross_analysis_score"
+            ]
+            phase_grade = result["quality_assessment"]["phase_consistency_grade"]
+            print(
+                f"✅ DASV Cross-Analysis completed successfully for {args.dasv_phase} phase"
+            )
+            print(f"📊 Overall Score: {overall_score}/10.0 | Grade: {phase_grade}")
 
-    # Execute validation
-    validator = AnalysisValidator(
-        ticker=ticker,
-        synthesis_file_path=args.synthesis_file,
-        confidence_threshold=args.confidence_threshold,
-        validation_depth=args.validation_depth,
-        output_dir=args.output_dir,
-    )
+            # Save results
+            output_file = cross_validator.save_results(result)
+            print(f"💾 Results saved to: {output_file}")
 
-    result = validator.execute_validation()
-
-    if "error" in result:
-        print(f"❌ Validation failed: {result['error']}")
-        sys.exit(1)
     else:
-        overall_score = result["overall_assessment"]["overall_reliability_score"]
-        decision_confidence = result["overall_assessment"]["decision_confidence"]
-        print(f"✅ Validation completed successfully for {ticker}")
+        # Single Ticker Validation Mode (existing functionality)
+        # Extract ticker from filename if not provided
+        ticker = args.ticker
+        if not ticker:
+            basename = os.path.basename(args.synthesis_file)
+            if "_" in basename:
+                ticker = basename.split("_")[0]
+            else:
+                print(
+                    "❌ Could not extract ticker from filename. Please provide --ticker argument."
+                )
+                sys.exit(1)
+
+        # Execute validation
+        validator = AnalysisValidator(
+            ticker=ticker,
+            synthesis_file_path=args.synthesis_file,
+            confidence_threshold=args.confidence_threshold,
+            validation_depth=args.validation_depth,
+            output_dir=args.output_dir,
+        )
+
+        result = validator.execute_validation()
+
+        if "error" in result:
+            print(f"❌ Validation failed: {result['error']}")
+            sys.exit(1)
+        else:
+            overall_score = result["overall_assessment"]["overall_reliability_score"]
+            decision_confidence = result["overall_assessment"]["decision_confidence"]
+            print(f"✅ Validation completed successfully for {ticker}")
         print(f"📊 Overall reliability: {overall_score}")
         print(f"🎯 Decision confidence: {decision_confidence}")
         sys.exit(0)

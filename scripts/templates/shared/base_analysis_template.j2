@@ -1,54 +1,106 @@
 {# ========================================================================== #}
-{# BASE ANALYSIS TEMPLATE - SHARED FOUNDATION FOR INSTITUTIONAL ANALYSIS    #}
+{# DASV ANALYSIS PHASE BASE TEMPLATE - FRAMEWORK FOUNDATION                   #}
 {# ========================================================================== #}
 {#                                                                            #}
-{# This template provides shared structure for both fundamental and sector    #}
-{# analysis templates, implementing common elements while allowing specific   #}
-{# customization through inheritance blocks.                                  #}
+{# This template provides the unified foundation for DASV Analysis Phase      #}
+{# outputs, managed by dasv-analysis-agent and utilized across fundamental,   #}
+{# sector, industry, and adapted trading analysis implementations.            #}
 {#                                                                            #}
-{# HYBRID TEMPLATE SYSTEM COMPONENT:                                          #}
-{# - Base Template: Common structure and shared components                    #}
-{# - Child Templates: fundamental_analysis_enhanced.j2, sector_analysis_enhanced.j2 #}
-{# - Specification Authority: templates/analysis/*.md files                   #}
+{# DASV FRAMEWORK INTEGRATION:                                                #}
+{# - Framework Coordinator: dasv-analysis-agent                              #}
+{# - Domain Specialists: fundamental_analyst, sector_analyst, trade_history  #}
+{# - Universal Components: Managed by framework coordinator                   #}
+{# - Domain-Specific Blocks: Inheritance blocks for specialist content       #}
+{# - Quality Standards: Institutional-grade framework compliance (>90%)      #}
 {# - Shared Macros: scripts/templates/shared/macros/*.j2                     #}
+{# - Framework Specification: docs/specifications/dasv_analysis_phase_*.md   #}
+{#                                                                            #}
+{# TEMPLATE ARCHITECTURE:                                                     #}
+{# - Framework-Managed Sections: Universal metadata, quality, risk, economic #}
+{# - Domain-Specific Blocks: Specialized analysis content via inheritance    #}
+{# - Macro Integration: Shared components for consistency and DRY principles #}
+{# - Output Coordination: JSON structure compatible with synthesis phase     #}
 {#                                                                            #}
 {# ========================================================================== #}
 
 ---
-title: {% block title %}{{ data.company_name | default(ticker) }} Analysis{% endblock %}
-description: {% block description %}Institutional-quality analysis with economic context and multi-source validation{% endblock %}
+title: {% block title %}
+{%- if analysis_type == "fundamental" -%}
+{{ data.company_name | default(ticker) }} Analysis
+{%- elif analysis_type == "sector" -%}
+{{ data.sector_name | default(sector) | title }} Sector Analysis
+{%- elif analysis_type == "industry" -%}
+{{ data.industry_name | default(industry) | title }} Industry Analysis
+{%- elif analysis_type == "trade_history" -%}
+{{ data.portfolio_name | default(portfolio) | title }} Trading Performance Analysis
+{%- else -%}
+DASV Framework Analysis
+{%- endif -%}
+{% endblock %}
+description: {% block description %}DASV Framework {{ analysis_type | default("investment") }} analysis with institutional-grade quality standards and framework coordination{% endblock %}
 author: Cole Morton
 date: {{ timestamp }}
+framework_coordinator: dasv-analysis-agent
+domain_specialist: {% block domain_specialist %}{{ analysis_type | default("generic") }}_analyst{% endblock %}
+quality_certification: {% block quality_certification %}{{ "Institutional Grade" if (data.overall_confidence | default(0.85) | float) >= 0.90 else "Standard Grade" }}{% endblock %}
 tags:
-  - {% block primary_tag %}analysis{% endblock %}
-  - {{ ticker.lower() if ticker else sector.lower() }}
-  - investing
-  - economic-analysis
+  - {% block primary_tag %}{{ analysis_type | default("analysis") }}{% endblock %}
+  - {{ ticker.lower() if ticker else (sector.lower() if sector else (portfolio.lower() if portfolio else "framework-analysis")) }}
+  - dasv-framework
   - institutional-research
+  - {% block analysis_context %}{% if analysis_type == "trade_history" %}trading-performance{% else %}investment-analysis{% endif %}{% endblock %}
 ---
 
-# {% block header %}{{ data.company_name | default(ticker) }} Analysis{% endblock %}
-*Generated: {{ timestamp[:10] }} | Confidence: {{ data.overall_confidence | default("0.90") }}/1.0 | Data Quality: {{ data.data_quality | default("0.90") }}/1.0 | Economic Context: Current*
-<!-- Author: Cole Morton {% block author_note %}(MANDATORY - ensure consistency){% endblock %} -->
+# {% block header %}
+{%- if analysis_type == "fundamental" -%}
+{{ data.company_name | default(ticker) }} Analysis
+{%- elif analysis_type == "sector" -%}
+{{ data.sector_name | default(sector) | title }} Sector Analysis
+{%- elif analysis_type == "industry" -%}
+{{ data.industry_name | default(industry) | title }} Industry Analysis
+{%- else -%}
+Investment Analysis
+{%- endif -%}
+{% endblock %}
+*Generated: {{ timestamp[:10] }} | Framework: DASV Analysis Phase | Coordinator: dasv-analysis-agent | Specialist: {{ analysis_type | default("generic") }}_analyst*
+*Confidence: {{ data.overall_confidence | default("0.90") }}/1.0 | Data Quality: {{ data.data_quality | default("0.90") }}/1.0 | {% block context_status %}Economic Context: Current{% endblock %}*
+<!-- Framework: DASV Analysis Phase | Author: Cole Morton {% block author_note %}(Framework Coordination){% endblock %} -->
 
-## 🎯 {% block investment_section_title %}Investment Thesis & Recommendation{% endblock %}
+## 🎯 {% block investment_section_title %}{% if analysis_type == "trade_history" %}Trading Performance Summary{% else %}Investment Thesis & Recommendation{% endif %}{% endblock %}
 
 {% block investment_thesis %}
 ### Core Thesis
+{%- if analysis_type == "fundamental" -%}
+{{ data.investment_thesis | default("Investment thesis with key value drivers based on comprehensive fundamental analysis.") }}
+{%- elif analysis_type == "sector" -%}
+{{ data.investment_thesis | default("Sector allocation thesis based on relative positioning and economic cycle analysis.") }}
+{%- elif analysis_type == "industry" -%}
+{{ data.investment_thesis | default("Industry investment thesis based on competitive dynamics and growth drivers.") }}
+{%- else -%}
 {{ data.investment_thesis | default("Investment thesis with key value drivers based on comprehensive analysis.") }}
+{%- endif -%}
 
-### Recommendation: {{ data.recommendation | default("HOLD") }} | Conviction: {{ data.conviction | default("0.80") }}/1.0
+### Recommendation: {{ data.recommendation | default("HOLD") }} | Confidence: {{ data.conviction | default("9.0") }}/10.0
 {% endblock %}
 
 {% block investment_details %}
 {# Child templates can override for specific investment details #}
 {% endblock %}
 
-## 📊 {% block economic_section_title %}Economic Sensitivity & Macro Positioning{% endblock %}
+## 📊 {% block economic_section_title %}{% if analysis_type == "trade_history" %}Market Context & Economic Environment{% else %}Economic Sensitivity & Macro Positioning{% endif %}{% endblock %}
 
 {% block economic_sensitivity %}
+{% if analysis_type == "trade_history" %}
+{# Adapted economic context for trading analysis #}
+### Market Regime Analysis
+- **Market Environment**: {{ data.market_regime | default("Neutral") }} | Volatility: {{ data.volatility_environment | default("Moderate") }}
+- **Interest Rate Impact**: {{ data.rate_environment_impact | default("Limited direct impact on trading signals") }}
+- **Economic Context**: {{ data.economic_context_relevance | default("Market regime classification for strategy adaptation") }}
+{% else %}
+{# Standard economic sensitivity for investment analysis #}
 {% from 'shared/macros/economic_sensitivity_macro.j2' import economic_sensitivity_matrix %}
 {{ economic_sensitivity_matrix(data, analysis_type) }}
+{% endif %}
 {% endblock %}
 
 {% block business_cycle_positioning %}
@@ -64,11 +116,25 @@ tags:
 {# Child templates add their specific content sections here #}
 {% endblock %}
 
-## ⚠️ {% block risk_section_title %}Quantified Risk Assessment Framework{% endblock %}
+## ⚠️ {% block risk_section_title %}{% if analysis_type == "trade_history" %}Trading Risk Assessment{% else %}Quantified Risk Assessment Framework{% endif %}{% endblock %}
 
 {% block risk_assessment %}
+{% if analysis_type == "trade_history" %}
+{# Adapted risk assessment for trading analysis #}
+### Trading Risk Matrix
+| Risk Category | Probability | Impact (1-5) | Risk Score | Mitigation Strategy | Monitoring KPI |
+|---------------|-------------|--------------|------------|--------------------|-----------------|
+| Strategy Risk | {{ data.strategy_risk_probability | default("0.30") }} | {{ data.strategy_risk_impact | default("3") }} | {{ data.strategy_risk_score | default("0.90") }} | Diversification and optimization | Win rate, Sharpe ratio |
+| Market Risk | {{ data.market_risk_probability | default("0.40") }} | {{ data.market_risk_impact | default("4") }} | {{ data.market_risk_score | default("1.60") }} | Market regime adaptation | Beta, correlation |
+| Execution Risk | {{ data.execution_risk_probability | default("0.20") }} | {{ data.execution_risk_impact | default("2") }} | {{ data.execution_risk_score | default("0.40") }} | Process improvement | Slippage, timing |
+| Liquidity Risk | {{ data.liquidity_risk_probability | default("0.15") }} | {{ data.liquidity_risk_impact | default("3") }} | {{ data.liquidity_risk_score | default("0.45") }} | Position sizing limits | Volume, spread |
+
+**Aggregate Trading Risk Score**: {{ data.aggregate_trading_risk_score | default("3.35") }}/20.0 | **Risk Grade**: {{ data.trading_risk_grade | default("Moderate") }}
+{% else %}
+{# Standard risk assessment for investment analysis #}
 {% from 'shared/macros/risk_assessment_macro.j2' import risk_matrix %}
 {{ risk_matrix(data.risk_factors if data.risk_factors else [], analysis_type) }}
+{% endif %}
 {% endblock %}
 
 {% block risk_monitoring %}
@@ -88,10 +154,16 @@ tags:
 ## 📋 {% block metadata_section_title %}Analysis Metadata & Validation{% endblock %}
 
 {% block validation_results %}
-### Multi-Source Validation Results
+### {% if analysis_type == "trade_history" %}Data Quality Validation Results{% else %}Multi-Source Validation Results{% endif %}
+{% if analysis_type == "trade_history" %}
+- **Trading Data Integrity**: {{ data.data_integrity_score | default("98.5") }}% accuracy across calculations | **Status**: {{ data.data_validation_status | default("PASSED") }}
+- **Statistical Significance**: {{ data.statistical_tests_passed | default("85") }}% of tests meet significance thresholds | **Status**: {{ data.statistical_status | default("ADEQUATE") }}
+- **Sample Size Adequacy**: {{ data.sample_adequacy_score | default("0.88") }}/1.0 adequacy score | **Status**: {{ data.sample_status | default("SUFFICIENT") }}
+{% else %}
 - **Price Consistency**: {{ data.price_variance | default("1.2") }}% variance across sources (Target: ≤2%) | **Status**: {{ data.price_validation_status | default("PASSED") }}
 - **Economic Indicator Freshness**: FRED data within {{ data.fred_freshness | default("6") }} hours | **Status**: {{ data.fred_status | default("CURRENT") }}
 - **CLI Service Health**: {{ data.cli_services_operational | default("6") }}/7 services operational ({{ data.cli_uptime | default("95") }}% uptime) | **Status**: {{ data.cli_status | default("OPERATIONAL") }}
+{% endif %}
 {% endblock %}
 
 {% block confidence_scoring %}
@@ -105,14 +177,21 @@ tags:
 {% endblock %}
 
 {% block methodology_notes %}
-**Methodology Notes**:
-- Economic sensitivity analysis integrated throughout with FRED real-time indicators
-- {% if analysis_type == "sector" %}Cross-sector positioning analysis provides relative valuation and timing context{% else %}Cross-sector positioning analysis provides relative valuation and timing context{% endif %}
-- Stress testing scenarios calibrated to current economic environment and cycle phase
-- Risk assessment with quantified probability/impact matrices and monitoring KPIs
-- {{ data.methodology_note_1 | default("Multi-source validation ensures data consistency and reliability") }}
-- {{ data.methodology_note_2 | default("Confidence scoring reflects institutional quality standards") }}
-- {{ data.methodology_note_3 | default("Economic context integration provides market-relevant insights") }}
+**Framework Methodology Notes**:
+- **DASV Framework Coordination**: dasv-analysis-agent manages universal components while domain specialists provide specialized analysis
+- **Quality Standards**: Institutional-grade framework compliance with >90% confidence threshold for certification
+{% if analysis_type == "trade_history" %}
+- **Statistical Rigor**: Statistical significance testing with p-value thresholds and sample size adequacy assessment
+- **Trading-Specific Adaptation**: Framework principles adapted for performance measurement and trading risk assessment
+- **Market Context Integration**: Economic regime classification for trading strategy adaptation and risk management
+{% else %}
+- **Economic Sensitivity Integration**: FRED real-time indicators with systematic correlation analysis throughout
+- **Multi-Source Validation**: Cross-validation across data sources ensures consistency and reliability
+- **Risk Assessment Framework**: Quantified probability/impact matrices with institutional monitoring KPIs
+{% endif %}
+- {{ data.methodology_note_1 | default("Framework-coordinated analysis ensures consistency across all analysis types") }}
+- {{ data.methodology_note_2 | default("Shared macros provide DRY principles and institutional quality components") }}
+- {{ data.methodology_note_3 | default("Domain-specific expertise combined with universal framework standards") }}
 {% endblock %}
 
 ## 🏁 {% block summary_section_title %}Investment Recommendation Summary{% endblock %}
@@ -121,9 +200,13 @@ tags:
 {% if analysis_type == "fundamental" %}
 {{ data.company_name | default(ticker) }} ({{ ticker }}) represents a {{ data.investment_characterization | default("compelling") }} investment opportunity with {{ data.risk_return_potential | default("strong") }} risk-adjusted return potential, supported by {{ data.fundamental_health | default("excellent") }} fundamental health and positioned {{ data.cycle_positioning | default("favorably") }} within the current economic cycle.
 {% elif analysis_type == "sector" %}
-{{ data.sector_name | default(sector) }} represents {{ data.investment_characterization | default("compelling growth") }} with {{ data.risk_return_potential | default("strong") }} risk-adjusted return potential, supported by {{ data.fundamental_health | default("excellent") }} financial health and positioned {{ data.cycle_positioning | default("well-positioned") }} within the current economic cycle.
+{{ data.sector_name | default(sector) | title }} sector represents {{ data.investment_characterization | default("compelling growth") }} with {{ data.risk_return_potential | default("strong") }} risk-adjusted return potential, supported by {{ data.fundamental_health | default("excellent") }} sector health and positioned {{ data.cycle_positioning | default("well-positioned") }} within the current economic cycle.
+{% elif analysis_type == "industry" %}
+{{ data.industry_name | default(industry) | title }} industry presents {{ data.investment_characterization | default("significant opportunities") }} with {{ data.risk_return_potential | default("attractive") }} risk-adjusted return potential, driven by {{ data.key_drivers | default("structural trends") }} and positioned {{ data.cycle_positioning | default("strategically") }} for the current market environment.
+{% elif analysis_type == "trade_history" %}
+{{ data.portfolio_name | default(portfolio) | title }} trading performance demonstrates {{ data.performance_characterization | default("systematic") }} execution with {{ data.statistical_significance | default("adequate") }} statistical validation, achieving {{ data.risk_adjusted_metrics | default("competitive") }} risk-adjusted returns through {{ data.strategy_effectiveness | default("disciplined") }} strategy implementation and {{ data.optimization_potential | default("identified") }} optimization opportunities.
 {% else %}
-This analysis represents {{ data.investment_characterization | default("a comprehensive") }} assessment with {{ data.risk_return_potential | default("balanced") }} risk-adjusted characteristics.
+This DASV framework analysis represents {{ data.investment_characterization | default("a comprehensive") }} assessment with {{ data.risk_return_potential | default("balanced") }} risk-adjusted characteristics and institutional-grade quality standards.
 {% endif %}
 {% endblock %}
 
@@ -132,10 +215,18 @@ This analysis represents {{ data.investment_characterization | default("a compre
 
 ## Disclaimer
 
-This analysis is for informational purposes only and should not be considered as investment advice. {% if analysis_type == "sector" %}Sector analysis contains forward-looking statements and economic projections that involve significant risks and uncertainties.{% endif %} Past performance does not guarantee future results. Please conduct your own research and consult with a qualified financial advisor before making investment decisions.
+This analysis is for informational purposes only and should not be considered as investment advice.
+{%- if analysis_type == "sector" %} Sector analysis contains forward-looking statements and economic projections that involve significant risks and uncertainties.
+{%- elif analysis_type == "industry" %} Industry analysis contains forward-looking statements about competitive dynamics and market trends that involve significant risks and uncertainties.
+{%- elif analysis_type == "fundamental" %} Individual security analysis involves company-specific risks and market volatility that could significantly impact results.
+{%- endif %} Past performance does not guarantee future results. Please conduct your own research and consult with a qualified financial advisor before making investment decisions.
 
 ---
 
-*{% if analysis_type == "sector" %}Framework: Confidence-weighted, multi-source validation, economic/liquidity cycle integrated*{% endif %}
-*Analysis generated using the Sensylate trading platform with institutional-quality {% if analysis_type == "fundamental" %}multi-source {% endif %}validation. For more insights and analysis, visit [colemorton.com](https://colemorton.com).*
+*{% if analysis_type == "sector" %}Framework: DASV Analysis Phase, sector-specific positioning, economic/liquidity cycle integration
+{%- elif analysis_type == "industry" %}Framework: DASV Analysis Phase, competitive landscape analysis, investment themes assessment
+{%- elif analysis_type == "fundamental" %}Framework: DASV Analysis Phase, multi-source validation, financial statement analysis, economic sensitivity
+{%- elif analysis_type == "trade_history" %}Framework: DASV Analysis Phase adapted for trading performance, statistical validation, risk-adjusted metrics
+{%- else %}Framework: DASV Analysis Phase with institutional-grade quality standards and framework coordination{% endif %}*
+*Analysis generated using the DASV Framework with dasv-analysis-agent coordination and institutional-quality validation. For more insights and analysis, visit [colemorton.com](https://colemorton.com).*
 {% endblock %}

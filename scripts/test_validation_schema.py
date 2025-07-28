@@ -1,0 +1,149 @@
+#!/usr/bin/env python3
+"""
+Test script to validate fundamental analysis validation JSON files against the schema.
+"""
+
+import json
+import sys
+from pathlib import Path
+
+try:
+    from jsonschema import ValidationError, validate
+except ImportError:
+    print(
+        "Error: jsonschema library not found. Install it with: pip install jsonschema"
+    )
+    sys.exit(1)
+
+
+def load_schema():
+    """Load the validation schema from the schemas directory."""
+    schema_path = (
+        Path(__file__).parent
+        / "schemas"
+        / "fundamental_analysis_validation_schema.json"
+    )
+
+    if not schema_path.exists():
+        print(f"Error: Schema file not found at {schema_path}")
+        return None
+
+    try:
+        with open(schema_path, "r") as f:
+            return json.load(f)
+    except json.JSONDecodeError as e:
+        print(f"Error: Invalid JSON in schema file: {e}")
+        return None
+
+
+def load_validation_file(file_path):
+    """Load a validation JSON file."""
+    try:
+        with open(file_path, "r") as f:
+            return json.load(f)
+    except json.JSONDecodeError as e:
+        print(f"Error: Invalid JSON in {file_path}: {e}")
+        return None
+    except FileNotFoundError:
+        print(f"Error: File not found: {file_path}")
+        return None
+
+
+def validate_validation_file(validation_data, schema, file_path):
+    """Validate a validation file against the schema."""
+    try:
+        validate(instance=validation_data, schema=schema)
+        return True, None
+    except ValidationError as e:
+        return False, str(e)
+
+
+def main():
+    """Main validation function."""
+    print("🔍 Testing Fundamental Analysis Validation Schema")
+    print("=" * 60)
+
+    # Load schema
+    schema = load_schema()
+    if not schema:
+        sys.exit(1)
+
+    print("✅ Schema loaded successfully")
+
+    # Test files (7 most recent individual ticker validation files)
+    validation_dir = (
+        Path(__file__).parent.parent
+        / "data"
+        / "outputs"
+        / "fundamental_analysis"
+        / "validation"
+    )
+    test_files = [
+        "VTRS_20250725_validation.json",  # Most recent
+        "TT_20250725_validation.json",  # Same date - low quality
+        "FANG_20250724_validation.json",  # High quality
+        "PKG_20250724_validation.json",  # High quality
+        "TFC_20250724_validation.json",  # High quality
+        "TEAM_20250723_validation.json",  # High quality
+        "ADBE_20250723_validation.json",  # High quality
+    ]
+
+    validation_results = []
+
+    print(f"\n📁 Testing {len(test_files)} validation files:")
+    print("-" * 40)
+
+    for file_name in test_files:
+        file_path = validation_dir / file_name
+
+        # Load validation data
+        validation_data = load_validation_file(file_path)
+        if not validation_data:
+            validation_results.append((file_name, False, "Failed to load file"))
+            continue
+
+        # Validate against schema
+        is_valid, error_message = validate_validation_file(
+            validation_data, schema, file_path
+        )
+        validation_results.append((file_name, is_valid, error_message))
+
+        # Print immediate result
+        status_icon = "✅" if is_valid else "❌"
+        print(f"{status_icon} {file_name}: {'VALID' if is_valid else 'INVALID'}")
+
+        if not is_valid:
+            print(f"   Error: {error_message}")
+
+    # Summary
+    print("\n" + "=" * 60)
+    print("📊 VALIDATION SUMMARY")
+    print("=" * 60)
+
+    valid_count = sum(1 for _, is_valid, _ in validation_results if is_valid)
+    total_count = len(validation_results)
+
+    print(f"✅ Valid files: {valid_count}/{total_count}")
+    print(f"❌ Invalid files: {total_count - valid_count}/{total_count}")
+
+    if valid_count == total_count:
+        print("\n🎉 ALL VALIDATION FILES PASS SCHEMA VALIDATION!")
+        print("Schema is ready for production use.")
+        return 0
+    else:
+        print(f"\n⚠️  {total_count - valid_count} files failed validation.")
+        print("Schema may need adjustments.")
+
+        # Print detailed errors for failed validations
+        print("\n🔍 DETAILED ERRORS:")
+        print("-" * 40)
+        for file_name, is_valid, error_message in validation_results:
+            if not is_valid:
+                print(f"\n❌ {file_name}:")
+                print(f"   {error_message}")
+
+        return 1
+
+
+if __name__ == "__main__":
+    sys.exit(main())

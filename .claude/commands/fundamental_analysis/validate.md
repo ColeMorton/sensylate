@@ -24,10 +24,202 @@ You are the Fundamental Analysis Validation Specialist, functioning similarly to
 
 ## Parameters
 
+### Mode 1: Single Ticker Validation
+**Trigger**: Filename argument matching `{TICKER}_{YYYYMMDD}.md`
 - `synthesis_filename`: Path to synthesis output file (required) - format: {TICKER}_{YYYYMMDD}.md
 - `confidence_threshold`: Minimum confidence requirement - `9.0` | `9.5` | `9.8` (optional, default: 9.0)
 - `validation_depth`: Validation rigor - `standard` | `comprehensive` | `institutional` (optional, default: institutional)
 - `real_time_validation`: Use current market data for validation - `true` | `false` (optional, default: true)
+
+### Mode 2: DASV Phase Cross-Analysis
+**Trigger**: Phase argument matching `discovery|analysis|synthesis|validation`
+- `dasv_phase`: DASV phase for cross-analysis (required) - `discovery` | `analysis` | `synthesis` | `validation`
+- `file_count`: Number of latest files to analyze (optional, default: 7)
+- `confidence_threshold`: Minimum confidence requirement - `9.0` | `9.5` | `9.8` (optional, default: 9.0)
+- `validation_depth`: Validation rigor - `standard` | `comprehensive` | `institutional` (optional, default: institutional)
+
+**Note**: `synthesis_filename` and `dasv_phase` are mutually exclusive - use one or the other, not both.
+
+## Parameter Detection and Execution Flow
+
+### Argument Parsing Logic
+```bash
+# Command Invocation Examples:
+/fundamental_analysis:validate TICKER_20250725.md          # Single Ticker Mode
+/fundamental_analysis:validate analysis                     # DASV Cross-Analysis Mode
+/fundamental_analysis:validate discovery --file_count=5    # DASV Cross-Analysis Mode (custom count)
+```
+
+**Detection Algorithm**:
+1. If argument matches pattern `{TICKER}_{YYYYMMDD}.md` → Single Ticker Validation Mode
+2. If argument matches `discovery|analysis|synthesis|validation` → DASV Phase Cross-Analysis Mode
+3. If no arguments provided → Error: Missing required parameter
+4. If invalid argument → Error: Invalid parameter format
+
+### Execution Routing
+- **Single Ticker Mode**: Extract ticker and date from filename, validate complete DASV workflow
+- **DASV Cross-Analysis Mode**: Analyze latest files in specified phase directory for consistency
+
+### Parameter Validation Rules
+- **Mutually Exclusive**: Cannot specify both synthesis_filename and dasv_phase
+- **Required**: Must specify either synthesis_filename OR dasv_phase
+- **Format Validation**: synthesis_filename must match exact pattern {TICKER}_{YYYYMMDD}.md
+- **Phase Validation**: dasv_phase must be one of the four valid DASV phases
+
+### Error Handling for Invalid Parameters
+- **Invalid Filename Format**: Must match {TICKER}_{YYYYMMDD}.md pattern exactly
+- **Non-existent Phase**: Phase must be discovery, analysis, synthesis, or validation
+- **Missing Required Parameters**: Must provide either filename or phase argument
+- **Conflicting Parameters**: Cannot combine single ticker and cross-analysis modes
+
+## DASV Phase Cross-Analysis Methodology
+
+**Purpose**: Validate consistency, quality, and ticker-specificity across the latest files within a specific DASV phase to ensure systematic analysis quality and eliminate hardcoded template artifacts.
+
+### Cross-Analysis Framework
+
+**File Discovery and Selection**:
+- Automatically locate latest 7 files (configurable) in specified phase directory
+- Sort by modification timestamp for most recent analysis outputs
+- Phase-specific directory mapping:
+  - `discovery`: `./data/outputs/fundamental_analysis/discovery/`
+  - `analysis`: `./data/outputs/fundamental_analysis/analysis/`
+  - `synthesis`: `./data/outputs/fundamental_analysis/` (root level)
+  - `validation`: `./data/outputs/fundamental_analysis/validation/`
+
+### Core Validation Dimensions
+
+#### 1. Structural Consistency Analysis
+**Objective**: Ensure uniform structure and format compliance across phase outputs
+```
+STRUCTURAL VALIDATION PROTOCOL:
+- JSON Schema Consistency: Validate all files follow identical structure
+- Required Field Verification: Confirm all mandatory fields are present
+- Data Type Consistency: Ensure consistent field types across files
+- Metadata Format Compliance: Verify consistent metadata structure
+- Confidence Score Format: Validate decimal format (0.0-1.0) consistency
+- CLI Services Integration: Confirm consistent service utilization patterns
+- Overall Structural Score: 9.0+/10.0 for institutional quality
+```
+
+#### 2. Hardcoded/Magic Value Detection
+**Objective**: Identify and flag non-ticker-specific repeated values that indicate template artifacts
+```
+MAGIC VALUE DETECTION FRAMEWORK:
+- Repeated String Patterns: Detect identical non-ticker strings across files
+- Numerical Value Analysis: Flag suspicious repeated numbers not related to market data
+- Template Artifact Identification: Identify placeholder text or example values
+- Generic Description Detection: Find non-specific company descriptions
+- Default Value Flagging: Identify unchanged template defaults
+- Threshold: <5% repeated non-ticker-specific content for institutional quality
+```
+
+#### 3. Ticker Specificity Validation
+**Objective**: Ensure all data and analysis content is appropriately specific to each stock/ticker
+```
+TICKER SPECIFICITY ASSESSMENT:
+- Company Name Accuracy: Verify correct company names match ticker symbols
+- Industry Classification: Confirm sector/industry assignments are ticker-specific
+- Financial Metrics Uniqueness: Validate financial data varies appropriately by company
+- Business Model Descriptions: Ensure company-specific business model analysis
+- Competitive Analysis Specificity: Verify ticker-appropriate competitive positioning
+- Price Data Correlation: Confirm price ranges and market caps align with ticker
+- Specificity Score: 9.5+/10.0 for institutional ticker-specific analysis
+```
+
+#### 4. CLI Services Integration Consistency
+**Objective**: Validate consistent and appropriate use of CLI financial services across phase files
+```
+CLI INTEGRATION VALIDATION:
+- Service Utilization Patterns: Verify consistent CLI service usage
+- Data Source Attribution: Confirm proper CLI service citations
+- Quality Score Consistency: Validate CLI confidence scoring alignment
+- Service Health Documentation: Ensure operational status tracking
+- Multi-Source Validation: Confirm cross-validation across CLI services
+- Service Integration Score: 9.0+/10.0 for production-grade integration
+```
+
+### Cross-Analysis Output Structure
+
+**File Naming**: `{PHASE}_cross_analysis_{YYYYMMDD}_validation.json`
+**Location**: `./data/outputs/fundamental_analysis/validation/`
+
+```json
+{
+  "metadata": {
+    "command_name": "fundamental_analyst_validate_dasv_cross_analysis",
+    "execution_timestamp": "ISO_8601_format",
+    "framework_phase": "dasv_phase_cross_analysis",
+    "dasv_phase_analyzed": "discovery|analysis|synthesis|validation",
+    "files_analyzed_count": 7,
+    "analysis_methodology": "comprehensive_cross_phase_consistency_validation"
+  },
+  "files_analyzed": [
+    {
+      "filename": "TICKER_YYYYMMDD_phase.json",
+      "ticker": "TICKER_SYMBOL",
+      "modification_timestamp": "ISO_8601_format",
+      "file_size_bytes": "numeric_file_size",
+      "structural_compliance": "9.X/10.0"
+    }
+  ],
+  "cross_analysis_results": {
+    "structural_consistency_score": "9.X/10.0",
+    "hardcoded_values_score": "9.X/10.0",
+    "ticker_specificity_score": "9.X/10.0",
+    "cli_integration_score": "9.X/10.0",
+    "overall_cross_analysis_score": "9.X/10.0"
+  },
+  "detected_issues": {
+    "structural_inconsistencies": [
+      {
+        "issue_type": "missing_field|data_type_mismatch|format_violation",
+        "files_affected": ["filename_array"],
+        "description": "specific_issue_description",
+        "severity": "high|medium|low",
+        "recommendation": "specific_fix_recommendation"
+      }
+    ],
+    "hardcoded_values": [
+      {
+        "value": "detected_hardcoded_string_or_number",
+        "files_affected": ["filename_array"],
+        "occurrences": "count_of_occurrences",
+        "suspected_template_artifact": "true|false",
+        "recommendation": "ticker_specific_replacement_suggestion"
+      }
+    ],
+    "ticker_specificity_violations": [
+      {
+        "field_path": "json_path_to_field",
+        "generic_content": "detected_generic_content",
+        "files_affected": ["filename_array"],
+        "recommendation": "ticker_specific_content_requirement"
+      }
+    ],
+    "cli_integration_inconsistencies": [
+      {
+        "service_name": "cli_service_name",
+        "inconsistency_type": "missing_service|inconsistent_usage|data_quality_variation",
+        "files_affected": ["filename_array"],
+        "recommendation": "standardization_approach"
+      }
+    ]
+  },
+  "quality_assessment": {
+    "institutional_quality_certified": "true|false",
+    "minimum_threshold_met": "true|false",
+    "phase_consistency_grade": "A+|A|A-|B+|B|B-|C+|C|F",
+    "ready_for_production": "true|false"
+  },
+  "recommendations": {
+    "immediate_fixes": ["array_of_critical_issues_to_address"],
+    "template_improvements": ["suggestions_for_template_enhancement"],
+    "validation_enhancements": ["process_improvement_recommendations"],
+    "cli_integration_optimizations": ["service_utilization_improvements"]
+  }
+}
+```
 
 ## Enhanced Validation via Production CLI Services
 
@@ -445,10 +637,27 @@ CLI INTEGRATION QUALITY GATES:
    - Provide usage recommendations and CLI-validated corrections
 
 ### Post-Execution
-1. **Save validation output to ./data/outputs/fundamental_analysis/validation/**
-2. Generate validation summary with institutional quality certification
-3. Flag any outputs failing minimum 9.0/10 threshold
-4. Document methodology limitations and research gaps
+1. **MANDATORY: Save validation output to ./data/outputs/fundamental_analysis/validation/**
+   - **CRITICAL**: Every validation execution MUST generate and save a comprehensive report
+   - For single ticker validation: `{TICKER}_{YYYYMMDD}_validation.json`
+   - For cross-analysis validation: `{PHASE}_cross_analysis_{YYYYMMDD}_validation.json`
+   - Verify file write success and report file size > 0 bytes
+   - Include error handling for disk write failures with retry mechanisms
+2. **Generate validation summary with institutional quality certification**
+   - Document overall assessment scores and grade assignments
+   - Include decision confidence levels and usage recommendations
+   - Flag blocking issues and required corrections
+3. **Flag any outputs failing minimum 9.0/10 threshold**
+   - Mark non-compliant files for immediate attention
+   - Generate prioritized remediation recommendations
+4. **Document methodology limitations and research gaps**
+   - Record CLI service availability and health status
+   - Note data quality constraints and validation limitations
+5. **VERIFICATION: Confirm report file integrity**
+   - Validate JSON structure and completeness
+   - Verify all required sections are populated
+   - Check file permissions and accessibility
+   - Log successful report generation with timestamp
 
 ## Security and Implementation Notes
 
@@ -477,6 +686,19 @@ CLI INTEGRATION QUALITY GATES:
 - Real-time market data validation via CLI financial services
 - Institutional quality confidence scoring throughout assessment
 - Evidence-based recommendations with specific correction priorities
+- **MANDATORY REPORT GENERATION**: Every validation execution must produce and save a comprehensive validation report
+
+### Cross-Analysis Report Management Standards
+- **File Naming Convention**: `{PHASE}_cross_analysis_{YYYYMMDD}_validation.json`
+- **Storage Location**: `./data/outputs/fundamental_analysis/validation/`
+- **Minimum Content Requirements**:
+  - Complete metadata with execution timestamp and methodology
+  - Full file analysis breakdown with structural compliance scores
+  - Detected issues matrix with severity classifications
+  - Quality assessment with institutional certification status
+  - Actionable recommendations for immediate fixes and improvements
+- **Report Retention**: Maintain validation reports for audit trail and framework improvement analysis
+- **File Integrity**: Verify JSON structure, completeness, and accessibility post-generation
 
 ## CLI Implementation Guidelines
 
@@ -510,9 +732,134 @@ CRITICAL: Always use production CLI services with proper configuration
 - **Source Reliability**: Leverage CLI data_quality indicators and timestamps
 - **Performance Optimization**: Utilize CLI caching for consistent validation data
 - **Error Prevention**: Apply CLI error handling to prevent validation failures
+- **Report Generation Integrity**: Implement file write verification and error handling for all validation reports
+
+### Mandatory Report Saving Protocol
+
+**CRITICAL IMPLEMENTATION REQUIREMENTS**:
+```bash
+# File saving verification protocol
+1. Generate validation report in memory
+2. Validate JSON structure and completeness
+3. Write to disk with error handling:
+   - Primary save attempt
+   - Verify file write success (size > 0 bytes)
+   - Retry mechanism for failed writes (up to 3 attempts)
+   - Log success/failure with timestamps
+4. Post-write verification:
+   - Confirm file accessibility and permissions
+   - Validate JSON parsing of saved file
+   - Check all required sections are populated
+   - Record successful completion in execution log
+```
+
+**Error Handling for Report Saving**:
+- Disk space validation before write attempts
+- Permission verification for target directory
+- Backup location fallback for critical validation reports
+- User notification for persistent save failures
+- Automatic retry with exponential backoff for temporary failures
+
+## Usage Examples
+
+### Single Ticker Validation Examples
+
+**Basic Single Ticker Validation:**
+```bash
+/fundamental_analysis:validate VTRS_20250725.md
+```
+- Validates complete DASV workflow for VTRS on July 25, 2025
+- Uses default institutional validation depth
+- Performs real-time CLI data validation
+- Output: `VTRS_20250725_validation.json`
+
+**Advanced Single Ticker Validation:**
+```bash
+/fundamental_analysis:validate AAPL_20250725.md --confidence_threshold=9.5 --validation_depth=comprehensive
+```
+- Higher confidence threshold requiring 9.5/10 minimum
+- Comprehensive validation rigor
+- Output: `AAPL_20250725_validation.json`
+
+### DASV Phase Cross-Analysis Examples
+
+**Analysis Phase Cross-Analysis (Current Request):**
+```bash
+/fundamental_analysis:validate analysis
+```
+- Analyzes latest 7 analysis files for consistency
+- Detects hardcoded values and template artifacts
+- Validates ticker specificity across files
+- Output: `analysis_cross_analysis_20250725_validation.json`
+
+**Discovery Phase Cross-Analysis:**
+```bash
+/fundamental_analysis:validate discovery --file_count=5
+```
+- Analyzes latest 5 discovery files
+- Focuses on data collection consistency
+- Output: `discovery_cross_analysis_20250725_validation.json`
+
+**Synthesis Phase Cross-Analysis:**
+```bash
+/fundamental_analysis:validate synthesis --confidence_threshold=9.8
+```
+- Institutional-grade synthesis validation
+- Higher confidence threshold for final documents
+- Output: `synthesis_cross_analysis_20250725_validation.json`
+
+**Validation Phase Cross-Analysis:**
+```bash
+/fundamental_analysis:validate validation
+```
+- Meta-validation of validation reports
+- Ensures validation consistency and quality
+- Output: `validation_cross_analysis_20250725_validation.json`
+
+### Error Examples
+
+**Invalid Parameter Format:**
+```bash
+/fundamental_analysis:validate VTRS_2025  # Missing .md extension
+# Error: Invalid filename format. Must match {TICKER}_{YYYYMMDD}.md
+```
+
+**Invalid Phase Specification:**
+```bash
+/fundamental_analysis:validate testing   # Invalid phase name
+# Error: Invalid phase. Must be discovery, analysis, synthesis, or validation
+```
+
+**Missing Parameters:**
+```bash
+/fundamental_analysis:validate           # No arguments
+# Error: Missing required parameter. Specify filename or phase
+```
 
 **Integration with DASV Framework**: This microservice provides comprehensive quality assurance for the complete fundamental analysis workflow, ensuring institutional-quality reliability standards across all phases before publication or decision-making usage. All data verification is performed through the production CLI financial services to maintain consistency with the discovery and analysis phases.
+
+## Validation Report Archive and Management
+
+### Report Lifecycle Management
+- **Creation**: Every validation execution automatically generates comprehensive reports
+- **Storage**: All reports saved to `./data/outputs/fundamental_analysis/validation/` with standardized naming
+- **Verification**: Post-generation integrity checks ensure report completeness and accessibility
+- **Retention**: Maintain historical validation reports for framework improvement analysis
+- **Cleanup**: Implement automated archival for reports older than 90 days (configurable)
+
+### Audit Trail Requirements
+- **Execution Logging**: Record all validation attempts with timestamps and outcomes
+- **Report Catalog**: Maintain index of generated reports for easy retrieval
+- **Quality Tracking**: Monitor validation scores and improvement trends over time
+- **Compliance Documentation**: Ensure all reports meet institutional quality standards
+
+### Integration Verification
+- **Cross-Analysis Coverage**: Verify all DASV phases have corresponding cross-analysis validation reports
+- **Consistency Monitoring**: Track framework evolution and standardization progress
+- **Quality Assurance**: Ensure validation reports support institutional compliance requirements
+- **Framework Improvement**: Use validation findings to enhance analysis methodologies
 
 **Author**: Cole Morton
 **Confidence**: [Validation confidence will be calculated based on assessment completeness and evidence quality]
 **Data Quality**: [Data quality score based on source verification and validation thoroughness via CLI services]
+**Report Generation**: [MANDATORY - All validation executions must produce comprehensive saved reports]
