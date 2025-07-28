@@ -65,8 +65,8 @@ class YahooFinanceCLI(BaseFinancialCLI):
         def get_history(
             ticker: str = typer.Argument(..., help="Stock ticker symbol"),
             period: str = typer.Option(
-                "1y",
-                help="Time period (1d, 5d, 1mo, 3mo, 6mo, 1y, 2y, 5y, 10y, ytd, max)",
+                "comprehensive",
+                help="Time period (comprehensive=daily only, 1d, 5d, 1mo, 3mo, 6mo, 1y, 2y, 5y, 10y, ytd, max)",
             ),
             env: str = typer.Option("dev", help="Environment"),
             output_format: str = typer.Option(OutputFormat.JSON, help="Output format"),
@@ -74,14 +74,39 @@ class YahooFinanceCLI(BaseFinancialCLI):
                 False, "--summary", help="Return summary instead of full data"
             ),
         ):
-            """Get historical price data"""
+            """Get historical price data - defaults to comprehensive collection (max daily only)"""
             try:
                 ticker = self.validate_ticker(ticker)
                 service = self._get_service(env)
 
                 if summary:
-                    result = service.get_market_data_summary(ticker, period)
+                    result = service.get_market_data_summary(
+                        ticker, period if period != "comprehensive" else "max"
+                    )
                     title = f"Market Summary: {ticker} ({period})"
+                elif period == "comprehensive":
+                    # Trigger comprehensive collection: daily (max) only - weekly disabled by default
+                    print(f"🔄 Initiating comprehensive data collection for {ticker}")
+                    print("   - Daily data: Maximum available history")
+                    print(
+                        "   - Weekly data: Disabled by default (use explicit weekly command if needed)"
+                    )
+
+                    # Fetch daily data (max) - this will trigger comprehensive collection
+                    daily_result = service.get_historical_data(ticker, "max")
+
+                    # Return daily-only results
+                    result = {
+                        "ticker": ticker,
+                        "collection_type": "comprehensive",
+                        "daily_data": daily_result,
+                        "summary": {
+                            "daily_records": len(daily_result.get("data", [])),
+                            "weekly_records": 0,
+                            "total_records": len(daily_result.get("data", [])),
+                        },
+                    }
+                    title = f"Comprehensive Historical Data: {ticker} (max daily only)"
                 else:
                     result = service.get_historical_data(ticker, period)
                     title = f"Historical Data: {ticker} ({period})"
@@ -153,6 +178,76 @@ class YahooFinanceCLI(BaseFinancialCLI):
 
             except Exception as e:
                 self._handle_error(e, f"Failed to analyze {ticker}")
+
+        @self.app.command("collection-status")
+        def collection_status(
+            ticker: str = typer.Argument(..., help="Stock ticker symbol"),
+            env: str = typer.Option("dev", help="Environment"),
+            output_format: str = typer.Option(OutputFormat.JSON, help="Output format"),
+        ):
+            """Check historical data collection status for a ticker"""
+            try:
+                ticker = self.validate_ticker(ticker)
+                service = self._get_service(env)
+
+                # Get service info with historical data stats
+                service_info = service.get_service_info()
+
+                # Check if files exist for this ticker
+                import os
+                from pathlib import Path
+
+                base_path = Path("data/raw/stocks") / ticker.upper()
+
+                status = {
+                    "ticker": ticker,
+                    "collection_enabled": service_info.get(
+                        "historical_storage", {}
+                    ).get("enabled", False),
+                    "files_exist": base_path.exists(),
+                    "data_types": [],
+                    "file_counts": {},
+                    "date_ranges": {},
+                }
+
+                if base_path.exists():
+                    for data_type_dir in base_path.iterdir():
+                        if data_type_dir.is_dir():
+                            data_type = data_type_dir.name
+                            status["data_types"].append(data_type)
+
+                            # Count files
+                            files = list(data_type_dir.rglob("*.json"))
+                            status["file_counts"][data_type] = len(files)
+
+                            # Get date range
+                            if files:
+                                dates = []
+                                for file_path in files:
+                                    try:
+                                        # Extract date from filename: TICKER_YYYY-MM-DD_datatype.json
+                                        parts = file_path.stem.split("_")
+                                        if len(parts) >= 2:
+                                            date_part = parts[1]
+                                            if "-" in date_part:
+                                                dates.append(date_part)
+                                    except:
+                                        continue
+
+                                if dates:
+                                    dates.sort()
+                                    status["date_ranges"][data_type] = {
+                                        "earliest": dates[0],
+                                        "latest": dates[-1],
+                                        "total_dates": len(dates),
+                                    }
+
+                self._output_result(
+                    status, output_format, f"Collection Status: {ticker}"
+                )
+
+            except Exception as e:
+                self._handle_error(e, f"Failed to get collection status for {ticker}")
 
         @self.app.command("batch")
         def batch_quotes(
