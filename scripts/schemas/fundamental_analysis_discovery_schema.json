@@ -18,7 +18,8 @@
     "cli_insights",
     "peer_group_data",
     "discovery_insights",
-    "data_quality_assessment"
+    "data_quality_assessment",
+    "local_data_references"
   ],
   "additionalProperties": false,
   "properties": {
@@ -749,6 +750,9 @@
           "description": "Quality assurance flags and confirmations"
         }
       }
+    },
+    "local_data_references": {
+      "$ref": "./local_data_references_schema.json"
     }
   },
   "examples": [

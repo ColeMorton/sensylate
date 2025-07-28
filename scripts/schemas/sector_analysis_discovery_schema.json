@@ -6,7 +6,8 @@
   "type": "object",
   "required": [
     "metadata",
-    "sector_companies_data"
+    "sector_companies_data",
+    "local_data_references"
   ],
   "additionalProperties": true,
   "properties": {
@@ -886,6 +887,9 @@
           }
         }
       }
+    },
+    "local_data_references": {
+      "$ref": "./local_data_references_schema.json"
     }
   }
 }
