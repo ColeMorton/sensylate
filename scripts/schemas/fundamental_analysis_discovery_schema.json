@@ -18,7 +18,8 @@
     "cli_insights",
     "peer_group_data",
     "discovery_insights",
-    "data_quality_assessment"
+    "data_quality_assessment",
+    "local_data_references"
   ],
   "additionalProperties": false,
   "properties": {
@@ -747,6 +748,192 @@
             "type": "string"
           },
           "description": "Quality assurance flags and confirmations"
+        }
+      }
+    },
+    "local_data_references": {
+      "type": "object",
+      "description": "Systematic discovery and referencing of related files from the ./data/ knowledge domain",
+      "required": [
+        "search_methodology",
+        "discovered_files",
+        "search_coverage",
+        "relevance_assessment"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "search_methodology": {
+          "type": "object",
+          "description": "Documentation of systematic search approach and coverage",
+          "required": [
+            "search_patterns",
+            "directories_searched",
+            "file_types_evaluated",
+            "temporal_scope"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "search_patterns": {
+              "type": "array",
+              "minItems": 3,
+              "items": {
+                "type": "string"
+              },
+              "description": "Search patterns used (ticker-based, date-based, analysis-type-based)"
+            },
+            "directories_searched": {
+              "type": "array",
+              "minItems": 2,
+              "items": {
+                "type": "string"
+              },
+              "description": "Directory paths systematically searched"
+            },
+            "file_types_evaluated": {
+              "type": "array",
+              "minItems": 3,
+              "items": {
+                "type": "string",
+                "enum": ["json", "md", "csv", "txt", "yaml"]
+              },
+              "description": "File types included in search scope"
+            },
+            "temporal_scope": {
+              "type": "string",
+              "description": "Temporal range considered for relevance assessment"
+            }
+          }
+        },
+        "discovered_files": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "filepath",
+              "relevance_score",
+              "relationship_type",
+              "file_description",
+              "accessibility_verified"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "filepath": {
+                "type": "string",
+                "pattern": "^\\./data/",
+                "description": "Relative filepath from project root (must start with ./data/)"
+              },
+              "relevance_score": {
+                "type": "number",
+                "minimum": 0.7,
+                "maximum": 1.0,
+                "description": "Relevance confidence score (minimum 0.7 for institutional grade)"
+              },
+              "relationship_type": {
+                "type": "string",
+                "enum": [
+                  "direct_analysis",
+                  "peer_analysis",
+                  "sector_context",
+                  "historical_analysis",
+                  "validation_data",
+                  "supporting_data",
+                  "cross_reference"
+                ],
+                "description": "Type of relationship to current analysis"
+              },
+              "file_description": {
+                "type": "string",
+                "minLength": 10,
+                "maxLength": 200,
+                "description": "Brief description of file content and relevance"
+              },
+              "accessibility_verified": {
+                "type": "boolean",
+                "const": true,
+                "description": "Must be true - file accessibility verified"
+              },
+              "file_type": {
+                "type": "string",
+                "enum": ["discovery", "analysis", "validation", "report", "data"],
+                "description": "Classification of file content type"
+              },
+              "date_relevance": {
+                "type": "string",
+                "enum": ["current", "recent", "historical", "comparative"],
+                "description": "Temporal relevance classification"
+              }
+            }
+          },
+          "description": "Array of discovered relevant files with metadata"
+        },
+        "search_coverage": {
+          "type": "object",
+          "description": "Assessment of search completeness and quality",
+          "required": [
+            "directories_covered",
+            "files_evaluated",
+            "coverage_completeness",
+            "search_confidence"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "directories_covered": {
+              "type": "integer",
+              "minimum": 2,
+              "description": "Number of directories systematically searched"
+            },
+            "files_evaluated": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Total number of files evaluated for relevance"
+            },
+            "coverage_completeness": {
+              "type": "number",
+              "minimum": 0.8,
+              "maximum": 1.0,
+              "description": "Assessment of search coverage completeness (minimum 0.8)"
+            },
+            "search_confidence": {
+              "type": "number",
+              "minimum": 0.8,
+              "maximum": 1.0,
+              "description": "Confidence in search methodology and results (minimum 0.8)"
+            }
+          }
+        },
+        "relevance_assessment": {
+          "type": "object",
+          "description": "Quality assessment of discovered file relevance",
+          "required": [
+            "high_relevance_files",
+            "total_relevant_files",
+            "average_relevance_score",
+            "assessment_methodology"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "high_relevance_files": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Number of files with relevance score >= 0.9"
+            },
+            "total_relevant_files": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Total number of files meeting minimum relevance threshold"
+            },
+            "average_relevance_score": {
+              "type": "number",
+              "minimum": 0.7,
+              "maximum": 1.0,
+              "description": "Average relevance score of all discovered files"
+            },
+            "assessment_methodology": {
+              "type": "string",
+              "minLength": 20,
+              "description": "Description of relevance scoring methodology"
+            }
+          }
         }
       }
     }
