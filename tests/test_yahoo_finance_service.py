@@ -176,7 +176,7 @@ class TestYahooFinanceService(unittest.TestCase):
         mock_instance.history.return_value = mock_df
         mock_ticker.return_value = mock_instance
 
-        result = self.service.get_historical_data("AAPL", "1y")
+        result = self.service.get_historical_data("AAPL", "5y")
 
         self.assertEqual(result['symbol'], 'AAPL')
         self.assertEqual(result['period'], '1y')
