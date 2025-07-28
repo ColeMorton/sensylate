@@ -1,0 +1,356 @@
+# Industry Analysis Configuration
+# Configuration for industry-wide DASV analysis workflows
+
+# Global configuration
+global:
+  framework_version: "2.1.0"
+  confidence_baseline: 9.0
+  confidence_enhanced: 9.5
+  confidence_premium: 9.8
+
+  output_formats:
+    discovery: "json"
+    analysis: "json"
+    synthesis: "markdown"
+    validation: "json"
+    metadata: "json"
+
+# Industry classification configuration
+industry_classification:
+  standard: "GICS"  # Global Industry Classification Standard
+  fallback: "NAICS"  # North American Industry Classification System
+
+  # Industry hierarchies and mappings
+  sector_mappings:
+    technology:
+      - software_infrastructure
+      - semiconductors
+      - consumer_electronics
+      - internet_content_and_information
+      - internet_retail
+    healthcare:
+      - pharmaceuticals
+      - biotechnology
+      - medical_devices
+      - healthcare_services
+    financials:
+      - banks
+      - insurance
+      - asset_management
+      - fintech
+    consumer:
+      - consumer_staples
+      - consumer_discretionary
+      - retail
+      - restaurants
+    industrials:
+      - aerospace_defense
+      - construction
+      - machinery
+      - transportation
+    energy:
+      - oil_gas
+      - renewable_energy
+      - utilities
+    materials:
+      - chemicals
+      - metals_mining
+      - forestry_paper
+    real_estate:
+      - reits
+      - real_estate_services
+    communications:
+      - telecommunications
+      - media_entertainment
+
+# DASV phase configuration
+phases:
+  discovery:
+    timeout_seconds: 300
+    required_data_sources: 5
+    min_company_coverage: 5
+    economic_indicators_required: true
+    trend_analysis_depth: "comprehensive"
+
+    output_structure:
+      metadata: true
+      industry_scope: true
+      representative_companies: true
+      trend_analysis: true
+      economic_indicators: true
+      cli_service_health: true
+      quality_metrics: true
+
+  analysis:
+    timeout_seconds: 600
+    structure_scorecard_required: true
+    moat_analysis_min_categories: 3
+    growth_catalysts_min_count: 3
+    risk_matrix_min_categories: 5
+    economic_sensitivity_required: true
+
+    confidence_requirements:
+      structure_assessment: 9.0
+      moat_analysis: 8.5
+      growth_catalysts: 9.0
+      risk_quantification: 9.0
+      economic_integration: 8.8
+
+  synthesis:
+    timeout_seconds: 180
+    template_compliance_required: true
+    template_path: "./templates/analysis/industry_analysis_template.md"
+    jinja_template_path: "./scripts/templates/industry_analysis_enhanced.j2"
+
+    required_sections:
+      - "Executive Summary"
+      - "Investment Thesis"
+      - "Industry Positioning Dashboard"
+      - "Growth Analysis & Catalysts"
+      - "Risk Assessment & Scenario Analysis"
+      - "Investment Decision Framework"
+      - "Industry Intelligence Summary"
+
+    quality_gates:
+      min_document_length: 8000
+      confidence_reporting_required: true
+      author_attribution_required: true
+      institutional_quality_markers: true
+
+  validation:
+    timeout_seconds: 240
+    real_time_validation_required: true
+    template_compliance_threshold: 0.9
+    cli_service_health_threshold: 0.8
+
+    quality_standards:
+      workflow_completeness: 1.0
+      data_consistency: 0.9
+      confidence_thresholds: 9.0
+      evidence_backing: 9.0
+      professional_presentation: 9.0
+
+    certification_levels:
+      INSTITUTIONAL_CERTIFIED: 9.5
+      PROFESSIONAL_APPROVED: 9.0
+      INTERNAL_USE_APPROVED: 8.0
+      DEVELOPMENT_STAGE: 0.0
+
+# CLI service integration
+cli_services:
+  required_services:
+    - yahoo_finance
+    - fmp
+    - fred_economic
+
+  recommended_services:
+    - alpha_vantage
+    - sec_edgar
+    - coingecko
+    - imf
+
+  health_check_timeout: 30
+  data_collection_timeout: 120
+  validation_timeout: 60
+
+# Data collection parameters
+data_collection:
+  representative_companies:
+    min_count: 3
+    max_count: 15
+    default_count: 5
+    selection_criteria:
+      - market_cap_ranking
+      - industry_relevance
+      - data_availability
+      - geographic_diversity
+
+  economic_indicators:
+    core_indicators:
+      - GDP_growth
+      - interest_rates
+      - inflation_rate
+      - unemployment_rate
+
+    industry_specific:
+      technology:
+        - tech_employment
+        - tech_production_index
+        - venture_capital_flows
+      healthcare:
+        - healthcare_spending
+        - demographic_trends
+        - regulatory_environment
+      financials:
+        - credit_conditions
+        - banking_sector_health
+        - monetary_policy
+
+  trend_analysis:
+    technology_trends: true
+    market_trends: true
+    consumer_behavior_trends: true
+    regulatory_trends: true
+    competitive_trends: true
+
+# Risk assessment framework
+risk_assessment:
+  risk_categories:
+    - regulatory_risks
+    - competitive_risks
+    - economic_risks
+    - technology_risks
+    - operational_risks
+
+  probability_scale:
+    min: 0.0
+    max: 1.0
+    precision: 2
+
+  impact_scale:
+    min: 1
+    max: 5
+    scale_definitions:
+      1: "Minimal impact"
+      2: "Minor impact"
+      3: "Moderate impact"
+      4: "Major impact"
+      5: "Severe impact"
+
+  stress_testing:
+    scenarios_required: 3
+    scenario_types:
+      - bear_case
+      - base_case
+      - bull_case
+
+    economic_scenarios:
+      - severe_recession
+      - regulatory_disruption
+      - technology_disruption
+      - competitive_disruption
+
+# Growth catalyst framework
+growth_catalysts:
+  catalyst_types:
+    - technology_adoption
+    - market_expansion
+    - regulatory_changes
+    - demographic_shifts
+    - economic_trends
+
+  quantification:
+    probability_required: true
+    timeline_required: true
+    impact_assessment_required: true
+    evidence_backing_required: true
+
+  confidence_requirements:
+    catalyst_identification: 8.5
+    probability_assessment: 9.0
+    impact_quantification: 8.8
+    timeline_estimation: 8.0
+
+# Template and output configuration
+templates:
+  base_template: "./scripts/templates/shared/base_analysis_template.j2"
+  industry_template: "./scripts/templates/industry_analysis_enhanced.j2"
+  macro_library: "./scripts/templates/shared/macros/industry_framework_macro.j2"
+
+  template_validation:
+    structure_compliance: true
+    content_sections_check: true
+    formatting_standards: true
+    institutional_quality: true
+
+# File management
+file_management:
+  naming_convention: "{industry}_{YYYYMMDD}_{phase}.{ext}"
+
+  directory_structure:
+    discovery: "./data/outputs/industry_analysis/discovery/"
+    analysis: "./data/outputs/industry_analysis/analysis/"
+    synthesis: "./data/outputs/industry_analysis/"
+    validation: "./data/outputs/industry_analysis/validation/"
+    metadata: "./data/outputs/industry_analysis/metadata/"
+
+  retention_policy:
+    days_to_keep: 90
+    archive_after_days: 30
+    cleanup_enabled: true
+
+# Quality assurance
+quality_assurance:
+  automated_checks:
+    - confidence_threshold_validation
+    - template_compliance_check
+    - data_consistency_validation
+    - cli_service_health_check
+    - evidence_backing_verification
+
+  manual_review_triggers:
+    - confidence_below_threshold
+    - critical_findings_detected
+    - template_compliance_failure
+    - cli_service_degradation
+
+  improvement_protocols:
+    - validation_enhancement
+    - data_collection_optimization
+    - template_refinement
+    - methodology_improvement
+
+# Integration with other systems
+integration:
+  fundamental_analysis:
+    data_sharing: true
+    confidence_inheritance: true
+    cross_validation: true
+
+  sector_analysis:
+    aggregation_support: true
+    comparative_analysis: true
+    cross_sector_validation: true
+
+  content_generation:
+    twitter_integration: true
+    document_export: true
+    presentation_support: true
+
+# Performance and monitoring
+performance:
+  monitoring:
+    execution_time_tracking: true
+    resource_utilization_tracking: true
+    error_rate_monitoring: true
+    quality_score_tracking: true
+
+  optimization:
+    caching_enabled: true
+    parallel_processing: true
+    resource_pooling: true
+    lazy_loading: true
+
+  alerting:
+    performance_degradation: true
+    quality_threshold_breaches: true
+    cli_service_failures: true
+    validation_failures: true
+
+# Development and testing
+development:
+  debug_mode: false
+  verbose_logging: false
+  test_data_enabled: false
+
+  testing:
+    unit_tests: true
+    integration_tests: true
+    end_to_end_tests: true
+    performance_tests: true
+
+  validation:
+    schema_validation: true
+    data_type_checking: true
+    range_validation: true
+    business_rule_validation: true

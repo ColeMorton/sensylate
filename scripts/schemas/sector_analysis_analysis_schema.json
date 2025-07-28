@@ -1,0 +1,2257 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sensylate.com/schemas/sector_analysis_analysis.json",
+  "title": "Sector Analysis Analysis Schema",
+  "description": "Comprehensive schema for sector analysis JSON outputs from systematic sector evaluation framework",
+  "type": "object",
+  "required": [
+    "metadata"
+  ],
+  "additionalProperties": true,
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "description": "Core metadata about the sector analysis execution",
+      "required": [
+        "command_name",
+        "execution_timestamp",
+        "framework_phase",
+        "sector",
+        "analysis_methodology"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "command_name": {
+          "type": "string",
+          "enum": [
+            "sector_analysis",
+            "sector_analyst_analyze"
+          ],
+          "description": "Standardized sector analysis command name"
+        },
+        "execution_timestamp": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d{6})?Z?$",
+          "description": "ISO 8601 timestamp with optional microseconds and timezone"
+        },
+        "framework_phase": {
+          "type": "string",
+          "enum": [
+            "analyze",
+            "systematic_evaluation",
+            "institutional_analysis"
+          ],
+          "description": "Analysis framework phase identifier"
+        },
+        "sector": {
+          "type": "string",
+          "pattern": "^[a-zA-Z_]+$",
+          "description": "Sector identifier (utilities, energy, healthcare, etc.)"
+        },
+        "analysis_methodology": {
+          "type": "string",
+          "enum": [
+            "cli_enhanced_systematic_sector_evaluation_framework",
+            "template_gap_analysis",
+            "institutional_sector_framework"
+          ],
+          "description": "Systematic analysis methodology identifier"
+        },
+        "validation_enhanced": {
+          "type": "boolean",
+          "description": "Whether validation enhancement is enabled"
+        },
+        "target_confidence_threshold": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Target confidence threshold for institutional quality"
+        },
+        "discovery_confidence_inherited": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Confidence score inherited from discovery phase"
+        },
+        "economic_context_integration": {
+          "type": "boolean",
+          "description": "Whether economic context integration is enabled"
+        },
+        "cli_services_utilized": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 7,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": [
+              "yahoo_finance_cli",
+              "alpha_vantage_cli",
+              "fmp_cli",
+              "fred_economic_cli",
+              "coingecko_cli",
+              "sec_edgar_cli",
+              "imf_cli"
+            ]
+          },
+          "description": "CLI services utilized for data collection"
+        },
+        "discovery_file_reference": {
+          "type": "string",
+          "description": "Reference to the discovery file used as input"
+        },
+        "confidence_threshold": {
+          "oneOf": [
+            {"type": "number", "minimum": 0.0, "maximum": 1.0},
+            {"type": "string", "pattern": "^0\\.[0-9]$"}
+          ],
+          "description": "Confidence threshold requirement"
+        }
+      }
+    },
+    "discovery_data_inheritance": {
+      "type": "object",
+      "description": "Discovery phase data preservation and validation",
+      "additionalProperties": true,
+      "properties": {
+        "metadata": {
+          "type": "string",
+          "description": "Discovery data preservation methodology"
+        },
+        "data_completeness": {
+          "type": "string",
+          "pattern": "^\\d{1,3}%$",
+          "description": "Data completeness percentage"
+        },
+        "inheritance_validation": {
+          "type": "string",
+          "description": "Validation of inherited discovery sections"
+        }
+      }
+    },
+    "sector_data": {
+      "type": "object",
+      "description": "Core sector financial and performance data",
+      "additionalProperties": true,
+      "properties": {
+        "total_market_cap": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Total sector market capitalization"
+        },
+        "average_pe_ratio": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Sector average P/E ratio"
+        },
+        "sector_price_performance": {
+          "type": "number",
+          "description": "Sector price performance percentage"
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Data confidence score"
+        }
+      }
+    },
+    "sector_overview": {
+      "type": "object",
+      "description": "High-level sector characteristics and scope",
+      "additionalProperties": true,
+      "properties": {
+        "sector_name": {
+          "type": "string",
+          "description": "Formal sector name"
+        },
+        "companies_analyzed": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Number of companies in sector analysis"
+        },
+        "etf_ticker": {
+          "type": "string",
+          "pattern": "^[A-Z]{2,5}$",
+          "description": "Representative sector ETF ticker symbol"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 20,
+          "description": "Comprehensive sector description"
+        },
+        "geographic_scope": {
+          "type": "string",
+          "description": "Geographic coverage scope"
+        },
+        "regulatory_environment": {
+          "type": "string",
+          "description": "Regulatory environment classification"
+        },
+        "lifecycle_stage": {
+          "type": "string",
+          "enum": [
+            "emerging_growth",
+            "growth",
+            "mature_growth",
+            "mature_defensive",
+            "declining"
+          ],
+          "description": "Sector lifecycle stage classification"
+        }
+      }
+    },
+    "economic_context": {
+      "type": "object",
+      "description": "Comprehensive economic environment analysis",
+      "additionalProperties": true,
+      "properties": {
+        "interest_rate_environment": {
+          "type": "string",
+          "enum": [
+            "accommodative",
+            "neutral",
+            "restrictive_but_moderating",
+            "restrictive_but_peaking",
+            "restrictive"
+          ],
+          "description": "Current interest rate environment classification"
+        },
+        "yield_curve_signal": {
+          "type": "string",
+          "enum": [
+            "normal_steepening",
+            "normal_flattening",
+            "inverted",
+            "bear_steepening"
+          ],
+          "description": "Yield curve signal interpretation"
+        },
+        "yield_curve_spread": {
+          "type": "number",
+          "description": "Yield curve spread in basis points"
+        },
+        "fed_funds_rate": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 15.0,
+          "description": "Current federal funds rate"
+        },
+        "unemployment_rate": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 15.0,
+          "description": "Current unemployment rate"
+        },
+        "gdp_analysis": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "nominal_gdp": {
+              "type": "number",
+              "minimum": 0,
+              "description": "Nominal GDP in trillions"
+            },
+            "real_gdp": {
+              "type": "string",
+              "description": "Real GDP growth assessment"
+            },
+            "gdp_growth_rate": {
+              "type": "string",
+              "description": "GDP growth rate analysis"
+            },
+            "gdp_trend": {
+              "type": "string",
+              "enum": ["increasing", "stable", "decreasing"],
+              "description": "GDP trend direction"
+            },
+            "sector_gdp_correlation": {
+              "type": "string",
+              "description": "Sector correlation with GDP analysis"
+            },
+            "latest_gdp_date": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+              "description": "Latest GDP data date"
+            }
+          }
+        },
+        "employment_analysis": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "nonfarm_payrolls": {
+              "type": "number",
+              "minimum": 0,
+              "description": "Nonfarm payrolls in thousands"
+            },
+            "payrolls_change_monthly": {
+              "type": "string",
+              "description": "Monthly payrolls change assessment"
+            },
+            "labor_force_participation": {
+              "type": "string",
+              "description": "Labor force participation analysis"
+            },
+            "initial_claims": {
+              "type": "string",
+              "description": "Initial claims trend analysis"
+            },
+            "employment_trend": {
+              "type": "string",
+              "enum": ["strengthening", "stable", "weakening"],
+              "description": "Employment trend direction"
+            },
+            "sector_employment_sensitivity": {
+              "type": "string",
+              "description": "Sector sensitivity to employment changes"
+            },
+            "employment_cyclical_position": {
+              "type": "string",
+              "description": "Employment cycle positioning"
+            }
+          }
+        },
+        "dollar_strength": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "dxy_proxy_ticker": {
+              "type": "string",
+              "pattern": "^[A-Z]{2,5}$",
+              "description": "DXY proxy ticker symbol"
+            },
+            "dxy_proxy_name": {
+              "type": "string",
+              "description": "DXY proxy fund name"
+            },
+            "dxy_proxy_current_price": {
+              "type": "number",
+              "minimum": 0,
+              "description": "Current DXY proxy price"
+            },
+            "dxy_historical_data": {
+              "type": "string",
+              "description": "DXY historical data analysis"
+            },
+            "usd_eur_rate": {
+              "type": "string",
+              "description": "USD/EUR rate estimation"
+            },
+            "sector_dollar_sensitivity": {
+              "type": "string",
+              "description": "Sector sensitivity to dollar strength"
+            },
+            "data_source": {
+              "type": "string",
+              "description": "Data source identification"
+            },
+            "data_validation": {
+              "type": "object",
+              "additionalProperties": true
+            }
+          }
+        },
+        "liquidity_conditions": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "credit_spreads": {
+              "type": "string",
+              "description": "Credit spreads assessment"
+            },
+            "money_supply_growth": {
+              "type": "string",
+              "description": "Money supply growth analysis"
+            },
+            "financial_conditions_index": {
+              "type": "string",
+              "description": "Financial conditions assessment"
+            },
+            "liquidity_regime": {
+              "type": "string",
+              "enum": ["accommodative_classification", "neutral", "restrictive"],
+              "description": "Liquidity regime classification"
+            }
+          }
+        },
+        "sector_policy_implications": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Policy implications for the sector"
+        },
+        "sector_sensitivity": {
+          "type": "string",
+          "description": "Overall sector sensitivity assessment"
+        },
+        "cyclical_positioning": {
+          "type": "string",
+          "description": "Sector cyclical positioning analysis"
+        },
+        "historical_correlation": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "with_gdp_growth": {
+              "type": "string",
+              "description": "Historical correlation with GDP growth"
+            },
+            "with_employment_growth": {
+              "type": "string",
+              "description": "Historical correlation with employment"
+            },
+            "with_inflation": {
+              "type": "string",
+              "description": "Historical correlation with inflation"
+            },
+            "with_dollar_strength": {
+              "type": "string",
+              "description": "Historical correlation with dollar strength"
+            }
+          }
+        }
+      }
+    },
+    "cli_service_validation": {
+      "type": "object",
+      "description": "CLI service operational status and validation",
+      "additionalProperties": true,
+      "properties": {
+        "service_health": {
+          "type": "string",
+          "description": "CLI services operational health status"
+        },
+        "health_score": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Overall health score"
+        },
+        "services_operational": {
+          "oneOf": [
+            {"type": "integer", "minimum": 0, "maximum": 7},
+            {"type": "string"}
+          ],
+          "description": "Number of operational services"
+        },
+        "services_healthy": {
+          "type": "boolean",
+          "description": "Overall service health status"
+        }
+      }
+    },
+    "business_cycle_positioning": {
+      "type": "object",
+      "description": "Sector positioning within business and economic cycles",
+      "required": [
+        "current_phase",
+        "recession_probability",
+        "historical_performance_by_phase",
+        "confidence"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "current_phase": {
+          "type": "string",
+          "enum": [
+            "early_cycle",
+            "mid_cycle",
+            "late_cycle",
+            "recession"
+          ],
+          "description": "Current business cycle phase"
+        },
+        "recession_probability": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Probability of recession occurrence"
+        },
+        "historical_performance_by_phase": {
+          "type": "object",
+          "description": "Sector performance across different business cycle phases",
+          "additionalProperties": true,
+          "patternProperties": {
+            "^(early_cycle|mid_cycle|late_cycle|recession)$": {
+              "oneOf": [
+                {"type": "string"},
+                {"type": "object", "additionalProperties": true}
+              ]
+            }
+          }
+        },
+        "interest_rate_sensitivity": {
+          "type": "object",
+          "description": "Sector sensitivity to interest rate changes",
+          "additionalProperties": true,
+          "properties": {
+            "duration_analysis": {
+              "oneOf": [
+                {"type": "string"},
+                {"type": "number", "minimum": 0}
+              ],
+              "description": "Duration risk analysis"
+            },
+            "leverage_impact": {
+              "type": "string",
+              "description": "Impact of leverage on rate sensitivity"
+            },
+            "rate_coefficients": {
+              "oneOf": [
+                {"type": "string"},
+                {"type": "object", "additionalProperties": true}
+              ],
+              "description": "Interest rate correlation coefficients"
+            }
+          }
+        },
+        "inflation_hedge_assessment": {
+          "type": "object",
+          "description": "Sector's effectiveness as inflation hedge",
+          "additionalProperties": true,
+          "properties": {
+            "pricing_power": {
+              "type": "string",
+              "description": "Sector pricing power assessment"
+            },
+            "real_return_protection": {
+              "oneOf": [
+                {"type": "string"},
+                {"type": "number", "minimum": -1.0, "maximum": 1.0}
+              ],
+              "description": "Real return protection capability"
+            },
+            "cost_structure_flexibility": {
+              "oneOf": [
+                {"type": "string"},
+                {"type": "object", "additionalProperties": true}
+              ],
+              "description": "Cost structure flexibility analysis"
+            }
+          }
+        },
+        "gdp_growth_correlation": {
+          "type": "object",
+          "description": "Sector correlation with GDP growth",
+          "additionalProperties": true,
+          "properties": {
+            "gdp_elasticity": {
+              "oneOf": [
+                {"type": "string"},
+                {"type": "number"}
+              ],
+              "description": "GDP elasticity coefficient"
+            },
+            "historical_correlation": {
+              "oneOf": [
+                {"type": "string"},
+                {"type": "number", "minimum": -1.0, "maximum": 1.0}
+              ],
+              "description": "Historical GDP correlation"
+            },
+            "expansion_performance": {
+              "oneOf": [
+                {"type": "string"},
+                {"type": "object", "additionalProperties": true}
+              ],
+              "description": "Performance during GDP expansion"
+            },
+            "contraction_performance": {
+              "oneOf": [
+                {"type": "string"},
+                {"type": "object", "additionalProperties": true}
+              ],
+              "description": "Performance during GDP contraction"
+            },
+            "leading_lagging_relationship": {
+              "type": "string",
+              "description": "Leading or lagging indicator relationship"
+            }
+          }
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0.7,
+          "maximum": 1.0,
+          "description": "Confidence score for business cycle analysis"
+        }
+      }
+    },
+    "liquidity_cycle_positioning": {
+      "type": "object",
+      "description": "Sector positioning within liquidity and credit cycles",
+      "required": [
+        "fed_policy_stance",
+        "credit_market_conditions",
+        "employment_sensitivity",
+        "confidence"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "fed_policy_stance": {
+          "type": "string",
+          "enum": [
+            "accommodative",
+            "neutral",
+            "restrictive",
+            "restrictive_but_moderating",
+            "restrictive_trending_neutral"
+          ],
+          "description": "Current Federal Reserve policy stance"
+        },
+        "credit_market_conditions": {
+          "type": "object",
+          "description": "Credit market environment assessment",
+          "additionalProperties": true,
+          "properties": {
+            "corporate_bond_issuance": {
+              "type": "string",
+              "description": "Corporate bond issuance conditions"
+            },
+            "credit_spreads": {
+              "oneOf": [
+                {"type": "string"},
+                {"type": "object", "additionalProperties": true}
+              ],
+              "description": "Credit spreads analysis"
+            },
+            "refinancing_risk": {
+              "type": "string",
+              "description": "Refinancing risk assessment"
+            },
+            "banking_standards": {
+              "type": "string",
+              "description": "Banking lending standards"
+            }
+          }
+        },
+        "money_supply_impact": {
+          "type": "object",
+          "description": "Money supply impact on sector",
+          "additionalProperties": true,
+          "properties": {
+            "m2_growth_sensitivity": {
+              "oneOf": [
+                {"type": "string"},
+                {"type": "number", "minimum": -1.0, "maximum": 1.0}
+              ],
+              "description": "M2 growth sensitivity"
+            },
+            "velocity_implications": {
+              "type": "string",
+              "description": "Money velocity implications"
+            },
+            "asset_price_inflation": {
+              "oneOf": [
+                {"type": "string"},
+                {"type": "object", "additionalProperties": true}
+              ],
+              "description": "Asset price inflation impact"
+            }
+          }
+        },
+        "liquidity_preferences": {
+          "type": "object",
+          "description": "Liquidity preference and flow analysis",
+          "additionalProperties": true,
+          "properties": {
+            "sector_allocation_flows": {
+              "type": "string",
+              "description": "Sector allocation flow patterns"
+            },
+            "risk_appetite_correlation": {
+              "oneOf": [
+                {"type": "string"},
+                {"type": "number", "minimum": -1.0, "maximum": 1.0}
+              ],
+              "description": "Risk appetite correlation"
+            }
+          }
+        },
+        "employment_sensitivity": {
+          "type": "object",
+          "description": "Employment cycle sensitivity analysis",
+          "additionalProperties": true,
+          "properties": {
+            "payroll_correlation": {
+              "oneOf": [
+                {"type": "string"},
+                {"type": "number", "minimum": -1.0, "maximum": 1.0}
+              ],
+              "description": "Payroll correlation coefficient"
+            },
+            "labor_participation_impact": {
+              "type": "string",
+              "description": "Labor participation impact assessment"
+            },
+            "initial_claims_signaling": {
+              "oneOf": [
+                {"type": "string"},
+                {"type": "object", "additionalProperties": true}
+              ],
+              "description": "Initial claims signaling analysis"
+            },
+            "employment_cycle_positioning": {
+              "type": "string",
+              "description": "Employment cycle positioning"
+            },
+            "consumer_spending_linkage": {
+              "oneOf": [
+                {"type": "string"},
+                {"type": "object", "additionalProperties": true}
+              ],
+              "description": "Consumer spending transmission mechanism"
+            }
+          }
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0.7,
+          "maximum": 1.0,
+          "description": "Confidence score for liquidity cycle analysis"
+        }
+      }
+    },
+    "industry_dynamics_scorecard": {
+      "type": "object",
+      "description": "Sector fundamental dynamics and competitive assessment",
+      "required": [
+        "profitability_score",
+        "balance_sheet_score",
+        "competitive_moat_score",
+        "regulatory_environment_rating",
+        "confidence"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "profitability_score": {
+          "type": "object",
+          "description": "Sector profitability assessment",
+          "required": ["grade", "trend"],
+          "additionalProperties": true,
+          "properties": {
+            "grade": {
+              "type": "string",
+              "pattern": "^[A-F][+-]?$",
+              "description": "Profitability grade (A+ to F)"
+            },
+            "trend": {
+              "type": "string",
+              "enum": ["improving", "stable", "declining"],
+              "description": "Profitability trend direction"
+            },
+            "key_metrics": {
+              "oneOf": [
+                {"type": "string"},
+                {"type": "object", "additionalProperties": true}
+              ],
+              "description": "Key profitability metrics"
+            },
+            "supporting_evidence": {
+              "oneOf": [
+                {"type": "string"},
+                {"type": "object", "additionalProperties": true}
+              ],
+              "description": "Supporting evidence for profitability assessment"
+            }
+          }
+        },
+        "balance_sheet_score": {
+          "type": "object",
+          "description": "Sector balance sheet strength assessment",
+          "required": ["grade", "trend"],
+          "additionalProperties": true,
+          "properties": {
+            "grade": {
+              "type": "string",
+              "pattern": "^[A-F][+-]?$",
+              "description": "Balance sheet grade (A+ to F)"
+            },
+            "trend": {
+              "type": "string",
+              "enum": ["improving", "stable", "declining"],
+              "description": "Balance sheet trend direction"
+            },
+            "debt_trends": {
+              "oneOf": [
+                {"type": "string"},
+                {"type": "object", "additionalProperties": true}
+              ],
+              "description": "Debt trend analysis"
+            },
+            "liquidity_adequacy": {
+              "oneOf": [
+                {"type": "string"},
+                {"type": "object", "additionalProperties": true}
+              ],
+              "description": "Liquidity adequacy assessment"
+            }
+          }
+        },
+        "competitive_moat_score": {
+          "type": "object",
+          "description": "Competitive moat strength assessment",
+          "required": ["score", "moat_strength"],
+          "additionalProperties": true,
+          "properties": {
+            "score": {
+              "oneOf": [
+                {"type": "number", "minimum": 0.0, "maximum": 10.0},
+                {"type": "string", "pattern": "^\\d+(\\.\\d+)?$"}
+              ],
+              "description": "Competitive moat score (0-10)"
+            },
+            "moat_strength": {
+              "type": "string",
+              "description": "Moat strength characteristics"
+            },
+            "sustainability": {
+              "oneOf": [
+                {"type": "string"},
+                {"type": "object", "additionalProperties": true}
+              ],
+              "description": "Moat sustainability analysis"
+            },
+            "evidence": {
+              "oneOf": [
+                {"type": "string"},
+                {"type": "object", "additionalProperties": true}
+              ],
+              "description": "Evidence supporting moat assessment"
+            }
+          }
+        },
+        "regulatory_environment_rating": {
+          "type": "object",
+          "description": "Regulatory environment assessment",
+          "required": ["rating"],
+          "additionalProperties": true,
+          "properties": {
+            "rating": {
+              "type": "string",
+              "enum": [
+                "favorable",
+                "neutral",
+                "neutral_to_hostile",
+                "hostile"
+              ],
+              "description": "Regulatory environment rating"
+            },
+            "policy_timeline": {
+              "oneOf": [
+                {"type": "string"},
+                {"type": "object", "additionalProperties": true}
+              ],
+              "description": "Policy timeline and expectations"
+            },
+            "compliance_costs": {
+              "oneOf": [
+                {"type": "string"},
+                {"type": "object", "additionalProperties": true}
+              ],
+              "description": "Compliance cost analysis"
+            },
+            "industry_influence": {
+              "type": "string",
+              "description": "Industry regulatory influence assessment"
+            }
+          }
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0.7,
+          "maximum": 1.0,
+          "description": "Confidence score for industry dynamics assessment"
+        }
+      }
+    },
+    "multi_method_valuation": {
+      "type": "object",
+      "description": "Comprehensive multi-method valuation analysis",
+      "required": [
+        "dcf_analysis",
+        "relative_comps",
+        "technical_analysis",
+        "blended_valuation",
+        "etf_price_vs_fair_value_analysis",
+        "confidence"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "dcf_analysis": {
+          "type": "object",
+          "description": "Discounted cash flow analysis",
+          "required": ["fair_value"],
+          "additionalProperties": true,
+          "properties": {
+            "fair_value": {
+              "oneOf": [
+                {"type": "number", "minimum": 0},
+                {"type": "string"}
+              ],
+              "description": "DCF-derived fair value"
+            },
+            "wacc": {
+              "oneOf": [
+                {"type": "number", "minimum": 0, "maximum": 25},
+                {"type": "string"}
+              ],
+              "description": "Weighted average cost of capital"
+            },
+            "growth_assumptions": {
+              "oneOf": [
+                {"type": "string"},
+                {"type": "object", "additionalProperties": true}
+              ],
+              "description": "Growth rate assumptions"
+            },
+            "sensitivity_analysis": {
+              "oneOf": [
+                {"type": "string"},
+                {"type": "object", "additionalProperties": true}
+              ],
+              "description": "Sensitivity analysis results"
+            },
+            "weight": {
+              "oneOf": [
+                {"type": "string", "pattern": "^\\d+_percent$"},
+                {"type": "number", "minimum": 0, "maximum": 100}
+              ],
+              "description": "Weight in blended valuation"
+            }
+          }
+        },
+        "relative_comps": {
+          "type": "object",
+          "description": "Relative comparables analysis",
+          "required": ["fair_value"],
+          "additionalProperties": true,
+          "properties": {
+            "fair_value": {
+              "oneOf": [
+                {"type": "number", "minimum": 0},
+                {"type": "string"}
+              ],
+              "description": "Comparables-derived fair value"
+            },
+            "peer_multiples": {
+              "oneOf": [
+                {"type": "string"},
+                {"type": "object", "additionalProperties": true}
+              ],
+              "description": "Peer group multiples analysis"
+            },
+            "premium_discount": {
+              "oneOf": [
+                {"type": "string"},
+                {"type": "object", "additionalProperties": true}
+              ],
+              "description": "Premium/discount analysis"
+            },
+            "multiple_trends": {
+              "oneOf": [
+                {"type": "string"},
+                {"type": "object", "additionalProperties": true}
+              ],
+              "description": "Multiple trend analysis"
+            },
+            "weight": {
+              "oneOf": [
+                {"type": "string", "pattern": "^\\d+_percent$"},
+                {"type": "number", "minimum": 0, "maximum": 100}
+              ],
+              "description": "Weight in blended valuation"
+            }
+          }
+        },
+        "technical_analysis": {
+          "type": "object",
+          "description": "Technical analysis and price action",
+          "required": ["fair_value"],
+          "additionalProperties": true,
+          "properties": {
+            "fair_value": {
+              "oneOf": [
+                {"type": "number", "minimum": 0},
+                {"type": "string"}
+              ],
+              "description": "Technical analysis target price"
+            },
+            "support_resistance": {
+              "oneOf": [
+                {"type": "string"},
+                {"type": "object", "additionalProperties": true}
+              ],
+              "description": "Support and resistance levels"
+            },
+            "momentum_indicators": {
+              "oneOf": [
+                {"type": "string"},
+                {"type": "object", "additionalProperties": true}
+              ],
+              "description": "Momentum indicator analysis"
+            },
+            "volume_profile": {
+              "oneOf": [
+                {"type": "string"},
+                {"type": "object", "additionalProperties": true}
+              ],
+              "description": "Volume profile analysis"
+            },
+            "weight": {
+              "oneOf": [
+                {"type": "string", "pattern": "^\\d+_percent$"},
+                {"type": "number", "minimum": 0, "maximum": 100}
+              ],
+              "description": "Weight in blended valuation"
+            }
+          }
+        },
+        "blended_valuation": {
+          "type": "object",
+          "description": "Probability-weighted blended valuation",
+          "required": ["weighted_fair_value"],
+          "additionalProperties": true,
+          "properties": {
+            "weighted_fair_value": {
+              "oneOf": [
+                {"type": "number", "minimum": 0},
+                {"type": "string"}
+              ],
+              "description": "Probability-weighted fair value"
+            },
+            "confidence_intervals": {
+              "oneOf": [
+                {"type": "string"},
+                {"type": "object", "additionalProperties": true}
+              ],
+              "description": "Confidence intervals for valuation"
+            },
+            "scenario_weighting": {
+              "oneOf": [
+                {"type": "string"},
+                {"type": "object", "additionalProperties": true}
+              ],
+              "description": "Scenario probability weighting"
+            }
+          }
+        },
+        "etf_price_vs_fair_value_analysis": {
+          "type": "object",
+          "description": "ETF price versus fair value comparison",
+          "required": [
+            "current_etf_price",
+            "fair_value_range",
+            "price_gap_analysis",
+            "recommendation_validation",
+            "price_positioning"
+          ],
+          "additionalProperties": true,
+          "properties": {
+            "current_etf_price": {
+              "oneOf": [
+                {"type": "number", "minimum": 0},
+                {"type": "string"}
+              ],
+              "description": "Current ETF market price"
+            },
+            "fair_value_range": {
+              "oneOf": [
+                {"type": "string"},
+                {"type": "object", "additionalProperties": true}
+              ],
+              "description": "Calculated fair value range"
+            },
+            "price_gap_analysis": {
+              "oneOf": [
+                {"type": "string"},
+                {"type": "object", "additionalProperties": true}
+              ],
+              "description": "Analysis of price gap to fair value"
+            },
+            "recommendation_validation": {
+              "oneOf": [
+                {"type": "string"},
+                {"type": "object", "additionalProperties": true}
+              ],
+              "description": "Investment recommendation validation"
+            },
+            "price_positioning": {
+              "type": "string",
+              "description": "Price positioning relative to fair value"
+            },
+            "etf_price_consistency": {
+              "oneOf": [
+                {"type": "number", "minimum": 0.8, "maximum": 1.0},
+                {"type": "string"}
+              ],
+              "description": "Cross-source price validation score"
+            }
+          }
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0.7,
+          "maximum": 1.0,
+          "description": "Confidence score for valuation analysis"
+        }
+      }
+    },
+    "quantified_risk_assessment": {
+      "type": "object",
+      "description": "Comprehensive quantified risk analysis",
+      "required": [
+        "risk_matrix",
+        "stress_testing",
+        "sensitivity_analysis",
+        "confidence"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "risk_matrix": {
+          "type": "object",
+          "description": "Risk probability and impact matrix",
+          "additionalProperties": true,
+          "patternProperties": {
+            "^(economic_recession|interest_rate_shock|dollar_strength|regulatory_changes|market_volatility)$": {
+              "type": "object",
+              "required": ["probability", "impact", "risk_score"],
+              "additionalProperties": true,
+              "properties": {
+                "probability": {
+                  "type": "number",
+                  "minimum": 0.0,
+                  "maximum": 1.0,
+                  "description": "Risk occurrence probability"
+                },
+                "impact": {
+                  "type": "number",
+                  "minimum": 1,
+                  "maximum": 5,
+                  "description": "Risk impact severity (1-5 scale)"
+                },
+                "risk_score": {
+                  "type": "number",
+                  "minimum": 0.0,
+                  "maximum": 5.0,
+                  "description": "Calculated risk score (probability × impact)"
+                },
+                "evidence": {
+                  "type": "string",
+                  "description": "Supporting evidence for risk assessment"
+                },
+                "rationale": {
+                  "type": "string",
+                  "description": "Rationale for risk scoring"
+                }
+              }
+            }
+          }
+        },
+        "stress_testing": {
+          "type": "object",
+          "description": "Stress testing scenario analysis",
+          "additionalProperties": true,
+          "properties": {
+            "bear_market_scenario": {
+              "type": "object",
+              "additionalProperties": true,
+              "properties": {
+                "probability": {
+                  "oneOf": [
+                    {"type": "string"},
+                    {"type": "number", "minimum": 0.0, "maximum": 100.0}
+                  ],
+                  "description": "Bear market scenario probability"
+                },
+                "sector_impact": {
+                  "oneOf": [
+                    {"type": "string"},
+                    {"type": "number"}
+                  ],
+                  "description": "Estimated sector impact"
+                },
+                "recovery_timeline": {
+                  "oneOf": [
+                    {"type": "string"},
+                    {"type": "number"}
+                  ],
+                  "description": "Expected recovery timeline"
+                }
+              }
+            },
+            "recession_scenario": {
+              "type": "object",
+              "additionalProperties": true,
+              "properties": {
+                "probability": {
+                  "oneOf": [
+                    {"type": "string"},
+                    {"type": "number", "minimum": 0.0, "maximum": 100.0}
+                  ],
+                  "description": "Recession scenario probability"
+                },
+                "sector_impact": {
+                  "oneOf": [
+                    {"type": "string"},
+                    {"type": "number"}
+                  ],
+                  "description": "Recession impact assessment"
+                },
+                "recovery_phases": {
+                  "type": "string",
+                  "description": "Recovery phase analysis"
+                }
+              }
+            },
+            "policy_shock_scenario": {
+              "type": "object",
+              "additionalProperties": true,
+              "properties": {
+                "probability": {
+                  "oneOf": [
+                    {"type": "string"},
+                    {"type": "number", "minimum": 0.0, "maximum": 100.0}
+                  ],
+                  "description": "Policy shock probability"
+                },
+                "regulatory_impact": {
+                  "type": "string",
+                  "description": "Regulatory impact assessment"
+                }
+              }
+            }
+          }
+        },
+        "sensitivity_analysis": {
+          "type": "object",
+          "description": "Key variable sensitivity analysis",
+          "additionalProperties": true,
+          "properties": {
+            "key_variables": {
+              "oneOf": [
+                {"type": "string"},
+                {"type": "array", "items": {"type": "string"}}
+              ],
+              "description": "Key variables driving sensitivity"
+            },
+            "elasticity_calculations": {
+              "oneOf": [
+                {"type": "string"},
+                {"type": "object", "additionalProperties": true}
+              ],
+              "description": "Elasticity calculations for key variables"
+            },
+            "break_even_analysis": {
+              "oneOf": [
+                {"type": "string"},
+                {"type": "object", "additionalProperties": true}
+              ],
+              "description": "Break-even analysis"
+            },
+            "tornado_diagram": {
+              "oneOf": [
+                {"type": "string"},
+                {"type": "array", "items": {"type": "string"}}
+              ],
+              "description": "Tornado diagram variable ranking"
+            }
+          }
+        },
+        "aggregate_risk_score": {
+          "oneOf": [
+            {"type": "number", "minimum": 0.0, "maximum": 25.0},
+            {"type": "string"}
+          ],
+          "description": "Aggregate weighted risk score"
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0.7,
+          "maximum": 1.0,
+          "description": "Confidence score for risk assessment"
+        }
+      }
+    },
+    "enhanced_economic_sensitivity": {
+      "type": "object",
+      "description": "Enhanced economic sensitivity and correlation analysis",
+      "required": [
+        "fed_funds_correlation",
+        "economic_indicators",
+        "confidence"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "fed_funds_correlation": {
+          "oneOf": [
+            {"type": "number", "minimum": -1.0, "maximum": 1.0},
+            {"type": "string"}
+          ],
+          "description": "Federal funds rate correlation coefficient"
+        },
+        "dxy_impact": {
+          "oneOf": [
+            {"type": "string"},
+            {"type": "object", "additionalProperties": true}
+          ],
+          "description": "Dollar strength (DXY) impact analysis"
+        },
+        "yield_curve_analysis": {
+          "oneOf": [
+            {"type": "string"},
+            {"type": "object", "additionalProperties": true}
+          ],
+          "description": "Yield curve impact analysis"
+        },
+        "crypto_correlation": {
+          "oneOf": [
+            {"type": "number", "minimum": -1.0, "maximum": 1.0},
+            {"type": "string"},
+            {"type": "object", "additionalProperties": true}
+          ],
+          "description": "Cryptocurrency correlation coefficient"
+        },
+        "economic_indicators": {
+          "type": "object",
+          "description": "Key economic indicator correlations",
+          "required": [
+            "unemployment_sensitivity",
+            "inflation_sensitivity",
+            "gdp_correlation"
+          ],
+          "additionalProperties": true,
+          "properties": {
+            "unemployment_sensitivity": {
+              "oneOf": [
+                {"type": "number", "minimum": -1.0, "maximum": 1.0},
+                {"type": "string"}
+              ],
+              "description": "Unemployment rate sensitivity"
+            },
+            "inflation_sensitivity": {
+              "oneOf": [
+                {"type": "number", "minimum": -1.0, "maximum": 1.0},
+                {"type": "string"}
+              ],
+              "description": "Inflation rate sensitivity"
+            },
+            "gdp_correlation": {
+              "oneOf": [
+                {"type": "number", "minimum": -1.0, "maximum": 1.0},
+                {"type": "string"}
+              ],
+              "description": "GDP growth correlation"
+            }
+          }
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0.7,
+          "maximum": 1.0,
+          "description": "Confidence score for economic sensitivity analysis"
+        }
+      }
+    },
+    "macroeconomic_risk_scoring": {
+      "type": "object",
+      "description": "Macroeconomic risk scoring and early warning systems",
+      "required": [
+        "gdp_based_risk_assessment",
+        "employment_based_risk_assessment",
+        "combined_macroeconomic_risk",
+        "early_warning_system",
+        "confidence"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "gdp_based_risk_assessment": {
+          "type": "object",
+          "description": "GDP-based risk assessment",
+          "required": ["gdp_deceleration_probability"],
+          "additionalProperties": true,
+          "properties": {
+            "gdp_deceleration_probability": {
+              "oneOf": [
+                {"type": "number", "minimum": 0.0, "maximum": 1.0},
+                {"type": "string"}
+              ],
+              "description": "Probability of GDP deceleration"
+            },
+            "recession_vulnerability": {
+              "oneOf": [
+                {"type": "number", "minimum": 0.0, "maximum": 1.0},
+                {"type": "string"}
+              ],
+              "description": "Recession vulnerability assessment"
+            },
+            "gdp_elasticity_impact": {
+              "oneOf": [
+                {"type": "string"},
+                {"type": "object", "additionalProperties": true}
+              ],
+              "description": "GDP elasticity impact analysis"
+            },
+            "early_warning_signals": {
+              "oneOf": [
+                {"type": "string"},
+                {"type": "array", "items": {"type": "string"}}
+              ],
+              "description": "Early warning signals list"
+            }
+          }
+        },
+        "employment_based_risk_assessment": {
+          "type": "object",
+          "description": "Employment-based risk assessment",
+          "required": ["payroll_decline_probability"],
+          "additionalProperties": true,
+          "properties": {
+            "payroll_decline_probability": {
+              "oneOf": [
+                {"type": "number", "minimum": 0.0, "maximum": 1.0},
+                {"type": "string"}
+              ],
+              "description": "Probability of payroll decline"
+            },
+            "labor_market_impact": {
+              "oneOf": [
+                {"type": "string"},
+                {"type": "object", "additionalProperties": true}
+              ],
+              "description": "Labor market impact assessment"
+            },
+            "claims_spike_scenarios": {
+              "oneOf": [
+                {"type": "string"},
+                {"type": "object", "additionalProperties": true}
+              ],
+              "description": "Initial claims spike scenario analysis"
+            },
+            "employment_cycle_risk": {
+              "oneOf": [
+                {"type": "string"},
+                {"type": "number", "minimum": 0.0, "maximum": 1.0}
+              ],
+              "description": "Employment cycle risk assessment"
+            }
+          }
+        },
+        "combined_macroeconomic_risk": {
+          "type": "object",
+          "description": "Combined macroeconomic risk analysis",
+          "required": ["composite_risk_index", "recession_probability"],
+          "additionalProperties": true,
+          "properties": {
+            "composite_risk_index": {
+              "oneOf": [
+                {"type": "number", "minimum": 0.0, "maximum": 1.0},
+                {"type": "string"}
+              ],
+              "description": "Composite risk index"
+            },
+            "cross_correlation_analysis": {
+              "oneOf": [
+                {"type": "string"},
+                {"type": "object", "additionalProperties": true}
+              ],
+              "description": "Cross-correlation analysis"
+            },
+            "recession_probability": {
+              "oneOf": [
+                {"type": "number", "minimum": 0.0, "maximum": 1.0},
+                {"type": "string"}
+              ],
+              "description": "Overall recession probability"
+            },
+            "stress_test_outcomes": {
+              "oneOf": [
+                {"type": "string"},
+                {"type": "object", "additionalProperties": true}
+              ],
+              "description": "Stress test outcome scenarios"
+            }
+          }
+        },
+        "early_warning_system": {
+          "type": "object",
+          "description": "Early warning system and monitoring framework",
+          "required": ["leading_indicators", "threshold_breach_probability"],
+          "additionalProperties": true,
+          "properties": {
+            "leading_indicators": {
+              "type": "array",
+              "items": {"type": "string"},
+              "minItems": 3,
+              "description": "Leading economic indicator list"
+            },
+            "threshold_breach_probability": {
+              "oneOf": [
+                {"type": "number", "minimum": 0.0, "maximum": 1.0},
+                {"type": "string"},
+                {"type": "object", "additionalProperties": true}
+              ],
+              "description": "Threshold breach probability"
+            },
+            "monitoring_kpis": {
+              "type": "array",
+              "items": {"type": "string"},
+              "minItems": 3,
+              "description": "Key performance indicators for monitoring"
+            },
+            "risk_escalation_triggers": {
+              "oneOf": [
+                {
+                  "type": "array",
+                  "items": {"type": "string"},
+                  "minItems": 3
+                },
+                {"type": "string"}
+              ],
+              "description": "Risk escalation trigger conditions"
+            }
+          }
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0.7,
+          "maximum": 1.0,
+          "description": "Confidence score for macroeconomic risk scoring"
+        }
+      }
+    },
+    "investment_recommendation_gap_analysis": {
+      "type": "object",
+      "description": "Investment recommendation and portfolio allocation analysis",
+      "required": [
+        "portfolio_allocation_context",
+        "economic_cycle_investment_positioning",
+        "risk_adjusted_investment_metrics",
+        "investment_conclusion_confidence",
+        "sector_investment_characteristics",
+        "etf_price_recommendation_framework"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "portfolio_allocation_context": {
+          "type": "object",
+          "description": "Portfolio allocation context and recommendations",
+          "required": ["confidence"],
+          "additionalProperties": true,
+          "properties": {
+            "sector_weighting_recommendations": {
+              "oneOf": [
+                {"type": "string"},
+                {"type": "object", "additionalProperties": true}
+              ],
+              "description": "Sector weighting recommendations"
+            },
+            "cross_sector_optimization": {
+              "oneOf": [
+                {"type": "string"},
+                {"type": "object", "additionalProperties": true}
+              ],
+              "description": "Cross-sector optimization analysis"
+            },
+            "economic_cycle_rotation": {
+              "oneOf": [
+                {"type": "string"},
+                {"type": "object", "additionalProperties": true}
+              ],
+              "description": "Economic cycle rotation strategy"
+            },
+            "risk_adjusted_positioning": {
+              "oneOf": [
+                {"type": "string"},
+                {"type": "object", "additionalProperties": true}
+              ],
+              "description": "Risk-adjusted positioning recommendations"
+            },
+            "confidence": {
+              "type": "number",
+              "minimum": 0.7,
+              "maximum": 1.0,
+              "description": "Portfolio allocation confidence score"
+            }
+          }
+        },
+        "economic_cycle_investment_positioning": {
+          "type": "object",
+          "description": "Economic cycle investment positioning analysis",
+          "required": ["confidence"],
+          "additionalProperties": true,
+          "properties": {
+            "rotation_probability_analysis": {
+              "oneOf": [
+                {"type": "string"},
+                {"type": "object", "additionalProperties": true}
+              ],
+              "description": "Sector rotation probability analysis"
+            },
+            "economic_timing_considerations": {
+              "oneOf": [
+                {"type": "string"},
+                {"type": "object", "additionalProperties": true}
+              ],
+              "description": "Economic timing considerations"
+            },
+            "business_cycle_allocation": {
+              "oneOf": [
+                {"type": "string"},
+                {"type": "object", "additionalProperties": true}
+              ],
+              "description": "Business cycle allocation strategy"
+            },
+            "policy_impact_assessment": {
+              "oneOf": [
+                {"type": "string"},
+                {"type": "object", "additionalProperties": true}
+              ],
+              "description": "Policy impact assessment"
+            },
+            "confidence": {
+              "type": "number",
+              "minimum": 0.7,
+              "maximum": 1.0,
+              "description": "Economic cycle positioning confidence"
+            }
+          }
+        },
+        "risk_adjusted_investment_metrics": {
+          "type": "object",
+          "description": "Risk-adjusted investment metrics analysis",
+          "required": ["confidence"],
+          "additionalProperties": true,
+          "properties": {
+            "sector_sharpe_calculation": {
+              "oneOf": [
+                {"type": "number", "minimum": -2.0, "maximum": 3.0},
+                {"type": "string"},
+                {"type": "object", "additionalProperties": true}
+              ],
+              "description": "Sector Sharpe ratio calculation"
+            },
+            "downside_risk_assessment": {
+              "oneOf": [
+                {"type": "string"},
+                {"type": "object", "additionalProperties": true}
+              ],
+              "description": "Downside risk assessment"
+            },
+            "volatility_adjusted_returns": {
+              "oneOf": [
+                {"type": "string"},
+                {"type": "object", "additionalProperties": true}
+              ],
+              "description": "Volatility-adjusted return analysis"
+            },
+            "stress_testing_scenarios": {
+              "oneOf": [
+                {"type": "string"},
+                {"type": "object", "additionalProperties": true}
+              ],
+              "description": "Stress testing scenario results"
+            },
+            "confidence": {
+              "type": "number",
+              "minimum": 0.7,
+              "maximum": 1.0,
+              "description": "Risk-adjusted metrics confidence"
+            }
+          }
+        },
+        "investment_conclusion_confidence": {
+          "type": "object",
+          "description": "Investment conclusion confidence methodology",
+          "required": ["confidence"],
+          "additionalProperties": true,
+          "properties": {
+            "thesis_confidence_methodology": {
+              "oneOf": [
+                {"type": "number", "minimum": 0.7, "maximum": 1.0},
+                {"type": "string"},
+                {"type": "object", "additionalProperties": true}
+              ],
+              "description": "Investment thesis confidence methodology"
+            },
+            "economic_factor_weighting": {
+              "oneOf": [
+                {"type": "string"},
+                {"type": "object", "additionalProperties": true}
+              ],
+              "description": "Economic factor weighting methodology"
+            },
+            "allocation_guidance_confidence": {
+              "oneOf": [
+                {"type": "number", "minimum": 0.7, "maximum": 1.0},
+                {"type": "string"},
+                {"type": "object", "additionalProperties": true}
+              ],
+              "description": "Allocation guidance confidence level"
+            },
+            "relative_positioning_confidence": {
+              "oneOf": [
+                {"type": "number", "minimum": 0.7, "maximum": 1.0},
+                {"type": "string"},
+                {"type": "object", "additionalProperties": true}
+              ],
+              "description": "Relative positioning confidence level"
+            },
+            "confidence": {
+              "type": "number",
+              "minimum": 0.7,
+              "maximum": 1.0,
+              "description": "Overall investment conclusion confidence"
+            }
+          }
+        },
+        "sector_investment_characteristics": {
+          "type": "object",
+          "description": "Sector investment characteristics classification",
+          "required": ["confidence"],
+          "additionalProperties": true,
+          "properties": {
+            "growth_defensive_classification": {
+              "type": "string",
+              "description": "Growth/defensive classification"
+            },
+            "interest_rate_sensitivity": {
+              "oneOf": [
+                {"type": "string"},
+                {"type": "object", "additionalProperties": true}
+              ],
+              "description": "Interest rate sensitivity profile"
+            },
+            "economic_sensitivity_profile": {
+              "oneOf": [
+                {"type": "string"},
+                {"type": "object", "additionalProperties": true}
+              ],
+              "description": "Economic sensitivity profile"
+            },
+            "investment_risk_opportunities": {
+              "oneOf": [
+                {"type": "string"},
+                {"type": "object", "additionalProperties": true}
+              ],
+              "description": "Investment risks and opportunities"
+            },
+            "confidence": {
+              "type": "number",
+              "minimum": 0.7,
+              "maximum": 1.0,
+              "description": "Investment characteristics confidence"
+            }
+          }
+        },
+        "etf_price_recommendation_framework": {
+          "type": "object",
+          "description": "ETF price recommendation framework",
+          "required": [
+            "etf_price_validation",
+            "fair_value_positioning",
+            "recommendation_logic",
+            "confidence"
+          ],
+          "additionalProperties": true,
+          "properties": {
+            "etf_price_validation": {
+              "oneOf": [
+                {"type": "string"},
+                {"type": "object", "additionalProperties": true}
+              ],
+              "description": "ETF price validation methodology"
+            },
+            "fair_value_positioning": {
+              "oneOf": [
+                {"type": "string"},
+                {"type": "object", "additionalProperties": true}
+              ],
+              "description": "Fair value positioning analysis"
+            },
+            "recommendation_logic": {
+              "oneOf": [
+                {"type": "string"},
+                {"type": "object", "additionalProperties": true}
+              ],
+              "description": "Investment recommendation logic"
+            },
+            "price_gap_assessment": {
+              "oneOf": [
+                {"type": "string"},
+                {"type": "object", "additionalProperties": true}
+              ],
+              "description": "Price gap assessment"
+            },
+            "etf_price_risk_assessment": {
+              "oneOf": [
+                {"type": "string"},
+                {"type": "object", "additionalProperties": true}
+              ],
+              "description": "ETF price risk assessment"
+            },
+            "confidence": {
+              "type": "number",
+              "minimum": 0.7,
+              "maximum": 1.0,
+              "description": "ETF recommendation framework confidence"
+            }
+          }
+        }
+      }
+    },
+    "analysis_quality_metrics": {
+      "type": "object",
+      "description": "Analysis quality and confidence metrics",
+      "required": [
+        "gap_coverage",
+        "confidence_propagation",
+        "analytical_rigor",
+        "evidence_strength"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "gap_coverage": {
+          "oneOf": [
+            {"type": "number", "minimum": 0.8, "maximum": 1.0},
+            {"type": "string"}
+          ],
+          "description": "Analysis gap coverage score"
+        },
+        "confidence_propagation": {
+          "oneOf": [
+            {"type": "number", "minimum": 0.8, "maximum": 1.0},
+            {"type": "string"},
+            {"type": "object", "additionalProperties": true}
+          ],
+          "description": "Confidence propagation methodology"
+        },
+        "analytical_rigor": {
+          "oneOf": [
+            {"type": "number", "minimum": 0.8, "maximum": 1.0},
+            {"type": "string"},
+            {"type": "object", "additionalProperties": true}
+          ],
+          "description": "Analytical rigor assessment"
+        },
+        "evidence_strength": {
+          "oneOf": [
+            {"type": "number", "minimum": 0.8, "maximum": 1.0},
+            {"type": "string"},
+            {"type": "object", "additionalProperties": true}
+          ],
+          "description": "Evidence strength evaluation"
+        }
+      }
+    },
+    "sector_structure_analysis": {
+      "type": "object",
+      "description": "Enhanced sector structure and competitive analysis",
+      "additionalProperties": true,
+      "properties": {
+        "competitive_landscape": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "grade": {
+              "type": "string",
+              "pattern": "^[A-F][+-]?$"
+            },
+            "trend": {
+              "type": "string",
+              "enum": ["improving", "stable", "declining"]
+            },
+            "market_concentration": {
+              "type": "string"
+            },
+            "competitive_dynamics": {
+              "type": "string"
+            },
+            "barriers_to_entry": {
+              "type": "string"
+            },
+            "confidence": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 10.0
+            }
+          }
+        },
+        "innovation_leadership": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "value_chain_structure": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "overall_structure_score": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 10.0
+        },
+        "structure_confidence": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 10.0
+        }
+      }
+    },
+    "sector_lifecycle_assessment": {
+      "type": "object",
+      "description": "Sector lifecycle stage assessment",
+      "additionalProperties": true,
+      "properties": {
+        "lifecycle_stage": {
+          "type": "string",
+          "enum": [
+            "emerging_growth",
+            "growth",
+            "mature_growth",
+            "mature_defensive",
+            "declining"
+          ]
+        },
+        "lifecycle_grade": {
+          "type": "string",
+          "pattern": "^[A-F][+-]?$"
+        },
+        "maturity_indicators": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "growth_drivers": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "maturity_challenges": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 10.0
+        }
+      }
+    },
+    "sector_competitive_intelligence": {
+      "type": "object",
+      "description": "Comprehensive competitive intelligence analysis",
+      "additionalProperties": true,
+      "properties": {
+        "peer_group_analysis": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "peer_companies": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": true,
+                "properties": {
+                  "symbol": {
+                    "type": "string",
+                    "pattern": "^[A-Z]{1,5}$"
+                  },
+                  "company_name": {
+                    "type": "string"
+                  },
+                  "market_cap": {
+                    "type": "number",
+                    "minimum": 0
+                  },
+                  "industry_position": {
+                    "type": "string"
+                  },
+                  "competitive_advantages": {
+                    "type": "array",
+                    "items": {"type": "string"}
+                  },
+                  "strategic_focus": {
+                    "type": "string"
+                  },
+                  "confidence": {
+                    "type": "number",
+                    "minimum": 0.0,
+                    "maximum": 1.0
+                  }
+                }
+              }
+            },
+            "competitive_positioning": {
+              "type": "string"
+            },
+            "market_share_stability": {
+              "type": "string"
+            },
+            "competitive_intensity": {
+              "type": "string"
+            }
+          }
+        },
+        "competitive_dynamics": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "market_positioning": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 10.0
+        }
+      }
+    },
+    "sector_investment_themes": {
+      "type": "object",
+      "description": "Sector investment themes and opportunities",
+      "additionalProperties": true,
+      "properties": {
+        "primary_themes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": true,
+            "properties": {
+              "theme": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "investment_case": {
+                "type": "string"
+              },
+              "timeline": {
+                "type": "string"
+              },
+              "probability": {
+                "type": "number",
+                "minimum": 0.0,
+                "maximum": 1.0
+              },
+              "confidence": {
+                "type": "number",
+                "minimum": 0.0,
+                "maximum": 10.0
+              }
+            }
+          }
+        },
+        "secondary_themes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        },
+        "theme_confidence": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 10.0
+        }
+      }
+    },
+    "sector_risk_assessment": {
+      "type": "object",
+      "description": "Comprehensive sector-specific risk assessment",
+      "additionalProperties": true,
+      "properties": {
+        "systematic_risks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": true,
+            "properties": {
+              "risk": {
+                "type": "string"
+              },
+              "probability": {
+                "type": "number",
+                "minimum": 0.0,
+                "maximum": 1.0
+              },
+              "impact": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 5
+              },
+              "evidence": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "competitive_risks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        },
+        "sector_regulatory_risks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        },
+        "sector_technology_risks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        },
+        "quantified_sector_assessment": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "sector_scenario_analysis": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 10.0
+        }
+      }
+    },
+    "sector_analytical_insights": {
+      "type": "object",
+      "description": "Key analytical insights and conclusions",
+      "additionalProperties": true,
+      "properties": {
+        "key_sector_findings": {
+          "type": "array",
+          "items": {"type": "string"},
+          "minItems": 3
+        },
+        "sector_investment_implications": {
+          "type": "array",
+          "items": {"type": "string"},
+          "minItems": 3
+        },
+        "sector_analysis_limitations": {
+          "type": "array",
+          "items": {"type": "string"},
+          "minItems": 3
+        },
+        "sector_follow_up_research": {
+          "type": "array",
+          "items": {"type": "string"},
+          "minItems": 3
+        }
+      }
+    },
+    "sector_quality_metrics": {
+      "type": "object",
+      "description": "Sector-specific quality metrics",
+      "additionalProperties": true,
+      "properties": {
+        "sector_analysis_confidence": {
+          "type": "number",
+          "minimum": 0.8,
+          "maximum": 1.0
+        },
+        "sector_data_quality_impact": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 10.0
+        },
+        "sector_methodology_rigor": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 10.0
+        },
+        "sector_evidence_strength": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 10.0
+        }
+      }
+    }
+  },
+  "examples": [
+    {
+      "metadata": {
+        "command_name": "sector_analysis",
+        "execution_timestamp": "2025-07-25T13:06:51.024629",
+        "framework_phase": "analyze",
+        "sector": "utilities",
+        "analysis_methodology": "cli_enhanced_systematic_sector_evaluation_framework",
+        "validation_enhanced": false,
+        "target_confidence_threshold": 0.9,
+        "discovery_confidence_inherited": 0.94,
+        "economic_context_integration": true,
+        "cli_services_utilized": ["yahoo_finance_cli", "alpha_vantage_cli", "fmp_cli", "fred_economic_cli"]
+      },
+      "business_cycle_positioning": {
+        "current_phase": "mid_cycle",
+        "recession_probability": 0.15,
+        "historical_performance_by_phase": {
+          "early_cycle": "Strong performance during economic recovery",
+          "mid_cycle": "Moderate performance with stable characteristics",
+          "late_cycle": "Defensive positioning becomes attractive",
+          "recession": "Outperformance due to defensive nature"
+        },
+        "confidence": 0.92
+      }
+    }
+  ],
+  "definitions": {
+    "confidence_score": {
+      "type": "number",
+      "minimum": 0.7,
+      "maximum": 1.0,
+      "description": "Institutional-grade confidence score (minimum 0.7 required)"
+    },
+    "sector_identifier": {
+      "type": "string",
+      "pattern": "^[a-zA-Z_]+$",
+      "description": "Valid sector identifier (utilities, energy, healthcare, etc.)"
+    },
+    "institutional_grade_threshold": {
+      "type": "number",
+      "minimum": 0.8,
+      "maximum": 1.0,
+      "description": "Institutional grade requires minimum 0.8 confidence score"
+    },
+    "economic_correlation": {
+      "type": "number",
+      "minimum": -1.0,
+      "maximum": 1.0,
+      "description": "Economic correlation coefficient (-1.0 to 1.0)"
+    },
+    "risk_score": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 25.0,
+      "description": "Risk score (probability × impact, 0-25 scale)"
+    },
+    "grade_classification": {
+      "type": "string",
+      "pattern": "^[A-F][+-]?$",
+      "description": "Letter grade classification (A+ to F)"
+    },
+    "etf_ticker": {
+      "type": "string",
+      "pattern": "^[A-Z]{2,5}$",
+      "description": "Valid ETF ticker symbol (2-5 uppercase letters)"
+    },
+    "business_cycle_phase": {
+      "type": "string",
+      "enum": ["early_cycle", "mid_cycle", "late_cycle", "recession"],
+      "description": "Business cycle phase classification"
+    },
+    "fed_policy_stance": {
+      "type": "string",
+      "enum": ["accommodative", "neutral", "restrictive", "restrictive_but_moderating", "restrictive_trending_neutral"],
+      "description": "Federal Reserve policy stance classification"
+    }
+  }
+}

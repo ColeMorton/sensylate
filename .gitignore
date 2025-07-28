@@ -121,7 +121,13 @@ scripts/data/cache/
 data/cache/
 scripts/data/cache/*
 data/cache/*
+
 # Image files for analysis
 data/images/**/*.png
 *.gz
 scripts/.hypothesis/
+
+# Claude conversation logs
+/.claude/logs/
+**/*_conversation_log_*.md
+*.conversation.md
