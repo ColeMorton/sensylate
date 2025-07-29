@@ -22,6 +22,16 @@ global:
   logging:
     level: INFO
     format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+    file_logging:
+      enabled: true
+      log_file: "${paths.logs_root}/financial_services.log"
+      max_size_mb: 50
+      backup_count: 5
+    service_health_logging:
+      enabled: true
+      health_check_interval: 300  # 5 minutes
+      log_failures: true
+      log_performance: true
 
 # Service-specific configurations
 services:

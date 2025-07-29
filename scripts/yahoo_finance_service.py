@@ -18,6 +18,18 @@ from typing import Any, Dict, List, Optional
 
 import yfinance as yf
 
+# Import trading session manager for session-aware caching
+try:
+    import sys
+
+    sys.path.insert(0, str(Path(__file__).parent / "utils"))
+    from trading_session_manager import TradingSessionManager
+
+    TRADING_SESSION_AVAILABLE = True
+except ImportError:
+    TradingSessionManager = None
+    TRADING_SESSION_AVAILABLE = False
+
 
 class YahooFinanceError(Exception):
     """Base exception for Yahoo Finance service errors"""
@@ -53,19 +65,48 @@ class FileBasedCache:
     """Simple file-based cache with TTL support"""
 
     def __init__(
-        self, cache_dir: str = "/tmp/yahoo_finance_cache", ttl: int = 900  # nosec B108
+        self,
+        cache_dir: str = "/tmp/yahoo_finance_cache",
+        ttl: int = 900,
+        use_trading_session_ttl: bool = True,  # nosec B108
     ):
         self.cache_dir = Path(cache_dir)
         self.cache_dir.mkdir(exist_ok=True)
-        self.ttl = ttl  # Time to live in seconds
+        self.ttl = ttl  # Fallback TTL in seconds
+        self.use_trading_session_ttl = use_trading_session_ttl
+
+        # Initialize trading session manager if available
+        if self.use_trading_session_ttl and TRADING_SESSION_AVAILABLE:
+            self.trading_session_manager = TradingSessionManager()
+        else:
+            self.trading_session_manager = None
 
     def _get_cache_path(self, key: str) -> Path:
         """Generate cache file path for given key"""
         hash_key = hashlib.md5(key.encode()).hexdigest()  # nosec B324
         return self.cache_dir / f"{hash_key}.json"
 
+    def _get_effective_ttl(self, key: str) -> int:
+        """Get effective TTL based on key content and trading session"""
+        if self.trading_session_manager and self.use_trading_session_ttl:
+            # Check if this is market data based on key content
+            is_market_data = any(
+                term in key.lower()
+                for term in ["historical", "quote", "price", "stock_info"]
+            )
+
+            if is_market_data:
+                try:
+                    session_ttl = self.trading_session_manager.get_cache_ttl_seconds()
+                    return session_ttl
+                except Exception:
+                    # Fallback to static TTL on error
+                    pass
+
+        return self.ttl
+
     def get(self, key: str) -> Optional[Dict[str, Any]]:
-        """Retrieve cached data if not expired"""
+        """Retrieve cached data if not expired using dynamic TTL"""
         cache_path = self._get_cache_path(key)
 
         if not cache_path.exists():
@@ -75,9 +116,11 @@ class FileBasedCache:
             with open(cache_path, "r") as f:
                 cached_data = json.load(f)
 
-            # Check if cache is expired
+            # Check if cache is expired using effective TTL
             cached_time = datetime.fromisoformat(cached_data["timestamp"])
-            if datetime.now() - cached_time > timedelta(seconds=self.ttl):
+            effective_ttl = self._get_effective_ttl(key)
+
+            if datetime.now() - cached_time > timedelta(seconds=effective_ttl):
                 cache_path.unlink()  # Remove expired cache
                 return None
 
@@ -148,6 +191,22 @@ class YahooFinanceService:
         "max",
     ]
 
+    VALID_INTERVALS = [
+        "1m",
+        "2m",
+        "5m",
+        "15m",
+        "30m",
+        "60m",
+        "90m",
+        "1h",
+        "1d",
+        "5d",
+        "1wk",
+        "1mo",
+        "3mo",
+    ]
+
     def __init__(self, cache_ttl: int = 900, rate_limit: int = 10):
         """
         Initialize Yahoo Finance service
@@ -198,6 +257,15 @@ class YahooFinanceService:
                 f"Valid periods: {', '.join(self.VALID_PERIODS)}"
             )
         return period
+
+    def _validate_interval(self, interval: str) -> str:
+        """Validate interval parameter"""
+        if interval not in self.VALID_INTERVALS:
+            raise ValidationError(
+                f"Invalid interval '{interval}'. "
+                f"Valid intervals: {', '.join(self.VALID_INTERVALS)}"
+            )
+        return interval
 
     def _make_request_with_retry(
         self, request_func: Any, *args: Any, max_retries: int = 3, **kwargs: Any
@@ -317,41 +385,48 @@ class YahooFinanceService:
                 f"Failed to fetch stock info for {symbol}: {str(e)}"
             )
 
-    def get_historical_data(self, symbol: str, period: str = "1y") -> Dict[str, Any]:
+    def get_historical_data(
+        self, symbol: str, period: str = "1y", interval: str = "1d"
+    ) -> Dict[str, Any]:
         """
-        Get historical price data with period validation
+        Get historical price data with period and interval validation
 
         Args:
             symbol: Stock symbol (e.g., 'AAPL', 'MSFT')
             period: Time period ('1d', '5d', '1mo', '3mo', '6mo', '1y',
                    '2y', '5y', '10y', 'ytd', 'max')
+            interval: Data interval ('1m', '2m', '5m', '15m', '30m', '60m', '90m',
+                     '1h', '1d', '5d', '1wk', '1mo', '3mo')
 
         Returns:
             Dictionary containing historical price data
 
         Raises:
-            ValidationError: If symbol or period format is invalid
+            ValidationError: If symbol, period, or interval format is invalid
             DataNotFoundError: If historical data is not available
             YahooFinanceError: For other API-related errors
         """
         symbol = self._validate_symbol(symbol)
         period = self._validate_period(period)
-        cache_key = f"historical_{symbol}_{period}"
+        interval = self._validate_interval(interval)
+        cache_key = f"historical_{symbol}_{period}_{interval}"
 
         # Check cache first
         cached_data = self.cache.get(cache_key)
         if cached_data:
-            self.logger.info(f"Cache hit for historical data: {symbol} ({period})")
+            self.logger.info(
+                f"Cache hit for historical data: {symbol} ({period}, {interval})"
+            )
             return cached_data
 
         def _fetch_historical_data() -> Dict[str, Any]:
             ticker = yf.Ticker(symbol)
-            hist = ticker.history(period=period)
+            hist = ticker.history(period=period, interval=interval)
 
             if hist.empty:
                 raise DataNotFoundError(
                     f"No historical data available for symbol: {symbol} "
-                    f"(period: {period})"
+                    f"(period: {period}, interval: {interval})"
                 )
 
             # Reset index to make Date a column, then convert to records
@@ -360,6 +435,7 @@ class YahooFinanceService:
             return {
                 "symbol": symbol,
                 "period": period,
+                "interval": interval,
                 "data": hist_reset.to_dict(orient="records"),
                 "timestamp": datetime.now().isoformat(),
             }

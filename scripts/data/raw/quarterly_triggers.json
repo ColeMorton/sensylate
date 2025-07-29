@@ -1,0 +1,11 @@
+{
+  "last_updated": "2025-07-28T17:45:11.149961",
+  "active_triggers": {},
+  "completed_collections": {
+    "AAPL_earnings_announcement": "2025-07-28T17:41:29.228072",
+    "AAPL_scheduled_quarterly": "2025-07-28T17:42:50.435286",
+    "MSFT_earnings_announcement": "2025-07-28T17:43:15.493831",
+    "IBM_earnings_announcement": "2025-07-28T17:45:11.149957"
+  },
+  "quarterly_schedule": {}
+}

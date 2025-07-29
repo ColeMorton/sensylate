@@ -179,7 +179,7 @@ class TestYahooFinanceService(unittest.TestCase):
         result = self.service.get_historical_data("AAPL", "5y")
 
         self.assertEqual(result['symbol'], 'AAPL')
-        self.assertEqual(result['period'], '1y')
+        self.assertEqual(result['period'], '5y')
         self.assertIn('data', result)
         self.assertIn('timestamp', result)
 
@@ -194,7 +194,7 @@ class TestYahooFinanceService(unittest.TestCase):
         mock_ticker.return_value = mock_instance
 
         with self.assertRaises(DataNotFoundError):
-            self.service.get_historical_data("INVALID", "1y")
+            self.service.get_historical_data("INVALID", "5y")
 
     @patch('yahoo_finance_service.yf.Ticker')
     def test_get_financials_success(self, mock_ticker):

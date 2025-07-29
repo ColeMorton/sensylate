@@ -92,7 +92,29 @@ class YahooFinanceAPIService(BaseFinancialService):
         try:
             # Use the existing service for the actual API call
             result = self.yf_service.get_stock_info(ticker)
-            return self._validate_response(result, f"stock_info_{ticker}")
+            validated_data = self._validate_response(result, f"stock_info_{ticker}")
+
+            # Store in historical data system
+            try:
+                self.store_historical_data(
+                    validated_data, f"stock_info_{ticker}", {"symbol": ticker}
+                )
+            except Exception as e:
+                self.logger.warning(
+                    f"Historical storage failed for stock_info_{ticker}: {e}"
+                )
+
+            # Trigger comprehensive collection if needed
+            try:
+                self._trigger_collection_if_needed(
+                    validated_data, f"stock_info_{ticker}", {"symbol": ticker}
+                )
+            except Exception as e:
+                self.logger.debug(
+                    f"Collection trigger check failed for stock_info_{ticker}: {e}"
+                )
+
+            return validated_data
 
         except YFValidationError as e:
             raise ValidationError(str(e))
@@ -101,7 +123,7 @@ class YahooFinanceAPIService(BaseFinancialService):
         except YahooFinanceError as e:
             raise FinancialServiceError(str(e))
 
-    def get_historical_data(self, ticker: str, period: str = "1y") -> Dict[str, Any]:
+    def get_historical_data(self, ticker: str, period: str = "max") -> Dict[str, Any]:
         """
         Get historical price data
 
@@ -113,8 +135,79 @@ class YahooFinanceAPIService(BaseFinancialService):
             Dictionary containing historical price data
         """
         try:
-            result = self.yf_service.get_historical_data(ticker, period)
-            return self._validate_response(result, f"historical_{ticker}_{period}")
+            result = self.yf_service.get_historical_data(ticker, period, interval="1d")
+            validated_data = self._validate_response(
+                result, f"historical_{ticker}_{period}"
+            )
+
+            # Store in historical data system
+            try:
+                self.store_historical_data(
+                    validated_data,
+                    f"historical_{ticker}_{period}",
+                    {"symbol": ticker, "period": period},
+                )
+            except Exception as e:
+                self.logger.warning(
+                    f"Historical storage failed for historical_{ticker}_{period}: {e}"
+                )
+
+            # Trigger comprehensive collection if needed
+            try:
+                self._trigger_collection_if_needed(
+                    validated_data,
+                    f"historical_{ticker}_{period}",
+                    {"symbol": ticker, "period": period},
+                )
+            except Exception as e:
+                self.logger.debug(
+                    f"Collection trigger check failed for historical_{ticker}_{period}: {e}"
+                )
+
+            return validated_data
+
+        except YFValidationError as e:
+            raise ValidationError(str(e))
+        except YFDataNotFoundError as e:
+            raise DataNotFoundError(str(e))
+        except YahooFinanceError as e:
+            raise FinancialServiceError(str(e))
+
+    def get_historical_data_weekly(
+        self, ticker: str, period: str = "max"
+    ) -> Dict[str, Any]:
+        """
+        Get historical weekly price data with proper timeframe storage
+
+        Args:
+            ticker: Stock symbol
+            period: Time period for weekly data (default: 'max')
+
+        Returns:
+            Dictionary containing weekly historical price data
+        """
+        try:
+            result = self.yf_service.get_historical_data(ticker, period, interval="1wk")
+            validated_data = self._validate_response(
+                result, f"historical_weekly_{ticker}_{period}"
+            )
+
+            # Store in historical data system with WEEKLY timeframe
+            try:
+                from utils.historical_data_manager import Timeframe
+
+                self.store_historical_data(
+                    validated_data,
+                    f"historical_weekly_{ticker}_{period}",
+                    {"symbol": ticker, "period": period},
+                    timeframe=Timeframe.WEEKLY,
+                )
+            except Exception as e:
+                self.logger.warning(
+                    f"Weekly historical storage failed for {ticker}_{period}: {e}"
+                )
+
+            return validated_data
 
         except YFValidationError as e:
             raise ValidationError(str(e))
@@ -310,7 +403,12 @@ def create_yahoo_finance_service(env: str = "dev") -> YahooFinanceAPIService:
     service_config = config_loader.get_service_config("yahoo_finance", env)
 
     # Convert to ServiceConfig format
-    from .base_financial_service import CacheConfig, RateLimitConfig, ServiceConfig
+    from .base_financial_service import (
+        CacheConfig,
+        HistoricalStorageConfig,
+        RateLimitConfig,
+        ServiceConfig,
+    )
 
     config = ServiceConfig(
         name=service_config.name,
@@ -320,6 +418,28 @@ def create_yahoo_finance_service(env: str = "dev") -> YahooFinanceAPIService:
         max_retries=service_config.max_retries,
         cache=CacheConfig(**service_config.cache),
         rate_limit=RateLimitConfig(**service_config.rate_limit),
+        historical_storage=HistoricalStorageConfig(
+            enabled=True,
+            store_stock_prices=True,
+            store_financials=True,
+            store_fundamentals=True,
+            store_news_sentiment=False,
+            auto_detect_data_type=True,
+            auto_collection_enabled=getattr(
+                service_config, "auto_collection_enabled", True
+            ),
+            daily_days=getattr(service_config, "daily_days", 365),
+            weekly_years=getattr(service_config, "weekly_years", 5),
+            trigger_on_price_calls=getattr(
+                service_config, "trigger_on_price_calls", True
+            ),
+            collection_interval_hours=getattr(
+                service_config, "collection_interval_hours", 24
+            ),
+            background_collection=getattr(
+                service_config, "background_collection", True
+            ),
+        ),
         headers=service_config.headers,
     )
 

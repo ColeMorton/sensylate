@@ -64,12 +64,47 @@ environments:
 # Data type specific settings
 data_type_configs:
   market_data:
-    ttl_seconds: 900
+    ttl_seconds: 900  # 15 minutes for price data
+    priority: "high"
+    compression: false
+
+  fundamentals:
+    ttl_seconds: 900  # 15 minutes for daily-updated ratios
     priority: "high"
     compression: false
 
   financial_statements:
     ttl_seconds: 3600  # 1 hour - quarterly data
+    priority: "medium"
+    compression: true
+
+  news_sentiment:
+    ttl_seconds: 1800  # 30 minutes for sentiment data
+    priority: "medium"
+    compression: false
+
+  options_data:
+    ttl_seconds: 900  # 15 minutes for options data
+    priority: "high"
+    compression: false
+
+  etf_data:
+    ttl_seconds: 3600  # 1 hour for ETF data
+    priority: "medium"
+    compression: true
+
+  insider_transactions:
+    ttl_seconds: 1800  # 30 minutes for insider data
+    priority: "medium"
+    compression: true
+
+  technical_indicators:
+    ttl_seconds: 900  # 15 minutes for technical indicators
+    priority: "medium"
+    compression: false
+
+  corporate_actions:
+    ttl_seconds: 3600  # 1 hour for corporate actions
     priority: "medium"
     compression: true
 
@@ -82,3 +117,131 @@ data_type_configs:
     ttl_seconds: 86400  # 24 hours - rarely change
     priority: "low"
     compression: true
+
+# Historical Data Storage Configuration
+historical_storage:
+  enabled: true
+  base_directory: "data/raw"
+
+  # Data retention policies by type (in days)
+  retention_policies:
+    daily_data: 1825      # 5 years for daily stock prices
+    financial_statements: 3650  # 10 years for financial statements
+    fundamentals: 2555    # 7 years for fundamental data
+    economic_data: 7300   # 20 years for economic indicators
+    news_sentiment: 90    # 3 months for news/sentiment data
+    options_data: 730     # 2 years for options data
+    etf_data: 1825        # 5 years for ETF holdings and flows
+    insider_transactions: 3650  # 10 years for insider trading data
+    technical_indicators: 730   # 2 years for technical indicators
+    corporate_actions: 7300     # 20 years for corporate actions
+
+  # Data organization settings
+  organization:
+    use_date_hierarchy: true
+    compress_old_data: true
+    compression_age_days: 365  # Compress data older than 1 year
+
+  # Data quality and validation
+  quality_control:
+    validate_on_store: true
+    require_metadata: true
+    check_duplicates: true
+    auto_cleanup_corrupted: true
+
+  # Storage optimization
+  optimization:
+    deduplication_enabled: true
+    batch_writes: true
+    async_storage: false  # Set to true in production for better performance
+    index_generation: true
+
+  # Auto-collection settings for comprehensive historical data
+  auto_collection:
+    enabled: true
+    daily_days: 365  # Collect 365 days of daily price data
+    weekly_years: 0  # Weekly collection disabled by default (set to 5+ to enable)
+    trigger_on_price_calls: true  # Auto-trigger on price-related API calls
+    collection_interval_hours: 24  # Don't re-collect if done within 24 hours
+    background_collection: true  # Run collection in background threads
+
+    # Data type specific collection intervals (in hours)
+    data_type_intervals:
+      fundamentals: 24        # Daily updates for PE ratio, market cap, etc.
+      financial_statements: 2160  # Quarterly (90 days * 24 hours)
+      news_sentiment: 24      # Daily sentiment aggregation
+      options_data: 24        # Daily options data
+      etf_holdings: 720       # Monthly ETF holdings (30 days * 24 hours)
+      etf_flows: 24           # Daily ETF flows
+      insider_transactions: 1 # Event-driven (check hourly)
+      technical_indicators: 24 # Daily technical indicators
+      corporate_actions: 1    # Event-driven (check hourly)
+
+  # Service-specific historical storage settings
+  service_configs:
+    yahoo_finance:
+      store_stock_prices: true
+      store_financials: true
+      store_fundamentals: true
+      store_news_sentiment: true  # Enabled for daily sentiment analysis
+      auto_detect_data_type: true
+      auto_collection_enabled: true
+      daily_days: 365
+      weekly_years: 0
+      trigger_on_price_calls: true
+      collection_interval_hours: 24
+      background_collection: true
+
+      # Data type specific collection settings
+      fundamentals_collection_hours: 24  # Daily fundamentals
+      news_sentiment_collection_hours: 24  # Daily sentiment
+
+    fmp:
+      store_stock_prices: true
+      store_financials: true
+      store_fundamentals: true
+      store_news_sentiment: true
+      auto_detect_data_type: true
+      auto_collection_enabled: true
+      daily_days: 365
+      weekly_years: 0
+      trigger_on_price_calls: true
+      collection_interval_hours: 24
+      background_collection: true
+
+    alpha_vantage:
+      store_stock_prices: true
+      store_financials: false  # Limited financial data
+      store_fundamentals: true
+      store_news_sentiment: true
+      auto_detect_data_type: true
+      auto_collection_enabled: true
+      daily_days: 365
+      weekly_years: 0
+      trigger_on_price_calls: true
+      collection_interval_hours: 24
+      background_collection: true
+
+    fred_economic:
+      store_economic_indicators: true
+      store_reports: true
+      auto_detect_data_type: true
+
+    sec_edgar:
+      store_regulatory_filings: true
+      auto_detect_data_type: true
+
+  # Discovery and indexing
+  discovery:
+    enable_search_index: true
+    index_update_interval: 3600  # 1 hour
+    full_reindex_interval: 86400  # 24 hours
+    search_cache_ttl: 1800  # 30 minutes
+
+  # Monitoring and alerting
+  monitoring:
+    track_storage_usage: true
+    alert_on_high_usage: true
+    usage_threshold_gb: 10
+    track_data_quality: true
+    quality_alert_threshold: 0.7
