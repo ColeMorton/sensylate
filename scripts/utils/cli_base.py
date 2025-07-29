@@ -10,13 +10,12 @@ Provides standardized CLI infrastructure for all financial services with:
 - Environment management
 """
 
+import csv
+import io
 import json
 import logging
-import sys
 from abc import ABC, abstractmethod
-from datetime import datetime
-from pathlib import Path
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Dict, Optional
 
 import typer
 import yaml
@@ -107,7 +106,24 @@ class BaseFinancialCLI(ABC):
         ):
             """Check service health and configuration"""
             try:
+                import time
+
+                start_time = time.time()
+
                 result = self.perform_health_check(env)
+
+                # Log health check result
+                try:
+                    from service_logging import log_cli_service_health
+
+                    # Add response time to result
+                    response_time_ms = (time.time() - start_time) * 1000
+                    result["response_time_ms"] = response_time_ms
+
+                    log_cli_service_health(self.service_name, result)
+                except ImportError:
+                    pass  # Service logging not available
+
                 self._output_result(
                     result, OutputFormat.JSON if verbose else OutputFormat.TABLE
                 )
@@ -242,8 +258,6 @@ class BaseFinancialCLI(ABC):
 
     def _output_csv(self, data: Any) -> None:
         """Output data as CSV"""
-        import csv
-        import io
 
         if isinstance(data, list) and len(data) > 0 and isinstance(data[0], dict):
             output = io.StringIO()
@@ -267,13 +281,8 @@ class BaseFinancialCLI(ABC):
     ) -> None:
         """Handle and display errors consistently"""
 
-        error_info = {
-            "error": str(error),
-            "error_type": type(error).__name__,
-            "context": context,
-            "timestamp": datetime.now().isoformat(),
-            "service": self.service_name,
-        }
+        # Log error details for debugging
+        self.logger.debug(f"Error details: {str(error)} (type: {type(error).__name__})")
 
         # Log error details
         self.logger.error(f"{context}: {error}")
@@ -391,7 +400,7 @@ class FinancialDataCLI:
                         )
                     )
                 else:
-                    error_panel = f"❌ Configuration validation failed\n\n"
+                    error_panel = "❌ Configuration validation failed\n\n"
                     error_panel += "\n".join(f"• {error}" for error in result["errors"])
 
                     if result["warnings"]:

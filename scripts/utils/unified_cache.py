@@ -6,12 +6,8 @@ Provides a cache interface using HistoricalDataManager as the single source of t
 eliminating the need for a separate cache directory.
 """
 
-import hashlib
-import json
 import logging
 from datetime import datetime, timedelta
-from enum import Enum
-from pathlib import Path
 from typing import Any, Dict, Optional, Tuple
 
 from historical_data_manager import DataType, HistoricalDataManager, Timeframe
@@ -55,7 +51,7 @@ class UnifiedCache:
             self.trading_session_manager = None
 
         # In-memory cache for recent lookups (avoids file I/O)
-        self._memory_cache = {}
+        self._memory_cache: Dict[str, Any] = {}
         self._memory_cache_size = 100  # Max entries in memory
 
     def _setup_logger(self) -> logging.Logger:
@@ -111,7 +107,7 @@ class UnifiedCache:
             # Check if this is market-related data
             is_market_data = data_type in [
                 DataType.STOCK_DAILY_PRICES,
-                DataType.FUNDAMENTALS,
+                DataType.STOCK_FUNDAMENTALS,
             ] or any(
                 term in endpoint.lower()
                 for term in ["historical", "quote", "price", "market"]
@@ -233,7 +229,7 @@ class UnifiedCache:
             data_type = self._detect_data_type(endpoint, data)
 
             if not symbol or not data_type:
-                self.logger.warning(f"Cannot determine symbol or data type for caching")
+                self.logger.warning("Cannot determine symbol or data type for caching")
                 return
 
             # Store in memory cache for fast retrieval
