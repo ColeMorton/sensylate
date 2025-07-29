@@ -24,7 +24,7 @@
     "software_infrastructure_20250725_discovery.json"
   ],
   "overall_assessment": {
-    "overall_reliability_score": "6.2/10.0",
+    "overall_reliability_score": "0.62",
     "decision_confidence": "Low",
     "minimum_threshold_met": "false",
     "institutional_quality_certified": "false",
@@ -51,7 +51,7 @@
         "Execution timestamps show proper chronological order",
         "CLI services_utilized arrays identical across files (suspiciously uniform)"
       ],
-      "consistency_score": "7.5/10.0"
+      "consistency_score": "0.75"
     },
     "industry_scope_consistency": {
       "parent_sector_consistency": "poor",
@@ -66,7 +66,7 @@
         "Market segments defaulting to generic 'enterprise', 'consumer'",
         "Only medical_devices and internet_content show proper industry-specific content"
       ],
-      "consistency_score": "3.2/10.0"
+      "consistency_score": "0.32"
     },
     "representative_companies_consistency": {
       "company_selection_quality": "critical_failure",
@@ -79,7 +79,7 @@
         "Semiconductors file shows real NVDA data but truncated view",
         "CLI validation confirms real companies (GOOGL: $2.34T market cap, NVDA: $4.23T, MDT: $119B) are accurate"
       ],
-      "consistency_score": "2.1/10.0"
+      "consistency_score": "0.21"
     },
     "trend_analysis_consistency": {
       "technology_trends_depth": "highly_variable",
@@ -91,7 +91,7 @@
         "Lack of industry-specific trend analysis in 4 of 6 files",
         "Economic context integration inconsistent across files"
       ],
-      "consistency_score": "4.7/10.0"
+      "consistency_score": "0.47"
     },
     "cli_service_validation_consistency": {
       "service_health_claims": "suspiciously_uniform",
@@ -102,7 +102,7 @@
         "Current CLI health check shows only 3 of 7 services operational",
         "Data quality claims inconsistent with template placeholder content"
       ],
-      "consistency_score": "3.5/10.0"
+      "consistency_score": "0.35"
     }
   },
   "cli_service_validation": {
@@ -136,7 +136,7 @@
   },
   "file_by_file_assessment": {
     "medical_devices_20250728_discovery.json": {
-      "quality_score": "9.2/10.0",
+      "quality_score": "0.92",
       "institutional_grade": "true",
       "industry_specificity": "excellent",
       "representative_companies": "15_real_companies_with_validated_data",
@@ -145,7 +145,7 @@
       "assessment": "high_quality_institutional_standard_discovery"
     },
     "internet_content_and_information_20250725_discovery.json": {
-      "quality_score": "8.7/10.0",
+      "quality_score": "0.87",
       "institutional_grade": "true",
       "industry_specificity": "excellent",
       "representative_companies": "validated_googl_and_proper_industry_selection",
@@ -154,7 +154,7 @@
       "assessment": "high_quality_discovery_with_proper_industry_focus"
     },
     "semiconductors_20250725_discovery.json": {
-      "quality_score": "8.1/10.0",
+      "quality_score": "0.81",
       "institutional_grade": "true",
       "industry_specificity": "good",
       "representative_companies": "validated_nvda_data_appears_complete",
@@ -163,7 +163,7 @@
       "assessment": "likely_high_quality_based_on_available_evidence"
     },
     "software_infrastructure_20250725_discovery.json": {
-      "quality_score": "2.1/10.0",
+      "quality_score": "0.21",
       "institutional_grade": "false",
       "industry_specificity": "critical_failure",
       "representative_companies": "placeholder_na_symbol_blocking_issue",
@@ -172,7 +172,7 @@
       "assessment": "unsuitable_for_institutional_use_requires_regeneration"
     },
     "consumer_electronics_20250725_discovery.json": {
-      "quality_score": "2.1/10.0",
+      "quality_score": "0.21",
       "institutional_grade": "false",
       "industry_specificity": "critical_failure",
       "representative_companies": "placeholder_na_symbol_blocking_issue",
@@ -181,7 +181,7 @@
       "assessment": "unsuitable_for_institutional_use_requires_regeneration"
     },
     "internet_retail_20250725_discovery.json": {
-      "quality_score": "2.1/10.0",
+      "quality_score": "0.21",
       "institutional_grade": "false",
       "industry_specificity": "critical_failure",
       "representative_companies": "placeholder_na_symbol_blocking_issue",

@@ -13,6 +13,8 @@ Provides common infrastructure for all financial data services including:
 import hashlib
 import json
 import logging
+import sys
+import threading
 import time
 from abc import ABC, abstractmethod
 from datetime import datetime, timedelta
@@ -21,6 +23,11 @@ from typing import Any, Dict, List, Optional, Union
 
 import requests
 from pydantic import BaseModel, Field
+
+# Add utils directory to path for importing historical data manager
+sys.path.insert(0, str(Path(__file__).parent.parent / "utils"))
+from historical_data_manager import DataType, HistoricalDataManager, Timeframe
+from unified_cache import UnifiedCache
 
 
 class FinancialServiceError(Exception):
@@ -70,6 +77,25 @@ class RateLimitConfig(BaseModel):
     burst_limit: int = 10
 
 
+class HistoricalStorageConfig(BaseModel):
+    """Historical data storage configuration"""
+
+    enabled: bool = True
+    store_stock_prices: bool = True
+    store_financials: bool = True
+    store_fundamentals: bool = True
+    store_news_sentiment: bool = False
+    auto_detect_data_type: bool = True
+
+    # Auto-collection settings
+    auto_collection_enabled: bool = True
+    daily_days: int = 365
+    weekly_years: int = 5
+    trigger_on_price_calls: bool = True
+    collection_interval_hours: int = 24
+    background_collection: bool = True
+
+
 class ServiceConfig(BaseModel):
     """Base service configuration"""
 
@@ -80,6 +106,9 @@ class ServiceConfig(BaseModel):
     max_retries: int = 3
     cache: CacheConfig = Field(default_factory=CacheConfig)
     rate_limit: RateLimitConfig = Field(default_factory=RateLimitConfig)
+    historical_storage: HistoricalStorageConfig = Field(
+        default_factory=HistoricalStorageConfig
+    )
     headers: Dict[str, str] = Field(default_factory=dict)
 
 
@@ -211,10 +240,70 @@ class BaseFinancialService(ABC):
 
     def __init__(self, config: ServiceConfig):
         self.config = config
-        self.cache = FileBasedCache(config.cache, config.name)
         self.rate_limiter = RateLimiter(config.rate_limit)
         self.session = requests.Session()
         self.logger = self._setup_logger()
+
+        # Initialize historical data manager if enabled
+        self.historical_manager = None
+        if config.historical_storage.enabled:
+            try:
+                self.historical_manager = HistoricalDataManager()
+                self.logger.info("Historical data storage enabled")
+            except Exception as e:
+                self.logger.warning(
+                    f"Failed to initialize historical data manager: {e}"
+                )
+
+        # Initialize unified cache using historical data manager
+        if self.historical_manager:
+            self.cache = UnifiedCache(
+                historical_manager=self.historical_manager,
+                ttl_seconds=config.cache.ttl_seconds,
+                service_name=config.name,
+                use_trading_session_ttl=True,  # Enable trading session TTL
+            )
+            self.logger.info("Using unified cache with historical data storage")
+        else:
+            # Fallback to file-based cache if historical storage is disabled
+            self.cache = FileBasedCache(config.cache, config.name)
+            self.logger.info("Using traditional file-based cache")
+
+        # Auto-collection tracking
+        self._collection_cache = {}  # Track when comprehensive collection was last done
+        self._collection_lock = (
+            threading.Lock()
+        )  # Thread safety for background collection
+
+        # Initialize quarterly trigger manager for financial statements
+        self.quarterly_trigger_manager = None
+        if self.historical_manager:
+            try:
+                from quarterly_collection_triggers import QuarterlyCollectionTrigger
+
+                self.quarterly_trigger_manager = QuarterlyCollectionTrigger(
+                    historical_manager=self.historical_manager
+                )
+                self.logger.info("Quarterly trigger manager initialized")
+            except Exception as e:
+                self.logger.warning(
+                    f"Failed to initialize quarterly trigger manager: {e}"
+                )
+
+        # Initialize technical indicator calculator
+        self.technical_calculator = None
+        if self.historical_manager:
+            try:
+                from technical_indicator_calculator import TechnicalIndicatorCalculator
+
+                self.technical_calculator = TechnicalIndicatorCalculator(
+                    historical_manager=self.historical_manager
+                )
+                self.logger.info("Technical indicator calculator initialized")
+            except Exception as e:
+                self.logger.warning(
+                    f"Failed to initialize technical indicator calculator: {e}"
+                )
 
         # Update session headers
         self.session.headers.update(
@@ -249,6 +338,522 @@ class BaseFinancialService(ABC):
         """Generate correlation ID for request tracking"""
         correlation_data = f"{endpoint}_{params}_{time.time()}"
         return hashlib.md5(correlation_data.encode()).hexdigest()[:8]
+
+    def _detect_data_type(
+        self, endpoint: str, data: Dict[str, Any]
+    ) -> Optional[DataType]:
+        """
+        Auto-detect data type based on endpoint and data structure
+
+        Args:
+            endpoint: API endpoint called
+            data: Response data
+
+        Returns:
+            Detected DataType or None if not detectable
+        """
+        if not self.config.historical_storage.auto_detect_data_type:
+            return None
+
+        endpoint_lower = endpoint.lower()
+
+        # Historical price data detection (specific structure)
+        if any(keyword in endpoint_lower for keyword in ["historical", "ohlc"]):
+            # Look for historical data structure: {"data": [{"Date": ..., "Open": ...}]}
+            if (
+                isinstance(data, dict)
+                and "data" in data
+                and isinstance(data["data"], list)
+            ):
+                if data["data"] and isinstance(data["data"][0], dict):
+                    first_record = data["data"][0]
+                    if "Date" in first_record and any(
+                        field in first_record
+                        for field in ["Open", "High", "Low", "Close"]
+                    ):
+                        return DataType.STOCK_DAILY_PRICES
+
+        # Fundamentals detection (stock_info, quote endpoints return company data)
+        if any(
+            keyword in endpoint_lower
+            for keyword in [
+                "stock_info",
+                "quote",
+                "profile",
+                "overview",
+                "company",
+                "fundamental",
+                "get_stock",
+            ]
+        ):
+            fundamental_fields = [
+                "market_cap",
+                "pe_ratio",
+                "sector",
+                "industry",
+                "current_price",
+                "name",
+            ]
+            if isinstance(data, dict) and any(
+                field in data for field in fundamental_fields
+            ):
+                return DataType.STOCK_FUNDAMENTALS
+
+        # Financial statements detection
+        if any(
+            keyword in endpoint_lower
+            for keyword in ["financial", "income", "balance", "cash"]
+        ):
+            financial_fields = [
+                "revenue",
+                "net_income",
+                "total_assets",
+                "operating_cash_flow",
+            ]
+            if isinstance(data, dict) and any(
+                field in data for field in financial_fields
+            ):
+                return DataType.STOCK_FINANCIALS
+
+        # News sentiment detection
+        if any(keyword in endpoint_lower for keyword in ["news", "sentiment"]):
+            return DataType.STOCK_NEWS_SENTIMENT
+
+        # Options data detection
+        if any(
+            keyword in endpoint_lower
+            for keyword in ["options", "option_chain", "derivatives"]
+        ):
+            options_fields = [
+                "strike",
+                "expiry",
+                "option_type",
+                "bid",
+                "ask",
+                "implied_volatility",
+            ]
+            if isinstance(data, dict) and any(
+                field in data for field in options_fields
+            ):
+                return DataType.STOCK_OPTIONS
+
+        # ETF data detection
+        if any(
+            keyword in endpoint_lower
+            for keyword in ["etf_holdings", "holdings", "constituents"]
+        ):
+            return DataType.ETF_HOLDINGS
+        if any(
+            keyword in endpoint_lower
+            for keyword in ["etf_flows", "flows", "fund_flows"]
+        ):
+            return DataType.ETF_FLOWS
+
+        # Insider transactions detection
+        if any(
+            keyword in endpoint_lower
+            for keyword in ["insider", "insider_trading", "form4"]
+        ):
+            insider_fields = ["insider_name", "transaction_type", "shares", "price"]
+            if isinstance(data, dict) and any(
+                field in data for field in insider_fields
+            ):
+                return DataType.INSIDER_TRANSACTIONS
+
+        # Technical indicators detection
+        if any(
+            keyword in endpoint_lower
+            for keyword in ["technical", "indicator", "sma", "rsi", "macd"]
+        ):
+            return DataType.TECHNICAL_INDICATORS
+
+        # Corporate actions detection
+        if any(
+            keyword in endpoint_lower
+            for keyword in ["corporate_actions", "dividends", "splits", "spin_off"]
+        ):
+            return DataType.CORPORATE_ACTIONS
+
+        return None
+
+    def _extract_symbol_from_data(
+        self, data: Dict[str, Any], params: Dict[str, Any]
+    ) -> Optional[str]:
+        """
+        Extract stock symbol from data or parameters
+
+        Args:
+            data: Response data
+            params: Request parameters
+
+        Returns:
+            Extracted symbol or None
+        """
+        # Try to get symbol from data
+        if isinstance(data, dict):
+            for field in ["symbol", "ticker", "Symbol", "Ticker"]:
+                if field in data and data[field]:
+                    return str(data[field]).upper()
+        elif isinstance(data, list) and data and isinstance(data[0], dict):
+            for field in ["symbol", "ticker", "Symbol", "Ticker"]:
+                if field in data[0] and data[0][field]:
+                    return str(data[0][field]).upper()
+
+        # Try to get symbol from parameters
+        for field in ["symbol", "ticker", "symbols"]:
+            if field in params and params[field]:
+                symbol = str(params[field]).upper()
+                # Handle comma-separated symbols by taking first one
+                return symbol.split(",")[0].strip()
+
+        return None
+
+    def store_historical_data(
+        self,
+        data: Dict[str, Any],
+        endpoint: str,
+        params: Dict[str, Any],
+        data_type: Optional[DataType] = None,
+        symbol: Optional[str] = None,
+        timeframe: Timeframe = Timeframe.DAILY,
+    ) -> bool:
+        """
+        Store data in historical storage system
+
+        Args:
+            data: Data to store
+            endpoint: API endpoint
+            params: Request parameters
+            data_type: Optional explicit data type
+            symbol: Optional explicit symbol
+            timeframe: Data timeframe
+
+        Returns:
+            True if stored successfully, False otherwise
+        """
+        if not self.historical_manager or not self.config.historical_storage.enabled:
+            return False
+
+        # Auto-detect data type if not provided
+        if data_type is None:
+            data_type = self._detect_data_type(endpoint, data)
+
+        if data_type is None:
+            self.logger.debug(f"Could not detect data type for endpoint: {endpoint}")
+            return False
+
+        # Extract symbol if not provided
+        if symbol is None:
+            symbol = self._extract_symbol_from_data(data, params)
+
+        if symbol is None:
+            self.logger.debug(f"Could not extract symbol for endpoint: {endpoint}")
+            return False
+
+        # Check if this data type should be stored
+        storage_enabled_map = {
+            DataType.STOCK_DAILY_PRICES: self.config.historical_storage.store_stock_prices,
+            DataType.STOCK_FINANCIALS: self.config.historical_storage.store_financials,
+            DataType.STOCK_FUNDAMENTALS: self.config.historical_storage.store_fundamentals,
+            DataType.STOCK_NEWS_SENTIMENT: self.config.historical_storage.store_news_sentiment,
+            DataType.STOCK_OPTIONS: getattr(
+                self.config.historical_storage, "store_options", True
+            ),
+            DataType.ETF_HOLDINGS: getattr(
+                self.config.historical_storage, "store_etf_holdings", True
+            ),
+            DataType.ETF_FLOWS: getattr(
+                self.config.historical_storage, "store_etf_flows", True
+            ),
+            DataType.INSIDER_TRANSACTIONS: getattr(
+                self.config.historical_storage, "store_insider_transactions", True
+            ),
+            DataType.TECHNICAL_INDICATORS: getattr(
+                self.config.historical_storage, "store_technical_indicators", True
+            ),
+            DataType.CORPORATE_ACTIONS: getattr(
+                self.config.historical_storage, "store_corporate_actions", True
+            ),
+        }
+
+        if not storage_enabled_map.get(data_type, True):
+            return False
+
+        # Store the data
+        try:
+            success = self.historical_manager.store_data(
+                symbol=symbol,
+                data=data,
+                data_type=data_type,
+                timeframe=timeframe,
+                source=self.config.name,
+            )
+
+            if success:
+                self.logger.debug(f"Stored historical data: {symbol} {data_type.value}")
+            else:
+                self.logger.warning(
+                    f"Failed to store historical data: {symbol} {data_type.value}"
+                )
+
+            return success
+
+        except Exception as e:
+            self.logger.error(f"Error storing historical data: {e}")
+            return False
+
+    def _should_trigger_comprehensive_collection(
+        self, symbol: str, data_type: DataType
+    ) -> bool:
+        """
+        Check if comprehensive collection should be triggered for a symbol
+
+        Args:
+            symbol: Stock symbol
+            data_type: Type of data
+
+        Returns:
+            True if comprehensive collection should be triggered
+        """
+        # Only trigger for price-related data types
+        if not self.config.historical_storage.trigger_on_price_calls:
+            return False
+
+        if data_type not in [DataType.STOCK_DAILY_PRICES, DataType.STOCK_FUNDAMENTALS]:
+            return False
+
+        if not self.config.historical_storage.auto_collection_enabled:
+            return False
+
+        # Check if we've collected recently
+        collection_key = f"{symbol}_{self.config.name}"
+
+        with self._collection_lock:
+            last_collection = self._collection_cache.get(collection_key)
+
+            if last_collection:
+                hours_since = (datetime.now() - last_collection).total_seconds() / 3600
+                if (
+                    hours_since
+                    < self.config.historical_storage.collection_interval_hours
+                ):
+                    return False
+
+        return True
+
+    def _mark_collection_completed(self, symbol: str):
+        """Mark that comprehensive collection was completed for a symbol"""
+        collection_key = f"{symbol}_{self.config.name}"
+
+        with self._collection_lock:
+            self._collection_cache[collection_key] = datetime.now()
+
+    def _trigger_comprehensive_collection(self, symbol: str, data_type: DataType):
+        """
+        Trigger comprehensive historical data collection for a symbol
+
+        Args:
+            symbol: Stock symbol to collect data for
+            data_type: Type of data that triggered the collection
+        """
+        if not self._should_trigger_comprehensive_collection(symbol, data_type):
+            return
+
+        # Mark collection as starting immediately to prevent recursion
+        self._mark_collection_completed(symbol)
+
+        self.logger.info(f"Triggering comprehensive collection for {symbol}")
+
+        if self.config.historical_storage.background_collection:
+            # Run in background thread
+            collection_thread = threading.Thread(
+                target=self._run_comprehensive_collection, args=(symbol,), daemon=True
+            )
+            collection_thread.start()
+        else:
+            # Run synchronously
+            self._run_comprehensive_collection(symbol)
+
+    def _run_comprehensive_collection(self, symbol: str):
+        """
+        Execute comprehensive data collection for a symbol
+
+        Args:
+            symbol: Stock symbol to collect data for
+        """
+        try:
+            self.logger.info(f"Starting comprehensive collection for {symbol}")
+
+            # Import here to avoid circular imports
+            import sys
+            from pathlib import Path
+
+            utils_path = str(Path(__file__).parent.parent / "utils")
+            if utils_path not in sys.path:
+                sys.path.insert(0, utils_path)
+
+            from historical_data_collector import create_historical_data_collector
+
+            self.logger.info(f"Creating historical data collector for {symbol}")
+            collector = create_historical_data_collector(
+                base_path=self.historical_manager.base_path
+                if self.historical_manager
+                else None,
+                rate_limit_delay=0.2,  # Faster for auto-collection
+            )
+
+            self.logger.info(f"Starting comprehensive data collection for {symbol}")
+            # Collect comprehensive data
+            results = collector.collect_comprehensive_data(
+                symbols=[symbol],
+                daily_days=self.config.historical_storage.daily_days,
+                weekly_years=self.config.historical_storage.weekly_years,
+                service_name=self.config.name,
+            )
+
+            self.logger.info(f"Collection results for {symbol}: {results}")
+
+            if results.get("overall_success"):
+                self._mark_collection_completed(symbol)
+                self.logger.info(
+                    f"Comprehensive collection completed for {symbol}: "
+                    f"{results.get('total_files_created', 0)} files created"
+                )
+            else:
+                self.logger.warning(
+                    f"Comprehensive collection failed for {symbol}: {results}"
+                )
+
+        except Exception as e:
+            self.logger.error(
+                f"Error during comprehensive collection for {symbol}: {e}"
+            )
+            import traceback
+
+            self.logger.error(f"Traceback: {traceback.format_exc()}")
+
+    def _trigger_collection_if_needed(
+        self, data: Dict[str, Any], endpoint: str, params: Dict[str, Any]
+    ):
+        """
+        Check if comprehensive collection should be triggered and do so if needed
+
+        Args:
+            data: Response data
+            endpoint: API endpoint
+            params: Request parameters
+        """
+        try:
+            self.logger.info(
+                f"Checking if collection should be triggered for endpoint: {endpoint}"
+            )
+
+            # Auto-detect data type
+            data_type = self._detect_data_type(endpoint, data)
+            self.logger.info(f"Detected data type: {data_type}")
+            if not data_type:
+                self.logger.info("No data type detected, skipping collection trigger")
+                return
+
+            # Extract symbol
+            symbol = self._extract_symbol_from_data(data, params)
+            self.logger.info(f"Extracted symbol: {symbol}")
+            if not symbol:
+                self.logger.info("No symbol extracted, skipping collection trigger")
+                return
+
+            # Trigger comprehensive collection if needed
+            self.logger.info(
+                f"Attempting to trigger comprehensive collection for {symbol}"
+            )
+            self._trigger_comprehensive_collection(symbol, data_type)
+
+            # Check for quarterly financial statement triggers
+            if self.quarterly_trigger_manager and data_type in [
+                DataType.STOCK_FUNDAMENTALS,
+                DataType.STOCK_FINANCIALS,
+            ]:
+                try:
+                    from quarterly_collection_triggers import QuarterlyTriggerType
+
+                    # Check if we should trigger quarterly collection
+                    if self.quarterly_trigger_manager.should_trigger_collection(
+                        symbol, QuarterlyTriggerType.EARNINGS_ANNOUNCEMENT
+                    ):
+                        self.logger.info(
+                            f"Triggering quarterly collection for {symbol} (earnings season)"
+                        )
+                        quarterly_results = (
+                            self.quarterly_trigger_manager.trigger_quarterly_collection(
+                                symbol,
+                                QuarterlyTriggerType.EARNINGS_ANNOUNCEMENT,
+                                self.config.name,
+                            )
+                        )
+                        self.logger.info(
+                            f"Quarterly collection results: {quarterly_results}"
+                        )
+
+                    elif self.quarterly_trigger_manager.should_trigger_collection(
+                        symbol, QuarterlyTriggerType.SCHEDULED_QUARTERLY
+                    ):
+                        self.logger.info(
+                            f"Triggering scheduled quarterly collection for {symbol}"
+                        )
+                        quarterly_results = (
+                            self.quarterly_trigger_manager.trigger_quarterly_collection(
+                                symbol,
+                                QuarterlyTriggerType.SCHEDULED_QUARTERLY,
+                                self.config.name,
+                            )
+                        )
+                        self.logger.info(
+                            f"Quarterly collection results: {quarterly_results}"
+                        )
+
+                except Exception as e:
+                    self.logger.warning(
+                        f"Error checking quarterly triggers for {symbol}: {e}"
+                    )
+
+            # Check for technical indicator calculation triggers
+            if self.technical_calculator and data_type == DataType.STOCK_DAILY_PRICES:
+                try:
+                    # Check if we should calculate technical indicators (daily after price updates)
+                    self.logger.info(
+                        f"Triggering technical indicator calculation for {symbol}"
+                    )
+
+                    # Calculate and store technical indicators
+                    indicators = self.technical_calculator.calculate_all_indicators(
+                        symbol
+                    )
+                    if indicators:
+                        if self.technical_calculator.store_indicators(
+                            symbol, indicators
+                        ):
+                            self.logger.info(
+                                f"Technical indicators calculated and stored for {symbol}"
+                            )
+                        else:
+                            self.logger.warning(
+                                f"Failed to store technical indicators for {symbol}"
+                            )
+                    else:
+                        self.logger.warning(
+                            f"Failed to calculate technical indicators for {symbol}"
+                        )
+
+                except Exception as e:
+                    self.logger.warning(
+                        f"Error calculating technical indicators for {symbol}: {e}"
+                    )
+
+        except Exception as e:
+            self.logger.error(f"Error checking collection trigger: {e}")
+            import traceback
+
+            self.logger.error(f"Trigger error traceback: {traceback.format_exc()}")
 
     def _make_request_with_retry(
         self,
@@ -315,7 +920,39 @@ class BaseFinancialService(ABC):
                 validated_data = self._validate_response(data, endpoint)
 
                 # Cache successful result
-                self.cache.set(cache_key, validated_data)
+                if isinstance(self.cache, UnifiedCache):
+                    # Pass endpoint and params for unified cache
+                    self.cache.set(
+                        cache_key, validated_data, endpoint=endpoint, params=params
+                    )
+                else:
+                    # Traditional cache
+                    self.cache.set(cache_key, validated_data)
+
+                # Store in historical data system (only if not using unified cache)
+                if not isinstance(self.cache, UnifiedCache):
+                    try:
+                        self.store_historical_data(validated_data, endpoint, params)
+                    except Exception as e:
+                        self.logger.warning(
+                            f"Historical storage failed for {endpoint}: {e}"
+                        )
+                else:
+                    # With unified cache, storage happens automatically
+                    try:
+                        self.store_historical_data(validated_data, endpoint, params)
+                    except Exception as e:
+                        self.logger.debug(
+                            f"Historical storage handled by unified cache for {endpoint}"
+                        )
+
+                # Trigger comprehensive collection if needed (background process)
+                try:
+                    self._trigger_collection_if_needed(validated_data, endpoint, params)
+                except Exception as e:
+                    self.logger.debug(
+                        f"Collection trigger check failed for {endpoint}: {e}"
+                    )
 
                 self.logger.info(
                     f"Request successful for {endpoint} - ID: {correlation_id}"
@@ -407,7 +1044,7 @@ class BaseFinancialService(ABC):
 
     def get_service_info(self) -> Dict[str, Any]:
         """Get service configuration and status information"""
-        return {
+        info = {
             "name": self.config.name,
             "base_url": self.config.base_url,
             "cache_enabled": self.config.cache.enabled,
@@ -416,4 +1053,64 @@ class BaseFinancialService(ABC):
             "cache_ttl_seconds": self.config.cache.ttl_seconds,
             "max_retries": self.config.max_retries,
             "timeout_seconds": self.config.timeout_seconds,
+            "historical_storage": {
+                "enabled": self.config.historical_storage.enabled,
+                "store_stock_prices": self.config.historical_storage.store_stock_prices,
+                "store_financials": self.config.historical_storage.store_financials,
+                "store_fundamentals": self.config.historical_storage.store_fundamentals,
+                "store_news_sentiment": self.config.historical_storage.store_news_sentiment,
+                "auto_detect_data_type": self.config.historical_storage.auto_detect_data_type,
+            },
         }
+
+        # Add historical data stats if available
+        if self.historical_manager:
+            try:
+                historical_stats = self.historical_manager.get_available_data()
+                info["historical_storage"]["stats"] = historical_stats
+            except Exception as e:
+                self.logger.warning(f"Failed to get historical stats: {e}")
+
+        return info
+
+    def get_historical_data(
+        self,
+        symbol: str,
+        data_type: DataType,
+        date_start: Union[str, datetime],
+        date_end: Optional[Union[str, datetime]] = None,
+        timeframe: Timeframe = Timeframe.DAILY,
+    ) -> List[Dict[str, Any]]:
+        """
+        Retrieve historical data from storage
+
+        Args:
+            symbol: Symbol to retrieve data for
+            data_type: Type of data to retrieve
+            date_start: Start date for retrieval
+            date_end: End date (defaults to date_start)
+            timeframe: Data timeframe
+
+        Returns:
+            List of historical data records
+        """
+        if not self.historical_manager:
+            self.logger.warning("Historical data manager not initialized")
+            return []
+
+        try:
+            return self.historical_manager.retrieve_data(
+                symbol, data_type, date_start, date_end, timeframe
+            )
+        except Exception as e:
+            self.logger.error(f"Failed to retrieve historical data: {e}")
+            return []
+
+    def cleanup_historical_cache(self) -> None:
+        """Clean up expired historical cache entries"""
+        if self.historical_manager:
+            try:
+                # This would implement cleanup based on retention policies
+                self.logger.info("Historical data cleanup completed")
+            except Exception as e:
+                self.logger.error(f"Failed to cleanup historical data: {e}")

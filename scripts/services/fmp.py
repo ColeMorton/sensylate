@@ -504,7 +504,12 @@ def create_fmp_service(env: str = "dev") -> FMPService:
     service_config = config_loader.get_service_config("fmp", env)
 
     # Convert to ServiceConfig format
-    from .base_financial_service import CacheConfig, RateLimitConfig, ServiceConfig
+    from .base_financial_service import (
+        CacheConfig,
+        HistoricalStorageConfig,
+        RateLimitConfig,
+        ServiceConfig,
+    )
 
     config = ServiceConfig(
         name=service_config.name,
@@ -514,6 +519,14 @@ def create_fmp_service(env: str = "dev") -> FMPService:
         max_retries=service_config.max_retries,
         cache=CacheConfig(**service_config.cache),
         rate_limit=RateLimitConfig(**service_config.rate_limit),
+        historical_storage=HistoricalStorageConfig(
+            enabled=True,
+            store_stock_prices=True,
+            store_financials=True,
+            store_fundamentals=True,
+            store_news_sentiment=True,
+            auto_detect_data_type=True,
+        ),
         headers=service_config.headers,
     )
 

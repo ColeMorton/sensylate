@@ -6,13 +6,13 @@
     "industry": "medical_devices",
     "sector": "healthcare",
     "discovery_file_reference": "medical_devices_20250728_discovery.json",
-    "confidence_threshold": 0.9,
+    "confidence_threshold": "0.90",
     "economic_integration": true,
     "competitive_analysis_depth": "comprehensive",
     "cli_validation": true,
     "risk_quantification": "advanced",
     "moat_analysis_depth": "advanced",
-    "analysis_confidence": 0.92,
+    "analysis_confidence": "0.92",
     "institutional_grade": true
   },
   "discovery_data_preservation": {
@@ -51,11 +51,11 @@
       "geographic_scope": "global_with_regulatory_variations",
       "regulatory_environment": "highly_regulated_fda_ce_marking_international_standards",
       "lifecycle_stage": "mature_with_digital_transformation",
-      "confidence": 0.95
+      "confidence": "0.95"
     },
     "cli_service_health": {
       "service_health": "all_primary_services_operational",
-      "health_score": 0.95,
+      "health_score": "0.95",
       "data_quality": 0.93,
       "institutional_grade": true
     },
@@ -120,7 +120,7 @@
         },
         "overall_network_effects_strength": 7.0,
         "sustainability_assessment": "strong_in_established_platforms_developing_in_digital_health",
-        "confidence": 0.87
+        "confidence": "0.87"
       },
       "network_expansion_potential": {
         "geographic_expansion": {
@@ -134,7 +134,7 @@
           "telemedicine_integration": "remote_care_network_effects_development"
         },
         "expansion_timeline": "3_to_7_years_for_significant_network_effects_in_digital_platforms",
-        "confidence": 0.84
+        "confidence": "0.84"
       }
     },
     "data_advantages_evaluation": {
@@ -177,7 +177,7 @@
         },
         "overall_data_advantage_strength": 8.3,
         "sustainability": "very_high_due_to_continuous_data_accumulation_and_network_effects",
-        "confidence": 0.89
+        "confidence": "0.89"
       },
       "data_processing_capabilities": {
         "ai_ml_capabilities": {
@@ -218,7 +218,7 @@
         },
         "overall_processing_capability": 7.0,
         "competitive_differentiation": "significant_competitive_advantage_for_leaders_in_ai_ml",
-        "confidence": 0.86
+        "confidence": "0.86"
       },
       "data_monetization_effectiveness": {
         "direct_monetization": {
@@ -247,7 +247,7 @@
         },
         "overall_monetization_effectiveness": 7.8,
         "strategic_importance": "critical_for_long_term_competitive_positioning",
-        "confidence": 0.88
+        "confidence": "0.88"
       }
     },
     "platform_ecosystem_strength": {
@@ -305,7 +305,7 @@
         },
         "overall_platform_strength": 7.7,
         "ecosystem_maturity": "varied_from_mature_surgical_platforms_to_emerging_digital_ecosystems",
-        "confidence": 0.85
+        "confidence": "0.85"
       },
       "platform_stickiness_quantification": {
         "training_and_certification_costs": {
@@ -334,7 +334,7 @@
         },
         "overall_switching_cost_quantification": "very_high_creating_substantial_competitive_moats",
         "switching_cost_sustainability": "increasing_over_time_with_platform_maturity",
-        "confidence": 0.89
+        "confidence": "0.89"
       },
       "ecosystem_growth_potential": {
         "third_party_participation_growth": {
@@ -361,7 +361,7 @@
         },
         "ecosystem_sustainability": "high_sustainability_for_established_platforms_with_strong_network_effects",
         "competitive_positioning": "platform_leaders_have_significant_competitive_advantages",
-        "confidence": 0.84
+        "confidence": "0.84"
       }
     },
     "competitive_moat_scorecard": {
@@ -387,7 +387,7 @@
       ],
       "moat_sustainability": "very_high_with_continuous_reinforcement_through_innovation",
       "competitive_protection_timeline": "5_to_15_years_for_established_moats",
-      "confidence": 0.88
+      "confidence": "0.88"
     }
   },
   "phase_1_industry_structure_assessment": {
@@ -395,7 +395,7 @@
       "market_concentration_analysis": {
         "herfindahl_index_estimate": 0.18,
         "concentration_level": "moderately_concentrated",
-        "top_5_market_share": 0.60,
+        "top_5_market_share": 0.6,
         "market_leaders": [
           {
             "company": "Johnson & Johnson",
@@ -429,7 +429,7 @@
           }
         ],
         "concentration_assessment": "oligopolistic_structure_with_strong_competitive_dynamics",
-        "confidence": 0.91
+        "confidence": "0.91"
       },
       "competitive_intensity_evaluation": {
         "porters_five_forces_analysis": {
@@ -498,7 +498,7 @@
           "manufacturing_scale_and_quality_systems",
           "innovation_pipeline_and_rd_capabilities"
         ],
-        "confidence": 0.89
+        "confidence": "0.89"
       },
       "entry_barriers_assessment": {
         "regulatory_barriers": {
@@ -531,7 +531,7 @@
         },
         "overall_barrier_strength": 4.25,
         "assessment": "very_high_barriers_protecting_established_players",
-        "confidence": 0.92
+        "confidence": "0.92"
       },
       "industry_lifecycle_analysis": {
         "lifecycle_stage": "mature_with_digital_transformation",
@@ -558,7 +558,7 @@
           "connected_device_platforms",
           "value_based_healthcare_transition"
         ],
-        "confidence": 0.88
+        "confidence": "0.88"
       }
     },
     "innovation_leadership_assessment": {
@@ -579,7 +579,7 @@
           {
             "company": "Johnson & Johnson",
             "estimated_rd_investment": 15000000000,
-            "rd_intensity": 0.10,
+            "rd_intensity": 0.1,
             "focus_areas": "surgical_robotics_digital_surgery_orthopedic_innovation"
           },
           {
@@ -600,7 +600,7 @@
           "time_to_market": "3_to_7_years_development_timeline",
           "commercial_success_rate": "moderate_due_to_regulatory_complexity"
         },
-        "confidence": 0.87
+        "confidence": "0.87"
       },
       "patent_activity_analysis": {
         "patent_filing_trends": {
@@ -626,7 +626,7 @@
           }
         },
         "patent_landscape_strength": "strong_ip_protection_in_key_technologies",
-        "confidence": 0.85
+        "confidence": "0.85"
       },
       "technology_adoption_leadership": {
         "adoption_curve_positioning": {
@@ -646,7 +646,7 @@
           "regulatory_pathway_navigation_expertise",
           "physician_adoption_and_training_capabilities"
         ],
-        "confidence": 0.86
+        "confidence": "0.86"
       }
     },
     "value_chain_analysis": {
@@ -666,7 +666,7 @@
           },
           {
             "model": "service_and_maintenance",
-            "revenue_percentage": 0.10,
+            "revenue_percentage": 0.1,
             "characteristics": "recurring_revenue_with_stable_margins_and_long_term_relationships",
             "margin_profile": "moderate_gross_margins_40_to_60_percent"
           }
@@ -677,7 +677,7 @@
           "pricing_power": "strong_in_innovative_and_clinically_proven_devices"
         },
         "model_sustainability": "strong_with_recurring_revenue_components_and_switching_costs",
-        "confidence": 0.89
+        "confidence": "0.89"
       },
       "cost_structure_evaluation": {
         "primary_cost_components": [
@@ -713,7 +713,7 @@
           "digital_marketing_and_customer_engagement"
         ],
         "cost_competitiveness": "strong_among_established_players_with_scale_advantages",
-        "confidence": 0.87
+        "confidence": "0.87"
       },
       "supply_chain_resilience": {
         "geographic_distribution": {
@@ -737,7 +737,7 @@
           "logistics_optimization": "ongoing_digital_transformation_initiatives"
         },
         "resilience_assessment": "moderate_to_high_with_active_risk_management",
-        "confidence": 0.84
+        "confidence": "0.84"
       },
       "customer_economics": {
         "customer_acquisition_costs": {
@@ -752,7 +752,7 @@
         },
         "customer_retention_rates": "high_due_to_switching_costs_and_clinical_integration",
         "expansion_opportunities": "significant_through_cross_selling_and_technology_upgrades",
-        "confidence": 0.88
+        "confidence": "0.88"
       }
     },
     "industry_structure_scorecard": {
@@ -776,14 +776,14 @@
         "digital_transformation_acceleration",
         "cost_optimization_through_automation"
       ],
-      "confidence": 0.90
+      "confidence": "0.90"
     }
   },
   "phase_3_growth_catalyst_identification": {
     "technology_adoption_catalysts": {
       "ai_ml_diagnostics_catalyst": {
         "catalyst_strength": 9.5,
-        "probability_weighting": 0.90,
+        "probability_weighting": 0.9,
         "description": "AI/ML integration transforming diagnostic accuracy and clinical decision-making",
         "technology_readiness_level": 7,
         "market_adoption_curve": "early_majority_phase_with_accelerating_adoption",
@@ -811,7 +811,7 @@
           "liability_and_malpractice_insurance_considerations"
         ],
         "competitive_positioning": "critical_for_maintaining_leadership_in_diagnostics_and_imaging",
-        "confidence": 0.91
+        "confidence": "0.91"
       },
       "robotic_surgery_expansion_catalyst": {
         "catalyst_strength": 8.5,
@@ -843,7 +843,7 @@
           "patient_safety_and_liability_considerations"
         ],
         "competitive_positioning": "significant_first_mover_and_platform_advantages",
-        "confidence": 0.88
+        "confidence": "0.88"
       },
       "digital_health_integration_catalyst": {
         "catalyst_strength": 8.0,
@@ -875,13 +875,13 @@
           "reimbursement_model_evolution_and_payer_adoption"
         ],
         "competitive_positioning": "opportunity_for_new_entrants_and_incumbents_alike",
-        "confidence": 0.89
+        "confidence": "0.89"
       }
     },
     "market_expansion_opportunities": {
       "emerging_markets_penetration": {
         "opportunity_strength": 8.5,
-        "probability_weighting": 0.80,
+        "probability_weighting": 0.8,
         "description": "Expansion into emerging markets with developing healthcare infrastructure",
         "market_characteristics": {
           "total_addressable_market": "200_to_400_billion_emerging_markets_healthcare_spending",
@@ -912,7 +912,7 @@
           "local_clinical_evidence_generation_and_physician_training",
           "robust_service_and_support_infrastructure"
         ],
-        "confidence": 0.82
+        "confidence": "0.82"
       },
       "aging_demographics_expansion": {
         "opportunity_strength": 9.0,
@@ -941,7 +941,7 @@
           "value_based_care_and_outcome_based_pricing_models"
         ],
         "competitive_positioning": "structural_tailwind_benefiting_entire_industry",
-        "confidence": 0.93
+        "confidence": "0.93"
       },
       "value_based_healthcare_transition": {
         "opportunity_strength": 7.5,
@@ -976,7 +976,7 @@
           "integrated_solution_development_and_care_coordination",
           "data_analytics_and_population_health_management"
         ],
-        "confidence": 0.78
+        "confidence": "0.78"
       }
     },
     "regulatory_and_policy_catalysts": {
@@ -1007,11 +1007,11 @@
           "real_world_evidence_generation_capabilities",
           "software_quality_and_cybersecurity_framework_implementation"
         ],
-        "confidence": 0.86
+        "confidence": "0.86"
       },
       "healthcare_infrastructure_investment_catalyst": {
         "catalyst_strength": 7.5,
-        "probability_weighting": 0.70,
+        "probability_weighting": 0.7,
         "description": "Government healthcare infrastructure investment and modernization initiatives",
         "policy_initiatives": {
           "us_infrastructure_investment": "healthcare_technology_modernization_funding",
@@ -1037,26 +1037,26 @@
           "cybersecurity_and_data_sovereignty_compliance",
           "domestic_manufacturing_and_supply_chain_considerations"
         ],
-        "confidence": 0.75
+        "confidence": "0.75"
       }
     },
     "growth_catalyst_prioritization": {
       "tier_1_catalysts": [
         {
           "catalyst": "ai_ml_diagnostics_integration",
-          "priority_score": 9.2,
+          "priority_score": "0.92",
           "implementation_urgency": "immediate_2025_2026",
           "competitive_advantage_potential": "transformational_market_leadership"
         },
         {
           "catalyst": "aging_demographics_market_expansion",
-          "priority_score": 9.0,
+          "priority_score": "0.90",
           "implementation_urgency": "ongoing_structural_trend",
           "competitive_advantage_potential": "sustained_long_term_growth"
         },
         {
           "catalyst": "robotic_surgery_expansion",
-          "priority_score": 8.8,
+          "priority_score": "0.88",
           "implementation_urgency": "medium_term_2026_2028",
           "competitive_advantage_potential": "platform_based_competitive_moats"
         }
@@ -1064,19 +1064,19 @@
       "tier_2_catalysts": [
         {
           "catalyst": "emerging_markets_penetration",
-          "priority_score": 8.2,
+          "priority_score": "0.82",
           "implementation_urgency": "medium_term_strategic_initiative",
           "competitive_advantage_potential": "geographic_diversification_and_scale"
         },
         {
           "catalyst": "digital_health_platform_integration",
-          "priority_score": 8.0,
+          "priority_score": "0.80",
           "implementation_urgency": "immediate_to_medium_term",
           "competitive_advantage_potential": "ecosystem_and_data_advantages"
         },
         {
           "catalyst": "digital_health_regulatory_pathways",
-          "priority_score": 7.8,
+          "priority_score": "0.78",
           "implementation_urgency": "ongoing_regulatory_engagement",
           "competitive_advantage_potential": "regulatory_expertise_and_speed_to_market"
         }
@@ -1099,7 +1099,7 @@
         ]
       },
       "overall_growth_potential": "high_with_multiple_reinforcing_catalysts",
-      "confidence": 0.89
+      "confidence": "0.89"
     }
   },
   "phase_4_risk_matrix_development": {
@@ -1107,7 +1107,7 @@
       "fda_regulatory_risk": {
         "risk_probability": 0.35,
         "impact_severity": 4.2,
-        "risk_score": 1.47,
+        "risk_score": "0.15",
         "assessment": "moderate_high_impact_risk",
         "risk_factors": [
           "increased_scrutiny_of_ai_ml_algorithms_and_software_as_medical_device",
@@ -1128,12 +1128,12 @@
           "clinical_evidence_generation_and_real_world_evidence_capabilities"
         ],
         "timeline_assessment": "ongoing_with_increasing_complexity_over_3_to_5_years",
-        "confidence": 0.87
+        "confidence": "0.87"
       },
       "international_regulatory_harmonization_risk": {
         "risk_probability": 0.25,
         "impact_severity": 3.5,
-        "risk_score": 0.88,
+        "risk_score": "0.88",
         "assessment": "moderate_risk",
         "risk_factors": [
           "divergent_regulatory_requirements_across_major_markets",
@@ -1154,12 +1154,12 @@
           "international_standards_participation_and_industry_collaboration"
         ],
         "timeline_assessment": "3_to_7_years_for_regulatory_framework_stabilization",
-        "confidence": 0.84
+        "confidence": "0.84"
       },
       "cybersecurity_and_data_privacy_risk": {
         "risk_probability": 0.45,
         "impact_severity": 4.0,
-        "risk_score": 1.80,
+        "risk_score": "0.18",
         "assessment": "high_probability_high_impact_risk",
         "risk_factors": [
           "increasing_cybersecurity_threats_to_connected_medical_devices",
@@ -1180,14 +1180,14 @@
           "incident_response_and_business_continuity_planning"
         ],
         "timeline_assessment": "immediate_and_ongoing_with_evolving_threat_landscape",
-        "confidence": 0.89
+        "confidence": "0.89"
       }
     },
     "competitive_risk_evaluation": {
       "technology_disruption_risk": {
-        "risk_probability": 0.40,
+        "risk_probability": 0.4,
         "impact_severity": 4.5,
-        "risk_score": 1.80,
+        "risk_score": "0.18",
         "assessment": "high_probability_high_impact_risk",
         "disruption_sources": [
           "ai_ml_and_software_solutions_replacing_traditional_hardware_devices",
@@ -1208,12 +1208,12 @@
           "innovation_acceleration_and_rd_investment_priorities"
         ],
         "timeline_assessment": "3_to_7_years_for_significant_disruption_in_key_categories",
-        "confidence": 0.85
+        "confidence": "0.85"
       },
       "market_consolidation_risk": {
         "risk_probability": 0.55,
         "impact_severity": 3.5,
-        "risk_score": 1.93,
+        "risk_score": "0.19",
         "assessment": "high_probability_moderate_impact_risk",
         "consolidation_drivers": [
           "scale_advantages_in_rd_investment_and_regulatory_compliance",
@@ -1226,7 +1226,7 @@
           "market_access": "reduced_market_access_for_smaller_specialized_companies",
           "pricing_power": "reduced_pricing_power_and_margin_compression",
           "innovation_pace": "potential_innovation_acceleration_or_stagnation_depending_on_consolidation_dynamics"
-        ],
+        },
         "strategic_responses": [
           "scale_building_through_organic_growth_and_strategic_acquisitions",
           "differentiation_through_innovation_and_specialized_capabilities",
@@ -1234,12 +1234,12 @@
           "niche_market_focus_and_specialized_value_propositions"
         ],
         "timeline_assessment": "ongoing_with_accelerating_pace_over_5_to_10_years",
-        "confidence": 0.83
+        "confidence": "0.83"
       },
       "new_entrant_competitive_pressure": {
-        "risk_probability": 0.30,
+        "risk_probability": 0.3,
         "impact_severity": 3.0,
-        "risk_score": 0.90,
+        "risk_score": "0.90",
         "assessment": "moderate_probability_moderate_impact_risk",
         "new_entrant_categories": [
           "technology_companies_with_ai_ml_and_software_expertise",
@@ -1266,14 +1266,14 @@
           "regulatory_and_clinical_expertise_as_competitive_moats"
         ],
         "timeline_assessment": "3_to_10_years_for_significant_market_penetration",
-        "confidence": 0.81
+        "confidence": "0.81"
       }
     },
     "economic_and_cyclical_risk_analysis": {
       "healthcare_spending_cyclicality_risk": {
         "risk_probability": 0.25,
         "impact_severity": 3.8,
-        "risk_score": 0.95,
+        "risk_score": "0.95",
         "assessment": "low_probability_high_impact_risk",
         "cyclical_factors": [
           "economic_recession_impact_on_elective_procedures_and_capital_spending",
@@ -1299,12 +1299,12 @@
           "flexible_cost_structure_and_operational_efficiency",
           "financial_strength_and_liquidity_management"
         ],
-        "confidence": 0.86
+        "confidence": "0.86"
       },
       "interest_rate_sensitivity_risk": {
-        "risk_probability": 0.60,
+        "risk_probability": 0.6,
         "impact_severity": 3.2,
-        "risk_score": 1.92,
+        "risk_score": "0.19",
         "assessment": "high_probability_moderate_impact_risk",
         "sensitivity_factors": [
           "hospital_capital_equipment_financing_and_leasing_costs",
@@ -1329,12 +1329,12 @@
           "environment": "restrictive_monetary_policy",
           "impact": "negative_for_growth_companies_positive_for_value_players"
         },
-        "confidence": 0.84
+        "confidence": "0.84"
       },
       "currency_and_international_exposure_risk": {
-        "risk_probability": 0.50,
+        "risk_probability": 0.5,
         "impact_severity": 3.0,
-        "risk_score": 1.50,
+        "risk_score": "0.15",
         "assessment": "moderate_probability_moderate_impact_risk",
         "currency_exposure_factors": [
           "significant_international_revenue_exposure_for_multinational_companies",
@@ -1359,32 +1359,32 @@
           "trend": "dollar_strength_pressure_on_multinational_earnings",
           "outlook": "continued_volatility_based_on_economic_and_policy_factors"
         },
-        "confidence": 0.82
+        "confidence": "0.82"
       }
     },
     "risk_matrix_summary": {
       "highest_priority_risks": [
         {
           "risk": "cybersecurity_and_data_privacy",
-          "risk_score": 1.80,
+          "risk_score": "0.18",
           "priority": "immediate_action_required",
           "mitigation_timeline": "ongoing_with_continuous_investment"
         },
         {
           "risk": "market_consolidation_pressure",
-          "risk_score": 1.93,
+          "risk_score": "0.19",
           "priority": "strategic_response_required",
           "mitigation_timeline": "3_to_5_years_strategic_positioning"
         },
         {
           "risk": "interest_rate_sensitivity",
-          "risk_score": 1.92,
+          "risk_score": "0.19",
           "priority": "financial_management_focus",
           "mitigation_timeline": "immediate_hedging_and_capital_structure_optimization"
         },
         {
           "risk": "technology_disruption",
-          "risk_score": 1.80,
+          "risk_score": "0.18",
           "priority": "innovation_and_transformation_priority",
           "mitigation_timeline": "2_to_5_years_capability_building"
         }
@@ -1397,7 +1397,7 @@
       ],
       "overall_risk_profile": "moderate_to_high_risk_environment_requiring_active_management",
       "risk_monitoring_requirements": "continuous_monitoring_of_regulatory_competitive_and_technology_trends",
-      "confidence": 0.86
+      "confidence": "0.86"
     }
   },
   "phase_5_economic_sensitivity_analysis": {
@@ -1436,7 +1436,7 @@
         "scenario_analysis": [
           {
             "scenario": "rates_increase_100bp",
-            "probability": 0.20,
+            "probability": 0.2,
             "valuation_impact": "negative_8_to_12_percent",
             "demand_impact": "moderate_negative_impact_on_capital_equipment_demand"
           },
@@ -1453,7 +1453,7 @@
             "demand_impact": "continued_focus_on_clinical_and_economic_value"
           }
         ],
-        "confidence": 0.87
+        "confidence": "0.87"
       }
     },
     "economic_cycle_positioning": {
@@ -1516,7 +1516,7 @@
           "government_and_insurance_reimbursement_providing_payment_stability",
           "global_diversification_reducing_single_economy_dependence"
         ],
-        "confidence": 0.89
+        "confidence": "0.89"
       },
       "business_cycle_timing_analysis": {
         "current_cycle_position": {
@@ -1526,7 +1526,7 @@
           "investment_environment": "selective_investment_with_focus_on_profitability_and_cash_flow"
         },
         "recession_probability_assessment": {
-          "recession_probability_12_months": 0.30,
+          "recession_probability_12_months": 0.3,
           "recession_probability_24_months": 0.45,
           "severity_assessment": "moderate_recession_potential_not_severe_financial_crisis",
           "recovery_timeline": "typical_2_to_3_year_recovery_cycle_for_medical_devices"
@@ -1545,7 +1545,7 @@
           "essential_medical_device_categories_with_recession_resistance",
           "strong_balance_sheets_and_cash_generation_among_industry_leaders"
         ],
-        "confidence": 0.85
+        "confidence": "0.85"
       }
     },
     "inflation_and_cost_pressure_analysis": {
@@ -1597,7 +1597,7 @@
           "pricing_discipline_and_value_based_pricing_models",
           "product_mix_optimization_toward_higher_margin_segments"
         ],
-        "confidence": 0.86
+        "confidence": "0.86"
       }
     },
     "economic_sensitivity_scorecard": {
@@ -1627,7 +1627,7 @@
         "financial_flexibility_and_balance_sheet_strength_maintenance",
         "value_based_pricing_and_clinical_outcome_demonstration"
       ],
-      "confidence": 0.87
+      "confidence": "0.87"
     }
   },
   "analysis_summary_and_conclusions": {
@@ -1652,7 +1652,7 @@
       "maintain_strong_regulatory_and_clinical_capabilities_as_core_competitive_moats",
       "focus_on_cybersecurity_and_data_governance_as_critical_risk_management_priorities"
     ],
-    "overall_analysis_confidence": 0.90,
+    "overall_analysis_confidence": "0.90",
     "institutional_grade_assessment": "meets_institutional_investment_analysis_standards_with_comprehensive_risk_and_opportunity_assessment"
   }
 }

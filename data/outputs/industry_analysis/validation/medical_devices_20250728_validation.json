@@ -14,7 +14,7 @@
     "api_keys_configured": "production_keys_from_config/services/financial_services.yaml"
   },
   "overall_assessment": {
-    "overall_reliability_score": "9.1/10.0",
+    "overall_reliability_score": "0.91",
     "decision_confidence": "High",
     "minimum_threshold_met": "true",
     "institutional_quality_certified": "true",
@@ -32,7 +32,7 @@
       "economic_context_integration": "8.9/10.0",
       "cli_multi_source_validation": "9.0/10.0",
       "cli_service_health_validation": "9.5/10.0",
-      "overall_discovery_score": "9.2/10.0",
+      "overall_discovery_score": "0.92",
       "evidence_quality": "CLI_Primary",
       "key_issues": [
         "Medtronic PE ratio validation - discovery shows 17.5 vs CLI validation 25.7 (47% variance requiring correction)",
@@ -46,7 +46,7 @@
       "growth_catalyst_validation": "8.8/10.0",
       "risk_matrix_validation": "8.7/10.0",
       "cli_economic_context_validation": "9.2/10.0",
-      "overall_analysis_score": "9.0/10.0",
+      "overall_analysis_score": "0.90",
       "evidence_quality": "CLI_Primary",
       "key_issues": [
         "Comprehensive competitive moat analysis with quantified switching costs ($50K-200K surgeon training)",
@@ -62,7 +62,7 @@
       "professional_presentation": "9.3/10.0",
       "cli_data_integration_quality": "9.1/10.0",
       "multi_source_evidence_strength": "8.8/10.0",
-      "overall_synthesis_score": "9.1/10.0",
+      "overall_synthesis_score": "0.91",
       "evidence_quality": "CLI_Primary",
       "key_issues": [
         "Template compliance excellent - follows industry_analysis_template.md specification exactly",
@@ -169,7 +169,7 @@
       "antitrust_competition_policy": "Regulatory risk assessment properly quantified with probability (0.35) and impact (4.2) scoring methodology",
       "data_privacy_security_regulation": "Cybersecurity risk properly elevated to highest priority (1.80 risk score) with comprehensive mitigation strategies",
       "industry_specific_regulatory_changes": "International regulatory harmonization risk properly assessed (0.25 probability, 3.5 impact)",
-      "regulatory_risk_matrix": "Risk matrix calculations verified with probability × impact methodology and timeline assessment",
+      "regulatory_risk_matrix": "Risk matrix calculations verified with probability \u00d7 impact methodology and timeline assessment",
       "confidence": "0.87"
     },
     "competitive_risk_evaluation": {
@@ -222,7 +222,7 @@
     "safe_for_decision_making": "true",
     "industry_data_blocking_issue": "false",
     "required_corrections": [
-      "Correct Medtronic PE ratio in discovery data (17.5 → 25.7)",
+      "Correct Medtronic PE ratio in discovery data (17.5 \u2192 25.7)",
       "Update CLI service health monitoring for improved validation coverage"
     ],
     "follow_up_research": [
