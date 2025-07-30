@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useCallback } from "react";
 import photoBoothConfig from "@/config/photo-booth.json";
-import { DashboardLoader, type DashboardConfig } from "@/lib/dashboardLoader";
+import {
+  DashboardLoader,
+  type DashboardConfig,
+} from "@/services/dashboardLoader";
 import ChartDisplay from "@/shortcodes/ChartDisplay";
 
 interface PhotoBoothDisplayProps {
