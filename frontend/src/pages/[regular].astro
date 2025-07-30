@@ -91,7 +91,7 @@ if (import.meta.env.DEV && !Astro.props.page) {
   if (page.id === "elements" && !isFeatureEnabled("elementsPage")) {
     return Astro.redirect("/404");
   }
-  if (page.id === "charts" && !isFeatureEnabled("charts_page")) {
+  if (page.id === "charts" && !isFeatureEnabled("chartsPage")) {
     return Astro.redirect("/404");
   }
 } else {

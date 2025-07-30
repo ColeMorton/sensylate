@@ -1,0 +1,57 @@
+{
+  "default_dashboard": "trading_performance",
+  "active_dashboards": [
+    {
+      "id": "trading_performance",
+      "name": "Trading Performance Dashboard",
+      "file": "trading-performance.mdx",
+      "description": "Comprehensive trading strategy performance overview",
+      "layout": "2x2_grid",
+      "enabled": true
+    },
+    {
+      "id": "portfolio_analysis",
+      "name": "Portfolio Analysis Dashboard", 
+      "file": "portfolio-analysis.mdx",
+      "description": "Portfolio composition and risk analysis",
+      "layout": "1x3_stack",
+      "enabled": true
+    },
+    {
+      "id": "market_overview",
+      "name": "Market Overview Dashboard",
+      "file": "market-overview.mdx", 
+      "description": "Market trends and sector analysis",
+      "layout": "2x2_grid",
+      "enabled": false
+    }
+  ],
+  "screenshot_settings": {
+    "viewport": {
+      "width": 1920,
+      "height": 1080
+    },
+    "device_scale_factor": 2,
+    "format": "png",
+    "quality": 95,
+    "full_page": true,
+    "timeout": 30000,
+    "wait_for_selector": ".photo-booth-ready"
+  },
+  "output": {
+    "directory": "data/outputs/photo-booth",
+    "filename_template": "{dashboard_id}_{mode}_{timestamp}.png",
+    "modes": ["light", "dark"],
+    "auto_cleanup": {
+      "enabled": true,
+      "keep_latest": 5,
+      "older_than_days": 30
+    }
+  },
+  "performance": {
+    "preload_charts": true,
+    "render_timeout": 15000,
+    "retry_attempts": 3,
+    "cache_bust": false
+  }
+}

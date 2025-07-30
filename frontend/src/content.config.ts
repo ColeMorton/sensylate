@@ -138,6 +138,19 @@ const calculatorsCollection = defineCollection({
   }),
 });
 
+// Dashboards collection schema
+const dashboardsCollection = defineCollection({
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "src/content/dashboards" }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string().optional(),
+    layout: z.string().default("2x2_grid"),
+    mode: z.string().default("both"),
+    enabled: z.boolean().default(true),
+    draft: z.boolean().optional(),
+  }),
+});
+
 // Export collections
 export const collections = {
   // Pages
@@ -147,6 +160,7 @@ export const collections = {
   about: aboutCollection,
   contact: contactCollection,
   calculators: calculatorsCollection,
+  dashboards: dashboardsCollection,
 
   // sections
   ctaSection: ctaSectionCollection,

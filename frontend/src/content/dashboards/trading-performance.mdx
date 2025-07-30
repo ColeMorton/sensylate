@@ -1,0 +1,44 @@
+---
+title: "Trading Performance Dashboard"
+description: "Comprehensive trading strategy performance overview"
+layout: "2x2_grid"
+mode: "both"
+enabled: true
+draft: false
+---
+
+<div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
+
+<ChartDisplay
+  client:only="react"
+  title="Bitcoin Portfolio Value Comparison"
+  category="Bitcoin Performance"
+  description="Multi-strategy Bitcoin trading vs buy-and-hold approach from 2014-2025. Active strategy: $1,000 → $113,312 (11,231% return)."
+  chartType="portfolio-value-comparison"
+/>
+
+<ChartDisplay
+  client:only="react"
+  title="Bitcoin Returns Comparison"
+  category="Bitcoin Performance"
+  description="Daily returns comparison: multi-strategy Bitcoin trading vs passive buy-and-hold showing day-to-day percentage changes over 3,960 days of market data."
+  chartType="returns-comparison"
+/>
+
+<ChartDisplay
+  client:only="react"
+  title="Bitcoin Portfolio Drawdown Analysis"
+  category="Bitcoin Risk Analysis"
+  description="Bitcoin portfolio risk analysis showing drawdown periods. Maximum drawdown: 53.23% with 839-day recovery duration."
+  chartType="portfolio-drawdowns"
+/>
+
+<ChartDisplay
+  client:only="react"
+  title="Live Signals Equity Curve"
+  category="Live Trading Performance"
+  description="Comprehensive live trading analysis showing equity curve, MFE (Maximum Favorable Excursion), and MAE (Maximum Adverse Excursion). Real-time performance from April to August 2025 with risk management insights."
+  chartType="live-signals-equity-curve"
+/>
+
+</div>
