@@ -109,7 +109,8 @@ function getFeatureFlags(): FeatureFlags {
         envToBoolean(
           import.meta.env.PUBLIC_FEATURE_CHARTS_PAGE,
           "PUBLIC_FEATURE_CHARTS_PAGE",
-        ) ?? isDevelopment(), // Re-enabled after fixing server mode routing
+        ) ??
+        (isDevelopment() || isStaging()), // Enable in both development and staging branches
     };
   } catch (error) {
     if (error instanceof FeatureFlagValidationError) {
