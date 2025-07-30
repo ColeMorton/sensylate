@@ -1,0 +1,265 @@
+{
+  "metadata": {
+    "evaluation_timestamp": "2025-07-30T21:06:41.451850",
+    "evaluation_depth": "comprehensive",
+    "validation_focus": [
+      "financial_data",
+      "market_analysis"
+    ],
+    "real_time_validation": true,
+    "filename": "/Users/colemorton/Projects/sensylate-command-system-enhancements/data/outputs/fundamental_analysis/MU_20250730.md",
+    "evaluation_engine": "institutional_grade_v1.0"
+  },
+  "overall_assessment": {
+    "overall_score": "9.40/10.0",
+    "quality_grade": "A",
+    "institutional_status": "INSTITUTIONAL_GRADE",
+    "meets_institutional_standards": true,
+    "weighted_breakdown": {
+      "financial_data_accuracy": {
+        "score": 9.7,
+        "weight": 0.25,
+        "weighted_contribution": 2.425
+      },
+      "market_analysis_quality": {
+        "score": 9.7,
+        "weight": 0.2,
+        "weighted_contribution": 1.94
+      },
+      "methodology_rigor": {
+        "score": 8.7,
+        "weight": 0.15,
+        "weighted_contribution": 1.305
+      },
+      "data_completeness": {
+        "score": 9.2,
+        "weight": 0.15,
+        "weighted_contribution": 1.38
+      },
+      "economic_context": {
+        "score": 10.0,
+        "weight": 0.1,
+        "weighted_contribution": 1.0
+      },
+      "risk_assessment": {
+        "score": 9.5,
+        "weight": 0.1,
+        "weighted_contribution": 0.9500000000000001
+      },
+      "structural_compliance": {
+        "score": 8.0,
+        "weight": 0.05,
+        "weighted_contribution": 0.4
+      }
+    }
+  },
+  "evaluation_breakdown": {
+    "financial_data_accuracy": {
+      "score": 9.7,
+      "issues": [
+        "Limited real-time market context"
+      ],
+      "evidence": [
+        "Multiple data sources found: Yahoo Finance, Alpha Vantage, FMP, FRED, SEC EDGAR",
+        "Confidence scores provided: 2 instances",
+        "Data freshness indicators present"
+      ],
+      "missing_metrics": [],
+      "data_sources_found": [
+        "Yahoo Finance",
+        "Alpha Vantage",
+        "FMP",
+        "FRED",
+        "SEC EDGAR"
+      ],
+      "confidence_scores_count": 2
+    },
+    "market_analysis_quality": {
+      "score": 9.7,
+      "issues": [
+        "Insufficient catalyst identification"
+      ],
+      "evidence": [
+        "Comprehensive analysis structure: 6/6 sections",
+        "Strong quantitative analysis: 54 quantitative elements",
+        "Scenario analysis present"
+      ],
+      "sections_found": [
+        "Investment Thesis",
+        "Valuation Analysis",
+        "Risk Assessment",
+        "Competitive Position",
+        "Economic Context",
+        "Stress Testing"
+      ],
+      "quantitative_elements": 54,
+      "scenario_coverage": 4
+    },
+    "methodology_rigor": {
+      "score": 8.7,
+      "issues": [
+        "Insufficient methodology transparency",
+        "Insufficient assumption transparency"
+      ],
+      "evidence": [
+        "Validation processes documented",
+        "Multi-method approach: DCF, Comps, Sum-of-Parts, Relative"
+      ],
+      "methodology_mentions": 3,
+      "validation_processes": 3,
+      "valuation_methods": [
+        "DCF",
+        "Comps",
+        "Sum-of-Parts",
+        "Relative"
+      ]
+    },
+    "data_completeness": {
+      "score": 9.2,
+      "issues": [
+        "Insufficient structured data presentation",
+        "Limited historical context"
+      ],
+      "evidence": [
+        "Comprehensive content length: 2485 words",
+        "Comprehensive peer analysis"
+      ],
+      "word_count": 2485,
+      "data_tables": 2,
+      "historical_context": 5
+    },
+    "economic_context": {
+      "score": 10.0,
+      "issues": [],
+      "evidence": [
+        "Comprehensive economic context: 9 indicators",
+        "Strong correlation analysis",
+        "Clear business cycle positioning"
+      ],
+      "economic_indicators": [
+        "GDP",
+        "Fed Funds",
+        "Inflation",
+        "CPI",
+        "Employment",
+        "Yield Curve",
+        "DXY",
+        "Consumer Confidence",
+        "Interest Rate"
+      ],
+      "correlation_analysis": 39
+    },
+    "risk_assessment": {
+      "score": 9.5,
+      "issues": [
+        "Insufficient risk identification"
+      ],
+      "evidence": [
+        "Strong risk quantification",
+        "Risk mitigation strategies present"
+      ],
+      "risk_identification": 4,
+      "quantified_risks": 6
+    },
+    "structural_compliance": {
+      "score": 8.0,
+      "issues": [
+        "Missing required disclaimers"
+      ],
+      "evidence": [
+        "Complete frontmatter metadata",
+        "Proper section structure"
+      ],
+      "frontmatter_completeness": 5,
+      "section_structure": 5
+    }
+  },
+  "evidence_based_scoring": {
+    "positive_evidence": [
+      "Multiple data sources found: Yahoo Finance, Alpha Vantage, FMP, FRED, SEC EDGAR",
+      "Confidence scores provided: 2 instances",
+      "Data freshness indicators present",
+      "Comprehensive analysis structure: 6/6 sections",
+      "Strong quantitative analysis: 54 quantitative elements",
+      "Scenario analysis present",
+      "Validation processes documented",
+      "Multi-method approach: DCF, Comps, Sum-of-Parts, Relative",
+      "Comprehensive content length: 2485 words",
+      "Comprehensive peer analysis",
+      "Comprehensive economic context: 9 indicators",
+      "Strong correlation analysis",
+      "Clear business cycle positioning",
+      "Strong risk quantification",
+      "Risk mitigation strategies present",
+      "Complete frontmatter metadata",
+      "Proper section structure"
+    ],
+    "areas_of_concern": [
+      "Limited real-time market context",
+      "Insufficient catalyst identification",
+      "Insufficient methodology transparency",
+      "Insufficient assumption transparency",
+      "Insufficient structured data presentation",
+      "Limited historical context",
+      "Insufficient risk identification",
+      "Missing required disclaimers"
+    ],
+    "quantitative_metrics": {
+      "word_count": 2485,
+      "content_length": 17525,
+      "section_coverage": 7,
+      "average_score": 9.257142857142856
+    },
+    "qualitative_assessment": {
+      "content_depth": "Comprehensive",
+      "analysis_rigor": "High",
+      "data_integration": "Strong"
+    }
+  },
+  "critical_findings": {
+    "strengths": [
+      "Financial Data Accuracy: Excellent (9.7/10)",
+      "Market Analysis Quality: Excellent (9.7/10)",
+      "Data Completeness: Excellent (9.2/10)",
+      "Economic Context: Excellent (10.0/10)",
+      "Risk Assessment: Excellent (9.5/10)"
+    ],
+    "weaknesses": [],
+    "critical_issues": [
+      "market_analysis_quality: Insufficient catalyst identification",
+      "methodology_rigor: Insufficient methodology transparency",
+      "methodology_rigor: Insufficient assumption transparency",
+      "data_completeness: Insufficient structured data presentation",
+      "risk_assessment: Insufficient risk identification",
+      "structural_compliance: Missing required disclaimers"
+    ],
+    "improvement_priorities": [
+      "Structural Compliance (Score: 8.0/10)"
+    ]
+  },
+  "actionable_recommendations": {
+    "immediate_actions": [],
+    "medium_term_improvements": [],
+    "long_term_enhancements": [],
+    "methodology_suggestions": [
+      "Implement multi-source data validation for all financial metrics",
+      "Add confidence scoring for all major analytical conclusions",
+      "Include sensitivity analysis for key valuation assumptions",
+      "Enhance real-time market context integration",
+      "Develop systematic peer comparison framework"
+    ]
+  },
+  "institutional_certification": {
+    "certification_status": "INSTITUTIONAL_GRADE",
+    "meets_standards": true,
+    "certification_level": "GOLD",
+    "compliance_score": "9.40/10.0",
+    "certification_requirements": {
+      "accuracy_standard": false,
+      "compliance_standard": false,
+      "institutional_standard": true
+    },
+    "certification_date": "2025-07-30T21:06:41.459066",
+    "valid_until": "Next quarterly review"
+  }
+}
