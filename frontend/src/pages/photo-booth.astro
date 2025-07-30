@@ -1,0 +1,20 @@
+---
+import PhotoBoothBase from "@/layouts/PhotoBoothBase.astro";
+import PhotoBoothDisplay from "@/layouts/shortcodes/PhotoBoothDisplay.tsx";
+import { features } from "@/lib/config";
+
+// Redirect to 404 if photo booth is disabled
+if (!features.photoBooth) {
+  return Astro.redirect("/404");
+}
+---
+
+<PhotoBoothBase
+  title="Photo Booth"
+  meta_title="Dashboard Photo Booth - High Resolution Screenshots"
+  description="Generate high-resolution dashboard screenshots for presentations and reports"
+>
+  <div class="photo-booth-container">
+    <PhotoBoothDisplay client:only="react" className="photo-booth-ready" />
+  </div>
+</PhotoBoothBase>

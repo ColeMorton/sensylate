@@ -1,0 +1,44 @@
+---
+title: "Market Overview Dashboard"
+description: "Market trends and sector analysis"
+layout: "2x2_grid"
+mode: "both"
+enabled: false
+draft: false
+---
+
+<div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
+
+<ChartDisplay
+  client:only="react"
+  title="Live Signals Weekly Candlestick Chart"
+  category="Live Trading Technical Analysis"
+  description="Weekly OHLC candlestick view of live signals equity performance. Aggregates daily equity data into weekly candles for technical analysis."
+  chartType="live-signals-weekly-candlestick"
+/>
+
+<ChartDisplay
+  client:only="react"
+  title="Apple Stock Reference"
+  category="Reference Data"
+  description="Interactive chart showing Apple stock high and low prices from July to December 2016. Data sourced from Plotly's public dataset."
+  chartType="apple-stock"
+/>
+
+<ChartDisplay
+  client:only="react"
+  title="Bitcoin Portfolio Value Comparison"
+  category="Bitcoin Performance"
+  description="Multi-strategy Bitcoin trading vs buy-and-hold approach from 2014-2025. Active strategy: $1,000 → $113,312 (11,231% return)."
+  chartType="portfolio-value-comparison"
+/>
+
+<ChartDisplay
+  client:only="react"
+  title="Live Signals Equity Curve"
+  category="Live Trading Performance"
+  description="Comprehensive live trading analysis showing equity curve, MFE (Maximum Favorable Excursion), and MAE (Maximum Adverse Excursion). Real-time performance from April to August 2025 with risk management insights."
+  chartType="live-signals-equity-curve"
+/>
+
+</div>

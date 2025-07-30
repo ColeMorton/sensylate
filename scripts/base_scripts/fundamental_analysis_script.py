@@ -12,7 +12,7 @@ Generalized, parameter-driven script for fundamental analysis content generation
 import json
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Dict, List, Optional
 
 from errors import DataError, ValidationError
 from result_types import ProcessingResult
@@ -257,12 +257,14 @@ class FundamentalAnalysisScript(BaseScript):
         """Generate Twitter content using template"""
 
         try:
-            # Render template
-            content = self.template_renderer.render_template(
-                template_type="fundamental",
-                template_variant=template_variant,
+            # Render template using correct method
+            result = self.template_renderer.render_fundamental_analysis(
+                ticker=analysis_data.get("ticker", ""),
                 data=analysis_data,
+                template_variant=template_variant,
             )
+
+            content = result.get("content", "")
 
             if not content or not content.strip():
                 raise ValidationError(

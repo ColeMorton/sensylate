@@ -1,0 +1,19 @@
+---
+title: "{{ industry_name }} Industry Analysis"
+meta_title: "{{ industry_name }} Industry Analysis - {{ recommendation }} Recommendation"
+description: "Institutional-quality {{ industry_name }} industry analysis with comprehensive investment thesis, {{ recommendation }} recommendation, and risk assessment framework. Confidence: {{ confidence }}/10.0"
+date: {{ analysis_date }}T10:00:00Z
+image: "/images/industry_analysis/{{ industry_slug }}_{{ date_code }}.png"
+authors: ["Cole Morton", "Claude"]
+categories: ["Investing", "Analysis", "Industry Analysis", "{{ industry_name }}", "Market Analysis"]
+tags: ["{{ industry_slug }}", "industry-analysis", "{{ recommendation|lower }}", "institutional-research", "economic-analysis"]
+draft: false
+industry_data:
+  industry: "{{ industry_code }}"
+  analysis_date: "{{ date_code }}"
+  confidence: {{ confidence }}
+  recommendation: "{{ recommendation }}"
+  content_type: "industry_analysis"
+---
+
+{{ content_body }}
