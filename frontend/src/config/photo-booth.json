@@ -11,7 +11,7 @@
     },
     {
       "id": "portfolio_analysis",
-      "name": "Portfolio Analysis Dashboard", 
+      "name": "Portfolio Analysis Dashboard",
       "file": "portfolio-analysis.mdx",
       "description": "Portfolio composition and risk analysis",
       "layout": "1x3_stack",
@@ -20,7 +20,7 @@
     {
       "id": "market_overview",
       "name": "Market Overview Dashboard",
-      "file": "market-overview.mdx", 
+      "file": "market-overview.mdx",
       "description": "Market trends and sector analysis",
       "layout": "2x2_grid",
       "enabled": false

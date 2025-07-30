@@ -1,7 +1,7 @@
 🏗️ Software Infrastructure industry structure assessment reveals A- positioning
 
 Competitive landscape:
-• Market concentration: 0.32 HHI - moderate oligopoly  
+• Market concentration: 0.32 HHI - moderate oligopoly
 • Top 5 market share: 72%
 • Entry barriers: 8.5/10 difficulty
 

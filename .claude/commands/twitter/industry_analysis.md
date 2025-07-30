@@ -572,7 +572,7 @@ VALIDATION-DRIVEN SUCCESS CRITERIA:
    - Economic sensitivity analysis (interest rate impact, recession vulnerability)
 
 4. **Competitive Positioning Insights**
-   - Network effects strength, data advantages, platform ecosystem ratings  
+   - Network effects strength, data advantages, platform ecosystem ratings
    - Innovation leadership assessment and R&D investment intensity
    - Market concentration analysis and entry barrier effectiveness
 
@@ -680,7 +680,7 @@ Investment implication: {moat_investment_thesis}
 
 Top catalysts:
 • {catalyst_1}: {catalyst_1_probability} probability | {catalyst_1_impact}/10.0 impact
-• {catalyst_2}: {catalyst_2_probability} probability | {catalyst_2_impact}/10.0 impact  
+• {catalyst_2}: {catalyst_2_probability} probability | {catalyst_2_impact}/10.0 impact
 • {catalyst_3}: {catalyst_3_probability} probability | {catalyst_3_impact}/10.0 impact
 
 Timeline & ROI:

@@ -7,7 +7,6 @@ via Node.js subprocess calls for web-based dashboard rendering.
 """
 
 import argparse
-import asyncio
 import json
 import logging
 import subprocess
@@ -36,17 +35,23 @@ class PhotoBoothGenerator:
         self.config = config
         self.logger = logging.getLogger(__name__)
         self.base_url = config.get("base_url", "http://localhost:4321")
-        self.output_dir = Path(config.get("output", {}).get("directory", "data/outputs/photo-booth"))
+        output_dir_path = config.get("output", {}).get(
+            "directory", "data/outputs/photo-booth"
+        )
+        if not Path(output_dir_path).is_absolute():
+            self.output_dir = project_root / output_dir_path
+        else:
+            self.output_dir = Path(output_dir_path)
         self.screenshot_settings = config.get("screenshot_settings", {})
-        
+
         # Ensure output directory exists
         self.output_dir.mkdir(parents=True, exist_ok=True)
 
     def generate_screenshot(
-        self, 
-        dashboard_id: str, 
+        self,
+        dashboard_id: str,
         mode: str = "light",
-        custom_config: Optional[Dict[str, Any]] = None
+        custom_config: Optional[Dict[str, Any]] = None,
     ) -> Path:
         """
         Generate a single dashboard screenshot.
@@ -59,18 +64,20 @@ class PhotoBoothGenerator:
         Returns:
             Path to the generated screenshot
         """
-        self.logger.info(f"Generating {mode} mode screenshot for dashboard: {dashboard_id}")
+        self.logger.info(
+            f"Generating {mode} mode screenshot for dashboard: {dashboard_id}"
+        )
 
         # Build URL with parameters
         url = f"{self.base_url}/photo-booth?dashboard={dashboard_id}&mode={mode}"
-        
+
         # Generate output filename
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        filename_template = self.config.get("output", {}).get("filename_template", "{dashboard_id}_{mode}_{timestamp}.png")
+        filename_template = self.config.get("output", {}).get(
+            "filename_template", "{dashboard_id}_{mode}_{timestamp}.png"
+        )
         filename = filename_template.format(
-            dashboard_id=dashboard_id,
-            mode=mode,
-            timestamp=timestamp
+            dashboard_id=dashboard_id, mode=mode, timestamp=timestamp
         )
         output_path = self.output_dir / filename
 
@@ -80,26 +87,28 @@ class PhotoBoothGenerator:
             settings.update(custom_config)
 
         # Create Node.js script for Puppeteer
-        puppeteer_script = self._create_puppeteer_script(url, str(output_path), settings)
-        
+        puppeteer_script = self._create_puppeteer_script(
+            url, str(output_path), settings
+        )
+
         try:
             # Execute Puppeteer script
             self._execute_puppeteer_script(puppeteer_script)
-            
+
             if output_path.exists():
                 self.logger.info(f"Screenshot saved to: {output_path}")
                 return output_path
             else:
-                raise RuntimeError(f"Screenshot generation failed: {output_path} not created")
-                
+                raise RuntimeError(
+                    f"Screenshot generation failed: {output_path} not created"
+                )
+
         except Exception as e:
             self.logger.error(f"Failed to generate screenshot: {e}")
             raise
 
     def generate_all_dashboards(
-        self, 
-        dashboards: Optional[List[str]] = None,
-        modes: Optional[List[str]] = None
+        self, dashboards: Optional[List[str]] = None, modes: Optional[List[str]] = None
     ) -> List[Path]:
         """
         Generate screenshots for multiple dashboards.
@@ -118,7 +127,9 @@ class PhotoBoothGenerator:
 
         # Determine dashboards to generate
         if dashboards is None:
-            active_dashboards = [d["id"] for d in photo_booth_config["active_dashboards"] if d["enabled"]]
+            active_dashboards = [
+                d["id"] for d in photo_booth_config["active_dashboards"] if d["enabled"]
+            ]
         else:
             active_dashboards = dashboards
 
@@ -127,27 +138,31 @@ class PhotoBoothGenerator:
             modes = photo_booth_config.get("output", {}).get("modes", ["light", "dark"])
 
         generated_files = []
-        
+
         for dashboard_id in active_dashboards:
             for mode in modes:
                 try:
                     output_path = self.generate_screenshot(dashboard_id, mode)
                     generated_files.append(output_path)
                 except Exception as e:
-                    self.logger.error(f"Failed to generate {mode} screenshot for {dashboard_id}: {e}")
+                    self.logger.error(
+                        f"Failed to generate {mode} screenshot for {dashboard_id}: {e}"
+                    )
                     continue
 
         self.logger.info(f"Generated {len(generated_files)} screenshots")
         return generated_files
 
-    def _create_puppeteer_script(self, url: str, output_path: str, settings: Dict[str, Any]) -> str:
+    def _create_puppeteer_script(
+        self, url: str, output_path: str, settings: Dict[str, Any]
+    ) -> str:
         """Create Node.js Puppeteer script for screenshot generation."""
         viewport = settings.get("viewport", {"width": 1920, "height": 1080})
         device_scale_factor = settings.get("device_scale_factor", 2)
         timeout = settings.get("timeout", 30000)
         wait_for_selector = settings.get("wait_for_selector", ".photo-booth-ready")
-        
-        script = f'''
+
+        script = f"""
 const puppeteer = require('puppeteer');
 
 (async () => {{
@@ -155,28 +170,60 @@ const puppeteer = require('puppeteer');
     headless: true,
     args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage']
   }});
-  
+
   try {{
     const page = await browser.newPage();
-    
+
     // Set viewport and device scale factor
     await page.setViewport({{
       width: {viewport["width"]},
       height: {viewport["height"]},
       deviceScaleFactor: {device_scale_factor}
     }});
-    
+
     // Navigate to the page
     console.log('Navigating to:', '{url}');
     await page.goto('{url}', {{ waitUntil: 'networkidle0', timeout: {timeout} }});
-    
+
     // Wait for dashboard to be ready
     console.log('Waiting for dashboard to be ready...');
     await page.waitForSelector('{wait_for_selector}', {{ timeout: {timeout} }});
-    
+
     // Additional wait for charts to render
     await new Promise(resolve => setTimeout(resolve, 3000));
-    
+
+    // Hide UI elements for clean screenshot
+    console.log('Hiding UI elements for clean screenshot...');
+    await page.evaluate(() => {{
+      // Hide photo booth controls
+      const controls = document.querySelectorAll('.photo-booth-controls');
+      controls.forEach(element => {{
+        element.style.display = 'none';
+        element.style.visibility = 'hidden';
+      }});
+
+      // Hide Astro dev toolbar
+      const devToolbarSelectors = [
+        'astro-dev-toolbar',
+        '#dev-toolbar-root',
+        '[data-astro-dev-toolbar]',
+        '.astro-dev-toolbar',
+        '#astro-dev-toolbar'
+      ];
+
+      let hiddenDevElements = 0;
+      devToolbarSelectors.forEach(selector => {{
+        const elements = document.querySelectorAll(selector);
+        elements.forEach(element => {{
+          element.style.display = 'none';
+          element.style.visibility = 'hidden';
+          hiddenDevElements++;
+        }});
+      }});
+
+      console.log(`Hidden ${{controls.length}} control elements and ${{hiddenDevElements}} dev toolbar elements`);
+    }});
+
     // Take screenshot
     console.log('Taking screenshot...');
     await page.screenshot({{
@@ -185,9 +232,9 @@ const puppeteer = require('puppeteer');
       type: '{settings.get("format", "png")}',
       quality: {settings.get("quality", 95) if settings.get("format") == "jpeg" else "undefined"}
     }});
-    
+
     console.log('Screenshot saved to:', '{output_path}');
-    
+
   }} catch (error) {{
     console.error('Screenshot generation failed:', error);
     process.exit(1);
@@ -195,33 +242,36 @@ const puppeteer = require('puppeteer');
     await browser.close();
   }}
 }})();
-'''
+"""
         return script
 
     def _execute_puppeteer_script(self, script: str) -> None:
         """Execute the Puppeteer script using Node.js."""
-        # Write script to temporary file with .cjs extension for CommonJS compatibility
-        script_path = self.output_dir / f"puppeteer_script_{datetime.now().strftime('%Y%m%d_%H%M%S')}.cjs"
-        
+        # Write script to temporary file in frontend directory for proper module resolution
+        frontend_dir = project_root / "frontend"
+        script_path = (
+            frontend_dir
+            / f"puppeteer_script_{datetime.now().strftime('%Y%m%d_%H%M%S')}.cjs"
+        )
+
         try:
-            with open(script_path, 'w') as f:
+            with open(script_path, "w") as f:
                 f.write(script)
-            
+
             # Execute with Node.js from frontend directory
-            frontend_dir = project_root / "frontend"
             result = subprocess.run(
                 ["node", str(script_path)],
                 cwd=str(frontend_dir),
                 capture_output=True,
                 text=True,
-                timeout=120  # 2 minute timeout
+                timeout=120,  # 2 minute timeout
             )
-            
+
             if result.returncode != 0:
                 raise RuntimeError(f"Puppeteer script failed: {result.stderr}")
-            
+
             self.logger.debug(f"Puppeteer output: {result.stdout}")
-            
+
         finally:
             # Clean up temporary script
             if script_path.exists():
@@ -230,25 +280,27 @@ const puppeteer = require('puppeteer');
     def cleanup_old_screenshots(self) -> None:
         """Clean up old screenshots based on configuration."""
         cleanup_config = self.config.get("output", {}).get("auto_cleanup", {})
-        
+
         if not cleanup_config.get("enabled", False):
             return
-            
+
         keep_latest = cleanup_config.get("keep_latest", 5)
         older_than_days = cleanup_config.get("older_than_days", 30)
-        
+
         # Implementation for cleanup logic
         # This is a placeholder - would implement file age checking and deletion
-        self.logger.info(f"Cleanup: keeping latest {keep_latest}, removing files older than {older_than_days} days")
+        self.logger.info(
+            f"Cleanup: keeping latest {keep_latest}, removing files older than {older_than_days} days"
+        )
 
 
 def load_config() -> Dict[str, Any]:
     """Load configuration from photo-booth config file."""
     config_path = project_root / "frontend/src/config/photo-booth.json"
-    
+
     if not config_path.exists():
         raise FileNotFoundError(f"Photo booth config not found: {config_path}")
-    
+
     with open(config_path) as f:
         return json.load(f)
 
@@ -257,34 +309,32 @@ def main():
     """Main execution function."""
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
-        "--dashboard",
-        help="Dashboard ID to generate (default: all active dashboards)"
+        "--dashboard", help="Dashboard ID to generate (default: all active dashboards)"
     )
     parser.add_argument(
         "--mode",
         choices=["light", "dark", "both"],
         default="both",
-        help="Theme mode to generate"
+        help="Theme mode to generate",
     )
     parser.add_argument(
         "--base-url",
         default="http://localhost:4321",
-        help="Base URL for the Astro development server"
+        help="Base URL for the Astro development server",
     )
     parser.add_argument(
-        "--output-dir",
-        help="Output directory override (default from config)"
+        "--output-dir", help="Output directory override (default from config)"
     )
     parser.add_argument(
         "--cleanup",
         action="store_true",
-        help="Clean up old screenshots after generation"
+        help="Clean up old screenshots after generation",
     )
     parser.add_argument(
         "--log-level",
         choices=["DEBUG", "INFO", "WARNING", "ERROR"],
         default="INFO",
-        help="Logging level"
+        help="Logging level",
     )
 
     args = parser.parse_args()
@@ -292,23 +342,23 @@ def main():
     try:
         # Setup logging
         setup_logging(level=args.log_level)
-        
+
         # Load configuration
         config = load_config()
-        
+
         # Override base URL if provided
         config["base_url"] = args.base_url
-        
+
         # Override output directory if provided
         if args.output_dir:
             config["output"]["directory"] = args.output_dir
 
         # Create generator
         generator = PhotoBoothGenerator(config)
-        
+
         # Determine modes to generate
         modes = ["light", "dark"] if args.mode == "both" else [args.mode]
-        
+
         # Generate screenshots
         if args.dashboard:
             generated_files = []
@@ -317,11 +367,11 @@ def main():
                 generated_files.append(output_path)
         else:
             generated_files = generator.generate_all_dashboards(modes=modes)
-        
+
         # Cleanup if requested
         if args.cleanup:
             generator.cleanup_old_screenshots()
-        
+
         # Print results
         print(f"✅ Generated {len(generated_files)} screenshot(s):")
         for path in generated_files:

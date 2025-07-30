@@ -109,7 +109,14 @@ function getFeatureFlags(): FeatureFlags {
         envToBoolean(
           import.meta.env.PUBLIC_FEATURE_CHARTS_PAGE,
           "PUBLIC_FEATURE_CHARTS_PAGE",
-        ) ?? (isDevelopment() || isStaging()), // Enable in both development and staging branches
+        ) ??
+        (isDevelopment() || isStaging()), // Enable in both development and staging branches
+      photoBooth:
+        envToBoolean(
+          import.meta.env.PUBLIC_FEATURE_PHOTO_BOOTH,
+          "PUBLIC_FEATURE_PHOTO_BOOTH",
+        ) ??
+        (isDevelopment() || isStaging()), // Enable only in dev and staging
     };
   } catch (error) {
     if (error instanceof FeatureFlagValidationError) {
@@ -139,6 +146,7 @@ function validateFeatureFlags(flags: FeatureFlags): void {
     "elementsPage",
     "authorsPage",
     "chartsPage",
+    "photoBooth",
   ];
 
   for (const flag of requiredFlags) {
