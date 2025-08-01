@@ -45,7 +45,8 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
         ? liveSignalsData
         : chartType === "trade-pnl-waterfall"
           ? tradeHistoryData
-          : chartType === "open-positions-pnl-timeseries"
+          : chartType === "open-positions-pnl-timeseries" ||
+              chartType === "open-positions-pnl-timeseries-weekly"
             ? openPositionsPnLData
             : portfolioData;
 
@@ -184,6 +185,79 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
       low: Math.min(...equities),
       close: equities[equities.length - 1],
     };
+  };
+
+  // Convert daily PnL data to weekly for open positions
+  const convertOpenPositionsPnLToWeekly = (
+    rows: OpenPositionPnLDataRow[],
+  ): OpenPositionPnLDataRow[] => {
+    if (!rows || rows.length === 0) {
+      return [];
+    }
+
+    const weeklyData: OpenPositionPnLDataRow[] = [];
+    const tickerWeeklyMap: {
+      [ticker: string]: { [weekKey: string]: OpenPositionPnLDataRow[] };
+    } = {};
+
+    // Group data by ticker and week
+    for (const row of rows) {
+      const date = new Date(row.Date);
+      const ticker = row.Ticker;
+
+      // Skip invalid data
+      if (isNaN(date.getTime())) {
+        continue;
+      }
+
+      // Start of week is Monday (getDay() returns 0 for Sunday, 1 for Monday, etc.)
+      const monday = new Date(date);
+      monday.setDate(date.getDate() - ((date.getDay() + 6) % 7));
+      monday.setHours(0, 0, 0, 0);
+
+      // Create week key (YYYY-MM-DD format for Monday)
+      const weekKey = monday.toISOString().split("T")[0];
+
+      if (!tickerWeeklyMap[ticker]) {
+        tickerWeeklyMap[ticker] = {};
+      }
+
+      if (!tickerWeeklyMap[ticker][weekKey]) {
+        tickerWeeklyMap[ticker][weekKey] = [];
+      }
+
+      tickerWeeklyMap[ticker][weekKey].push(row);
+    }
+
+    // Process each ticker's weekly data
+    Object.entries(tickerWeeklyMap).forEach(([_ticker, weeklyMap]) => {
+      Object.entries(weeklyMap).forEach(([weekKey, weekData]) => {
+        if (weekData.length > 0) {
+          // Sort by date to get the last entry of the week
+          const sortedWeekData = weekData.sort(
+            (a, b) => new Date(a.Date).getTime() - new Date(b.Date).getTime(),
+          );
+
+          const lastEntry = sortedWeekData[sortedWeekData.length - 1];
+
+          // Get the Friday of this week (or last available day)
+          const monday = new Date(weekKey);
+          const friday = new Date(monday);
+          friday.setDate(monday.getDate() + 4);
+
+          // Create weekly data point using the last PnL value of the week
+          weeklyData.push({
+            ...lastEntry,
+            Date: friday.toISOString().split("T")[0], // Use Friday as the week ending date
+          });
+        }
+      });
+    });
+
+    // Sort by date
+    return weeklyData.sort(
+      (a, b) => new Date(a.Date).getTime() - new Date(b.Date).getTime(),
+    );
   };
 
   // Chart data generation
@@ -482,10 +556,92 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
         return chartData;
       }
 
+      case "open-positions-pnl-timeseries-weekly": {
+        const openPositionsPnLRows = data as OpenPositionPnLDataRow[];
+        if (!openPositionsPnLRows || openPositionsPnLRows.length === 0) {
+          return [];
+        }
+
+        // Convert to weekly data
+        const weeklyPnLData =
+          convertOpenPositionsPnLToWeekly(openPositionsPnLRows);
+        if (weeklyPnLData.length === 0) {
+          return [];
+        }
+
+        // Group weekly data by ticker to create separate time series for each position
+        const positionMap: { [ticker: string]: OpenPositionPnLDataRow[] } = {};
+        weeklyPnLData.forEach((row) => {
+          if (!positionMap[row.Ticker]) {
+            positionMap[row.Ticker] = [];
+          }
+          positionMap[row.Ticker].push(row);
+        });
+
+        // Create a line for each position using different colors
+        const chartColors = [
+          colors.multiStrategy, // #00BCD4 - Cyan
+          colors.buyHold, // #9575CD - Purple
+          colors.tertiary, // #4285F4 - Blue
+          colors.drawdown, // #FF7043 - Orange
+          colors.neutral, // #90A4AE - Gray
+          "#FF6B6B", // Red
+          "#4ECDC4", // Teal
+          "#45B7D1", // Sky Blue
+          "#96CEB4", // Mint Green
+        ];
+
+        const chartData: Data[] = [];
+        let colorIndex = 0;
+
+        Object.entries(positionMap).forEach(([ticker, rows]) => {
+          // Sort rows by date
+          const sortedRows = rows.sort(
+            (a, b) => new Date(a.Date).getTime() - new Date(b.Date).getTime(),
+          );
+
+          const dates = sortedRows.map((row) => row.Date);
+          const pnlValues = sortedRows.map((row) => parseFloat(row.PnL));
+
+          chartData.push({
+            type: "scatter",
+            mode: "lines+markers",
+            x: dates,
+            y: pnlValues,
+            name: ticker,
+            line: {
+              color: chartColors[colorIndex % chartColors.length],
+              width: 2,
+            },
+            marker: {
+              size: 6, // Slightly larger markers for weekly data
+              color: chartColors[colorIndex % chartColors.length],
+            },
+            hovertemplate:
+              "<b>%{fullData.name}</b><br>" +
+              "Week Ending: %{x}<br>" +
+              "PnL: $%{y:.2f}<br>" +
+              "<extra></extra>",
+          });
+
+          colorIndex++;
+        });
+
+        return chartData;
+      }
+
       default:
         return [];
     }
-  }, [chartType, data, isDarkMode, loading, error, convertToWeeklyOHLC]);
+  }, [
+    chartType,
+    data,
+    isDarkMode,
+    loading,
+    error,
+    convertToWeeklyOHLC,
+    convertOpenPositionsPnLToWeekly,
+  ]);
 
   // Chart layout
   const layout: Partial<Layout> = useMemo(() => {
@@ -515,6 +671,8 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
           return "Trade PnL Waterfall Chart";
         case "open-positions-pnl-timeseries":
           return "Open Positions Cumulative PnL Time Series";
+        case "open-positions-pnl-timeseries-weekly":
+          return "Open Positions Cumulative PnL Time Series (Weekly)";
         default:
           return "Chart";
       }
@@ -539,6 +697,8 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
         case "trade-pnl-waterfall":
           return "PnL ($)";
         case "open-positions-pnl-timeseries":
+          return "Cumulative PnL ($)";
+        case "open-positions-pnl-timeseries-weekly":
           return "Cumulative PnL ($)";
         default:
           return "Value";

@@ -131,6 +131,12 @@ export function usePortfolioData(chartType: ChartType): DataServiceResponse<{
             break;
           }
 
+          case "open-positions-pnl-timeseries-weekly": {
+            // Weekly open positions PnL charts are handled by useOpenPositionsPnLData hook
+            setData({});
+            break;
+          }
+
           default:
             setData({});
         }
@@ -160,7 +166,8 @@ export function usePortfolioData(chartType: ChartType): DataServiceResponse<{
       chartType !== "apple-stock" &&
       !chartType.startsWith("live-signals-") &&
       chartType !== "trade-pnl-waterfall" &&
-      chartType !== "open-positions-pnl-timeseries"
+      chartType !== "open-positions-pnl-timeseries" &&
+      chartType !== "open-positions-pnl-timeseries-weekly"
     ) {
       fetchDataForChartType(abortController.signal);
     } else {

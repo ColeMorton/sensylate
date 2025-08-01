@@ -426,6 +426,281 @@ class ChartDataService {
     );
   }
 
+  // Data validation methods
+  private validateCSVData(data: any[], dataType: string): {
+    isValid: boolean;
+    issues: string[];
+    recordCount: number;
+  } {
+    const issues = [];
+    
+    if (!Array.isArray(data)) {
+      issues.push(`${dataType} data is not an array`);
+      return { isValid: false, issues, recordCount: 0 };
+    }
+    
+    if (data.length === 0) {
+      issues.push(`${dataType} data is empty`);
+      return { isValid: false, issues, recordCount: 0 };
+    }
+    
+    // Validate data structure based on type
+    if (dataType === "live_signals") {
+      const requiredFields = ["timestamp", "equity", "drawdown", "mfe", "mae"];
+      const sampleRecord = data[0];
+      
+      for (const field of requiredFields) {
+        if (!(field in sampleRecord)) {
+          issues.push(`Missing required field: ${field}`);
+        }
+      }
+      
+      // Check for reasonable data ranges
+      const equityValues = data.map(d => parseFloat(d.equity)).filter(v => !isNaN(v));
+      if (equityValues.length === 0) {
+        issues.push("No valid equity values found");
+      }
+    }
+    
+    if (dataType === "portfolio") {
+      const requiredFields = ["Date"];
+      const sampleRecord = data[0];
+      
+      for (const field of requiredFields) {
+        if (!(field in sampleRecord)) {
+          issues.push(`Missing required field: ${field}`);
+        }
+      }
+    }
+    
+    if (dataType === "trade_history") {
+      const requiredFields = ["Ticker", "PnL", "Status"];
+      const sampleRecord = data[0];
+      
+      for (const field of requiredFields) {
+        if (!(field in sampleRecord)) {
+          issues.push(`Missing required field: ${field}`);
+        }
+      }
+    }
+    
+    return {
+      isValid: issues.length === 0,
+      issues,
+      recordCount: data.length
+    };
+  }
+
+  private async checkDataFreshness(endpoint: string): Promise<{
+    isFresh: boolean;
+    ageHours: number;
+    lastModified?: string;
+  }> {
+    try {
+      const response = await fetch(endpoint, { method: 'HEAD' });
+      
+      if (!response.ok) {
+        return { isFresh: false, ageHours: Infinity };
+      }
+      
+      const lastModified = response.headers.get('last-modified');
+      if (lastModified) {
+        const modifiedDate = new Date(lastModified);
+        const ageMs = Date.now() - modifiedDate.getTime();
+        const ageHours = ageMs / (1000 * 60 * 60);
+        
+        return {
+          isFresh: ageHours <= 24, // Consider fresh if less than 24 hours old
+          ageHours,
+          lastModified
+        };
+      }
+      
+      return { isFresh: true, ageHours: 0 }; // Assume fresh if no timestamp
+    } catch {
+      return { isFresh: false, ageHours: Infinity };
+    }
+  }
+
+  // Enhanced data fetching with validation
+  async fetchLiveSignalsDataWithValidation(): Promise<{
+    data: LiveSignalsDataRow[];
+    validation: {
+      isValid: boolean;
+      issues: string[];
+      recordCount: number;
+    };
+    freshness: {
+      isFresh: boolean;
+      ageHours: number;
+      lastModified?: string;
+    };
+  }> {
+    try {
+      // Check data freshness first
+      const freshness = await this.checkDataFreshness(
+        "/data/portfolio/live-signals/live_signals_equity.csv"
+      );
+      
+      // Fetch the data
+      const data = await this.fetchLiveSignalsData();
+      
+      // Validate the data
+      const validation = this.validateCSVData(data, "live_signals");
+      
+      return { data, validation, freshness };
+    } catch (error) {
+      throw new Error(
+        error instanceof Error
+          ? error.message
+          : "Failed to fetch and validate live signals data"
+      );
+    }
+  }
+
+  async fetchTradeHistoryDataWithValidation(): Promise<{
+    data: TradeHistoryDataRow[];
+    validation: {
+      isValid: boolean;
+      issues: string[];
+      recordCount: number;
+    };
+    freshness: {
+      isFresh: boolean;
+      ageHours: number;
+      lastModified?: string;
+    };
+  }> {
+    try {
+      // Check data freshness first
+      const freshness = await this.checkDataFreshness(
+        "/data/trade-history/live_signals.csv"
+      );
+      
+      // Fetch the data
+      const data = await this.fetchTradeHistoryData();
+      
+      // Validate the data
+      const validation = this.validateCSVData(data, "trade_history");
+      
+      return { data, validation, freshness };
+    } catch (error) {
+      throw new Error(
+        error instanceof Error
+          ? error.message
+          : "Failed to fetch and validate trade history data"
+      );
+    }
+  }
+
+  async getDataQualityReport(): Promise<{
+    overall: "healthy" | "warning" | "error";
+    categories: {
+      [key: string]: {
+        status: "healthy" | "warning" | "error";
+        recordCount: number;
+        issues: string[];
+        freshness: {
+          isFresh: boolean;
+          ageHours: number;
+        };
+      };
+    };
+    generatedAt: string;
+  }> {
+    const categories: any = {};
+    let overallStatus: "healthy" | "warning" | "error" = "healthy";
+    
+    // Check live signals data
+    try {
+      const liveSignalsResult = await this.fetchLiveSignalsDataWithValidation();
+      categories.live_signals = {
+        status: liveSignalsResult.validation.isValid ? 
+          (liveSignalsResult.freshness.isFresh ? "healthy" : "warning") : "error",
+        recordCount: liveSignalsResult.validation.recordCount,
+        issues: liveSignalsResult.validation.issues,
+        freshness: {
+          isFresh: liveSignalsResult.freshness.isFresh,
+          ageHours: liveSignalsResult.freshness.ageHours
+        }
+      };
+      
+      if (categories.live_signals.status === "error") {
+        overallStatus = "error";
+      } else if (categories.live_signals.status === "warning" && overallStatus === "healthy") {
+        overallStatus = "warning";
+      }
+    } catch (error) {
+      categories.live_signals = {
+        status: "error",
+        recordCount: 0,
+        issues: [`Failed to fetch: ${error}`],
+        freshness: { isFresh: false, ageHours: Infinity }
+      };
+      overallStatus = "error";
+    }
+    
+    // Check trade history data
+    try {
+      const tradeHistoryResult = await this.fetchTradeHistoryDataWithValidation();
+      categories.trade_history = {
+        status: tradeHistoryResult.validation.isValid ? 
+          (tradeHistoryResult.freshness.isFresh ? "healthy" : "warning") : "error",
+        recordCount: tradeHistoryResult.validation.recordCount,
+        issues: tradeHistoryResult.validation.issues,
+        freshness: {
+          isFresh: tradeHistoryResult.freshness.isFresh,
+          ageHours: tradeHistoryResult.freshness.ageHours
+        }
+      };
+      
+      if (categories.trade_history.status === "error") {
+        overallStatus = "error";
+      } else if (categories.trade_history.status === "warning" && overallStatus === "healthy") {
+        overallStatus = "warning";
+      }
+    } catch (error) {
+      categories.trade_history = {
+        status: "error",
+        recordCount: 0,
+        issues: [`Failed to fetch: ${error}`],
+        freshness: { isFresh: false, ageHours: Infinity }
+      };
+      overallStatus = "error";
+    }
+    
+    // Check portfolio data
+    try {
+      const portfolioData = await this.fetchPortfolioData();
+      const hasAllData = this.isPortfolioCacheComplete();
+      
+      categories.portfolio = {
+        status: hasAllData ? "healthy" : "warning",
+        recordCount: portfolioData.multiStrategyValue?.length || 0,
+        issues: hasAllData ? [] : ["Some portfolio data files missing"],
+        freshness: { isFresh: true, ageHours: 0 } // Portfolio data freshness check would need file-specific logic
+      };
+      
+      if (categories.portfolio.status === "warning" && overallStatus === "healthy") {
+        overallStatus = "warning";
+      }
+    } catch (error) {
+      categories.portfolio = {
+        status: "error",
+        recordCount: 0,
+        issues: [`Failed to fetch: ${error}`],
+        freshness: { isFresh: false, ageHours: Infinity }
+      };
+      overallStatus = "error";
+    }
+    
+    return {
+      overall: overallStatus,
+      categories,
+      generatedAt: new Date().toISOString()
+    };
+  }
+
   // Clear cache (useful for development or forced refresh)
   clearCache(): void {
     this.cache = {};
@@ -434,16 +709,18 @@ class ChartDataService {
     this.openPositionsPnLCache = {};
   }
 
-  // Get cache status
+  // Enhanced cache status with data quality info
   getCacheStatus(): {
     isValid: boolean;
     lastFetched?: number;
     hasData: boolean;
+    dataQuality?: "unknown" | "healthy" | "warning" | "error";
   } {
     return {
       isValid: this.isCacheValid(),
       lastFetched: this.cache.lastFetched,
       hasData: this.isPortfolioCacheComplete(),
+      dataQuality: "unknown" // Would be set by validation methods
     };
   }
 }
