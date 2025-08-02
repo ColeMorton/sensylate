@@ -35,20 +35,24 @@ DISABLE_MISE = "true"
     """
 
 # Environment Variables by Deploy Context
+# NOTE: Netlify overrides .env.* files - all feature flags must be defined here for deployments
 # Production context (main branch)
 [context.production.environment]
   PUBLIC_ENV = "production"
   PUBLIC_FEATURE_CHARTS_PAGE = "false"
   PUBLIC_FEATURE_PHOTO_BOOTH = "false"
+  PUBLIC_FEATURE_ELEMENTS_PAGE = "false"
 
 # Branch deploy context (staging and other branches)
 [context.branch-deploy.environment]
   PUBLIC_ENV = "staging"
   PUBLIC_FEATURE_CHARTS_PAGE = "true"
   PUBLIC_FEATURE_PHOTO_BOOTH = "true"
+  PUBLIC_FEATURE_ELEMENTS_PAGE = "true"
 
 # Deploy preview context (pull requests)
 [context.deploy-preview.environment]
   PUBLIC_ENV = "staging"
   PUBLIC_FEATURE_CHARTS_PAGE = "true"
   PUBLIC_FEATURE_PHOTO_BOOTH = "true"
+  PUBLIC_FEATURE_ELEMENTS_PAGE = "true"
