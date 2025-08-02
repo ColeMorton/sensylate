@@ -36,9 +36,6 @@ DISABLE_MISE = "true"
 
 # Environment Variables by Deploy Context
 # Production context (main branch)
-
-# Environment Variables by Deploy Context
-# Production context (main branch)
 [context.production.environment]
   PUBLIC_ENV = "production"
   PUBLIC_FEATURE_SEARCH = "true"
