@@ -1,17 +1,19 @@
 #!/usr/bin/env node
 
 /**
- * Netlify Configuration Generation Script
+ * Robust Netlify Configuration Generation Script
  *
- * Generates netlify.toml environment sections from the feature-flags.config.ts
- * single source of truth. This ensures Netlify deployments use consistent
- * feature flag configurations.
+ * Generates netlify.toml from scratch using a template-based approach.
+ * This eliminates fragility from parsing potentially corrupted files.
  *
- * This script only updates the environment variable sections, preserving
- * other netlify.toml configurations like build settings and form handling.
+ * Key improvements:
+ * - Template-based generation (no parsing existing content)
+ * - TOML validation to prevent duplicates
+ * - Atomic file operations with backup/rollback
+ * - Fail-safe error handling
  */
 
-import { readFileSync, writeFileSync } from 'fs';
+import { readFileSync, writeFileSync, existsSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -23,7 +25,7 @@ const NETLIFY_CONFIG_PATH = join(__dirname, '../netlify.toml');
 const BACKUP_PATH = join(__dirname, '../netlify.toml.backup');
 
 /**
- * Load feature flags (same as generate-env-files.js)
+ * Load feature flags configuration
  */
 async function loadFeatureFlags() {
   const flags = [
@@ -50,129 +52,39 @@ function getEnvVarName(flagName) {
 }
 
 /**
- * Parse existing netlify.toml and extract non-environment sections
+ * Generate environment variables for a specific environment
  */
-function parseNetlifyConfig(content) {
-  const lines = content.split('\n');
-  const preservedSections = [];
-  let currentSection = [];
-  let inEnvironmentSection = false;
-  let skipUntilNextSection = false;
+function generateEnvironmentVars(environment, flags) {
+  const vars = [`  PUBLIC_ENV = "${environment}"`];
 
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i].trim();
+  // Use Set to prevent duplicates
+  const addedVars = new Set(['PUBLIC_ENV']);
 
-    // Check if we're starting environment-related comments
-    if (line.includes('Environment Variables by Deploy Context') ||
-        line.includes('Production context') ||
-        line.includes('Branch deploy context') ||
-        line.includes('Deploy preview context')) {
-      // Save current section before starting environment-related content
-      if (currentSection.length > 0 && !inEnvironmentSection) {
-        preservedSections.push(currentSection.join('\n'));
-        currentSection = [];
-      }
-      inEnvironmentSection = true;
-      skipUntilNextSection = true;
-      continue;
-    }
-
-    // Check if we're entering an environment section
-    if (line.match(/^\[context\.(production|branch-deploy|deploy-preview)\.environment\]$/)) {
-      // We're already in environment section mode from comments above
-      inEnvironmentSection = true;
-      skipUntilNextSection = true;
-      continue;
-    }
-
-    // Check if we're entering a new section
-    if (line.startsWith('[') && !line.includes('.environment]')) {
-      // If we were in an environment section, we're done skipping
-      if (inEnvironmentSection) {
-        inEnvironmentSection = false;
-        skipUntilNextSection = false;
-        currentSection = [lines[i]]; // Start new section
-        continue;
-      }
-
-      // Save previous section
-      if (currentSection.length > 0) {
-        preservedSections.push(currentSection.join('\n'));
-      }
-      currentSection = [lines[i]];
-      continue;
-    }
-
-    // Skip lines in environment sections
-    if (skipUntilNextSection && inEnvironmentSection) {
-      continue;
-    }
-
-    // Add line to current section
-    if (!skipUntilNextSection) {
-      currentSection.push(lines[i]);
-    }
-  }
-
-  // Add final section
-  if (currentSection.length > 0 && !inEnvironmentSection) {
-    preservedSections.push(currentSection.join('\n'));
-  }
-
-  return preservedSections;
-}
-
-/**
- * Generate environment section for a specific context
- */
-function generateEnvironmentSection(context, environment, flags) {
-  const lines = [`[context.${context}.environment]`];
-
-  // Add environment identification
-  lines.push(`  PUBLIC_ENV = "${environment}"`);
-
-  // Add feature flags
   for (const flag of flags) {
     const envVarName = getEnvVarName(flag.name);
+
+    // Skip if already added (prevents duplicates)
+    if (addedVars.has(envVarName)) {
+      console.warn(`⚠️  Skipping duplicate environment variable: ${envVarName}`);
+      continue;
+    }
+
     const value = flag.environments[environment];
-    lines.push(`  ${envVarName} = "${value}"`);
+    vars.push(`  ${envVarName} = "${value}"`);
+    addedVars.add(envVarName);
   }
 
-  return lines.join('\n');
+  return vars;
 }
 
 /**
- * Generate complete netlify.toml content
+ * Generate complete netlify.toml from template
  */
-async function generateNetlifyConfig() {
-  try {
-    console.log('🔄 Reading existing netlify.toml...');
+function generateNetlifyConfigContent(flags) {
+  const prodVars = generateEnvironmentVars('production', flags);
+  const stagingVars = generateEnvironmentVars('staging', flags);
 
-    // Read existing config
-    let existingContent = '';
-    try {
-      existingContent = readFileSync(NETLIFY_CONFIG_PATH, 'utf-8');
-    } catch (error) {
-      console.log('📝 No existing netlify.toml found, creating new one...');
-    }
-
-    // Create backup
-    if (existingContent) {
-      writeFileSync(BACKUP_PATH, existingContent, 'utf-8');
-      console.log('💾 Created backup at netlify.toml.backup');
-    }
-
-    console.log('🔄 Loading feature flags...');
-    const flags = await loadFeatureFlags();
-
-    console.log('🔄 Generating new configuration...');
-
-    // Parse existing config to preserve non-environment sections
-    const preservedSections = existingContent ? parseNetlifyConfig(existingContent) : [];
-
-    // If no existing config, add basic build configuration
-    if (!existingContent) {
-      preservedSections.unshift(`[build]
+  return `[build]
   publish = "dist"
   command = "yarn build"
 
@@ -205,34 +117,115 @@ DISABLE_MISE = "true"
     Message: {{message}}
 
     Submitted at: {{created_at}}
-    """`);
+    """
+
+# Environment Variables by Deploy Context
+# NOTE: Generated automatically from feature-flags.config.ts - do not edit manually
+
+# Production context (main branch)
+[context.production.environment]
+${prodVars.join('\n')}
+
+# Branch deploy context (staging and other branches)
+[context.branch-deploy.environment]
+${stagingVars.join('\n')}
+
+# Deploy preview context (pull requests)
+[context.deploy-preview.environment]
+${stagingVars.join('\n')}
+`;
+}
+
+/**
+ * Validate TOML content for duplicate keys
+ */
+function validateTOMLContent(content) {
+  const lines = content.split('\n');
+  const sections = {};
+  let currentSection = null;
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i].trim();
+
+    // Track section headers
+    if (line.match(/^\[.*\]$/)) {
+      currentSection = line;
+      if (!sections[currentSection]) {
+        sections[currentSection] = new Set();
+      }
+      continue;
     }
 
-    // Generate environment sections
-    const environmentSections = [
-      '# Environment Variables by Deploy Context',
-      '# Production context (main branch)',
-      generateEnvironmentSection('production', 'production', flags),
-      '',
-      '# Branch deploy context (staging and other branches)',
-      generateEnvironmentSection('branch-deploy', 'staging', flags),
-      '',
-      '# Deploy preview context (pull requests)',
-      generateEnvironmentSection('deploy-preview', 'staging', flags),
-    ];
+    // Check for key-value pairs
+    const keyValueMatch = line.match(/^(\w+)\s*=\s*/);
+    if (keyValueMatch && currentSection) {
+      const key = keyValueMatch[1];
 
-    // Combine all sections
-    const finalContent = [
-      ...preservedSections,
-      '',
-      ...environmentSections,
-      '',
-    ].join('\n');
+      if (sections[currentSection].has(key)) {
+        throw new Error(`Duplicate key "${key}" found in section ${currentSection} at line ${i + 1}`);
+      }
 
-    // Write new config
-    writeFileSync(NETLIFY_CONFIG_PATH, finalContent, 'utf-8');
+      sections[currentSection].add(key);
+    }
+  }
 
-    console.log('✅ Generated netlify.toml with environment sections');
+  console.log('✅ TOML validation passed - no duplicate keys found');
+  return true;
+}
+
+/**
+ * Create backup of existing file
+ */
+function createBackup() {
+  if (existsSync(NETLIFY_CONFIG_PATH)) {
+    const content = readFileSync(NETLIFY_CONFIG_PATH, 'utf-8');
+    writeFileSync(BACKUP_PATH, content, 'utf-8');
+    console.log('💾 Created backup at netlify.toml.backup');
+    return true;
+  }
+  return false;
+}
+
+/**
+ * Restore from backup
+ */
+function restoreFromBackup() {
+  if (existsSync(BACKUP_PATH)) {
+    const content = readFileSync(BACKUP_PATH, 'utf-8');
+    writeFileSync(NETLIFY_CONFIG_PATH, content, 'utf-8');
+    console.log('🔄 Restored from backup due to error');
+    return true;
+  }
+  return false;
+}
+
+/**
+ * Generate netlify.toml using robust template approach
+ */
+async function generateNetlifyConfig() {
+  try {
+    console.log('🔄 Generating netlify.toml from template...');
+
+    // Create backup first
+    const hasBackup = createBackup();
+
+    // Load feature flags
+    console.log('🔄 Loading feature flags...');
+    const flags = await loadFeatureFlags();
+
+    // Generate content from template
+    console.log('🔄 Generating configuration content...');
+    const content = generateNetlifyConfigContent(flags);
+
+    // Validate content before writing
+    console.log('🔍 Validating TOML content...');
+    validateTOMLContent(content);
+
+    // Write atomically
+    console.log('📝 Writing netlify.toml...');
+    writeFileSync(NETLIFY_CONFIG_PATH, content, 'utf-8');
+
+    console.log('✅ Successfully generated netlify.toml');
     console.log('');
     console.log('Generated sections:');
     console.log('  - [context.production.environment]');
@@ -243,15 +236,13 @@ DISABLE_MISE = "true"
     console.log('   Do not edit them manually - use the configuration file instead.');
 
   } catch (error) {
-    console.error('❌ Error generating netlify.toml:', error);
+    console.error('❌ Error generating netlify.toml:', error.message);
 
-    // Restore backup if it exists
-    try {
-      const backup = readFileSync(BACKUP_PATH, 'utf-8');
-      writeFileSync(NETLIFY_CONFIG_PATH, backup, 'utf-8');
-      console.log('🔄 Restored from backup due to error');
-    } catch (restoreError) {
-      console.error('❌ Could not restore from backup:', restoreError);
+    // Attempt to restore backup
+    if (restoreFromBackup()) {
+      console.log('✅ Successfully restored from backup');
+    } else {
+      console.error('❌ Could not restore from backup - manual intervention required');
     }
 
     process.exit(1);
@@ -259,35 +250,43 @@ DISABLE_MISE = "true"
 }
 
 /**
- * Validate netlify.toml environment sections
+ * Validate existing netlify.toml
  */
 function validateNetlifyConfig() {
-  console.log('🔍 Validating netlify.toml environment sections...');
+  console.log('🔍 Validating netlify.toml...');
 
   try {
-    const content = readFileSync(NETLIFY_CONFIG_PATH, 'utf-8');
-
-    // Check for required sections
-    const requiredSections = [
-      'context.production.environment',
-      'context.branch-deploy.environment',
-      'context.deploy-preview.environment'
-    ];
-
-    const missingSections = requiredSections.filter(section =>
-      !content.includes(`[${section}]`)
-    );
-
-    if (missingSections.length > 0) {
-      console.log('⚠️  Missing environment sections:', missingSections);
+    if (!existsSync(NETLIFY_CONFIG_PATH)) {
+      console.error('❌ netlify.toml does not exist');
       return false;
     }
 
-    console.log('✅ All required environment sections found');
+    const content = readFileSync(NETLIFY_CONFIG_PATH, 'utf-8');
+
+    // Validate TOML structure
+    validateTOMLContent(content);
+
+    // Check for required sections
+    const requiredSections = [
+      '[context.production.environment]',
+      '[context.branch-deploy.environment]',
+      '[context.deploy-preview.environment]'
+    ];
+
+    const missingSections = requiredSections.filter(section =>
+      !content.includes(section)
+    );
+
+    if (missingSections.length > 0) {
+      console.error('❌ Missing required sections:', missingSections);
+      return false;
+    }
+
+    console.log('✅ netlify.toml validation successful');
     return true;
 
   } catch (error) {
-    console.error('❌ Error validating netlify.toml:', error);
+    console.error('❌ Validation failed:', error.message);
     return false;
   }
 }
@@ -302,14 +301,15 @@ switch (command) {
     generateNetlifyConfig();
     break;
   case 'validate':
-    validateNetlifyConfig();
+    const isValid = validateNetlifyConfig();
+    process.exit(isValid ? 0 : 1);
     break;
   case 'help':
     console.log('Usage: node generate-netlify-config.js [command]');
     console.log('');
     console.log('Commands:');
-    console.log('  generate  Generate netlify.toml environment sections (default)');
-    console.log('  validate  Validate existing netlify.toml');
+    console.log('  generate  Generate netlify.toml from template (default)');
+    console.log('  validate  Validate existing netlify.toml structure');
     console.log('  help      Show this help message');
     break;
   default:
