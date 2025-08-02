@@ -6,7 +6,6 @@
 DISABLE_PYTHON = "true"
 DISABLE_MISE = "true"
 
-
 [functions]
   directory = "netlify/functions"
 
@@ -35,10 +34,8 @@ DISABLE_MISE = "true"
     """
 
 # Environment Variables by Deploy Context
-# NOTE: Netlify overrides .env.* files - all feature flags must be defined here for deployments
-# Production context (main branch)
+# NOTE: Generated automatically from feature-flags.config.ts - do not edit manually
 
-# Environment Variables by Deploy Context
 # Production context (main branch)
 [context.production.environment]
   PUBLIC_ENV = "production"
@@ -52,7 +49,6 @@ DISABLE_MISE = "true"
   PUBLIC_FEATURE_AUTHORS_PAGE = "false"
   PUBLIC_FEATURE_CHARTS_PAGE = "false"
   PUBLIC_FEATURE_PHOTO_BOOTH = "false"
-  PUBLIC_FEATURE_ELEMENTS_PAGE = "false"
 
 # Branch deploy context (staging and other branches)
 [context.branch-deploy.environment]
@@ -67,7 +63,6 @@ DISABLE_MISE = "true"
   PUBLIC_FEATURE_AUTHORS_PAGE = "true"
   PUBLIC_FEATURE_CHARTS_PAGE = "true"
   PUBLIC_FEATURE_PHOTO_BOOTH = "true"
-  PUBLIC_FEATURE_ELEMENTS_PAGE = "true"
 
 # Deploy preview context (pull requests)
 [context.deploy-preview.environment]
@@ -82,4 +77,3 @@ DISABLE_MISE = "true"
   PUBLIC_FEATURE_AUTHORS_PAGE = "true"
   PUBLIC_FEATURE_CHARTS_PAGE = "true"
   PUBLIC_FEATURE_PHOTO_BOOTH = "true"
-  PUBLIC_FEATURE_ELEMENTS_PAGE = "true"
