@@ -276,9 +276,9 @@ class SECEDGARCLl(BaseFinancialCLI):
                     for filing_type in filing_types.split(","):
                         filing_type = filing_type.strip()
                         try:
-                            analysis["filings"][
-                                filing_type
-                            ] = service.get_company_filings(ticker, filing_type)
+                            analysis["filings"][filing_type] = (
+                                service.get_company_filings(ticker, filing_type)
+                            )
                         except Exception as e:
                             analysis["filings"][filing_type] = {"error": str(e)}
 

@@ -58,9 +58,9 @@ class ErrorHandler:
                 source_path=path_obj,
                 operation=operation,
                 context={
-                    "permissions": oct(path_obj.stat().st_mode)
-                    if path_obj.exists()
-                    else "unknown"
+                    "permissions": (
+                        oct(path_obj.stat().st_mode) if path_obj.exists() else "unknown"
+                    )
                 },
             )
         elif isinstance(error, IsADirectoryError):

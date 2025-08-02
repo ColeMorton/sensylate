@@ -409,7 +409,7 @@
             "revenue_impact": "15-25%"
           },
           {
-            "catalyst": "digital_payment_acceleration", 
+            "catalyst": "digital_payment_acceleration",
             "probability": 0.90,
             "impact": 3,
             "timeline": "1-3 years",
@@ -428,7 +428,7 @@
             "catalyst": "grid_modernization_investments",
             "probability": 0.85,
             "impact": 3,
-            "timeline": "24 months", 
+            "timeline": "24 months",
             "revenue_impact": "Infrastructure rate recovery"
           }
         ]

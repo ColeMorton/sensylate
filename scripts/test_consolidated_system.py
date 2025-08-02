@@ -76,7 +76,9 @@ def test_consolidated_storage():
     csv_exists = expected_csv.exists()
     meta_exists = expected_meta.exists()
 
-    print(f"   CSV file: {'✅ EXISTS' if csv_exists else '❌ MISSING'} ({expected_csv})")
+    print(
+        f"   CSV file: {'✅ EXISTS' if csv_exists else '❌ MISSING'} ({expected_csv})"
+    )
     print(
         f"   Metadata file: {'✅ EXISTS' if meta_exists else '❌ MISSING'} ({expected_meta})"
     )

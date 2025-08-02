@@ -33,7 +33,7 @@
     },
     "company_b_profile": {
       "ticker": "MSFT",
-      "company_name": "Microsoft Corporation", 
+      "company_name": "Microsoft Corporation",
       "sector": "Technology",
       "industry": "Software - Infrastructure",
       "business_model": "Integrated technology platform spanning productivity software, cloud infrastructure, and AI services with subscription-based model",
@@ -46,7 +46,7 @@
       ],
       "competitive_advantages": [
         "Integrated ecosystem across productivity and cloud",
-        "Network effects with 400M+ Office 365 users", 
+        "Network effects with 400M+ Office 365 users",
         "High switching costs from enterprise integration",
         "Brand trust as enterprise partner for 40+ years"
       ],
@@ -115,7 +115,7 @@
     "regulatory_environment_comparison": {
       "nvda_regulatory_risks": [
         "China export controls (current and expanding)",
-        "Antitrust scrutiny due to market dominance", 
+        "Antitrust scrutiny due to market dominance",
         "AI regulation and governance frameworks"
       ],
       "msft_regulatory_risks": [
@@ -184,7 +184,7 @@
     },
     "efficiency_comparison": {
       "return_metrics": {
-        "nvda": "58% ROIC - exceptional capital efficiency", 
+        "nvda": "58% ROIC - exceptional capital efficiency",
         "msft": "28.5% ROIC - strong value creation"
       },
       "asset_utilization": {
@@ -628,7 +628,7 @@
         "relationship_description": "Primary NVDA fundamental analysis source"
       },
       {
-        "file_path": "/data/outputs/fundamental_analysis/analysis/MSFT_20250714_analysis.json", 
+        "file_path": "/data/outputs/fundamental_analysis/analysis/MSFT_20250714_analysis.json",
         "file_type": "analysis",
         "relevance_score": 1.0,
         "relationship_description": "Primary MSFT fundamental analysis source"
@@ -641,7 +641,7 @@
       },
       {
         "file_path": "/data/outputs/fundamental_analysis/discovery/MSFT_20250714_discovery.json",
-        "file_type": "discovery", 
+        "file_type": "discovery",
         "relevance_score": 0.95,
         "relationship_description": "MSFT discovery phase data for cross-validation"
       },
@@ -665,7 +665,7 @@
       },
       {
         "file_path": "/data/outputs/industry_analysis/analysis/SOFTWARE_INFRASTRUCTURE_20250729_analysis.json",
-        "file_type": "analysis", 
+        "file_type": "analysis",
         "relevance_score": 0.85,
         "relationship_description": "Software infrastructure industry context for MSFT positioning"
       },
@@ -691,7 +691,7 @@
     },
     "data_integration_opportunities": [
       "Cross-validation of financial metrics using discovery phase data",
-      "Industry positioning assessment using sector and industry analyses", 
+      "Industry positioning assessment using sector and industry analyses",
       "Quality score propagation from validation files to comparative confidence",
       "Economic context integration across both fundamental analyses",
       "Competitive landscape mapping using peer analysis from both sources"
@@ -718,7 +718,7 @@
     "risk_factors": [
       "NVDA: High competitive pressure from AMD, Intel, and custom chip development",
       "MSFT: AWS cloud dominance and Google AI competition",
-      "NVDA: Geopolitical risks from China export restrictions", 
+      "NVDA: Geopolitical risks from China export restrictions",
       "MSFT: Antitrust enforcement risk with historical precedent",
       "NVDA: Technology disruption risk from quantum computing long-term",
       "MSFT: Market saturation in some segments offset by AI opportunities"

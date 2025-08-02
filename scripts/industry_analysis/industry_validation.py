@@ -138,7 +138,9 @@ class IndustryValidation:
                 "sec_edgar": create_sec_edgar_service(env),
                 "imf": create_imf_service(env),
             }
-            print(f"✅ Initialized {len(self.cli_services)} CLI services for validation")
+            print(
+                f"✅ Initialized {len(self.cli_services)} CLI services for validation"
+            )
             self._check_cli_service_health()
         except Exception as e:
             print(f"⚠️  Failed to initialize CLI services: {e}")
@@ -171,16 +173,20 @@ class IndustryValidation:
         completeness = {
             "discovery_phase": {
                 "present": self.discovery_data is not None,
-                "confidence": self.discovery_data.get("discovery_confidence", 0.0)
-                if self.discovery_data
-                else 0.0,
+                "confidence": (
+                    self.discovery_data.get("discovery_confidence", 0.0)
+                    if self.discovery_data
+                    else 0.0
+                ),
                 "quality_score": self._assess_discovery_quality(),
             },
             "analysis_phase": {
                 "present": self.analysis_data is not None,
-                "confidence": self.analysis_data.get("analysis_confidence", 0.0)
-                if self.analysis_data
-                else 0.0,
+                "confidence": (
+                    self.analysis_data.get("analysis_confidence", 0.0)
+                    if self.analysis_data
+                    else 0.0
+                ),
                 "quality_score": self._assess_analysis_quality(),
             },
             "synthesis_phase": {

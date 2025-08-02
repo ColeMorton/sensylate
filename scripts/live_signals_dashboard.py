@@ -310,9 +310,11 @@ class LiveSignalsDashboard:
             tickers = [pos["ticker"] for pos in positions]
             returns = [pos["current_return"] for pos in positions]
             colors = [
-                self.theme["colors"]["success"]
-                if r > 0
-                else self.theme["colors"]["danger"]
+                (
+                    self.theme["colors"]["success"]
+                    if r > 0
+                    else self.theme["colors"]["danger"]
+                )
                 for r in returns
             ]
 

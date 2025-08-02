@@ -128,17 +128,17 @@ class ContentEvaluationEngine:
         )
 
         # Generate recommendations
-        evaluation_result[
-            "actionable_recommendations"
-        ] = self._generate_recommendations(
-            evaluation_result["evaluation_breakdown"],
-            evaluation_result["overall_assessment"],
+        evaluation_result["actionable_recommendations"] = (
+            self._generate_recommendations(
+                evaluation_result["evaluation_breakdown"],
+                evaluation_result["overall_assessment"],
+            )
         )
 
         # Institutional certification
-        evaluation_result[
-            "institutional_certification"
-        ] = self._institutional_certification(evaluation_result["overall_assessment"])
+        evaluation_result["institutional_certification"] = (
+            self._institutional_certification(evaluation_result["overall_assessment"])
+        )
 
         return evaluation_result
 
@@ -188,17 +188,17 @@ class ContentEvaluationEngine:
 
         # Financial data accuracy evaluation
         if "financial_data" in validation_focus:
-            evaluation_results[
-                "financial_data_accuracy"
-            ] = self._evaluate_financial_data_accuracy(
-                content_data, real_time_validation
+            evaluation_results["financial_data_accuracy"] = (
+                self._evaluate_financial_data_accuracy(
+                    content_data, real_time_validation
+                )
             )
 
         # Market analysis quality evaluation
         if "market_analysis" in validation_focus:
-            evaluation_results[
-                "market_analysis_quality"
-            ] = self._evaluate_market_analysis_quality(content_data)
+            evaluation_results["market_analysis_quality"] = (
+                self._evaluate_market_analysis_quality(content_data)
+            )
 
         # Methodology rigor evaluation
         evaluation_results["methodology_rigor"] = self._evaluate_methodology_rigor(
@@ -221,9 +221,9 @@ class ContentEvaluationEngine:
         )
 
         # Structural compliance evaluation
-        evaluation_results[
-            "structural_compliance"
-        ] = self._evaluate_structural_compliance(content_data)
+        evaluation_results["structural_compliance"] = (
+            self._evaluate_structural_compliance(content_data)
+        )
 
         return evaluation_results
 
@@ -236,21 +236,21 @@ class ContentEvaluationEngine:
 
         # Core evaluations for standard depth
         if "financial_data" in validation_focus:
-            evaluation_results[
-                "financial_data_accuracy"
-            ] = self._evaluate_financial_data_accuracy(content_data, False)
+            evaluation_results["financial_data_accuracy"] = (
+                self._evaluate_financial_data_accuracy(content_data, False)
+            )
 
         if "market_analysis" in validation_focus:
-            evaluation_results[
-                "market_analysis_quality"
-            ] = self._evaluate_market_analysis_quality(content_data)
+            evaluation_results["market_analysis_quality"] = (
+                self._evaluate_market_analysis_quality(content_data)
+            )
 
         evaluation_results["methodology_rigor"] = self._evaluate_methodology_rigor(
             content_data
         )
-        evaluation_results[
-            "structural_compliance"
-        ] = self._evaluate_structural_compliance(content_data)
+        evaluation_results["structural_compliance"] = (
+            self._evaluate_structural_compliance(content_data)
+        )
 
         return evaluation_results
 
@@ -260,9 +260,9 @@ class ContentEvaluationEngine:
         evaluation_results = {}
 
         # Basic structural and compliance checks
-        evaluation_results[
-            "structural_compliance"
-        ] = self._evaluate_structural_compliance(content_data)
+        evaluation_results["structural_compliance"] = (
+            self._evaluate_structural_compliance(content_data)
+        )
         evaluation_results["basic_quality"] = self._evaluate_basic_quality(content_data)
 
         return evaluation_results
@@ -850,9 +850,9 @@ class ContentEvaluationEngine:
             "issues": issues,
             "evidence": evidence,
             "grammar_check": grammar_issues,
-            "readability_check": f"{avg_sentence_length:.1f} words/sentence"
-            if sentences > 0
-            else "N/A",
+            "readability_check": (
+                f"{avg_sentence_length:.1f} words/sentence" if sentences > 0 else "N/A"
+            ),
         }
 
     def _calculate_overall_assessment(
@@ -951,28 +951,37 @@ class ContentEvaluationEngine:
                     if evaluation_breakdown[cat].get("score", 0) >= 8.0
                 ]
             ),
-            "average_score": sum(
-                results.get("score", 0) for results in evaluation_breakdown.values()
-            )
-            / len(evaluation_breakdown)
-            if evaluation_breakdown
-            else 0,
+            "average_score": (
+                sum(
+                    results.get("score", 0) for results in evaluation_breakdown.values()
+                )
+                / len(evaluation_breakdown)
+                if evaluation_breakdown
+                else 0
+            ),
         }
 
         # Qualitative assessment
         evidence_summary["qualitative_assessment"] = {
-            "content_depth": "Comprehensive"
-            if content_data["word_count"] > 2000
-            else "Adequate"
-            if content_data["word_count"] > 1500
-            else "Limited",
-            "analysis_rigor": "High"
-            if evaluation_breakdown.get("methodology_rigor", {}).get("score", 0) >= 8.5
-            else "Moderate",
-            "data_integration": "Strong"
-            if evaluation_breakdown.get("financial_data_accuracy", {}).get("score", 0)
-            >= 9.0
-            else "Adequate",
+            "content_depth": (
+                "Comprehensive"
+                if content_data["word_count"] > 2000
+                else "Adequate" if content_data["word_count"] > 1500 else "Limited"
+            ),
+            "analysis_rigor": (
+                "High"
+                if evaluation_breakdown.get("methodology_rigor", {}).get("score", 0)
+                >= 8.5
+                else "Moderate"
+            ),
+            "data_integration": (
+                "Strong"
+                if evaluation_breakdown.get("financial_data_accuracy", {}).get(
+                    "score", 0
+                )
+                >= 9.0
+                else "Adequate"
+            ),
         }
 
         return evidence_summary

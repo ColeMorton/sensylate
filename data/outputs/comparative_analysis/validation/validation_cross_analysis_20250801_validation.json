@@ -237,7 +237,7 @@
       },
       {
         "issue": "MA fundamental analysis date synchronization",
-        "impact": "medium", 
+        "impact": "medium",
         "effort": "medium",
         "timeline": "1-2 days",
         "rationale": "Eliminates date consistency concerns for institutional use"
@@ -245,7 +245,7 @@
       {
         "issue": "Financial Health section format standardization",
         "impact": "low",
-        "effort": "low", 
+        "effort": "low",
         "timeline": "immediate",
         "rationale": "Maintains professional presentation consistency"
       }

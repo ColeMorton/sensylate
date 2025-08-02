@@ -204,7 +204,7 @@
         "score": "9.6/10.0",
         "documented_services": [
           "yahoo_finance",
-          "alpha_vantage", 
+          "alpha_vantage",
           "fmp",
           "fred_economic",
           "sec_edgar",

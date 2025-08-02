@@ -261,7 +261,9 @@ def test_blog_templates():
                 "validation",
             ]
             source_mentions = sum(1 for source in data_sources if source in content)
-            print(f"   📊 Multi-Source Validation: {source_mentions} sources referenced")
+            print(
+                f"   📊 Multi-Source Validation: {source_mentions} sources referenced"
+            )
         else:
             print(f"   ❌ Status: {result['status']}")
             print(f"   Error: {result['error']}")
@@ -322,7 +324,9 @@ def test_validation_templates():
         if result["status"] == "SUCCESS":
             print(f"   ✅ Status: {result['status']}")
             print(f"   💬 Word Count: {result['word_count']}")
-            print(f"   📊 Has Quality Metrics: {'quality' in result['content'].lower()}")
+            print(
+                f"   📊 Has Quality Metrics: {'quality' in result['content'].lower()}"
+            )
             print(f"   📋 Has Validation Tables: {'|' in result['content']}")
             print(
                 f"   🎯 Has Status Indicators: {'✅' in result['content'] or '❌' in result['content']}"
@@ -547,7 +551,9 @@ def generate_test_summary(twitter_results, blog_results, validation_results):
             overall_institutional = (
                 avg_confidence + avg_economic + avg_risk + avg_sources
             ) / 4
-            print(f"   📊 Overall Institutional Score: {overall_institutional*100:.1f}%")
+            print(
+                f"   📊 Overall Institutional Score: {overall_institutional*100:.1f}%"
+            )
             print(
                 f"   🏆 Certification Status: {'✅ ACHIEVED' if overall_institutional >= 0.9 else '⚠️ PARTIAL' if overall_institutional >= 0.7 else '❌ NOT ACHIEVED'}"
             )

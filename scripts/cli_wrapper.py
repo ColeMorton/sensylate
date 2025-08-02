@@ -155,9 +155,11 @@ class CLIServiceWrapper:
                     "cli_script_path": str(self.cli_script_path),
                     "available": is_available,
                     "exists": self.cli_script_path.exists(),
-                    "is_file": self.cli_script_path.is_file()
-                    if self.cli_script_path.exists()
-                    else False,
+                    "is_file": (
+                        self.cli_script_path.is_file()
+                        if self.cli_script_path.exists()
+                        else False
+                    ),
                 },
             )
 
@@ -486,9 +488,7 @@ class CLIServiceWrapper:
             "execution_mode": (
                 "global"
                 if self.global_available
-                else "local"
-                if self.local_available
-                else "unavailable"
+                else "local" if self.local_available else "unavailable"
             ),
         }
 

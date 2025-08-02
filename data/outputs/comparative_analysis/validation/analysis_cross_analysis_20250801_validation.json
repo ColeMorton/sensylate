@@ -16,7 +16,7 @@
       "structural_compliance": "9.6/10.0"
     },
     {
-      "filename": "NVDA_vs_MSFT_20250801_analysis.json", 
+      "filename": "NVDA_vs_MSFT_20250801_analysis.json",
       "ticker_pair": "NVDA_vs_MSFT",
       "modification_timestamp": "2025-08-01T12:00:00.000000Z",
       "file_size_bytes": 24136,
@@ -25,7 +25,7 @@
   ],
   "cross_analysis_results": {
     "structural_consistency_score": "9.6/10.0",
-    "hardcoded_values_score": "9.2/10.0", 
+    "hardcoded_values_score": "9.2/10.0",
     "ticker_specificity_score": "9.7/10.0",
     "cli_integration_score": "9.8/10.0",
     "overall_cross_analysis_score": "9.6/10.0"
@@ -43,7 +43,7 @@
         "issue_type": "format_variation",
         "files_affected": ["NVDA_vs_MSFT_20250801_analysis.json"],
         "description": "Market cap format inconsistent - '$4.02T' vs numeric format 513119256576 in MA_vs_XEL",
-        "severity": "medium", 
+        "severity": "medium",
         "recommendation": "Adopt consistent numeric format for market cap values with unit specification"
       }
     ],
@@ -59,7 +59,7 @@
         "value": "A+ grade patterns",
         "files_affected": ["MA_vs_XEL_20250801_analysis.json", "NVDA_vs_MSFT_20250801_analysis.json"],
         "occurrences": 8,
-        "suspected_template_artifact": "false", 
+        "suspected_template_artifact": "false",
         "recommendation": "Grade standardization appears appropriate for comparative framework"
       }
     ],
@@ -82,7 +82,7 @@
   "detailed_structural_analysis": {
     "common_structure_elements": [
       "metadata",
-      "comparative_discovery_data_inheritance", 
+      "comparative_discovery_data_inheritance",
       "comparative_market_data",
       "comparative_company_overview",
       "economic_context",
@@ -90,7 +90,7 @@
       "peer_group_analysis",
       "financial_health_analysis",
       "competitive_position_assessment",
-      "growth_analysis", 
+      "growth_analysis",
       "risk_assessment",
       "valuation_model_inputs",
       "analytical_insights",
@@ -99,14 +99,14 @@
     "structure_completeness": "100% - All required sections present in both files",
     "metadata_consistency": {
       "command_name": "consistent - comparative_analyst_analyze",
-      "framework_phase": "consistent - analyze", 
+      "framework_phase": "consistent - analyze",
       "analysis_methodology": "consistent - cross_stock_comparative_evaluation_framework",
       "confidence_thresholds": "consistent - 0.9 target",
       "economic_context_integration": "consistent - true"
     },
     "data_format_consistency": {
       "confidence_scores": "consistent - decimal format 0.0-1.0",
-      "risk_probabilities": "consistent - decimal format 0.0-1.0", 
+      "risk_probabilities": "consistent - decimal format 0.0-1.0",
       "grade_formats": "consistent - letter grades A+, A, A-, B+, etc.",
       "price_formats": "inconsistent - mixed string/numeric formats",
       "market_cap_formats": "inconsistent - mixed string/numeric formats"
@@ -222,7 +222,7 @@
   },
   "confidence_assessment": {
     "structural_validation_confidence": "0.96",
-    "content_quality_confidence": "0.95", 
+    "content_quality_confidence": "0.95",
     "cli_integration_confidence": "0.98",
     "overall_validation_confidence": "0.96"
   }

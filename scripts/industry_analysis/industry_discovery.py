@@ -126,7 +126,9 @@ class IndustryDiscovery:
         healthy_count = sum(
             1 for s in self.cli_service_health.values() if s["status"] == "healthy"
         )
-        print(f"📊 CLI Service Health: {healthy_count}/{len(self.cli_services)} healthy")
+        print(
+            f"📊 CLI Service Health: {healthy_count}/{len(self.cli_services)} healthy"
+        )
 
     def discover_industry_scope(self) -> Dict[str, Any]:
         """Define industry scope and boundaries"""

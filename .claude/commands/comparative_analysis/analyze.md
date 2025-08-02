@@ -302,7 +302,7 @@ COMPARATIVE ECONOMIC CONTEXT INTEGRATION:
 - Risk appetite correlation comparative analysis across both stocks
 - Sector-specific monetary policy differential impact assessment
 
-COMPARATIVE AGGREGATE RISK SCORES: 
+COMPARATIVE AGGREGATE RISK SCORES:
 - Stock 1 Risk Score: Fundamental analysis-weighted probability × economic impact
 - Stock 2 Risk Score: Fundamental analysis-weighted probability × economic impact
 - Risk Differential Assessment: Comparative risk profile analysis with winner/loser determination
@@ -371,7 +371,7 @@ COMPARATIVE AGGREGATE RISK SCORES:
     },
     "stock_2": {
       "name": "company_name",
-      "sector": "sector_classification", 
+      "sector": "sector_classification",
       "industry": "industry_classification",
       "description": "business_description",
       "ceo": "chief_executive_officer",

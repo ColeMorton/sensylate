@@ -171,12 +171,12 @@ class BitcoinDiscoveryGenerator:
                         [f for f in discovered_files if f["relevance_score"] >= 0.9]
                     ),
                     "total_relevant_files": len(discovered_files),
-                    "average_relevance_score": sum(
-                        f["relevance_score"] for f in discovered_files
-                    )
-                    / len(discovered_files)
-                    if discovered_files
-                    else 0.8,
+                    "average_relevance_score": (
+                        sum(f["relevance_score"] for f in discovered_files)
+                        / len(discovered_files)
+                        if discovered_files
+                        else 0.8
+                    ),
                     "assessment_methodology": "pattern_matching_with_semantic_analysis_for_alternative_assets_and_store_of_value_correlation",
                 },
             }

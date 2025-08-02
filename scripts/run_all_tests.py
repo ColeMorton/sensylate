@@ -227,7 +227,9 @@ class TestRunner:
                 print(f"        ... and {len(analysis['symbols_found']) - 5} more")
 
         if analysis["timeframes_found"]:
-            print(f"   ⏰ Timeframes: {', '.join(sorted(analysis['timeframes_found']))}")
+            print(
+                f"   ⏰ Timeframes: {', '.join(sorted(analysis['timeframes_found']))}"
+            )
 
         if analysis.get("file_sizes", {}).get("grand_total", 0) > 0:
             sizes = analysis["file_sizes"]

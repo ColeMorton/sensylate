@@ -347,9 +347,9 @@ class TradingSessionManager:
         return {
             "current_time_et": dt.strftime("%Y-%m-%d %H:%M:%S %Z"),
             "is_trading_day": is_trading_day,
-            "is_market_holiday": self.is_market_holiday(dt.date())
-            if is_trading_day
-            else None,
+            "is_market_holiday": (
+                self.is_market_holiday(dt.date()) if is_trading_day else None
+            ),
             "is_market_open": is_open,
             "market_open_time": f"{self.market_open.strftime('%H:%M')} ET",
             "market_close_time": f"{self.market_close.strftime('%H:%M')} ET",

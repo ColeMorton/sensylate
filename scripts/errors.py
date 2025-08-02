@@ -93,9 +93,9 @@ class TemplateError(TwitterSystemError):
             {
                 "template_name": self.template_name,
                 "template_variant": self.template_variant,
-                "data_context_keys": list(self.data_context.keys())
-                if self.data_context
-                else [],
+                "data_context_keys": (
+                    list(self.data_context.keys()) if self.data_context else []
+                ),
             }
         )
         return result
@@ -171,9 +171,9 @@ class ProcessingError(TwitterSystemError):
         result.update(
             {
                 "pipeline_stage": self.pipeline_stage,
-                "input_data_keys": list(self.input_data.keys())
-                if self.input_data
-                else [],
+                "input_data_keys": (
+                    list(self.input_data.keys()) if self.input_data else []
+                ),
             }
         )
         return result

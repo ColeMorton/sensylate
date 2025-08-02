@@ -47,17 +47,17 @@ Added **Phase 0: LOCAL-FIRST DATA INVENTORY** to trade_history_discover.md:
 local_data_inventory:
   purpose: "Prevent memory leaks by utilizing local data before external API calls"
   execution_priority: "MUST execute before any external data collection"
-  
+
   fundamental_analysis_inventory:
     search_directory: "/data/outputs/fundamental_analysis/"
     file_pattern: "{TICKER}_{YYYYMMDD}.md"
     cache_check: "Check for existing analysis files before API calls"
-    
+
   sector_analysis_inventory:
     search_directory: "/data/outputs/sector_analysis/"
     file_pattern: "{SECTOR}_{YYYYMMDD}.md"
     available_sectors: [11 sectors available]
-    
+
   cache_inventory:
     cache_directories: ["/data/cache/", "/scripts/data/cache/"]
     cache_validation: "TTL validation and integrity checks"
@@ -75,7 +75,7 @@ memory_management:
     max_api_calls_per_minute: 20
     connection_pool_size: 5
     task_timeout: 30
-    
+
   fail_fast_triggers:
     - Memory usage > 1.5GB: Abort with error
     - API response time > 10s: Circuit breaker activation
@@ -113,7 +113,7 @@ execution_sequence:
     - Phase 1: Authoritative CSV Data Ingestion (streaming)
     - Phase 2: Cache-First Market Context Collection
     - Phase 3: Optimized Fundamental Integration (local files first)
-    
+
   resource_managed_external_calls:
     - Maximum 5 concurrent API calls (vs previous unlimited)
     - Connection pooling for all CLI services
