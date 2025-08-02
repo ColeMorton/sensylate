@@ -28,10 +28,19 @@
     "photo-booth:generate:light": "python3 ../scripts/photo_booth_generator.py --mode light",
     "photo-booth:generate:dark": "python3 ../scripts/photo_booth_generator.py --mode dark",
     "photo-booth:cleanup": "python3 ../scripts/photo_booth_generator.py --cleanup",
+    "flags:sync": "node scripts/sync-flags.js",
+    "flags:validate": "node scripts/sync-flags.js validate",
+    "flags:validate-quick": "node scripts/sync-flags.js validate-quick",
+    "flags:generate-env": "node scripts/sync-flags.js generate-env",
+    "flags:generate-netlify": "node scripts/sync-flags.js generate-netlify",
+    "flags:add": "node scripts/sync-flags.js add",
+    "flags:remove": "node scripts/sync-flags.js remove",
+    "flags:list": "node scripts/sync-flags.js list",
+    "flags:status": "node scripts/sync-flags.js status",
     "lint": "eslint src --fix",
     "lint:check": "eslint src",
     "check-git-tracking": "node scripts/check-git-tracking.js",
-    "pre-commit": "npm run lint:check && npm run check-git-tracking && npm run validate-env"
+    "pre-commit": "npm run lint:check && npm run check-git-tracking && npm run validate-env && npm run flags:validate-quick"
   },
   "dependencies": {
     "@astrojs/check": "0.9.4",
