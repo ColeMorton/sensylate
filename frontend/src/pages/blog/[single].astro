@@ -21,9 +21,14 @@ if (import.meta.env.DEV) {
   console.log(
     `🔍 [ROUTE DEBUG] [single].astro processing URL: ${Astro.url.pathname}`,
   );
-  
+
   // Check if this route is incorrectly handling pages that should go to [regular].astro
-  const shouldBeRegularRoute = ['charts', 'elements', 'about', 'contact'].includes(Astro.params.single || '');
+  const shouldBeRegularRoute = [
+    "charts",
+    "elements",
+    "about",
+    "contact",
+  ].includes(Astro.params.single || "");
   if (shouldBeRegularRoute) {
     console.error(
       `❌ [ROUTE ERROR] [single].astro incorrectly handling ${Astro.url.pathname}. This should be handled by [regular].astro`,
