@@ -16,10 +16,7 @@ from unittest.mock import patch
 import numpy as np
 import pandas as pd
 
-from data_contract_discovery import (
-    DataContract,
-    DataContractDiscovery,
-)
+from data_contract_discovery import DataContract, DataContractDiscovery
 from data_pipeline_manager import DataPipelineManager
 from result_types import ProcessingResult
 

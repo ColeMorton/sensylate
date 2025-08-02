@@ -52,3 +52,5 @@ node_modules/.vite/vitest/
 # puppeteer cache
 .puppeteer/
 puppeteer-cache/
+
+public/images/examples/

@@ -428,7 +428,7 @@ class ChartDataService {
 
   // Data validation methods
   private validateCSVData(
-    data: any[],
+    data: unknown[],
     dataType: string,
   ): {
     isValid: boolean;
@@ -613,7 +613,7 @@ class ChartDataService {
     };
     generatedAt: string;
   }> {
-    const categories: any = {};
+    const categories: Record<string, { status: string; ageHours: number; summary: { totalRows: number; validRows: number; errorRows: number; ageHours: number } }> = {};
     let overallStatus: "healthy" | "warning" | "error" = "healthy";
 
     // Check live signals data

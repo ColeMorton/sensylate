@@ -7,7 +7,7 @@ const Youtube = ({
 }: {
   id: string;
   title: string;
-  [key: string]: any;
+  [key: string]: unknown;
 }) => {
   useEffect(() => {
     import("@justinribeiro/lite-youtube");

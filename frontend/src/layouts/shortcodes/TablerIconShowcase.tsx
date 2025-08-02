@@ -147,10 +147,7 @@ const TablerIconShowcase: React.FC = () => {
     if (process.env.NODE_ENV === "development") {
       const undefinedIcons = popularIcons.filter((icon) => !icon.component);
       if (undefinedIcons.length > 0) {
-        console.warn(
-          "🚨 TablerIconShowcase: Found undefined icons:",
-          undefinedIcons.map((i) => i.name),
-        );
+        // TablerIconShowcase: Found undefined icons
       }
     }
   }, []);

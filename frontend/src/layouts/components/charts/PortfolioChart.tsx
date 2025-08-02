@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from "react";
+import React, { useMemo, useState, useEffect, useCallback } from "react";
 import type { Data, Layout } from "plotly.js";
 import type {
   ChartType,
@@ -106,7 +106,7 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
   };
 
   // Convert daily equity data to weekly OHLC for candlestick charts
-  const convertToWeeklyOHLC = (
+  const convertToWeeklyOHLC = useCallback((
     rows: LiveSignalsDataRow[],
   ): WeeklyOHLCDataRow[] => {
     if (!rows || rows.length === 0) {
@@ -156,7 +156,7 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
     }
 
     return weeklyData;
-  };
+  }, []);
 
   const processWeekData = (
     weekData: LiveSignalsDataRow[],
@@ -188,7 +188,7 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
   };
 
   // Convert daily PnL data to weekly for open positions
-  const convertOpenPositionsPnLToWeekly = (
+  const convertOpenPositionsPnLToWeekly = useCallback((
     rows: OpenPositionPnLDataRow[],
   ): OpenPositionPnLDataRow[] => {
     if (!rows || rows.length === 0) {
@@ -258,7 +258,7 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
     return weeklyData.sort(
       (a, b) => new Date(a.Date).getTime() - new Date(b.Date).getTime(),
     );
-  };
+  }, []);
 
   // Chart data generation
   const chartData: Data[] = useMemo(() => {

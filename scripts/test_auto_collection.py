@@ -112,9 +112,7 @@ def test_caching_behavior():
 
         # Second call should be much faster (cached)
         if second_call_time < first_call_time * 0.5:
-            print(
-                "   🎉 CACHING SUCCESS: Second call was significantly faster (cached)"
-            )
+            print("   🎉 CACHING SUCCESS: Second call was significantly faster (cached)")
         else:
             print("   ⚠️  Cache behavior unclear - both calls took similar time")
 
@@ -253,9 +251,7 @@ def show_final_summary():
         print(f"   📊 Weekly price files: {len(weekly_files)}")
 
         if daily_files or weekly_files:
-            print(
-                "\n🎉 SUCCESS: Auto-collection created comprehensive historical data!"
-            )
+            print("\n🎉 SUCCESS: Auto-collection created comprehensive historical data!")
             if daily_files:
                 print("   ✅ Daily data (365 days): CREATED")
             if weekly_files:

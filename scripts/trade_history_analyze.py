@@ -898,14 +898,14 @@ class TradeHistoryAnalysis:
             analysis_results = {}
 
             # Signal effectiveness analysis
-            analysis_results["signal_effectiveness"] = (
-                self.analyze_signal_effectiveness(self.closed_trades)
-            )
+            analysis_results[
+                "signal_effectiveness"
+            ] = self.analyze_signal_effectiveness(self.closed_trades)
 
             # Statistical performance measurement
-            analysis_results["statistical_analysis"] = (
-                self.perform_statistical_analysis(self.closed_trades)
-            )
+            analysis_results[
+                "statistical_analysis"
+            ] = self.perform_statistical_analysis(self.closed_trades)
 
             # Pattern recognition and quality classification
             analysis_results["pattern_recognition"] = self.analyze_patterns_and_quality(
@@ -913,9 +913,9 @@ class TradeHistoryAnalysis:
             )
 
             # Optimization opportunities
-            analysis_results["optimization_opportunities"] = (
-                self.generate_optimization_opportunities(analysis_results)
-            )
+            analysis_results[
+                "optimization_opportunities"
+            ] = self.generate_optimization_opportunities(analysis_results)
 
             # Risk assessment
             analysis_results["risk_assessment"] = self.assess_risk_and_portfolio(

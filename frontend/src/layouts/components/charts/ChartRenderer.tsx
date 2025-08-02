@@ -18,10 +18,10 @@ const ChartRenderer: React.FC<ChartRendererProps> = ({
   loading = false,
   error = null,
 }) => {
-  const plotRef = useRef<any>(null);
+  const plotRef = useRef<HTMLDivElement | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const handleInitialized = (figure: any, graphDiv: HTMLDivElement) => {
+  const handleInitialized = (figure: unknown, graphDiv: HTMLDivElement) => {
     plotRef.current = graphDiv;
   };
 

@@ -51,9 +51,9 @@ export interface CalculatorTheme {
 
 export interface UIComponentProps {
   field: CalculatorField;
-  value: any;
+  value: unknown;
   error?: string;
-  onChange: (value: any) => void;
+  onChange: (value: unknown) => void;
   theme: CalculatorTheme;
   disabled?: boolean;
 }
@@ -63,11 +63,11 @@ export interface CalculatorUIProps {
   schema: { inputs: CalculatorField[]; outputs: CalculatorField[] };
   config: CalculatorConfig;
   theme: CalculatorTheme;
-  inputs: Record<string, any>;
-  outputs: Record<string, any>;
+  inputs: Record<string, unknown>;
+  outputs: Record<string, unknown>;
   errors: Record<string, string>;
   isCalculating: boolean;
-  onInputChange: (name: string, value: any) => void;
+  onInputChange: (name: string, value: unknown) => void;
   onCalculate: () => void;
   onReset: () => void;
 }

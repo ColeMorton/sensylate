@@ -117,9 +117,9 @@ class ServiceDiscoveryManager:
                 # Find latest file
                 latest_file = max(fundamental_files, key=lambda f: f.stat().st_mtime)
                 availability["fundamental_analysis"]["latest_file"] = str(latest_file)
-                availability["fundamental_analysis"]["latest_date"] = (
-                    datetime.fromtimestamp(latest_file.stat().st_mtime).isoformat()
-                )
+                availability["fundamental_analysis"][
+                    "latest_date"
+                ] = datetime.fromtimestamp(latest_file.stat().st_mtime).isoformat()
 
         # Check sector analysis files
         if self.sector_analysis_dir.exists():

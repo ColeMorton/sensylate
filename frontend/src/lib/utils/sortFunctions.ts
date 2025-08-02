@@ -1,7 +1,7 @@
 // sort by date
-export const sortByDate = (array: any[]) => {
+export const sortByDate = (array: Array<{ data: { date?: string } }>) => {
   const sortedArray = array.sort(
-    (a: any, b: any) =>
+    (a, b) =>
       new Date(b.data.date && b.data.date).valueOf() -
       new Date(a.data.date && a.data.date).valueOf(),
   );
@@ -9,12 +9,12 @@ export const sortByDate = (array: any[]) => {
 };
 
 // sort product by weight
-export const sortByWeight = (array: any[]) => {
+export const sortByWeight = (array: Array<{ data: { weight?: number } }>) => {
   const withWeight = array.filter(
-    (item: { data: { weight: any } }) => item.data.weight,
+    (item) => item.data.weight,
   );
   const withoutWeight = array.filter(
-    (item: { data: { weight: any } }) => !item.data.weight,
+    (item) => !item.data.weight,
   );
   const sortedWeightedArray = withWeight.sort(
     (a: { data: { weight: number } }, b: { data: { weight: number } }) =>

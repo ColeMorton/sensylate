@@ -8,7 +8,7 @@ interface CalculatorWidgetProps {
   calculatorId: string;
   config?: CalculatorConfig;
   theme?: CalculatorTheme;
-  onResult?: (result: any) => void;
+  onResult?: (result: unknown) => void;
   onError?: (error: string) => void;
 }
 
@@ -20,11 +20,11 @@ export const CalculatorWidget: React.FC<CalculatorWidgetProps> = ({
   onError,
 }) => {
   const [calculator, setCalculator] = useState<BaseCalculator | null>(null);
-  const [inputs, setInputs] = useState<Record<string, any>>({});
-  const [outputs, setOutputs] = useState<Record<string, any>>({});
+  const [inputs, setInputs] = useState<Record<string, unknown>>({});
+  const [outputs, setOutputs] = useState<Record<string, unknown>>({});
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isCalculating, setIsCalculating] = useState(false);
-  const [lastResult, setLastResult] = useState<any>(null);
+  const [lastResult, setLastResult] = useState<unknown>(null);
 
   // Initialize calculator on client side
   useEffect(() => {
@@ -40,8 +40,8 @@ export const CalculatorWidget: React.FC<CalculatorWidgetProps> = ({
         try {
           const defaultInputs = calcInstance.getDefaultInputs();
           setInputs(defaultInputs || {});
-        } catch (error) {
-          console.error("Error getting default inputs:", error);
+        } catch {
+          // Error getting default inputs
           setInputs({});
         }
         // Clear any previous errors
@@ -49,13 +49,13 @@ export const CalculatorWidget: React.FC<CalculatorWidgetProps> = ({
       } else {
         setErrors({ general: `Calculator "${calculatorId}" not found` });
       }
-    } catch (error) {
-      console.error("Error initializing calculator:", error);
+    } catch {
+      // Error initializing calculator
       setErrors({ general: "Failed to initialize calculator" });
     }
   }, [calculatorId]);
 
-  const handleInputChange = (name: string, value: any) => {
+  const handleInputChange = (name: string, value: unknown) => {
     setInputs((prev) => ({ ...prev, [name]: value }));
 
     // Clear field error when user starts typing

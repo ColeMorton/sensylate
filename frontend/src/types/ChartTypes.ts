@@ -149,7 +149,7 @@ export interface ChartContainerProps {
 export interface ChartRendererProps {
   data: Data[];
   layout: Partial<Layout>;
-  config?: any;
+  config?: Partial<Plotly.Config>;
   loading?: boolean;
   error?: string | null;
 }

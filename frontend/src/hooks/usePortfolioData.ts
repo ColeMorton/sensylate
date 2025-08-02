@@ -30,7 +30,7 @@ export function useAppleStockData(): DataServiceResponse<StockDataRow[]> {
       } catch (err) {
         // Don't set error if request was aborted (component unmounting)
         if (err instanceof Error && err.name !== "AbortError") {
-          console.error("Apple stock data loading error:", err);
+          // Apple stock data loading error
           setError(
             err instanceof Error
               ? err.message
@@ -143,7 +143,7 @@ export function usePortfolioData(chartType: ChartType): DataServiceResponse<{
       } catch (err) {
         // Don't set error if request was aborted (component unmounting)
         if (err instanceof Error && err.name !== "AbortError") {
-          console.error("Portfolio data loading error:", err);
+          // Portfolio data loading error
           setError(
             err instanceof Error
               ? err.message

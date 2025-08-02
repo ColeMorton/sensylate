@@ -8,15 +8,14 @@ const Tabs = ({ children }: { children: React.ReactElement }) => {
   const tabRefs: React.RefObject<HTMLElement[]> = useRef([]);
   useEffect(() => {
     if (defaultFocus) {
-      //@ts-ignore
-      tabRefs.current[active]?.focus();
+      (tabRefs.current[active] as HTMLElement)?.focus();
     } else {
       setDefaultFocus(true);
     }
-  }, [active]);
+  }, [active, defaultFocus]);
 
   const tabLinks = Array.from(
-    (children.props as any).value.matchAll(
+    (children.props as { value: string }).value.matchAll(
       /<div\s+data-name="([^"]+)"[^>]*>((?:.|\n)*?)<\/div>/g,
     ),
     (match: RegExpMatchArray) => ({ name: match[1], children: match[0] }),
@@ -47,8 +46,7 @@ const Tabs = ({ children }: { children: React.ReactElement }) => {
               tabIndex={index === active ? 0 : -1}
               onKeyDown={(event) => handleKeyDown(event, index)}
               onClick={() => setActive(index)}
-              //@ts-ignore
-              ref={(ref) => (tabRefs.current[index] = ref)}
+              ref={(ref) => ((tabRefs.current as HTMLElement[])[index] = ref as HTMLElement)}
             >
               {item.name}
             </li>

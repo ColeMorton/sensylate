@@ -127,7 +127,7 @@ export class MortgageCalculator extends BaseCalculator {
     ],
   };
 
-  calculate(inputs: Record<string, any>): CalculatorResult {
+  calculate(inputs: Record<string, unknown>): CalculatorResult {
     const startTime = performance.now();
 
     const validationErrors = this.validateInputs(inputs);
