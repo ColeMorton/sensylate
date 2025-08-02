@@ -613,7 +613,19 @@ class ChartDataService {
     };
     generatedAt: string;
   }> {
-    const categories: Record<string, { status: string; ageHours: number; summary: { totalRows: number; validRows: number; errorRows: number; ageHours: number } }> = {};
+    const categories: Record<
+      string,
+      {
+        status: string;
+        ageHours: number;
+        summary: {
+          totalRows: number;
+          validRows: number;
+          errorRows: number;
+          ageHours: number;
+        };
+      }
+    > = {};
     let overallStatus: "healthy" | "warning" | "error" = "healthy";
 
     // Check live signals data

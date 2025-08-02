@@ -245,13 +245,13 @@ export class E2ETestHelper {
     if (process.env.E2E_SCREENSHOTS !== "false") {
       const fs = await import("fs");
       const path = await import("path");
-      
+
       // Ensure screenshots directory exists
       const screenshotDir = "./src/test/e2e/screenshots";
       if (!fs.existsSync(screenshotDir)) {
         fs.mkdirSync(screenshotDir, { recursive: true });
       }
-      
+
       const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
       const filename = path.join(screenshotDir, `${name}-${timestamp}.png`);
 

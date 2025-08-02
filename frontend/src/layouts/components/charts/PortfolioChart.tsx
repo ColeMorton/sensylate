@@ -106,57 +106,61 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
   };
 
   // Convert daily equity data to weekly OHLC for candlestick charts
-  const convertToWeeklyOHLC = useCallback((
-    rows: LiveSignalsDataRow[],
-  ): WeeklyOHLCDataRow[] => {
-    if (!rows || rows.length === 0) {
-      return [];
-    }
-
-    const weeklyData: WeeklyOHLCDataRow[] = [];
-    let currentWeek: LiveSignalsDataRow[] = [];
-    let currentWeekStart: Date | null = null;
-
-    for (const row of rows) {
-      const date = new Date(row.timestamp);
-      const equity = parseFloat(row.equity);
-
-      // Skip invalid data
-      if (isNaN(equity)) {
-        continue;
+  const convertToWeeklyOHLC = useCallback(
+    (rows: LiveSignalsDataRow[]): WeeklyOHLCDataRow[] => {
+      if (!rows || rows.length === 0) {
+        return [];
       }
 
-      // Start of week is Monday (getDay() returns 0 for Sunday, 1 for Monday, etc.)
-      const monday = new Date(date);
-      monday.setDate(date.getDate() - ((date.getDay() + 6) % 7));
-      monday.setHours(0, 0, 0, 0);
+      const weeklyData: WeeklyOHLCDataRow[] = [];
+      let currentWeek: LiveSignalsDataRow[] = [];
+      let currentWeekStart: Date | null = null;
 
-      // If this is a new week, process the previous week
-      if (currentWeekStart && monday.getTime() !== currentWeekStart.getTime()) {
-        if (currentWeek.length > 0) {
-          const weekOHLC = processWeekData(currentWeek, currentWeekStart);
-          if (weekOHLC) {
-            weeklyData.push(weekOHLC);
-          }
+      for (const row of rows) {
+        const date = new Date(row.timestamp);
+        const equity = parseFloat(row.equity);
+
+        // Skip invalid data
+        if (isNaN(equity)) {
+          continue;
         }
-        currentWeek = [];
+
+        // Start of week is Monday (getDay() returns 0 for Sunday, 1 for Monday, etc.)
+        const monday = new Date(date);
+        monday.setDate(date.getDate() - ((date.getDay() + 6) % 7));
+        monday.setHours(0, 0, 0, 0);
+
+        // If this is a new week, process the previous week
+        if (
+          currentWeekStart &&
+          monday.getTime() !== currentWeekStart.getTime()
+        ) {
+          if (currentWeek.length > 0) {
+            const weekOHLC = processWeekData(currentWeek, currentWeekStart);
+            if (weekOHLC) {
+              weeklyData.push(weekOHLC);
+            }
+          }
+          currentWeek = [];
+        }
+
+        // Update current week
+        currentWeekStart = monday;
+        currentWeek.push(row);
       }
 
-      // Update current week
-      currentWeekStart = monday;
-      currentWeek.push(row);
-    }
-
-    // Process the final week
-    if (currentWeek.length > 0 && currentWeekStart) {
-      const weekOHLC = processWeekData(currentWeek, currentWeekStart);
-      if (weekOHLC) {
-        weeklyData.push(weekOHLC);
+      // Process the final week
+      if (currentWeek.length > 0 && currentWeekStart) {
+        const weekOHLC = processWeekData(currentWeek, currentWeekStart);
+        if (weekOHLC) {
+          weeklyData.push(weekOHLC);
+        }
       }
-    }
 
-    return weeklyData;
-  }, []);
+      return weeklyData;
+    },
+    [],
+  );
 
   const processWeekData = (
     weekData: LiveSignalsDataRow[],
@@ -188,77 +192,78 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
   };
 
   // Convert daily PnL data to weekly for open positions
-  const convertOpenPositionsPnLToWeekly = useCallback((
-    rows: OpenPositionPnLDataRow[],
-  ): OpenPositionPnLDataRow[] => {
-    if (!rows || rows.length === 0) {
-      return [];
-    }
-
-    const weeklyData: OpenPositionPnLDataRow[] = [];
-    const tickerWeeklyMap: {
-      [ticker: string]: { [weekKey: string]: OpenPositionPnLDataRow[] };
-    } = {};
-
-    // Group data by ticker and week
-    for (const row of rows) {
-      const date = new Date(row.Date);
-      const ticker = row.Ticker;
-
-      // Skip invalid data
-      if (isNaN(date.getTime())) {
-        continue;
+  const convertOpenPositionsPnLToWeekly = useCallback(
+    (rows: OpenPositionPnLDataRow[]): OpenPositionPnLDataRow[] => {
+      if (!rows || rows.length === 0) {
+        return [];
       }
 
-      // Start of week is Monday (getDay() returns 0 for Sunday, 1 for Monday, etc.)
-      const monday = new Date(date);
-      monday.setDate(date.getDate() - ((date.getDay() + 6) % 7));
-      monday.setHours(0, 0, 0, 0);
+      const weeklyData: OpenPositionPnLDataRow[] = [];
+      const tickerWeeklyMap: {
+        [ticker: string]: { [weekKey: string]: OpenPositionPnLDataRow[] };
+      } = {};
 
-      // Create week key (YYYY-MM-DD format for Monday)
-      const weekKey = monday.toISOString().split("T")[0];
+      // Group data by ticker and week
+      for (const row of rows) {
+        const date = new Date(row.Date);
+        const ticker = row.Ticker;
 
-      if (!tickerWeeklyMap[ticker]) {
-        tickerWeeklyMap[ticker] = {};
-      }
-
-      if (!tickerWeeklyMap[ticker][weekKey]) {
-        tickerWeeklyMap[ticker][weekKey] = [];
-      }
-
-      tickerWeeklyMap[ticker][weekKey].push(row);
-    }
-
-    // Process each ticker's weekly data
-    Object.entries(tickerWeeklyMap).forEach(([_ticker, weeklyMap]) => {
-      Object.entries(weeklyMap).forEach(([weekKey, weekData]) => {
-        if (weekData.length > 0) {
-          // Sort by date to get the last entry of the week
-          const sortedWeekData = weekData.sort(
-            (a, b) => new Date(a.Date).getTime() - new Date(b.Date).getTime(),
-          );
-
-          const lastEntry = sortedWeekData[sortedWeekData.length - 1];
-
-          // Get the Friday of this week (or last available day)
-          const monday = new Date(weekKey);
-          const friday = new Date(monday);
-          friday.setDate(monday.getDate() + 4);
-
-          // Create weekly data point using the last PnL value of the week
-          weeklyData.push({
-            ...lastEntry,
-            Date: friday.toISOString().split("T")[0], // Use Friday as the week ending date
-          });
+        // Skip invalid data
+        if (isNaN(date.getTime())) {
+          continue;
         }
-      });
-    });
 
-    // Sort by date
-    return weeklyData.sort(
-      (a, b) => new Date(a.Date).getTime() - new Date(b.Date).getTime(),
-    );
-  }, []);
+        // Start of week is Monday (getDay() returns 0 for Sunday, 1 for Monday, etc.)
+        const monday = new Date(date);
+        monday.setDate(date.getDate() - ((date.getDay() + 6) % 7));
+        monday.setHours(0, 0, 0, 0);
+
+        // Create week key (YYYY-MM-DD format for Monday)
+        const weekKey = monday.toISOString().split("T")[0];
+
+        if (!tickerWeeklyMap[ticker]) {
+          tickerWeeklyMap[ticker] = {};
+        }
+
+        if (!tickerWeeklyMap[ticker][weekKey]) {
+          tickerWeeklyMap[ticker][weekKey] = [];
+        }
+
+        tickerWeeklyMap[ticker][weekKey].push(row);
+      }
+
+      // Process each ticker's weekly data
+      Object.entries(tickerWeeklyMap).forEach(([_ticker, weeklyMap]) => {
+        Object.entries(weeklyMap).forEach(([weekKey, weekData]) => {
+          if (weekData.length > 0) {
+            // Sort by date to get the last entry of the week
+            const sortedWeekData = weekData.sort(
+              (a, b) => new Date(a.Date).getTime() - new Date(b.Date).getTime(),
+            );
+
+            const lastEntry = sortedWeekData[sortedWeekData.length - 1];
+
+            // Get the Friday of this week (or last available day)
+            const monday = new Date(weekKey);
+            const friday = new Date(monday);
+            friday.setDate(monday.getDate() + 4);
+
+            // Create weekly data point using the last PnL value of the week
+            weeklyData.push({
+              ...lastEntry,
+              Date: friday.toISOString().split("T")[0], // Use Friday as the week ending date
+            });
+          }
+        });
+      });
+
+      // Sort by date
+      return weeklyData.sort(
+        (a, b) => new Date(a.Date).getTime() - new Date(b.Date).getTime(),
+      );
+    },
+    [],
+  );
 
   // Chart data generation
   const chartData: Data[] = useMemo(() => {

@@ -88,7 +88,9 @@ describe("Theme Switcher E2E Tests", () => {
 
       // Background should be appropriate for the theme
       if (themeState.hasDarkClass) {
-        expect(themeState.backgroundColor).toMatch(/rgb\(30, 31, 34\)|rgb\(28, 28, 28\)|#1c1c1c|#1e1f22/);
+        expect(themeState.backgroundColor).toMatch(
+          /rgb\(30, 31, 34\)|rgb\(28, 28, 28\)|#1c1c1c|#1e1f22/,
+        );
       } else {
         expect(themeState.backgroundColor).toMatch(
           /rgb\(255, 255, 255\)|white|#fff/,
@@ -137,7 +139,9 @@ describe("Theme Switcher E2E Tests", () => {
 
       expect(darkState.storedTheme).toBe("dark");
       expect(darkState.hasDarkClass).toBe(true);
-      expect(darkState.backgroundColor).toMatch(/rgb\(30, 31, 34\)|rgb\(28, 28, 28\)|#1c1c1c|#1e1f22/);
+      expect(darkState.backgroundColor).toMatch(
+        /rgb\(30, 31, 34\)|rgb\(28, 28, 28\)|#1c1c1c|#1e1f22/,
+      );
 
       await e2eHelper.takeScreenshot(page, "homepage-dark-mode");
     }, 15000);
@@ -258,7 +262,9 @@ describe("Theme Switcher E2E Tests", () => {
 
       expect(aboutState.hasDarkClass).toBe(true);
       expect(aboutState.storedTheme).toBe("dark");
-      expect(aboutState.backgroundColor).toMatch(/rgb\(30, 31, 34\)|rgb\(28, 28, 28\)|#1c1c1c|#1e1f22/);
+      expect(aboutState.backgroundColor).toMatch(
+        /rgb\(30, 31, 34\)|rgb\(28, 28, 28\)|#1c1c1c|#1e1f22/,
+      );
     }, 20000);
   });
 

@@ -1,5 +1,14 @@
 // similar products
-const similarItems = (currentItem: { id?: string; data?: { categories?: string[]; tags?: string[] } }, allItems: Array<{ id?: string; data?: { categories?: string[]; tags?: string[] } }>) => {
+const similarItems = (
+  currentItem: {
+    id?: string;
+    data?: { categories?: string[]; tags?: string[] };
+  },
+  allItems: Array<{
+    id?: string;
+    data?: { categories?: string[]; tags?: string[] };
+  }>,
+) => {
   let categories: string[] = [];
   let tags: string[] = [];
 

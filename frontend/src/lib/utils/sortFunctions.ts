@@ -10,12 +10,8 @@ export const sortByDate = (array: Array<{ data: { date?: string } }>) => {
 
 // sort product by weight
 export const sortByWeight = (array: Array<{ data: { weight?: number } }>) => {
-  const withWeight = array.filter(
-    (item) => item.data.weight,
-  );
-  const withoutWeight = array.filter(
-    (item) => !item.data.weight,
-  );
+  const withWeight = array.filter((item) => item.data.weight);
+  const withoutWeight = array.filter((item) => !item.data.weight);
   const sortedWeightedArray = withWeight.sort(
     (a: { data: { weight: number } }, b: { data: { weight: number } }) =>
       a.data.weight - b.data.weight,

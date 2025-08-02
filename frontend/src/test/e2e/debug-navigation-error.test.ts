@@ -146,7 +146,10 @@ describe("Debug Navigation Error - Blog and Analysis Pages", () => {
         navigationResults.push(result);
 
         // Take screenshot for debugging
-        await e2eHelper.takeScreenshot(page, `debug-navigation-${step.path.replace(/\//g, "-")}`);
+        await e2eHelper.takeScreenshot(
+          page,
+          `debug-navigation-${step.path.replace(/\//g, "-")}`,
+        );
 
         console.log(
           `✅ ${step.description}: Status ${response?.status()}, took ${endTime - startTime}ms`,

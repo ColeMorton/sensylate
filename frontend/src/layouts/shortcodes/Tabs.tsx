@@ -46,7 +46,9 @@ const Tabs = ({ children }: { children: React.ReactElement }) => {
               tabIndex={index === active ? 0 : -1}
               onKeyDown={(event) => handleKeyDown(event, index)}
               onClick={() => setActive(index)}
-              ref={(ref) => ((tabRefs.current as HTMLElement[])[index] = ref as HTMLElement)}
+              ref={(ref) =>
+                ((tabRefs.current as HTMLElement[])[index] = ref as HTMLElement)
+              }
             >
               {item.name}
             </li>
