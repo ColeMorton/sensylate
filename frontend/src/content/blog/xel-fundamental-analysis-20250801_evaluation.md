@@ -1,3 +1,14 @@
+---
+title: "XEL Fundamental Analysis Evaluation Report - 2025-08-01"
+meta_title: "XEL Fundamental Analysis Evaluation Report"
+description: "Comprehensive evaluation of XEL fundamental analysis with 9.3/10 reliability score. Evidence-based assessment of financial data accuracy and methodology transparency."
+date: 2025-08-01T00:00:00Z
+authors: ["Cole Morton", "Claude"]
+categories: ["Investing", "Analysis", "Evaluation"]
+tags: ["xel", "evaluation", "fundamental-analysis", "utilities", "reliability-assessment"]
+draft: false
+---
+
 # Fundamental Analysis Evaluation Report: Xcel Energy Inc. (XEL)
 
 ## Executive Assessment
