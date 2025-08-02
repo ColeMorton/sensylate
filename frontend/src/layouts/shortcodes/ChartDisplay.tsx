@@ -21,6 +21,7 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({
     "live-signals-weekly-candlestick",
     "trade-pnl-waterfall",
     "open-positions-pnl-timeseries",
+    "open-positions-pnl-timeseries-weekly",
   ];
 
   if (!supportedChartTypes.includes(chartType)) {

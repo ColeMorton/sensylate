@@ -279,9 +279,9 @@ class ScriptConfig:
             "max_retries": self.max_retries,
             "timeout_seconds": self.timeout_seconds,
             "enable_performance_tracking": self.enable_performance_tracking,
-            "performance_log_file": str(self.performance_log_file)
-            if self.performance_log_file
-            else None,
+            "performance_log_file": (
+                str(self.performance_log_file) if self.performance_log_file else None
+            ),
         }
 
         try:
@@ -316,9 +316,9 @@ class ScriptConfig:
             "max_retries": self.max_retries,
             "timeout_seconds": self.timeout_seconds,
             "enable_performance_tracking": self.enable_performance_tracking,
-            "performance_log_file": str(self.performance_log_file)
-            if self.performance_log_file
-            else None,
+            "performance_log_file": (
+                str(self.performance_log_file) if self.performance_log_file else None
+            ),
         }
 
 

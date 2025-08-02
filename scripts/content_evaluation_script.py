@@ -850,9 +850,9 @@ class ContentEvaluationEngine:
             "issues": issues,
             "evidence": evidence,
             "grammar_check": grammar_issues,
-            "readability_check": f"{avg_sentence_length:.1f} words/sentence"
-            if sentences > 0
-            else "N/A",
+            "readability_check": (
+                f"{avg_sentence_length:.1f} words/sentence" if sentences > 0 else "N/A"
+            ),
         }
 
     def _calculate_overall_assessment(
@@ -951,28 +951,39 @@ class ContentEvaluationEngine:
                     if evaluation_breakdown[cat].get("score", 0) >= 8.0
                 ]
             ),
-            "average_score": sum(
-                results.get("score", 0) for results in evaluation_breakdown.values()
-            )
-            / len(evaluation_breakdown)
-            if evaluation_breakdown
-            else 0,
+            "average_score": (
+                sum(
+                    results.get("score", 0) for results in evaluation_breakdown.values()
+                )
+                / len(evaluation_breakdown)
+                if evaluation_breakdown
+                else 0
+            ),
         }
 
         # Qualitative assessment
         evidence_summary["qualitative_assessment"] = {
-            "content_depth": "Comprehensive"
-            if content_data["word_count"] > 2000
-            else "Adequate"
-            if content_data["word_count"] > 1500
-            else "Limited",
-            "analysis_rigor": "High"
-            if evaluation_breakdown.get("methodology_rigor", {}).get("score", 0) >= 8.5
-            else "Moderate",
-            "data_integration": "Strong"
-            if evaluation_breakdown.get("financial_data_accuracy", {}).get("score", 0)
-            >= 9.0
-            else "Adequate",
+            "content_depth": (
+                "Comprehensive"
+                if content_data["word_count"] > 2000
+                else "Adequate"
+                if content_data["word_count"] > 1500
+                else "Limited"
+            ),
+            "analysis_rigor": (
+                "High"
+                if evaluation_breakdown.get("methodology_rigor", {}).get("score", 0)
+                >= 8.5
+                else "Moderate"
+            ),
+            "data_integration": (
+                "Strong"
+                if evaluation_breakdown.get("financial_data_accuracy", {}).get(
+                    "score", 0
+                )
+                >= 9.0
+                else "Adequate"
+            ),
         }
 
         return evidence_summary

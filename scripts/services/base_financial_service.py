@@ -696,9 +696,11 @@ class BaseFinancialService(ABC):
 
             self.logger.info(f"Creating historical data collector for {symbol}")
             collector = create_historical_data_collector(
-                base_path=self.historical_manager.base_path
-                if self.historical_manager
-                else None,
+                base_path=(
+                    self.historical_manager.base_path
+                    if self.historical_manager
+                    else None
+                ),
                 rate_limit_delay=0.2,  # Faster for auto-collection
             )
 

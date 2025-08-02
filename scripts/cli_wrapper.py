@@ -155,9 +155,11 @@ class CLIServiceWrapper:
                     "cli_script_path": str(self.cli_script_path),
                     "available": is_available,
                     "exists": self.cli_script_path.exists(),
-                    "is_file": self.cli_script_path.is_file()
-                    if self.cli_script_path.exists()
-                    else False,
+                    "is_file": (
+                        self.cli_script_path.is_file()
+                        if self.cli_script_path.exists()
+                        else False
+                    ),
                 },
             )
 

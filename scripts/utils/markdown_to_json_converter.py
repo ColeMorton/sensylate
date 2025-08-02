@@ -62,26 +62,30 @@ class MarkdownToJsonConverter:
             "top_risk_factor": top_risk_factor,
             "timeline_detail": timeline_detail,
             # Individual catalyst fields (fallback)
-            "catalyst_1": catalysts[0]["name"]
-            if len(catalysts) > 0
-            else "AI memory demand growth",
-            "catalyst_1_probability": catalysts[0]["probability"]
-            if len(catalysts) > 0
-            else 85,
+            "catalyst_1": (
+                catalysts[0]["name"]
+                if len(catalysts) > 0
+                else "AI memory demand growth"
+            ),
+            "catalyst_1_probability": (
+                catalysts[0]["probability"] if len(catalysts) > 0 else 85
+            ),
             "catalyst_1_impact": catalysts[0]["impact"] if len(catalysts) > 0 else 15,
-            "catalyst_2": catalysts[1]["name"]
-            if len(catalysts) > 1
-            else "Memory pricing recovery",
-            "catalyst_2_probability": catalysts[1]["probability"]
-            if len(catalysts) > 1
-            else 70,
+            "catalyst_2": (
+                catalysts[1]["name"]
+                if len(catalysts) > 1
+                else "Memory pricing recovery"
+            ),
+            "catalyst_2_probability": (
+                catalysts[1]["probability"] if len(catalysts) > 1 else 70
+            ),
             "catalyst_2_impact": catalysts[1]["impact"] if len(catalysts) > 1 else 25,
-            "catalyst_3": catalysts[2]["name"]
-            if len(catalysts) > 2
-            else "Data center upgrades",
-            "catalyst_3_probability": catalysts[2]["probability"]
-            if len(catalysts) > 2
-            else 75,
+            "catalyst_3": (
+                catalysts[2]["name"] if len(catalysts) > 2 else "Data center upgrades"
+            ),
+            "catalyst_3_probability": (
+                catalysts[2]["probability"] if len(catalysts) > 2 else 75
+            ),
             "catalyst_3_impact": catalysts[2]["impact"] if len(catalysts) > 2 else 12,
         }
 

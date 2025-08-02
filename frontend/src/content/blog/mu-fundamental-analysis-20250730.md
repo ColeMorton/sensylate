@@ -19,10 +19,6 @@ tags:
 draft: false
 ---
 
-_Generated: 2025-07-30 | Confidence: 0.9/1.0 | Data Quality: 0.9/1.0 | Economic Context: Current_
-
-<!-- Author: Cole Morton (MANDATORY - ensure consistency) -->
-
 ## 🎯 Investment Thesis & Recommendation
 
 ### Core Thesis

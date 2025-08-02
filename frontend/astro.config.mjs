@@ -101,6 +101,7 @@ export default defineConfig({
         "@/shortcodes/Tab",
         "@/shortcodes/ChartDisplay",
         "@/shortcodes/PhotoBoothDisplay",
+        "@/shortcodes/TablerIconShowcase",
       ],
     }),
     mdx(),

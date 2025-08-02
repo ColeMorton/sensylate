@@ -40,7 +40,7 @@ The trade_history_discover.md command was experiencing "command not found" error
 ```python
 class CLIServiceWrapper:
     """Wrapper for CLI services that handles both global and local execution modes"""
-    
+
     def execute_command(self, command: str, *args, **kwargs) -> Tuple[bool, str, str]:
         """Execute CLI command with fallback mechanisms"""
         # Try global command first: yahoo_finance_cli analyze SPY
@@ -60,7 +60,7 @@ class CLIServiceWrapper:
 ```python
 class ServiceDiscoveryManager:
     """Manages service discovery and execution for trade history analysis"""
-    
+
     def get_market_data_with_fallback(self, ticker: str, data_type: str) -> Dict[str, Any]:
         """Get market data with intelligent fallback strategy"""
         # 1. Check local data availability first (70% coverage)
@@ -193,7 +193,7 @@ from scripts.cli_wrapper import execute_cli_command
 
 # Automatically handles global vs local execution
 success, stdout, stderr = execute_cli_command(
-    'yahoo_finance', 'quote', 'AAPL', 
+    'yahoo_finance', 'quote', 'AAPL',
     env='dev', output_format='json'
 )
 ```

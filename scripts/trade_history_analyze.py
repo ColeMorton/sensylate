@@ -229,12 +229,12 @@ class TradeHistoryAnalysis:
 
             exit_analysis = {
                 "exit_efficiency_metrics": {
-                    "overall_exit_efficiency": np.mean(exit_eff_values)
-                    if exit_eff_values
-                    else 0,
-                    "mfe_capture_rate": np.mean(mfe_ratio_values)
-                    if mfe_ratio_values
-                    else 0,
+                    "overall_exit_efficiency": (
+                        np.mean(exit_eff_values) if exit_eff_values else 0
+                    ),
+                    "mfe_capture_rate": (
+                        np.mean(mfe_ratio_values) if mfe_ratio_values else 0
+                    ),
                     "sample_size": len(valid_exit_eff_trades),
                     "confidence": min(0.95, 0.5 + (len(valid_exit_eff_trades) / 20)),
                 }
@@ -322,9 +322,9 @@ class TradeHistoryAnalysis:
                 "std_deviation": float(np.std(returns_array, ddof=1)),
                 "skewness": float(stats.skew(returns_array)),
                 "kurtosis": float(stats.kurtosis(returns_array)),
-                "normality_test_p_value": float(normality_p_value)
-                if normality_p_value
-                else None,
+                "normality_test_p_value": (
+                    float(normality_p_value) if normality_p_value else None
+                ),
                 "sample_size": len(returns),
                 "confidence": min(0.95, 0.5 + (len(returns) / 25)),
             },
@@ -459,9 +459,9 @@ class TradeHistoryAnalysis:
                                 [t for t in month_trades if t.get("Return", 0) > 0]
                             )
                             / len(month_trades),
-                            "avg_return": np.mean(month_returns)
-                            if month_returns
-                            else 0,
+                            "avg_return": (
+                                np.mean(month_returns) if month_returns else 0
+                            ),
                         }
 
                 temporal_patterns["monthly_effectiveness"] = monthly_performance
@@ -604,14 +604,16 @@ class TradeHistoryAnalysis:
 
                 risk_assessment["drawdown_analysis"] = {
                     "max_drawdown": float(np.min(drawdowns)),
-                    "avg_drawdown": float(np.mean(drawdowns[drawdowns < 0]))
-                    if any(drawdowns < 0)
-                    else 0,
-                    "downside_deviation": float(
-                        np.std(returns_array[returns_array < 0], ddof=1)
-                    )
-                    if any(returns_array < 0)
-                    else 0,
+                    "avg_drawdown": (
+                        float(np.mean(drawdowns[drawdowns < 0]))
+                        if any(drawdowns < 0)
+                        else 0
+                    ),
+                    "downside_deviation": (
+                        float(np.std(returns_array[returns_array < 0], ddof=1))
+                        if any(returns_array < 0)
+                        else 0
+                    ),
                     "confidence": min(0.9, 0.4 + (len(returns) / 20)),
                 }
 
@@ -633,9 +635,9 @@ class TradeHistoryAnalysis:
             risk_assessment["portfolio_risk_metrics"] = {
                 "active_positions": total_active,
                 "sector_concentration": sector_concentration,
-                "position_diversification": len(sectors) / total_active
-                if total_active > 0
-                else 0,
+                "position_diversification": (
+                    len(sectors) / total_active if total_active > 0 else 0
+                ),
                 "confidence": 0.8,
             }
 

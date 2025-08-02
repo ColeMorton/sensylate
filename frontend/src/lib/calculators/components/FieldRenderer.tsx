@@ -4,9 +4,9 @@ import type { CalculatorTheme } from "../core/UIRenderer.ts";
 
 interface FieldRendererProps {
   field: CalculatorField;
-  value: any;
+  value: unknown;
   error?: string;
-  onChange: (value: any) => void;
+  onChange: (value: unknown) => void;
   theme: CalculatorTheme;
   disabled?: boolean;
 }
@@ -57,7 +57,7 @@ export const FieldRenderer: React.FC<FieldRendererProps> = ({
       HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
     >,
   ) => {
-    let newValue: any = event.target.value;
+    let newValue: unknown = event.target.value;
 
     if (field.type === "number") {
       newValue = newValue === "" ? undefined : Number(newValue);

@@ -345,11 +345,13 @@ class ScriptRegistry:
                 name: metadata.to_dict() for name, metadata in self._scripts.items()
             },
             "content_type_support": self._get_content_type_support(),
-            "export_timestamp": TwitterSystemLogger()
-            .logger.handlers[0]
-            .formatter.formatTime(None, None)
-            if TwitterSystemLogger().logger.handlers
-            else "unknown",
+            "export_timestamp": (
+                TwitterSystemLogger()
+                .logger.handlers[0]
+                .formatter.formatTime(None, None)
+                if TwitterSystemLogger().logger.handlers
+                else "unknown"
+            ),
         }
 
         try:
@@ -415,13 +417,15 @@ class ScriptRegistry:
             "validation_required": sum(
                 1 for m in self._scripts.values() if m.requires_validation
             ),
-            "average_parameters": sum(
-                len(m.required_parameters) + len(m.optional_parameters)
-                for m in self._scripts.values()
-            )
-            / len(self._scripts)
-            if self._scripts
-            else 0,
+            "average_parameters": (
+                sum(
+                    len(m.required_parameters) + len(m.optional_parameters)
+                    for m in self._scripts.values()
+                )
+                / len(self._scripts)
+                if self._scripts
+                else 0
+            ),
         }
 
 

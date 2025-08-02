@@ -12,14 +12,16 @@ export async function getStaticPaths() {
   const pages = await getSinglePage(COLLECTION_FOLDER);
 
   // DEBUG: Log all detected pages for static site generation
-  console.log(
-    "🔍 [STATIC BUILD] Pages detected in collection:",
-    pages.map((p) => ({
-      id: p.id,
-      slug: p.slug,
-      data: { title: p.data.title, draft: p.data.draft },
-    })),
-  );
+  if (import.meta.env.DEV) {
+    console.log(
+      "🔍 [STATIC BUILD] Pages detected in collection:",
+      pages.map((p) => ({
+        id: p.id,
+        slug: p.slug,
+        data: { title: p.data.title, draft: p.data.draft },
+      })),
+    );
+  }
 
   // Filter out elements page if feature flag is disabled
   const filteredPages = pages.filter((page) => {
@@ -40,21 +42,25 @@ export async function getStaticPaths() {
   }));
 
   // DEBUG: Log generated static paths
-  console.log(
-    "🔍 [STATIC BUILD] Generated static paths:",
-    paths.map((p) => p.params.regular),
-  );
+  if (import.meta.env.DEV) {
+    console.log(
+      "🔍 [STATIC BUILD] Generated static paths:",
+      paths.map((p) => p.params.regular),
+    );
+  }
 
   return paths;
 }
 
-// DEBUG: Route handler identification
-console.log(
-  `🔍 [ROUTE DEBUG] [regular].astro processing URL: ${Astro.url.pathname}`,
-);
-console.log(`🔍 [ROUTE DEBUG] Route params:`, Astro.params);
-console.log(`🔍 [ROUTE DEBUG] Development mode: ${import.meta.env.DEV}`);
-console.log(`🔍 [ROUTE DEBUG] Props page exists: ${!!Astro.props.page}`);
+// DEBUG: Route handler identification (development only)
+if (import.meta.env.DEV) {
+  console.log(
+    `🔍 [ROUTE DEBUG] [regular].astro processing URL: ${Astro.url.pathname}`,
+  );
+  console.log(`🔍 [ROUTE DEBUG] Route params:`, Astro.params);
+  console.log(`🔍 [ROUTE DEBUG] Development mode: ${import.meta.env.DEV}`);
+  console.log(`🔍 [ROUTE DEBUG] Props page exists: ${!!Astro.props.page}`);
+}
 
 // In server mode (development), get page from params. In static mode, get from props.
 let page;
@@ -96,9 +102,11 @@ if (import.meta.env.DEV && !Astro.props.page) {
   }
 } else {
   // Static mode: use props from getStaticPaths
-  console.log(
-    `🔍 [STATIC MODE] Using page from props: ${Astro.props.page?.id}`,
-  );
+  if (import.meta.env.DEV) {
+    console.log(
+      `🔍 [STATIC MODE] Using page from props: ${Astro.props.page?.id}`,
+    );
+  }
   page = Astro.props.page;
 }
 

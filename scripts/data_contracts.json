@@ -1,0 +1,1191 @@
+{
+  "discovery_timestamp": "2025-07-31T12:40:42.416898",
+  "total_contracts": 9,
+  "contracts": [
+    {
+      "contract_id": "open-positions_live_signals_open_positions_pnl",
+      "category": "open-positions",
+      "file_path": "/Users/colemorton/Projects/sensylate-command-system-enhancements/frontend/public/data/open-positions/live_signals_open_positions_pnl.csv",
+      "relative_path": "open-positions/live_signals_open_positions_pnl.csv",
+      "schema": [
+        {
+          "name": "Date",
+          "data_type": "datetime",
+          "sample_values": [
+            "2025-05-02",
+            "2025-05-05",
+            "2025-05-06",
+            "2025-05-07",
+            "2025-05-08"
+          ],
+          "nullable": "False",
+          "unique_values": 54,
+          "format_pattern": "%Y-%m-%d"
+        },
+        {
+          "name": "Ticker",
+          "data_type": "string",
+          "sample_values": [
+            "NVDA",
+            "NVDA",
+            "NVDA",
+            "NVDA",
+            "NVDA"
+          ],
+          "nullable": "False",
+          "unique_values": 9,
+          "format_pattern": null
+        },
+        {
+          "name": "Price",
+          "data_type": "numeric",
+          "sample_values": [
+            "114.49205017089844",
+            "113.81209564208984",
+            "113.53211975097656",
+            "117.05187225341795",
+            "117.36185455322266"
+          ],
+          "nullable": "False",
+          "unique_values": 240,
+          "format_pattern": "float"
+        },
+        {
+          "name": "PnL",
+          "data_type": "numeric",
+          "sample_values": [
+            "2.882050170898438",
+            "2.2020956420898443",
+            "1.922119750976563",
+            "5.441872253417969",
+            "5.751854553222657"
+          ],
+          "nullable": "False",
+          "unique_values": 240,
+          "format_pattern": "float"
+        },
+        {
+          "name": "Position_Size",
+          "data_type": "numeric",
+          "sample_values": [
+            "1.0",
+            "1.0",
+            "1.0",
+            "1.0",
+            "1.0"
+          ],
+          "nullable": "False",
+          "unique_values": 1,
+          "format_pattern": "integer"
+        },
+        {
+          "name": "Entry_Date",
+          "data_type": "datetime",
+          "sample_values": [
+            "2025-05-02",
+            "2025-05-02",
+            "2025-05-02",
+            "2025-05-02",
+            "2025-05-02"
+          ],
+          "nullable": "False",
+          "unique_values": 9,
+          "format_pattern": "%Y-%m-%d"
+        },
+        {
+          "name": "Entry_Price",
+          "data_type": "numeric",
+          "sample_values": [
+            "111.61",
+            "111.61",
+            "111.61",
+            "111.61",
+            "111.61"
+          ],
+          "nullable": "False",
+          "unique_values": 9,
+          "format_pattern": "float"
+        },
+        {
+          "name": "Direction",
+          "data_type": "categorical",
+          "sample_values": [
+            "Long",
+            "Long",
+            "Long",
+            "Long",
+            "Long"
+          ],
+          "nullable": "False",
+          "unique_values": 1,
+          "format_pattern": null
+        },
+        {
+          "name": "Position_UUID",
+          "data_type": "uuid",
+          "sample_values": [
+            "NVDA_SMA_36_40_2025-05-02",
+            "NVDA_SMA_36_40_2025-05-02",
+            "NVDA_SMA_36_40_2025-05-02",
+            "NVDA_SMA_36_40_2025-05-02",
+            "NVDA_SMA_36_40_2025-05-02"
+          ],
+          "nullable": "False",
+          "unique_values": 9,
+          "format_pattern": null
+        }
+      ],
+      "row_count": 240,
+      "last_modified": "2025-07-28T13:15:16.415542",
+      "file_size_bytes": 26130,
+      "dependencies": [
+        "open-positions"
+      ],
+      "refresh_frequency": "daily",
+      "data_sources": [
+        "trade_history_cli"
+      ],
+      "freshness_threshold_hours": 1,
+      "minimum_rows": 1,
+      "required_columns": [
+        "Price",
+        "Date",
+        "Entry_Date",
+        "Ticker",
+        "PnL",
+        "Entry_Price",
+        "Direction",
+        "Position_UUID",
+        "Position_Size"
+      ]
+    },
+    {
+      "contract_id": "portfolio_multi_strategy_portfolio_cumulative_returns",
+      "category": "portfolio",
+      "file_path": "/Users/colemorton/Projects/sensylate-command-system-enhancements/frontend/public/data/portfolio/multi_strategy_portfolio_cumulative_returns.csv",
+      "relative_path": "portfolio/multi_strategy_portfolio_cumulative_returns.csv",
+      "schema": [
+        {
+          "name": "Date",
+          "data_type": "datetime",
+          "sample_values": [
+            "2014-09-17",
+            "2014-09-18",
+            "2014-09-19",
+            "2014-09-20",
+            "2014-09-21"
+          ],
+          "nullable": "False",
+          "unique_values": 1000,
+          "format_pattern": "%Y-%m-%d"
+        },
+        {
+          "name": "Cumulative_Returns",
+          "data_type": "numeric",
+          "sample_values": [
+            "0.0",
+            "0.0",
+            "0.0",
+            "0.0",
+            "0.0"
+          ],
+          "nullable": "False",
+          "unique_values": 637,
+          "format_pattern": "float"
+        },
+        {
+          "name": "Cumulative_Returns_Pct",
+          "data_type": "numeric",
+          "sample_values": [
+            "0.0",
+            "0.0",
+            "0.0",
+            "0.0",
+            "0.0"
+          ],
+          "nullable": "False",
+          "unique_values": 637,
+          "format_pattern": "float"
+        }
+      ],
+      "row_count": 1000,
+      "last_modified": "2025-07-28T13:15:16.416821",
+      "file_size_bytes": 189540,
+      "dependencies": [
+        "portfolio"
+      ],
+      "refresh_frequency": "daily",
+      "data_sources": [
+        "yahoo_finance",
+        "alpha_vantage"
+      ],
+      "freshness_threshold_hours": 24,
+      "minimum_rows": 100,
+      "required_columns": [
+        "Cumulative_Returns_Pct",
+        "Cumulative_Returns",
+        "Date"
+      ]
+    },
+    {
+      "contract_id": "portfolio_multi_strategy_portfolio_drawdowns",
+      "category": "portfolio",
+      "file_path": "/Users/colemorton/Projects/sensylate-command-system-enhancements/frontend/public/data/portfolio/multi_strategy_portfolio_drawdowns.csv",
+      "relative_path": "portfolio/multi_strategy_portfolio_drawdowns.csv",
+      "schema": [
+        {
+          "name": "Date",
+          "data_type": "datetime",
+          "sample_values": [
+            "2014-09-17",
+            "2014-09-18",
+            "2014-09-19",
+            "2014-09-20",
+            "2014-09-21"
+          ],
+          "nullable": "False",
+          "unique_values": 1000,
+          "format_pattern": "%Y-%m-%d"
+        },
+        {
+          "name": "Drawdown",
+          "data_type": "numeric",
+          "sample_values": [
+            "0.0",
+            "0.0",
+            "0.0",
+            "0.0",
+            "0.0"
+          ],
+          "nullable": "False",
+          "unique_values": 580,
+          "format_pattern": "float"
+        },
+        {
+          "name": "Drawdown_Pct",
+          "data_type": "numeric",
+          "sample_values": [
+            "0.0",
+            "0.0",
+            "0.0",
+            "0.0",
+            "0.0"
+          ],
+          "nullable": "False",
+          "unique_values": 580,
+          "format_pattern": "float"
+        },
+        {
+          "name": "Peak_Value",
+          "data_type": "numeric",
+          "sample_values": [
+            "1000.0",
+            "1000.0",
+            "1000.0",
+            "1000.0",
+            "1000.0"
+          ],
+          "nullable": "False",
+          "unique_values": 58,
+          "format_pattern": "float"
+        },
+        {
+          "name": "Current_Value",
+          "data_type": "numeric",
+          "sample_values": [
+            "1000.0",
+            "1000.0",
+            "1000.0",
+            "1000.0",
+            "1000.0"
+          ],
+          "nullable": "False",
+          "unique_values": 637,
+          "format_pattern": "float"
+        }
+      ],
+      "row_count": 1000,
+      "last_modified": "2025-07-28T13:15:16.418205",
+      "file_size_bytes": 335606,
+      "dependencies": [
+        "portfolio"
+      ],
+      "refresh_frequency": "daily",
+      "data_sources": [
+        "yahoo_finance",
+        "alpha_vantage"
+      ],
+      "freshness_threshold_hours": 24,
+      "minimum_rows": 100,
+      "required_columns": [
+        "Drawdown_Pct",
+        "Peak_Value",
+        "Drawdown",
+        "Current_Value",
+        "Date"
+      ]
+    },
+    {
+      "contract_id": "portfolio_multi_strategy_portfolio_returns",
+      "category": "portfolio",
+      "file_path": "/Users/colemorton/Projects/sensylate-command-system-enhancements/frontend/public/data/portfolio/multi_strategy_portfolio_returns.csv",
+      "relative_path": "portfolio/multi_strategy_portfolio_returns.csv",
+      "schema": [
+        {
+          "name": "Date",
+          "data_type": "datetime",
+          "sample_values": [
+            "2014-09-17",
+            "2014-09-18",
+            "2014-09-19",
+            "2014-09-20",
+            "2014-09-21"
+          ],
+          "nullable": "False",
+          "unique_values": 1000,
+          "format_pattern": "%Y-%m-%d"
+        },
+        {
+          "name": "Returns",
+          "data_type": "numeric",
+          "sample_values": [
+            "0.0",
+            "0.0",
+            "0.0",
+            "0.0",
+            "0.0"
+          ],
+          "nullable": "False",
+          "unique_values": 637,
+          "format_pattern": "float"
+        },
+        {
+          "name": "Returns_Pct",
+          "data_type": "numeric",
+          "sample_values": [
+            "0.0",
+            "0.0",
+            "0.0",
+            "0.0",
+            "0.0"
+          ],
+          "nullable": "False",
+          "unique_values": 637,
+          "format_pattern": "float"
+        }
+      ],
+      "row_count": 1000,
+      "last_modified": "2025-07-28T13:15:16.419735",
+      "file_size_bytes": 151088,
+      "dependencies": [
+        "portfolio"
+      ],
+      "refresh_frequency": "daily",
+      "data_sources": [
+        "yahoo_finance",
+        "alpha_vantage"
+      ],
+      "freshness_threshold_hours": 24,
+      "minimum_rows": 100,
+      "required_columns": [
+        "Returns_Pct",
+        "Returns",
+        "Date"
+      ]
+    },
+    {
+      "contract_id": "portfolio_multi_strategy_portfolio_portfolio_value",
+      "category": "portfolio",
+      "file_path": "/Users/colemorton/Projects/sensylate-command-system-enhancements/frontend/public/data/portfolio/multi_strategy_portfolio_portfolio_value.csv",
+      "relative_path": "portfolio/multi_strategy_portfolio_portfolio_value.csv",
+      "schema": [
+        {
+          "name": "Date",
+          "data_type": "datetime",
+          "sample_values": [
+            "2014-09-17",
+            "2014-09-18",
+            "2014-09-19",
+            "2014-09-20",
+            "2014-09-21"
+          ],
+          "nullable": "False",
+          "unique_values": 1000,
+          "format_pattern": "%Y-%m-%d"
+        },
+        {
+          "name": "Portfolio_Value",
+          "data_type": "numeric",
+          "sample_values": [
+            "1000.0",
+            "1000.0",
+            "1000.0",
+            "1000.0",
+            "1000.0"
+          ],
+          "nullable": "False",
+          "unique_values": 637,
+          "format_pattern": "float"
+        },
+        {
+          "name": "Normalized_Value",
+          "data_type": "numeric",
+          "sample_values": [
+            "1.0",
+            "1.0",
+            "1.0",
+            "1.0",
+            "1.0"
+          ],
+          "nullable": "False",
+          "unique_values": 637,
+          "format_pattern": "float"
+        }
+      ],
+      "row_count": 1000,
+      "last_modified": "2025-07-28T13:15:16.418982",
+      "file_size_bytes": 187338,
+      "dependencies": [
+        "portfolio"
+      ],
+      "refresh_frequency": "daily",
+      "data_sources": [
+        "yahoo_finance",
+        "alpha_vantage"
+      ],
+      "freshness_threshold_hours": 24,
+      "minimum_rows": 100,
+      "required_columns": [
+        "Normalized_Value",
+        "Portfolio_Value",
+        "Date"
+      ]
+    },
+    {
+      "contract_id": "portfolio_portfolio_buy_and_hold_portfolio_value",
+      "category": "portfolio",
+      "file_path": "/Users/colemorton/Projects/sensylate-command-system-enhancements/frontend/public/data/portfolio/portfolio_buy_and_hold_portfolio_value.csv",
+      "relative_path": "portfolio/portfolio_buy_and_hold_portfolio_value.csv",
+      "schema": [
+        {
+          "name": "Date",
+          "data_type": "datetime",
+          "sample_values": [
+            "2014-09-17",
+            "2014-09-18",
+            "2014-09-19",
+            "2014-09-20",
+            "2014-09-21"
+          ],
+          "nullable": "False",
+          "unique_values": 1000,
+          "format_pattern": "%Y-%m-%d"
+        },
+        {
+          "name": "Portfolio_Value",
+          "data_type": "numeric",
+          "sample_values": [
+            "1000.0",
+            "928.074423987688",
+            "863.2552513789442",
+            "894.1036056442576",
+            "872.0563120544942"
+          ],
+          "nullable": "False",
+          "unique_values": 998,
+          "format_pattern": "float"
+        },
+        {
+          "name": "Normalized_Value",
+          "data_type": "numeric",
+          "sample_values": [
+            "1.0",
+            "0.928074423987688",
+            "0.8632552513789443",
+            "0.8941036056442577",
+            "0.8720563120544943"
+          ],
+          "nullable": "False",
+          "unique_values": 998,
+          "format_pattern": "float"
+        }
+      ],
+      "row_count": 1000,
+      "last_modified": "2025-07-28T13:15:16.420699",
+      "file_size_bytes": 189575,
+      "dependencies": [
+        "portfolio"
+      ],
+      "refresh_frequency": "daily",
+      "data_sources": [
+        "yahoo_finance",
+        "alpha_vantage"
+      ],
+      "freshness_threshold_hours": 24,
+      "minimum_rows": 100,
+      "required_columns": [
+        "Normalized_Value",
+        "Portfolio_Value",
+        "Date"
+      ]
+    },
+    {
+      "contract_id": "portfolio_portfolio_buy_and_hold_returns",
+      "category": "portfolio",
+      "file_path": "/Users/colemorton/Projects/sensylate-command-system-enhancements/frontend/public/data/portfolio/portfolio_buy_and_hold_returns.csv",
+      "relative_path": "portfolio/portfolio_buy_and_hold_returns.csv",
+      "schema": [
+        {
+          "name": "Date",
+          "data_type": "datetime",
+          "sample_values": [
+            "2014-09-17",
+            "2014-09-18",
+            "2014-09-19",
+            "2014-09-20",
+            "2014-09-21"
+          ],
+          "nullable": "False",
+          "unique_values": 1000,
+          "format_pattern": "%Y-%m-%d"
+        },
+        {
+          "name": "Returns",
+          "data_type": "numeric",
+          "sample_values": [
+            "0.0",
+            "-0.0719255760123118",
+            "-0.0698426450868382",
+            "0.0357349164294535",
+            "-0.0246585445473926"
+          ],
+          "nullable": "False",
+          "unique_values": 999,
+          "format_pattern": "float"
+        },
+        {
+          "name": "Returns_Pct",
+          "data_type": "numeric",
+          "sample_values": [
+            "0.0",
+            "-7.1925576012311865",
+            "-6.9842645086838235",
+            "3.573491642945359",
+            "-2.465854454739269"
+          ],
+          "nullable": "False",
+          "unique_values": 999,
+          "format_pattern": "float"
+        }
+      ],
+      "row_count": 1000,
+      "last_modified": "2025-07-28T13:15:16.421787",
+      "file_size_bytes": 204139,
+      "dependencies": [
+        "portfolio"
+      ],
+      "refresh_frequency": "daily",
+      "data_sources": [
+        "yahoo_finance",
+        "alpha_vantage"
+      ],
+      "freshness_threshold_hours": 24,
+      "minimum_rows": 100,
+      "required_columns": [
+        "Returns_Pct",
+        "Returns",
+        "Date"
+      ]
+    },
+    {
+      "contract_id": "portfolio_live-signals_live_signals_equity",
+      "category": "portfolio",
+      "file_path": "/Users/colemorton/Projects/sensylate-command-system-enhancements/frontend/public/data/portfolio/live-signals/live_signals_equity.csv",
+      "relative_path": "portfolio/live-signals/live_signals_equity.csv",
+      "schema": [
+        {
+          "name": "timestamp",
+          "data_type": "datetime",
+          "sample_values": [
+            "2025-04-01",
+            "2025-04-02",
+            "2025-04-03",
+            "2025-04-04",
+            "2025-04-05"
+          ],
+          "nullable": "False",
+          "unique_values": 122,
+          "format_pattern": "%Y-%m-%d"
+        },
+        {
+          "name": "equity",
+          "data_type": "numeric",
+          "sample_values": [
+            "-9.65546797108216",
+            "5.637011371924542",
+            "22.73292193333089",
+            "16.693766821228472",
+            "4.552877320127456"
+          ],
+          "nullable": "False",
+          "unique_values": 122,
+          "format_pattern": "float"
+        },
+        {
+          "name": "equity_pct",
+          "data_type": "numeric",
+          "sample_values": [
+            "0.0",
+            "0.0",
+            "0.0",
+            "0.0",
+            "0.0"
+          ],
+          "nullable": "False",
+          "unique_values": 1,
+          "format_pattern": "integer"
+        },
+        {
+          "name": "equity_change",
+          "data_type": "numeric",
+          "sample_values": [
+            "0.0",
+            "15.292479343006702",
+            "17.095910561406342",
+            "-6.039155112102414",
+            "-12.140889501101016"
+          ],
+          "nullable": "False",
+          "unique_values": 122,
+          "format_pattern": "float"
+        },
+        {
+          "name": "equity_change_pct",
+          "data_type": "numeric",
+          "sample_values": [
+            "0.0",
+            "0.0",
+            "0.0",
+            "0.0",
+            "0.0"
+          ],
+          "nullable": "False",
+          "unique_values": 1,
+          "format_pattern": "integer"
+        },
+        {
+          "name": "drawdown",
+          "data_type": "numeric",
+          "sample_values": [
+            "9.65546797108216",
+            "0.0",
+            "0.0",
+            "6.039155112102414",
+            "18.180044613203428"
+          ],
+          "nullable": "False",
+          "unique_values": 104,
+          "format_pattern": "float"
+        },
+        {
+          "name": "drawdown_pct",
+          "data_type": "numeric",
+          "sample_values": [
+            "0.0",
+            "0.0",
+            "0.0",
+            "0.0",
+            "0.0"
+          ],
+          "nullable": "False",
+          "unique_values": 1,
+          "format_pattern": "integer"
+        },
+        {
+          "name": "peak_equity",
+          "data_type": "numeric",
+          "sample_values": [
+            "151.89629075077426",
+            "151.89629075077426",
+            "151.89629075077426",
+            "151.89629075077426",
+            "151.89629075077426"
+          ],
+          "nullable": "False",
+          "unique_values": 1,
+          "format_pattern": "float"
+        },
+        {
+          "name": "mfe",
+          "data_type": "numeric",
+          "sample_values": [
+            "-9.65546797108216",
+            "5.637011371924542",
+            "22.73292193333089",
+            "16.693766821228472",
+            "4.552877320127456"
+          ],
+          "nullable": "False",
+          "unique_values": 122,
+          "format_pattern": "float"
+        },
+        {
+          "name": "mae",
+          "data_type": "numeric",
+          "sample_values": [
+            "-9.65546797108216",
+            "0.0",
+            "0.0",
+            "-6.039155112102414",
+            "-18.180044613203428"
+          ],
+          "nullable": "False",
+          "unique_values": 104,
+          "format_pattern": "float"
+        }
+      ],
+      "row_count": 122,
+      "last_modified": "2025-07-31T10:13:23.161166",
+      "file_size_bytes": 16046,
+      "dependencies": [
+        "portfolio"
+      ],
+      "refresh_frequency": "daily",
+      "data_sources": [
+        "yahoo_finance",
+        "alpha_vantage"
+      ],
+      "freshness_threshold_hours": 24,
+      "minimum_rows": 100,
+      "required_columns": [
+        "equity_pct",
+        "mfe",
+        "mae",
+        "equity_change_pct",
+        "drawdown",
+        "equity",
+        "timestamp",
+        "peak_equity",
+        "equity_change",
+        "drawdown_pct"
+      ]
+    },
+    {
+      "contract_id": "trade-history_live_signals",
+      "category": "trade-history",
+      "file_path": "/Users/colemorton/Projects/sensylate-command-system-enhancements/frontend/public/data/trade-history/live_signals.csv",
+      "relative_path": "trade-history/live_signals.csv",
+      "schema": [
+        {
+          "name": "Position_UUID",
+          "data_type": "uuid",
+          "sample_values": [
+            "CRWD_EMA_5_21_2025-04-14",
+            "NFLX_EMA_19_46_2025-04-14",
+            "COST_EMA_29_68_2025-04-30",
+            "INTU_SMA_54_64_2025-04-30",
+            "GOOGL_SMA_9_39_2025-05-05"
+          ],
+          "nullable": "False",
+          "unique_values": 38,
+          "format_pattern": null
+        },
+        {
+          "name": "Ticker",
+          "data_type": "string",
+          "sample_values": [
+            "CRWD",
+            "NFLX",
+            "COST",
+            "INTU",
+            "GOOGL"
+          ],
+          "nullable": "False",
+          "unique_values": 35,
+          "format_pattern": null
+        },
+        {
+          "name": "Strategy_Type",
+          "data_type": "categorical",
+          "sample_values": [
+            "EMA",
+            "EMA",
+            "EMA",
+            "SMA",
+            "SMA"
+          ],
+          "nullable": "False",
+          "unique_values": 2,
+          "format_pattern": null
+        },
+        {
+          "name": "Short_Window",
+          "data_type": "numeric",
+          "sample_values": [
+            "5",
+            "19",
+            "29",
+            "54",
+            "9"
+          ],
+          "nullable": "False",
+          "unique_values": 35,
+          "format_pattern": "integer"
+        },
+        {
+          "name": "Long_Window",
+          "data_type": "numeric",
+          "sample_values": [
+            "21",
+            "46",
+            "68",
+            "64",
+            "39"
+          ],
+          "nullable": "False",
+          "unique_values": 29,
+          "format_pattern": "integer"
+        },
+        {
+          "name": "Signal_Window",
+          "data_type": "numeric",
+          "sample_values": [
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          "nullable": "False",
+          "unique_values": 1,
+          "format_pattern": "integer"
+        },
+        {
+          "name": "Entry_Timestamp",
+          "data_type": "datetime",
+          "sample_values": [
+            "2025-04-14 00:00:00",
+            "2025-04-14 00:00:00",
+            "2025-04-30 00:00:00",
+            "2025-04-30 00:00:00",
+            "2025-05-05 00:00:00"
+          ],
+          "nullable": "False",
+          "unique_values": 26,
+          "format_pattern": "%Y-%m-%d %H:%M:%S"
+        },
+        {
+          "name": "Exit_Timestamp",
+          "data_type": "datetime",
+          "sample_values": [
+            "2025-07-14 00:00:00",
+            "2025-07-09 00:00:00",
+            "2025-07-14 00:00:00",
+            "2025-07-10 00:00:00",
+            "2025-05-08 00:00:00"
+          ],
+          "nullable": "True",
+          "unique_values": 17,
+          "format_pattern": "%Y-%m-%d %H:%M:%S"
+        },
+        {
+          "name": "Avg_Entry_Price",
+          "data_type": "numeric",
+          "sample_values": [
+            "386.9549865722656",
+            "932.7000122070312",
+            "990.0",
+            "614.0900268554688",
+            "163.0"
+          ],
+          "nullable": "False",
+          "unique_values": 38,
+          "format_pattern": "float"
+        },
+        {
+          "name": "Avg_Exit_Price",
+          "data_type": "numeric",
+          "sample_values": [
+            "488.0",
+            "1275.31",
+            "973.29",
+            "768.43",
+            "155.0"
+          ],
+          "nullable": "True",
+          "unique_values": 29,
+          "format_pattern": "float"
+        },
+        {
+          "name": "Position_Size",
+          "data_type": "numeric",
+          "sample_values": [
+            "1.0",
+            "1.0",
+            "1.0",
+            "1.0",
+            "1.0"
+          ],
+          "nullable": "False",
+          "unique_values": 1,
+          "format_pattern": "integer"
+        },
+        {
+          "name": "Direction",
+          "data_type": "categorical",
+          "sample_values": [
+            "Long",
+            "Long",
+            "Long",
+            "Long",
+            "Long"
+          ],
+          "nullable": "False",
+          "unique_values": 1,
+          "format_pattern": null
+        },
+        {
+          "name": "PnL",
+          "data_type": "numeric",
+          "sample_values": [
+            "101.05",
+            "342.61",
+            "-16.71",
+            "154.34",
+            "-8.0"
+          ],
+          "nullable": "True",
+          "unique_values": 29,
+          "format_pattern": "float"
+        },
+        {
+          "name": "Return",
+          "data_type": "numeric",
+          "sample_values": [
+            "0.2611",
+            "0.3673",
+            "-0.0169",
+            "0.2513",
+            "-0.049079"
+          ],
+          "nullable": "True",
+          "unique_values": 29,
+          "format_pattern": "float"
+        },
+        {
+          "name": "Duration_Days",
+          "data_type": "numeric",
+          "sample_values": [
+            "91.0",
+            "86.0",
+            "75.0",
+            "71.0",
+            "3.0"
+          ],
+          "nullable": "True",
+          "unique_values": 25,
+          "format_pattern": "integer"
+        },
+        {
+          "name": "Trade_Type",
+          "data_type": "categorical",
+          "sample_values": [
+            "Long",
+            "Long",
+            "Long",
+            "Long",
+            "Long"
+          ],
+          "nullable": "False",
+          "unique_values": 1,
+          "format_pattern": null
+        },
+        {
+          "name": "Status",
+          "data_type": "categorical",
+          "sample_values": [
+            "Closed",
+            "Closed",
+            "Closed",
+            "Closed",
+            "Closed"
+          ],
+          "nullable": "False",
+          "unique_values": 2,
+          "format_pattern": null
+        },
+        {
+          "name": "Max_Favourable_Excursion",
+          "data_type": "numeric",
+          "sample_values": [
+            "0.338605",
+            "0.43537",
+            "0.077859",
+            "0.287433",
+            "0.113067"
+          ],
+          "nullable": "False",
+          "unique_values": 38,
+          "format_pattern": "float"
+        },
+        {
+          "name": "Max_Adverse_Excursion",
+          "data_type": "numeric",
+          "sample_values": [
+            "0.080875",
+            "0.0",
+            "0.024535",
+            "0.006302",
+            "0.093006"
+          ],
+          "nullable": "False",
+          "unique_values": 37,
+          "format_pattern": "float"
+        },
+        {
+          "name": "MFE_MAE_Ratio",
+          "data_type": "numeric",
+          "sample_values": [
+            "4.186769706336939",
+            "3.1733849602608517",
+            "45.609806410663275",
+            "1.21569576156377",
+            "15.265766550522647"
+          ],
+          "nullable": "True",
+          "unique_values": 37,
+          "format_pattern": "float"
+        },
+        {
+          "name": "Exit_Efficiency",
+          "data_type": "numeric",
+          "sample_values": [
+            "0.8435",
+            "-0.4341",
+            "0.256744",
+            "-2.382981",
+            "-4.7372"
+          ],
+          "nullable": "True",
+          "unique_values": 17,
+          "format_pattern": "float"
+        },
+        {
+          "name": "Days_Since_Entry",
+          "data_type": "numeric",
+          "sample_values": [
+            "91.0",
+            "75.0",
+            "71.0",
+            "3.0",
+            "71.0"
+          ],
+          "nullable": "True",
+          "unique_values": 19,
+          "format_pattern": "integer"
+        },
+        {
+          "name": "Current_Unrealized_PnL",
+          "data_type": "numeric",
+          "sample_values": [
+            "0.2611",
+            "-0.0169",
+            "0.2513",
+            "-0.049079",
+            "0.1693556684924398"
+          ],
+          "nullable": "True",
+          "unique_values": 21,
+          "format_pattern": "float"
+        },
+        {
+          "name": "Current_Excursion_Status",
+          "data_type": "string",
+          "sample_values": [
+            "Favorable",
+            "Adverse",
+            "Favorable",
+            "Adverse",
+            "Favorable"
+          ],
+          "nullable": "True",
+          "unique_values": 2,
+          "format_pattern": null
+        },
+        {
+          "name": "Exit_Efficiency_Fixed",
+          "data_type": "numeric",
+          "sample_values": [
+            "0.7712",
+            "-0.2168",
+            "0.8744",
+            "-0.4341",
+            "0.5767"
+          ],
+          "nullable": "True",
+          "unique_values": 27,
+          "format_pattern": "float"
+        },
+        {
+          "name": "Trade_Quality",
+          "data_type": "string",
+          "sample_values": [
+            "Excellent",
+            "Excellent",
+            "Excellent",
+            "Excellent",
+            "Poor"
+          ],
+          "nullable": "False",
+          "unique_values": 5,
+          "format_pattern": null
+        },
+        {
+          "name": "X_Status",
+          "data_type": "numeric",
+          "sample_values": [
+            "1911689528345346367",
+            "1914511681620943333",
+            "1917431122784575695",
+            "1917434673879474514",
+            "1919230882873029008"
+          ],
+          "nullable": "False",
+          "unique_values": 38,
+          "format_pattern": "integer"
+        }
+      ],
+      "row_count": 38,
+      "last_modified": "2025-07-28T13:15:16.422455",
+      "file_size_bytes": 9078,
+      "dependencies": [
+        "trade-history"
+      ],
+      "refresh_frequency": "daily",
+      "data_sources": [
+        "trade_history_cli"
+      ],
+      "freshness_threshold_hours": 6,
+      "minimum_rows": 1,
+      "required_columns": [
+        "Short_Window",
+        "X_Status",
+        "Direction",
+        "Long_Window",
+        "Ticker",
+        "Trade_Type",
+        "Max_Favourable_Excursion",
+        "PnL",
+        "Trade_Quality",
+        "Max_Adverse_Excursion",
+        "Strategy_Type",
+        "Entry_Timestamp",
+        "Avg_Entry_Price",
+        "Position_UUID",
+        "Signal_Window",
+        "Status",
+        "Position_Size"
+      ]
+    }
+  ]
+}

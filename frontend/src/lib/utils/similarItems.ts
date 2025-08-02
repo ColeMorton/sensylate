@@ -1,5 +1,14 @@
 // similar products
-const similarItems = (currentItem: any, allItems: any[]) => {
+const similarItems = (
+  currentItem: {
+    id?: string;
+    data?: { categories?: string[]; tags?: string[] };
+  },
+  allItems: Array<{
+    id?: string;
+    data?: { categories?: string[]; tags?: string[] };
+  }>,
+) => {
   let categories: string[] = [];
   let tags: string[] = [];
 
@@ -15,7 +24,7 @@ const similarItems = (currentItem: any, allItems: any[]) => {
 
   // filter by categories
   const filterByCategories = allItems.filter(
-    (item: any) =>
+    (item) =>
       categories.length > 0 &&
       item.data.categories &&
       categories.find((category) => item.data.categories.includes(category)),
@@ -23,7 +32,7 @@ const similarItems = (currentItem: any, allItems: any[]) => {
 
   // filter by tags
   const filterByTags = allItems.filter(
-    (item: any) =>
+    (item) =>
       tags.length > 0 &&
       item.data.tags &&
       tags.find((tag) => item.data.tags.includes(tag)),

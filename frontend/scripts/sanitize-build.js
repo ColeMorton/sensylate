@@ -74,6 +74,12 @@ const IGNORE_PATTERNS = [
   /\.params\.push.*access_token/i, // Plotly URL parameter building
   /_mapboxAccessToken/i, // Plotly mapbox token variable
   /styleValueDflt/i, // Plotly style defaults
+
+  // Tabler Icons library patterns (legitimate icon component names)
+  /"[A-Z][a-zA-Z]*(?:Filled|Outline)?"/, // Icon component names like "LayoutDistributeHorizontalFilled"
+  /layout-[a-z-]*-filled/i, // Icon slug names like "layout-distribute-horizontal-filled"
+  /square-rounded-[a-z-]*-filled/i, // Icon slug names like "square-rounded-chevrons-right-filled"
+  /@tabler\/icons-react.*[A-Za-z0-9]{32,}/i, // Tabler icons library context
 ];
 
 // Allowed public prefixes (these are safe to expose)

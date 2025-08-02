@@ -45,7 +45,7 @@ const PlotlyChart: React.FC<PlotlyChartProps> = ({
 }) => {
   const [chartData, setChartData] = useState<Data[]>(data);
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const plotRef = useRef<any>(null);
+  const plotRef = useRef<HTMLDivElement | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
   // Detect dark mode

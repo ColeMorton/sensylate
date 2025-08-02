@@ -247,9 +247,11 @@ class TemplateCustomizationValidator:
                             "type": "placeholder_value",
                             "path": path,
                             "issue": f"Generic placeholder in value: {data}",
-                            "severity": "high"
-                            if "N/A" in data or "Representative" in data
-                            else "medium",
+                            "severity": (
+                                "high"
+                                if "N/A" in data or "Representative" in data
+                                else "medium"
+                            ),
                         }
                     )
                     break

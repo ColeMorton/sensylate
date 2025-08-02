@@ -30,7 +30,7 @@ export function useAppleStockData(): DataServiceResponse<StockDataRow[]> {
       } catch (err) {
         // Don't set error if request was aborted (component unmounting)
         if (err instanceof Error && err.name !== "AbortError") {
-          console.error("Apple stock data loading error:", err);
+          // Apple stock data loading error
           setError(
             err instanceof Error
               ? err.message
@@ -131,13 +131,19 @@ export function usePortfolioData(chartType: ChartType): DataServiceResponse<{
             break;
           }
 
+          case "open-positions-pnl-timeseries-weekly": {
+            // Weekly open positions PnL charts are handled by useOpenPositionsPnLData hook
+            setData({});
+            break;
+          }
+
           default:
             setData({});
         }
       } catch (err) {
         // Don't set error if request was aborted (component unmounting)
         if (err instanceof Error && err.name !== "AbortError") {
-          console.error("Portfolio data loading error:", err);
+          // Portfolio data loading error
           setError(
             err instanceof Error
               ? err.message
@@ -160,7 +166,8 @@ export function usePortfolioData(chartType: ChartType): DataServiceResponse<{
       chartType !== "apple-stock" &&
       !chartType.startsWith("live-signals-") &&
       chartType !== "trade-pnl-waterfall" &&
-      chartType !== "open-positions-pnl-timeseries"
+      chartType !== "open-positions-pnl-timeseries" &&
+      chartType !== "open-positions-pnl-timeseries-weekly"
     ) {
       fetchDataForChartType(abortController.signal);
     } else {

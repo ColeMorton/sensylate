@@ -40,6 +40,17 @@ repos:
         args: ["-r", "-f", "json", "--skip", "B404,B603,B607"]
         exclude: ^scripts/.*test.*\.py$
 
+  # Chart data refresh pipeline
+  - repo: local
+    hooks:
+      - id: refresh-chart-data
+        name: refresh chart data
+        entry: python scripts/data_pipeline_manager.py
+        language: system
+        files: ^(scripts/.*\.py|frontend/src/.*(tsx?|astro)|frontend/src/.*charts.*|frontend/src/.*dashboard.*)$
+        pass_filenames: false
+        verbose: true
+
   # Frontend TypeScript/JavaScript quality
   - repo: local
     hooks:

@@ -420,11 +420,11 @@ class TemplateCriteriaManager:
                 content_type: profile.to_dict()
                 for content_type, profile in self.criteria_profiles.items()
             },
-            "export_timestamp": self.logger.logger.handlers[0].formatter.formatTime(
-                None, None
-            )
-            if self.logger.logger.handlers
-            else "unknown",
+            "export_timestamp": (
+                self.logger.logger.handlers[0].formatter.formatTime(None, None)
+                if self.logger.logger.handlers
+                else "unknown"
+            ),
         }
 
         try:

@@ -304,14 +304,16 @@ class TwitterTemplateSelector:
             "total_selections": total_selections,
             "template_usage": template_usage,
             "average_scores": average_scores,
-            "most_used_template": max(template_usage.items(), key=lambda x: x[1])[0]
-            if template_usage
-            else None,
-            "highest_scoring_template": max(average_scores.items(), key=lambda x: x[1])[
-                0
-            ]
-            if average_scores
-            else None,
+            "most_used_template": (
+                max(template_usage.items(), key=lambda x: x[1])[0]
+                if template_usage
+                else None
+            ),
+            "highest_scoring_template": (
+                max(average_scores.items(), key=lambda x: x[1])[0]
+                if average_scores
+                else None
+            ),
         }
 
     def export_configuration(self, output_path: Path) -> None:

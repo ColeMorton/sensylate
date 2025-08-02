@@ -8,8 +8,8 @@ export interface CalculatorField {
   max?: number;
   step?: number;
   options?: { value: string | number; label: string }[];
-  defaultValue?: any;
-  validation?: (value: any) => string | null;
+  defaultValue?: unknown;
+  validation?: (value: unknown) => string | null;
 }
 
 export interface CalculatorSchema {
@@ -31,12 +31,12 @@ export interface CalculatorConfig {
   theme?: string;
   layout?: "vertical" | "horizontal" | "grid";
   showMetadata?: boolean;
-  customStyles?: Record<string, any>;
+  customStyles?: Record<string, Record<string, string | number>>;
 }
 
 export interface CalculatorResult {
   success: boolean;
-  data?: Record<string, any>;
+  data?: Record<string, unknown>;
   error?: string;
   warnings?: string[];
   metadata?: {
@@ -51,10 +51,10 @@ export abstract class BaseCalculator {
   abstract readonly schema: CalculatorSchema;
 
   abstract calculate(
-    inputs: Record<string, any>,
+    inputs: Record<string, unknown>,
   ): Promise<CalculatorResult> | CalculatorResult;
 
-  validateInputs(inputs: Record<string, any>): string[] {
+  validateInputs(inputs: Record<string, unknown>): string[] {
     const errors: string[] = [];
 
     for (const field of this.schema.inputs) {
@@ -95,8 +95,8 @@ export abstract class BaseCalculator {
     return errors;
   }
 
-  getDefaultInputs(): Record<string, any> {
-    const defaults: Record<string, any> = {};
+  getDefaultInputs(): Record<string, unknown> {
+    const defaults: Record<string, unknown> = {};
     for (const field of this.schema.inputs) {
       if (field.defaultValue !== undefined) {
         defaults[field.name] = field.defaultValue;

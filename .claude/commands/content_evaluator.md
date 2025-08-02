@@ -57,6 +57,7 @@ evidence_script:
 | financial_analysis_evaluation | `evaluation/financial_analysis_validation.j2` | Content type financial analysis | Investment research validation |
 | market_research_evaluation | `evaluation/market_research_validation.j2` | Content type market research | Market analysis quality assessment |
 | strategic_assessment_evaluation | `evaluation/strategic_assessment_validation.j2` | Content type strategic analysis | Business intelligence validation |
+| comparative_analysis_evaluation | `evaluation/comparative_analysis_validation.j2` | Content type comparative analysis | Cross-stock comparative investment analysis validation |
 | compliance_evaluation | `evaluation/compliance_validation.j2` | Regulatory content focus | Compliance and risk assessment |
 | general_content_evaluation | `evaluation/general_content_validation.j2` | Default fallback template | General content quality assessment |
 
@@ -73,6 +74,10 @@ evidence_matrix_template:
 risk_assessment_template:
   path: "{TEMPLATES_BASE}/content_evaluation/shared/risk_assessment.j2"
   purpose: "Risk calibration and impact assessment components"
+
+comparative_matrix_template:
+  path: "{TEMPLATES_BASE}/content_evaluation/shared/comparative_matrix.j2"
+  purpose: "Cross-stock comparative analysis validation and consistency checking"
 ```
 
 **Template Selection Algorithm**:
@@ -92,6 +97,12 @@ def select_evaluation_template(content_analysis):
     # Strategic assessment for business intelligence
     elif content_analysis.get('content_type') == 'strategic_analysis':
         return 'evaluation/strategic_assessment_validation.j2'
+
+    # Comparative analysis evaluation for cross-stock analysis
+    elif (content_analysis.get('content_type') == 'comparative_analysis' or
+          '_vs_' in content_analysis.get('filename', '').lower() or
+          len(content_analysis.get('stock_symbols', [])) >= 2):
+        return 'evaluation/comparative_analysis_validation.j2'
 
     # Compliance evaluation for regulatory content
     elif (content_analysis.get('regulatory_focus', False) or
@@ -262,7 +273,9 @@ content_evaluation_flow:
 
 ### Advanced Parameters
 - `confidence_threshold`: Minimum confidence requirement - `9.0` | `9.5` | `9.8` (optional, default: 9.0)
-- `template_variant`: Specific template override - `financial_analysis` | `market_research` | `strategic_assessment` | `auto` (optional, default: auto)
+- `template_variant`: Specific template override - `financial_analysis` | `market_research` | `strategic_assessment` | `comparative_analysis` | `auto` (optional, default: auto)
+- `comparative_validation`: Enable specialized comparative analysis validation - `true` | `false` (optional, default: auto-detect)
+- `cross_stock_threshold`: Cross-stock data consistency threshold - `1%` | `3%` | `5%` (optional, default: 3%)
 - `cli_validation`: Enable real-time CLI service validation - `true` | `false` (optional, default: true)
 - `output_format`: Output format preference - `markdown` | `json` | `both` (optional, default: markdown)
 
@@ -270,14 +283,15 @@ content_evaluation_flow:
 - `phase_start`: Starting phase - `validation` | `market_data` | `compliance` | `evidence` (optional)
 - `phase_end`: Ending phase - `validation` | `market_data` | `compliance` | `evidence` (optional)
 - `continue_on_error`: Continue workflow despite errors - `true` | `false` (optional, default: false)
-- `content_type`: Content type for evaluation - `financial_analysis` | `trade_history` | `sector_analysis` (optional)
+- `content_type`: Content type for evaluation - `financial_analysis` | `trade_history` | `sector_analysis` | `comparative_analysis` (optional)
 
 ## Systematic Evaluation Methodology
 
 **Phase 0: Pre-Evaluation Context Establishment**
 - Document analysis date and data freshness requirements
-- Identify content type (financial analysis, market research, strategic assessment)
+- Identify content type (financial analysis, market research, strategic assessment, comparative analysis)
 - Extract stock symbols/tickers for real-time data validation via Yahoo Finance CLI
+- **For Comparative Analysis**: Identify both companies and validate cross-stock comparison framework
 - Assess claimed confidence levels and methodology transparency
 - Note any explicit limitations or assumptions stated
 
@@ -290,6 +304,7 @@ content_evaluation_flow:
 
 2. **Evidence Mapping**: For each claim, identify:
    - Primary source requirements (SEC filings, official reports)
+   - **For Comparative Analysis**: Cross-stock data consistency requirements
    - Verification methodology needed
    - Potential conflict indicators
    - Time-sensitivity factors
@@ -297,16 +312,20 @@ content_evaluation_flow:
 **Phase 2: Multi-Source Validation Protocol**
 3. **Primary Source Verification**:
    - Cross-reference ALL quantitative data with official sources (10-K, 10-Q, earnings calls)
+   - **For Comparative Analysis**: Validate data consistency across both companies
    - Validate regulatory information via authoritative bodies (SEC, FDA, etc.)
    - **Use Yahoo Finance MCP server** for real-time financial data validation:
      - MCP tool `get_stock_fundamentals(ticker)` - Current stock metrics and valuations
      - MCP tool `get_financial_statements(ticker)` - Financial statements and data integrity
      - MCP tool `get_market_data_summary(ticker, period)` - Historical performance analysis
+     - **For Comparative Analysis**: Execute for both tickers and cross-validate comparative claims
    - Verify timeline accuracy against actual events
 
 4. **Consistency Analysis**:
    - Compare claims against peer analysis and consensus estimates
+   - **For Comparative Analysis**: Verify cross-stock comparison methodology and winner determination logic
    - Check internal logical consistency within the document
+   - **For Comparative Analysis**: Validate risk matrix probabilities and portfolio allocation rationale
    - Identify conflicts between stated confidence and supporting evidence
    - Assess methodology appropriateness for stated conclusions
 
@@ -348,32 +367,46 @@ content_evaluation_flow:
 **Evidence-Based Rating Benchmarks**:
 
 **Financial Data Accuracy (Weight: 30%)**
-- A (9-10): All metrics verified via official filings, <5% variance from source
-- B (7-8): Minor discrepancies <10%, or timing lags clearly noted
-- C (5-6): Significant errors 10-25%, or methodology concerns present
-- D (3-4): Major errors >25%, or unverifiable source claims
-- F (1-2): Fundamental calculation errors or fabricated data
+- A (9-10): All metrics verified via official filings, <5% variance from source, cross-stock data consistent
+- B (7-8): Minor discrepancies <10%, or timing lags clearly noted, comparative ratios accurate
+- C (5-6): Significant errors 10-25%, or methodology concerns present, some cross-stock inconsistencies
+- D (3-4): Major errors >25%, or unverifiable source claims, significant comparative data issues
+- F (1-2): Fundamental calculation errors or fabricated data, cross-stock analysis fundamentally flawed
 
-**Market Analysis Quality (Weight: 25%)**
+**Comparative Analysis Quality (Weight: 25%)** *[For Comparative Analysis Only]*
+- A (9-10): Sound comparative methodology, winner determination well-supported, risk matrices accurate
+- B (7-8): Generally sound comparison with minor gaps in cross-stock analysis or portfolio logic
+- C (5-6): Some comparative methodology concerns or questionable winner determination rationale
+- D (3-4): Significant comparative framework issues or unsupported cross-stock conclusions
+- F (1-2): Comparative methodology fundamentally flawed or winner determination lacks basis
+
+**Market Analysis Quality (Weight: 25%)** *[For Non-Comparative Analysis]*
 - A (9-10): Assumptions backed by current research, peer consensus alignment
 - B (7-8): Reasonable assumptions with minor gaps in supporting evidence
 - C (5-6): Questionable assumptions or significant peer disagreement
 - D (3-4): Unsupported assumptions or contradicted by evidence
 - F (1-2): Assumptions contradicted by readily available data
 
-**Regulatory/Risk Assessment (Weight: 25%)**
-- A (9-10): Current regulatory status verified, risks appropriately weighted
-- B (7-8): Generally current with minor timeline or impact uncertainties
-- C (5-6): Some outdated information or risk probability miscalibration
-- D (3-4): Major regulatory gaps or significantly understated risks
-- F (1-2): Fundamental regulatory misunderstanding or ignored risks
+**Risk Assessment (Weight: 20%)**
+- A (9-10): Risk matrices accurate, stress testing sound, comparative risk analysis well-calibrated
+- B (7-8): Generally sound risk assessment with minor probability or impact uncertainties
+- C (5-6): Some risk probability miscalibration or missing cross-stock risk considerations
+- D (3-4): Significant risk assessment gaps or understated comparative risks
+- F (1-2): Risk analysis fundamentally flawed or critical risks ignored
 
-**Methodology Transparency (Weight: 20%)**
-- A (9-10): Assumptions explicit, confidence levels appropriate, limitations noted
-- B (7-8): Generally transparent with minor gaps in methodology disclosure
-- C (5-6): Some methodology concerns or overconfident assertions
-- D (3-4): Significant methodology gaps or inappropriate confidence claims
-- F (1-2): Methodology opaque or confidence claims unsupported by analysis
+**Regulatory/Compliance Assessment (Weight: 15%)**
+- A (9-10): Current regulatory status verified, compliance requirements understood
+- B (7-8): Generally current with minor regulatory timeline uncertainties
+- C (5-6): Some outdated regulatory information or compliance gaps
+- D (3-4): Major regulatory gaps or compliance misunderstandings
+- F (1-2): Fundamental regulatory misunderstanding or ignored compliance issues
+
+**Methodology Transparency (Weight: 10%)**
+- A (9-10): Methodology explicit, confidence levels appropriate, comparative framework clear
+- B (7-8): Generally transparent with minor gaps in methodology or comparative logic disclosure
+- C (5-6): Some methodology concerns or overconfident comparative assertions
+- D (3-4): Significant methodology gaps or inappropriate confidence in comparative claims
+- F (1-2): Methodology opaque or comparative confidence claims unsupported by analysis
 
 ## Structured Output Requirements
 
@@ -392,9 +425,12 @@ content_evaluation_flow:
 | Category | Score | Grade | Weight | Evidence Quality | Key Issues |
 |----------|-------|--------|--------|------------------|------------|
 | Financial Data | X.X/10 | [A-F] | 30% | [Primary/Secondary/Unverified] | [Brief summary] |
-| Market Analysis | X.X/10 | [A-F] | 25% | [Primary/Secondary/Unverified] | [Brief summary] |
-| Regulatory/Risk | X.X/10 | [A-F] | 25% | [Primary/Secondary/Unverified] | [Brief summary] |
-| Methodology | X.X/10 | [A-F] | 20% | [Primary/Secondary/Unverified] | [Brief summary] |
+| Comparative Analysis* | X.X/10 | [A-F] | 25% | [Primary/Secondary/Unverified] | [Brief summary] |
+| Risk Assessment | X.X/10 | [A-F] | 20% | [Primary/Secondary/Unverified] | [Brief summary] |
+| Regulatory/Compliance | X.X/10 | [A-F] | 15% | [Primary/Secondary/Unverified] | [Brief summary] |
+| Methodology | X.X/10 | [A-F] | 10% | [Primary/Secondary/Unverified] | [Brief summary] |
+
+*For comparative analysis content only. Non-comparative content uses Market Analysis (25%) instead.
 
 ## Critical Findings Matrix
 ### ✅ Verified Claims (High Confidence)
@@ -485,13 +521,18 @@ When evaluating financial content, ALWAYS use the CLI service ecosystem for curr
 
 **Step 1: Symbol Extraction**
 - Scan content for stock symbols/tickers (e.g., HIMS, AAPL, TSLA)
+- **For Comparative Analysis**: Identify both companies being compared (e.g., AAPL vs MSFT)
 - Note claimed stock prices, valuations, and financial metrics
+- **For Comparative Analysis**: Extract comparative ratios, risk matrices, and portfolio allocations
 - Identify date ranges for historical data validation
 
 **Step 2: Real-Time Validation**
 - Execute CLI service commands for each identified symbol
+- **For Comparative Analysis**: Execute for both companies and validate cross-stock comparisons
 - Compare CLI service results with content claims
+- **For Comparative Analysis**: Verify comparative ratios and relative positioning accuracy
 - Calculate variance percentages for quantitative metrics
+- **For Comparative Analysis**: Cross-validate winner determination logic with actual data
 - Flag discrepancies exceeding accuracy thresholds
 
 **Step 3: Data Quality Assessment**
@@ -499,6 +540,7 @@ When evaluating financial content, ALWAYS use the CLI service ecosystem for curr
 - **Minor Discrepancy** (5-10% variance): Grade B with timing notation
 - **Significant Error** (10-25% variance): Grade C with methodology concerns
 - **Major Inaccuracy** (>25% variance): Grade D/F requiring correction
+- **For Comparative Analysis**: Additional cross-stock consistency threshold (≤3% variance between comparative claims)
 
 **CLI Service Data Reliability Standards**:
 - Yahoo Finance provides real-time market data with <15 minute delay
@@ -606,6 +648,10 @@ python {SCRIPTS_BASE}/content_evaluation/batch_evaluator.py \
 
 # Multi-source validation for critical content
 /content_evaluator filename="/data/outputs/investment_recommendations/HIGH_CONVICTION_PICKS_20250718.md" evaluation_depth=institutional real_time_validation=true
+
+# Comparative analysis evaluation examples
+/content_evaluator filename="/data/outputs/comparative_analysis/AAPL_vs_GOOGL_20250718.md" comparative_validation=true
+/content_evaluator filename="/data/outputs/comparative_analysis/cross-sector-comparison-20250718.md" evaluation_depth=comprehensive
 ```
 
 Analyzes the specified file and generates comprehensive accuracy evaluation report with evidence-based scoring and actionable recommendations.
@@ -654,6 +700,7 @@ Analyzes the specified file and generates comprehensive accuracy evaluation repo
 - `fundamental_analyst`: Provides fundamental analysis reports via {DATA_OUTPUTS}/fundamental_analysis/
 - `trade_history`: Provides trade history reports via {DATA_OUTPUTS}/trade_history/
 - `sector_analyst`: Provides sector analysis reports via {DATA_OUTPUTS}/sector_analysis/
+- `comparative_analyst`: Provides comparative analysis reports via {DATA_OUTPUTS}/comparative_analysis/ (DASV framework)
 
 ### Downstream Dependencies
 **Commands that consume this command's outputs**:
@@ -667,6 +714,12 @@ Analyzes the specified file and generates comprehensive accuracy evaluation repo
 /fundamental_analyst TICKER
 /content_evaluator filename="{DATA_OUTPUTS}/fundamental_analysis/TICKER_YYYYMMDD.md"
 /content_publisher ticker=TICKER
+
+# Comparative analysis evaluation workflow
+/comparative_analyst/discover ticker_1=AAPL ticker_2=MSFT
+/comparative_analyst/synthesize analysis_file="data/outputs/comparative_analysis/analysis/AAPL_vs_MSFT_{date}_analysis.json"
+/content_evaluator filename="{DATA_OUTPUTS}/comparative_analysis/AAPL_vs_MSFT_YYYYMMDD.md" comparative_validation=true
+/content_publisher content_type=comparative_analysis
 
 # Validation workflow
 /trade_history action=analyze
@@ -723,16 +776,19 @@ quality_assurance:
 ```
 /content_evaluator filename="{DATA_OUTPUTS}/fundamental_analysis/AAPL_20250718.md"
 /content_evaluator filename="{DATA_OUTPUTS}/trade_history/trading-performance-historical-20250718.md"
+/content_evaluator filename="{DATA_OUTPUTS}/comparative_analysis/AAPL_vs_MSFT_20250718.md"
 ```
 
 ### Advanced Usage
 ```
 /content_evaluator filename="{DATA_OUTPUTS}/sector_analysis/technology-sector-analysis-20250718.md" evaluation_depth=institutional confidence_threshold=9.5
+/content_evaluator filename="{DATA_OUTPUTS}/comparative_analysis/AAPL_vs_MSFT_20250718.md" comparative_validation=true cross_stock_threshold=1%
 ```
 
 ### Validation Enhancement
 ```
 /content_evaluator filename="{DATA_OUTPUTS}/fundamental_analysis/TSLA_20250718.md" validation_focus=financial_data,market_analysis real_time_validation=true
+/content_evaluator filename="{DATA_OUTPUTS}/comparative_analysis/MU_vs_DHR_20250730.md" evaluation_depth=institutional template_variant=comparative_analysis
 ```
 
 ---

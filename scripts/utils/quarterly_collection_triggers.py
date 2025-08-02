@@ -120,12 +120,16 @@ class QuarterlyCollectionTrigger:
                 datetime(year, 10, 15),  # Q3 earnings season start
                 datetime(year, 11, 15),  # Q3 earnings season end
                 # Q4 earnings typically released in January-March (of next year)
-                datetime(year + 1, 1, 15)
-                if year == current_year
-                else datetime(year, 1, 15),  # Q4 earnings season start
-                datetime(year + 1, 3, 15)
-                if year == current_year
-                else datetime(year, 3, 15),  # Q4 earnings season end
+                (
+                    datetime(year + 1, 1, 15)
+                    if year == current_year
+                    else datetime(year, 1, 15)
+                ),  # Q4 earnings season start
+                (
+                    datetime(year + 1, 3, 15)
+                    if year == current_year
+                    else datetime(year, 3, 15)
+                ),  # Q4 earnings season end
             ]
 
         return quarters

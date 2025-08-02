@@ -10,7 +10,7 @@ function Video({
   width: number;
   height: number | "auto";
   src: string;
-  [key: string]: any;
+  [key: string]: unknown;
 }) {
   return (
     <video

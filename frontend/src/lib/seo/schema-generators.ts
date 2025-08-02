@@ -146,8 +146,8 @@ export function generateBreadcrumbSchema(
 export function serializeSchema(schema: BaseSchema): string {
   try {
     return JSON.stringify(schema, null, 0);
-  } catch (error) {
-    console.error("Error serializing schema:", error);
+  } catch {
+    // Error serializing schema
     return "{}";
   }
 }
@@ -157,18 +157,18 @@ export function validateSchema(schema: BaseSchema): boolean {
   try {
     // Basic validation checks
     if (!schema["@context"] || !schema["@type"]) {
-      console.warn("Schema missing required @context or @type");
+      // Schema missing required @context or @type
       return false;
     }
 
     if (schema["@context"] !== "https://schema.org") {
-      console.warn("Schema @context should be https://schema.org");
+      // Schema @context should be https://schema.org
       return false;
     }
 
     return true;
-  } catch (error) {
-    console.error("Schema validation error:", error);
+  } catch {
+    // Schema validation error
     return false;
   }
 }

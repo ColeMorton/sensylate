@@ -1,0 +1,581 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sensylate.com/schemas/comparative_analysis_discovery.json",
+  "title": "Comparative Analysis Discovery Schema",
+  "description": "Comprehensive validation schema for comparative analysis discovery JSON outputs from DASV Phase 1 framework",
+  "type": "object",
+  "required": [
+    "metadata",
+    "comparative_company_intelligence",
+    "cross_sector_analysis",
+    "financial_metrics_comparison",
+    "business_model_comparison",
+    "competitive_position_analysis",
+    "economic_context_integration",
+    "risk_assessment_comparison",
+    "market_data_comparison",
+    "regulatory_environment_comparison",
+    "valuation_framework_comparison",
+    "data_quality_assessment",
+    "local_data_references",
+    "discovery_insights"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": [
+        "command_name",
+        "execution_timestamp",
+        "framework_phase",
+        "companies_analyzed",
+        "comparison_methodology",
+        "analysis_scope"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "command_name": {
+          "type": "string",
+          "const": "comparative_analysis_discover"
+        },
+        "execution_timestamp": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d{6})?Z?$"
+        },
+        "framework_phase": {
+          "type": "string",
+          "const": "DASV_Phase_1_Discovery"
+        },
+        "companies_analyzed": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Z]{1,5}$"
+          }
+        },
+        "comparison_methodology": {
+          "type": "string",
+          "const": "cross_sector_comparative_intelligence_framework"
+        },
+        "analysis_scope": {
+          "type": "string",
+          "enum": ["fundamental_comparison", "sector_comparison", "cross_industry_comparison"]
+        }
+      }
+    },
+    "comparative_company_intelligence": {
+      "type": "object",
+      "required": [
+        "company_a_profile",
+        "company_b_profile",
+        "comparative_assessment",
+        "confidence"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "company_a_profile": {
+          "type": "object",
+          "required": [
+            "ticker",
+            "company_name",
+            "sector",
+            "industry",
+            "business_model",
+            "market_position",
+            "financial_health_grade",
+            "confidence"
+          ],
+          "additionalProperties": true
+        },
+        "company_b_profile": {
+          "type": "object",
+          "required": [
+            "ticker",
+            "company_name",
+            "sector",
+            "industry",
+            "business_model",
+            "market_position",
+            "financial_health_grade",
+            "confidence"
+          ],
+          "additionalProperties": true
+        },
+        "comparative_assessment": {
+          "type": "object",
+          "required": [
+            "business_model_differences",
+            "market_position_comparison",
+            "competitive_advantages",
+            "strategic_positioning"
+          ],
+          "additionalProperties": true
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0.90,
+          "maximum": 1.0
+        }
+      }
+    },
+    "cross_sector_analysis": {
+      "type": "object",
+      "required": [
+        "sector_characteristics",
+        "industry_dynamics_comparison",
+        "regulatory_environment_comparison",
+        "economic_sensitivity_comparison",
+        "confidence"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "sector_characteristics": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "industry_dynamics_comparison": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "regulatory_environment_comparison": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "economic_sensitivity_comparison": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0.90,
+          "maximum": 1.0
+        }
+      }
+    },
+    "financial_metrics_comparison": {
+      "type": "object",
+      "required": [
+        "profitability_comparison",
+        "liquidity_comparison",
+        "leverage_comparison",
+        "efficiency_comparison",
+        "growth_comparison",
+        "confidence"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "profitability_comparison": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "liquidity_comparison": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "leverage_comparison": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "efficiency_comparison": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "growth_comparison": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0.95,
+          "maximum": 1.0
+        }
+      }
+    },
+    "business_model_comparison": {
+      "type": "object",
+      "required": [
+        "revenue_stream_analysis",
+        "operational_model_comparison",
+        "competitive_moat_analysis",
+        "scalability_assessment",
+        "confidence"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "revenue_stream_analysis": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "operational_model_comparison": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "competitive_moat_analysis": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "scalability_assessment": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0.90,
+          "maximum": 1.0
+        }
+      }
+    },
+    "competitive_position_analysis": {
+      "type": "object",
+      "required": [
+        "market_position_comparison",
+        "competitive_advantages_assessment",
+        "moat_strength_comparison",
+        "industry_positioning",
+        "confidence"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "market_position_comparison": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "competitive_advantages_assessment": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "moat_strength_comparison": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "industry_positioning": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0.90,
+          "maximum": 1.0
+        }
+      }
+    },
+    "economic_context_integration": {
+      "type": "object",
+      "required": [
+        "interest_rate_sensitivity",
+        "economic_cycle_positioning",
+        "policy_implications",
+        "macro_risk_factors",
+        "confidence"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "interest_rate_sensitivity": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "economic_cycle_positioning": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "policy_implications": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "macro_risk_factors": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0.90,
+          "maximum": 1.0
+        }
+      }
+    },
+    "risk_assessment_comparison": {
+      "type": "object",
+      "required": [
+        "operational_risk_comparison",
+        "financial_risk_comparison",
+        "competitive_risk_comparison",
+        "regulatory_risk_comparison",
+        "overall_risk_assessment",
+        "confidence"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "operational_risk_comparison": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "financial_risk_comparison": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "competitive_risk_comparison": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "regulatory_risk_comparison": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "overall_risk_assessment": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0.90,
+          "maximum": 1.0
+        }
+      }
+    },
+    "market_data_comparison": {
+      "type": "object",
+      "required": [
+        "valuation_metrics_comparison",
+        "performance_comparison",
+        "volatility_analysis",
+        "liquidity_assessment",
+        "confidence"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "valuation_metrics_comparison": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "performance_comparison": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "volatility_analysis": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "liquidity_assessment": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0.95,
+          "maximum": 1.0
+        }
+      }
+    },
+    "regulatory_environment_comparison": {
+      "type": "object",
+      "required": [
+        "regulatory_framework_analysis",
+        "compliance_requirements",
+        "policy_impact_assessment",
+        "regulatory_risk_comparison",
+        "confidence"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "regulatory_framework_analysis": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "compliance_requirements": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "policy_impact_assessment": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "regulatory_risk_comparison": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0.90,
+          "maximum": 1.0
+        }
+      }
+    },
+    "valuation_framework_comparison": {
+      "type": "object",
+      "required": [
+        "valuation_methodology_comparison",
+        "multiple_analysis",
+        "intrinsic_value_assessment",
+        "relative_valuation",
+        "confidence"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "valuation_methodology_comparison": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "multiple_analysis": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "intrinsic_value_assessment": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "relative_valuation": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0.90,
+          "maximum": 1.0
+        }
+      }
+    },
+    "data_quality_assessment": {
+      "type": "object",
+      "required": [
+        "overall_data_quality",
+        "source_reliability_scores",
+        "data_completeness",
+        "institutional_grade",
+        "quality_flags"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "overall_data_quality": {
+          "type": "number",
+          "minimum": 0.95,
+          "maximum": 1.0
+        },
+        "source_reliability_scores": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "data_completeness": {
+          "type": "number",
+          "minimum": 0.95,
+          "maximum": 1.0
+        },
+        "institutional_grade": {
+          "type": "boolean",
+          "const": true
+        },
+        "quality_flags": {
+          "type": "array",
+          "minItems": 3,
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "local_data_references": {
+      "type": "object",
+      "required": [
+        "discovered_files",
+        "relevance_scores",
+        "cross_reference_analysis",
+        "data_integration_opportunities"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "discovered_files": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": [
+              "file_path",
+              "file_type",
+              "relevance_score",
+              "relationship_description"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "file_path": {
+                "type": "string"
+              },
+              "file_type": {
+                "type": "string",
+                "enum": ["discovery", "analysis", "validation", "report", "data"]
+              },
+              "relevance_score": {
+                "type": "number",
+                "minimum": 0.7,
+                "maximum": 1.0
+              },
+              "relationship_description": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "relevance_scores": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "cross_reference_analysis": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "data_integration_opportunities": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "discovery_insights": {
+      "type": "object",
+      "required": [
+        "key_findings",
+        "comparative_advantages",
+        "risk_factors",
+        "next_phase_priorities",
+        "overall_confidence"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "key_findings": {
+          "type": "array",
+          "minItems": 5,
+          "items": {
+            "type": "string"
+          }
+        },
+        "comparative_advantages": {
+          "type": "array",
+          "minItems": 3,
+          "items": {
+            "type": "string"
+          }
+        },
+        "risk_factors": {
+          "type": "array",
+          "minItems": 3,
+          "items": {
+            "type": "string"
+          }
+        },
+        "next_phase_priorities": {
+          "type": "array",
+          "minItems": 3,
+          "items": {
+            "type": "string"
+          }
+        },
+        "overall_confidence": {
+          "type": "number",
+          "minimum": 0.90,
+          "maximum": 1.0
+        }
+      }
+    }
+  }
+}
