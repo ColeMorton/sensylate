@@ -10,22 +10,28 @@ import remarkToc from "remark-toc";
 import sharp from "sharp";
 import path from "path";
 import config from "./src/config/config.json";
+import { FEATURE_FLAGS, getFlagsForEnvironment, getBuildDefineName } from "./src/config/feature-flags.config.ts";
 
-// Build-time feature flag optimization
+// Build-time feature flag optimization using single source of truth
 const getFeatureFlags = () => {
   const envToBoolean = (value) => value?.toLowerCase() === 'true';
-  const isDevelopment = process.env.NODE_ENV === 'development';
-  return {
-    search: envToBoolean(process.env.PUBLIC_FEATURE_SEARCH) ?? config.settings.search,
-    theme_switcher: envToBoolean(process.env.PUBLIC_FEATURE_THEME_SWITCHER) ?? config.settings.theme_switcher,
-    comments: envToBoolean(process.env.PUBLIC_FEATURE_COMMENTS) ?? config.disqus.enable,
-    gtm: envToBoolean(process.env.PUBLIC_FEATURE_GTM) ?? config.google_tag_manager.enable,
-    calculators: envToBoolean(process.env.PUBLIC_FEATURE_CALCULATORS) ?? true,
-    calculator_advanced: envToBoolean(process.env.PUBLIC_FEATURE_CALCULATOR_ADVANCED) ?? false,
-    elements_page: envToBoolean(process.env.PUBLIC_FEATURE_ELEMENTS_PAGE) ?? true,
-    authors_page: envToBoolean(process.env.PUBLIC_FEATURE_AUTHORS_PAGE) ?? true,
-    charts_page: envToBoolean(process.env.PUBLIC_FEATURE_CHARTS_PAGE) ?? isDevelopment
-  };
+  const currentEnv = process.env.NODE_ENV === 'development' ? 'development' :
+                    process.env.PUBLIC_ENV === 'staging' ? 'staging' : 'production';
+
+  // Get environment-specific flags from single source
+  const configFlags = getFlagsForEnvironment(currentEnv);
+
+  // Allow environment variable overrides (maintains backward compatibility)
+  const flags = {};
+  for (const flag of FEATURE_FLAGS) {
+    const envVar = `PUBLIC_FEATURE_${flag.name.replace(/([A-Z])/g, '_$1').toUpperCase()}`;
+    const envValue = envToBoolean(process.env[envVar]);
+
+    // Use env override if present, otherwise use config value
+    flags[flag.name] = envValue !== undefined ? envValue : configFlags[flag.name];
+  }
+
+  return flags;
 };
 
 const buildTimeFlags = getFeatureFlags();
@@ -62,15 +68,12 @@ export default defineConfig({
     },
     define: {
       // Build-time feature flags for dead code elimination
-      __FEATURE_SEARCH__: buildTimeFlags.search,
-      __FEATURE_THEME_SWITCHER__: buildTimeFlags.theme_switcher,
-      __FEATURE_COMMENTS__: buildTimeFlags.comments,
-      __FEATURE_GTM__: buildTimeFlags.gtm,
-      __FEATURE_CALCULATORS__: buildTimeFlags.calculators,
-      __FEATURE_CALCULATOR_ADVANCED__: buildTimeFlags.calculator_advanced,
-      __FEATURE_ELEMENTS_PAGE__: buildTimeFlags.elements_page,
-      __FEATURE_AUTHORS_PAGE__: buildTimeFlags.authors_page,
-      __FEATURE_CHARTS_PAGE__: buildTimeFlags.charts_page,
+      // Generated from single source of truth with consistent naming
+      ...Object.fromEntries(
+        FEATURE_FLAGS
+          .filter(flag => flag.buildTimeOptimization)
+          .map(flag => [getBuildDefineName(flag.name), buildTimeFlags[flag.name]])
+      ),
     },
     resolve: {
       alias: {
@@ -99,9 +102,14 @@ export default defineConfig({
         "@/shortcodes/Youtube",
         "@/shortcodes/Tabs",
         "@/shortcodes/Tab",
-        "@/shortcodes/ChartDisplay",
-        "@/shortcodes/PhotoBoothDisplay",
-        "@/shortcodes/TablerIconShowcase",
+        // Conditional components for tree-shaking
+        "@/shortcodes/ConditionalTablerIconShowcase",
+        "@/shortcodes/ConditionalChartDisplay",
+        "@/shortcodes/ConditionalPhotoBoothDisplay",
+        // Original large components replaced with conditional versions:
+        // - ChartDisplay -> ConditionalChartDisplay
+        // - PhotoBoothDisplay -> ConditionalPhotoBoothDisplay
+        // - TablerIconShowcase -> ConditionalTablerIconShowcase
       ],
     }),
     mdx(),
