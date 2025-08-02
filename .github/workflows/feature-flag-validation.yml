@@ -1,0 +1,303 @@
+name: Feature Flag Validation
+
+on:
+  push:
+    branches: [ main, development, staging ]
+    paths:
+      - 'frontend/.env.*'
+      - 'frontend/netlify.toml'
+      - 'frontend/src/config/feature-flags.config.ts'
+      - 'frontend/astro.config.mjs'
+      - 'frontend/src/types/index.d.ts'
+      - 'frontend/scripts/generate-env-files.js'
+      - 'frontend/scripts/generate-netlify-config.js'
+      - 'frontend/scripts/validate-flags.js'
+      - 'frontend/scripts/sync-flags.js'
+      - '.github/workflows/feature-flag-validation.yml'
+
+  pull_request:
+    branches: [ main, development, staging ]
+    paths:
+      - 'frontend/.env.*'
+      - 'frontend/netlify.toml'
+      - 'frontend/src/config/feature-flags.config.ts'
+      - 'frontend/astro.config.mjs'
+      - 'frontend/src/types/index.d.ts'
+      - 'frontend/scripts/generate-env-files.js'
+      - 'frontend/scripts/generate-netlify-config.js'
+      - 'frontend/scripts/validate-flags.js'
+      - 'frontend/scripts/sync-flags.js'
+
+  # Allow manual triggering
+  workflow_dispatch:
+
+  # Run weekly to catch any drift
+  schedule:
+    - cron: '0 9 * * 1'  # Every Monday at 9 AM UTC
+
+jobs:
+  validate-feature-flags:
+    name: Validate Feature Flag Consistency
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./frontend
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'yarn'
+          cache-dependency-path: 'frontend/yarn.lock'
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Run feature flag validation
+        run: yarn flags:validate
+
+      - name: Check environment file consistency
+        run: yarn flags:validate-quick
+
+      - name: Validate Netlify configuration
+        run: node scripts/generate-netlify-config.js validate
+
+      - name: Test environment file generation
+        run: |
+          # Backup current files
+          cp .env.development .env.development.backup
+          cp .env.staging .env.staging.backup
+          cp .env.production .env.production.backup
+
+          # Generate new files
+          yarn flags:generate-env
+
+          # Compare with originals
+          if ! diff -q .env.development .env.development.backup; then
+            echo "❌ .env.development differs from generated version"
+            echo "Generated file contents:"
+            cat .env.development
+            echo "Original file contents:"
+            cat .env.development.backup
+            exit 1
+          fi
+
+          if ! diff -q .env.staging .env.staging.backup; then
+            echo "❌ .env.staging differs from generated version"
+            echo "Generated file contents:"
+            cat .env.staging
+            echo "Original file contents:"
+            cat .env.staging.backup
+            exit 1
+          fi
+
+          if ! diff -q .env.production .env.production.backup; then
+            echo "❌ .env.production differs from generated version"
+            echo "Generated file contents:"
+            cat .env.production
+            echo "Original file contents:"
+            cat .env.production.backup
+            exit 1
+          fi
+
+          echo "✅ All environment files match generated versions"
+
+      - name: Test Netlify configuration generation
+        run: |
+          # Backup current file
+          cp netlify.toml netlify.toml.backup
+
+          # Generate new file
+          yarn flags:generate-netlify
+
+          # Extract environment sections for comparison
+          grep -A 20 '\[context\..*\.environment\]' netlify.toml > netlify-env-new.txt || true
+          grep -A 20 '\[context\..*\.environment\]' netlify.toml.backup > netlify-env-original.txt || true
+
+          # Compare environment sections
+          if ! diff -q netlify-env-new.txt netlify-env-original.txt; then
+            echo "❌ netlify.toml environment sections differ from generated version"
+            echo "Generated environment sections:"
+            cat netlify-env-new.txt
+            echo "Original environment sections:"
+            cat netlify-env-original.txt
+            exit 1
+          fi
+
+          echo "✅ Netlify configuration matches generated version"
+
+      - name: Check for unused build defines
+        run: |
+          echo "🔍 Checking for unused build defines..."
+
+          # Extract build defines from astro.config.mjs
+          DEFINES=$(grep -o '__FEATURE_[A-Z_]*__' astro.config.mjs | sort | uniq)
+
+          UNUSED_DEFINES=""
+          for define in $DEFINES; do
+            # Search for usage in source files (excluding astro.config.mjs itself)
+            USAGE_COUNT=$(find src -name "*.ts" -o -name "*.tsx" -o -name "*.js" -o -name "*.jsx" -o -name "*.astro" | xargs grep -l "$define" | wc -l)
+
+            if [ "$USAGE_COUNT" -eq 0 ]; then
+              UNUSED_DEFINES="$UNUSED_DEFINES $define"
+            fi
+          done
+
+          if [ -n "$UNUSED_DEFINES" ]; then
+            echo "⚠️  Found unused build defines: $UNUSED_DEFINES"
+            echo "These defines are created but never used, indicating missed dead code elimination opportunities"
+          else
+            echo "✅ All build defines are being used"
+          fi
+
+      - name: Validate TypeScript types
+        run: |
+          echo "🔍 Checking TypeScript feature flag types..."
+
+          # Check if TypeScript compilation passes
+          yarn check
+
+          echo "✅ TypeScript validation passed"
+
+      - name: Generate validation report
+        run: |
+          echo "📊 Feature Flag System Status Report" > feature-flag-report.md
+          echo "Generated on: $(date)" >> feature-flag-report.md
+          echo "" >> feature-flag-report.md
+
+          echo "## Validation Results" >> feature-flag-report.md
+          yarn flags:status >> feature-flag-report.md 2>&1
+
+          echo "" >> feature-flag-report.md
+          echo "## Feature Flags List" >> feature-flag-report.md
+          yarn flags:list >> feature-flag-report.md 2>&1
+
+      - name: Upload validation report
+        uses: actions/upload-artifact@v4
+        with:
+          name: feature-flag-validation-report
+          path: frontend/feature-flag-report.md
+          retention-days: 30
+
+      - name: Comment on PR (if applicable)
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const path = 'frontend/feature-flag-report.md';
+
+            if (fs.existsSync(path)) {
+              const report = fs.readFileSync(path, 'utf8');
+
+              await github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: `## 🚩 Feature Flag Validation Report
+
+${report}
+
+This automated report validates the consistency of feature flag configurations across all sources.`
+              });
+            }
+
+  test-build-optimization:
+    name: Test Build-time Feature Flag Optimization
+    runs-on: ubuntu-latest
+    needs: validate-feature-flags
+
+    defaults:
+      run:
+        working-directory: ./frontend
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'yarn'
+          cache-dependency-path: 'frontend/yarn.lock'
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Test build with current flags
+        run: |
+          echo "🔨 Testing build with current feature flag configuration..."
+          yarn build
+
+          # Check if build directory exists and has content
+          if [ ! -d "dist" ] || [ -z "$(ls -A dist)" ]; then
+            echo "❌ Build failed or produced empty output"
+            exit 1
+          fi
+
+          echo "✅ Build completed successfully"
+
+      - name: Analyze bundle size impact
+        run: |
+          echo "📊 Analyzing bundle size..."
+
+          # Get current build size
+          BUILD_SIZE=$(du -sh dist | cut -f1)
+          echo "Current build size: $BUILD_SIZE"
+
+          # Count JavaScript files in build
+          JS_FILES=$(find dist -name "*.js" | wc -l)
+          echo "JavaScript files in build: $JS_FILES"
+
+          echo "Build analysis complete"
+
+  security-check:
+    name: Security and Dependency Check
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./frontend
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'yarn'
+          cache-dependency-path: 'frontend/yarn.lock'
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Check for hardcoded secrets in feature flags
+        run: |
+          echo "🔍 Scanning feature flag configurations for potential secrets..."
+
+          # Check for common secret patterns
+          if grep -r -i "password\|secret\|key\|token\|api" src/config/feature-flags.config.ts; then
+            echo "⚠️  Found potential secret references in feature flag config"
+            echo "Please ensure no actual secrets are committed"
+          else
+            echo "✅ No obvious secret patterns found"
+          fi
+
+      - name: Validate script permissions
+        run: |
+          echo "🔍 Checking script file permissions..."
+
+          # Ensure scripts are not executable (security best practice)
+          find scripts -name "*.js" -executable | while read file; do
+            echo "⚠️  Script $file is executable - consider removing execute permissions"
+          done
+
+          echo "✅ Script permissions check complete"

@@ -68,6 +68,14 @@ repos:
         files: ^frontend/src/.*\.(ts|tsx|js|jsx)$
         pass_filenames: false
 
+      - id: feature-flag-validation
+        name: feature flag consistency validation
+        entry: bash -c 'cd frontend && yarn flags:validate-quick'
+        language: system
+        files: ^frontend/(\.env\.|netlify\.toml|src/config/feature-flags\.config\.ts|astro\.config\.mjs)
+        pass_filenames: false
+        verbose: true
+
   # YAML configuration validation
   - repo: https://github.com/adrienverge/yamllint
     rev: v1.35.1
