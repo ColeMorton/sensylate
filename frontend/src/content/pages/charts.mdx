@@ -5,9 +5,11 @@ description: "Explore interactive data visualizations and charts powered by Plot
 draft: false
 ---
 
+import ChartDisplay from "@/layouts/shortcodes/ChartDisplay.tsx";
+
 <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
 
-<ConditionalChartDisplay
+<ChartDisplay
   client:only="react"
   title="Bitcoin Portfolio Value Comparison"
   category="Bitcoin Performance"
@@ -15,7 +17,7 @@ draft: false
   chartType="portfolio-value-comparison"
 />
 
-<ConditionalChartDisplay
+<ChartDisplay
   client:only="react"
   title="Bitcoin Returns Comparison"
   category="Bitcoin Performance"
@@ -23,7 +25,7 @@ draft: false
   chartType="returns-comparison"
 />
 
-<ConditionalChartDisplay
+<ChartDisplay
   client:only="react"
   title="Bitcoin Portfolio Drawdown Analysis"
   category="Bitcoin Risk Analysis"
@@ -37,7 +39,7 @@ draft: false
 
 <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
 
-<ConditionalChartDisplay
+<ChartDisplay
   client:only="react"
   title="Live Signals Equity Curve"
   category="Live Trading Performance"
@@ -45,7 +47,7 @@ draft: false
   chartType="live-signals-equity-curve"
 />
 
-<ConditionalChartDisplay
+<ChartDisplay
   client:only="react"
   title="Live Signals Drawdown Analysis"
   category="Live Trading Risk"
@@ -57,7 +59,7 @@ draft: false
 
 <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
 
-<ConditionalChartDisplay
+<ChartDisplay
   client:only="react"
   title="Live Signals Weekly Candlestick Chart"
   category="Live Trading Technical Analysis"
@@ -65,7 +67,7 @@ draft: false
   chartType="live-signals-weekly-candlestick"
 />
 
-<ConditionalChartDisplay
+<ChartDisplay
   client:only="react"
   title="Trade PnL Waterfall Chart"
   category="Live Trading Individual Trades"
@@ -73,7 +75,7 @@ draft: false
   chartType="trade-pnl-waterfall"
 />
 
-<ConditionalChartDisplay
+<ChartDisplay
   client:only="react"
   title="Open Positions Cumulative PnL Time Series"
   category="Live Trading Open Positions"
@@ -81,7 +83,7 @@ draft: false
   chartType="open-positions-pnl-timeseries"
 />
 
-<ConditionalChartDisplay
+<ChartDisplay
   client:only="react"
   title="Open Positions Cumulative PnL Time Series (Weekly)"
   category="Live Trading Open Positions"
@@ -95,7 +97,7 @@ draft: false
 
 <div class="grid grid-cols-1 gap-6">
 
-<ConditionalChartDisplay
+<ChartDisplay
   client:only="react"
   title="Apple Stock Reference"
   category="Reference Data"
