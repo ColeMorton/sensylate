@@ -62,13 +62,24 @@ function parseNetlifyConfig(content) {
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i].trim();
 
-    // Check if we're entering an environment section
-    if (line.match(/^\[context\.(production|branch-deploy|deploy-preview)\.environment\]$/)) {
-      // Save current section before starting environment section
+    // Check if we're starting environment-related comments
+    if (line.includes('Environment Variables by Deploy Context') ||
+        line.includes('Production context') ||
+        line.includes('Branch deploy context') ||
+        line.includes('Deploy preview context')) {
+      // Save current section before starting environment-related content
       if (currentSection.length > 0 && !inEnvironmentSection) {
         preservedSections.push(currentSection.join('\n'));
         currentSection = [];
       }
+      inEnvironmentSection = true;
+      skipUntilNextSection = true;
+      continue;
+    }
+
+    // Check if we're entering an environment section
+    if (line.match(/^\[context\.(production|branch-deploy|deploy-preview)\.environment\]$/)) {
+      // We're already in environment section mode from comments above
       inEnvironmentSection = true;
       skipUntilNextSection = true;
       continue;

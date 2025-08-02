@@ -34,6 +34,7 @@ DISABLE_MISE = "true"
     Submitted at: {{created_at}}
     """
 
+
 # Environment Variables by Deploy Context
 # Production context (main branch)
 [context.production.environment]
