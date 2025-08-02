@@ -59,6 +59,14 @@ const IGNORE_PATTERNS = [
   // CSS selectors
   /input\[type=password\]/i,
 
+  // Tabler Icons library patterns (legitimate icon names)
+  /Icon[A-Z][a-zA-Z]+/i, // Icon component names (IconHome, IconSettings, etc.)
+  /[A-Z][a-zA-Z]+Icon/i, // Icon names ending with "Icon"
+  /Layout[A-Z][a-zA-Z]+/i, // Layout-related icon names
+  /Square[A-Z][a-zA-Z]+/i, // Square-related icon names
+  /[A-Z][a-zA-Z]+Filled"/i, // Filled variant icon names
+  /@tabler\/icons/i, // Tabler icons library references
+
   // Plotly.js library patterns (legitimate library code)
   /plotly.*api_key/i, // Plotly mapbox integration
   /stamen.*api_key/i, // Plotly stamen map tiles
