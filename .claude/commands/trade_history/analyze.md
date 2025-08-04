@@ -334,6 +334,96 @@ risk_assessment_analysis:
       - False signal reduction methodologies
       - Signal confirmation and filtering improvements
       - Advanced signal generation techniques
+
+  advanced_statistical_metrics:
+    pnl_standard_deviation_analysis:
+      - overall_pnl_std_dev: "Standard deviation of all returns - portfolio volatility measure"
+      - winners_pnl_std_dev: "Standard deviation of winning trades - winner consistency measure"
+      - losers_pnl_std_dev: "Standard deviation of losing trades - loss control consistency"
+      - comparative_volatility: "Volatility comparison between winners and losers"
+
+    system_quality_assessment:
+      - system_quality_number: "SQN calculation: √(number_of_trades) × (mean_return / std_dev_returns)"
+      - sqn_interpretation: "Quality bands: >2.5 Excellent, >1.25 Above Average, <0.7 Below Average"
+      - reliability_assessment: "System performance consistency and reliability measurement"
+      - comparative_sqn: "SQN comparison against industry benchmarks"
+
+    return_distribution_analysis:
+      - skewness_calculation: "Return distribution skewness (positive = few large winners, negative = few large losers)"
+      - kurtosis_calculation: "Return distribution kurtosis (high values = extreme outliers present)"
+      - distribution_characteristics: "Normal vs non-normal distribution implications"
+      - tail_risk_assessment: "Extreme outcome probability and impact analysis"
+
+  comprehensive_profit_loss_metrics:
+    absolute_performance_tracking:
+      - biggest_profit_dollar: "Largest winner in absolute dollar terms"
+      - biggest_loss_dollar: "Largest loss in absolute dollar terms"
+      - profit_loss_extremes: "Analysis of extreme outcomes and their impact"
+      - outlier_contribution: "Contribution of extreme trades to overall performance"
+
+    expectancy_and_ratio_analysis:
+      - profit_loss_ratio: "Average winner divided by average loser ratio"
+      - trade_expectancy_dollar: "Expected value per trade in dollar terms"
+      - risk_reward_assessment: "Risk-reward profile and optimization opportunities"
+      - expectancy_reliability: "Consistency of expectancy across time periods"
+
+    accumulated_performance_metrics:
+      - accumulated_return_net: "Total accumulated profit/loss net of all costs"
+      - accumulated_return_gross: "Total accumulated profit/loss before costs"
+      - breakeven_trade_analysis: "Number and percentage of breakeven trades"
+      - performance_attribution: "Contribution analysis by trade outcome type"
+
+  consecutive_performance_analysis:
+    streak_performance_metrics:
+      - max_consecutive_wins: "Maximum consecutive winning trades achieved"
+      - max_consecutive_losses: "Maximum consecutive losing trades experienced"
+      - streak_performance_impact: "Average return during win streaks vs isolated wins"
+      - recovery_analysis: "Average trades required to recover from loss streaks"
+
+    momentum_persistence_assessment:
+      - win_after_win_probability: "Probability of win following another win (momentum)"
+      - loss_after_loss_probability: "Probability of loss following another loss (clustering)"
+      - streak_vs_random: "Comparison to random trade outcome distribution"
+      - momentum_exploitation: "Opportunities to capitalize on performance momentum"
+
+  daily_performance_metrics:
+    daily_aggregation_analysis:
+      - average_daily_pnl: "Average daily profit/loss over entire trading period"
+      - daily_return_volatility: "Standard deviation of daily returns"
+      - positive_days_percentage: "Percentage of trading days with positive returns"
+      - daily_consistency: "Day-to-day performance consistency measurement"
+
+    daily_extreme_analysis:
+      - largest_daily_gain: "Best single trading day performance"
+      - largest_daily_loss: "Worst single trading day performance"
+      - daily_distribution: "Distribution of daily returns and characteristics"
+      - risk_concentration: "Daily risk exposure and concentration analysis"
+
+  enhanced_hold_time_analysis:
+    outcome_based_duration:
+      - average_win_hold_time: "Average hold time for winning trades"
+      - average_loss_hold_time: "Average hold time for losing trades"
+      - average_breakeven_hold_time: "Average hold time for breakeven trades"
+      - duration_outcome_correlation: "Correlation between hold time and trade outcome"
+
+    optimal_timing_analysis:
+      - optimal_hold_period: "Calculated optimal hold period based on historical data"
+      - duration_efficiency: "Actual vs optimal hold time efficiency measurement"
+      - hold_time_distribution: "Distribution of trades across short/medium/long-term categories"
+      - timing_optimization_opportunities: "Specific improvements for hold period management"
+
+  position_sizing_and_directional_analysis:
+    position_size_metrics:
+      - total_shares_traded: "Total position size across all trades"
+      - average_position_size: "Average position size per trade"
+      - position_size_consistency: "Consistency of position sizing methodology"
+      - scaling_opportunities: "Position size optimization potential"
+
+    directional_performance_breakdown:
+      - long_position_analysis: "Long position count, win rate, and average return"
+      - short_position_analysis: "Short position count, win rate, and average return"
+      - directional_bias: "Percentage allocation between long and short positions"
+      - directional_effectiveness: "Comparative performance between long and short strategies"
 ```
 
 ## Data/File Dependencies
@@ -662,6 +752,116 @@ output_specification:
       "mean_return": {"lower": 0.0234, "upper": 0.0870, "confidence_level": 0.95},
       "sharpe_ratio": {"lower": 0.78, "upper": 1.48, "confidence_level": 0.95},
       "win_rate": {"lower": 0.42, "upper": 0.68, "confidence_level": 0.95}
+    }
+  },
+  "advanced_statistical_metrics": {
+    "pnl_standard_deviation_analysis": {
+      "overall_pnl_std_dev": 0.0834,
+      "winners_pnl_std_dev": 0.0567,
+      "losers_pnl_std_dev": 0.0389,
+      "comparative_volatility": 1.46,
+      "confidence": 0.91
+    },
+    "system_quality_assessment": {
+      "system_quality_number": 1.67,
+      "sqn_interpretation": "Above Average",
+      "reliability_assessment": "Strong performance consistency",
+      "comparative_sqn": "85th percentile vs retail traders",
+      "confidence": 0.89
+    },
+    "return_distribution_analysis": {
+      "skewness_calculation": 0.34,
+      "kurtosis_calculation": 2.87,
+      "distribution_characteristics": "Positive skew with few large winners",
+      "tail_risk_assessment": "Moderate positive tail risk present",
+      "confidence": 0.88
+    }
+  },
+  "comprehensive_profit_loss_metrics": {
+    "absolute_performance_tracking": {
+      "biggest_profit_dollar": 289.45,
+      "biggest_loss_dollar": -145.67,
+      "profit_loss_extremes": "2:1 ratio favorable",
+      "outlier_contribution": 0.23,
+      "confidence": 0.95
+    },
+    "expectancy_and_ratio_analysis": {
+      "profit_loss_ratio": 1.89,
+      "trade_expectancy_dollar": 34.56,
+      "risk_reward_assessment": "Favorable risk-reward profile",
+      "expectancy_reliability": 0.82,
+      "confidence": 0.91
+    },
+    "accumulated_performance_metrics": {
+      "accumulated_return_net": 1456.78,
+      "accumulated_return_gross": 1523.45,
+      "breakeven_trade_analysis": {"count": 3, "percentage": 0.067},
+      "performance_attribution": "Winners: 67%, Losers: 27%, Breakeven: 6%",
+      "confidence": 0.94
+    }
+  },
+  "consecutive_performance_analysis": {
+    "streak_performance_metrics": {
+      "max_consecutive_wins": 6,
+      "max_consecutive_losses": 4,
+      "streak_performance_impact": 0.0234,
+      "recovery_analysis": 2.3,
+      "confidence": 0.84
+    },
+    "momentum_persistence_assessment": {
+      "win_after_win_probability": 0.63,
+      "loss_after_loss_probability": 0.45,
+      "streak_vs_random": "Significantly better than random",
+      "momentum_exploitation": "Strong momentum signals present",
+      "confidence": 0.79
+    }
+  },
+  "daily_performance_metrics": {
+    "daily_aggregation_analysis": {
+      "average_daily_pnl": 23.45,
+      "daily_return_volatility": 0.0234,
+      "positive_days_percentage": 0.67,
+      "daily_consistency": 0.73,
+      "confidence": 0.86
+    },
+    "daily_extreme_analysis": {
+      "largest_daily_gain": 145.67,
+      "largest_daily_loss": -89.23,
+      "daily_distribution": "Normal with slight positive skew",
+      "risk_concentration": "Well-distributed daily risk",
+      "confidence": 0.88
+    }
+  },
+  "enhanced_hold_time_analysis": {
+    "outcome_based_duration": {
+      "average_win_hold_time": 32.4,
+      "average_loss_hold_time": 28.7,
+      "average_breakeven_hold_time": 35.2,
+      "duration_outcome_correlation": 0.23,
+      "confidence": 0.81
+    },
+    "optimal_timing_analysis": {
+      "optimal_hold_period": 29.8,
+      "duration_efficiency": 0.76,
+      "hold_time_distribution": {"short": 0.22, "medium": 0.56, "long": 0.22},
+      "timing_optimization_opportunities": "Reduce hold time by 3-5 days",
+      "confidence": 0.78
+    }
+  },
+  "position_sizing_and_directional_analysis": {
+    "position_size_metrics": {
+      "total_shares_traded": 4567,
+      "average_position_size": 101.5,
+      "position_size_consistency": "Fixed sizing methodology",
+      "scaling_opportunities": "Consider dynamic sizing",
+      "confidence": 0.92
+    },
+    "directional_performance_breakdown": {
+      "long_position_analysis": {"count": 42, "win_rate": 0.57, "avg_return": 0.0567},
+      "short_position_analysis": {"count": 3, "win_rate": 0.33, "avg_return": -0.0234},
+      "directional_bias": 0.93,
+      "directional_effectiveness": "Strong long bias with good performance",
+      "confidence": 0.87
     }
   },
   "analysis_quality_assessment": {
