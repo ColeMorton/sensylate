@@ -39,8 +39,8 @@ const buildTimeFlags = getFeatureFlags();
 // Use Netlify adapter only for Netlify builds
 const adapter = process.env.NETLIFY ? netlify() : undefined;
 
-// Use server mode in development to fix route detection issues, static in production
-const outputMode = process.env.NODE_ENV === "development" ? "server" : "static";
+// Use server mode in local development only, static for builds and Netlify
+const outputMode = (process.env.NODE_ENV === "development" && !process.env.NETLIFY) ? "server" : "static";
 
 // https://astro.build/config
 export default defineConfig({
