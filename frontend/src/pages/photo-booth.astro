@@ -1,6 +1,6 @@
 ---
 import PhotoBoothBase from "@/layouts/PhotoBoothBase.astro";
-import PhotoBoothDisplay from "@/layouts/shortcodes/PhotoBoothDisplay.tsx";
+import ConditionalPhotoBoothDisplay from "@/layouts/shortcodes/ConditionalPhotoBoothDisplay.tsx";
 import { features } from "@/lib/config";
 
 // Redirect to 404 if photo booth is disabled
@@ -15,6 +15,9 @@ if (!features.photoBooth) {
   description="Generate high-resolution dashboard screenshots for presentations and reports"
 >
   <div class="photo-booth-container">
-    <PhotoBoothDisplay client:only="react" className="photo-booth-ready" />
+    <ConditionalPhotoBoothDisplay
+      client:only="react"
+      className="photo-booth-ready"
+    />
   </div>
 </PhotoBoothBase>

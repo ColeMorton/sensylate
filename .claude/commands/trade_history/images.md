@@ -34,9 +34,9 @@ This command automatically:
 **Report Type Mapping:**
 - `HISTORICAL_PERFORMANCE_REPORT_*.md` → 2x2 grid performance dashboard (dual-mode PNG)
   - **Top Left**: Bar chart showing All Trade Performance (sorted by return, highest to lowest)
-  - **Top Right**: 2x2 gauge grid (Win Rate, Total Return, Profit Factor, Total Trades)
-  - **Bottom Left**: Scatter plot Return vs Duration with trend line
-  - **Bottom Right**: Weekly Performance bars based on entry dates
+  - **Top Right**: 2x2 gauge grid (Win Rate, Total Return, Profit Factor, System Quality Number)
+  - **Bottom Left**: Scatter plot Return vs Duration with trend line and hold time analysis
+  - **Bottom Right**: Advanced statistical distribution chart (return distribution with skewness/kurtosis)
 - `LIVE_SIGNALS_MONITOR_*.md` → Signal status charts (disabled)
 - `TRADE_ANALYSIS_*.md` → Trade distribution visualizations (disabled)
 - `PORTFOLIO_SUMMARY_*.md` → Portfolio composition charts (disabled)
@@ -132,13 +132,20 @@ production:
 ```yaml
 report_visualizations:
   historical_performance:
-    charts: ["gauge_grid_2x2", "bar_chart_sorted", "scatter_with_trend", "weekly_performance_bars"]
+    charts: ["gauge_grid_2x2_advanced", "bar_chart_sorted", "scatter_with_hold_analysis", "statistical_distribution"]
     layout: "2x2_grid"
     positions:
       top_left: "bar_chart_sorted"  # All Trade Performance (sorted by return)
-      top_right: "gauge_grid_2x2"   # 2x2 gauge grid (Win Rate, Total Return, Profit Factor, Total Trades)
-      bottom_left: "scatter_with_trend"  # Return vs Duration with trend line
-      bottom_right: "weekly_performance_bars"  # Weekly Performance based on entry dates
+      top_right: "gauge_grid_2x2_advanced"   # 2x2 gauge grid (Win Rate, Total Return, Profit Factor, SQN)
+      bottom_left: "scatter_with_hold_analysis"  # Return vs Duration with hold time analysis
+      bottom_right: "statistical_distribution"  # Return distribution with skewness/kurtosis
+    advanced_metrics:
+      - system_quality_number
+      - return_distribution_skewness
+      - return_distribution_kurtosis
+      - enhanced_hold_time_analysis
+      - consecutive_performance_metrics
+      - daily_performance_summary
     plotly_template: "sensylate_dashboard"
     export_formats: ["png"]  # PNG-only export as specified
     dual_mode: true  # Light and dark mode variants
@@ -152,11 +159,30 @@ report_visualizations:
     interactive_features: ["hover", "zoom", "pan"]
 
   trade_analysis:
-    charts: ["distribution_histogram", "duration_scatter", "quality_bands"]
+    charts: ["distribution_histogram", "duration_scatter", "quality_bands", "consecutive_performance_chart", "daily_performance_heatmap"]
     layout: "flexible_grid"
     plotly_template: "sensylate_light_hd"
     export_formats: ["png", "pdf", "svg"]
     density_optimization: true
+    advanced_analytics:
+      - profit_loss_distribution
+      - hold_time_by_outcome
+      - streak_analysis_timeline
+      - statistical_distribution_overlay
+
+  advanced_metrics_dashboard:
+    charts: ["sqn_gauge", "skewness_kurtosis_scatter", "hold_time_distribution", "consecutive_streaks", "daily_volatility"]
+    layout: "3x2_grid"
+    positions:
+      top_left: "sqn_gauge"  # System Quality Number gauge
+      top_middle: "skewness_kurtosis_scatter"  # Distribution parameters
+      top_right: "hold_time_distribution"  # Hold time by outcome
+      bottom_left: "consecutive_streaks"  # Win/loss streaks
+      bottom_middle: "daily_volatility"  # Daily performance volatility
+      bottom_right: "profit_loss_extremes"  # Largest wins/losses
+    plotly_template: "sensylate_advanced"
+    export_formats: ["png", "html"]
+    interactive_features: ["hover", "zoom", "crossfilter"]
 ```
 
 ## Quality Assurance

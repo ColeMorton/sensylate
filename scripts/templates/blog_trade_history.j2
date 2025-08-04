@@ -128,6 +128,84 @@ This analysis provides comprehensive quantitative evaluation of trading performa
 {% endfor %}
 {%- endif %}
 
+## Advanced Statistical Analysis
+
+{% if data.advanced_statistical_metrics -%}
+### Distribution Metrics
+- **Overall Return Std Dev**: {{ data.advanced_statistical_metrics.pnl_std_dev_overall | default("N/A") }}% (Portfolio volatility measure)
+- **Winner Std Dev**: {{ data.advanced_statistical_metrics.pnl_std_dev_winners | default("N/A") }}% (Winning trade consistency)
+- **Loser Std Dev**: {{ data.advanced_statistical_metrics.pnl_std_dev_losers | default("N/A") }}% (Loss control consistency)
+- **Return Skewness**: {{ data.advanced_statistical_metrics.skewness | default("N/A") }} ({{ "Positive outliers dominant" if data.advanced_statistical_metrics.skewness > 0 else "Negative outliers dominant" if data.advanced_statistical_metrics.skewness < 0 else "Symmetric distribution" }})
+- **Return Kurtosis**: {{ data.advanced_statistical_metrics.kurtosis | default("N/A") }} ({{ "High tail risk" if data.advanced_statistical_metrics.kurtosis > 3 else "Normal tail risk" }})
+
+### System Quality Assessment
+- **System Quality Number (SQN)**: {{ data.advanced_statistical_metrics.sqn | default("N/A") }}
+  - Quality Rating: {{ "Excellent" if data.advanced_statistical_metrics.sqn > 2.5 else "Above Average" if data.advanced_statistical_metrics.sqn > 1.25 else "Below Average" if data.advanced_statistical_metrics.sqn < 0.7 else "Average" }}
+  - Interpretation: {{ "Outstanding system" if data.advanced_statistical_metrics.sqn > 2.5 else "Strong performance system" if data.advanced_statistical_metrics.sqn > 1.25 else "Needs improvement" if data.advanced_statistical_metrics.sqn < 0.7 else "Acceptable performance" }}
+{%- endif %}
+
+## Comprehensive Profit/Loss Analysis
+
+{% if data.profit_loss_analysis -%}
+### Absolute Performance Metrics
+- **Largest Winner**: ${{ data.profit_loss_analysis.biggest_profit | default("N/A") }} ({{ data.profit_loss_analysis.biggest_profit_ticker | default("N/A") }})
+- **Largest Loss**: ${{ data.profit_loss_analysis.biggest_loss | default("N/A") }} ({{ data.profit_loss_analysis.biggest_loss_ticker | default("N/A") }})
+- **Total Accumulated P&L**: ${{ data.profit_loss_analysis.accumulated_pnl | default("N/A") }}
+- **Average Daily P&L**: ${{ data.profit_loss_analysis.avg_daily_pnl | default("N/A") }}
+
+### Risk-Reward Analysis
+- **Profit/Loss Ratio**: {{ data.profit_loss_analysis.profit_loss_ratio | default("N/A") }}:1
+- **Trade Expectancy**: ${{ data.profit_loss_analysis.trade_expectancy | default("N/A") }} per trade
+- **Breakeven Trades**: {{ data.profit_loss_analysis.breakeven_count | default("N/A") }} ({{ data.profit_loss_analysis.breakeven_percentage | default("N/A") }}%)
+
+### Performance Distribution
+- **Win Rate Breakdown**: {{ data.profit_loss_analysis.win_percentage | default("N/A") }}% wins, {{ data.profit_loss_analysis.loss_percentage | default("N/A") }}% losses, {{ data.profit_loss_analysis.breakeven_percentage | default("N/A") }}% breakeven
+{%- endif %}
+
+## Consecutive Performance & Momentum Analysis
+
+{% if data.consecutive_analysis -%}
+### Streak Performance
+- **Maximum Consecutive Wins**: {{ data.consecutive_analysis.max_consecutive_wins | default("N/A") }} trades
+- **Maximum Consecutive Losses**: {{ data.consecutive_analysis.max_consecutive_losses | default("N/A") }} trades
+- **Win Streak Average Return**: {{ data.consecutive_analysis.win_streak_avg_return | default("N/A") }}%
+- **Loss Recovery Time**: {{ data.consecutive_analysis.loss_recovery_trades | default("N/A") }} trades average
+
+### Momentum Persistence
+- **Win-After-Win Rate**: {{ data.consecutive_analysis.win_after_win_rate | default("N/A") }}% (Trend continuation)
+- **Loss-After-Loss Rate**: {{ data.consecutive_analysis.loss_after_loss_rate | default("N/A") }}% (Drawdown control)
+- **Streak Impact**: {{ data.consecutive_analysis.streak_performance_differential | default("N/A") }}% performance difference
+{%- endif %}
+
+## Enhanced Duration & Hold Time Analysis
+
+{% if data.hold_time_analysis -%}
+### Hold Time by Outcome
+- **Average Win Hold Time**: {{ data.hold_time_analysis.avg_win_hold_time | default("N/A") }} days
+- **Average Loss Hold Time**: {{ data.hold_time_analysis.avg_loss_hold_time | default("N/A") }} days
+- **Average Breakeven Hold Time**: {{ data.hold_time_analysis.avg_breakeven_hold_time | default("N/A") }} days
+
+### Duration Optimization
+- **Optimal Hold Period**: {{ data.hold_time_analysis.optimal_hold_period | default("N/A") }} days (vs {{ data.hold_time_analysis.actual_avg_hold | default("N/A") }} actual)
+- **Duration Efficiency**: {{ data.hold_time_analysis.duration_efficiency | default("N/A") }}% (Timing effectiveness)
+- **Hold Time Distribution**: Short ≤7d ({{ data.hold_time_analysis.short_term_percentage | default("N/A") }}%), Medium 8-30d ({{ data.hold_time_analysis.medium_term_percentage | default("N/A") }}%), Long >30d ({{ data.hold_time_analysis.long_term_percentage | default("N/A") }}%)
+{%- endif %}
+
+## Position Sizing & Directional Analysis
+
+{% if data.position_analysis -%}
+### Position Sizing Metrics
+- **Total Position Size**: {{ data.position_analysis.total_shares | default("N/A") }} units
+- **Average Position Size**: {{ data.position_analysis.avg_position_size | default("N/A") }} (Note: Standardized sizing)
+- **Return per Unit**: {{ data.position_analysis.return_per_share | default("N/A") }}% average
+- **Sizing Methodology**: {{ data.position_analysis.sizing_consistency | default("Fixed sizing (1.0 per trade)") }}
+
+### Directional Performance
+- **Long Positions**: {{ data.position_analysis.long_trades | default("N/A") }} trades ({{ data.position_analysis.long_win_rate | default("N/A") }}% win rate, {{ data.position_analysis.long_avg_return | default("N/A") }}% avg return)
+- **Short Positions**: {{ data.position_analysis.short_trades | default("0") }} trades ({{ data.position_analysis.short_win_rate | default("N/A") }}% win rate, {{ data.position_analysis.short_avg_return | default("N/A") }}% avg return)
+- **Directional Bias**: {{ data.position_analysis.directional_bias | default("100% Long") }} - {{ data.position_analysis.bias_assessment | default("Bullish strategy focus") }}
+{%- endif %}
+
 ## Statistical Significance Analysis
 
 {% if data.statistical_analysis -%}
