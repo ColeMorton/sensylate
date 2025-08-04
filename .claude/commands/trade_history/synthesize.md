@@ -283,6 +283,40 @@ historical_analysis_synthesis:
       - downside_deviation: "Estimated XX.X% from loss distribution analysis"
       - recovery_time: "Average X.X trades to recover from losses with time-based recovery analysis"
 
+    advanced_statistical_metrics:
+      - pnl_standard_deviation_overall: "Standard deviation of all returns (XX.XX%) - volatility measure"
+      - pnl_standard_deviation_winners: "Standard deviation of winning trades (XX.XX%) - winner consistency"
+      - pnl_standard_deviation_losers: "Standard deviation of losing trades (XX.XX%) - loss control consistency"
+      - system_quality_number: "SQN: X.XX (Above Average >1.25, Below Average <0.7) - system reliability indicator"
+      - return_distribution_skewness: "X.XX (positive indicates few large winners, negative indicates few large losers)"
+      - return_distribution_kurtosis: "X.XX (high values indicate extreme outliers present)"
+
+    comprehensive_profit_loss_analysis:
+      - biggest_profit_dollar: "Largest winner: $XXX.XX (TICKER) - absolute profit capture"
+      - biggest_loss_dollar: "Largest loss: $-XXX.XX (TICKER) - maximum risk experienced"
+      - profit_loss_ratio: "X.XX:1 (average win ÷ average loss) - risk-reward effectiveness"
+      - trade_expectancy_dollar: "$XX.XX per trade - expected value per trade execution"
+      - accumulated_return_net: "$X,XXX.XX total profit/loss - cumulative portfolio performance"
+      - accumulated_return_gross: "$X,XXX.XX (same as net - no fees tracked)"
+      - breakeven_trade_count: "X trades (X.X%) - neutral outcome analysis"
+      - breakeven_percentage: "X.X% of total trades - execution precision indicator"
+
+    consecutive_performance_analysis:
+      - max_consecutive_wins: "X consecutive winning trades - positive momentum streaks"
+      - max_consecutive_losses: "X consecutive losing trades - drawdown control assessment"
+      - consecutive_win_performance: "XX.X% average return during win streaks"
+      - consecutive_loss_recovery: "X.X trades average to recover from loss streaks"
+      - momentum_persistence: "XX% of wins followed by another win - trend continuation rate"
+      - streak_impact_analysis: "Performance differential between streak vs isolated trades"
+
+    daily_performance_metrics:
+      - average_daily_pnl: "$XX.XX average daily profit/loss over XX trading days"
+      - daily_return_volatility: "X.XX% daily return standard deviation"
+      - positive_days_percentage: "XX.X% of trading days positive"
+      - largest_daily_gain: "$XXX.XX on YYYY-MM-DD - single day maximum profit"
+      - largest_daily_loss: "$-XX.XX on YYYY-MM-DD - single day maximum loss"
+      - daily_sharpe_approximation: "X.XX annualized daily Sharpe estimate"
+
   predictive_characteristics_analysis:
     signal_strength_indicators:
       - high_mfe_capture: "Trades with >80% MFE capture - strong momentum patterns"
@@ -318,6 +352,28 @@ historical_analysis_synthesis:
       short_term: "≤7 days performance and characteristics"
       medium_term: "8-30 days effectiveness and patterns"
       long_term: ">30 days performance and edge identification"
+
+    enhanced_hold_time_analysis:
+      - average_win_hold_time: "XX.X days average for winning trades - trend capture duration"
+      - average_loss_hold_time: "XX.X days average for losing trades - risk management timing"
+      - average_breakeven_hold_time: "XX.X days average for breakeven trades - neutral outcome timing"
+      - optimal_hold_period: "XX.X days calculated optimal vs XX.X actual - efficiency opportunity"
+      - hold_time_distribution: "Short(≤7d): X%, Medium(8-30d): X%, Long(>30d): X%"
+      - duration_performance_correlation: "Correlation coefficient between hold time and returns"
+
+    position_sizing_analysis:
+      - total_shares_traded: "XXX total position size across all trades"
+      - average_position_size: "X.XX average position per trade (note: standardized to 1.0)"
+      - return_per_share: "Calculated return per unit position size"
+      - size_consistency: "Position sizing methodology: Fixed (1.0) vs Variable analysis"
+      - scaling_opportunities: "Analysis of position size optimization potential"
+
+    directional_performance_analysis:
+      - long_position_performance: "XX trades Long: XX.X% win rate, XX.X% avg return"
+      - short_position_performance: "X trades Short: XX.X% win rate, XX.X% avg return (if applicable)"
+      - directional_bias: "XXX% Long allocation - directional strategy focus"
+      - long_vs_short_efficiency: "Comparative effectiveness analysis"
+      - market_directional_alignment: "Performance correlation with market direction"
 
     sector_performance:
       - sector_breakdown: "Performance by industry classification"

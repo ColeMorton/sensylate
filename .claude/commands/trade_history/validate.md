@@ -93,6 +93,96 @@ statistical_validation_architecture:
       iqr_method: "Identify extreme return outliers"
       z_score_analysis: "Standard deviation-based outlier detection"
       impact_assessment: "Outlier influence on statistical measures"
+
+  advanced_statistical_metrics_validation:
+    pnl_standard_deviation_validation:
+      calculation_accuracy: "Cross-validate std dev calculations against statistical libraries"
+      tolerance: "±0.001 acceptable variance for standard deviation calculations"
+      consistency_check: "Winners std dev + losers std dev relationship validation"
+      comparative_analysis: "Validate winners typically have higher std dev than losers"
+
+    system_quality_number_validation:
+      sqn_calculation_formula: "Verify SQN = √(number_of_trades) × (mean_return / std_dev_returns)"
+      quality_band_accuracy: ">2.5 Excellent, >1.25 Above Average, <0.7 Below Average"
+      reliability_threshold: "SQN values must be within reasonable bounds (-5.0 to +5.0)"
+      interpretation_consistency: "Quality rating must match calculated SQN value"
+
+    distribution_analysis_validation:
+      skewness_bounds: "Skewness values must be within reasonable range (-3.0 to +3.0)"
+      kurtosis_bounds: "Kurtosis values must be within reasonable range (1.0 to 10.0)"
+      distribution_interpretation: "Skewness/kurtosis interpretation must match calculated values"
+      tail_risk_assessment: "Extreme value analysis must align with distribution parameters"
+
+  comprehensive_profit_loss_validation:
+    absolute_performance_validation:
+      biggest_profit_accuracy: "Largest winner must match maximum P&L value from CSV data"
+      biggest_loss_accuracy: "Largest loss must match minimum P&L value from CSV data"
+      extremes_ratio_validation: "Profit/loss extremes ratio must be mathematically correct"
+      outlier_contribution_bounds: "Outlier contribution must be between 0.0 and 1.0"
+
+    expectancy_calculation_validation:
+      profit_loss_ratio_formula: "Verify PLR = |Average Winner| / |Average Loser|"
+      trade_expectancy_formula: "Verify Expectancy = (Win Rate × Avg Win) - (Loss Rate × Avg Loss)"
+      expectancy_dollar_consistency: "Dollar expectancy must match percentage-based calculations"
+      reliability_assessment: "Expectancy reliability must reflect calculation confidence"
+
+    accumulated_metrics_validation:
+      net_gross_relationship: "Net return must be ≤ Gross return (accounting for costs)"
+      breakeven_count_accuracy: "Breakeven trades must match CSV data with 0.00 P&L"
+      performance_attribution_sum: "Winners + Losers + Breakeven percentages must = 100%"
+      attribution_consistency: "Attribution percentages must match actual trade counts"
+
+  consecutive_performance_validation:
+    streak_calculation_validation:
+      consecutive_wins_accuracy: "Maximum consecutive wins must match trade sequence analysis"
+      consecutive_losses_accuracy: "Maximum consecutive losses must match trade sequence analysis"
+      streak_impact_calculation: "Streak performance impact calculations mathematically correct"
+      recovery_analysis_accuracy: "Recovery time calculations must match actual trade sequences"
+
+    momentum_persistence_validation:
+      probability_bounds: "Win/loss after win/loss probabilities must be between 0.0 and 1.0"
+      momentum_vs_random: "Momentum assessment must compare to 50% random baseline"
+      statistical_significance: "Momentum patterns must have adequate sample size for significance"
+      exploitation_feasibility: "Momentum exploitation opportunities must be implementable"
+
+  daily_performance_validation:
+    daily_aggregation_validation:
+      daily_pnl_consistency: "Average daily P&L must aggregate correctly from trade data"
+      volatility_calculation: "Daily return volatility must use proper standard deviation formula"
+      positive_days_accuracy: "Positive days percentage must match actual daily performance"
+      consistency_measurement: "Daily consistency metrics must be within expected bounds"
+
+    daily_extreme_validation:
+      largest_gain_accuracy: "Largest daily gain must match maximum single-day performance"
+      largest_loss_accuracy: "Largest daily loss must match minimum single-day performance"
+      distribution_characterization: "Daily distribution description must match statistical analysis"
+      risk_concentration_assessment: "Risk concentration analysis must reflect actual distribution"
+
+  enhanced_hold_time_validation:
+    outcome_duration_validation:
+      hold_time_accuracy: "Average hold times must match calculated durations by outcome"
+      duration_correlation: "Hold time vs outcome correlation must be statistically valid"
+      outcome_classification: "Win/loss/breakeven classification must match P&L data"
+      duration_reasonableness: "Hold times must be within reasonable trading ranges (1-365 days)"
+
+    optimal_timing_validation:
+      optimal_period_calculation: "Optimal hold period must be based on risk-adjusted returns"
+      efficiency_measurement: "Duration efficiency must be calculated consistently"
+      distribution_accuracy: "Hold time distribution categories must sum to 100%"
+      optimization_feasibility: "Timing optimization recommendations must be implementable"
+
+  position_sizing_directional_validation:
+    position_metrics_validation:
+      total_shares_accuracy: "Total shares traded must sum correctly from individual trades"
+      average_size_calculation: "Average position size must be mathematically correct"
+      consistency_assessment: "Position sizing consistency must reflect actual methodology"
+      scaling_opportunities: "Scaling recommendations must be based on performance analysis"
+
+    directional_analysis_validation:
+      long_short_segregation: "Long/short position counts must match trade classification"
+      performance_by_direction: "Win rates and returns by direction must be accurate"
+      directional_bias_calculation: "Directional bias percentage must match actual allocation"
+      effectiveness_comparison: "Long vs short effectiveness must be statistically supported"
 ```
 
 ### Phase 4B: Report Integrity and Completeness Verification
@@ -220,9 +310,10 @@ confidence_scoring_methodology:
       portfolio_metadata: "Weight: 0.25 - Trade count adequacy, timeframe coverage"
 
     analysis_phase_confidence:
-      statistical_significance: "Weight: 0.35 - Sample size adequacy, p-value thresholds"
-      calculation_accuracy: "Weight: 0.30 - Cross-validation against standard methods"
-      pattern_reliability: "Weight: 0.20 - Temporal and strategy pattern consistency"
+      statistical_significance: "Weight: 0.25 - Sample size adequacy, p-value thresholds"
+      calculation_accuracy: "Weight: 0.25 - Cross-validation against standard methods"
+      advanced_metrics_accuracy: "Weight: 0.20 - Advanced statistical metrics validation"
+      pattern_reliability: "Weight: 0.15 - Temporal and strategy pattern consistency"
       optimization_feasibility: "Weight: 0.15 - Implementation confidence of recommendations"
 
     synthesis_phase_confidence:
@@ -363,6 +454,8 @@ validation_output_specification:
       significance_thresholds: "p-value ≤0.05 for statistical conclusions"
       confidence_intervals: "95% CI methodology verification"
       sample_size_adequacy: "≥10 trades minimum, power analysis validation"
+      advanced_metrics_accuracy: "±0.001 for standard deviations, SQN within bounds"
+      distribution_parameter_bounds: "Skewness (-3,+3), Kurtosis (1,10) reasonable ranges"
 
     report_quality_standards:
       content_accuracy: "≥99% consistency with source data"

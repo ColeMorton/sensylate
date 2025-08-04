@@ -436,6 +436,357 @@
       "description": "Additional performance measurement data",
       "additionalProperties": true
     },
+    "advanced_statistical_metrics": {
+      "type": "object",
+      "description": "Advanced statistical analysis including standard deviations and system quality metrics",
+      "required": ["confidence"],
+      "additionalProperties": true,
+      "properties": {
+        "pnl_std_dev_overall": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Standard deviation of all returns - portfolio volatility measure"
+        },
+        "pnl_std_dev_winners": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Standard deviation of winning trades - winner consistency measure"
+        },
+        "pnl_std_dev_losers": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Standard deviation of losing trades - loss control consistency"
+        },
+        "system_quality_number": {
+          "type": "number",
+          "description": "SQN system reliability indicator (>1.25 Above Average, <0.7 Below Average)"
+        },
+        "return_distribution_skewness": {
+          "type": "number",
+          "description": "Return distribution skewness (positive = few large winners)"
+        },
+        "return_distribution_kurtosis": {
+          "type": "number",
+          "description": "Return distribution kurtosis (high values = extreme outliers)"
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0.8,
+          "maximum": 1.0,
+          "description": "Confidence in advanced statistical metrics"
+        }
+      }
+    },
+    "comprehensive_profit_loss_analysis": {
+      "type": "object",
+      "description": "Comprehensive profit/loss analysis including expectancy and dollar metrics",
+      "required": ["confidence"],
+      "additionalProperties": true,
+      "properties": {
+        "biggest_profit_dollar": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Largest winner in dollar terms"
+        },
+        "biggest_loss_dollar": {
+          "type": "number",
+          "maximum": 0,
+          "description": "Largest loss in dollar terms"
+        },
+        "profit_loss_ratio": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Average win divided by average loss ratio"
+        },
+        "trade_expectancy_dollar": {
+          "type": "number",
+          "description": "Expected value per trade in dollar terms"
+        },
+        "accumulated_return_net": {
+          "type": "number",
+          "description": "Total accumulated profit/loss net"
+        },
+        "accumulated_return_gross": {
+          "type": "number",
+          "description": "Total accumulated profit/loss gross"
+        },
+        "breakeven_trade_count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of breakeven trades"
+        },
+        "breakeven_percentage": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Percentage of trades that were breakeven"
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0.8,
+          "maximum": 1.0,
+          "description": "Confidence in profit/loss analysis"
+        }
+      }
+    },
+    "consecutive_performance_analysis": {
+      "type": "object",
+      "description": "Analysis of consecutive wins/losses and momentum patterns",
+      "required": ["confidence"],
+      "additionalProperties": true,
+      "properties": {
+        "max_consecutive_wins": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Maximum consecutive winning trades"
+        },
+        "max_consecutive_losses": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Maximum consecutive losing trades"
+        },
+        "consecutive_win_performance": {
+          "type": "number",
+          "description": "Average return during win streaks"
+        },
+        "consecutive_loss_recovery": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Average trades to recover from loss streaks"
+        },
+        "momentum_persistence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Rate of wins followed by another win"
+        },
+        "streak_impact_analysis": {
+          "type": "number",
+          "description": "Performance differential between streak vs isolated trades"
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0.7,
+          "maximum": 1.0,
+          "description": "Confidence in consecutive performance analysis"
+        }
+      }
+    },
+    "daily_performance_metrics": {
+      "type": "object",
+      "description": "Daily performance tracking and volatility analysis",
+      "required": ["confidence"],
+      "additionalProperties": true,
+      "properties": {
+        "average_daily_pnl": {
+          "type": "number",
+          "description": "Average daily profit/loss over trading period"
+        },
+        "daily_return_volatility": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Daily return standard deviation"
+        },
+        "positive_days_percentage": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Percentage of trading days with positive returns"
+        },
+        "largest_daily_gain": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Largest single day profit"
+        },
+        "largest_daily_loss": {
+          "type": "number",
+          "maximum": 0,
+          "description": "Largest single day loss"
+        },
+        "daily_sharpe_approximation": {
+          "type": "number",
+          "description": "Annualized daily Sharpe ratio estimate"
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0.7,
+          "maximum": 1.0,
+          "description": "Confidence in daily performance metrics"
+        }
+      }
+    },
+    "enhanced_hold_time_analysis": {
+      "type": "object",
+      "description": "Detailed hold time analysis by trade outcome",
+      "required": ["confidence"],
+      "additionalProperties": true,
+      "properties": {
+        "average_win_hold_time": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Average hold time for winning trades in days"
+        },
+        "average_loss_hold_time": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Average hold time for losing trades in days"
+        },
+        "average_breakeven_hold_time": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Average hold time for breakeven trades in days"
+        },
+        "optimal_hold_period": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Calculated optimal hold period in days"
+        },
+        "hold_time_distribution": {
+          "type": "object",
+          "description": "Distribution of trades by hold time categories",
+          "properties": {
+            "short_term_percentage": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "description": "Percentage of trades held ≤7 days"
+            },
+            "medium_term_percentage": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "description": "Percentage of trades held 8-30 days"
+            },
+            "long_term_percentage": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "description": "Percentage of trades held >30 days"
+            }
+          }
+        },
+        "duration_performance_correlation": {
+          "type": "number",
+          "minimum": -1,
+          "maximum": 1,
+          "description": "Correlation coefficient between hold time and returns"
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0.7,
+          "maximum": 1.0,
+          "description": "Confidence in hold time analysis"
+        }
+      }
+    },
+    "position_sizing_analysis": {
+      "type": "object",
+      "description": "Position sizing methodology and return per unit analysis",
+      "required": ["confidence"],
+      "additionalProperties": true,
+      "properties": {
+        "total_shares_traded": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Total position size across all trades"
+        },
+        "average_position_size": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Average position size per trade"
+        },
+        "return_per_share": {
+          "type": "number",
+          "description": "Calculated return per unit position size"
+        },
+        "size_consistency": {
+          "type": "string",
+          "description": "Position sizing methodology description"
+        },
+        "scaling_opportunities": {
+          "type": "string",
+          "description": "Analysis of position size optimization potential"
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0.7,
+          "maximum": 1.0,
+          "description": "Confidence in position sizing analysis"
+        }
+      }
+    },
+    "directional_performance_analysis": {
+      "type": "object",
+      "description": "Long vs short position performance analysis",
+      "required": ["confidence"],
+      "additionalProperties": true,
+      "properties": {
+        "long_position_performance": {
+          "type": "object",
+          "description": "Long position performance metrics",
+          "properties": {
+            "trade_count": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Number of long trades"
+            },
+            "win_rate": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "description": "Win rate for long positions"
+            },
+            "average_return": {
+              "type": "number",
+              "description": "Average return for long positions"
+            }
+          }
+        },
+        "short_position_performance": {
+          "type": "object",
+          "description": "Short position performance metrics",
+          "properties": {
+            "trade_count": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Number of short trades"
+            },
+            "win_rate": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "description": "Win rate for short positions"
+            },
+            "average_return": {
+              "type": "number",
+              "description": "Average return for short positions"
+            }
+          }
+        },
+        "directional_bias": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Percentage allocation to long positions"
+        },
+        "long_vs_short_efficiency": {
+          "type": "string",
+          "description": "Comparative effectiveness analysis"
+        },
+        "market_directional_alignment": {
+          "type": "number",
+          "minimum": -1,
+          "maximum": 1,
+          "description": "Correlation with market direction"
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0.7,
+          "maximum": 1.0,
+          "description": "Confidence in directional performance analysis"
+        }
+      }
+    },
     "pattern_recognition": {
       "type": "object",
       "description": "Pattern recognition and trade quality analysis",

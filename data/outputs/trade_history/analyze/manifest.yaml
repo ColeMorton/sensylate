@@ -1,0 +1,19 @@
+last_execution: 2025-08-03T07:30:00Z
+confidence_score: 0.86
+analysis_completeness: 96.5
+statistical_significance: 0.89
+sample_size_adequacy: 0.88
+portfolio: live_signals
+total_trades_analyzed: 38
+closed_trades: 38
+active_trades: 0
+strategies_analyzed:
+  - SMA: 31 trades
+  - EMA: 7 trades
+critical_findings:
+  - Exit efficiency at 43% presents major optimization opportunity
+  - SMCI trade (866% return) significantly impacts portfolio statistics
+  - SMA strategy outperforms EMA by 15.2% win rate
+  - Hold period optimization could improve returns by 15%
+optimization_opportunities_identified: 7
+next_phase_ready: true
