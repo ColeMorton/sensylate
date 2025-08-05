@@ -13,7 +13,7 @@ import subprocess
 import sys
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Union
 
 # Add project root to Python path
 project_root = Path(__file__).parent.parent
@@ -51,64 +51,136 @@ class PhotoBoothGenerator:
         self,
         dashboard_id: str,
         mode: str = "light",
+        aspect_ratio: str = "16:9",
+        export_format: str = "png",
+        dpi: int = 300,
+        scale_factor: int = 3,
         custom_config: Optional[Dict[str, Any]] = None,
-    ) -> Path:
+    ) -> Union[Path, List[Path]]:
         """
         Generate a single dashboard screenshot.
 
         Args:
             dashboard_id: ID of the dashboard to screenshot
             mode: Theme mode ('light' or 'dark')
+            aspect_ratio: Aspect ratio ('16:9', '4:3', '3:4')
+            export_format: Export format ('png', 'svg', 'both')
+            dpi: DPI setting for PNG output (150, 300, 600)
+            scale_factor: Scale factor for high-DPI (2, 3, 4)
             custom_config: Optional custom screenshot configuration
 
         Returns:
-            Path to the generated screenshot
+            Path to the generated screenshot (or list of paths for 'both' format)
         """
         self.logger.info(
-            f"Generating {mode} mode screenshot for dashboard: {dashboard_id}"
+            f"Generating {export_format} export: {dashboard_id} ({mode} mode, {aspect_ratio}, {dpi} DPI)"
         )
 
         # Build URL with parameters
         url = f"{self.base_url}/photo-booth?dashboard={dashboard_id}&mode={mode}"
 
-        # Generate output filename
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        filename_template = self.config.get("output", {}).get(
-            "filename_template", "{dashboard_id}_{mode}_{timestamp}.png"
-        )
-        filename = filename_template.format(
-            dashboard_id=dashboard_id, mode=mode, timestamp=timestamp
-        )
-        output_path = self.output_dir / filename
+        # Get aspect ratio dimensions from config
+        aspect_dimensions = self._get_aspect_ratio_dimensions(aspect_ratio)
 
-        # Merge screenshot settings
+        # Generate output filename(s)
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+
+        # Support both new and legacy filename templates
+        filename_template = self.config.get("output", {}).get(
+            "filename_template",
+            "{dashboard_id}_{mode}_{aspect_ratio}_{format}_{dpi}dpi_{timestamp}.{extension}",
+        )
+
+        output_paths = []
+        formats_to_generate = (
+            ["png", "svg"] if export_format == "both" else [export_format]
+        )
+
+        for fmt in formats_to_generate:
+            extension = "svg" if fmt == "svg" else "png"
+            filename = filename_template.format(
+                dashboard_id=dashboard_id,
+                mode=mode,
+                aspect_ratio=aspect_ratio.replace(":", "x"),
+                format=fmt,
+                dpi=dpi,
+                timestamp=timestamp,
+                extension=extension,
+            )
+            output_paths.append(self.output_dir / filename)
+
+        # Merge screenshot settings with aspect ratio dimensions
         settings = {**self.screenshot_settings}
+        settings["viewport"] = aspect_dimensions
+        settings["device_scale_factor"] = scale_factor
         if custom_config:
             settings.update(custom_config)
 
-        # Create Node.js script for Puppeteer
-        puppeteer_script = self._create_puppeteer_script(
-            url, str(output_path), settings
-        )
+        generated_files = []
 
         try:
-            # Execute Puppeteer script
-            self._execute_puppeteer_script(puppeteer_script)
+            for i, fmt in enumerate(formats_to_generate):
+                output_path = output_paths[i]
 
-            if output_path.exists():
-                self.logger.info(f"Screenshot saved to: {output_path}")
-                return output_path
-            else:
-                raise RuntimeError(
-                    f"Screenshot generation failed: {output_path} not created"
-                )
+                if fmt == "svg":
+                    # Generate SVG using dedicated SVG exporter
+                    result = self._generate_svg(
+                        url, str(output_path), aspect_dimensions
+                    )
+                    if result:
+                        generated_files.append(output_path)
+                        self.logger.info(f"SVG saved to: {output_path}")
+
+                elif fmt == "png":
+                    # Generate PNG using Puppeteer + Sharp processing
+                    temp_png_path = str(output_path).replace(".png", "_temp.png")
+
+                    # Create Node.js script for Puppeteer
+                    puppeteer_script = self._create_puppeteer_script(
+                        url, temp_png_path, settings
+                    )
+
+                    # Execute Puppeteer script to get raw PNG
+                    self._execute_puppeteer_script(puppeteer_script)
+
+                    if Path(temp_png_path).exists():
+                        # Process with Sharp.js for high-DPI and optimization
+                        sharp_result = self._process_with_sharp(
+                            temp_png_path, str(output_path), dpi, scale_factor
+                        )
+
+                        if sharp_result:
+                            generated_files.append(output_path)
+                            self.logger.info(f"High-DPI PNG saved to: {output_path}")
+
+                            # Clean up temp file
+                            Path(temp_png_path).unlink()
+                        else:
+                            raise RuntimeError(
+                                f"Sharp processing failed for {output_path}"
+                            )
+                    else:
+                        raise RuntimeError(
+                            f"Puppeteer PNG generation failed: {temp_png_path} not created"
+                        )
+
+            if not generated_files:
+                raise RuntimeError("No files were generated successfully")
+
+            return generated_files[0] if len(generated_files) == 1 else generated_files
 
         except Exception as e:
-            self.logger.error(f"Failed to generate screenshot: {e}")
+            self.logger.error(f"Failed to generate export: {e}")
             raise
 
     def generate_all_dashboards(
-        self, dashboards: Optional[List[str]] = None, modes: Optional[List[str]] = None
+        self,
+        dashboards: Optional[List[str]] = None,
+        modes: Optional[List[str]] = None,
+        aspect_ratio: str = "16:9",
+        export_format: str = "png",
+        dpi: int = 300,
+        scale_factor: int = 3,
     ) -> List[Path]:
         """
         Generate screenshots for multiple dashboards.
@@ -116,6 +188,10 @@ class PhotoBoothGenerator:
         Args:
             dashboards: List of dashboard IDs to generate (default: all active)
             modes: List of modes to generate (default: from config)
+            aspect_ratio: Aspect ratio for export (default: 16:9)
+            export_format: Export format (default: png)
+            dpi: DPI setting for PNG output (default: 300)
+            scale_factor: Scale factor for high-DPI (default: 3)
 
         Returns:
             List of generated screenshot paths
@@ -142,11 +218,22 @@ class PhotoBoothGenerator:
         for dashboard_id in active_dashboards:
             for mode in modes:
                 try:
-                    output_path = self.generate_screenshot(dashboard_id, mode)
-                    generated_files.append(output_path)
+                    result = self.generate_screenshot(
+                        dashboard_id,
+                        mode,
+                        aspect_ratio=aspect_ratio,
+                        export_format=export_format,
+                        dpi=dpi,
+                        scale_factor=scale_factor,
+                    )
+                    # Handle both single file and multiple file results
+                    if isinstance(result, list):
+                        generated_files.extend(result)
+                    else:
+                        generated_files.append(result)
                 except Exception as e:
                     self.logger.error(
-                        f"Failed to generate {mode} screenshot for {dashboard_id}: {e}"
+                        f"Failed to generate {export_format} export for {dashboard_id} ({mode}): {e}"
                     )
                     continue
 
@@ -277,6 +364,95 @@ const puppeteer = require('puppeteer');
             if script_path.exists():
                 script_path.unlink()
 
+    def _get_aspect_ratio_dimensions(self, aspect_ratio: str) -> Dict[str, int]:
+        """Get viewport dimensions for the specified aspect ratio."""
+        # Load export options from config
+        export_options = self.config.get("export_options", {})
+        aspect_ratios = export_options.get("aspect_ratios", {}).get("available", [])
+
+        # Find matching aspect ratio
+        for ar in aspect_ratios:
+            if ar["id"] == aspect_ratio:
+                return ar["dimensions"]
+
+        # Default fallback to 16:9
+        self.logger.warning(
+            f"Aspect ratio {aspect_ratio} not found, using default 16:9"
+        )
+        return {"width": 1920, "height": 1080}
+
+    def _generate_svg(
+        self, url: str, output_path: str, dimensions: Dict[str, int]
+    ) -> bool:
+        """Generate SVG using the SVG exporter utility."""
+        try:
+            # Execute SVG exporter
+            frontend_dir = project_root / "frontend"
+            svg_exporter_path = project_root / "scripts/utils/svg_exporter.js"
+
+            result = subprocess.run(
+                [
+                    "node",
+                    str(svg_exporter_path),
+                    "export",
+                    url,
+                    output_path,
+                    str(dimensions["width"]),
+                    str(dimensions["height"]),
+                ],
+                cwd=str(frontend_dir),
+                capture_output=True,
+                text=True,
+                timeout=120,
+            )
+
+            if result.returncode == 0:
+                self.logger.debug(f"SVG exporter output: {result.stdout}")
+                return True
+            else:
+                self.logger.error(f"SVG exporter failed: {result.stderr}")
+                return False
+
+        except Exception as e:
+            self.logger.error(f"SVG generation failed: {e}")
+            return False
+
+    def _process_with_sharp(
+        self, input_path: str, output_path: str, dpi: int, scale_factor: int
+    ) -> bool:
+        """Process PNG with Sharp.js for high-DPI and optimization."""
+        try:
+            # Execute Sharp processor
+            frontend_dir = project_root / "frontend"
+            sharp_processor_path = project_root / "scripts/utils/sharp_processor.js"
+
+            result = subprocess.run(
+                [
+                    "node",
+                    str(sharp_processor_path),
+                    "process",
+                    input_path,
+                    output_path,
+                    str(dpi),
+                    "1",  # Scale factor is already applied in Puppeteer
+                ],
+                cwd=str(frontend_dir),
+                capture_output=True,
+                text=True,
+                timeout=120,
+            )
+
+            if result.returncode == 0:
+                self.logger.debug(f"Sharp processor output: {result.stdout}")
+                return True
+            else:
+                self.logger.error(f"Sharp processor failed: {result.stderr}")
+                return False
+
+        except Exception as e:
+            self.logger.error(f"Sharp processing failed: {e}")
+            return False
+
     def cleanup_old_screenshots(self) -> None:
         """Clean up old screenshots based on configuration."""
         cleanup_config = self.config.get("output", {}).get("auto_cleanup", {})
@@ -316,6 +492,32 @@ def main():
         choices=["light", "dark", "both"],
         default="both",
         help="Theme mode to generate",
+    )
+    parser.add_argument(
+        "--aspect-ratio",
+        choices=["16:9", "4:3", "3:4"],
+        default="16:9",
+        help="Aspect ratio for export",
+    )
+    parser.add_argument(
+        "--format",
+        choices=["png", "svg", "both"],
+        default="png",
+        help="Export format",
+    )
+    parser.add_argument(
+        "--dpi",
+        type=int,
+        choices=[150, 300, 600],
+        default=300,
+        help="DPI setting for PNG output",
+    )
+    parser.add_argument(
+        "--scale-factor",
+        type=int,
+        choices=[2, 3, 4],
+        default=3,
+        help="Scale factor for high-DPI output",
     )
     parser.add_argument(
         "--base-url",
@@ -363,10 +565,27 @@ def main():
         if args.dashboard:
             generated_files = []
             for mode in modes:
-                output_path = generator.generate_screenshot(args.dashboard, mode)
-                generated_files.append(output_path)
+                result = generator.generate_screenshot(
+                    args.dashboard,
+                    mode,
+                    aspect_ratio=args.aspect_ratio,
+                    export_format=args.format,
+                    dpi=args.dpi,
+                    scale_factor=args.scale_factor,
+                )
+                # Handle both single file and multiple file results
+                if isinstance(result, list):
+                    generated_files.extend(result)
+                else:
+                    generated_files.append(result)
         else:
-            generated_files = generator.generate_all_dashboards(modes=modes)
+            generated_files = generator.generate_all_dashboards(
+                modes=modes,
+                aspect_ratio=args.aspect_ratio,
+                export_format=args.format,
+                dpi=args.dpi,
+                scale_factor=args.scale_factor,
+            )
 
         # Cleanup if requested
         if args.cleanup:

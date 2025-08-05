@@ -88,7 +88,18 @@ import ChartDisplay from "@/layouts/shortcodes/ChartDisplay.tsx";
   title="Open Positions Cumulative PnL Time Series (Weekly)"
   category="Live Trading Open Positions"
   description="Weekly aggregated view of open positions PnL showing end-of-week cumulative values for each ticker. Provides cleaner visualization of longer-term trends with reduced data noise."
-  chartType="open-positions-pnl-timeseries-weekly"
+  chartType="open-positions-pnl-timeseries"
+  timeframe="weekly"
+/>
+
+<ChartDisplay
+  client:only="react"
+  title="Open Positions Cumulative PnL Time Series (Indexed)"
+  category="Live Trading Open Positions"
+  description="Indexed view of open positions PnL showing cumulative values by position bar rather than date. Each bar represents sequential position progression from entry (bar 0) onwards for cleaner comparative analysis."
+  chartType="open-positions-pnl-timeseries"
+  timeframe="daily"
+  indexed={true}
 />
 
 </div>

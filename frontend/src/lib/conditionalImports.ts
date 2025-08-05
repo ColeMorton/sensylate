@@ -14,6 +14,27 @@ declare const __FEATURE_PHOTO_BOOTH__: boolean;
 declare const __FEATURE_ELEMENTS_PAGE__: boolean;
 declare const __FEATURE_CHARTS_PAGE__: boolean;
 
+// Debug logging for build-time constants
+console.log("🔍 Build-time constants debug:");
+console.log(
+  "  __FEATURE_PHOTO_BOOTH__:",
+  typeof __FEATURE_PHOTO_BOOTH__ !== "undefined"
+    ? __FEATURE_PHOTO_BOOTH__
+    : "UNDEFINED",
+);
+console.log(
+  "  __FEATURE_ELEMENTS_PAGE__:",
+  typeof __FEATURE_ELEMENTS_PAGE__ !== "undefined"
+    ? __FEATURE_ELEMENTS_PAGE__
+    : "UNDEFINED",
+);
+console.log(
+  "  __FEATURE_CHARTS_PAGE__:",
+  typeof __FEATURE_CHARTS_PAGE__ !== "undefined"
+    ? __FEATURE_CHARTS_PAGE__
+    : "UNDEFINED",
+);
+
 /**
  * Build-time feature flags for conditional imports and dead code elimination.
  * These values are resolved at build time and allow for complete removal

@@ -9,6 +9,14 @@
 import React, { Suspense } from "react";
 import { BuildTimeFeatures } from "@/lib/conditionalImports";
 
+// Debug logging for build-time feature flags
+console.log("🔍 ConditionalPhotoBoothDisplay Debug:");
+console.log("  BuildTimeFeatures.photoBooth:", BuildTimeFeatures.photoBooth);
+console.log(
+  "  typeof BuildTimeFeatures.photoBooth:",
+  typeof BuildTimeFeatures.photoBooth,
+);
+
 // Build-time conditional import
 const PhotoBoothDisplay = BuildTimeFeatures.photoBooth
   ? React.lazy(() => import("./PhotoBoothDisplay"))
