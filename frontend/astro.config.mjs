@@ -14,7 +14,10 @@ import { FEATURE_FLAGS, getFlagsForEnvironment, getBuildDefineName } from "./src
 
 // Build-time feature flag optimization using single source of truth
 const getFeatureFlags = () => {
-  const envToBoolean = (value) => value?.toLowerCase() === 'true';
+  const envToBoolean = (value) => {
+    if (value === undefined || value === '') return undefined;
+    return value?.toLowerCase() === 'true';
+  };
   const currentEnv = process.env.NODE_ENV === 'development' ? 'development' :
                     process.env.PUBLIC_ENV === 'staging' ? 'staging' : 'production';
 
@@ -36,11 +39,17 @@ const getFeatureFlags = () => {
 
 const buildTimeFlags = getFeatureFlags();
 
+// Debug logging for build-time flags
+console.log('🔍 Astro Config Debug:');
+console.log('  NODE_ENV:', process.env.NODE_ENV);
+console.log('  buildTimeFlags:', buildTimeFlags);
+console.log('  photoBooth flag:', buildTimeFlags.photoBooth);
+
 // Use Netlify adapter only for Netlify builds
 const adapter = process.env.NETLIFY ? netlify() : undefined;
 
-// Use server mode in development to fix route detection issues, static in production
-const outputMode = process.env.NODE_ENV === "development" ? "server" : "static";
+// Use server mode in local development only, static for builds and Netlify
+const outputMode = (process.env.NODE_ENV === "development" && !process.env.NETLIFY) ? "server" : "static";
 
 // https://astro.build/config
 export default defineConfig({
@@ -72,7 +81,12 @@ export default defineConfig({
       ...Object.fromEntries(
         FEATURE_FLAGS
           .filter(flag => flag.buildTimeOptimization)
-          .map(flag => [getBuildDefineName(flag.name), buildTimeFlags[flag.name]])
+          .map(flag => {
+            const defineName = getBuildDefineName(flag.name);
+            const defineValue = buildTimeFlags[flag.name];
+            console.log(`🔍 Setting Vite define: ${defineName} = ${defineValue}`);
+            return [defineName, defineValue];
+          })
       ),
     },
     resolve: {

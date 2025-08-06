@@ -34,4 +34,15 @@ export class DashboardLoader {
     const dashboards = await this.getAllDashboards();
     return dashboards.find((dashboard) => dashboard.id === id) || null;
   }
+
+  static getLayoutClasses(layout: string): string {
+    const layoutMappings: Record<string, string> = {
+      "2x2_grid": "grid grid-cols-1 gap-6 lg:grid-cols-2",
+      "1x3_stack": "grid grid-cols-1 gap-6",
+      "3x1_row": "grid grid-cols-1 gap-6 lg:grid-cols-3",
+      "1x2_column": "grid grid-cols-1 gap-6 lg:grid-cols-2",
+    };
+
+    return layoutMappings[layout] || "grid grid-cols-1 gap-6";
+  }
 }
