@@ -5,6 +5,7 @@ import type {
   TradeHistoryDataRow,
   ClosedPositionPnLDataRow,
   OpenPositionPnLDataRow,
+  BenchmarkDataRow,
   PortfolioDataCache,
 } from "@/types/ChartTypes";
 
@@ -20,6 +21,10 @@ class ChartDataService {
   } = {};
   private openPositionsPnLCache: {
     data?: OpenPositionPnLDataRow[];
+    lastFetched?: number;
+  } = {};
+  private benchmarkCache: {
+    data?: BenchmarkDataRow[];
     lastFetched?: number;
   } = {};
   private readonly CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
@@ -99,6 +104,27 @@ class ChartDataService {
     });
   }
 
+  private parseBenchmarkCSV(
+    csvText: string,
+    ticker: string,
+  ): BenchmarkDataRow[] {
+    const lines = csvText.trim().split("\n");
+    const headers = lines[0].split(",");
+
+    return lines.slice(1).map((line) => {
+      const values = line.split(",");
+      const row: { [key: string]: string } = {};
+      headers.forEach((header, index) => {
+        row[header.trim()] = values[index]?.trim() || "";
+      });
+      return {
+        date: row.date,
+        ticker,
+        close: row.close,
+      } as BenchmarkDataRow;
+    });
+  }
+
   // Cache management
   private isCacheValid(): boolean {
     return (
@@ -129,6 +155,13 @@ class ChartDataService {
     return (
       this.openPositionsPnLCache.lastFetched !== undefined &&
       Date.now() - this.openPositionsPnLCache.lastFetched < this.CACHE_DURATION
+    );
+  }
+
+  private isBenchmarkCacheValid(): boolean {
+    return (
+      this.benchmarkCache.lastFetched !== undefined &&
+      Date.now() - this.benchmarkCache.lastFetched < this.CACHE_DURATION
     );
   }
 
@@ -428,6 +461,54 @@ class ChartDataService {
 
   async getOpenPositionsPnLData(): Promise<OpenPositionPnLDataRow[]> {
     return await this.fetchOpenPositionsPnLData();
+  }
+
+  async fetchBenchmarkData(): Promise<BenchmarkDataRow[]> {
+    // Return cached data if valid
+    if (this.benchmarkCache.data && this.isBenchmarkCacheValid()) {
+      return this.benchmarkCache.data;
+    }
+
+    const benchmarkTickers = ["SPY", "QQQ", "BTC-USD"];
+    const liveSignalsStartDate = "2025-04-01";
+
+    try {
+      const allBenchmarkData: BenchmarkDataRow[] = [];
+
+      // Fetch all benchmark data in parallel
+      const benchmarkPromises = benchmarkTickers.map(async (ticker) => {
+        const response = await fetch(`/data/raw/stocks/${ticker}/daily.csv`);
+        if (!response.ok) {
+          throw new Error(`Failed to fetch ${ticker} data: ${response.status}`);
+        }
+        const csvText = await response.text();
+        const data = this.parseBenchmarkCSV(csvText, ticker);
+
+        // Filter data to match live signals timeframe
+        return data.filter((row) => row.date >= liveSignalsStartDate);
+      });
+
+      const benchmarkResults = await Promise.all(benchmarkPromises);
+      benchmarkResults.forEach((data) => allBenchmarkData.push(...data));
+
+      // Update cache
+      this.benchmarkCache = {
+        data: allBenchmarkData,
+        lastFetched: Date.now(),
+      };
+
+      return allBenchmarkData;
+    } catch (error) {
+      throw new Error(
+        error instanceof Error
+          ? error.message
+          : "Failed to load benchmark data",
+      );
+    }
+  }
+
+  async getBenchmarkData(): Promise<BenchmarkDataRow[]> {
+    return await this.fetchBenchmarkData();
   }
 
   async getClosedTradesWithPriceHistory(): Promise<ClosedPositionPnLDataRow[]> {
@@ -796,6 +877,7 @@ class ChartDataService {
     this.liveSignalsCache = {};
     this.tradeHistoryCache = {};
     this.openPositionsPnLCache = {};
+    this.benchmarkCache = {};
   }
 
   // Enhanced cache status with data quality info

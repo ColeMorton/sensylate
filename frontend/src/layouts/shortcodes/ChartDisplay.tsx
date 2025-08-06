@@ -20,6 +20,7 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({
     "returns-comparison",
     "portfolio-drawdowns",
     "live-signals-equity-curve",
+    "live-signals-benchmark-comparison",
     "live-signals-drawdowns",
     "live-signals-weekly-candlestick",
     "trade-pnl-waterfall",

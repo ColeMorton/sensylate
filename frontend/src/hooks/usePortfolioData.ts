@@ -6,6 +6,7 @@ import type {
   TradeHistoryDataRow,
   ClosedPositionPnLDataRow,
   OpenPositionPnLDataRow,
+  BenchmarkDataRow,
   ChartType,
   DataServiceResponse,
 } from "@/types/ChartTypes";
@@ -112,8 +113,8 @@ export function usePortfolioData(chartType: ChartType): DataServiceResponse<{
           }
 
           case "live-signals-equity-curve":
+          case "live-signals-benchmark-comparison":
           case "live-signals-drawdowns":
-          case "live-signals-performance-metrics":
           case "live-signals-weekly-candlestick": {
             // Live signals charts are handled by useLiveSignalsData hook
             setData({});
@@ -134,12 +135,6 @@ export function usePortfolioData(chartType: ChartType): DataServiceResponse<{
 
           case "open-positions-pnl-timeseries": {
             // Open positions PnL charts are handled by useOpenPositionsPnLData hook
-            setData({});
-            break;
-          }
-
-          case "open-positions-pnl-timeseries-weekly": {
-            // Weekly open positions PnL charts are handled by useOpenPositionsPnLData hook
             setData({});
             break;
           }
@@ -174,8 +169,7 @@ export function usePortfolioData(chartType: ChartType): DataServiceResponse<{
       !chartType.startsWith("live-signals-") &&
       chartType !== "trade-pnl-waterfall" &&
       chartType !== "closed-positions-pnl-timeseries" &&
-      chartType !== "open-positions-pnl-timeseries" &&
-      chartType !== "open-positions-pnl-timeseries-weekly"
+      chartType !== "open-positions-pnl-timeseries"
     ) {
       fetchDataForChartType(abortController.signal);
     } else {
@@ -428,6 +422,34 @@ export function useClosedPositionsPnLData(): DataServiceResponse<
           err instanceof Error
             ? err.message
             : "Failed to load closed positions PnL data with price history",
+        );
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  return { data, loading, error };
+}
+
+// Hook for benchmark data (SPY, QQQ, BTC-USD)
+export function useBenchmarkData(): DataServiceResponse<BenchmarkDataRow[]> {
+  const [data, setData] = useState<BenchmarkDataRow[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        const result = await chartDataService.getBenchmarkData();
+        setData(result);
+      } catch (err) {
+        setError(
+          err instanceof Error ? err.message : "Failed to load benchmark data",
         );
       } finally {
         setLoading(false);

@@ -9,6 +9,7 @@ import type {
   TradeHistoryDataRow,
   ClosedPositionPnLDataRow,
   OpenPositionPnLDataRow,
+  BenchmarkDataRow,
 } from "@/types/ChartTypes";
 import {
   usePortfolioData,
@@ -18,6 +19,7 @@ import {
   useWaterfallTradeData,
   useClosedPositionsPnLData,
   useOpenPositionsPnLData,
+  useBenchmarkData,
 } from "@/hooks/usePortfolioData";
 import { getChartColors, getPlotlyThemeColors } from "@/utils/chartTheme";
 import ChartRenderer from "./ChartRenderer";
@@ -48,6 +50,7 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
   const waterfallTradeData = useWaterfallTradeData();
   const closedPositionsPnLData = useClosedPositionsPnLData();
   const openPositionsPnLData = useOpenPositionsPnLData();
+  const benchmarkData = useBenchmarkData();
 
   // Smart position data selection logic
   const isPositionChart = chartType === "open-positions-pnl-timeseries";
@@ -67,17 +70,19 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
   const { data, loading, error } =
     chartType === "apple-stock"
       ? appleData
-      : chartType.startsWith("live-signals-")
-        ? liveSignalsData
-        : chartType === "trade-pnl-waterfall"
-          ? waterfallTradeData
-          : chartType === "closed-positions-pnl-timeseries"
-            ? closedPositionsPnLData
-            : chartType === "open-positions-pnl-timeseries"
-              ? shouldUseClosedData
-                ? closedPositionsPnLData
-                : openPositionsPnLData
-              : portfolioData;
+      : chartType === "live-signals-benchmark-comparison"
+        ? benchmarkData
+        : chartType.startsWith("live-signals-")
+          ? liveSignalsData
+          : chartType === "trade-pnl-waterfall"
+            ? waterfallTradeData
+            : chartType === "closed-positions-pnl-timeseries"
+              ? closedPositionsPnLData
+              : chartType === "open-positions-pnl-timeseries"
+                ? shouldUseClosedData
+                  ? closedPositionsPnLData
+                  : openPositionsPnLData
+                : portfolioData;
 
   // Dynamic legend visibility based on data volume
   const shouldShowLegend = useMemo(() => {
@@ -541,16 +546,8 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
             type: "scatter",
             mode: "lines",
             x: unpackLiveSignals(liveSignalsRows, "timestamp"),
-            y: unpackLiveSignals(liveSignalsRows, "equity"),
-            line: { color: colors.tertiary, width: 2 },
-            name: "Live Signals Equity",
-          },
-          {
-            type: "scatter",
-            mode: "lines",
-            x: unpackLiveSignals(liveSignalsRows, "timestamp"),
             y: unpackLiveSignals(liveSignalsRows, "mfe"),
-            line: { color: colors.multiStrategy, width: 2 },
+            line: { color: "#26C6DA", width: 3 }, // Prominent cyan for MFE
             name: "MFE (Maximum Favorable Excursion)",
           },
           {
@@ -558,10 +555,116 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
             mode: "lines",
             x: unpackLiveSignals(liveSignalsRows, "timestamp"),
             y: unpackLiveSignals(liveSignalsRows, "mae"),
-            line: { color: colors.buyHold, width: 2 },
+            line: { color: "#FF5722", width: 3 }, // Prominent red for MAE
             name: "MAE (Maximum Adverse Excursion)",
           },
+          {
+            type: "scatter",
+            mode: "lines",
+            x: unpackLiveSignals(liveSignalsRows, "timestamp"),
+            y: unpackLiveSignals(liveSignalsRows, "equity"),
+            line: { color: colors.neutral, width: 2, dash: "dot" }, // Muted dotted line for context
+            name: "Portfolio Equity",
+          },
         ];
+      }
+
+      case "live-signals-benchmark-comparison": {
+        const benchmarkRows = data as BenchmarkDataRow[];
+        const liveSignalsRows = liveSignalsData.data;
+
+        if (
+          !benchmarkRows ||
+          benchmarkRows.length === 0 ||
+          !liveSignalsRows ||
+          liveSignalsRows.length === 0
+        ) {
+          return [];
+        }
+
+        // Group benchmark data by ticker
+        const benchmarkByTicker: { [key: string]: BenchmarkDataRow[] } = {};
+        benchmarkRows.forEach((row) => {
+          if (!benchmarkByTicker[row.ticker]) {
+            benchmarkByTicker[row.ticker] = [];
+          }
+          benchmarkByTicker[row.ticker].push(row);
+        });
+
+        // Get baseline values for normalization
+        // Find first non-zero equity value for meaningful percentage calculation
+        let portfolioBaseline = 0;
+        for (const row of liveSignalsRows) {
+          const equity = parseFloat(row.equity);
+          if (equity !== 0) {
+            portfolioBaseline = Math.abs(equity); // Use absolute value to handle initial losses
+            break;
+          }
+        }
+
+        // Fallback to a reasonable starting capital if all values are zero
+        if (portfolioBaseline === 0) {
+          portfolioBaseline = 1000; // Assume $1000 starting capital
+        }
+
+        const benchmarkBaselines: { [key: string]: number } = {};
+
+        Object.entries(benchmarkByTicker).forEach(([ticker, rows]) => {
+          if (rows.length > 0) {
+            benchmarkBaselines[ticker] = parseFloat(rows[0].close);
+          }
+        });
+
+        const chartData: Data[] = [];
+
+        // Add portfolio equity (normalized to percentage)
+        const portfolioPercentages = liveSignalsRows.map((row) => {
+          const equity = parseFloat(row.equity);
+          // Calculate percentage relative to the baseline (first non-zero equity)
+          // This shows the performance relative to the initial position size
+          return (equity / portfolioBaseline) * 100;
+        });
+
+        chartData.push({
+          type: "scatter",
+          mode: "lines",
+          x: unpackLiveSignals(liveSignalsRows, "timestamp"),
+          y: portfolioPercentages,
+          line: { color: colors.tertiary, width: 3 }, // Cyan for portfolio
+          name: "Live Signals Portfolio",
+        });
+
+        // Add benchmark series with color mapping
+        const benchmarkColors = {
+          SPY: colors.multiStrategy, // Blue for SPY
+          QQQ: colors.buyHold, // Purple for QQQ
+          "BTC-USD": colors.drawdown, // Orange for BTC
+        };
+
+        Object.entries(benchmarkByTicker).forEach(([ticker, rows]) => {
+          if (rows.length > 0 && benchmarkBaselines[ticker]) {
+            const percentages = rows.map((row) => {
+              const close = parseFloat(row.close);
+              return (close / benchmarkBaselines[ticker]) * 100;
+            });
+
+            chartData.push({
+              type: "scatter",
+              mode: "lines",
+              x: rows.map((row) => row.date),
+              y: percentages,
+              line: {
+                color:
+                  benchmarkColors[ticker as keyof typeof benchmarkColors] ||
+                  colors.neutral,
+                width: 2,
+              },
+              name: ticker === "BTC-USD" ? "Bitcoin" : ticker,
+            });
+          }
+        });
+
+        return chartData;
       }
 
       case "live-signals-drawdowns": {
@@ -827,6 +930,7 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
     convertOpenPositionsPnLToWeekly,
     createIndexedDataWithEntry,
     createClosedPositionIndexedData,
+    liveSignalsData,
   ]);
 
   // Chart layout
@@ -848,7 +952,9 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
         case "portfolio-drawdowns":
           return "Portfolio Drawdown Analysis";
         case "live-signals-equity-curve":
-          return "Live Signals Portfolio Equity Curve";
+          return "Live Signals MFE/MAE Analysis";
+        case "live-signals-benchmark-comparison":
+          return "Live Signals vs Market Benchmarks";
         case "live-signals-drawdowns":
           return "Live Signals Portfolio Drawdowns";
         case "live-signals-weekly-candlestick":
@@ -883,7 +989,9 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
         case "portfolio-drawdowns":
           return "Drawdown (%)";
         case "live-signals-equity-curve":
-          return "Equity ($)";
+          return "Value ($)";
+        case "live-signals-benchmark-comparison":
+          return "Relative Performance (%)";
         case "live-signals-drawdowns":
           return "Drawdown ($)";
         case "live-signals-weekly-candlestick":

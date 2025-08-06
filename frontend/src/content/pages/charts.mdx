@@ -41,10 +41,18 @@ import ChartDisplay from "@/layouts/shortcodes/ChartDisplay.tsx";
 
 <ChartDisplay
   client:only="react"
-  title="Live Signals Equity Curve"
-  category="Live Trading Performance"
-  description="Comprehensive live trading analysis showing equity curve, MFE (Maximum Favorable Excursion), and MAE (Maximum Adverse Excursion). Real-time performance from April to August 2025 with risk management insights."
+  title="Live Signals MFE/MAE Analysis"
+  category="Live Trading Risk Analysis"
+  description="Risk-reward analysis focusing on Maximum Favorable Excursion (MFE) and Maximum Adverse Excursion (MAE) with portfolio equity as context. Shows potential upside vs downside exposure in live trading."
   chartType="live-signals-equity-curve"
+/>
+
+<ChartDisplay
+  client:only="react"
+  title="Live Signals vs Market Benchmarks"
+  category="Live Trading Performance Comparison"
+  description="Comparative performance analysis showing live signals portfolio against major market benchmarks: SPY (S&P 500), QQQ (Nasdaq 100), and Bitcoin. All series normalized to 100% for relative performance comparison."
+  chartType="live-signals-benchmark-comparison"
 />
 
 <ChartDisplay

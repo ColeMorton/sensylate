@@ -105,6 +105,13 @@ export interface StockDataRow {
   [key: string]: string;
 }
 
+// Benchmark data structure for comparison charts
+export interface BenchmarkDataRow {
+  date: string;
+  ticker: string;
+  close: string;
+}
+
 // Chart configuration types
 export type ChartType =
   | "apple-stock"
@@ -112,6 +119,7 @@ export type ChartType =
   | "returns-comparison"
   | "portfolio-drawdowns"
   | "live-signals-equity-curve"
+  | "live-signals-benchmark-comparison"
   | "live-signals-drawdowns"
   | "live-signals-weekly-candlestick"
   | "trade-pnl-waterfall"
