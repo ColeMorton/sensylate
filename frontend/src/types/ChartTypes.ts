@@ -70,6 +70,20 @@ export interface TradeHistoryDataRow {
   X_Status: string;
 }
 
+// Enhanced closed position data with real daily price progression
+export interface ClosedPositionPnLDataRow {
+  Date: string;
+  Ticker: string;
+  Price: string;
+  PnL: string;
+  Position_Size: string;
+  Entry_Date: string;
+  Entry_Price: string;
+  Direction: string;
+  Position_UUID: string;
+  Duration_Days: string;
+}
+
 // Open positions PnL time series data structure
 export interface OpenPositionPnLDataRow {
   Date: string;
@@ -101,7 +115,8 @@ export type ChartType =
   | "live-signals-drawdowns"
   | "live-signals-weekly-candlestick"
   | "trade-pnl-waterfall"
-  | "open-positions-pnl-timeseries";
+  | "open-positions-pnl-timeseries"
+  | "closed-positions-pnl-timeseries";
 
 export interface ChartConfig {
   title: string;
@@ -136,6 +151,7 @@ export interface ChartDisplayProps {
   chartType?: ChartType;
   timeframe?: "daily" | "weekly";
   indexed?: boolean;
+  positionType?: "open" | "closed" | "auto";
   className?: string;
 }
 

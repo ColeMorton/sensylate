@@ -4,6 +4,7 @@ import type {
   StockDataRow,
   LiveSignalsDataRow,
   TradeHistoryDataRow,
+  ClosedPositionPnLDataRow,
   OpenPositionPnLDataRow,
   ChartType,
   DataServiceResponse,
@@ -125,6 +126,12 @@ export function usePortfolioData(chartType: ChartType): DataServiceResponse<{
             break;
           }
 
+          case "closed-positions-pnl-timeseries": {
+            // Closed positions PnL charts are handled by useTradeHistoryData hook
+            setData({});
+            break;
+          }
+
           case "open-positions-pnl-timeseries": {
             // Open positions PnL charts are handled by useOpenPositionsPnLData hook
             setData({});
@@ -166,6 +173,7 @@ export function usePortfolioData(chartType: ChartType): DataServiceResponse<{
       chartType !== "apple-stock" &&
       !chartType.startsWith("live-signals-") &&
       chartType !== "trade-pnl-waterfall" &&
+      chartType !== "closed-positions-pnl-timeseries" &&
       chartType !== "open-positions-pnl-timeseries" &&
       chartType !== "open-positions-pnl-timeseries-weekly"
     ) {
@@ -356,6 +364,70 @@ export function useOpenPositionsPnLData(): DataServiceResponse<
           err instanceof Error
             ? err.message
             : "Failed to load open positions PnL data",
+        );
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  return { data, loading, error };
+}
+
+// Hook for waterfall chart data (uses pre-sorted backend data)
+export function useWaterfallTradeData(): DataServiceResponse<
+  TradeHistoryDataRow[]
+> {
+  const [data, setData] = useState<TradeHistoryDataRow[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        const result = await chartDataService.getWaterfallTradeData();
+        setData(result);
+      } catch (err) {
+        setError(
+          err instanceof Error
+            ? err.message
+            : "Failed to load waterfall trade data",
+        );
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  return { data, loading, error };
+}
+
+// Hook for closed positions with real price history
+export function useClosedPositionsPnLData(): DataServiceResponse<
+  ClosedPositionPnLDataRow[]
+> {
+  const [data, setData] = useState<ClosedPositionPnLDataRow[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        const result = await chartDataService.getClosedTradesWithPriceHistory();
+        setData(result);
+      } catch (err) {
+        setError(
+          err instanceof Error
+            ? err.message
+            : "Failed to load closed positions PnL data with price history",
         );
       } finally {
         setLoading(false);

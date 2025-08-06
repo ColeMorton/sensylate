@@ -7,13 +7,16 @@ import type {
   LiveSignalsDataRow,
   WeeklyOHLCDataRow,
   TradeHistoryDataRow,
+  ClosedPositionPnLDataRow,
   OpenPositionPnLDataRow,
 } from "@/types/ChartTypes";
 import {
   usePortfolioData,
   useAppleStockData,
   useLiveSignalsData,
-  useTradeHistoryData,
+  // useTradeHistoryData,
+  useWaterfallTradeData,
+  useClosedPositionsPnLData,
   useOpenPositionsPnLData,
 } from "@/hooks/usePortfolioData";
 import { getChartColors, getPlotlyThemeColors } from "@/utils/chartTheme";
@@ -24,6 +27,7 @@ interface PortfolioChartProps {
   title?: string;
   timeframe?: "daily" | "weekly";
   indexed?: boolean;
+  positionType?: "open" | "closed" | "auto";
 }
 
 const PortfolioChart: React.FC<PortfolioChartProps> = ({
@@ -31,6 +35,7 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
   title,
   timeframe = "daily",
   indexed = false,
+  positionType = "auto",
 }) => {
   const [isDarkMode, setIsDarkMode] = useState(false);
 
@@ -38,8 +43,25 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
   const portfolioData = usePortfolioData(chartType);
   const appleData = useAppleStockData();
   const liveSignalsData = useLiveSignalsData();
-  const tradeHistoryData = useTradeHistoryData();
+  // const tradeHistoryData = useTradeHistoryData(); // Not currently used
+  // Removed import for now
+  const waterfallTradeData = useWaterfallTradeData();
+  const closedPositionsPnLData = useClosedPositionsPnLData();
   const openPositionsPnLData = useOpenPositionsPnLData();
+
+  // Smart position data selection logic
+  const isPositionChart = chartType === "open-positions-pnl-timeseries";
+  const shouldUseClosedData =
+    isPositionChart &&
+    (positionType === "closed" ||
+      (positionType === "auto" &&
+        (!openPositionsPnLData.data ||
+          openPositionsPnLData.data.length === 0)));
+  const actualDataType = isPositionChart
+    ? shouldUseClosedData
+      ? "closed"
+      : "open"
+    : null;
 
   // Use appropriate data source based on chart type
   const { data, loading, error } =
@@ -48,10 +70,51 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
       : chartType.startsWith("live-signals-")
         ? liveSignalsData
         : chartType === "trade-pnl-waterfall"
-          ? tradeHistoryData
-          : chartType === "open-positions-pnl-timeseries"
-            ? openPositionsPnLData
-            : portfolioData;
+          ? waterfallTradeData
+          : chartType === "closed-positions-pnl-timeseries"
+            ? closedPositionsPnLData
+            : chartType === "open-positions-pnl-timeseries"
+              ? shouldUseClosedData
+                ? closedPositionsPnLData
+                : openPositionsPnLData
+              : portfolioData;
+
+  // Dynamic legend visibility based on data volume
+  const shouldShowLegend = useMemo(() => {
+    const isAnyPositionChart =
+      chartType === "open-positions-pnl-timeseries" ||
+      chartType === "closed-positions-pnl-timeseries";
+
+    if (isAnyPositionChart && shouldUseClosedData) {
+      // For closed data, hide legend if > 7 positions
+      const closedData = data as ClosedPositionPnLDataRow[];
+      if (closedData && closedData.length > 0) {
+        const uniquePositions = new Set(
+          closedData.map((row) => row.Position_UUID),
+        ).size;
+        return uniquePositions <= 7;
+      }
+      return true;
+    }
+
+    if (isAnyPositionChart && !shouldUseClosedData) {
+      // For open data, hide legend if > 7 positions
+      const openData = data as OpenPositionPnLDataRow[];
+      if (openData && openData.length > 0) {
+        const uniquePositions = new Set(openData.map((row) => row.Ticker)).size;
+        return uniquePositions <= 7;
+      }
+      return true;
+    }
+
+    // For closed-positions-pnl-timeseries, always hide legend (original behavior)
+    if (chartType === "closed-positions-pnl-timeseries") {
+      return false;
+    }
+
+    // For all other charts, show legend
+    return true;
+  }, [chartType, shouldUseClosedData, data]);
 
   // Dark mode detection
   useEffect(() => {
@@ -205,7 +268,7 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
       const firstRow = rows[0];
       if (!firstRow.Entry_Date || !firstRow.Entry_Price) {
         // If no entry information available, return original data
-        console.warn(`Missing entry information for ticker ${firstRow.Ticker}`);
+        // console.warn(`Missing entry information for ticker ${firstRow.Ticker}`);
         return rows;
       }
 
@@ -224,6 +287,63 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
 
       // Combine entry point with existing data
       return [entryPoint, ...rows];
+    },
+    [],
+  );
+
+  // Create indexed data for closed positions using real historical price data
+  const createClosedPositionIndexedData = useCallback(
+    (
+      closedPositionsData: ClosedPositionPnLDataRow[],
+    ): Array<{
+      ticker: string;
+      data: Array<{ bar: number; pnl: number }>;
+      color: string;
+      finalPnL: number;
+    }> => {
+      if (!closedPositionsData || closedPositionsData.length === 0) {
+        return [];
+      }
+
+      // Group data by ticker (Position_UUID for unique trades)
+      const tradeMap: { [uuid: string]: ClosedPositionPnLDataRow[] } = {};
+
+      closedPositionsData.forEach((row) => {
+        const uuid = row.Position_UUID;
+        if (!tradeMap[uuid]) {
+          tradeMap[uuid] = [];
+        }
+        tradeMap[uuid].push(row);
+      });
+
+      return Object.entries(tradeMap).map(([_uuid, tradeData]) => {
+        // Sort by date to ensure proper position bar ordering
+        const sortedData = tradeData.sort(
+          (a, b) => new Date(a.Date).getTime() - new Date(b.Date).getTime(),
+        );
+
+        if (sortedData.length === 0) {
+          return { ticker: "", data: [], color: "#26c6da", finalPnL: 0 };
+        }
+
+        const ticker = sortedData[0].Ticker;
+        const finalPnL = parseFloat(sortedData[sortedData.length - 1].PnL);
+
+        // Create indexed data points from real price data
+        const data: Array<{ bar: number; pnl: number }> = sortedData.map(
+          (row, index) => ({
+            bar: index,
+            pnl: parseFloat(row.PnL),
+          }),
+        );
+
+        return {
+          ticker,
+          data,
+          color: finalPnL >= 0 ? "#26c6da" : "#7e57c2", // Exact hex colors: cyan for winners, purple for losers
+          finalPnL,
+        };
+      });
     },
     [],
   );
@@ -501,6 +621,7 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
           return [];
         }
 
+        // Data is already pre-sorted by PnL magnitude from backend
         const pnlValues = tradeHistoryRows.map((trade) =>
           parseFloat(trade.PnL),
         );
@@ -532,6 +653,45 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
       }
 
       case "open-positions-pnl-timeseries": {
+        // Handle both open and closed position data based on shouldUseClosedData
+        if (shouldUseClosedData) {
+          // Use existing closed positions logic when showing closed data
+          const closedPositionsRows = data as ClosedPositionPnLDataRow[];
+          if (!closedPositionsRows || closedPositionsRows.length === 0) {
+            return [];
+          }
+
+          const closedPositionsData =
+            createClosedPositionIndexedData(closedPositionsRows);
+          if (closedPositionsData.length === 0) {
+            return [];
+          }
+
+          const chartData: Data[] = [];
+
+          closedPositionsData.forEach((position) => {
+            chartData.push({
+              type: "scatter",
+              mode: "lines",
+              x: position.data.map((point) => point.bar),
+              y: position.data.map((point) => point.pnl),
+              name: position.ticker,
+              line: {
+                color: position.color,
+                width: 2,
+              },
+              hovertemplate:
+                "<b>%{fullData.name}</b><br>" +
+                "Position Bar: %{x}<br>" +
+                "PnL: $%{y:.2f}<br>" +
+                "<extra></extra>",
+            });
+          });
+
+          return chartData;
+        }
+
+        // Original open positions logic
         const openPositionsPnLRows = data as OpenPositionPnLDataRow[];
         if (!openPositionsPnLRows || openPositionsPnLRows.length === 0) {
           return [];
@@ -620,6 +780,42 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
         return chartData;
       }
 
+      case "closed-positions-pnl-timeseries": {
+        const closedPositionsRows = data as ClosedPositionPnLDataRow[];
+        if (!closedPositionsRows || closedPositionsRows.length === 0) {
+          return [];
+        }
+
+        const closedPositionsData =
+          createClosedPositionIndexedData(closedPositionsRows);
+        if (closedPositionsData.length === 0) {
+          return [];
+        }
+
+        const chartData: Data[] = [];
+
+        closedPositionsData.forEach((position) => {
+          chartData.push({
+            type: "scatter",
+            mode: "lines",
+            x: position.data.map((point) => point.bar),
+            y: position.data.map((point) => point.pnl),
+            name: position.ticker,
+            line: {
+              color: position.color,
+              width: 2,
+            },
+            hovertemplate:
+              "<b>%{fullData.name}</b><br>" +
+              "Position Bar: %{x}<br>" +
+              "PnL: $%{y:.2f}<br>" +
+              "<extra></extra>",
+          });
+        });
+
+        return chartData;
+      }
+
       default:
         return [];
     }
@@ -634,6 +830,7 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
     convertToWeeklyOHLC,
     convertOpenPositionsPnLToWeekly,
     createIndexedDataWithEntry,
+    createClosedPositionIndexedData,
   ]);
 
   // Chart layout
@@ -662,13 +859,18 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
           return "Live Signals Weekly Candlestick Chart";
         case "trade-pnl-waterfall":
           return "Trade PnL Waterfall Chart";
-        case "open-positions-pnl-timeseries":
+        case "closed-positions-pnl-timeseries":
+          return "Closed Positions PnL Time Series (Indexed)";
+        case "open-positions-pnl-timeseries": {
+          const positionTypeText =
+            actualDataType === "closed" ? "Closed" : "Open";
           if (indexed) {
-            return "Open Positions Cumulative PnL Time Series (Indexed)";
+            return `${positionTypeText} Positions Cumulative PnL Time Series (Indexed)`;
           }
           return timeframe === "weekly"
-            ? "Open Positions Cumulative PnL Time Series (Weekly)"
-            : "Open Positions Cumulative PnL Time Series";
+            ? `${positionTypeText} Positions Cumulative PnL Time Series (Weekly)`
+            : `${positionTypeText} Positions Cumulative PnL Time Series`;
+        }
         default:
           return "Chart";
       }
@@ -692,6 +894,8 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
           return "Equity ($)";
         case "trade-pnl-waterfall":
           return "PnL ($)";
+        case "closed-positions-pnl-timeseries":
+          return "PnL ($)";
         case "open-positions-pnl-timeseries":
           return "Cumulative PnL ($)";
         default:
@@ -713,7 +917,7 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
       modebar: {
         orientation: "h",
       },
-      showlegend: true,
+      showlegend: shouldShowLegend,
       legend: {
         x: 0,
         xanchor: "left",
@@ -734,16 +938,20 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
         type:
           chartType === "trade-pnl-waterfall"
             ? "category"
-            : chartType === "open-positions-pnl-timeseries" && indexed
+            : chartType === "closed-positions-pnl-timeseries"
               ? "linear"
-              : "date",
+              : chartType === "open-positions-pnl-timeseries" && indexed
+                ? "linear"
+                : "date",
         title: {
           text:
             chartType === "trade-pnl-waterfall"
               ? "Ticker"
-              : chartType === "open-positions-pnl-timeseries" && indexed
+              : chartType === "closed-positions-pnl-timeseries"
                 ? "Position Bar"
-                : "Date",
+                : chartType === "open-positions-pnl-timeseries" && indexed
+                  ? "Position Bar"
+                  : "Date",
           font: themeColors.font,
         },
         gridcolor: themeColors.gridColor,
@@ -772,7 +980,15 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
       },
       hovermode: chartType === "trade-pnl-waterfall" ? "closest" : "x unified",
     };
-  }, [isDarkMode, chartType, title, timeframe, indexed]);
+  }, [
+    isDarkMode,
+    chartType,
+    title,
+    timeframe,
+    indexed,
+    shouldShowLegend,
+    actualDataType,
+  ]);
 
   // Chart config
   const config = useMemo(

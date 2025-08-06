@@ -14,10 +14,20 @@ import inspect
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Type, Union, get_type_hints
+from typing import (
+    Any,
+    Dict,
+    List,
+    Optional,
+    Type,
+    Union,
+    get_args,
+    get_origin,
+    get_type_hints,
+)
 
 from error_handler import ErrorHandler
-from errors import ConfigurationError, ProcessingError
+from errors import ConfigurationError
 from logging_config import TwitterSystemLogger
 from result_types import ErrorResult, ProcessingResult
 from script_config import ScriptConfig
@@ -70,11 +80,10 @@ class BaseScript(ABC):
     def __init__(self, config: ScriptConfig):
         self.config = config
         self.error_handler = ErrorHandler()
-        self.logger = TwitterSystemLogger(
-            name=self.__class__.__name__,
-            log_level=config.log_level,
-            log_file=config.log_file,
-        )
+        # Use standard logging instead of structured JSON logging to reduce verbosity
+        import logging
+
+        self.logger = logging.getLogger(self.__class__.__name__)
 
         # Script metadata
         self.metadata = self._get_script_metadata()
@@ -131,10 +140,65 @@ class BaseScript(ABC):
             if param_name in self.metadata.parameter_types:
                 expected_type = self.metadata.parameter_types[param_name]
 
-                if expected_type != Any and not isinstance(param_value, expected_type):
+                if expected_type != Any and not self._is_valid_type(
+                    param_value, expected_type
+                ):
                     self.error_handler.handle_type_validation_error(
                         param_value, expected_type, param_name
                     )
+
+    def _is_valid_type(self, value: Any, expected_type: Type[Any]) -> bool:
+        """Check if value matches expected type, handling generic types properly"""
+
+        if expected_type == Any:
+            return True
+
+        # Handle None values for Optional types
+        if value is None:
+            origin = get_origin(expected_type)
+            if origin is Union:
+                args = get_args(expected_type)
+                return type(None) in args
+            return False
+
+        # Get the origin and args for generic types
+        origin = get_origin(expected_type)
+
+        if origin is None:
+            # Simple type (not generic)
+            return isinstance(value, expected_type)
+
+        # Handle Union types (including Optional)
+        if origin is Union:
+            args = get_args(expected_type)
+            return any(self._is_valid_type(value, arg) for arg in args)
+
+        # Handle List types
+        if origin is list or origin is List:
+            if not isinstance(value, list):
+                return False
+            args = get_args(expected_type)
+            if args:
+                element_type = args[0]
+                return all(self._is_valid_type(item, element_type) for item in value)
+            return True
+
+        # Handle Dict types
+        if origin is dict or origin is Dict:
+            if not isinstance(value, dict):
+                return False
+            args = get_args(expected_type)
+            if len(args) >= 2:
+                key_type, value_type = args[0], args[1]
+                return all(
+                    self._is_valid_type(k, key_type)
+                    and self._is_valid_type(v, value_type)
+                    for k, v in value.items()
+                )
+            return True
+
+        # For other generic types, just check the origin
+        return isinstance(value, origin)
 
     def validate_required_parameters(self, **kwargs) -> None:
         """Validate required parameters are present"""
@@ -368,7 +432,7 @@ class ScriptRegistry:
     def _get_content_type_support(self) -> Dict[str, List[str]]:
         """Get mapping of content types to supporting scripts"""
 
-        content_type_support = {}
+        content_type_support: Dict[str, List[str]] = {}
 
         for script_name, metadata in self._scripts.items():
             for content_type in metadata.supported_content_types:
@@ -404,7 +468,7 @@ class ScriptRegistry:
     def get_registry_stats(self) -> Dict[str, Any]:
         """Get registry statistics"""
 
-        content_type_counts = {}
+        content_type_counts: Dict[str, int] = {}
         for metadata in self._scripts.values():
             for content_type in metadata.supported_content_types:
                 content_type_counts[content_type] = (

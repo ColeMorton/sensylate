@@ -1,0 +1,122 @@
+# Trade History Dashboard Generation Configuration
+# Configuration for trade history image generation service
+
+# Output configuration
+output:
+  base_directory: "data/outputs/trade_history"
+  image_format: "png"
+  image_quality: 95
+  width: 1200
+  height: 800
+  dpi: 150
+
+# Theme configuration - Sensylate design system compliant
+theme:
+  name: "sensylate"
+  primary_color: "#00BCD4"      # Cyan - Multi-Strategy
+  secondary_color: "#9575CD"    # Purple - Buy & Hold
+  tertiary_color: "#4285F4"     # Blue - Supporting
+  accent_color: "#FF7043"       # Orange - Drawdowns/Warnings
+  neutral_color: "#90A4AE"      # Gray - Neutral
+  background_color: "#FFFFFF"   # White background
+  text_color: "#212121"         # Dark text
+  grid_color: "#E0E0E0"        # Light gray grid
+
+  # Dark theme variants
+  dark:
+    background_color: "#121212"
+    text_color: "#FFFFFF"
+    grid_color: "#333333"
+
+  # Font configuration
+  fonts:
+    title: "Roboto"
+    body: "Roboto"
+    monospace: "Roboto Mono"
+
+  # Chart styling
+  chart:
+    line_width: 2
+    marker_size: 6
+    opacity: 0.8
+    grid_alpha: 0.3
+
+# Chart engine configuration
+chart_engine:
+  default_engine: "plotly"
+  engines:
+    plotly:
+      config:
+        responsive: true
+        displayModeBar: false
+        displaylogo: false
+        toImageButtonOptions:
+          format: "png"
+          height: 800
+          width: 1200
+          scale: 1
+    matplotlib:
+      backend: "Agg"
+      style: "seaborn-v0_8"
+
+# Report type specific configurations
+report_types:
+  HISTORICAL_PERFORMANCE_REPORT:
+    charts:
+      - portfolio_value_comparison
+      - returns_comparison
+      - portfolio_drawdowns
+    layout: "dashboard"
+
+  LIVE_SIGNALS_MONITOR:
+    charts:
+      - live_signals_equity_curve
+      - live_signals_drawdowns
+      - live_signals_weekly_candlestick
+    layout: "monitor"
+
+  TRADE_ANALYSIS:
+    charts:
+      - trade_pnl_waterfall
+      - closed_positions_pnl_timeseries
+    layout: "analysis"
+
+  PORTFOLIO_SUMMARY:
+    charts:
+      - portfolio_value_comparison
+      - open_positions_pnl_timeseries
+    layout: "summary"
+
+  INTERNAL_TRADING_REPORT:
+    charts:
+      - trade_pnl_waterfall
+      - closed_positions_pnl_timeseries
+      - open_positions_pnl_timeseries
+    layout: "full"
+
+# Environment-specific configurations
+dev:
+  output:
+    base_directory: "data/outputs/trade_history/dev"
+  theme:
+    debug_mode: true
+  chart_engine:
+    cache_charts: false
+
+test:
+  output:
+    base_directory: "data/outputs/trade_history/test"
+  theme:
+    debug_mode: false
+  chart_engine:
+    cache_charts: true
+
+prod:
+  output:
+    base_directory: "data/outputs/trade_history/prod"
+  theme:
+    debug_mode: false
+    optimization: true
+  chart_engine:
+    cache_charts: true
+    performance_mode: true
