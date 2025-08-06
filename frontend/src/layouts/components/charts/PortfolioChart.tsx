@@ -9,7 +9,7 @@ import type {
   TradeHistoryDataRow,
   ClosedPositionPnLDataRow,
   OpenPositionPnLDataRow,
-  BenchmarkDataRow,
+  LiveSignalsBenchmarkDataRow,
 } from "@/types/ChartTypes";
 import {
   usePortfolioData,
@@ -19,7 +19,7 @@ import {
   useWaterfallTradeData,
   useClosedPositionsPnLData,
   useOpenPositionsPnLData,
-  useBenchmarkData,
+  useLiveSignalsBenchmarkData,
 } from "@/hooks/usePortfolioData";
 import { getChartColors, getPlotlyThemeColors } from "@/utils/chartTheme";
 import ChartRenderer from "./ChartRenderer";
@@ -50,7 +50,7 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
   const waterfallTradeData = useWaterfallTradeData();
   const closedPositionsPnLData = useClosedPositionsPnLData();
   const openPositionsPnLData = useOpenPositionsPnLData();
-  const benchmarkData = useBenchmarkData();
+  const liveSignalsBenchmarkData = useLiveSignalsBenchmarkData();
 
   // Smart position data selection logic
   const isPositionChart = chartType === "open-positions-pnl-timeseries";
@@ -71,7 +71,7 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
     chartType === "apple-stock"
       ? appleData
       : chartType === "live-signals-benchmark-comparison"
-        ? benchmarkData
+        ? liveSignalsBenchmarkData
         : chartType.startsWith("live-signals-")
           ? liveSignalsData
           : chartType === "trade-pnl-waterfall"
@@ -570,98 +570,48 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
       }
 
       case "live-signals-benchmark-comparison": {
-        const benchmarkRows = data as BenchmarkDataRow[];
-        const liveSignalsRows = liveSignalsData.data;
+        const benchmarkRows = data as LiveSignalsBenchmarkDataRow[];
 
-        if (
-          !benchmarkRows ||
-          benchmarkRows.length === 0 ||
-          !liveSignalsRows ||
-          liveSignalsRows.length === 0
-        ) {
+        if (!benchmarkRows || benchmarkRows.length === 0) {
           return [];
         }
 
-        // Group benchmark data by ticker
-        const benchmarkByTicker: { [key: string]: BenchmarkDataRow[] } = {};
-        benchmarkRows.forEach((row) => {
-          if (!benchmarkByTicker[row.ticker]) {
-            benchmarkByTicker[row.ticker] = [];
-          }
-          benchmarkByTicker[row.ticker].push(row);
-        });
-
-        // Get baseline values for normalization
-        // Find first non-zero equity value for meaningful percentage calculation
-        let portfolioBaseline = 0;
-        for (const row of liveSignalsRows) {
-          const equity = parseFloat(row.equity);
-          if (equity !== 0) {
-            portfolioBaseline = Math.abs(equity); // Use absolute value to handle initial losses
-            break;
-          }
-        }
-
-        // Fallback to a reasonable starting capital if all values are zero
-        if (portfolioBaseline === 0) {
-          portfolioBaseline = 1000; // Assume $1000 starting capital
-        }
-
-        const benchmarkBaselines: { [key: string]: number } = {};
-
-        Object.entries(benchmarkByTicker).forEach(([ticker, rows]) => {
-          if (rows.length > 0) {
-            benchmarkBaselines[ticker] = parseFloat(rows[0].close);
-          }
-        });
-
         const chartData: Data[] = [];
 
-        // Add portfolio equity (normalized to percentage)
-        const portfolioPercentages = liveSignalsRows.map((row) => {
-          const equity = parseFloat(row.equity);
-          // Calculate percentage relative to the baseline (first non-zero equity)
-          // This shows the performance relative to the initial position size
-          return (equity / portfolioBaseline) * 100;
-        });
-
-        chartData.push({
-          type: "scatter",
-          mode: "lines",
-          x: unpackLiveSignals(liveSignalsRows, "timestamp"),
-          y: portfolioPercentages,
-          line: { color: colors.tertiary, width: 3 }, // Cyan for portfolio
-          name: "Live Signals Portfolio",
-        });
-
-        // Add benchmark series with color mapping
-        const benchmarkColors = {
+        // Define color mapping for series
+        const seriesColors = {
+          Portfolio: colors.tertiary, // Cyan for portfolio
           SPY: colors.multiStrategy, // Blue for SPY
           QQQ: colors.buyHold, // Purple for QQQ
           "BTC-USD": colors.drawdown, // Orange for BTC
         };
 
-        Object.entries(benchmarkByTicker).forEach(([ticker, rows]) => {
-          if (rows.length > 0 && benchmarkBaselines[ticker]) {
-            const percentages = rows.map((row) => {
-              const close = parseFloat(row.close);
-              return (close / benchmarkBaselines[ticker]) * 100;
-            });
+        // Define display names
+        const seriesNames = {
+          Portfolio: "Live Signals Portfolio",
+          SPY: "SPY",
+          QQQ: "QQQ",
+          "BTC-USD": "Bitcoin",
+        };
 
-            chartData.push({
-              type: "scatter",
-              mode: "lines",
-              x: rows.map((row) => row.date),
-              y: percentages,
-              line: {
-                color:
-                  benchmarkColors[ticker as keyof typeof benchmarkColors] ||
-                  colors.neutral,
-                width: 2,
-              },
-              name: ticker === "BTC-USD" ? "Bitcoin" : ticker,
-            });
-          }
+        // Create series for each column (Portfolio, SPY, QQQ, BTC-USD)
+        const seriesColumns = ["Portfolio", "SPY", "QQQ", "BTC-USD"] as const;
+
+        seriesColumns.forEach((column) => {
+          const values = benchmarkRows.map((row) => parseFloat(row[column]));
+          const dates = benchmarkRows.map((row) => row.Date);
+
+          chartData.push({
+            type: "scatter",
+            mode: "lines",
+            x: dates,
+            y: values,
+            line: {
+              color: seriesColors[column],
+              width: column === "Portfolio" ? 3 : 2,
+            },
+            name: seriesNames[column],
+          });
         });
 
         return chartData;
@@ -930,7 +880,6 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
     convertOpenPositionsPnLToWeekly,
     createIndexedDataWithEntry,
     createClosedPositionIndexedData,
-    liveSignalsData,
   ]);
 
   // Chart layout
@@ -1101,7 +1050,7 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
       displayModeBar: false,
       displaylogo: false,
       toImageButtonOptions: {
-        format: "png",
+        format: "png" as const,
         filename: `${chartType}-chart`,
         height: 500,
         width: 700,

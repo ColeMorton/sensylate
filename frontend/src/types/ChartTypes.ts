@@ -112,6 +112,14 @@ export interface BenchmarkDataRow {
   close: string;
 }
 
+// Live Signals Benchmark Comparison data structure from pre-processed CSV
+export interface LiveSignalsBenchmarkDataRow {
+  Date: string;
+  Portfolio: string;
+  SPY: string;
+  QQQ: string;
+  "BTC-USD": string;
+}
 // Chart configuration types
 export type ChartType =
   | "apple-stock"

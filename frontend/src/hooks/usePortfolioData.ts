@@ -7,6 +7,7 @@ import type {
   ClosedPositionPnLDataRow,
   OpenPositionPnLDataRow,
   BenchmarkDataRow,
+  LiveSignalsBenchmarkDataRow,
   ChartType,
   DataServiceResponse,
 } from "@/types/ChartTypes";
@@ -480,4 +481,36 @@ export function useDataServiceStatus() {
     refreshStatus,
     clearCache,
   };
+}
+
+// Hook for live signals benchmark comparison data
+export function useLiveSignalsBenchmarkData(): DataServiceResponse<
+  LiveSignalsBenchmarkDataRow[]
+> {
+  const [data, setData] = useState<LiveSignalsBenchmarkDataRow[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        const result = await chartDataService.getLiveSignalsBenchmarkData();
+        setData(result);
+      } catch (err) {
+        setError(
+          err instanceof Error
+            ? err.message
+            : "Failed to load live signals benchmark comparison data",
+        );
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  return { data, loading, error };
 }

@@ -6,6 +6,7 @@ import type {
   ClosedPositionPnLDataRow,
   OpenPositionPnLDataRow,
   BenchmarkDataRow,
+  LiveSignalsBenchmarkDataRow,
   PortfolioDataCache,
 } from "@/types/ChartTypes";
 
@@ -25,6 +26,10 @@ class ChartDataService {
   } = {};
   private benchmarkCache: {
     data?: BenchmarkDataRow[];
+    lastFetched?: number;
+  } = {};
+  private liveSignalsBenchmarkCache: {
+    data?: LiveSignalsBenchmarkDataRow[];
     lastFetched?: number;
   } = {};
   private readonly CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
@@ -125,6 +130,22 @@ class ChartDataService {
     });
   }
 
+  private parseLiveSignalsBenchmarkCSV(
+    csvText: string,
+  ): LiveSignalsBenchmarkDataRow[] {
+    const lines = csvText.trim().split("\n");
+    const headers = lines[0].split(",");
+
+    return lines.slice(1).map((line) => {
+      const values = line.split(",");
+      const row: Partial<LiveSignalsBenchmarkDataRow> = {};
+      headers.forEach((header, index) => {
+        row[header.trim() as keyof LiveSignalsBenchmarkDataRow] =
+          values[index]?.trim() || "";
+      });
+      return row as LiveSignalsBenchmarkDataRow;
+    });
+  }
   // Cache management
   private isCacheValid(): boolean {
     return (
@@ -165,6 +186,13 @@ class ChartDataService {
     );
   }
 
+  private isLiveSignalsBenchmarkCacheValid(): boolean {
+    return (
+      this.liveSignalsBenchmarkCache.lastFetched !== undefined &&
+      Date.now() - this.liveSignalsBenchmarkCache.lastFetched <
+        this.CACHE_DURATION
+    );
+  }
   // Data fetching methods
   async fetchAppleStockData(signal?: AbortSignal): Promise<StockDataRow[]> {
     try {
@@ -893,6 +921,47 @@ class ChartDataService {
       hasData: this.isPortfolioCacheComplete(),
       dataQuality: "unknown", // Would be set by validation methods
     };
+  }
+
+  async fetchLiveSignalsBenchmarkData(): Promise<
+    LiveSignalsBenchmarkDataRow[]
+  > {
+    // Return cached data if valid
+    if (
+      this.liveSignalsBenchmarkCache.data &&
+      this.isLiveSignalsBenchmarkCacheValid()
+    ) {
+      return this.liveSignalsBenchmarkCache.data;
+    }
+
+    try {
+      const response = await fetch(
+        "/data/portfolio/live_signals_benchmark_comparison.csv",
+      );
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const csvText = await response.text();
+      const data = this.parseLiveSignalsBenchmarkCSV(csvText);
+
+      // Update cache
+      this.liveSignalsBenchmarkCache = {
+        data,
+        lastFetched: Date.now(),
+      };
+
+      return data;
+    } catch (error) {
+      throw new Error(
+        error instanceof Error
+          ? error.message
+          : "Failed to load live signals benchmark comparison data",
+      );
+    }
+  }
+
+  async getLiveSignalsBenchmarkData(): Promise<LiveSignalsBenchmarkDataRow[]> {
+    return await this.fetchLiveSignalsBenchmarkData();
   }
 }
 
