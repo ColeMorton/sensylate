@@ -113,6 +113,28 @@ services:
     headers:
       Accept: "application/json"
 
+  eia:
+    name: "eia"
+    base_url: "https://api.eia.gov/v2"
+    api_key: null  # EIA provides some data without API key
+    rate_limit:
+      requests_per_minute: 60
+    cache:
+      ttl_seconds: 3600  # 1 hour for energy data
+    headers:
+      Accept: "application/json"
+
+  economic_calendar:
+    name: "economic_calendar"
+    base_url: "https://api.tradingeconomics.com"
+    api_key: null  # Many economic calendar services offer free tier
+    rate_limit:
+      requests_per_minute: 60
+    cache:
+      ttl_seconds: 900  # 15 minutes
+    headers:
+      Accept: "application/json"
+
 # Data orchestration configuration
 orchestration:
   cross_validation:

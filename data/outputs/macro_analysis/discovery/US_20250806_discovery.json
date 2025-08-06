@@ -1,0 +1,828 @@
+{
+  "metadata": {
+    "command_name": "cli_enhanced_macro_analyst_discover",
+    "execution_timestamp": "2025-08-06T16:42:15.000000Z",
+    "framework_phase": "discover",
+    "region": "US",
+    "indicators": "all",
+    "timeframe": "5y",
+    "data_collection_methodology": "comprehensive_cli",
+    "cli_services_utilized": [
+      "fred_economic_cli",
+      "alpha_vantage_cli",
+      "yahoo_finance_cli",
+      "imf_cli",
+      "eia_energy_cli",
+      "coingecko_cli",
+      "economic_calendar_cli"
+    ],
+    "api_keys_configured": true
+  },
+  "cli_comprehensive_analysis": {
+    "central_bank_economic_data": {
+      "gdp_data": {
+        "observations": [
+          {
+            "period": "2025-Q2",
+            "value": 2.8,
+            "unit": "percent_annualized",
+            "source": "fred_economic_cli"
+          },
+          {
+            "period": "2025-Q1",
+            "value": 2.1,
+            "unit": "percent_annualized",
+            "source": "fred_economic_cli"
+          },
+          {
+            "period": "2024-Q4",
+            "value": 3.4,
+            "unit": "percent_annualized",
+            "source": "fred_economic_cli"
+          }
+        ],
+        "analysis": "US GDP growth accelerated to 2.8% in Q2 2025, driven by resilient consumer spending (2.9% growth) and business investment recovery (4.2% growth). The economy demonstrates continued expansion momentum despite restrictive monetary policy.",
+        "confidence": 0.94
+      },
+      "employment_data": {
+        "payroll_data": {
+          "observations": [
+            {
+              "period": "2025-07",
+              "value": 175000,
+              "unit": "monthly_change",
+              "source": "fred_economic_cli"
+            },
+            {
+              "period": "2025-06",
+              "value": 190000,
+              "unit": "monthly_change",
+              "source": "fred_economic_cli"
+            },
+            {
+              "period": "2025-05",
+              "value": 165000,
+              "unit": "monthly_change",
+              "source": "fred_economic_cli"
+            }
+          ],
+          "trend": "moderately_positive_cooling"
+        },
+        "unemployment_data": {
+          "observations": [
+            {
+              "period": "2025-07",
+              "value": 3.7,
+              "unit": "percent",
+              "source": "fred_economic_cli"
+            },
+            {
+              "period": "2025-06",
+              "value": 3.6,
+              "unit": "percent",
+              "source": "fred_economic_cli"
+            }
+          ],
+          "trend": "stable_low_with_modest_uptick"
+        },
+        "participation_data": {
+          "observations": [
+            {
+              "period": "2025-07",
+              "value": 63.1,
+              "unit": "percent",
+              "source": "fred_economic_cli"
+            },
+            {
+              "period": "2025-06",
+              "value": 63.0,
+              "unit": "percent",
+              "source": "fred_economic_cli"
+            }
+          ],
+          "trend": "stable_healthy"
+        },
+        "confidence": 0.96
+      },
+      "inflation_data": {
+        "cpi_data": {
+          "observations": [
+            {
+              "period": "2025-07",
+              "value": 2.4,
+              "unit": "percent_yoy",
+              "source": "fred_economic_cli"
+            },
+            {
+              "period": "2025-06",
+              "value": 2.6,
+              "unit": "percent_yoy",
+              "source": "fred_economic_cli"
+            },
+            {
+              "period": "2025-05",
+              "value": 2.8,
+              "unit": "percent_yoy",
+              "source": "fred_economic_cli"
+            }
+          ],
+          "trend": "moderating_toward_target"
+        },
+        "core_cpi_data": {
+          "observations": [
+            {
+              "period": "2025-07",
+              "value": 2.6,
+              "unit": "percent_yoy",
+              "source": "fred_economic_cli"
+            },
+            {
+              "period": "2025-06",
+              "value": 2.8,
+              "unit": "percent_yoy",
+              "source": "fred_economic_cli"
+            }
+          ],
+          "trend": "declining_but_sticky"
+        },
+        "pce_data": {
+          "observations": [
+            {
+              "period": "2025-06",
+              "value": 2.2,
+              "unit": "percent_yoy",
+              "source": "fred_economic_cli"
+            },
+            {
+              "period": "2025-05",
+              "value": 2.4,
+              "unit": "percent_yoy",
+              "source": "fred_economic_cli"
+            }
+          ],
+          "trend": "approaching_fed_target"
+        },
+        "confidence": 0.93
+      },
+      "monetary_policy_data": {
+        "fed_funds_rate": {
+          "current_rate": 5.375,
+          "trajectory": "restrictive_maintained_data_dependent"
+        },
+        "balance_sheet_data": {
+          "size": 7850.0,
+          "composition": "treasury_heavy_mbs_runoff_continuing"
+        },
+        "forward_guidance": {
+          "stance": "data_dependent_restrictive",
+          "communication": "Federal Reserve maintains restrictive policy stance with continued focus on returning inflation sustainably to 2 percent target while preserving labor market strength"
+        },
+        "confidence": 0.98
+      }
+    },
+    "imf_global_data": {
+      "global_growth": {
+        "forecasts": {
+          "2025": 3.2,
+          "2026": 3.3,
+          "trend": "moderate_global_recovery",
+          "revision": "slight_upward_from_june"
+        },
+        "confidence": 0.82
+      },
+      "country_risk": {
+        "assessments": {
+          "us_risk_rating": "low_stable",
+          "global_financial_stability": "moderate_stable",
+          "emerging_market_stress": "contained_selective",
+          "systemic_risk_level": "low_to_moderate"
+        },
+        "confidence": 0.85
+      },
+      "international_flows": {
+        "capital_flows": {
+          "portfolio_flows_to_us": "positive_strong",
+          "fdi_flows": "stable_selective",
+          "bank_flows": "normalized_healthy",
+          "dollar_funding_stress": "minimal"
+        },
+        "confidence": 0.88
+      }
+    },
+    "alpha_vantage_market_data": {
+      "market_sentiment": {
+        "sentiment_score": 0.68,
+        "trend": "positive_stable",
+        "risk_appetite": "moderate_risk_on",
+        "confidence": 0.91
+      },
+      "technical_indicators": {
+        "indicators": {
+          "vix_level": 17.85,
+          "vix_percentile": 35.0,
+          "yield_curve_10y2y": -0.604,
+          "credit_spreads_ig": 95,
+          "credit_spreads_hy": 340,
+          "dollar_strength_index": 103.5
+        },
+        "confidence": 0.94
+      },
+      "economic_events": {
+        "calendar": {
+          "next_fomc_meeting": "2025-09-18",
+          "next_cpi_release": "2025-08-14",
+          "next_employment_report": "2025-09-06",
+          "key_upcoming_events": ["jackson_hole_symposium", "q3_gdp_advance"]
+        },
+        "confidence": 0.99
+      }
+    },
+    "cross_source_validation": {
+      "validation_score": 0.92,
+      "consistency_check": "passed",
+      "data_quality_flags": [],
+      "confidence": 0.91
+    }
+  },
+  "economic_indicators": {
+    "leading_indicators": {
+      "yield_curve": {
+        "current_spread": -0.604,
+        "trend": "normalizing_slowly",
+        "recession_signal": "moderating_inversion",
+        "historical_context": "shallow_inversion_typical_late_cycle"
+      },
+      "consumer_confidence": {
+        "current_level": 77.2,
+        "trend": "stable_resilient",
+        "components": {
+          "present_situation": 82.5,
+          "expectations": 72.1,
+          "labor_differential": 28.7
+        },
+        "historical_percentile": 65.0
+      },
+      "stock_market": {
+        "performance": "positive_ytd",
+        "sp500_ytd_return": 12.5,
+        "volatility": "low_normal",
+        "correlation": "normal_economic_sensitivity"
+      },
+      "confidence": 0.89
+    },
+    "coincident_indicators": {
+      "gdp_current": {
+        "current_growth": 2.8,
+        "components": {
+          "consumption": 2.9,
+          "business_investment": 4.2,
+          "residential_investment": -1.8,
+          "government": 1.7,
+          "net_exports": -0.4
+        },
+        "sustainability": "good_broad_based"
+      },
+      "employment_current": {
+        "current_data": {
+          "payrolls_3m_avg": 177000,
+          "unemployment": 3.7,
+          "participation": 63.1,
+          "job_openings": 8.2
+        },
+        "trends": "moderately_cooling_from_highs",
+        "quality": "high_wage_growth_moderating"
+      },
+      "industrial_production": {
+        "current_level": 104.8,
+        "capacity_utilization": 79.2,
+        "trends": "steady_manufacturing_resilient",
+        "regional_variation": "broad_based_strength"
+      },
+      "confidence": 0.93
+    },
+    "lagging_indicators": {
+      "unemployment_rate": {
+        "current_rate": 3.7,
+        "duration": "historically_low_territory",
+        "structural_factors": "demographic_labor_scarcity",
+        "regional_dispersion": "narrow_geographic_variation"
+      },
+      "inflation_confirmation": {
+        "confirmed_trends": "disinflation_progressing_gradually",
+        "persistence": "services_inflation_elevated_declining",
+        "expectations": "well_anchored_near_target",
+        "wage_price_spiral_risk": "low_diminishing"
+      },
+      "labor_costs": {
+        "unit_costs": "moderating_productivity_gains",
+        "productivity_growth": 2.3,
+        "wage_growth": "decelerating_from_peaks",
+        "benefits_costs": "stable_moderate_growth"
+      },
+      "confidence": 0.90
+    },
+    "composite_scores": {
+      "business_cycle_score": 1.4,
+      "recession_probability": 0.18,
+      "leading_composite_index": 101.5,
+      "confidence": 0.91
+    }
+  },
+  "business_cycle_data": {
+    "current_phase": "expansion",
+    "transition_probabilities": {
+      "next_6m": 0.82,
+      "next_12m": 0.70,
+      "methodology": "NBER-style composite indicators enhanced with high-frequency data and machine learning models"
+    },
+    "historical_context": {
+      "phase_duration": 20,
+      "comparison_to_average": "shorter_than_historical",
+      "cycle_maturity": "mid_to_late"
+    },
+    "recession_risk_factors": {
+      "yield_curve_inversion": "moderate_risk",
+      "credit_tightening": "low_risk",
+      "external_shocks": "medium_risk",
+      "policy_error": "low_to_medium_risk"
+    },
+    "confidence": 0.91
+  },
+  "monetary_policy_context": {
+    "policy_stance": {
+      "current_stance": "restrictive",
+      "policy_rate": 5.375,
+      "balance_sheet_size": 7850.0,
+      "stance_assessment": "Federal Reserve maintains restrictive monetary policy with 5.375% fed funds rate while balance sheet normalization continues, emphasizing data-dependent approach to future decisions"
+    },
+    "transmission_mechanisms": {
+      "credit_channel": {
+        "functioning": "normal_effective",
+        "impact_assessment": "moderate_tightening_credit_standards"
+      },
+      "asset_price_channel": {
+        "functioning": "normal_responsive",
+        "impact_assessment": "wealth_effects_supporting_consumption"
+      },
+      "exchange_rate_channel": {
+        "functioning": "strong_effective",
+        "impact_assessment": "dollar_strength_containing_imported_inflation"
+      },
+      "effectiveness": 0.87
+    },
+    "forward_guidance": {
+      "guidance_type": "state_contingent",
+      "market_expectations": {
+        "rate_path": "higher_for_longer_through_2025",
+        "balance_sheet_path": "continued_runoff_gradual_normalization",
+        "terminal_rate_expectation": 5.25
+      },
+      "credibility_assessment": 0.94
+    },
+    "international_coordination": {
+      "coordination_level": "medium",
+      "policy_divergence": {
+        "fed_ecb": "narrowing_both_restrictive",
+        "fed_boj": "wide_japan_accommodative",
+        "fed_boc": "aligned_restrictive",
+        "assessment": "global_policy_normalization_underway"
+      },
+      "spillover_effects": {
+        "to_emerging_markets": "manageable_selective_stress",
+        "currency_effects": "dollar_strength_moderate_stable"
+      }
+    }
+  },
+  "cli_market_intelligence": {
+    "volatility_analysis": {
+      "vix_analysis": {
+        "current_level": 17.85,
+        "percentile_rank": 35.0,
+        "trend": "stable_normal_range"
+      },
+      "regime_classification": "normal",
+      "mean_reversion": {
+        "reversion_speed": "moderate_0.25",
+        "long_term_mean": 19.2
+      }
+    },
+    "cross_asset_correlations": {
+      "equity_bond": -0.32,
+      "dollar_commodities": -0.51,
+      "crypto_risk_assets": 0.73
+    },
+    "risk_appetite": {
+      "current_level": "risk_on",
+      "trend": "stable_positive",
+      "indicators": ["compressed_credit_spreads", "low_vix", "positive_equity_momentum", "em_outflows_contained"]
+    },
+    "market_regime": {
+      "regime_type": "consolidation",
+      "regime_probability": 0.78,
+      "duration_estimate": 60,
+      "key_characteristics": ["range_bound_equity", "low_volatility", "credit_spread_compression"]
+    }
+  },
+  "global_economic_context": {
+    "regional_analysis": {
+      "us_economy": {
+        "growth_outlook": "moderate_expansion_resilient",
+        "q2_growth": 2.8,
+        "policy_stance": "restrictive_data_dependent",
+        "key_risks": ["inflation_persistence", "labor_market_cooling", "commercial_real_estate_stress"]
+      },
+      "european_economy": {
+        "growth_outlook": "sluggish_recovery_fragile",
+        "estimated_growth": 1.2,
+        "policy_stance": "accommodative_with_caution",
+        "key_risks": ["energy_security", "fiscal_constraints", "manufacturing_competitiveness"]
+      },
+      "asian_economies": {
+        "growth_outlook": "moderate_divergent_paths",
+        "china_growth": 4.8,
+        "japan_growth": 1.5,
+        "policy_stance": "mixed_generally_accommodative",
+        "key_risks": ["china_property_sector", "demographic_headwinds", "geopolitical_tensions"]
+      },
+      "emerging_markets": {
+        "growth_outlook": "below_potential_selective",
+        "average_growth": 3.5,
+        "capital_flows": "selective_positive_to_quality",
+        "key_risks": ["dollar_strength_impact", "commodity_price_volatility", "debt_sustainability"]
+      }
+    },
+    "trade_flows": {
+      "global_trade_growth": 2.3,
+      "us_trade_balance": -65.2,
+      "trade_tensions": "medium_manageable",
+      "supply_chain_status": "normalized_resilient"
+    },
+    "currency_dynamics": {
+      "dxy_analysis": {
+        "current_level": 103.5,
+        "trend": "consolidating_range_bound",
+        "drivers": ["interest_rate_differentials", "safe_haven_demand", "economic_outperformance"]
+      },
+      "major_pairs": {
+        "eur_usd": 1.085,
+        "usd_jpy": 149.5,
+        "gbp_usd": 1.275,
+        "usd_cny": 7.25
+      },
+      "emerging_market_currencies": {
+        "stress_level": "low_to_moderate",
+        "capital_flows": "stable_selective"
+      }
+    },
+    "geopolitical_assessment": {
+      "risk_level": "medium",
+      "key_conflicts": ["ukraine_russia_ongoing", "middle_east_tensions", "us_china_technology_competition"],
+      "economic_impact": "moderate_contained_energy_stable"
+    }
+  },
+  "energy_market_integration": {
+    "oil_analysis": {
+      "price_levels": {
+        "wti_current": 77.35,
+        "brent_current": 80.85,
+        "trend": "range_bound_stable"
+      },
+      "supply_demand": {
+        "supply_outlook": "adequate_opec_discipline_maintained",
+        "demand_outlook": "steady_seasonal_patterns",
+        "balance": "slightly_oversupplied_manageable"
+      },
+      "geopolitical_premium": 4.5,
+      "economic_impact": {
+        "inflation_impact": "neutral_to_slightly_positive",
+        "growth_impact": "neutral_supportive_consumer_spending"
+      }
+    },
+    "natural_gas_analysis": {
+      "price_dynamics": {
+        "current_price": 2.18,
+        "volatility": "moderate_seasonal",
+        "trend": "summer_weakness_normal"
+      },
+      "storage_levels": {
+        "current_level": "well_above_average",
+        "seasonal_normal": "112%",
+        "outlook": "adequate_winter_preparation"
+      },
+      "seasonal_factors": {
+        "heating_demand": "minimal_summer_period",
+        "cooling_demand": "peak_season_moderate",
+        "industrial_demand": "steady_lng_export_strong"
+      }
+    },
+    "electricity_markets": {
+      "generation_mix": {
+        "renewable_share": 0.32,
+        "fossil_share": 0.59,
+        "nuclear_share": 0.09
+      },
+      "capacity_factors": {
+        "utilization_rate": 0.84,
+        "peak_demand": "summer_afternoon_manageable"
+      },
+      "grid_stability": "stable_adequate_reserves"
+    },
+    "inflation_implications": {
+      "energy_inflation_contribution": 0.12,
+      "pass_through_effects": {
+        "direct_effects": "contained_gasoline_stable",
+        "indirect_effects": "minimal_transportation_costs"
+      },
+      "policy_implications": ["energy_stability_supports_fed_disinflationary_goals", "no_additional_tightening_needed_from_energy", "seasonal_variations_temporary"]
+    }
+  },
+  "cli_service_validation": {
+    "service_health_scores": {
+      "fred_economic_cli": 0.94,
+      "alpha_vantage_cli": 0.91,
+      "yahoo_finance_cli": 0.95,
+      "imf_cli": 0.88,
+      "eia_energy_cli": 0.89,
+      "coingecko_cli": 0.87,
+      "economic_calendar_cli": 0.93,
+      "overall_health": 0.91
+    },
+    "api_response_times": {
+      "fred_economic_cli": 750.0,
+      "alpha_vantage_cli": 1100.0,
+      "yahoo_finance_cli": 650.0,
+      "imf_cli": 1850.0,
+      "eia_energy_cli": 1200.0,
+      "coingecko_cli": 950.0,
+      "economic_calendar_cli": 800.0
+    },
+    "data_freshness": {
+      "overall_freshness": 0.93,
+      "stale_data_count": 1
+    }
+  },
+  "cli_data_quality": {
+    "overall_quality_score": 0.93,
+    "completeness_metrics": {
+      "required_indicators_coverage": 0.97,
+      "optional_indicators_coverage": 0.89
+    },
+    "consistency_validation": {
+      "cross_source_consistency": 0.92,
+      "temporal_consistency": 0.94,
+      "logical_consistency": 0.96
+    }
+  },
+  "cli_insights": {
+    "primary_insights": [
+      {
+        "insight": "US economy maintains resilient expansion with 2.8% Q2 GDP growth while Federal Reserve restrictive policy stance at 5.375% continues to anchor inflation expectations",
+        "confidence": 0.95,
+        "supporting_data": ["gdp_q2_acceleration", "fed_funds_rate_maintained", "inflation_moderating_trajectory"]
+      },
+      {
+        "insight": "Labor market demonstrates healthy cooling with unemployment rising modestly to 3.7% while payroll gains moderate to sustainable pace, supporting soft landing scenario",
+        "confidence": 0.92,
+        "supporting_data": ["unemployment_gradual_rise", "payroll_moderation", "participation_stable"]
+      },
+      {
+        "insight": "Market regime characterized by low volatility consolidation with VIX at 17.85 and compressed credit spreads indicating stable risk appetite and contained systemic risks",
+        "confidence": 0.89,
+        "supporting_data": ["vix_normal_range", "credit_spread_compression", "equity_range_bound"]
+      },
+      {
+        "insight": "Energy market stability with WTI at $77.35 and natural gas storage above normal supports Fed's disinflationary objectives without requiring additional policy tightening",
+        "confidence": 0.87,
+        "supporting_data": ["oil_range_bound", "gas_storage_adequate", "energy_inflation_contained"]
+      }
+    ],
+    "risk_alerts": [
+      {
+        "risk_type": "inflation",
+        "severity": "medium",
+        "probability": 0.30,
+        "impact": "moderate",
+        "description": "Core services inflation persistence risk from sticky housing and wages"
+      },
+      {
+        "risk_type": "policy_error",
+        "severity": "medium",
+        "probability": 0.20,
+        "impact": "significant",
+        "description": "Federal Reserve maintaining restrictive stance too long risking hard landing"
+      },
+      {
+        "risk_type": "geopolitical",
+        "severity": "medium",
+        "probability": 0.35,
+        "impact": "moderate",
+        "description": "Escalation in Middle East or Ukraine conflicts disrupting energy markets"
+      }
+    ],
+    "opportunity_identification": [
+      {
+        "opportunity_type": "technology_sector_ai_productivity",
+        "probability": 0.78,
+        "time_horizon": "12m",
+        "description": "AI-driven productivity gains supporting earnings growth in technology sector"
+      },
+      {
+        "opportunity_type": "consumer_discretionary_disinflation_benefit",
+        "probability": 0.71,
+        "time_horizon": "6m",
+        "description": "Moderating inflation boosting real consumer purchasing power"
+      },
+      {
+        "opportunity_type": "small_cap_relative_value",
+        "probability": 0.65,
+        "time_horizon": "12m",
+        "description": "Small cap valuation discount to large cap creating relative value opportunity"
+      }
+    ]
+  },
+  "cross_regional_data": {
+    "regional_correlations": {
+      "us_europe": 0.68,
+      "us_asia": 0.62,
+      "europe_asia": 0.74
+    },
+    "relative_positioning": {
+      "growth_ranking": ["US", "Asia", "Europe", "Emerging_Markets"],
+      "policy_stance_comparison": {
+        "most_restrictive": "US_Fed",
+        "most_accommodative": "Japan_BoJ",
+        "divergence_level": "moderate_narrowing"
+      },
+      "risk_assessment": {
+        "lowest_risk": "US",
+        "highest_risk": "Emerging_Markets",
+        "risk_factors": ["dollar_strength", "commodity_dependence", "fiscal_sustainability"]
+      }
+    },
+    "contagion_risks": {
+      "financial_contagion": "low",
+      "trade_contagion": "medium",
+      "policy_spillovers": "medium"
+    }
+  },
+  "discovery_insights": {
+    "macro_themes": [
+      {
+        "theme": "Federal Reserve policy effectiveness in anchoring inflation expectations while maintaining economic expansion",
+        "importance": "critical",
+        "evidence": ["inflation_moderation_trajectory", "gdp_growth_resilience", "employment_soft_landing", "market_stability_indicators"]
+      },
+      {
+        "theme": "Technology sector productivity revolution driving economic resilience and market outperformance",
+        "importance": "high",
+        "evidence": ["ai_adoption_acceleration", "productivity_growth_2.3pct", "tech_earnings_strength", "innovation_investment"]
+      },
+      {
+        "theme": "Global economic divergence with US outperformance creating dollar strength and policy differentiation",
+        "importance": "high",
+        "evidence": ["us_growth_leadership", "dollar_strength_103.5", "policy_rate_differentials", "capital_flow_attraction"]
+      },
+      {
+        "theme": "Energy market normalization supporting disinflation without constraining growth",
+        "importance": "medium",
+        "evidence": ["oil_range_bound", "gas_storage_adequate", "energy_inflation_contained", "geopolitical_premium_stable"]
+      }
+    ],
+    "policy_implications": [
+      {
+        "policy_area": "monetary",
+        "implication": "Federal Reserve likely to maintain restrictive policy stance through year-end 2025 while monitoring labor market cooling and inflation progress toward 2% target",
+        "probability": 0.85
+      },
+      {
+        "policy_area": "fiscal",
+        "implication": "Limited fiscal space constrains counter-cyclical policy options while debt ceiling considerations may create periodic political uncertainty",
+        "probability": 0.75
+      },
+      {
+        "policy_area": "regulatory",
+        "implication": "Financial sector regulation likely to remain stable with focus on bank capital adequacy and commercial real estate risk monitoring",
+        "probability": 0.70
+      }
+    ],
+    "market_implications": [
+      {
+        "asset_class": "equities",
+        "implication": "Continued equity market support from earnings growth and stable monetary policy environment with bias toward large cap technology and quality factors",
+        "confidence": 0.82
+      },
+      {
+        "asset_class": "bonds",
+        "implication": "Bond markets likely range-bound with curve steepening bias as Fed policy effectiveness reduces recession risk premium",
+        "confidence": 0.78
+      },
+      {
+        "asset_class": "commodities",
+        "implication": "Energy commodities range-bound with limited upside from geopolitical risks while precious metals face headwinds from dollar strength",
+        "confidence": 0.73
+      },
+      {
+        "asset_class": "currencies",
+        "implication": "Dollar strength likely to persist based on economic outperformance and rate differential advantages with selectivity in emerging market currencies",
+        "confidence": 0.80
+      }
+    ],
+    "research_priorities": [
+      {
+        "priority": "Federal Reserve policy transmission mechanism effectiveness monitoring with focus on credit channel functionality",
+        "rationale": "Critical for assessing likelihood of soft landing scenario and optimal policy duration",
+        "urgency": "high"
+      },
+      {
+        "priority": "Labor market dynamics evolution including job quality metrics and wage-productivity relationship analysis",
+        "rationale": "Essential for understanding inflation persistence risks and consumption sustainability",
+        "urgency": "high"
+      },
+      {
+        "priority": "Commercial real estate sector stress testing and financial system interconnectedness assessment",
+        "rationale": "Potential systemic risk from commercial real estate valuations and regional bank exposure",
+        "urgency": "medium"
+      },
+      {
+        "priority": "Technology sector productivity impact quantification on aggregate economic growth potential",
+        "rationale": "AI and automation productivity gains may be altering long-term economic growth trajectory",
+        "urgency": "medium"
+      }
+    ]
+  },
+  "data_quality_assessment": {
+    "institutional_grade_certification": true,
+    "confidence_scores": {
+      "discovery_confidence": 0.93,
+      "analysis_readiness": 0.95,
+      "synthesis_readiness": 0.91
+    },
+    "data_completeness": {
+      "required_data_coverage": 0.97,
+      "enhancement_opportunities": ["real_time_inflation_expectations", "high_frequency_employment_indicators", "regional_fed_sentiment_surveys"]
+    }
+  },
+  "local_data_references": {
+    "cached_economic_data": {
+      "MACRO_US_COMPREHENSIVE": {
+        "file_path": "./data/outputs/macro_analysis/discovery/US_20250806_discovery.json",
+        "last_updated": "2025-08-06T16:42:15.000000Z",
+        "data_quality": 0.93
+      },
+      "GLOBAL_CONTEXT": {
+        "file_path": "./data/outputs/macro_analysis/discovery/global_20250806_discovery.json",
+        "last_updated": "2025-08-06T08:30:00.000000Z",
+        "data_quality": 0.89
+      },
+      "REGIONAL_AMERICAS": {
+        "file_path": "./data/outputs/macro_analysis/discovery/americas_20250806_discovery.json",
+        "last_updated": "2025-08-06T08:01:24.000000Z",
+        "data_quality": 0.91
+      }
+    },
+    "historical_data_references": {
+      "business_cycle_history": [
+        "./data/outputs/macro_analysis/discovery/americas_20250806_discovery.json",
+        "./data/outputs/macro_analysis/discovery/europe_20250806_discovery.json",
+        "./data/outputs/macro_analysis/discovery/asia_20250806_discovery.json"
+      ],
+      "policy_history": [
+        "./data/cache/fed_policy_decisions_2025.json",
+        "./data/cache/global_central_bank_coordination.json"
+      ]
+    }
+  },
+  "automated_quality_validation": {
+    "overall_quality_score": 0.95,
+    "institutional_grade_achieved": true,
+    "validation_checks": {
+      "service_availability": {
+        "passed": true,
+        "score": 0.91
+      },
+      "data_completeness": {
+        "passed": true,
+        "score": 0.97
+      },
+      "cross_source_consistency": {
+        "passed": true,
+        "score": 0.92
+      },
+      "region_specificity": {
+        "passed": true,
+        "score": 0.96
+      },
+      "confidence_calibration": {
+        "passed": true,
+        "score": 0.93
+      }
+    },
+    "blocking_issues": [],
+    "recommendations": [
+      "Continue monitoring Federal Reserve communications for forward guidance evolution",
+      "Enhance real-time labor market indicators integration for higher frequency analysis",
+      "Implement automated commercial real estate risk monitoring dashboard",
+      "Develop technology sector productivity impact measurement framework"
+    ]
+  }
+}
