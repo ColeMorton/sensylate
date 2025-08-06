@@ -12,6 +12,7 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({
   indexed = false,
   positionType = "auto",
   className = "",
+  titleOnly = false,
 }) => {
   // Handle unsupported chart types
   const supportedChartTypes = [
@@ -35,6 +36,7 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({
         category={category}
         description={description}
         className={className}
+        titleOnly={titleOnly}
       >
         <div className="flex min-h-[400px] items-center justify-center rounded-lg bg-blue-100 p-8 text-center dark:bg-blue-900">
           <div>
@@ -56,6 +58,7 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({
       category={category}
       description={description}
       className={className}
+      titleOnly={titleOnly}
     >
       <PortfolioChart
         chartType={chartType}

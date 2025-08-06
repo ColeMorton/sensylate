@@ -169,6 +169,7 @@ export interface ChartDisplayProps {
   indexed?: boolean;
   positionType?: "open" | "closed" | "auto";
   className?: string;
+  titleOnly?: boolean;
 }
 
 export interface ChartContainerProps {
@@ -177,6 +178,7 @@ export interface ChartContainerProps {
   description?: string;
   children: React.ReactNode;
   className?: string;
+  titleOnly?: boolean;
 }
 
 export interface ChartRendererProps {

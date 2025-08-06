@@ -86,6 +86,17 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
 
   // Dynamic legend visibility based on data volume
   const shouldShowLegend = useMemo(() => {
+    // Hide legend for specific chart types
+    const hideLegendChartTypes = [
+      "live-signals-drawdowns",
+      "live-signals-weekly-candlestick",
+      "trade-pnl-waterfall",
+    ];
+
+    if (hideLegendChartTypes.includes(chartType)) {
+      return false;
+    }
+
     const isAnyPositionChart =
       chartType === "open-positions-pnl-timeseries" ||
       chartType === "closed-positions-pnl-timeseries";
@@ -344,6 +355,57 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
           finalPnL,
         };
       });
+    },
+    [],
+  );
+
+  // Calculate average trade progression across all closed positions
+  const calculateAverageTradeProgression = useCallback(
+    (
+      positionsData: Array<{
+        ticker: string;
+        data: Array<{ bar: number; pnl: number }>;
+        color: string;
+        finalPnL: number;
+      }>,
+    ): Array<{ bar: number; pnl: number }> => {
+      if (!positionsData || positionsData.length === 0) {
+        return [];
+      }
+
+      // Find the maximum trade length to determine the range
+      const maxLength = Math.max(
+        ...positionsData.map((position) => position.data.length),
+      );
+
+      if (maxLength === 0) {
+        return [];
+      }
+
+      // Calculate average PnL at each position bar
+      const averageData: Array<{ bar: number; pnl: number }> = [];
+
+      for (let bar = 0; bar < maxLength; bar++) {
+        let totalPnL = 0;
+        let count = 0;
+
+        // Sum PnL values from all positions that have data at this bar
+        positionsData.forEach((position) => {
+          if (position.data.length > bar) {
+            totalPnL += position.data[bar].pnl;
+            count++;
+          }
+        });
+
+        if (count > 0) {
+          averageData.push({
+            bar,
+            pnl: totalPnL / count,
+          });
+        }
+      }
+
+      return averageData;
     },
     [],
   );
@@ -717,16 +779,17 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
 
           const chartData: Data[] = [];
 
+          // Add individual positions as scatter plots
           closedPositionsData.forEach((position) => {
             chartData.push({
               type: "scatter",
-              mode: "lines",
+              mode: "markers",
               x: position.data.map((point) => point.bar),
               y: position.data.map((point) => point.pnl),
               name: position.ticker,
-              line: {
+              marker: {
                 color: position.color,
-                width: 2,
+                size: 6,
               },
               hovertemplate:
                 "<b>%{fullData.name}</b><br>" +
@@ -735,6 +798,28 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
                 "<extra></extra>",
             });
           });
+
+          // Calculate and add average trade progression line
+          const averageTradeData =
+            calculateAverageTradeProgression(closedPositionsData);
+          if (averageTradeData.length > 0) {
+            chartData.push({
+              type: "scatter",
+              mode: "lines",
+              x: averageTradeData.map((point) => point.bar),
+              y: averageTradeData.map((point) => point.pnl),
+              name: "Average Trade",
+              line: {
+                color: "#3179f5", // tertiary_data color
+                width: 3,
+              },
+              hovertemplate:
+                "<b>Average Trade</b><br>" +
+                "Position Bar: %{x}<br>" +
+                "Avg PnL: $%{y:.2f}<br>" +
+                "<extra></extra>",
+            });
+          }
 
           return chartData;
         }
@@ -842,16 +927,17 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
 
         const chartData: Data[] = [];
 
+        // Add individual positions as scatter plots
         closedPositionsData.forEach((position) => {
           chartData.push({
             type: "scatter",
-            mode: "lines",
+            mode: "markers",
             x: position.data.map((point) => point.bar),
             y: position.data.map((point) => point.pnl),
             name: position.ticker,
-            line: {
+            marker: {
               color: position.color,
-              width: 2,
+              size: 6,
             },
             hovertemplate:
               "<b>%{fullData.name}</b><br>" +
@@ -860,6 +946,28 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
               "<extra></extra>",
           });
         });
+
+        // Calculate and add average trade progression line
+        const averageTradeData =
+          calculateAverageTradeProgression(closedPositionsData);
+        if (averageTradeData.length > 0) {
+          chartData.push({
+            type: "scatter",
+            mode: "lines",
+            x: averageTradeData.map((point) => point.bar),
+            y: averageTradeData.map((point) => point.pnl),
+            name: "Average Trade",
+            line: {
+              color: "#3179f5", // tertiary_data color
+              width: 3,
+            },
+            hovertemplate:
+              "<b>Average Trade</b><br>" +
+              "Position Bar: %{x}<br>" +
+              "Avg PnL: $%{y:.2f}<br>" +
+              "<extra></extra>",
+          });
+        }
 
         return chartData;
       }
@@ -880,6 +988,7 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
     convertOpenPositionsPnLToWeekly,
     createIndexedDataWithEntry,
     createClosedPositionIndexedData,
+    calculateAverageTradeProgression,
   ]);
 
   // Chart layout
@@ -911,7 +1020,7 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
         case "trade-pnl-waterfall":
           return "Trade PnL Waterfall Chart";
         case "closed-positions-pnl-timeseries":
-          return "Closed Positions PnL Time Series (Indexed)";
+          return "Closed Position PnL Performance";
         case "open-positions-pnl-timeseries": {
           const positionTypeText =
             actualDataType === "closed" ? "Closed" : "Open";

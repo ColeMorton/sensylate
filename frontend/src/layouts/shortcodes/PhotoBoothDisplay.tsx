@@ -428,6 +428,10 @@ const DashboardRenderer: React.FC<{
 }> = ({ dashboard, mode }) => {
   const layoutClasses = DashboardLoader.getLayoutClasses(dashboard.layout);
 
+  // Enable title-only mode for Portfolio History Portrait dashboard
+  const isPortfolioHistoryPortrait =
+    dashboard.id === "portfolio_history_portrait";
+
   return (
     <div className={`dashboard-content ${dashboard.layout} ${mode}-mode`}>
       <div className={layoutClasses}>
@@ -439,6 +443,7 @@ const DashboardRenderer: React.FC<{
             description={chart.description}
             chartType={chart.chartType as string}
             className="photo-booth-chart"
+            titleOnly={isPortfolioHistoryPortrait}
           />
         ))}
       </div>
