@@ -107,11 +107,6 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
       return true;
     }
 
-    // For closed-positions-pnl-timeseries, always hide legend (original behavior)
-    if (chartType === "closed-positions-pnl-timeseries") {
-      return false;
-    }
-
     // For all other charts, show legend
     return true;
   }, [chartType, shouldUseClosedData, data]);
@@ -827,6 +822,7 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
     error,
     timeframe,
     indexed,
+    shouldUseClosedData,
     convertToWeeklyOHLC,
     convertOpenPositionsPnLToWeekly,
     createIndexedDataWithEntry,
@@ -978,7 +974,7 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
         tickcolor: themeColors.tickColor,
         tickfont: themeColors.font,
       },
-      hovermode: chartType === "trade-pnl-waterfall" ? "closest" : "x unified",
+      hovermode: "closest",
     };
   }, [
     isDarkMode,

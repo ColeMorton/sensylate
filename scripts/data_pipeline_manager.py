@@ -17,7 +17,7 @@ import logging
 import sys
 from datetime import datetime, timedelta
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional, Tuple, Union
 
 import numpy as np
 import pandas as pd
@@ -720,7 +720,7 @@ class DataPipelineManager:
         from cli_wrapper import get_service_manager
 
         failed_services = []
-        health_details = {}
+        health_details: dict[str, dict[str, Union[bool, str, None]]] = {}
 
         try:
             service_manager = get_service_manager()
@@ -874,8 +874,8 @@ class DataPipelineManager:
         self, df: pd.DataFrame, contract: DataContract
     ) -> Tuple[List[str], List[str]]:
         """Validate trade history specific schema requirements - returns (errors, warnings)"""
-        errors = []
-        warnings = []
+        errors: list[str] = []
+        warnings: list[str] = []
 
         # Required columns for trade history
         required_columns = {
@@ -914,8 +914,8 @@ class DataPipelineManager:
         self, df: pd.DataFrame, contract: DataContract
     ) -> Tuple[List[str], List[str]]:
         """Validate portfolio specific schema requirements - returns (errors, warnings)"""
-        errors = []
-        warnings = []
+        errors: list[str] = []
+        warnings: list[str] = []
 
         # Check for Date column - treat as warning since portfolio data might have different structures
         required_columns = {"Date"}
@@ -938,8 +938,8 @@ class DataPipelineManager:
         self, df: pd.DataFrame, contract: DataContract
     ) -> Tuple[List[str], List[str]]:
         """Validate open positions specific schema requirements - returns (errors, warnings)"""
-        errors = []
-        warnings = []
+        errors: list[str] = []
+        warnings: list[str] = []
 
         # Required columns for open positions
         required_columns = {"Ticker", "PnL", "Date"}
@@ -1786,7 +1786,7 @@ class DataPipelineManager:
                 self.logger.info("Successfully generated all chart-ready data files")
                 return ProcessingResult(success=True, operation="generate_chart_data")
             else:
-                errors = []
+                errors: list[str] = []
                 if not waterfall_result.success:
                     errors.append(f"Waterfall: {waterfall_result.error}")
                 if not closed_positions_result.success:
@@ -1914,7 +1914,7 @@ class DataPipelineManager:
 
     def _load_historical_price_data(self, ticker: str) -> Dict[str, float]:
         """Load historical price data for a ticker from raw data stocks directory with enhanced validation"""
-        price_data = {}
+        price_data: dict[str, float] = {}
 
         try:
             # Try to load historical price data from raw stocks directory
@@ -2125,20 +2125,35 @@ class DataPipelineManager:
                         )
                         continue
 
-                    # Generate daily progression from entry to exit
-                    date_range = pd.date_range(entry_date, exit_date, freq="D")
-
-                    # Handle single-day trades
-                    if len(date_range) == 0:
-                        date_range = [pd.to_datetime(entry_date)]
-
-                    # Load historical price data for this ticker (with caching)
+                    # Load historical price data first to determine available trading dates
                     if ticker not in price_data_cache:
                         price_data_cache[ticker] = self._load_historical_price_data(
                             ticker
                         )
 
                     historical_prices = price_data_cache[ticker]
+
+                    # Generate progression using only trading days (dates with actual price data)
+                    if len(historical_prices) > 0:
+                        # Use only dates that exist in historical price data within trade period
+                        available_dates = []
+                        for date_str, _ in historical_prices.items():
+                            try:
+                                price_date = pd.to_datetime(date_str).date()
+                                if entry_date <= price_date <= exit_date:
+                                    available_dates.append(pd.to_datetime(date_str))
+                            except (ValueError, TypeError, AttributeError):
+                                continue
+
+                        if available_dates:
+                            date_range = sorted(available_dates)
+                        else:
+                            # Fallback: single day with entry date if no trading days found
+                            date_range = [pd.to_datetime(entry_date)]
+                    else:
+                        # Fallback: single day with entry date if no price data available
+                        date_range = [pd.to_datetime(entry_date)]
+
                     use_real_data = len(historical_prices) > 0
 
                     if use_real_data:

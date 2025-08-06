@@ -1,4 +1,4 @@
-import type { Data, Layout } from "plotly.js";
+import type { Data, Layout, Config } from "plotly.js";
 
 // Portfolio data structure from CSV files
 export interface PortfolioDataRow {
@@ -166,7 +166,7 @@ export interface ChartContainerProps {
 export interface ChartRendererProps {
   data: Data[];
   layout: Partial<Layout>;
-  config?: Partial<Plotly.Config>;
+  config?: Partial<Config>;
   loading?: boolean;
   error?: string | null;
 }
