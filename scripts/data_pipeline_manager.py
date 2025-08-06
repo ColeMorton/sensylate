@@ -37,6 +37,280 @@ from script_config import ScriptConfig
 from utils.logging_setup import setup_logging
 
 
+class DryRunReport:
+    """Comprehensive dry-run analysis report for data pipeline operations"""
+
+    def __init__(self):
+        """Initialize empty dry-run report"""
+        self.start_time = datetime.now()
+        self.contracts = []
+        self.current_data_status = {}
+        self.update_plan = {}
+        self.operations_sequence = []
+        self.projected_results = {}
+        self.service_mappings = {}
+        self.validation_results = {}
+        self.errors = []
+        self.warnings = []
+
+    def add_contract(self, contract: DataContract, status: str, reason: str = ""):
+        """Add contract analysis to report"""
+        self.contracts.append(
+            {
+                "contract_id": contract.contract_id,
+                "category": contract.category,
+                "file_path": str(contract.file_path),
+                "relative_path": contract.relative_path,
+                "status": status,
+                "reason": reason,
+                "schema_columns": len(contract.schema) if contract.schema else 0,
+                "freshness_threshold_hours": contract.freshness_threshold_hours,
+            }
+        )
+
+    def set_current_data_status(self, category: str, file_status_data: Dict[str, Any]):
+        """Set current data status for a category"""
+        self.current_data_status[category] = file_status_data
+
+    def add_update_plan_item(
+        self, file_path: str, reason: str, estimated_time: float, row_count: int = 0
+    ):
+        """Add item to update plan"""
+        self.update_plan[file_path] = {
+            "reason": reason,
+            "estimated_time": estimated_time,
+            "projected_row_count": row_count,
+            "estimated_size_mb": round(row_count * 0.05 / 1000, 2)
+            if row_count > 0
+            else 0.0,
+        }
+
+    def add_operation(self, operation: str, duration: float, details: str = ""):
+        """Add operation to sequence"""
+        self.operations_sequence.append(
+            {
+                "operation": operation,
+                "estimated_duration": duration,
+                "details": details,
+                "timestamp": datetime.now(),
+            }
+        )
+
+    def set_service_mapping(self, contract_id: str, services: List[str]):
+        """Set service mapping for contract"""
+        self.service_mappings[contract_id] = services
+
+    def add_validation_result(
+        self, contract_id: str, is_valid: bool, issues: List[str]
+    ):
+        """Add validation result"""
+        self.validation_results[contract_id] = {
+            "is_valid": is_valid,
+            "issues": issues,
+        }
+
+    def add_error(self, error: str):
+        """Add error to report"""
+        self.errors.append(error)
+
+    def add_warning(self, warning: str):
+        """Add warning to report"""
+        self.warnings.append(warning)
+
+    def generate_text_report(self) -> str:
+        """Generate human-readable text report"""
+        report_lines = []
+
+        # Header
+        report_lines.append("📊 DATA PIPELINE DRY-RUN REPORT")
+        report_lines.append("=" * 50)
+        report_lines.append(
+            f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+        )
+        report_lines.append("")
+
+        # Contract Discovery
+        report_lines.append("CONTRACT DISCOVERY")
+        report_lines.append("-" * 20)
+        total_contracts = len(self.contracts)
+        categories = set(c["category"] for c in self.contracts)
+        new_contracts = len([c for c in self.contracts if c["status"] == "new"])
+        modified_contracts = len(
+            [c for c in self.contracts if c["status"] == "modified"]
+        )
+
+        report_lines.append(f"- Total contracts: {total_contracts}")
+        report_lines.append(
+            f"- Categories: {', '.join(categories)} ({len(categories)} total)"
+        )
+        report_lines.append(f"- New contracts: {new_contracts}")
+        report_lines.append(f"- Modified contracts: {modified_contracts}")
+        report_lines.append("")
+
+        # Current Data Status
+        report_lines.append("CURRENT DATA STATUS")
+        report_lines.append("-" * 20)
+        total_files = sum(
+            len(status.get("files", {})) for status in self.current_data_status.values()
+        )
+        fresh_files = sum(
+            len(
+                [
+                    f
+                    for f, data in status.get("files", {}).items()
+                    if data.get("status") == "fresh"
+                ]
+            )
+            for status in self.current_data_status.values()
+        )
+        stale_files = sum(
+            len(
+                [
+                    f
+                    for f, data in status.get("files", {}).items()
+                    if data.get("status") == "stale"
+                ]
+            )
+            for status in self.current_data_status.values()
+        )
+        missing_files = sum(
+            len(
+                [
+                    f
+                    for f, data in status.get("files", {}).items()
+                    if not data.get("exists", True)
+                ]
+            )
+            for status in self.current_data_status.values()
+        )
+        total_size_bytes = sum(
+            sum(data.get("size_bytes", 0) for data in status.get("files", {}).values())
+            for status in self.current_data_status.values()
+        )
+
+        report_lines.append(f"- Fresh files: {fresh_files}")
+        report_lines.append(f"- Stale files: {stale_files} (>24h old)")
+        report_lines.append(f"- Missing files: {missing_files}")
+        report_lines.append(f"- Total size: {total_size_bytes / (1024*1024):.1f}MB")
+        report_lines.append("")
+
+        # Update Plan
+        report_lines.append("UPDATE PLAN")
+        report_lines.append("-" * 12)
+        files_to_update = len(self.update_plan)
+        total_estimated_time = sum(
+            item["estimated_time"] for item in self.update_plan.values()
+        )
+        unique_services = set()
+        for services in self.service_mappings.values():
+            unique_services.update(services)
+
+        report_lines.append(f"- Files to update: {files_to_update}")
+        if files_to_update > 0:
+            reasons: Dict[str, int] = {}
+            for item in self.update_plan.values():
+                reason = item["reason"]
+                reasons[reason] = reasons.get(reason, 0) + 1
+            reason_summary = ", ".join(
+                f"{reason} ({count})" for reason, count in reasons.items()
+            )
+            report_lines.append(f"- Reasons: {reason_summary}")
+        report_lines.append(f"- Estimated processing time: {total_estimated_time:.0f}s")
+        report_lines.append(
+            f"- Services required: {', '.join(sorted(unique_services))}"
+        )
+        report_lines.append("")
+
+        # Operations Sequence
+        if self.operations_sequence:
+            report_lines.append("OPERATIONS SEQUENCE")
+            report_lines.append("-" * 19)
+            for i, op in enumerate(self.operations_sequence, 1):
+                details = f" - {op['details']}" if op["details"] else ""
+                report_lines.append(
+                    f"{i}. {op['operation']} ({op['estimated_duration']:.1f}s){details}"
+                )
+            report_lines.append("")
+
+        # Projected Results
+        report_lines.append("PROJECTED RESULTS")
+        report_lines.append("-" * 17)
+        total_projected_rows = sum(
+            item["projected_row_count"] for item in self.update_plan.values()
+        )
+        total_projected_size = sum(
+            item["estimated_size_mb"] for item in self.update_plan.values()
+        )
+        all_valid = all(
+            result["is_valid"] for result in self.validation_results.values()
+        )
+
+        report_lines.append(f"- Total files after update: {total_files}")
+        if total_projected_size > 0:
+            report_lines.append(f"- Estimated total size: {total_projected_size:.1f}MB")
+        if total_projected_rows > 0:
+            report_lines.append(f"- Total projected rows: {total_projected_rows:,}")
+        report_lines.append(
+            f"- Data quality: {'All validations would pass' if all_valid else 'Some validation issues'}"
+        )
+        report_lines.append(
+            f"- Schema compliance: {len([r for r in self.validation_results.values() if r['is_valid']])}/{len(self.validation_results)} contracts"
+        )
+        report_lines.append("")
+
+        # Errors and Warnings
+        if self.errors:
+            report_lines.append("ERRORS")
+            report_lines.append("-" * 6)
+            for error in self.errors:
+                report_lines.append(f"❌ {error}")
+            report_lines.append("")
+
+        if self.warnings:
+            report_lines.append("WARNINGS")
+            report_lines.append("-" * 8)
+            for warning in self.warnings:
+                report_lines.append(f"⚠️  {warning}")
+            report_lines.append("")
+
+        # Footer
+        execution_time = (datetime.now() - self.start_time).total_seconds()
+        report_lines.append(f"Analysis completed in {execution_time:.2f}seconds")
+
+        return "\n".join(report_lines)
+
+    def generate_json_report(self) -> str:
+        """Generate machine-readable JSON report"""
+        import json
+
+        execution_time = (datetime.now() - self.start_time).total_seconds()
+
+        report_data = {
+            "metadata": {
+                "generated_at": datetime.now().isoformat(),
+                "execution_time_seconds": execution_time,
+                "report_type": "dry_run_analysis",
+            },
+            "contract_discovery": {
+                "total_contracts": len(self.contracts),
+                "contracts": self.contracts,
+                "categories": list(set(c["category"] for c in self.contracts)),
+            },
+            "current_data_status": self.current_data_status,
+            "update_plan": self.update_plan,
+            "operations_sequence": [
+                {**op, "timestamp": op["timestamp"].isoformat()}
+                for op in self.operations_sequence
+            ],
+            "service_mappings": self.service_mappings,
+            "validation_results": self.validation_results,
+            "errors": self.errors,
+            "warnings": self.warnings,
+        }
+
+        return json.dumps(report_data, indent=2, default=str)
+
+
 class DataPipelineManager:
     """
     Contract-driven data pipeline orchestrator
@@ -87,6 +361,63 @@ class DataPipelineManager:
         self.logger.info(
             f"Initialized contract-driven pipeline for {self.frontend_data_dir}"
         )
+
+    def _get_source_data_path(self, portfolio_name: str) -> Path:
+        """Get the source data file path for a portfolio"""
+        return (
+            self.project_root
+            / "data"
+            / "raw"
+            / "trade_history"
+            / f"{portfolio_name}.csv"
+        )
+
+    def _get_source_data_modification_time(
+        self, portfolio_name: str
+    ) -> Optional[datetime]:
+        """Get the modification time of source data file for a portfolio"""
+        source_path = self._get_source_data_path(portfolio_name)
+        if source_path.exists():
+            return datetime.fromtimestamp(source_path.stat().st_mtime)
+        return None
+
+    def _check_open_positions_exist(self, portfolio_name: str) -> bool:
+        """Check if any open positions exist in the source data"""
+        source_path = self._get_source_data_path(portfolio_name)
+        if not source_path.exists():
+            return False
+
+        try:
+            df = pd.read_csv(source_path)
+            if "Status" in df.columns:
+                open_positions = df[df["Status"] == "Open"]
+                return len(open_positions) > 0
+            return False
+        except Exception as e:
+            self.logger.warning(f"Error checking open positions in {source_path}: {e}")
+            return False
+
+    def _extract_portfolio_name_from_contract(
+        self, contract: DataContract
+    ) -> Optional[str]:
+        """Extract portfolio name from contract ID or file path"""
+        # Pattern: look for portfolio name in contract_id or file path
+        # Examples: "trade-history_live_signals", "portfolio_live-signals_live_signals_equity"
+
+        # Try to extract from contract_id
+        if (
+            "live_signals" in contract.contract_id
+            or "live-signals" in contract.contract_id
+        ):
+            return "live_signals"
+
+        # Try to extract from file path
+        file_path_str = str(contract.file_path)
+        if "live_signals" in file_path_str or "live-signals" in file_path_str:
+            return "live_signals"
+
+        # Could add more portfolio patterns here as needed
+        return None
 
     def _initialize_cli_capabilities(self) -> Dict[str, Dict[str, Any]]:
         """Initialize CLI service capability mapping"""
@@ -241,7 +572,7 @@ class DataPipelineManager:
             successful_contracts = []
 
             # Group contracts by category for efficient processing
-            contracts_by_category = {}
+            contracts_by_category: Dict[str, List[DataContract]] = {}
             for contract in discovery_result.contracts:
                 if contract.contract_id not in unfulfillable_contracts:
                     if contract.category not in contracts_by_category:
@@ -670,7 +1001,7 @@ class DataPipelineManager:
         """Generate generic data based on contract schema"""
         try:
             # Create synthetic data based on schema
-            data = {}
+            data: Dict[str, Any] = {}
             num_rows = contract.minimum_rows
 
             for column_schema in contract.schema:
@@ -1244,57 +1575,366 @@ class DataPipelineManager:
             directory.mkdir(parents=True, exist_ok=True)
 
     def validate_data_freshness(self) -> Dict[str, Any]:
-        """Validate freshness of chart data files"""
+        """Validate freshness of chart data files using discovered contracts"""
         validation_results = {}
         current_time = datetime.now()
 
-        for category, config in self.chart_data_dependencies.items():
-            category_results = {"files": {}, "status": "healthy", "issues": []}
+        # Ensure contracts are discovered
+        if not self.contracts:
+            self.discover_contracts()
 
-            for output_file in config["output_files"]:
-                if category == "portfolio":
-                    file_path = self.frontend_data_dir / "portfolio" / output_file
-                elif category == "live_signals":
-                    file_path = (
-                        self.frontend_data_dir / "portfolio/live-signals" / output_file
-                    )
-                elif category == "trade_history":
-                    file_path = self.frontend_data_dir / "trade-history" / output_file
-                elif category == "open_positions":
-                    file_path = self.frontend_data_dir / "open-positions" / output_file
-                else:
-                    continue
+        # Group contracts by category
+        contracts_by_category: Dict[str, List[DataContract]] = {}
+        for contract in self.contracts:
+            if contract.category not in contracts_by_category:
+                contracts_by_category[contract.category] = []
+            contracts_by_category[contract.category].append(contract)
+
+        # Validate each category
+        for category, contracts in contracts_by_category.items():
+            category_results: Dict[str, Any] = {
+                "files": {},
+                "status": "healthy",
+                "issues": [],
+            }
+
+            for contract in contracts:
+                file_path = contract.file_path
+                filename = file_path.name
 
                 if file_path.exists():
                     file_age_hours = (
                         current_time - datetime.fromtimestamp(file_path.stat().st_mtime)
                     ).total_seconds() / 3600
-                    file_status = "fresh" if file_age_hours <= 24 else "stale"
 
-                    category_results["files"][output_file] = {
+                    # Use source-based logic for portfolio and trade-history data
+                    needs_update = False
+                    update_reason = ""
+
+                    if category in ["portfolio", "trade-history"]:
+                        # Extract portfolio name from contract
+                        portfolio_name = self._extract_portfolio_name_from_contract(
+                            contract
+                        )
+                        if portfolio_name:
+                            source_mod_time = self._get_source_data_modification_time(
+                                portfolio_name
+                            )
+                            output_mod_time = datetime.fromtimestamp(
+                                file_path.stat().st_mtime
+                            )
+
+                            if source_mod_time and source_mod_time > output_mod_time:
+                                needs_update = True
+                                source_age_hours = (
+                                    current_time - source_mod_time
+                                ).total_seconds() / 3600
+                                update_reason = f"Source data modified {source_age_hours:.1f}h ago, output is outdated"
+                            else:
+                                needs_update = False
+                                update_reason = "Output is up-to-date with source data"
+                        else:
+                            # Fallback to time-based logic
+                            needs_update = (
+                                file_age_hours > contract.freshness_threshold_hours
+                            )
+                            update_reason = f"File is {file_age_hours:.1f}h old (threshold: {contract.freshness_threshold_hours}h)"
+                    elif category == "open-positions":
+                        # Special logic for open positions: check if positions actually exist
+                        portfolio_name = self._extract_portfolio_name_from_contract(
+                            contract
+                        )
+                        if portfolio_name:
+                            has_open_positions = self._check_open_positions_exist(
+                                portfolio_name
+                            )
+                            if not has_open_positions:
+                                # No open positions, only update if file is very old (cleanup)
+                                needs_update = (
+                                    file_age_hours > 24
+                                )  # 24h cleanup threshold
+                                update_reason = (
+                                    f"No open positions, cleanup needed (file is {file_age_hours:.1f}h old)"
+                                    if needs_update
+                                    else "No open positions, no update needed"
+                                )
+                            else:
+                                # Has open positions, use standard freshness check
+                                needs_update = (
+                                    file_age_hours > contract.freshness_threshold_hours
+                                )
+                                update_reason = f"Open positions exist, file is {file_age_hours:.1f}h old (threshold: {contract.freshness_threshold_hours}h)"
+                        else:
+                            # Fallback to time-based logic
+                            needs_update = (
+                                file_age_hours > contract.freshness_threshold_hours
+                            )
+                            update_reason = f"File is {file_age_hours:.1f}h old (threshold: {contract.freshness_threshold_hours}h)"
+                    else:
+                        # Default time-based logic for other categories
+                        needs_update = (
+                            file_age_hours > contract.freshness_threshold_hours
+                        )
+                        update_reason = f"File is {file_age_hours:.1f}h old (threshold: {contract.freshness_threshold_hours}h)"
+
+                    file_status = "stale" if needs_update else "fresh"
+
+                    category_results["files"][filename] = {
                         "exists": True,
                         "age_hours": round(file_age_hours, 2),
                         "status": file_status,
                         "size_bytes": file_path.stat().st_size,
+                        "threshold_hours": contract.freshness_threshold_hours,
+                        "update_reason": update_reason,
                     }
 
                     if file_status == "stale":
-                        category_results["issues"].append(
-                            f"{output_file} is {file_age_hours:.1f} hours old"
-                        )
+                        issues_list = category_results["issues"]
+                    if isinstance(issues_list, list):
+                        issues_list.append(update_reason)
                 else:
-                    category_results["files"][output_file] = {
+                    category_results["files"][filename] = {
                         "exists": False,
                         "status": "missing",
+                        "threshold_hours": contract.freshness_threshold_hours,
                     }
-                    category_results["issues"].append(f"{output_file} does not exist")
+                    category_results["issues"].append(f"{filename} does not exist")
 
-            if category_results["issues"]:
+            issues_list = category_results["issues"]
+            if isinstance(issues_list, list) and issues_list:
                 category_results["status"] = "issues"
 
             validation_results[category] = category_results
 
         return validation_results
+
+    def run_dry_run_analysis(self) -> DryRunReport:
+        """Run comprehensive dry-run analysis without making changes"""
+        report = DryRunReport()
+
+        try:
+            # Step 1: Discover all contracts
+            self.logger.info("Discovering contracts for dry-run analysis")
+            report.add_operation(
+                "Contract Discovery", 0.1, "Scanning frontend directory structure"
+            )
+
+            self.discover_contracts()
+
+            # Analyze each contract
+            for contract in self.contracts:
+                try:
+                    # Determine contract status using same logic as validate_data_freshness
+                    if not contract.file_path.exists():
+                        status = "missing"
+                        reason = "File does not exist"
+                    else:
+                        file_age_hours = (
+                            datetime.now() - contract.last_modified
+                        ).total_seconds() / 3600
+
+                        # Use source-based logic for portfolio and trade-history data
+                        needs_update = False
+                        update_reason = ""
+
+                        if contract.category in ["portfolio", "trade-history"]:
+                            # Extract portfolio name from contract
+                            portfolio_name = self._extract_portfolio_name_from_contract(
+                                contract
+                            )
+                            if portfolio_name:
+                                source_mod_time = (
+                                    self._get_source_data_modification_time(
+                                        portfolio_name
+                                    )
+                                )
+                                output_mod_time = contract.last_modified
+
+                                if (
+                                    source_mod_time
+                                    and source_mod_time > output_mod_time
+                                ):
+                                    needs_update = True
+                                    source_age_hours = (
+                                        datetime.now() - source_mod_time
+                                    ).total_seconds() / 3600
+                                    update_reason = f"Source data modified {source_age_hours:.1f}h ago, output is outdated"
+                                else:
+                                    needs_update = False
+                                    update_reason = f"File is {file_age_hours:.1f}h old, up-to-date with source"
+                            else:
+                                # Fallback to time-based logic
+                                needs_update = (
+                                    file_age_hours > contract.freshness_threshold_hours
+                                )
+                                update_reason = f"File is {file_age_hours:.1f}h old (threshold: {contract.freshness_threshold_hours}h)"
+                        elif contract.category == "open-positions":
+                            # Special logic for open positions
+                            portfolio_name = self._extract_portfolio_name_from_contract(
+                                contract
+                            )
+                            if portfolio_name:
+                                has_open_positions = self._check_open_positions_exist(
+                                    portfolio_name
+                                )
+                                if not has_open_positions:
+                                    needs_update = (
+                                        file_age_hours > 24
+                                    )  # 24h cleanup threshold
+                                    update_reason = (
+                                        f"No open positions, cleanup needed (file is {file_age_hours:.1f}h old)"
+                                        if needs_update
+                                        else f"No open positions, file is {file_age_hours:.1f}h old (no update needed)"
+                                    )
+                                else:
+                                    needs_update = (
+                                        file_age_hours
+                                        > contract.freshness_threshold_hours
+                                    )
+                                    update_reason = f"Open positions exist, file is {file_age_hours:.1f}h old (threshold: {contract.freshness_threshold_hours}h)"
+                            else:
+                                needs_update = (
+                                    file_age_hours > contract.freshness_threshold_hours
+                                )
+                                update_reason = f"File is {file_age_hours:.1f}h old (threshold: {contract.freshness_threshold_hours}h)"
+                        else:
+                            # Default time-based logic for other categories
+                            needs_update = (
+                                file_age_hours > contract.freshness_threshold_hours
+                            )
+                            update_reason = f"File is {file_age_hours:.1f}h old (threshold: {contract.freshness_threshold_hours}h)"
+
+                        status = "stale" if needs_update else "fresh"
+                        reason = update_reason
+
+                    report.add_contract(contract, status, reason)
+
+                    # Add service mapping
+                    capable_services = self.map_contract_to_services(contract)
+                    report.set_service_mapping(contract.contract_id, capable_services)
+
+                    # Add to update plan if needed
+                    if status in ["missing", "stale"]:
+                        estimated_rows = self._estimate_data_rows(contract)
+                        estimated_time = self._estimate_processing_time(
+                            contract, estimated_rows
+                        )
+
+                        report.add_update_plan_item(
+                            str(contract.file_path),
+                            reason,
+                            estimated_time,
+                            estimated_rows,
+                        )
+
+                        # Add detailed operation for this file
+                        operation_details = (
+                            f"{estimated_rows} rows, {contract.category} category"
+                        )
+                        report.add_operation(
+                            f"Generate {contract.relative_path}",
+                            estimated_time,
+                            operation_details,
+                        )
+
+                    # Simulate validation
+                    validation_issues = self._simulate_validation(contract)
+                    report.add_validation_result(
+                        contract.contract_id,
+                        len(validation_issues) == 0,
+                        validation_issues,
+                    )
+
+                except Exception as e:
+                    error_msg = (
+                        f"Failed to analyze contract {contract.contract_id}: {str(e)}"
+                    )
+                    report.add_error(error_msg)
+                    self.logger.error(error_msg)
+
+            # Step 2: Get current data status
+            self.logger.info("Analyzing current data status")
+            report.add_operation(
+                "Data Status Analysis", 0.5, "Checking file freshness and sizes"
+            )
+
+            current_status = self.validate_data_freshness()
+            for category, status_data in current_status.items():
+                report.set_current_data_status(category, status_data)
+
+            # Step 3: Add summary operations
+            total_files_to_update = len(report.update_plan)
+            if total_files_to_update > 0:
+                report.add_operation(
+                    "Data Generation Phase",
+                    15.0,
+                    f"{total_files_to_update} files to update",
+                )
+                report.add_operation(
+                    "CSV Transformation", 5.0, "Convert data to frontend format"
+                )
+                report.add_operation(
+                    "Schema Validation", 2.0, "Validate output schemas"
+                )
+
+            self.logger.info(
+                f"Dry-run analysis completed. {total_files_to_update} files would be updated."
+            )
+
+        except Exception as e:
+            error_msg = f"Dry-run analysis failed: {str(e)}"
+            report.add_error(error_msg)
+            self.logger.error(error_msg)
+
+        return report
+
+    def _estimate_data_rows(self, contract: DataContract) -> int:
+        """Estimate number of rows that would be generated for a contract"""
+        if contract.category == "portfolio":
+            if "live-signals" in contract.relative_path:
+                return 150  # ~5 months of daily data
+            else:
+                return 3960  # ~11 years of daily data (2014-2025)
+        elif contract.category == "trade-history":
+            return 45  # Typical number of closed trades
+        elif contract.category == "open-positions":
+            return 450  # 5 positions × 90 days
+        else:
+            return 100  # Default estimate
+
+    def _estimate_processing_time(
+        self, contract: DataContract, row_count: int
+    ) -> float:
+        """Estimate processing time for a contract in seconds"""
+        base_time = 1.0  # Base processing time
+        row_factor = max(1.0, row_count / 1000.0)  # Scale with row count
+
+        if contract.category == "portfolio":
+            return base_time * row_factor * 2.0  # Portfolio data is more complex
+        elif contract.category == "live-signals":
+            return base_time * row_factor * 3.0  # Live signals require more processing
+        else:
+            return base_time * row_factor
+
+    def _simulate_validation(self, contract: DataContract) -> List[str]:
+        """Simulate validation and return potential issues"""
+        issues = []
+
+        # Check if file path is valid
+        if not contract.file_path.parent.exists():
+            issues.append(
+                f"Parent directory does not exist: {contract.file_path.parent}"
+            )
+
+        # Check expected schema
+        if not contract.schema:
+            issues.append("No expected schema defined")
+
+        # Check for known problematic paths
+        if "sensylate-command-system-enhancements" in str(contract.file_path):
+            issues.append("File path references external project directory")
+
+        return issues
 
 
 def main():
@@ -1313,6 +1953,17 @@ def main():
         help="Continue despite individual failures",
     )
     parser.add_argument("--verbose", action="store_true", help="Enable verbose logging")
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Analyze what would be updated without making changes",
+    )
+    parser.add_argument(
+        "--format",
+        choices=["text", "json", "table"],
+        default="text",
+        help="Output format for reports (default: text)",
+    )
 
     args = parser.parse_args()
 
@@ -1343,6 +1994,23 @@ def main():
         print(
             f"\nOverall Status: {'✅ Healthy' if overall_healthy else '⚠️ Issues Found'}"
         )
+        sys.exit(exit_code)
+
+    elif args.dry_run:
+        # Dry-run analysis mode
+        print("🔍 Starting dry-run analysis...")
+        report = pipeline.run_dry_run_analysis()
+
+        # Generate and display report
+        if args.format == "json":
+            print(report.generate_json_report())
+        elif args.format == "table":
+            print(report.generate_text_report())
+        else:
+            print(report.generate_text_report())
+
+        # Exit with appropriate code
+        exit_code = 1 if report.errors else 0
         sys.exit(exit_code)
 
     else:

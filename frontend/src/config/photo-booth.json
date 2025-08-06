@@ -38,13 +38,66 @@
     "timeout": 30000,
     "wait_for_selector": ".photo-booth-ready"
   },
+  "export_options": {
+    "formats": {
+      "available": ["png", "svg", "both"],
+      "default": "png",
+      "descriptions": {
+        "png": "High-resolution raster image, perfect for presentations and print",
+        "svg": "Vector-based image with infinite scalability and small file size",
+        "both": "Generate both PNG and SVG formats simultaneously"
+      }
+    },
+    "aspect_ratios": {
+      "available": [
+        {
+          "id": "16:9",
+          "name": "Widescreen (16:9)",
+          "dimensions": { "width": 1920, "height": 1080 },
+          "description": "Standard widescreen format, ideal for monitors and web"
+        },
+        {
+          "id": "4:3",
+          "name": "Traditional (4:3)",
+          "dimensions": { "width": 1440, "height": 1080 },
+          "description": "Classic presentation format, ideal for projectors"
+        },
+        {
+          "id": "3:4",
+          "name": "Portrait (3:4)",
+          "dimensions": { "width": 1080, "height": 1440 },
+          "description": "Portrait orientation, ideal for social media and mobile"
+        }
+      ],
+      "default": "16:9"
+    },
+    "dpi_settings": {
+      "available": [150, 300, 600],
+      "default": 300,
+      "descriptions": {
+        "150": "Web/Digital - Standard screen resolution",
+        "300": "Print/Professional - High-quality printing standard",
+        "600": "Ultra-High - Professional publishing and large format"
+      }
+    },
+    "scale_factors": {
+      "available": [2, 3, 4],
+      "default": 3,
+      "descriptions": {
+        "2": "Standard high-DPI (2x resolution)",
+        "3": "Enhanced high-DPI (3x resolution)",
+        "4": "Ultra high-DPI (4x resolution)"
+      }
+    }
+  },
   "output": {
     "directory": "data/outputs/photo-booth",
-    "filename_template": "{dashboard_id}_{mode}_{timestamp}.png",
+    "filename_template": "{dashboard_id}_{mode}_{aspect_ratio}_{format}_{dpi}dpi_{timestamp}.{extension}",
+    "legacy_filename_template": "{dashboard_id}_{mode}_{timestamp}.png",
     "modes": ["light", "dark"],
     "auto_cleanup": {
       "enabled": true,
-      "keep_latest": 5,
+      "keep_latest": 10,
       "older_than_days": 30
     }
   },

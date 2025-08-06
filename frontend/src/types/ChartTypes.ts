@@ -101,8 +101,7 @@ export type ChartType =
   | "live-signals-drawdowns"
   | "live-signals-weekly-candlestick"
   | "trade-pnl-waterfall"
-  | "open-positions-pnl-timeseries"
-  | "open-positions-pnl-timeseries-weekly";
+  | "open-positions-pnl-timeseries";
 
 export interface ChartConfig {
   title: string;
@@ -135,6 +134,8 @@ export interface ChartDisplayProps {
   category?: string;
   description?: string;
   chartType?: ChartType;
+  timeframe?: "daily" | "weekly";
+  indexed?: boolean;
   className?: string;
 }
 
