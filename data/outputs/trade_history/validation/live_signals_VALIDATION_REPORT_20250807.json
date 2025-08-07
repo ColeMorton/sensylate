@@ -1,7 +1,7 @@
 {
   "portfolio": "live_signals",
   "validation_metadata": {
-    "execution_timestamp": "2025-08-07T01:45:06.790729+00:00",
+    "execution_timestamp": "2025-08-07T09:41:55.893686+00:00",
     "validation_depth": "comprehensive",
     "confidence_threshold": 0.7,
     "protocol_version": "DASV_Phase_4_Comprehensive"
@@ -16,28 +16,28 @@
     },
     "win_rate_validation": {
       "authoritative_win_rate": 0.6285714285714286,
-      "discovery_win_rate": 0.5789473684210527,
-      "analysis_win_rate": null,
-      "discovery_variance": 0.049624060150375904,
-      "analysis_variance": null,
-      "discovery_tolerance_met": false,
+      "discovery_win_rate": 0.6285714285714286,
+      "analysis_win_rate": 0.6285714285714286,
+      "discovery_variance": 0.0,
+      "analysis_variance": 0.0,
+      "discovery_tolerance_met": true,
       "analysis_tolerance_met": true,
-      "validation_confidence": 0.65,
+      "validation_confidence": 0.98,
       "breakeven_trades_count": 3,
       "decisive_trades_count": 35
     },
     "sharpe_ratio_validation": {
       "authoritative_sharpe": 0.5298399628038108,
-      "reported_sharpe": 0,
-      "variance": 0.5298399628038108,
-      "tolerance_met": "False",
-      "validation_confidence": 0.6,
+      "reported_sharpe": 0.5298399628038108,
+      "variance": 0.0,
+      "tolerance_met": "True",
+      "validation_confidence": 0.95,
       "component_validation": {
         "mean_return_variance": 0.07924736842105264,
         "std_dev_variance": 0.8505812907679788,
         "risk_free_rate_used": 0.02
       },
-      "issue_severity": "MINOR"
+      "issue_severity": "NONE"
     },
     "sample_adequacy_validation": {
       "total_trades": 38,
@@ -50,14 +50,14 @@
       "statistical_power": 0.95,
       "adequacy_score": 1.0,
       "strategy_specific_adequacy": {
-        "SMA": {
-          "total_trades": 31,
-          "adequate": true,
-          "threshold": 15
-        },
         "EMA": {
           "total_trades": 7,
           "adequate": false,
+          "threshold": 15
+        },
+        "SMA": {
+          "total_trades": 31,
+          "adequate": true,
           "threshold": 15
         }
       },
@@ -65,21 +65,21 @@
       "validation_confidence": 0.95
     },
     "distribution_analysis_validation": {
-      "skewness": 0,
-      "kurtosis": 0,
+      "skewness": 1.1489888700523456,
+      "kurtosis": 1.3056696583782532,
       "normality_p_value": 1.0,
       "skewness_bounds_valid": true,
-      "kurtosis_bounds_valid": false,
+      "kurtosis_bounds_valid": true,
       "normality_rejected": false,
-      "distribution_interpretation": "Near-normal distribution",
-      "validation_confidence": 0.7
+      "distribution_interpretation": "Positive skew with moderate kurtosis",
+      "validation_confidence": 0.9
     },
     "advanced_metrics_validation": {
       "sqn_bounds_valid": true,
-      "sqn_interpretation_valid": false,
-      "sqn_value": 0,
-      "bounds_check": "SQN 0.00 within valid range [-5.0, 5.0]",
-      "validation_confidence": 0.7
+      "sqn_interpretation_valid": true,
+      "sqn_value": 3.26942716948921,
+      "bounds_check": "SQN 3.27 within valid range [-5.0, 5.0]",
+      "validation_confidence": 0.92
     },
     "authoritative_metrics": {
       "total_trades": 38,
@@ -103,15 +103,6 @@
       "sharpe_ratio": 0.5298399628038108,
       "avg_duration": 42.60526315789474,
       "strategy_performance": {
-        "SMA": {
-          "total_trades": 31,
-          "win_rate": 0.6071428571428571,
-          "wins": 17,
-          "losses": 11,
-          "breakevens": 3,
-          "total_pnl": 376.34,
-          "avg_return": 0.06206129032258064
-        },
         "EMA": {
           "total_trades": 7,
           "win_rate": 0.7142857142857143,
@@ -120,10 +111,19 @@
           "breakevens": 0,
           "total_pnl": 475.1900000000001,
           "avg_return": 0.15535714285714283
+        },
+        "SMA": {
+          "total_trades": 31,
+          "win_rate": 0.6071428571428571,
+          "wins": 17,
+          "losses": 11,
+          "breakevens": 3,
+          "total_pnl": 376.34,
+          "avg_return": 0.06206129032258064
         }
       },
       "validation_passed": true,
-      "calculation_timestamp": "2025-08-07T01:45:06.819495+00:00",
+      "calculation_timestamp": "2025-08-07T09:41:55.921050+00:00",
       "data_source": "/Users/colemorton/Projects/sensylate/data/raw/trade_history/live_signals.csv"
     },
     "unified_engine_validation": {
@@ -163,29 +163,20 @@
       "overall_validation_success": true,
       "validation_errors": []
     },
-    "overall_statistical_confidence": 0.792,
+    "overall_statistical_confidence": 0.9655,
     "critical_issues": [],
     "validation_success": true
   },
   "report_integrity": {
-    "structural_completeness": {
-      "sections_found": 4,
-      "required_sections": 4,
-      "completeness_score": 1.0,
-      "has_dashboard": true,
-      "has_pnl": true,
-      "has_win_rate": true,
-      "has_recommendations": true,
-      "validation_confidence": 0.9
-    },
+    "structural_completeness": {},
     "content_accuracy": {
-      "discovery_analysis_consistency": false,
-      "trade_count_variance": 38,
+      "discovery_analysis_consistency": true,
+      "trade_count_variance": 0,
       "win_rate_present": true,
-      "validation_confidence": 0.75
+      "validation_confidence": 0.95
     },
     "formatting_compliance": {},
-    "overall_integrity_confidence": 0.825
+    "overall_integrity_confidence": 0.95
   },
   "business_logic_validation": {
     "signal_effectiveness_coherence": {
@@ -194,7 +185,10 @@
       "validation_confidence": 0.9
     },
     "optimization_feasibility": {
-      "error": "'list' object has no attribute 'get'"
+      "feasibility_opportunities_count": 0,
+      "average_feasibility_confidence": 0,
+      "feasibility_assessment": "Low",
+      "validation_confidence": 0.65
     },
     "risk_assessment_coherence": {
       "correlation_bounds_valid": true,
@@ -204,48 +198,42 @@
       "max_correlation": 0,
       "validation_confidence": 0.88
     },
-    "overall_business_logic_confidence": 0.89
+    "overall_business_logic_confidence": 0.81
   },
   "confidence_scoring": {
     "component_confidence": {
-      "discovery_phase": 0.8914285714285715,
-      "analysis_phase": 0.0,
-      "statistical_validation": 0.792,
-      "integrity_validation": 0.825,
-      "business_logic_validation": 0.89,
-      "synthesis_phase": 0.8574999999999999
+      "discovery_phase": 0.8514285714285714,
+      "analysis_phase": 0.935,
+      "statistical_validation": 0.9655,
+      "integrity_validation": 0.95,
+      "business_logic_validation": 0.81,
+      "synthesis_phase": 0.88
     },
-    "overall_confidence": 0.5229821428571428,
-    "quality_band": "inadequate",
-    "quality_description": "Insufficient quality, requires major improvements",
+    "overall_confidence": 0.894857142857143,
+    "quality_band": "operational_grade",
+    "quality_description": "High quality, suitable for internal decisions",
     "threshold_assessment": {
       "minimum_threshold": 0.7,
-      "threshold_met": false,
-      "threshold_margin": -0.17701785714285712
+      "threshold_met": true,
+      "threshold_margin": 0.19485714285714306
     }
   },
   "overall_assessment": {
-    "validation_success": false,
+    "validation_success": true,
     "quality_gates": {
-      "statistical_validation": false,
-      "report_integrity": false,
+      "statistical_validation": true,
+      "report_integrity": true,
       "business_logic": true,
-      "overall_confidence": false
+      "overall_confidence": true
     },
-    "quality_certification": "inadequate"
+    "quality_certification": "operational_grade"
   },
   "validation_summary": {
-    "validation_success": false,
-    "quality_certification": "inadequate",
-    "confidence_score": 0.5229821428571428,
-    "gates_passed": "1/4",
-    "critical_issues": [
-      "Statistical validation below threshold - review calculation accuracy",
-      "Report integrity issues detected - review content consistency"
-    ],
-    "recommendations": [
-      "Enhance statistical validation methodology and cross-validation procedures",
-      "Improve report generation and content validation processes"
-    ]
+    "validation_success": true,
+    "quality_certification": "operational_grade",
+    "confidence_score": 0.894857142857143,
+    "gates_passed": "4/4",
+    "critical_issues": [],
+    "recommendations": []
   }
 }

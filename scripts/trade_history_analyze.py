@@ -22,7 +22,6 @@ from pathlib import Path
 from typing import Any, Dict
 
 import numpy as np
-import pandas as pd
 import scipy.stats as stats
 
 from trade_history.unified_calculation_engine import TradingCalculationEngine
@@ -46,6 +45,21 @@ class AtomicAnalysisTool:
 
         # Ensure output directory exists
         self.output_dir.mkdir(parents=True, exist_ok=True)
+
+    def _convert_numpy_types(self, obj):
+        """Convert numpy types to native Python types for JSON serialization"""
+        if isinstance(obj, dict):
+            return {key: self._convert_numpy_types(value) for key, value in obj.items()}
+        elif isinstance(obj, list):
+            return [self._convert_numpy_types(item) for item in obj]
+        elif isinstance(obj, np.bool_):
+            return bool(obj)
+        elif isinstance(obj, np.integer):
+            return int(obj)
+        elif isinstance(obj, np.floating):
+            return float(obj)
+        else:
+            return obj
 
     def load_discovery_data(self) -> Dict[str, Any]:
         """
@@ -109,11 +123,14 @@ class AtomicAnalysisTool:
                 }
                 continue
 
-            # Calculate strategy-specific metrics
-            wins = [t for t in trades if t.return_csv > 0]
-            losses = [t for t in trades if t.return_csv <= 0]
+            # Calculate strategy-specific metrics using proper breakeven handling
+            wins = [t for t in trades if t.outcome.value == "win"]
+            losses = [t for t in trades if t.outcome.value == "loss"]
+            breakevens = [t for t in trades if t.outcome.value == "breakeven"]
 
-            win_rate = len(wins) / len(trades) if trades else 0
+            # Win rate based on decisive trades only (wins + losses)
+            decisive_trades = wins + losses
+            win_rate = len(wins) / len(decisive_trades) if decisive_trades else 0
             avg_win_return = np.mean([t.return_csv for t in wins]) if wins else 0
             avg_loss_return = np.mean([t.return_csv for t in losses]) if losses else 0
 
@@ -125,9 +142,10 @@ class AtomicAnalysisTool:
                 "total_trades": len(trades),
                 "winners": len(wins),
                 "losers": len(losses),
+                "breakevens": len(breakevens),
                 "average_return_winners": avg_win_return,
                 "average_return_losers": avg_loss_return,
-                "sample_size_adequacy": len(trades) >= 15,
+                "sample_size_adequacy": bool(len(trades) >= 15),
                 "confidence": confidence,
                 "analysis_possible": True,
             }
@@ -208,7 +226,7 @@ class AtomicAnalysisTool:
                 "return_vs_zero": {
                     "t_statistic": float(t_stat),
                     "p_value": float(p_value),
-                    "significant_at_95": p_value < 0.05,
+                    "significant_at_95": bool(p_value < 0.05),
                     "confidence_interval_95": [
                         float(confidence_interval[0]),
                         float(confidence_interval[1]),
@@ -404,6 +422,25 @@ class AtomicAnalysisTool:
                 "performance_metrics": statistical_analysis.get(
                     "performance_metrics", {}
                 ),
+                "advanced_statistical_metrics": {
+                    "system_quality_number": statistical_analysis.get(
+                        "statistical_analysis", {}
+                    )
+                    .get("statistical_significance", {})
+                    .get("return_vs_zero", {})
+                    .get("t_statistic", 0),
+                    "return_distribution_skewness": statistical_analysis.get(
+                        "statistical_analysis", {}
+                    )
+                    .get("return_distribution", {})
+                    .get("skewness", 0),
+                    "return_distribution_kurtosis": statistical_analysis.get(
+                        "statistical_analysis", {}
+                    )
+                    .get("return_distribution", {})
+                    .get("kurtosis", 0),
+                    "confidence": 0.82,
+                },
                 "optimization_opportunities": optimization_opportunities,
                 "risk_assessment": {
                     "portfolio_risk_metrics": {
@@ -412,9 +449,11 @@ class AtomicAnalysisTool:
                         "confidence": 0.8,
                     }
                 },
-                "unified_engine_validation": validation_results,
+                "unified_engine_validation": self._convert_numpy_types(
+                    validation_results
+                ),
                 "next_phase_inputs": {
-                    "synthesis_ready": confidence_scores["overall"] > 0.7
+                    "synthesis_ready": bool(confidence_scores["overall"] > 0.7)
                 },
             }
 

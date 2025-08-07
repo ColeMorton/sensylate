@@ -7,10 +7,12 @@
   "required": [
     "portfolio",
     "synthesis_metadata",
+    "confidence_propagation",
     "key_metrics",
     "report_data_structures",
+    "quality_assurance",
     "data_sources",
-    "next_phase_inputs"
+    "validation_inputs"
   ],
   "additionalProperties": true,
   "properties": {
@@ -21,7 +23,7 @@
     "synthesis_metadata": {
       "type": "object",
       "description": "Trade synthesis execution metadata and quality metrics",
-      "required": ["execution_timestamp", "confidence_score", "reports_ready"],
+      "required": ["execution_timestamp", "confidence_score", "reports_ready", "quality_grade", "structural_integrity"],
       "additionalProperties": true,
       "properties": {
         "execution_timestamp": {
@@ -31,14 +33,77 @@
         },
         "confidence_score": {
           "type": "number",
-          "minimum": 0.5,
+          "minimum": 0.7,
           "maximum": 1.0,
-          "description": "Overall synthesis confidence (institutional threshold: >0.7)"
+          "description": "Overall synthesis confidence (institutional threshold: >0.9)"
+        },
+        "quality_grade": {
+          "type": "string",
+          "enum": ["institutional", "operational", "standard", "developmental"],
+          "description": "Quality grade classification"
         },
         "reports_ready": {
           "type": "boolean",
           "const": true,
           "description": "Whether reports are ready for generation"
+        },
+        "structural_integrity": {
+          "type": "object",
+          "required": ["sections_found", "required_sections", "completeness_score", "strategic_recommendations"],
+          "properties": {
+            "sections_found": {
+              "type": "integer",
+              "minimum": 4,
+              "description": "Number of sections found in report"
+            },
+            "required_sections": {
+              "type": "integer",
+              "const": 4,
+              "description": "Number of required sections"
+            },
+            "completeness_score": {
+              "type": "number",
+              "minimum": 1.0,
+              "maximum": 1.0,
+              "description": "Structural completeness score"
+            },
+            "strategic_recommendations": {
+              "type": "boolean",
+              "const": true,
+              "description": "Strategic recommendations section included"
+            }
+          }
+        }
+      }
+    },
+    "confidence_propagation": {
+      "type": "object",
+      "description": "DASV framework confidence propagation tracking",
+      "required": ["discovery_inherited", "analysis_inherited", "synthesis_achieved", "validation_target"],
+      "properties": {
+        "discovery_inherited": {
+          "type": "number",
+          "minimum": 0.7,
+          "maximum": 1.0,
+          "description": "Confidence inherited from discovery phase"
+        },
+        "analysis_inherited": {
+          "type": "number",
+          "minimum": 0.7,
+          "maximum": 1.0,
+          "description": "Confidence inherited from analysis phase"
+        },
+        "synthesis_achieved": {
+          "type": "number",
+          "minimum": 0.9,
+          "maximum": 1.0,
+          "description": "Confidence achieved in synthesis phase"
+        },
+        "validation_target": {
+          "type": "number",
+          "minimum": 0.92,
+          "maximum": 1.0,
+          "description": "Target confidence for validation phase"
         }
       }
     },
@@ -456,6 +521,33 @@
         }
       }
     },
+    "quality_assurance": {
+      "type": "object",
+      "description": "Quality assurance and institutional standards compliance",
+      "required": ["template_compliance", "content_accuracy_verified", "institutional_standards_met", "fundamental_analysis_quality_achieved"],
+      "properties": {
+        "template_compliance": {
+          "type": "boolean",
+          "const": true,
+          "description": "Template compliance with institutional standards"
+        },
+        "content_accuracy_verified": {
+          "type": "boolean",
+          "const": true,
+          "description": "Content accuracy cross-validation completed"
+        },
+        "institutional_standards_met": {
+          "type": "boolean",
+          "const": true,
+          "description": "Institutional quality standards achieved"
+        },
+        "fundamental_analysis_quality_achieved": {
+          "type": "boolean",
+          "const": true,
+          "description": "Fundamental analysis quality standards matched"
+        }
+      }
+    },
     "data_sources": {
       "type": "object",
       "description": "Source data files used in synthesis",
@@ -475,10 +567,10 @@
         }
       }
     },
-    "next_phase_inputs": {
+    "validation_inputs": {
       "type": "object",
-      "description": "Synthesis readiness for validation phase",
-      "required": ["validation_ready", "reports_generated"],
+      "description": "Enhanced validation inputs for institutional-grade assessment",
+      "required": ["validation_ready", "structural_integrity_complete", "confidence_threshold_met", "strategic_recommendations_included"],
       "additionalProperties": true,
       "properties": {
         "validation_ready": {
@@ -486,17 +578,32 @@
           "const": true,
           "description": "Whether synthesis is ready for validation phase"
         },
+        "structural_integrity_complete": {
+          "type": "boolean",
+          "const": true,
+          "description": "All 4 required sections structurally complete"
+        },
+        "confidence_threshold_met": {
+          "type": "boolean",
+          "const": true,
+          "description": "Institutional confidence threshold (0.9+) achieved"
+        },
+        "strategic_recommendations_included": {
+          "type": "boolean",
+          "const": true,
+          "description": "Strategic recommendations section included with quantified targets"
+        },
         "reports_generated": {
           "type": "integer",
-          "minimum": 1,
-          "maximum": 5,
+          "minimum": 3,
+          "maximum": 3,
           "description": "Number of report structures generated"
         },
         "synthesis_confidence": {
           "type": "number",
-          "minimum": 0.5,
+          "minimum": 0.9,
           "maximum": 1.0,
-          "description": "Overall synthesis confidence score"
+          "description": "Institutional-grade synthesis confidence score"
         }
       }
     }

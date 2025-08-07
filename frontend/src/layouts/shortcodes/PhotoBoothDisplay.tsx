@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
-import html2canvas from "html2canvas";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import photoBoothConfig from "@/config/photo-booth.json";
 import {
   DashboardLoader,
@@ -11,18 +10,10 @@ interface PhotoBoothDisplayProps {
   className?: string;
 }
 
-// Helper function to get dimensions for selected aspect ratio
-const getAspectRatioDimensions = (aspectRatio: "16:9" | "4:3" | "3:4") => {
-  const aspectRatioConfig =
-    photoBoothConfig.export_options.aspect_ratios.available.find(
-      (ar) => ar.id === aspectRatio,
-    );
-  return aspectRatioConfig?.dimensions || { width: 1920, height: 1080 }; // fallback to 16:9
-};
-
 const PhotoBoothDisplay: React.FC<PhotoBoothDisplayProps> = ({
   className = "",
 }) => {
+  const dashboardRef = useRef<HTMLDivElement>(null);
   const [selectedDashboard, setSelectedDashboard] = useState<string>(
     photoBoothConfig.default_dashboard,
   );
@@ -131,6 +122,25 @@ const PhotoBoothDisplay: React.FC<PhotoBoothDisplayProps> = ({
     selectedScaleFactor,
   ]);
 
+  // Set dashboard dimensions based on selected aspect ratio
+  useEffect(() => {
+    const aspectRatioConfig =
+      photoBoothConfig.export_options.aspect_ratios.available.find(
+        (ratio) => ratio.id === selectedAspectRatio,
+      );
+
+    if (aspectRatioConfig && dashboardRef.current) {
+      dashboardRef.current.style.setProperty(
+        "--photo-booth-width",
+        `${aspectRatioConfig.dimensions.width}px`,
+      );
+      dashboardRef.current.style.setProperty(
+        "--photo-booth-height",
+        `${aspectRatioConfig.dimensions.height}px`,
+      );
+    }
+  }, [selectedAspectRatio]);
+
   const handleDashboardChange = useCallback((dashboardId: string) => {
     setIsReady(false);
     setSelectedDashboard(dashboardId);
@@ -194,20 +204,6 @@ const PhotoBoothDisplay: React.FC<PhotoBoothDisplayProps> = ({
     window.history.replaceState({}, "", url.toString());
   }, []);
 
-  const hideControls = useCallback(() => {
-    const controls = document.querySelectorAll(".photo-booth-controls");
-    controls.forEach((element) => {
-      (element as HTMLElement).style.display = "none";
-    });
-  }, []);
-
-  const showControls = useCallback(() => {
-    const controls = document.querySelectorAll(".photo-booth-controls");
-    controls.forEach((element) => {
-      (element as HTMLElement).style.display = "";
-    });
-  }, []);
-
   const handleExportDashboard = useCallback(async () => {
     const currentDashboard = activeDashboards.find(
       (d) => d.id === selectedDashboard,
@@ -221,92 +217,27 @@ const PhotoBoothDisplay: React.FC<PhotoBoothDisplayProps> = ({
     setExportError(null);
 
     try {
-      // Find the dashboard container
-      const dashboardElement = document.querySelector(".photo-booth-dashboard");
-      if (!dashboardElement) {
-        throw new Error("Dashboard element not found");
-      }
-
-      // Get dimensions for selected aspect ratio
-      const dimensions = getAspectRatioDimensions(selectedAspectRatio);
-
-      // Add export-specific class to remove rounded borders and apply sizing
-      dashboardElement.classList.add("photo-booth-export");
-
-      // Apply exact dimensions to the dashboard container
-      (dashboardElement as HTMLElement).style.width = `${dimensions.width}px`;
-      (dashboardElement as HTMLElement).style.height = `${dimensions.height}px`;
-      (dashboardElement as HTMLElement).style.maxWidth = "none";
-      (dashboardElement as HTMLElement).style.maxHeight = "none";
-      (dashboardElement as HTMLElement).style.overflow = "hidden";
-
-      // Hide controls for clean screenshot
-      hideControls();
-
-      // Wait a moment for UI to update and reflow
-      await new Promise((resolve) => setTimeout(resolve, 300));
-
-      // Capture screenshot using html2canvas
-      const canvas = await html2canvas(dashboardElement as HTMLElement, {
-        width: dimensions.width,
-        height: dimensions.height,
-        scale: 1, // Keep scale at 1, apply scaling factor via CSS transform if needed
-        backgroundColor: currentMode === "dark" ? "#1f2937" : "#ffffff",
-        useCORS: true,
-        allowTaint: false,
-        foreignObjectRendering: false,
-        logging: false,
-      });
-
-      // Clean up: remove export class and reset styles
-      dashboardElement.classList.remove("photo-booth-export");
-      (dashboardElement as HTMLElement).style.width = "";
-      (dashboardElement as HTMLElement).style.height = "";
-      (dashboardElement as HTMLElement).style.maxWidth = "";
-      (dashboardElement as HTMLElement).style.maxHeight = "";
-      (dashboardElement as HTMLElement).style.overflow = "";
-
-      // Show controls again
-      showControls();
-
-      // Convert canvas to blob
-      const blob = await new Promise<Blob>((resolve) => {
-        canvas.toBlob(
-          (blob) => {
-            if (blob) {
-              resolve(blob);
-            }
-          },
-          "image/png",
-          0.95,
-        );
-      });
-
-      // Prepare metadata
-      const metadata = {
-        dashboard_id: selectedDashboard,
-        mode: currentMode,
-        aspect_ratio: selectedAspectRatio,
-        format: selectedFormat,
-        dpi: selectedDPI,
-        scale_factor: selectedScaleFactor,
-      };
-
-      // Send to API for processing
-      const formData = new FormData();
-      formData.append("image", blob);
-      formData.append("metadata", JSON.stringify(metadata));
-
-      const response = await fetch("/api/process-export", {
+      // Call the Python photo booth generator via API
+      const response = await fetch("/api/export-dashboard", {
         method: "POST",
-        body: formData,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          dashboard_id: selectedDashboard,
+          mode: currentMode,
+          aspect_ratio: selectedAspectRatio,
+          format: selectedFormat,
+          dpi: selectedDPI,
+          scale_factor: selectedScaleFactor,
+        }),
       });
 
       const result = await response.json();
 
       if (result.success) {
         setExportMessage(result.message);
-        console.log("Export successful:", result.file);
+        console.log("Export successful:", result.files);
       } else {
         setExportError(result.error || result.message);
       }
@@ -316,20 +247,6 @@ const PhotoBoothDisplay: React.FC<PhotoBoothDisplayProps> = ({
         "Export failed: " +
           (error instanceof Error ? error.message : "Unknown error"),
       );
-
-      // Clean up: remove export class and reset styles even on error
-      const dashboardElement = document.querySelector(".photo-booth-dashboard");
-      if (dashboardElement) {
-        dashboardElement.classList.remove("photo-booth-export");
-        (dashboardElement as HTMLElement).style.width = "";
-        (dashboardElement as HTMLElement).style.height = "";
-        (dashboardElement as HTMLElement).style.maxWidth = "";
-        (dashboardElement as HTMLElement).style.maxHeight = "";
-        (dashboardElement as HTMLElement).style.overflow = "";
-      }
-
-      // Make sure controls are shown even if there's an error
-      showControls();
     } finally {
       setIsExporting(false);
     }
@@ -342,8 +259,6 @@ const PhotoBoothDisplay: React.FC<PhotoBoothDisplayProps> = ({
     selectedFormat,
     selectedDPI,
     selectedScaleFactor,
-    hideControls,
-    showControls,
   ]);
 
   const currentDashboard = activeDashboards.find(
@@ -636,6 +551,7 @@ const PhotoBoothDisplay: React.FC<PhotoBoothDisplayProps> = ({
 
       {/* Dashboard Content */}
       <div
+        ref={dashboardRef}
         className={`photo-booth-dashboard ${currentMode === "dark" ? "dark" : ""}`}
         data-dashboard-id={selectedDashboard}
         data-mode={currentMode}

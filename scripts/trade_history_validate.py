@@ -258,17 +258,19 @@ class TradeHistoryValidator:
                 )
                 strategy_data = signal_data.get("win_rate_by_strategy", {})
                 if strategy_data:
-                    # Calculate weighted average across strategies
-                    total_strategy_trades = 0
+                    # Calculate weighted average across strategies using decisive trades only
                     total_strategy_wins = 0
+                    total_strategy_losses = 0
                     for strategy, metrics in strategy_data.items():
-                        trades = metrics.get("total_trades", 0)
                         wins = metrics.get("winners", 0)
-                        total_strategy_trades += trades
+                        losses = metrics.get("losers", 0)
                         total_strategy_wins += wins
+                        total_strategy_losses += losses
+
+                    decisive_trades = total_strategy_wins + total_strategy_losses
                     analysis_win_rate = (
-                        total_strategy_wins / total_strategy_trades
-                        if total_strategy_trades > 0
+                        total_strategy_wins / decisive_trades
+                        if decisive_trades > 0
                         else 0
                     )
 
@@ -314,11 +316,9 @@ class TradeHistoryValidator:
             # Get authoritative Sharpe ratio from unified engine
             authoritative_sharpe = authoritative_metrics.get("sharpe_ratio", 0)
 
-            # Get reported Sharpe ratio from analysis data
-            risk_metrics = (
-                self.analysis_data.get("performance_measurement", {})
-                .get("statistical_analysis", {})
-                .get("risk_adjusted_metrics", {})
+            # Get reported Sharpe ratio from analysis data (corrected path)
+            risk_metrics = self.analysis_data.get("statistical_analysis", {}).get(
+                "risk_adjusted_metrics", {}
             )
             reported_sharpe = risk_metrics.get("sharpe_ratio", 0)
 
@@ -423,10 +423,8 @@ class TradeHistoryValidator:
 
         # Distribution Analysis Validation - NOW IMPLEMENTED
         try:
-            return_stats = (
-                self.analysis_data.get("performance_measurement", {})
-                .get("statistical_analysis", {})
-                .get("return_distribution", {})
+            return_stats = self.analysis_data.get("statistical_analysis", {}).get(
+                "return_distribution", {}
             )
 
             # Validate distribution parameters against reasonable bounds
@@ -472,9 +470,12 @@ class TradeHistoryValidator:
             )
 
             # System Quality Number validation
-            sqn_metrics = advanced_metrics.get("system_quality_assessment", {})
-            sqn_value = sqn_metrics.get("system_quality_number", 0)
-            sqn_interpretation = sqn_metrics.get("sqn_interpretation", "")
+            sqn_value = advanced_metrics.get("system_quality_number", 0)
+            sqn_interpretation = (
+                "Above Average"
+                if sqn_value > 2.5
+                else ("Average" if sqn_value >= 1.25 else "Below Average")
+            )
 
             # Validate SQN bounds and interpretation
             sqn_bounds_valid = -5.0 <= sqn_value <= 5.0
@@ -619,10 +620,8 @@ class TradeHistoryValidator:
                     "portfolio_summary", {}
                 ).get("total_trades", 0)
 
-                analysis_trades = (
-                    self.analysis_data.get("statistical_validation", {})
-                    .get("sample_size_assessment", {})
-                    .get("total_trades", 0)
+                analysis_trades = self.analysis_data.get("performance_metrics", {}).get(
+                    "sample_size", 0
                 )
 
                 # Check consistency between discovery and analysis phases
@@ -823,9 +822,7 @@ class TradeHistoryValidator:
             else 0.0
         )
         analysis_confidence = (
-            self.analysis_data.get("analysis_quality_assessment", {}).get(
-                "overall_confidence", 0.0
-            )
+            self.analysis_data.get("analysis_metadata", {}).get("confidence_score", 0.0)
             if self.analysis_data
             else 0.0
         )
@@ -1132,7 +1129,6 @@ def main():
         print("=" * 60)
 
         summary = validation_report.get("validation_summary", {})
-        overall_assessment = validation_report.get("overall_assessment", {})
 
         success_status = "✅ PASSED" if summary.get("validation_success") else "❌ FAILED"
         quality_cert = (

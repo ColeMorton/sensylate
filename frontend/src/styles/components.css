@@ -309,12 +309,91 @@
   }
 }
 
-/* Photo Booth Export Styles */
-/* Remove rounded borders and shadows for clean export screenshots */
-.photo-booth-export .photo-booth-chart {
-  @apply !rounded-none !shadow-none;
+/* Photo Booth Export Aspect Ratio Constraints */
+/* Dashboard constrained to selected aspect ratio dimensions */
+.photo-booth-dashboard {
+  width: var(--photo-booth-width, 1920px);
+  height: var(--photo-booth-height, 1080px);
+  max-width: var(--photo-booth-width, 1920px);
+  max-height: var(--photo-booth-height, 1080px);
+  min-width: var(--photo-booth-width, 1920px);
+  min-height: var(--photo-booth-height, 1080px);
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
 }
 
-.photo-booth-export .photo-booth-chart > div {
-  @apply !rounded-none !shadow-none;
+.photo-booth-dashboard .dashboard-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Export mode: Dashboard fills viewport responsively */
+.photo-booth-container.exporting .photo-booth-dashboard,
+body:not(:has(.photo-booth-controls:not([style*="display: none"])))
+  .photo-booth-dashboard {
+  width: 100vw !important;
+  height: 100vh !important;
+  max-width: none !important;
+  max-height: none !important;
+  min-width: none !important;
+  min-height: none !important;
+  margin: 0;
+}
+
+/* Export mode: Ensure charts scale to fill available space */
+.photo-booth-container.exporting .photo-booth-dashboard .dashboard-content,
+body:not(:has(.photo-booth-controls:not([style*="display: none"])))
+  .photo-booth-dashboard
+  .dashboard-content {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.photo-booth-container.exporting .photo-booth-chart,
+body:not(:has(.photo-booth-controls:not([style*="display: none"])))
+  .photo-booth-chart {
+  flex: 1 !important;
+  min-height: 0 !important;
+}
+
+.photo-booth-container.exporting .chart-container,
+body:not(:has(.photo-booth-controls:not([style*="display: none"])))
+  .chart-container {
+  height: 100% !important;
+  flex: 1 !important;
+}
+
+/* Export mode: Surgical fix for waterfall chart width overflow */
+.photo-booth-container.exporting .plotly-chart,
+body:not(:has(.photo-booth-controls:not([style*="display: none"])))
+  .plotly-chart {
+  max-width: 100% !important;
+  overflow: hidden !important;
+}
+
+/* Export mode: Targeted height expansion for 2x1_stack layouts */
+.photo-booth-container.exporting
+  .photo-booth-dashboard.2x1_stack
+  .photo-booth-chart,
+body:not(:has(.photo-booth-controls:not([style*="display: none"])))
+  .photo-booth-dashboard
+  [class*="2x1_stack"]
+  .photo-booth-chart,
+.photo-booth-container.exporting
+  .photo-booth-dashboard
+  [class*="flex-col"]
+  .photo-booth-chart,
+body:not(:has(.photo-booth-controls:not([style*="display: none"])))
+  .photo-booth-dashboard
+  [class*="flex-col"]
+  .photo-booth-chart {
+  flex: 1 !important;
+  min-height: 0 !important;
 }

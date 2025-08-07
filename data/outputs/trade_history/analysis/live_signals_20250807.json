@@ -1,45 +1,36 @@
 {
   "portfolio": "live_signals",
   "analysis_metadata": {
-    "execution_timestamp": "2025-08-07T03:30:13.964632+00:00",
-    "protocol_version": "DASV_Phase_2_Statistical_Analysis",
-    "confidence_score": 0.84,
-    "sample_size_adequacy": 1.0,
-    "statistical_significance": 0.95,
-    "signal_effectiveness_confidence": 0.85
-  },
-  "sample_validation": {
-    "total_trades": 38,
-    "closed_trades_analyzed": 38,
-    "active_trades_portfolio": 0,
-    "minimum_sample_met": true,
-    "statistical_power": 0.95,
-    "methodology_compliance": "DASV Phase 2 - Conservative confidence scoring with sample size validation"
+    "execution_timestamp": "2025-08-07T19:33:05.020370",
+    "confidence_score": 0.935,
+    "statistical_significance": 0.95
   },
   "signal_effectiveness": {
     "entry_signal_analysis": {
       "win_rate_by_strategy": {
-        "SMA": {
-          "win_rate": 0.6071,
-          "total_trades": 31,
-          "winners": 17,
-          "losers": 11,
-          "breakevens": 3,
-          "average_return_winners": 0.148,
-          "average_return_losers": -0.0538,
-          "sample_size_adequacy": true,
-          "confidence": 0.9
-        },
         "EMA": {
-          "win_rate": 0.7143,
+          "win_rate": 0.7142857142857143,
           "total_trades": 7,
           "winners": 5,
           "losers": 2,
           "breakevens": 0,
           "average_return_winners": 0.2265,
           "average_return_losers": -0.0225,
+          "sample_size_adequacy": false,
+          "confidence": 0.7333333333333334,
+          "analysis_possible": true
+        },
+        "SMA": {
+          "win_rate": 0.6071428571428571,
+          "total_trades": 31,
+          "winners": 17,
+          "losers": 11,
+          "breakevens": 3,
+          "average_return_winners": 0.148,
+          "average_return_losers": -0.05382727272727273,
           "sample_size_adequacy": true,
-          "confidence": 0.8
+          "confidence": 0.95,
+          "analysis_possible": true
         }
       },
       "total_strategies_analyzed": 2,
@@ -47,255 +38,105 @@
     },
     "exit_signal_analysis": {
       "exit_efficiency_metrics": {
-        "overall_exit_efficiency": -0.7445,
-        "mfe_capture_rate": -0.7445,
-        "sample_size": 38,
-        "confidence": 0.89
+        "status": "PENDING_MFE_MAE_DATA"
       }
     }
   },
   "statistical_analysis": {
-    "statistical_analysis": {
-      "return_distribution": {
-        "mean_return": 0.079247,
-        "median_return": 0.02315,
-        "std_deviation": 0.149419,
-        "skewness": 1.149,
-        "kurtosis": 1.3057,
-        "normality_test_p_value": 0.003117,
-        "sample_size": 38,
-        "confidence": 0.75
-      },
-      "statistical_significance": {
-        "return_vs_zero": {
-          "t_statistic": 3.2694,
-          "p_value": 0.002334,
-          "significant_at_95": true,
-          "confidence_interval_95": [
-            0.030135,
-            0.12836
-          ]
-        }
-      },
-      "risk_adjusted_metrics": {
-        "sharpe_ratio": 8.4109,
-        "sortino_ratio": 26.0307,
-        "downside_deviation": 0.048328,
-        "confidence": 0.82
-      }
-    },
-    "performance_metrics": {
-      "win_rate": 0.6286,
-      "total_wins": 22,
-      "total_losses": 13,
-      "total_pnl": 851.53,
-      "profit_factor": 6.2828,
-      "expectancy": 22.4087,
+    "return_distribution": {
+      "mean_return": 0.07924736842105264,
+      "median_return": 0.02315,
+      "std_deviation": 0.14941870923202122,
+      "skewness": 1.1489888700523456,
+      "kurtosis": 1.3056696583782532,
       "sample_size": 38,
-      "confidence": 0.82
+      "confidence": 0.95
     },
-    "advanced_statistical_metrics": {
-      "pnl_std_dev_overall": 63.8242,
-      "pnl_std_dev_winners": 75.5043,
-      "pnl_std_dev_losers": 11.0548,
-      "system_quality_number": 3.2694,
-      "return_distribution_skewness": 1.149,
-      "return_distribution_kurtosis": 1.3057,
-      "confidence": 0.82
+    "statistical_significance": {
+      "return_vs_zero": {
+        "t_statistic": 3.26942716948921,
+        "p_value": 0.0023335256185005246,
+        "significant_at_95": true,
+        "confidence_interval_95": [
+          0.03013466081646201,
+          0.12836007602564325
+        ]
+      },
+      "normality_test_p_value": 0.00559920596463661
+    },
+    "risk_adjusted_metrics": {
+      "sharpe_ratio": 0.5298399628038108,
+      "sortino_ratio": 1.6397775068868876,
+      "downside_deviation": 0.048328122619210406,
+      "confidence": 0.9
     }
+  },
+  "performance_metrics": {
+    "win_rate": 0.6285714285714286,
+    "total_wins": 22,
+    "total_losses": 13,
+    "total_pnl": 851.5300000000002,
+    "profit_factor": 6.2827718841119164,
+    "expectancy": 0.07924736842105264,
+    "sample_size": 38,
+    "confidence": 0.95
   },
   "advanced_statistical_metrics": {
-    "pnl_std_dev_overall": 63.8242,
-    "pnl_std_dev_winners": 75.5043,
-    "pnl_std_dev_losers": 11.0548,
-    "system_quality_number": 3.2694,
-    "return_distribution_skewness": 1.149,
-    "return_distribution_kurtosis": 1.3057,
+    "system_quality_number": 3.26942716948921,
+    "return_distribution_skewness": 1.1489888700523456,
+    "return_distribution_kurtosis": 1.3056696583782532,
     "confidence": 0.82
-  },
-  "pattern_recognition": {
-    "trade_quality_classification": {
-      "Excellent": {
-        "count": 24,
-        "percentage": 0.6316,
-        "avg_return": 0.1462,
-        "characteristics": [
-          "High return performance",
-          "Limited downside exposure"
-        ]
-      },
-      "Poor Setup - High Risk, Low Reward": {
-        "count": 5,
-        "percentage": 0.1316,
-        "avg_return": -0.0485,
-        "characteristics": [
-          "Standard performance profile"
-        ]
-      },
-      "Poor": {
-        "count": 4,
-        "percentage": 0.1053,
-        "avg_return": -0.0048,
-        "characteristics": [
-          "Efficient trade duration",
-          "Limited downside exposure"
-        ]
-      },
-      "Failed to Capture Upside": {
-        "count": 4,
-        "percentage": 0.1053,
-        "avg_return": -0.0859,
-        "characteristics": [
-          "Efficient trade duration"
-        ]
-      },
-      "Good": {
-        "count": 1,
-        "percentage": 0.0263,
-        "avg_return": 0.1088,
-        "characteristics": [
-          "High return performance",
-          "Strong exit efficiency"
-        ]
-      }
-    },
-    "pattern_recognition": {
-      "signal_temporal_patterns": {
-        "monthly_effectiveness": {
-          "month_4": {
-            "trade_count": 11,
-            "win_rate": 0.5455,
-            "avg_return": 0.0602
-          },
-          "month_5": {
-            "trade_count": 15,
-            "win_rate": 0.7333,
-            "avg_return": 0.1097
-          },
-          "month_6": {
-            "trade_count": 9,
-            "win_rate": 0.4444,
-            "avg_return": 0.0686
-          },
-          "month_7": {
-            "trade_count": 3,
-            "win_rate": 0.3333,
-            "avg_return": 0.0287
-          }
-        }
-      },
-      "sample_size": 38,
-      "confidence": 0.683
-    }
   },
   "optimization_opportunities": {
     "entry_signal_enhancements": [],
-    "exit_signal_refinements": [
-      {
-        "opportunity": "Improve exit timing efficiency",
-        "current_efficiency": -0.7445,
-        "potential_improvement": "Target efficiency improvement to 0.80 (154.5% gain)",
-        "implementation": "Implement dynamic trailing stop adjustments based on volatility",
-        "confidence": 0.82
-      }
-    ],
+    "exit_signal_refinements": [],
     "strategy_parameter_optimization": []
   },
   "risk_assessment": {
-    "drawdown_analysis": {
-      "max_drawdown": -0.312184,
-      "avg_drawdown": -0.117033,
-      "downside_deviation": 0.048328,
-      "confidence": 0.9
-    },
     "portfolio_risk_metrics": {
       "active_positions": 0,
-      "position_diversification": 0.9695,
-      "confidence": 0.9
+      "total_positions": 38,
+      "confidence": 0.8
     }
   },
-  "analysis_quality_assessment": {
-    "overall_confidence": 0.84,
-    "sample_size_confidence": 0.95,
-    "statistical_robustness": 0.87,
-    "signal_analysis_confidence": 0.85,
-    "methodology_compliance": true,
-    "conservative_scoring": true,
-    "limitations": [
-      "EMA strategy sample size below optimal threshold",
-      "Historical analysis may not predict future performance",
-      "Market regime changes not accounted for in analysis"
-    ]
+  "unified_engine_validation": {
+    "pnl_accuracy_validation": {
+      "csv_total_pnl": 851.5300000000002,
+      "calculated_total_pnl": 851.5300000000002,
+      "variance": 0.0,
+      "tolerance_met": true,
+      "validation_confidence": 0.99
+    },
+    "win_rate_validation": {
+      "total_trades": 38,
+      "winning_trades": 22,
+      "losing_trades": 13,
+      "breakeven_trades": 3,
+      "decisive_trades": 35,
+      "calculated_win_rate": 0.6285714285714286,
+      "reported_win_rate": 0.6285714285714286,
+      "variance": 0.0,
+      "tolerance_met": true,
+      "validation_confidence": 0.98
+    },
+    "sharpe_ratio_validation": {
+      "calculated_sharpe": 0.5298399628038108,
+      "reported_sharpe": 0.5298399628038108,
+      "variance": 0.0,
+      "tolerance_met": true,
+      "validation_confidence": 0.95
+    },
+    "trade_classification_validation": {
+      "total_trades": 38,
+      "classified_trades": 38,
+      "classification_accurate": true,
+      "wins_plus_losses_plus_breakevens": "22 + 13 + 3 = 38",
+      "validation_confidence": 1.0
+    },
+    "overall_validation_success": true,
+    "validation_errors": []
   },
   "next_phase_inputs": {
-    "synthesis_ready": true,
-    "confidence_threshold_met": true,
-    "analysis_package_path": "/Users/colemorton/Projects/sensylate/data/outputs/trade_history/analysis/live_signals_20250807.json",
-    "critical_findings": [
-      "High-confidence statistical analysis achieved",
-      "Strong portfolio performance: $851.53 total P&L",
-      "SMA strategy shows institutional-grade performance"
-    ],
-    "report_focus_areas": [
-      "statistical_performance_validation",
-      "risk_management_enhancement"
-    ]
-  },
-  "comprehensive_profit_loss_analysis": {
-    "biggest_profit_dollar": 342.61,
-    "biggest_loss_dollar": -36.24,
-    "profit_loss_ratio": 3.712547022429769,
-    "trade_expectancy_dollar": 22.40868421052632,
-    "accumulated_return_net": 851.5300000000002,
-    "accumulated_return_gross": 1173.9099999999999,
-    "breakeven_trade_count": 3,
-    "breakeven_percentage": 0.0789,
-    "confidence": 0.92
-  },
-  "consecutive_performance_analysis": {
-    "max_consecutive_wins": 6,
-    "max_consecutive_losses": 4,
-    "consecutive_win_performance": 46.0327,
-    "consecutive_loss_recovery": 5.0,
-    "momentum_persistence": 0.5455,
-    "streak_impact_analysis": 23.624,
-    "confidence": 0.81
-  },
-  "enhanced_hold_time_analysis": {
-    "average_win_hold_time": 52.59,
-    "average_loss_hold_time": 29.62,
-    "average_breakeven_hold_time": 25.67,
-    "optimal_hold_period": 52.59,
-    "hold_time_distribution": {
-      "short_term_percentage": 0.1316,
-      "medium_term_percentage": 0.2895,
-      "long_term_percentage": 0.5789
-    },
-    "duration_performance_correlation": 0.5969,
-    "confidence": 0.86
-  },
-  "position_sizing_analysis": {
-    "total_shares_traded": 38.0,
-    "average_position_size": 1.0,
-    "return_per_share": 22.4087,
-    "size_consistency": "Uniform position sizing (1.0 shares per trade)",
-    "scaling_opportunities": "Consider dynamic position sizing based on signal confidence",
-    "confidence": 0.95
-  },
-  "directional_performance_analysis": {
-    "long_position_performance": {
-      "trade_count": 38,
-      "win_rate": 0.5789,
-      "average_return": 0.0792
-    },
-    "short_position_performance": {
-      "trade_count": 0,
-      "win_rate": 0,
-      "average_return": 0
-    },
-    "directional_bias": 1.0,
-    "long_vs_short_efficiency": "Portfolio exclusively long-biased - consider short signal development",
-    "market_directional_alignment": 0.85,
-    "confidence": 0.88
+    "synthesis_ready": true
   }
 }

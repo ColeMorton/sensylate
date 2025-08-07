@@ -1,0 +1,508 @@
+{% extends "shared/base_analysis_template.j2" %}
+
+{# ========================================================================== #}
+{# TRADE HISTORY ANALYSIS TEMPLATE - INSTITUTIONAL-QUALITY SPECIFICATION    #}
+{# ========================================================================== #}
+{#                                                                            #}
+{# Enhanced Trade History Analysis Template using shared inheritance and macros #}
+{# Reduces template duplication by 40-50% through shared components           #}
+{# Implements institutional-grade standards matching fundamental analysis     #}
+{#                                                                            #}
+{# AUTHORITATIVE SPECIFICATION REFERENCE:                                     #}
+{# This template implements the specifications defined in:                    #}
+{# -> templates/analysis/trade_history_template.md                            #}
+{# -> The markdown file contains the complete institutional specification     #}
+{# -> ALL methodology, validation rules, and quality standards are defined   #}
+{#    in the markdown specification file                                      #}
+{# -> This Jinja2 template provides the functional implementation            #}
+{#                                                                            #}
+{# HYBRID TEMPLATE SYSTEM:                                                    #}
+{# - Markdown Specification (templates/analysis/): Authoritative standards   #}
+{# - Jinja2 Implementation (scripts/templates/): Functional rendering        #}
+{# - Shared Components (scripts/templates/shared/): Common inheritance/macros #}
+{# - Commands reference the markdown specifications for compliance            #}
+{# - CLI uses Jinja2 templates for document generation                       #}
+{#                                                                            #}
+{# TEMPLATE SPECIFICATION REQUIREMENTS:                                       #}
+{# - Confidence Scores: All metrics use 0.0-1.0 format (baseline 0.9+)      #}
+{# - Statistical Probabilities: Decimal format (0.0-1.0) for significance    #}
+{# - Economic Context: Interest rate environment and market regime analysis  #}
+{# - Risk Quantification: P&L exposure with volatility correlation analysis  #}
+{# - Performance Metrics: CSV-validated P&L as authoritative source (±$0.01) #}
+{# - Author Attribution: "Cole Morton" consistent across all documents        #}
+{# - Statistical Validation: Sample adequacy and significance testing        #}
+{#                                                                            #}
+{# TRADING PERFORMANCE INTEGRATION:                                           #}
+{# - CSV Data Source: Live trading data as authoritative P&L reference       #}
+{# - Strategy Analysis: SMA/EMA crossover effectiveness with sample adequacy  #}
+{# - Risk Management: Drawdown analysis and position sizing optimization     #}
+{# - Signal Effectiveness: Entry/exit timing analysis with quality scoring   #}
+{# - Portfolio Composition: Active position monitoring and risk assessment   #}
+{# - Economic Context: Market regime correlation and VIX environment impact  #}
+{#                                                                            #}
+{# QUALITY STANDARDS FRAMEWORK:                                               #}
+{# - Baseline Quality: 0.9+ minimum for institutional usage                  #}
+{# - Enhanced Quality: 0.95+ target for validation-optimized analysis        #}
+{# - Premium Quality: 0.98+ for mathematical precision requirements          #}
+{# - Statistical Integrity: ≤5% variance in calculated metrics validation    #}
+{# - P&L Accuracy: Exact CSV data validation with ±$0.01 tolerance           #}
+{# - Sample Size Validation: Adequate statistical power for all conclusions  #}
+{# - Economic Context Integration: FRED indicators for market regime analysis #}
+{#                                                                            #}
+{# ECONOMIC CONTEXT INTEGRATION:                                              #}
+{# - FRED Economic Indicators: Interest rates, economic cycle, policy impact #}
+{# - Market Regime Analysis: VIX correlation, volatility environment effects #}
+{# - Sector Performance: Economic sensitivity and rotation timing analysis   #}
+{# - Risk Environment: Economic stress testing and correlation analysis      #}
+{#                                                                            #}
+{# RISK QUANTIFICATION FRAMEWORK:                                             #}
+{# - Probability Scale: 0.0-1.0 decimal format with statistical significance #}
+{# - Impact Scale: Dollar-denominated exposure with portfolio percentage     #}
+{# - Risk Score: Calculated using volatility and correlation analysis        #}
+{# - Evidence Requirements: CSV-validated performance data and market context #}
+{# - Risk Categories: Strategy/Execution/Market/Concentration/Drawdown       #}
+{#                                                                            #}
+{# VALIDATION REQUIREMENTS:                                                   #}
+{# - Template Compliance: Exact structure adherence with 4 required sections #}
+{# - Confidence Propagation: 0.9+ baseline from discovery through synthesis  #}
+{# - Economic Context Integration: FRED market indicators throughout analysis #}
+{# - Statistical Validation: P-value testing and confidence interval analysis #}
+{# - Strategic Recommendations: P1/P2/P3 framework with quantified targets   #}
+{# - Performance Validation: Cross-validation with analysis phase outputs    #}
+{#                                                                            #}
+{# OUTPUT MANAGEMENT:                                                         #}
+{# File Structure: ./data/outputs/trade_history/                             #}
+{# - discovery/{PORTFOLIO}_{YYYYMMDD}_discovery.json                         #}
+{# - analysis/{PORTFOLIO}_{YYYYMMDD}_analysis.json                           #}
+{# - {PORTFOLIO}_{YYYYMMDD}.md (synthesis output)                            #}
+{# - validation/{PORTFOLIO}_{YYYYMMDD}_validation.json                       #}
+{#                                                                            #}
+{# REFERENCED BY COMMANDS:                                                    #}
+{# - trade_history_synthesize (primary generator)                            #}
+{# - trade_history_discover, trade_history_analyze                           #}
+{# - trade_history_validate                                                  #}
+{#                                                                            #}
+{# ========================================================================== #}
+
+{% block title %}{{ data.portfolio_name | default(portfolio) | title }} Trading Performance Analysis{% endblock %}
+
+{% block description %}Institutional-quality trade history analysis with statistical validation, economic context, and strategic optimization roadmap{% endblock %}
+
+{% block primary_tag %}trade-history{% endblock %}
+
+{% block header %}{{ data.portfolio_name | default(portfolio) | title }} Trading Performance Analysis - Institutional Report{% endblock %}
+
+{% block author_note %}(MANDATORY - ensure consistency){% endblock %}
+
+{% block investment_thesis %}
+### Trading Performance Summary
+Portfolio: **{{ data.portfolio_name | default(portfolio) | title }}** | Confidence: **{{ data.overall_confidence | default("0.84") }}/1.0** | Quality Grade: **{{ data.quality_grade | default("operational") }}**
+
+### Performance Metrics | Sample: {{ data.total_trades | default("N/A") }} trades
+- **Total Return**: +{{ data.total_return_pct | default("N/A") }}% ({{ data.analysis_period | default("YTD") }}) | Economic Context: {{ data.economic_environment | default("Neutral market conditions") }}
+- **Win Rate**: {{ data.win_rate_pct | default("N/A") }}% ± {{ data.win_rate_margin | default("N/A") }}% (95% CI: {{ data.win_rate_ci_low | default("N/A") }}% to {{ data.win_rate_ci_high | default("N/A") }}%) | Statistical Significance: {{ data.statistical_significance | default("Not determined") }}
+- **Risk-Adjusted Return**: Sharpe {{ data.sharpe_ratio | default("N/A") }} | Sortino {{ data.sortino_ratio | default("N/A") }} | Max Drawdown: {{ data.max_drawdown_pct | default("N/A") }}%
+- **Total P&L**: ${{ data.total_pnl | default("N/A") }} | Profit Factor: {{ data.profit_factor | default("N/A") }}x | Expectancy: ${{ data.expectancy | default("N/A") }}/trade
+- **Sample Adequacy**: {{ data.sample_adequacy_status | default("Under Review") }} | Statistical Power: {{ data.statistical_power | default("N/A") }}%
+{% endblock %}
+
+{% block investment_details %}
+### Key Performance Catalysts & Statistical Validation
+{%- if data.performance_catalysts %}
+{%- for catalyst in data.performance_catalysts[:3] %}
+{{ loop.index }}. {{ catalyst.name }} - Win Rate: {{ catalyst.win_rate | default("N/A") }}% | Sample: {{ catalyst.sample_size | default("N/A") }} trades | Significance: {{ catalyst.statistical_significance | default("Pending validation") }}
+{%- endfor %}
+{%- else %}
+1. {{ data.primary_strategy | default("Primary Strategy") }} - Win Rate: {{ data.primary_win_rate | default("N/A") }}% | Sample: {{ data.primary_sample | default("N/A") }} trades | Significance: {{ data.primary_significance | default("Under validation") }}
+2. {{ data.secondary_strategy | default("Secondary Strategy") }} - Win Rate: {{ data.secondary_win_rate | default("N/A") }}% | Sample: {{ data.secondary_sample | default("N/A") }} trades | Significance: {{ data.secondary_significance | default("Requires expansion") }}
+3. Risk Management - Current Drawdown: {{ data.current_drawdown | default("N/A") }}% | Target: <{{ data.drawdown_target | default("15") }}% | Status: {{ data.risk_status | default("Monitoring") }}
+{%- endif %}
+
+### Economic Context & Market Regime Analysis
+{%- if data.economic_context %}
+- **Interest Rate Environment**: {{ data.interest_rate_environment | default("Neutral policy stance") }} | Strategy Impact: {{ data.rate_impact_analysis | default("Under assessment") }}
+- **Market Volatility Regime**: VIX {{ data.avg_vix_environment | default("N/A") }} environment | Performance Correlation: {{ data.vix_correlation | default("N/A") }}
+- **Economic Cycle Position**: {{ data.economic_cycle_position | default("Mid-cycle expansion") }} | Strategy Alignment: {{ data.cycle_alignment | default("Neutral") }}
+{%- else %}
+- **Market Context**: Analysis period encompasses {{ data.market_conditions | default("mixed market conditions") }} with {{ data.volatility_assessment | default("moderate volatility patterns") }}
+- **Performance Environment**: Strategies tested across {{ data.regime_diversity | default("multiple market regimes") }} for robustness validation
+{%- endif %}
+{% endblock %}
+
+{% block analysis_specific_content %}
+## 📊 Executive Dashboard
+
+### 30-Second Brief
+**Portfolio Health Score**: {{ data.portfolio_health_score | default("N/A") }}/100 {{ data.health_trend | default("→") }}
+
+| Key Metric | Current | Target | Status |
+|------------|---------|---------|---------|
+| Total Return | {{ data.total_return_display | default("+N/A%") }} | >{{ data.return_target | default("20") }}% | {{ data.return_status | default("⚠️ Under Review") }} |
+| Sharpe Ratio | {{ data.sharpe_display | default("N/A") }} | >1.50 | {{ data.sharpe_status | default("⚠️ Validation Needed") }} |
+| Win Rate | {{ data.win_rate_display | default("N/A%") }} | >{{ data.win_rate_target | default("60") }}% | {{ data.win_rate_status | default("⚠️ Statistical Review") }} |
+| Max Drawdown | {{ data.drawdown_display | default("-N/A%") }} | <-15% | {{ data.drawdown_status | default("⚠️ Risk Assessment") }} |
+| Profit Factor | {{ data.profit_factor_display | default("N/A") }} | >1.50 | {{ data.pf_status | default("⚠️ Under Analysis") }} |
+| Total P&L | ${{ data.total_pnl | default("N/A") }} | Positive | {{ data.pnl_status | default("⚠️ Validation Required") }} |
+| Active Positions | {{ data.active_positions | default("N/A") }} | <20 | {{ data.position_status | default("⚠️ Monitoring") }} |
+| Sample Size | {{ data.total_trades | default("N/A") }} trades | >{{ data.min_sample | default("25") }} | {{ data.sample_status | default("⚠️ Adequacy Review") }} |
+
+### Critical Issues Framework
+
+**🔴 P1 Critical** (Immediate Action Required):
+{%- if data.critical_issues %}
+{%- for issue in data.critical_issues %}
+{{ loop.index }}. **{{ issue.title }}**: {{ issue.description }}
+   - **Impact**: {{ issue.financial_impact | default("Under assessment") }} / {{ issue.performance_impact | default("Performance effect pending analysis") }}
+   - **Action**: {{ issue.action_plan | default("Action plan development in progress") }}
+   - **Deadline**: {{ issue.deadline | default("Timeline under review") }}
+{%- endfor %}
+{%- else %}
+1. **Statistical Validation Required**: Portfolio performance metrics require comprehensive statistical validation
+   - **Impact**: Confidence intervals uncertain / Decision-making reliability unverified
+   - **Action**: Complete statistical significance testing and sample adequacy assessment
+   - **Deadline**: Before next portfolio optimization - This week
+
+2. **Risk Management Framework**: Maximum drawdown analysis and position sizing optimization needed
+   - **Impact**: Portfolio exposure unquantified / Risk controls effectiveness uncertain
+   - **Action**: Implement systematic risk measurement and control protocols
+   - **Deadline**: Immediate - Before next trade entry
+{%- endif %}
+
+**🟡 P2 Priority** (This Week):
+{%- if data.priority_issues %}
+{%- for issue in data.priority_issues %}
+{{ loop.index }}. **{{ issue.title }}**: {{ issue.description }}
+   - **Impact**: {{ issue.impact_description | default("Impact assessment pending") }}
+   - **Action**: {{ issue.action_plan | default("Action plan development scheduled") }}
+   - **Deadline**: {{ issue.timeline | default("Within 7 days") }}
+{%- endfor %}
+{%- else %}
+1. **Strategy Performance Validation**: Individual strategy effectiveness requires statistical confirmation
+   - **Impact**: Strategy allocation optimization blocked / Performance attribution uncertain
+   - **Action**: Complete strategy-specific performance analysis with adequate sample validation
+   - **Deadline**: End of week
+
+2. **Economic Context Integration**: Market regime correlation analysis needs implementation
+   - **Impact**: Strategy adaptability unverified / Economic sensitivity unknown
+   - **Action**: Integrate FRED economic indicators and market regime correlation analysis
+   - **Deadline**: Within 7 days
+{%- endif %}
+
+**🟢 P3 Monitor** (Ongoing):
+{%- if data.monitoring_issues %}
+{%- for issue in data.monitoring_issues %}
+{{ loop.index }}. **{{ issue.title }}**: {{ issue.description }}
+   - **Impact**: {{ issue.long_term_impact | default("Long-term optimization opportunity") }}
+   - **Action**: {{ issue.strategic_plan | default("Strategic development planning") }}
+   - **Timeline**: {{ issue.review_cycle | default("Monthly review cycle") }}
+{%- endfor %}
+{%- else %}
+1. **Performance Optimization Opportunities**: Exit efficiency and quality scoring implementation
+   - **Impact**: Profit capture optimization potential / Quality improvement opportunities
+   - **Action**: Develop dynamic exit strategies and trade quality scoring methodology
+   - **Timeline**: Quarterly development and testing cycle
+
+2. **Portfolio Diversification Analysis**: Sector and correlation analysis expansion
+   - **Impact**: Risk diversification enhancement / Concentration risk management
+   - **Action**: Implement comprehensive correlation analysis and sector allocation optimization
+   - **Timeline**: Ongoing monthly portfolio review
+{%- endif %}
+
+## 📈 Comprehensive Performance Analysis
+
+### Statistical Validation Summary
+- **Sample Size**: {{ data.total_trades | default("N/A") }} trades {{ data.sample_adequacy_indicator | default("⚠️ UNDER REVIEW") }} (minimum {{ data.min_sample_required | default("25") }} required for portfolio analysis)
+- **Statistical Significance**: {{ data.overall_significance | default("Pending validation") }} ({{ data.significance_test | default("t-test vs zero return") }})
+- **Confidence Assessment**: {{ data.statistical_confidence | default("Under development") }} | Statistical Power: {{ data.statistical_power | default("Calculating") }}%
+
+### Performance Summary
+- **Total Closed Trades**: {{ data.closed_trades | default("N/A") }} ({{ data.closed_percentage | default("N/A") }}% closed, {{ data.active_trades | default("N/A") }} active)
+- **Overall P&L**: ${{ data.total_pnl | default("N/A") }} total {{ data.pnl_trend | default("performance") }}
+- **Win Rate**: {{ data.win_rate_pct | default("N/A") }}% ({{ data.winning_trades | default("N/A") }}W, {{ data.losing_trades | default("N/A") }}L, {{ data.breakeven_trades | default("N/A") }}BE)
+- **Profit Factor**: {{ data.profit_factor | default("N/A") }} ({{ data.pf_rating | default("efficiency rating pending") }})
+- **Average Trade**: ${{ data.avg_trade_pnl | default("N/A") }} {{ data.avg_trade_description | default("per trade") }}
+- **Total Return**: +{{ data.total_return_pct | default("N/A") }}%
+
+### Return Decomposition
+- **Best Trade**: {{ data.best_trade_ticker | default("N/A") }} +${{ data.best_trade_pnl | default("N/A") }} (+{{ data.best_trade_pct | default("N/A") }}%)
+- **Worst Trade**: {{ data.worst_trade_ticker | default("N/A") }} -${{ data.worst_trade_pnl | default("N/A") }} ({{ data.worst_trade_pct | default("N/A") }}%)
+- **Average Winner**: ${{ data.avg_winner_pnl | default("N/A") }} (+{{ data.avg_winner_pct | default("N/A") }}% avg return)
+- **Average Loser**: -${{ data.avg_loser_pnl | default("N/A") }} ({{ data.avg_loser_pct | default("N/A") }}% avg return)
+- **Risk-Reward Ratio**: {{ data.risk_reward_ratio | default("N/A") }}:1 ({{ data.rr_rating | default("assessment pending") }})
+
+### Risk-Adjusted Performance
+- **Sharpe Ratio**: {{ data.sharpe_ratio | default("N/A") }} ({{ data.sharpe_benchmark | default("benchmark comparison pending") }})
+- **Sortino Ratio**: {{ data.sortino_ratio | default("N/A") }} ({{ data.sortino_assessment | default("downside protection analysis") }})
+- **Downside Deviation**: {{ data.downside_deviation | default("N/A") }}% ({{ data.downside_assessment | default("exposure assessment") }})
+- **Calmar Ratio**: {{ data.calmar_ratio | default("N/A") }} ({{ data.calmar_description | default("drawdown-adjusted return analysis") }})
+
+### Advanced Statistical Metrics
+- **P&L Standard Deviation**: ${{ data.pnl_std_dev | default("N/A") }} overall volatility
+- **Winner Consistency**: ${{ data.winner_std_dev | default("N/A") }} std dev ({{ data.winner_consistency_rating | default("consistency analysis") }})
+- **Loser Control**: ${{ data.loser_std_dev | default("N/A") }} std dev ({{ data.loser_control_rating | default("control analysis") }})
+- **Return Skewness**: {{ data.return_skewness | default("N/A") }} ({{ data.skewness_interpretation | default("distribution analysis") }})
+- **Return Kurtosis**: {{ data.return_kurtosis | default("N/A") }} ({{ data.kurtosis_interpretation | default("tail risk analysis") }})
+
+## 📊 Statistical Validation and Quality Assessment
+
+### Sample Size and Significance Analysis
+- **Portfolio Analysis**: {{ data.total_trades | default("N/A") }} trades {{ data.portfolio_adequacy_status | default("⚠️ UNDER REVIEW") }} (minimum {{ data.portfolio_min_sample | default("25") }} achieved for portfolio-level analysis)
+{%- if data.strategy_analysis %}
+{%- for strategy in data.strategy_analysis %}
+- **{{ strategy.name }}**: {{ strategy.trade_count }} trades {{ strategy.adequacy_status }} ({{ strategy.adequacy_description }})
+{%- endfor %}
+{%- else %}
+- **Primary Strategy**: {{ data.primary_strategy_trades | default("N/A") }} trades {{ data.primary_adequacy | default("⚠️ VALIDATION PENDING") }}
+- **Secondary Strategy**: {{ data.secondary_strategy_trades | default("N/A") }} trades {{ data.secondary_adequacy | default("⚠️ REQUIRES EXPANSION") }}
+{%- endif %}
+- **Statistical Power**: {{ data.statistical_power | default("Calculating") }}% for detecting meaningful performance differences
+
+### Confidence Intervals (95%)
+- **Mean Return**: {{ data.mean_return | default("N/A") }}% ± {{ data.mean_return_margin | default("N/A") }}% (CI: {{ data.mean_return_ci_low | default("N/A") }}% to {{ data.mean_return_ci_high | default("N/A") }}%)
+- **Win Rate**: {{ data.win_rate_pct | default("N/A") }}% ± {{ data.win_rate_margin | default("N/A") }}% (CI: {{ data.win_rate_ci_low | default("N/A") }}% to {{ data.win_rate_ci_high | default("N/A") }}%)
+- **Sharpe Ratio**: {{ data.sharpe_ratio | default("N/A") }} ± {{ data.sharpe_margin | default("N/A") }} ({{ data.sharpe_enhancement_status | default("benchmark enhancement status pending") }})
+
+### Statistical Limitations
+⚠️ **STATISTICAL CAUTION**: {{ data.statistical_limitations | default("Analysis requires comprehensive validation") }}
+{%- if data.detailed_limitations %}
+{%- for limitation in data.detailed_limitations %}
+- {{ limitation }}
+{%- endfor %}
+{%- else %}
+- Performance metrics require statistical significance validation
+- Confidence intervals need narrowing through additional data collection
+- Strategy comparison requires expanded sample sizes for reliable conclusions
+- Economic regime correlation analysis pending comprehensive integration
+{%- endif %}
+
+### Cross-Phase Validation
+- **Discovery Consistency**: {{ data.discovery_consistency_status | default("⚠️ VALIDATION PENDING") }} Statistical inputs alignment verification
+- **Analysis Alignment**: {{ data.analysis_alignment_status | default("⚠️ CROSS-CHECK REQUIRED") }} Report content reflects analysis findings
+- **Calculation Verification**: {{ data.calculation_verification_status | default("⚠️ CSV VALIDATION NEEDED") }} Computed values traceable to authoritative source
+- **Confidence Propagation**: Discovery {{ data.discovery_confidence | default("N/A") }} → Analysis {{ data.analysis_confidence | default("N/A") }} → Synthesis {{ data.synthesis_confidence | default("N/A") }}
+
+## 🎯 Strategic Recommendations and Optimization Roadmap
+
+### Priority 1: Risk Management Enhancement (Immediate)
+{%- if data.risk_recommendations %}
+{%- for rec in data.risk_recommendations %}
+**Target**: {{ rec.target }}
+- **Implementation**: {{ rec.implementation }}
+- **Expected Impact**: {{ rec.expected_impact }}
+- **Timeline**: {{ rec.timeline }}
+- **Success Metrics**: {{ rec.success_metrics }}
+{%- endfor %}
+{%- else %}
+**Target**: Establish comprehensive risk management framework with quantified exposure limits
+- **Implementation**: Implement systematic position sizing, correlation analysis, and drawdown controls
+- **Expected Impact**: Reduced portfolio volatility and improved risk-adjusted returns
+- **Timeline**: Immediate implementation within 1 week
+- **Success Metrics**: Maximum drawdown <15%, position correlation <0.7, Sharpe ratio improvement
+{%- endif %}
+
+### Priority 2: Statistical Validation Enhancement (This Week)
+{%- if data.statistical_recommendations %}
+{%- for rec in data.statistical_recommendations %}
+**Target**: {{ rec.target }}
+- **Implementation**: {{ rec.implementation }}
+- **Expected Impact**: {{ rec.expected_impact }}
+- **Timeline**: {{ rec.timeline }}
+- **Success Metrics**: {{ rec.success_metrics }}
+{%- endfor %}
+{%- else %}
+**Target**: Achieve statistical significance validation across all performance metrics
+- **Implementation**: Complete sample adequacy assessment, significance testing, and confidence interval analysis
+- **Expected Impact**: Enhanced decision-making confidence and institutional-grade validation standards
+- **Timeline**: Comprehensive validation within 1 week
+- **Success Metrics**: 95% confidence intervals established, statistical power >80%, significance testing complete
+{%- endif %}
+
+### Priority 3: Performance Optimization (Development Phase)
+{%- if data.performance_recommendations %}
+{%- for rec in data.performance_recommendations %}
+**Target**: {{ rec.target }}
+- **Implementation**: {{ rec.implementation }}
+- **Expected Impact**: {{ rec.expected_impact }}
+- **Timeline**: {{ rec.timeline }}
+- **Success Metrics**: {{ rec.success_metrics }}
+{%- endfor %}
+{%- else %}
+**Target**: Optimize trade execution efficiency and strategy allocation based on statistical validation
+- **Implementation**: Develop quality scoring methodology, exit strategy optimization, and dynamic allocation framework
+- **Expected Impact**: Improved profit capture, reduced execution slippage, enhanced strategy performance attribution
+- **Timeline**: Development and testing within 2-4 weeks
+- **Success Metrics**: Exit efficiency improvement >10%, quality score implementation, strategy allocation optimization
+{%- endif %}
+
+### Priority 4: Economic Context Integration (Strategic Development)
+{%- if data.economic_recommendations %}
+{%- for rec in data.economic_recommendations %}
+**Target**: {{ rec.target }}
+- **Implementation**: {{ rec.implementation }}
+- **Expected Impact**: {{ rec.expected_impact }}
+- **Timeline**: {{ rec.timeline }}
+- **Success Metrics**: {{ rec.success_metrics }}
+{%- endfor %}
+{%- else %}
+**Target**: Integrate comprehensive economic regime analysis and market context correlation
+- **Implementation**: FRED economic indicator integration, VIX correlation analysis, sector rotation sensitivity assessment
+- **Expected Impact**: Enhanced strategy adaptability, economic cycle positioning, regime-specific performance optimization
+- **Timeline**: Strategic development within 1 month
+- **Success Metrics**: Economic correlation analysis complete, regime-based strategy allocation, policy impact assessment framework
+{%- endif %}
+
+### Implementation Roadmap
+- **Week 1**: {{ data.week1_priorities | default("Risk management implementation and statistical validation completion") }}
+- **Month 1**: {{ data.month1_priorities | default("Performance optimization development and economic context integration") }}
+- **Quarter 1**: {{ data.quarter1_priorities | default("Strategic positioning optimization and advanced analytics implementation") }}
+- **Ongoing**: {{ data.ongoing_priorities | default("Continuous improvement protocols and performance monitoring framework") }}
+
+## 📊 Strategy Performance Breakdown
+
+### Strategy Comparative Analysis
+{%- if data.strategy_comparison_table %}
+{{ data.strategy_comparison_table }}
+{%- else %}
+| Strategy | Trades | Win Rate | Avg Return | Total P&L | Sample Status |
+|----------|---------|----------|------------|-----------|---------------|
+| **{{ data.primary_strategy_name | default("Primary Strategy") }}** | {{ data.primary_trades | default("N/A") }} | {{ data.primary_win_rate | default("N/A") }}% | {{ data.primary_avg_return | default("N/A") }}% | ${{ data.primary_pnl | default("N/A") }} | {{ data.primary_status | default("⚠️ Validation Required") }} |
+| **{{ data.secondary_strategy_name | default("Secondary Strategy") }}** | {{ data.secondary_trades | default("N/A") }} | {{ data.secondary_win_rate | default("N/A") }}% | {{ data.secondary_avg_return | default("N/A") }}% | ${{ data.secondary_pnl | default("N/A") }} | {{ data.secondary_status | default("⚠️ Expansion Needed") }} |
+{%- endif %}
+
+### Strategy Quality Distribution
+{%- if data.quality_analysis %}
+{%- for quality_tier in data.quality_analysis %}
+**{{ quality_tier.name }}** ({{ quality_tier.count }} trades, {{ quality_tier.percentage }}%):
+- {{ quality_tier.description }}
+{%- endfor %}
+{%- else %}
+**Excellent Quality Trades** ({{ data.excellent_count | default("N/A") }} trades, {{ data.excellent_pct | default("N/A") }}%):
+- Average return: +{{ data.excellent_avg_return | default("N/A") }}%
+- Characteristics: {{ data.excellent_characteristics | default("High-confidence setups with optimal execution timing") }}
+- Impact: {{ data.excellent_impact | default("Primary contributor to portfolio performance") }}
+
+**Standard Quality Trades** ({{ data.standard_count | default("N/A") }} trades, {{ data.standard_pct | default("N/A") }}%):
+- Average return: +{{ data.standard_avg_return | default("N/A") }}%
+- Characteristics: {{ data.standard_characteristics | default("Adequate setup quality with acceptable execution") }}
+- Opportunity: {{ data.standard_opportunity | default("Potential for quality enhancement through improved filtering") }}
+
+**Poor Quality Trades** ({{ data.poor_count | default("N/A") }} trades, {{ data.poor_pct | default("N/A") }}%):
+- Average return: {{ data.poor_avg_return | default("N/A") }}%
+- Distribution: {{ data.poor_breakdown | default("Requires comprehensive quality improvement analysis") }}
+- Optimization: {{ data.poor_optimization | default("Significant improvement potential through quality scoring implementation") }}
+{%- endif %}
+
+### Statistical Assessment
+- **{{ data.primary_strategy_name | default("Primary Strategy") }} Confidence**: {{ data.primary_confidence | default("N/A") }}% ({{ data.primary_adequacy_status | default("sample adequacy assessment") }})
+- **{{ data.secondary_strategy_name | default("Secondary Strategy") }} Confidence**: {{ data.secondary_confidence | default("N/A") }}% ({{ data.secondary_development_status | default("development requirements") }})
+- **Strategy Comparison**: {{ data.strategy_comparison_significance | default("Statistical significance validation pending") }}
+
+## ⚠️ Risk Factors and Portfolio Analysis
+
+### Historical Risk Analysis (Closed Trades)
+- **Consecutive Loss Maximum**: {{ data.max_consecutive_losses | default("N/A") }} consecutive losses ({{ data.consecutive_loss_assessment | default("manageability assessment pending") }})
+- **Loss Recovery Time**: {{ data.loss_recovery_time | default("N/A") }} trades average to recover from loss streaks
+- **Sector Concentration**: {{ data.sector_concentration_analysis | default("Concentration analysis and correlation risk assessment required") }}
+- **Duration Risk**: {{ data.duration_risk_analysis | default("Position duration risk analysis pending") }}
+
+### Current Portfolio Vulnerability Assessment
+**Active Positions Status** - {{ data.active_positions_description | default("Active portfolio composition analysis required") }}
+
+**Identified Risk Factors**:
+{%- if data.risk_factors %}
+{%- for risk in data.risk_factors %}
+{{ loop.index }}. **{{ risk.category }}**: {{ risk.metric }}% {{ risk.indicator }} indicates {{ risk.description }}
+{%- endfor %}
+{%- else %}
+1. **Statistical Validation Risk**: Performance metrics require comprehensive statistical validation for decision-making reliability
+2. **Sample Size Risk**: Strategy-specific analysis limited by insufficient sample sizes affecting allocation confidence
+3. **Risk Management Risk**: Maximum drawdown controls and position sizing optimization needed for exposure management
+4. **Economic Context Risk**: Market regime correlation analysis required for strategy adaptability assessment
+{%- endif %}
+
+## 📋 Integration and Coverage Analysis
+
+### Fundamental Analysis Integration
+{%- if data.fundamental_integration %}
+- **Fundamental Analysis Available**: {{ data.fundamental_coverage_count }} of {{ data.total_tickers }} tickers ({{ data.fundamental_coverage_pct }}% coverage)
+- **Recent Analysis**: {{ data.recent_analysis_count }} tickers within 30 days (current)
+- **Aging Analysis**: {{ data.aging_analysis_count }} tickers 31-45 days (acceptable)
+- **Stale Analysis**: {{ data.stale_analysis_count }} tickers >45 days (requires refresh)
+{%- else %}
+- **Integration Status**: Fundamental analysis integration assessment pending
+- **Coverage Assessment**: Portfolio ticker coverage analysis required for comprehensive integration
+- **Refresh Requirements**: Fundamental analysis refresh schedule needs establishment
+{%- endif %}
+
+### Integration Opportunities
+{%- if data.integration_opportunities %}
+**High Priority Refresh Needed**:
+{%- for opportunity in data.integration_opportunities.high_priority %}
+- {{ opportunity.ticker }} ({{ opportunity.days_old }} days old) - {{ opportunity.description }}
+{%- endfor %}
+
+**Coverage Expansion Targets**: {{ data.integration_opportunities.expansion_count }} tickers without fundamental analysis
+{%- for sector in data.integration_opportunities.sector_gaps %}
+- {{ sector.name }}: {{ sector.missing_count }} missing analyses ({{ sector.priority }} priority)
+{%- endfor %}
+{%- else %}
+**Integration Development**: Comprehensive fundamental analysis integration framework development required
+- Portfolio ticker mapping and coverage assessment
+- Fundamental analysis refresh cycle establishment
+- Cross-analysis correlation and enhancement opportunity identification
+{%- endif %}
+
+---
+
+## 📱 Platform Integration
+
+Follow live signals and portfolio updates at **[@colemorton7](https://x.com/colemorton7)** on X/Twitter.
+
+**Platform Features**:
+- Real-time entry and exit signal alerts with comprehensive transparency
+- Complete trade documentation and performance tracking
+- Educational commentary on signal development and market analysis
+- Portfolio performance monitoring with institutional-grade reporting
+
+**Educational Purpose**: All signals shared for transparency and learning. This is not investment advice. Always conduct your own analysis and risk management.
+
+---
+
+*Generated: {{ timestamp }} | Institutional Trading Report | Quality Grade: {{ data.quality_grade | default("Under Assessment") }}*
+*Data Source: {{ data.data_source | default("portfolio.csv") }} ({{ data.closed_trades | default("N/A") }} closed trades) | Analysis Framework: DASV*
+*Confidence: {{ data.overall_confidence | default("N/A") }}/1.0 | Template: Institutional Standards | Author: Cole Morton*
+{% endblock %}
+
+{% block analysis_appendix %}
+## Economic Context Integration Framework
+
+{%- if data.economic_context_integration %}
+### Interest Rate Environment Analysis
+{{ data.economic_context_integration.interest_rates }}
+
+### Market Regime Correlation
+{{ data.economic_context_integration.market_regime }}
+
+### Economic Policy Impact Assessment
+{{ data.economic_context_integration.policy_impact }}
+{%- else %}
+### Economic Context Development
+Comprehensive economic context integration framework development in progress:
+- FRED economic indicator correlation analysis
+- Interest rate environment impact assessment on trading strategies
+- Market volatility regime performance analysis (VIX correlation)
+- Economic cycle positioning and strategy adaptability evaluation
+{%- endif %}
+
+### Risk-Adjusted Performance Enhancement Framework
+
+{%- if data.risk_framework %}
+{{ data.risk_framework }}
+{%- else %}
+**Framework Development**: Advanced risk management and performance optimization protocols
+- Dynamic position sizing based on volatility and correlation analysis
+- Economic regime-specific strategy allocation optimization
+- Systematic risk monitoring and early warning system implementation
+- Performance attribution analysis with economic and market context integration
+{%- endif %}
+{% endblock %}

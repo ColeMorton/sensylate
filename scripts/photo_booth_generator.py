@@ -11,6 +11,8 @@ import json
 import logging
 import subprocess
 import sys
+import urllib.error
+import urllib.request
 from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Union
@@ -47,6 +49,44 @@ class PhotoBoothGenerator:
         # Ensure output directory exists
         self.output_dir.mkdir(parents=True, exist_ok=True)
 
+    def check_server_status(self) -> bool:
+        """
+        Check if the development server is running and accessible.
+
+        Returns:
+            bool: True if server is accessible, False otherwise
+        """
+        try:
+            self.logger.info(f"Checking server status at {self.base_url}")
+
+            # Try to access the photo booth page
+            test_url = f"{self.base_url}/photo-booth"
+            request = urllib.request.Request(test_url)
+
+            with urllib.request.urlopen(request, timeout=5) as response:
+                if response.status == 200:
+                    self.logger.info("✅ Development server is running and accessible")
+                    return True
+                else:
+                    self.logger.error(
+                        f"❌ Server responded with status {response.status}"
+                    )
+                    return False
+
+        except urllib.error.URLError as e:
+            if "Connection refused" in str(e):
+                self.logger.error(f"❌ Connection refused to {self.base_url}")
+                self.logger.error("🔧 SOLUTION: Start the development server first:")
+                self.logger.error("   cd frontend && yarn dev")
+                self.logger.error("   Wait for 'Local http://localhost:4321/' message")
+                self.logger.error("   Then run this export script in a new terminal")
+            else:
+                self.logger.error(f"❌ Cannot connect to server: {e}")
+            return False
+        except Exception as e:
+            self.logger.error(f"❌ Unexpected error checking server: {e}")
+            return False
+
     def generate_screenshot(
         self,
         dashboard_id: str,
@@ -75,6 +115,12 @@ class PhotoBoothGenerator:
         self.logger.info(
             f"Generating {export_format} export: {dashboard_id} ({mode} mode, {aspect_ratio}, {dpi} DPI)"
         )
+
+        # Check if development server is running before attempting screenshot
+        if not self.check_server_status():
+            raise RuntimeError(
+                "Development server is not accessible. Please start the server first."
+            )
 
         # Build URL with parameters
         url = f"{self.base_url}/photo-booth?dashboard={dashboard_id}&mode={mode}"
@@ -196,6 +242,12 @@ class PhotoBoothGenerator:
         Returns:
             List of generated screenshot paths
         """
+        # Check if development server is running before attempting multiple screenshots
+        if not self.check_server_status():
+            raise RuntimeError(
+                "Development server is not accessible. Please start the server first."
+            )
+
         # Load photo booth config
         photo_booth_config_path = project_root / "frontend/src/config/photo-booth.json"
         with open(photo_booth_config_path) as f:
