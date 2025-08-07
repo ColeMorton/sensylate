@@ -1,8 +1,10 @@
+import type { ChartType } from "@/types/ChartTypes";
+
 export interface DashboardChart {
   title: string;
   category?: string;
   description?: string;
-  chartType: string;
+  chartType: ChartType;
 }
 
 export interface DashboardConfig {

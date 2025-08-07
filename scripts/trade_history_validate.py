@@ -1,10 +1,20 @@
 #!/usr/bin/env python3
 """
-Trade History Validation - DASV Phase 4
+Trade History Validation - DASV Phase 4 (Enhanced)
 Comprehensive quality assurance and validation for institutional-quality trading performance analysis
 
-Implements systematic validation protocols and advanced confidence scoring methodologies
-for the complete DASV trading analysis pipeline.
+ARCHITECTURAL REPAIR IMPLEMENTATION:
+- Uses unified calculation engine as single source of truth
+- Implements finance-grade precision tolerances (±$0.01 P&L, ±0.02 Sharpe ratio)
+- Proper breakeven trade handling throughout validation pipeline  
+- Real P&L accuracy validation against CSV source data
+- Fail-fast validation with detailed error reporting
+
+Fixes critical issues:
+- Sharpe ratio calculation error (8.398 vs 0.397)
+- Win rate discrepancy (57.89% vs 62.86%) 
+- Missing P&L validation implementation
+- Breakeven trade classification bugs
 """
 
 import argparse
@@ -14,11 +24,22 @@ import math
 import os
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
+import sys
+
+# Add trade_history module to path for unified calculation engine
+sys.path.append(str(Path(__file__).parent / "trade_history"))
+from unified_calculation_engine import TradingCalculationEngine, FINANCIAL_TOLERANCES, ValidationError
 
 
 class TradeHistoryValidator:
     """
-    Comprehensive validation engine for DASV Phase 4 trade history analysis.
+    Enhanced validation engine for DASV Phase 4 trade history analysis.
+    
+    ARCHITECTURAL IMPROVEMENTS:
+    - Uses unified calculation engine as authoritative source
+    - Dynamic date handling (no hardcoded dependencies)
+    - Finance-grade precision validation
+    - Fail-fast error handling with detailed reporting
     """
 
     def __init__(
@@ -37,34 +58,81 @@ class TradeHistoryValidator:
         self.discovery_data = None
         self.analysis_data = None
         self.synthesis_data = None
+        self.calculation_engine = None  # Will be initialized with actual CSV data
+        
+        # Dynamic date resolution
+        self.resolved_date = self._resolve_portfolio_date()
+
+    def _resolve_portfolio_date(self) -> str:
+        """
+        Dynamically resolve portfolio date from available files.
+        Fixes hardcoded date dependency issue.
+        """
+        base_path = Path("/Users/colemorton/Projects/sensylate/data/outputs/trade_history")
+        
+        # Check if portfolio contains date (e.g., live_signals_20250807)
+        if '_20' in self.portfolio and len(self.portfolio.split('_')[-1]) == 8:
+            return self.portfolio.split('_')[-1]
+        
+        # Find latest available date for this portfolio
+        discovery_path = base_path / "discovery"
+        if discovery_path.exists():
+            pattern = f"{self.portfolio}_*.json"
+            files = list(discovery_path.glob(pattern))
+            if files:
+                # Extract dates and get latest
+                dates = []
+                for file in files:
+                    filename = file.stem
+                    if '_' in filename:
+                        date_part = filename.split('_')[-1]
+                        if date_part.isdigit() and len(date_part) == 8:
+                            dates.append(date_part)
+                if dates:
+                    return max(dates)  # Latest date
+        
+        # Fallback to current date
+        return datetime.datetime.now().strftime("%Y%m%d")
+
+    def _get_csv_file_path(self) -> str:
+        """Get the CSV file path for direct validation"""
+        csv_path = Path(f"/Users/colemorton/Projects/sensylate/data/raw/trade_history/{self.portfolio}.csv")
+        if csv_path.exists():
+            return str(csv_path)
+        
+        # Try with date suffix
+        csv_path_dated = Path(f"/Users/colemorton/Projects/sensylate/data/raw/trade_history/{self.portfolio}_{self.resolved_date}.csv")
+        if csv_path_dated.exists():
+            return str(csv_path_dated)
+        
+        raise FileNotFoundError(f"CSV file not found for portfolio {self.portfolio}")
 
     def load_phase_outputs(self) -> Dict[str, Any]:
-        """Load and validate all phase outputs from DASV pipeline."""
+        """
+        Load and validate all phase outputs from DASV pipeline.
+        ENHANCED: Uses dynamic date resolution and initializes calculation engine.
+        """
 
-        base_path = Path(
-            "/Users/colemorton/Projects/sensylate/data/outputs/trade_history"
-        )
-        date_suffix = "20250807"  # Current date format
+        base_path = Path("/Users/colemorton/Projects/sensylate/data/outputs/trade_history")
 
         try:
+            # Initialize unified calculation engine with CSV data
+            csv_file_path = self._get_csv_file_path()
+            self.calculation_engine = TradingCalculationEngine(csv_file_path)
+            print(f"✅ Unified calculation engine initialized with {len(self.calculation_engine.trades)} trades")
+
             # Load discovery data
-            discovery_path = (
-                base_path / "discovery" / f"{self.portfolio}_{date_suffix}.json"
-            )
+            discovery_path = base_path / "discovery" / f"{self.portfolio}_{self.resolved_date}.json"
             with open(discovery_path, "r") as f:
                 self.discovery_data = json.load(f)
 
             # Load analysis data
-            analysis_path = (
-                base_path / "analysis" / f"{self.portfolio}_{date_suffix}.json"
-            )
+            analysis_path = base_path / "analysis" / f"{self.portfolio}_{self.resolved_date}.json"
             with open(analysis_path, "r") as f:
                 self.analysis_data = json.load(f)
 
             # Load synthesis data (from internal report)
-            synthesis_path = (
-                base_path / "internal" / f"{self.portfolio}_{date_suffix}.md"
-            )
+            synthesis_path = base_path / "internal" / f"{self.portfolio}_{self.resolved_date}.md"
             if synthesis_path.exists():
                 with open(synthesis_path, "r") as f:
                     self.synthesis_data = {"internal_report_content": f.read()}
@@ -74,9 +142,11 @@ class TradeHistoryValidator:
             return {
                 "discovery_loaded": True,
                 "analysis_loaded": True,
-                "synthesis_loaded": bool(
-                    self.synthesis_data.get("internal_report_content")
-                ),
+                "synthesis_loaded": bool(self.synthesis_data.get("internal_report_content")),
+                "calculation_engine_initialized": True,
+                "resolved_date": self.resolved_date,
+                "csv_file_path": csv_file_path,
+                "total_trades_validated": len(self.calculation_engine.trades),
                 "validation_confidence": 0.95,
             }
 
@@ -85,51 +155,111 @@ class TradeHistoryValidator:
                 "discovery_loaded": False,
                 "analysis_loaded": False,
                 "synthesis_loaded": False,
+                "calculation_engine_initialized": False,
                 "error": str(e),
                 "validation_confidence": 0.0,
             }
 
     def validate_statistical_calculations(self) -> Dict[str, Any]:
-        """Execute comprehensive statistical validation and significance testing."""
+        """
+        Execute comprehensive statistical validation with finance-grade precision.
+        ENHANCED: Uses unified calculation engine and implements missing P&L validation.
+        """
+
+        if not self.calculation_engine:
+            return {"error": "Unified calculation engine not initialized", "confidence": 0.0}
 
         if not self.analysis_data:
             return {"error": "Analysis data not loaded", "confidence": 0.0}
 
+        # Get authoritative metrics from unified calculation engine
+        authoritative_metrics = self.calculation_engine.calculate_portfolio_performance()
+        
+        # Perform comprehensive validation against unified calculations
+        engine_validation = self.calculation_engine.validate_portfolio_metrics(authoritative_metrics)
+        
         validation_results = {
+            "pnl_accuracy_validation": {},  # NOW IMPLEMENTED - Critical fix
             "win_rate_validation": {},
             "sharpe_ratio_validation": {},
-            "pnl_accuracy_validation": {},
             "sample_adequacy_validation": {},
             "distribution_analysis_validation": {},
             "advanced_metrics_validation": {},
+            "authoritative_metrics": authoritative_metrics,
+            "unified_engine_validation": engine_validation
         }
 
-        # Win Rate Validation
+        # CRITICAL P&L ACCURACY VALIDATION - NOW IMPLEMENTED
         try:
-            performance = self.discovery_data.get("performance_metrics", {})
-            reported_win_rate = performance.get("win_rate", 0)
-            total_wins = performance.get("total_wins", 0)
-            total_losses = performance.get("total_losses", 0)
-            total_trades = total_wins + total_losses
-
-            if total_trades > 0:
-                calculated_win_rate = total_wins / total_trades
-                variance = abs(reported_win_rate - calculated_win_rate)
-                tolerance_met = variance <= 0.005  # ±0.5% tolerance
-
-                validation_results["win_rate_validation"] = {
-                    "reported_value": reported_win_rate,
-                    "calculated_value": calculated_win_rate,
-                    "variance": variance,
-                    "tolerance_met": tolerance_met,
-                    "validation_confidence": 0.98 if tolerance_met else 0.65,
+            # Use engine validation results for P&L accuracy
+            pnl_validation = engine_validation.get("pnl_accuracy_validation", {})
+            if pnl_validation:
+                validation_results["pnl_accuracy_validation"] = pnl_validation
+            else:
+                # Fallback manual P&L validation
+                closed_trades = self.calculation_engine.get_closed_trades()
+                csv_total_pnl = sum(t.pnl_csv for t in closed_trades)
+                discovery_total_pnl = self.discovery_data.get("performance_metrics", {}).get("total_pnl", 0)
+                pnl_variance = abs(csv_total_pnl - discovery_total_pnl)
+                
+                validation_results["pnl_accuracy_validation"] = {
+                    "csv_total_pnl": csv_total_pnl,
+                    "discovery_total_pnl": discovery_total_pnl,
+                    "variance": pnl_variance,
+                    "tolerance_met": pnl_variance <= FINANCIAL_TOLERANCES["pnl_accuracy"],
+                    "validation_confidence": 0.99 if pnl_variance <= FINANCIAL_TOLERANCES["pnl_accuracy"] else 0.50
                 }
+        except Exception as e:
+            validation_results["pnl_accuracy_validation"]["error"] = str(e)
+
+        # Win Rate Validation with Proper Breakeven Handling
+        try:
+            # Get authoritative win rate from unified engine
+            authoritative_win_rate = authoritative_metrics.get("win_rate", 0)
+            discovery_win_rate = self.discovery_data.get("performance_metrics", {}).get("win_rate", 0)
+            analysis_win_rate = None
+            
+            # Try to extract analysis win rate
+            if "signal_effectiveness" in self.analysis_data:
+                signal_data = self.analysis_data["signal_effectiveness"].get("entry_signal_analysis", {})
+                strategy_data = signal_data.get("win_rate_by_strategy", {})
+                if strategy_data:
+                    # Calculate weighted average across strategies
+                    total_strategy_trades = 0
+                    total_strategy_wins = 0
+                    for strategy, metrics in strategy_data.items():
+                        trades = metrics.get("total_trades", 0)
+                        wins = metrics.get("winners", 0)
+                        total_strategy_trades += trades
+                        total_strategy_wins += wins
+                    analysis_win_rate = total_strategy_wins / total_strategy_trades if total_strategy_trades > 0 else 0
+
+            # Validate against authoritative calculation
+            discovery_variance = abs(authoritative_win_rate - discovery_win_rate)
+            analysis_variance = abs(authoritative_win_rate - analysis_win_rate) if analysis_win_rate else None
+
+            validation_results["win_rate_validation"] = {
+                "authoritative_win_rate": authoritative_win_rate,
+                "discovery_win_rate": discovery_win_rate,
+                "analysis_win_rate": analysis_win_rate,
+                "discovery_variance": discovery_variance,
+                "analysis_variance": analysis_variance,
+                "discovery_tolerance_met": discovery_variance <= FINANCIAL_TOLERANCES["win_rate"],
+                "analysis_tolerance_met": (analysis_variance <= FINANCIAL_TOLERANCES["win_rate"]) if analysis_variance else True,
+                "validation_confidence": 0.98 if discovery_variance <= FINANCIAL_TOLERANCES["win_rate"] else 0.65,
+                "breakeven_trades_count": authoritative_metrics.get("breakeven_trades", 0),
+                "decisive_trades_count": authoritative_metrics.get("decisive_trades", 0)
+            }
 
         except Exception as e:
             validation_results["win_rate_validation"]["error"] = str(e)
 
-        # Sharpe Ratio Validation
+        # Sharpe Ratio Validation with Proper Financial Formula
         try:
+            # Get authoritative Sharpe ratio from unified engine
+            authoritative_sharpe = authoritative_metrics.get("sharpe_ratio", 0)
+            
+            # Get reported Sharpe ratio from analysis data
             risk_metrics = (
                 self.analysis_data.get("performance_measurement", {})
                 .get("statistical_analysis", {})
@@ -137,71 +267,132 @@ class TradeHistoryValidator:
             )
             reported_sharpe = risk_metrics.get("sharpe_ratio", 0)
 
-            # Cross-validate against return and volatility
+            # Calculate variance using finance-grade tolerance
+            sharpe_variance = abs(authoritative_sharpe - reported_sharpe)
+            tolerance_met = sharpe_variance <= FINANCIAL_TOLERANCES["sharpe_ratio"]  # ±0.02 tolerance
+
+            # Also validate components for detailed analysis
             return_stats = (
                 self.analysis_data.get("performance_measurement", {})
                 .get("statistical_analysis", {})
                 .get("return_distribution", {})
             )
-            mean_return = return_stats.get("mean_return", 0)
-            std_dev = return_stats.get("std_deviation", 1)
+            reported_mean_return = return_stats.get("mean_return", 0)
+            reported_std_dev = return_stats.get("std_deviation", 1)
+            
+            authoritative_mean_return = authoritative_metrics.get("avg_return", 0)
+            authoritative_std_dev = authoritative_metrics.get("return_std", 1)
 
-            # Assume 2% risk-free rate for validation
-            risk_free_rate = 0.02
-            if std_dev > 0:
-                cross_check_sharpe = (mean_return - risk_free_rate) / std_dev
-                variance = abs(reported_sharpe - cross_check_sharpe)
-                tolerance_met = (
-                    variance <= 2.0
-                )  # Allow some variance in different calculation methods
-
-                validation_results["sharpe_ratio_validation"] = {
-                    "reported_value": reported_sharpe,
-                    "cross_check_value": cross_check_sharpe,
-                    "variance": variance,
-                    "tolerance_met": tolerance_met,
-                    "validation_confidence": 0.85 if tolerance_met else 0.60,
-                }
+            validation_results["sharpe_ratio_validation"] = {
+                "authoritative_sharpe": authoritative_sharpe,
+                "reported_sharpe": reported_sharpe,
+                "variance": sharpe_variance,
+                "tolerance_met": tolerance_met,
+                "validation_confidence": 0.95 if tolerance_met else 0.60,
+                "component_validation": {
+                    "mean_return_variance": abs(authoritative_mean_return - reported_mean_return),
+                    "std_dev_variance": abs(authoritative_std_dev - reported_std_dev),
+                    "risk_free_rate_used": 0.02
+                },
+                "issue_severity": "CRITICAL" if sharpe_variance > 1.0 else "MINOR" if not tolerance_met else "NONE"
+            }
 
         except Exception as e:
             validation_results["sharpe_ratio_validation"]["error"] = str(e)
 
-        # Sample Adequacy Validation
+        # Sample Adequacy Validation with Enhanced Thresholds
         try:
-            total_trades = self.discovery_data.get("portfolio_summary", {}).get(
-                "total_trades", 0
-            )
-            minimum_threshold = 10
-            threshold_met = total_trades >= minimum_threshold
-
-            # Statistical power analysis
-            if total_trades >= 30:
+            closed_trades = len(self.calculation_engine.get_closed_trades())
+            open_trades = len(self.calculation_engine.get_open_trades())
+            total_trades = closed_trades + open_trades
+            
+            # Enhanced thresholds as per validation specification
+            portfolio_threshold = 25
+            strategy_threshold = 15
+            basic_threshold = 10
+            
+            # Statistical power analysis with enhanced criteria
+            if closed_trades >= portfolio_threshold:
+                adequacy_level = "ADEQUATE"
                 power = 0.95
-            elif total_trades >= 20:
-                power = 0.85
-            elif total_trades >= 10:
-                power = 0.70
+                adequacy_score = 1.0
+            elif closed_trades >= basic_threshold:
+                adequacy_level = "MINIMAL"
+                power = 0.80
+                adequacy_score = closed_trades / portfolio_threshold
             else:
+                adequacy_level = "INSUFFICIENT"
                 power = 0.50
+                adequacy_score = 0.5
 
-            adequacy_score = min(total_trades / 30, 1.0)
+            # Strategy-specific adequacy
+            strategy_adequacy = {}
+            for strategy, strategy_metrics in authoritative_metrics.get("strategy_performance", {}).items():
+                strategy_trades = strategy_metrics.get("total_trades", 0)
+                strategy_adequate = strategy_trades >= strategy_threshold
+                strategy_adequacy[strategy] = {
+                    "total_trades": strategy_trades,
+                    "adequate": strategy_adequate,
+                    "threshold": strategy_threshold
+                }
 
             validation_results["sample_adequacy_validation"] = {
                 "total_trades": total_trades,
-                "minimum_threshold_met": threshold_met,
+                "closed_trades": closed_trades,
+                "open_trades": open_trades,
+                "adequacy_level": adequacy_level,
+                "portfolio_threshold": portfolio_threshold,
+                "basic_threshold": basic_threshold,
+                "threshold_met": closed_trades >= basic_threshold,
                 "statistical_power": power,
                 "adequacy_score": adequacy_score,
-                "confidence_impact": 1.0 if threshold_met else 0.75,
+                "strategy_specific_adequacy": strategy_adequacy,
+                "confidence_impact": adequacy_score,
+                "validation_confidence": 0.95 if adequacy_score >= 0.8 else 0.75
             }
 
         except Exception as e:
             validation_results["sample_adequacy_validation"]["error"] = str(e)
 
+        # Distribution Analysis Validation - NOW IMPLEMENTED
+        try:
+            return_stats = (
+                self.analysis_data.get("performance_measurement", {})
+                .get("statistical_analysis", {})
+                .get("return_distribution", {})
+            )
+            
+            # Validate distribution parameters against reasonable bounds
+            skewness = return_stats.get("skewness", 0)
+            kurtosis = return_stats.get("kurtosis", 0)
+            normality_p_value = return_stats.get("normality_test_p_value", 1.0)
+            
+            # Distribution parameter bounds validation
+            skewness_bounds_valid = -3.0 <= skewness <= 3.0
+            kurtosis_bounds_valid = 1.0 <= kurtosis <= 10.0
+            normality_significant = normality_p_value < 0.05  # Reject normality hypothesis
+            
+            validation_results["distribution_analysis_validation"] = {
+                "skewness": skewness,
+                "kurtosis": kurtosis,
+                "normality_p_value": normality_p_value,
+                "skewness_bounds_valid": skewness_bounds_valid,
+                "kurtosis_bounds_valid": kurtosis_bounds_valid,
+                "normality_rejected": normality_significant,
+                "distribution_interpretation": (
+                    "Positive skew with moderate kurtosis" if skewness > 0.5 
+                    else "Near-normal distribution" if abs(skewness) < 0.5 
+                    else "Negative skew distribution"
+                ),
+                "validation_confidence": 0.90 if skewness_bounds_valid and kurtosis_bounds_valid else 0.70
+            }
+
+        except Exception as e:
+            validation_results["distribution_analysis_validation"]["error"] = str(e)
+
         # Advanced Metrics Validation
         try:
-            advanced_metrics = self.analysis_data.get(
-                "advanced_statistical_metrics", {}
-            )
+            advanced_metrics = self.analysis_data.get("advanced_statistical_metrics", {})
 
             # System Quality Number validation
             sqn_metrics = advanced_metrics.get("system_quality_assessment", {})
@@ -220,39 +411,52 @@ class TradeHistoryValidator:
             elif sqn_value < 0.7 and "Below" in sqn_interpretation:
                 interpretation_valid = True
             else:
-                interpretation_valid = (
-                    "Above Average" in sqn_interpretation
-                )  # Allow some flexibility
+                interpretation_valid = "Above Average" in sqn_interpretation  # Allow some flexibility
 
             validation_results["advanced_metrics_validation"] = {
                 "sqn_bounds_valid": sqn_bounds_valid,
                 "sqn_interpretation_valid": interpretation_valid,
                 "sqn_value": sqn_value,
                 "bounds_check": f"SQN {sqn_value:.2f} within valid range [-5.0, 5.0]",
-                "validation_confidence": 0.92
-                if sqn_bounds_valid and interpretation_valid
-                else 0.70,
+                "validation_confidence": 0.92 if sqn_bounds_valid and interpretation_valid else 0.70,
             }
 
         except Exception as e:
             validation_results["advanced_metrics_validation"]["error"] = str(e)
 
-        # Calculate overall statistical validation confidence
-        individual_confidences = []
-        for validation_key in validation_results:
-            if isinstance(validation_results[validation_key], dict):
-                conf = validation_results[validation_key].get(
-                    "validation_confidence", 0.0
-                )
+        # Calculate overall statistical validation confidence with weighted scoring
+        confidence_weights = {
+            "pnl_accuracy_validation": 0.30,    # Critical - P&L must be exact
+            "win_rate_validation": 0.25,        # High importance - core metric
+            "sharpe_ratio_validation": 0.20,    # High importance - risk-adjusted performance
+            "sample_adequacy_validation": 0.15,  # Medium importance - statistical power
+            "distribution_analysis_validation": 0.05,  # Lower importance - descriptive
+            "advanced_metrics_validation": 0.05   # Lower importance - additional metrics
+        }
+        
+        weighted_confidence_sum = 0.0
+        total_weight = 0.0
+        
+        for validation_key, weight in confidence_weights.items():
+            if validation_key in validation_results and isinstance(validation_results[validation_key], dict):
+                conf = validation_results[validation_key].get("validation_confidence", 0.0)
                 if conf > 0:
-                    individual_confidences.append(conf)
-
-        overall_confidence = (
-            sum(individual_confidences) / len(individual_confidences)
-            if individual_confidences
-            else 0.0
-        )
+                    weighted_confidence_sum += conf * weight
+                    total_weight += weight
+        
+        overall_confidence = weighted_confidence_sum / total_weight if total_weight > 0 else 0.0
         validation_results["overall_statistical_confidence"] = overall_confidence
+        
+        # Add critical issue flags
+        critical_issues = []
+        if validation_results.get("pnl_accuracy_validation", {}).get("tolerance_met", True) is False:
+            critical_issues.append("P&L validation failed - CSV data inconsistency detected")
+        
+        if validation_results.get("sharpe_ratio_validation", {}).get("issue_severity") == "CRITICAL":
+            critical_issues.append("Sharpe ratio calculation error - magnitude > 1.0 variance")
+        
+        validation_results["critical_issues"] = critical_issues
+        validation_results["validation_success"] = len(critical_issues) == 0
 
         return validation_results
 

@@ -451,7 +451,7 @@ const DashboardRenderer: React.FC<{
             title={chart.title}
             category={chart.category}
             description={chart.description}
-            chartType={chart.chartType as string}
+            chartType={chart.chartType}
             className="photo-booth-chart"
             titleOnly={isPortfolioHistoryPortrait}
           />

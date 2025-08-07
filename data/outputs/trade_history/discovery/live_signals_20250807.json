@@ -1,7 +1,7 @@
 {
   "portfolio": "live_signals",
   "discovery_metadata": {
-    "execution_timestamp": "2025-08-07T09:39:58.363642",
+    "execution_timestamp": "2025-08-07T11:26:15.359642",
     "protocol_version": "DASV_Phase_1_Comprehensive",
     "data_source": "/Users/colemorton/Projects/sensylate/data/raw/trade_history/live_signals.csv",
     "confidence_score": 0.8914285714285715,
@@ -19,69 +19,6 @@
     "SMA": 31
   },
   "ticker_performance": {
-    "AMD": {
-      "total_trades": 1,
-      "closed_trades": 1,
-      "active_trades": 0,
-      "total_return": 0.3616,
-      "win_rate": 1.0
-    },
-    "VTR": {
-      "total_trades": 1,
-      "closed_trades": 1,
-      "active_trades": 0,
-      "total_return": -0.0811,
-      "win_rate": 0.0
-    },
-    "ISRG": {
-      "total_trades": 1,
-      "closed_trades": 1,
-      "active_trades": 0,
-      "total_return": 0.0179,
-      "win_rate": 1.0
-    },
-    "AMZN": {
-      "total_trades": 1,
-      "closed_trades": 1,
-      "active_trades": 0,
-      "total_return": 0.1198,
-      "win_rate": 1.0
-    },
-    "ILMN": {
-      "total_trades": 1,
-      "closed_trades": 1,
-      "active_trades": 0,
-      "total_return": 0.2063,
-      "win_rate": 1.0
-    },
-    "AAPL": {
-      "total_trades": 1,
-      "closed_trades": 1,
-      "active_trades": 0,
-      "total_return": -0.0452,
-      "win_rate": 0.0
-    },
-    "HSY": {
-      "total_trades": 1,
-      "closed_trades": 1,
-      "active_trades": 0,
-      "total_return": -0.0068,
-      "win_rate": 0.0
-    },
-    "NFLX": {
-      "total_trades": 1,
-      "closed_trades": 1,
-      "active_trades": 0,
-      "total_return": 0.3673,
-      "win_rate": 1.0
-    },
-    "SMCI": {
-      "total_trades": 1,
-      "closed_trades": 1,
-      "active_trades": 0,
-      "total_return": 0.303,
-      "win_rate": 1.0
-    },
     "GME": {
       "total_trades": 1,
       "closed_trades": 1,
@@ -89,25 +26,11 @@
       "total_return": 0.0178,
       "win_rate": 1.0
     },
-    "PGR": {
+    "NFLX": {
       "total_trades": 1,
       "closed_trades": 1,
       "active_trades": 0,
-      "total_return": -0.1259,
-      "win_rate": 0.0
-    },
-    "UHS": {
-      "total_trades": 1,
-      "closed_trades": 1,
-      "active_trades": 0,
-      "total_return": -0.1502,
-      "win_rate": 0.0
-    },
-    "LYV": {
-      "total_trades": 1,
-      "closed_trades": 1,
-      "active_trades": 0,
-      "total_return": 0.1088,
+      "total_return": 0.3673,
       "win_rate": 1.0
     },
     "EQT": {
@@ -117,26 +40,47 @@
       "total_return": 0.069,
       "win_rate": 1.0
     },
-    "NVDA": {
+    "RTX": {
       "total_trades": 1,
       "closed_trades": 1,
       "active_trades": 0,
-      "total_return": 0.5565,
+      "total_return": 0.135,
       "win_rate": 1.0
     },
-    "DOCU": {
+    "ILMN": {
       "total_trades": 1,
       "closed_trades": 1,
       "active_trades": 0,
-      "total_return": 0.0,
+      "total_return": 0.2063,
+      "win_rate": 1.0
+    },
+    "AMZN": {
+      "total_trades": 1,
+      "closed_trades": 1,
+      "active_trades": 0,
+      "total_return": 0.1198,
+      "win_rate": 1.0
+    },
+    "UHS": {
+      "total_trades": 1,
+      "closed_trades": 1,
+      "active_trades": 0,
+      "total_return": -0.1502,
       "win_rate": 0.0
     },
-    "LIN": {
+    "COIN": {
       "total_trades": 1,
       "closed_trades": 1,
       "active_trades": 0,
-      "total_return": 0.0056,
-      "win_rate": 1.0
+      "total_return": -0.0059,
+      "win_rate": 0.0
+    },
+    "COST": {
+      "total_trades": 1,
+      "closed_trades": 1,
+      "active_trades": 0,
+      "total_return": -0.0169,
+      "win_rate": 0.0
     },
     "GOOGL": {
       "total_trades": 2,
@@ -145,7 +89,91 @@
       "total_return": 0.1137,
       "win_rate": 0.5
     },
+    "INTU": {
+      "total_trades": 1,
+      "closed_trades": 1,
+      "active_trades": 0,
+      "total_return": 0.2513,
+      "win_rate": 1.0
+    },
+    "NVDA": {
+      "total_trades": 1,
+      "closed_trades": 1,
+      "active_trades": 0,
+      "total_return": 0.5565,
+      "win_rate": 1.0
+    },
+    "MCO": {
+      "total_trades": 1,
+      "closed_trades": 1,
+      "active_trades": 0,
+      "total_return": 0.0284,
+      "win_rate": 1.0
+    },
+    "HSY": {
+      "total_trades": 1,
+      "closed_trades": 1,
+      "active_trades": 0,
+      "total_return": -0.0068,
+      "win_rate": 0.0
+    },
+    "CRWD": {
+      "total_trades": 1,
+      "closed_trades": 1,
+      "active_trades": 0,
+      "total_return": 0.2611,
+      "win_rate": 1.0
+    },
+    "MA": {
+      "total_trades": 2,
+      "closed_trades": 2,
+      "active_trades": 0,
+      "total_return": -0.0293,
+      "win_rate": 0.0
+    },
+    "WELL": {
+      "total_trades": 1,
+      "closed_trades": 1,
+      "active_trades": 0,
+      "total_return": 0.0927,
+      "win_rate": 1.0
+    },
+    "GD": {
+      "total_trades": 1,
+      "closed_trades": 1,
+      "active_trades": 0,
+      "total_return": 0.1038,
+      "win_rate": 1.0
+    },
+    "AAPL": {
+      "total_trades": 1,
+      "closed_trades": 1,
+      "active_trades": 0,
+      "total_return": -0.0452,
+      "win_rate": 0.0
+    },
+    "COR": {
+      "total_trades": 1,
+      "closed_trades": 1,
+      "active_trades": 0,
+      "total_return": 0.0,
+      "win_rate": 0.0
+    },
+    "LMT": {
+      "total_trades": 1,
+      "closed_trades": 1,
+      "active_trades": 0,
+      "total_return": -0.0281,
+      "win_rate": 0.0
+    },
     "DOV": {
+      "total_trades": 1,
+      "closed_trades": 1,
+      "active_trades": 0,
+      "total_return": 0.0,
+      "win_rate": 0.0
+    },
+    "DOCU": {
       "total_trades": 1,
       "closed_trades": 1,
       "active_trades": 0,
@@ -157,6 +185,34 @@
       "closed_trades": 1,
       "active_trades": 0,
       "total_return": 0.1753,
+      "win_rate": 1.0
+    },
+    "PGR": {
+      "total_trades": 1,
+      "closed_trades": 1,
+      "active_trades": 0,
+      "total_return": -0.1259,
+      "win_rate": 0.0
+    },
+    "AMD": {
+      "total_trades": 1,
+      "closed_trades": 1,
+      "active_trades": 0,
+      "total_return": 0.3616,
+      "win_rate": 1.0
+    },
+    "SHOP": {
+      "total_trades": 1,
+      "closed_trades": 1,
+      "active_trades": 0,
+      "total_return": 0.0741,
+      "win_rate": 1.0
+    },
+    "ISRG": {
+      "total_trades": 1,
+      "closed_trades": 1,
+      "active_trades": 0,
+      "total_return": 0.0179,
       "win_rate": 1.0
     },
     "FFIV": {
@@ -173,62 +229,6 @@
       "total_return": -0.0091,
       "win_rate": 0.0
     },
-    "LMT": {
-      "total_trades": 1,
-      "closed_trades": 1,
-      "active_trades": 0,
-      "total_return": -0.0281,
-      "win_rate": 0.0
-    },
-    "MCO": {
-      "total_trades": 1,
-      "closed_trades": 1,
-      "active_trades": 0,
-      "total_return": 0.0284,
-      "win_rate": 1.0
-    },
-    "COIN": {
-      "total_trades": 1,
-      "closed_trades": 1,
-      "active_trades": 0,
-      "total_return": -0.0059,
-      "win_rate": 0.0
-    },
-    "WELL": {
-      "total_trades": 1,
-      "closed_trades": 1,
-      "active_trades": 0,
-      "total_return": 0.0927,
-      "win_rate": 1.0
-    },
-    "MA": {
-      "total_trades": 2,
-      "closed_trades": 2,
-      "active_trades": 0,
-      "total_return": -0.0293,
-      "win_rate": 0.0
-    },
-    "INTU": {
-      "total_trades": 1,
-      "closed_trades": 1,
-      "active_trades": 0,
-      "total_return": 0.2513,
-      "win_rate": 1.0
-    },
-    "SHOP": {
-      "total_trades": 1,
-      "closed_trades": 1,
-      "active_trades": 0,
-      "total_return": 0.0741,
-      "win_rate": 1.0
-    },
-    "GD": {
-      "total_trades": 1,
-      "closed_trades": 1,
-      "active_trades": 0,
-      "total_return": 0.1038,
-      "win_rate": 1.0
-    },
     "TSLA": {
       "total_trades": 2,
       "closed_trades": 2,
@@ -236,33 +236,33 @@
       "total_return": 0.0763,
       "win_rate": 0.5
     },
-    "COST": {
+    "SMCI": {
       "total_trades": 1,
       "closed_trades": 1,
       "active_trades": 0,
-      "total_return": -0.0169,
-      "win_rate": 0.0
-    },
-    "CRWD": {
-      "total_trades": 1,
-      "closed_trades": 1,
-      "active_trades": 0,
-      "total_return": 0.2611,
+      "total_return": 0.303,
       "win_rate": 1.0
     },
-    "RTX": {
+    "VTR": {
       "total_trades": 1,
       "closed_trades": 1,
       "active_trades": 0,
-      "total_return": 0.135,
+      "total_return": -0.0811,
+      "win_rate": 0.0
+    },
+    "LYV": {
+      "total_trades": 1,
+      "closed_trades": 1,
+      "active_trades": 0,
+      "total_return": 0.1088,
       "win_rate": 1.0
     },
-    "COR": {
+    "LIN": {
       "total_trades": 1,
       "closed_trades": 1,
       "active_trades": 0,
-      "total_return": 0.0,
-      "win_rate": 0.0
+      "total_return": 0.0056,
+      "win_rate": 1.0
     }
   },
   "performance_metrics": {
@@ -287,81 +287,51 @@
     "validation_issues": []
   },
   "local_data_integration": {
-    "execution_timestamp": "2025-08-07T09:39:58.363642",
+    "execution_timestamp": "2025-08-07T11:26:15.359642",
     "total_tickers": 35,
     "fundamental_analysis_coverage": {
-      "AMD": {
-        "file_path": "/Users/colemorton/Projects/sensylate/data/outputs/fundamental_analysis/AMD_20250710.md",
-        "file_date": "2025-07-10T00:00:00",
-        "age_days": 28
-      },
-      "AMZN": {
-        "file_path": "/Users/colemorton/Projects/sensylate/data/outputs/fundamental_analysis/AMZN_20250722.md",
-        "file_date": "2025-07-22T00:00:00",
-        "age_days": 16
-      },
-      "AAPL": {
-        "file_path": "/Users/colemorton/Projects/sensylate/data/outputs/fundamental_analysis/AAPL_20250711.md",
-        "file_date": "2025-07-11T00:00:00",
-        "age_days": 27
+      "GME": {
+        "file_path": "/Users/colemorton/Projects/sensylate/data/outputs/fundamental_analysis/GME_20250630.md",
+        "file_date": "2025-06-30T00:00:00",
+        "age_days": 38
       },
       "NFLX": {
         "file_path": "/Users/colemorton/Projects/sensylate/data/outputs/fundamental_analysis/NFLX_20250731.md",
         "file_date": "2025-07-31T00:00:00",
         "age_days": 7
       },
-      "SMCI": {
-        "file_path": "/Users/colemorton/Projects/sensylate/data/outputs/fundamental_analysis/SMCI_20250731.md",
-        "file_date": "2025-07-31T00:00:00",
-        "age_days": 7
-      },
-      "GME": {
-        "file_path": "/Users/colemorton/Projects/sensylate/data/outputs/fundamental_analysis/GME_20250630.md",
-        "file_date": "2025-06-30T00:00:00",
-        "age_days": 38
-      },
-      "NVDA": {
-        "file_path": "/Users/colemorton/Projects/sensylate/data/outputs/fundamental_analysis/NVDA_20250712.md",
-        "file_date": "2025-07-12T00:00:00",
-        "age_days": 26
-      },
-      "DOCU": {
-        "file_path": "/Users/colemorton/Projects/sensylate/data/outputs/fundamental_analysis/DOCU_20250718.md",
-        "file_date": "2025-07-18T00:00:00",
-        "age_days": 20
-      },
-      "GOOGL": {
-        "file_path": "/Users/colemorton/Projects/sensylate/data/outputs/fundamental_analysis/GOOGL_20250714.md",
-        "file_date": "2025-07-14T00:00:00",
-        "age_days": 24
-      },
-      "DOV": {
-        "file_path": "/Users/colemorton/Projects/sensylate/data/outputs/fundamental_analysis/DOV_20250627.md",
-        "file_date": "2025-06-27T00:00:00",
-        "age_days": 41
-      },
-      "QCOM": {
-        "file_path": "/Users/colemorton/Projects/sensylate/data/outputs/fundamental_analysis/QCOM_20250625.md",
-        "file_date": "2025-06-25T00:00:00",
-        "age_days": 43
+      "AMZN": {
+        "file_path": "/Users/colemorton/Projects/sensylate/data/outputs/fundamental_analysis/AMZN_20250722.md",
+        "file_date": "2025-07-22T00:00:00",
+        "age_days": 16
       },
       "COIN": {
         "file_path": "/Users/colemorton/Projects/sensylate/data/outputs/fundamental_analysis/COIN_20250804.md",
         "file_date": "2025-08-04T00:00:00",
         "age_days": 3
       },
-      "WELL": {
-        "file_path": "/Users/colemorton/Projects/sensylate/data/outputs/fundamental_analysis/WELL_20250620.md",
-        "file_date": "2025-06-20T00:00:00",
-        "age_days": 48
+      "GOOGL": {
+        "file_path": "/Users/colemorton/Projects/sensylate/data/outputs/fundamental_analysis/GOOGL_20250714.md",
+        "file_date": "2025-07-14T00:00:00",
+        "age_days": 24
+      },
+      "NVDA": {
+        "file_path": "/Users/colemorton/Projects/sensylate/data/outputs/fundamental_analysis/NVDA_20250712.md",
+        "file_date": "2025-07-12T00:00:00",
+        "age_days": 26
       },
       "MA": {
         "file_path": "/Users/colemorton/Projects/sensylate/data/outputs/fundamental_analysis/MA_20250702.md",
         "file_date": "2025-07-02T00:00:00",
         "age_days": 36
       },
-      "TSLA": {
-        "file_path": "/Users/colemorton/Projects/sensylate/data/outputs/fundamental_analysis/TSLA_20250711.md",
+      "WELL": {
+        "file_path": "/Users/colemorton/Projects/sensylate/data/outputs/fundamental_analysis/WELL_20250620.md",
+        "file_date": "2025-06-20T00:00:00",
+        "age_days": 48
+      },
+      "AAPL": {
+        "file_path": "/Users/colemorton/Projects/sensylate/data/outputs/fundamental_analysis/AAPL_20250711.md",
         "file_date": "2025-07-11T00:00:00",
         "age_days": 27
       },
@@ -369,25 +339,55 @@
         "file_path": "/Users/colemorton/Projects/sensylate/data/outputs/fundamental_analysis/COR_20250617.md",
         "file_date": "2025-06-17T00:00:00",
         "age_days": 51
+      },
+      "DOV": {
+        "file_path": "/Users/colemorton/Projects/sensylate/data/outputs/fundamental_analysis/DOV_20250627.md",
+        "file_date": "2025-06-27T00:00:00",
+        "age_days": 41
+      },
+      "DOCU": {
+        "file_path": "/Users/colemorton/Projects/sensylate/data/outputs/fundamental_analysis/DOCU_20250718.md",
+        "file_date": "2025-07-18T00:00:00",
+        "age_days": 20
+      },
+      "AMD": {
+        "file_path": "/Users/colemorton/Projects/sensylate/data/outputs/fundamental_analysis/AMD_20250710.md",
+        "file_date": "2025-07-10T00:00:00",
+        "age_days": 28
+      },
+      "QCOM": {
+        "file_path": "/Users/colemorton/Projects/sensylate/data/outputs/fundamental_analysis/QCOM_20250625.md",
+        "file_date": "2025-06-25T00:00:00",
+        "age_days": 43
+      },
+      "TSLA": {
+        "file_path": "/Users/colemorton/Projects/sensylate/data/outputs/fundamental_analysis/TSLA_20250711.md",
+        "file_date": "2025-07-11T00:00:00",
+        "age_days": 27
+      },
+      "SMCI": {
+        "file_path": "/Users/colemorton/Projects/sensylate/data/outputs/fundamental_analysis/SMCI_20250731.md",
+        "file_date": "2025-07-31T00:00:00",
+        "age_days": 7
       }
     },
     "tickers_with_local_data": [
-      "AMD",
-      "AMZN",
-      "AAPL",
-      "NFLX",
-      "SMCI",
       "GME",
-      "NVDA",
-      "DOCU",
-      "GOOGL",
-      "DOV",
-      "QCOM",
+      "NFLX",
+      "AMZN",
       "COIN",
-      "WELL",
+      "GOOGL",
+      "NVDA",
       "MA",
+      "WELL",
+      "AAPL",
+      "COR",
+      "DOV",
+      "DOCU",
+      "AMD",
+      "QCOM",
       "TSLA",
-      "COR"
+      "SMCI"
     ],
     "coverage_statistics": {
       "fundamental_analysis_coverage": 0.45714285714285713,
