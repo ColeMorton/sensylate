@@ -1,0 +1,504 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sensylate.com/schemas/trade_history_synthesis.json",
+  "title": "Trade History Synthesis Schema",
+  "description": "JSON Schema for validating trade history synthesis phase outputs with institutional-grade report generation standards",
+  "type": "object",
+  "required": [
+    "portfolio",
+    "synthesis_metadata",
+    "key_metrics",
+    "report_data_structures",
+    "data_sources",
+    "next_phase_inputs"
+  ],
+  "additionalProperties": true,
+  "properties": {
+    "portfolio": {
+      "type": "string",
+      "description": "Portfolio identifier for trade history synthesis"
+    },
+    "synthesis_metadata": {
+      "type": "object",
+      "description": "Trade synthesis execution metadata and quality metrics",
+      "required": ["execution_timestamp", "confidence_score", "reports_ready"],
+      "additionalProperties": true,
+      "properties": {
+        "execution_timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO 8601 timestamp of synthesis execution"
+        },
+        "confidence_score": {
+          "type": "number",
+          "minimum": 0.5,
+          "maximum": 1.0,
+          "description": "Overall synthesis confidence (institutional threshold: >0.7)"
+        },
+        "reports_ready": {
+          "type": "boolean",
+          "const": true,
+          "description": "Whether reports are ready for generation"
+        }
+      }
+    },
+    "key_metrics": {
+      "type": "object",
+      "description": "Extracted key metrics for report generation",
+      "required": ["portfolio_overview", "performance_summary", "confidence_assessment"],
+      "additionalProperties": true,
+      "properties": {
+        "portfolio_overview": {
+          "type": "object",
+          "description": "Portfolio composition and trade statistics",
+          "required": ["total_trades", "closed_trades", "active_trades"],
+          "properties": {
+            "total_trades": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Total number of trades in portfolio"
+            },
+            "closed_trades": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Number of closed/completed trades"
+            },
+            "active_trades": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Number of active/open trades"
+            },
+            "unique_tickers": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Number of unique ticker symbols traded"
+            }
+          }
+        },
+        "performance_summary": {
+          "type": "object",
+          "description": "Core performance metrics for reporting",
+          "required": ["win_rate", "total_wins", "total_losses", "total_pnl"],
+          "properties": {
+            "win_rate": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "description": "Overall win rate from closed trades"
+            },
+            "total_wins": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Number of winning trades"
+            },
+            "total_losses": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Number of losing trades"
+            },
+            "total_pnl": {
+              "type": "number",
+              "description": "Total profit and loss in base currency"
+            },
+            "profit_factor": {
+              "type": "number",
+              "minimum": 0,
+              "description": "Profit factor metric"
+            },
+            "expectancy": {
+              "type": "number",
+              "description": "Expected value per trade"
+            }
+          }
+        },
+        "statistical_analysis": {
+          "type": "object",
+          "description": "Statistical analysis data for reporting",
+          "additionalProperties": true
+        },
+        "signal_effectiveness": {
+          "type": "object",
+          "description": "Signal effectiveness analysis data for reporting",
+          "additionalProperties": true
+        },
+        "confidence_assessment": {
+          "type": "object",
+          "description": "Confidence assessment for synthesis quality",
+          "required": ["overall_confidence"],
+          "properties": {
+            "overall_confidence": {
+              "type": "number",
+              "minimum": 0.5,
+              "maximum": 1.0,
+              "description": "Overall analysis confidence score"
+            },
+            "sample_size_adequate": {
+              "type": "boolean",
+              "description": "Whether sample size meets adequacy requirements"
+            },
+            "statistical_significance": {
+              "type": "boolean",
+              "description": "Whether results achieve statistical significance"
+            }
+          }
+        }
+      }
+    },
+    "report_data_structures": {
+      "type": "object",
+      "description": "Data structures optimized for different report types",
+      "required": ["executive_dashboard", "historical_analysis", "live_monitoring"],
+      "additionalProperties": true,
+      "properties": {
+        "executive_dashboard": {
+          "type": "object",
+          "description": "Executive-level dashboard data structure",
+          "required": ["key_metrics", "portfolio_health_score"],
+          "properties": {
+            "key_metrics": {
+              "type": "object",
+              "description": "Key metrics for executive reporting",
+              "additionalProperties": true
+            },
+            "portfolio_health_score": {
+              "type": "object",
+              "description": "Portfolio health assessment",
+              "required": ["score", "interpretation"],
+              "properties": {
+                "score": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100,
+                  "description": "Portfolio health score (0-100)"
+                },
+                "interpretation": {
+                  "type": "string",
+                  "enum": ["Excellent", "Good", "Fair", "Needs Improvement"],
+                  "description": "Health score interpretation"
+                }
+              }
+            },
+            "critical_issues": {
+              "type": "array",
+              "description": "Critical issues requiring attention",
+              "items": {
+                "type": "object",
+                "required": ["priority", "issue", "details", "recommendation"],
+                "properties": {
+                  "priority": {
+                    "type": "string",
+                    "enum": ["HIGH", "MEDIUM", "LOW"],
+                    "description": "Issue priority level"
+                  },
+                  "issue": {
+                    "type": "string",
+                    "description": "Issue description"
+                  },
+                  "details": {
+                    "type": "string",
+                    "description": "Detailed issue information"
+                  },
+                  "recommendation": {
+                    "type": "string",
+                    "description": "Recommended action"
+                  }
+                }
+              }
+            },
+            "trend_indicators": {
+              "type": "object",
+              "description": "Trend indicators for key metrics",
+              "additionalProperties": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "historical_analysis": {
+          "type": "object",
+          "description": "Historical performance analysis data structure",
+          "required": ["closed_trades_summary"],
+          "properties": {
+            "closed_trades_summary": {
+              "type": "object",
+              "description": "Summary of closed trades analysis",
+              "required": ["count"],
+              "properties": {
+                "count": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "description": "Number of closed trades analyzed"
+                },
+                "top_winners": {
+                  "type": "array",
+                  "description": "Top performing winning trades",
+                  "items": {
+                    "type": "object",
+                    "required": ["ticker", "pnl"],
+                    "properties": {
+                      "ticker": {
+                        "type": "string",
+                        "description": "Ticker symbol"
+                      },
+                      "strategy": {
+                        "type": "string",
+                        "description": "Trading strategy used"
+                      },
+                      "pnl": {
+                        "type": "number",
+                        "description": "Profit/loss amount"
+                      },
+                      "return_pct": {
+                        "type": "number",
+                        "description": "Return percentage"
+                      },
+                      "duration_days": {
+                        "type": "number",
+                        "minimum": 0,
+                        "description": "Trade duration in days"
+                      }
+                    }
+                  }
+                },
+                "top_losers": {
+                  "type": "array",
+                  "description": "Top performing losing trades",
+                  "items": {
+                    "type": "object",
+                    "required": ["ticker", "pnl"],
+                    "properties": {
+                      "ticker": {
+                        "type": "string",
+                        "description": "Ticker symbol"
+                      },
+                      "strategy": {
+                        "type": "string",
+                        "description": "Trading strategy used"
+                      },
+                      "pnl": {
+                        "type": "number",
+                        "description": "Profit/loss amount"
+                      },
+                      "return_pct": {
+                        "type": "number",
+                        "description": "Return percentage"
+                      },
+                      "duration_days": {
+                        "type": "number",
+                        "minimum": 0,
+                        "description": "Trade duration in days"
+                      }
+                    }
+                  }
+                },
+                "strategy_breakdown": {
+                  "type": "object",
+                  "description": "Performance breakdown by strategy",
+                  "additionalProperties": {
+                    "type": "object",
+                    "required": ["total_trades", "win_rate", "total_pnl"],
+                    "properties": {
+                      "total_trades": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "description": "Total trades for this strategy"
+                      },
+                      "win_rate": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1,
+                        "description": "Win rate for this strategy"
+                      },
+                      "total_pnl": {
+                        "type": "number",
+                        "description": "Total PnL for this strategy"
+                      },
+                      "avg_return": {
+                        "type": "number",
+                        "description": "Average return for this strategy"
+                      }
+                    }
+                  }
+                },
+                "monthly_performance": {
+                  "type": "object",
+                  "description": "Monthly performance analysis",
+                  "additionalProperties": true
+                }
+              }
+            },
+            "statistical_summary": {
+              "type": "object",
+              "description": "Statistical analysis summary for historical reporting",
+              "additionalProperties": true
+            },
+            "confidence_disclosure": {
+              "type": "object",
+              "description": "Confidence and limitation disclosures",
+              "required": ["overall_confidence"],
+              "properties": {
+                "overall_confidence": {
+                  "type": "number",
+                  "minimum": 0.5,
+                  "maximum": 1.0,
+                  "description": "Overall confidence score"
+                },
+                "sample_adequacy": {
+                  "type": "boolean",
+                  "description": "Whether sample size is adequate"
+                },
+                "statistical_significance": {
+                  "type": "boolean",
+                  "description": "Whether results are statistically significant"
+                },
+                "limitations": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "List of analysis limitations"
+                }
+              }
+            }
+          }
+        },
+        "live_monitoring": {
+          "type": "object",
+          "description": "Live monitoring data structure for active positions",
+          "required": ["active_positions"],
+          "properties": {
+            "active_positions": {
+              "type": "object",
+              "description": "Active positions summary",
+              "required": ["count"],
+              "properties": {
+                "count": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "description": "Number of active positions"
+                },
+                "positions_summary": {
+                  "type": "array",
+                  "description": "Summary of active positions",
+                  "items": {
+                    "type": "object",
+                    "required": ["ticker"],
+                    "properties": {
+                      "ticker": {
+                        "type": "string",
+                        "description": "Ticker symbol"
+                      },
+                      "strategy": {
+                        "type": "string",
+                        "description": "Trading strategy"
+                      },
+                      "entry_date": {
+                        "type": "string",
+                        "description": "Entry date"
+                      },
+                      "days_held": {
+                        "type": "number",
+                        "minimum": 0,
+                        "description": "Days position has been held"
+                      },
+                      "unrealized_pnl": {
+                        "type": "number",
+                        "description": "Unrealized profit/loss"
+                      }
+                    }
+                  }
+                },
+                "risk_indicators": {
+                  "type": "object",
+                  "description": "Portfolio risk indicators",
+                  "required": ["position_count", "concentration_risk", "status"],
+                  "properties": {
+                    "position_count": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "description": "Current position count"
+                    },
+                    "concentration_risk": {
+                      "type": "string",
+                      "enum": ["LOW", "MEDIUM", "HIGH"],
+                      "description": "Concentration risk level"
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": ["ACTIVE", "NO_POSITIONS"],
+                      "description": "Portfolio status"
+                    }
+                  }
+                }
+              }
+            },
+            "real_time_metrics": {
+              "type": "object",
+              "description": "Real-time portfolio metrics",
+              "properties": {
+                "platform_status": {
+                  "type": "string",
+                  "description": "Platform operational status"
+                },
+                "last_signal": {
+                  "type": "object",
+                  "description": "Information about the last signal",
+                  "additionalProperties": true
+                },
+                "market_context": {
+                  "type": "object",
+                  "description": "Current market context information",
+                  "additionalProperties": true
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "data_sources": {
+      "type": "object",
+      "description": "Source data files used in synthesis",
+      "required": ["discovery_file", "analysis_file", "csv_source"],
+      "properties": {
+        "discovery_file": {
+          "type": "string",
+          "description": "Path to discovery phase output file"
+        },
+        "analysis_file": {
+          "type": "string",
+          "description": "Path to analysis phase output file"
+        },
+        "csv_source": {
+          "type": "string",
+          "description": "Path to source CSV data file"
+        }
+      }
+    },
+    "next_phase_inputs": {
+      "type": "object",
+      "description": "Synthesis readiness for validation phase",
+      "required": ["validation_ready", "reports_generated"],
+      "additionalProperties": true,
+      "properties": {
+        "validation_ready": {
+          "type": "boolean",
+          "const": true,
+          "description": "Whether synthesis is ready for validation phase"
+        },
+        "reports_generated": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5,
+          "description": "Number of report structures generated"
+        },
+        "synthesis_confidence": {
+          "type": "number",
+          "minimum": 0.5,
+          "maximum": 1.0,
+          "description": "Overall synthesis confidence score"
+        }
+      }
+    }
+  }
+}

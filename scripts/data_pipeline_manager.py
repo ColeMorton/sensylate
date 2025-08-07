@@ -80,9 +80,9 @@ class DryRunReport:
             "reason": reason,
             "estimated_time": estimated_time,
             "projected_row_count": row_count,
-            "estimated_size_mb": round(row_count * 0.05 / 1000, 2)
-            if row_count > 0
-            else 0.0,
+            "estimated_size_mb": (
+                round(row_count * 0.05 / 1000, 2) if row_count > 0 else 0.0
+            ),
         }
 
     def add_operation(self, operation: str, duration: float, details: str = ""):
@@ -664,9 +664,11 @@ class DataPipelineManager:
                     is_available = dashboard_script.exists()
                     availability_details[service_name] = {
                         "available": is_available,
-                        "error": None
-                        if is_available
-                        else f"Dashboard script not found: {dashboard_script}",
+                        "error": (
+                            None
+                            if is_available
+                            else f"Dashboard script not found: {dashboard_script}"
+                        ),
                     }
                     if not is_available:
                         failed_services.append(service_name)
@@ -679,9 +681,11 @@ class DataPipelineManager:
 
                     availability_details[service_name] = {
                         "available": is_available,
-                        "error": None
-                        if is_available
-                        else f"Service {service_name} not available",
+                        "error": (
+                            None
+                            if is_available
+                            else f"Service {service_name} not available"
+                        ),
                     }
 
                     if not is_available:

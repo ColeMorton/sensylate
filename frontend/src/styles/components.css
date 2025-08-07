@@ -308,3 +308,13 @@
     white-space: normal;
   }
 }
+
+/* Photo Booth Export Styles */
+/* Remove rounded borders and shadows for clean export screenshots */
+.photo-booth-export .photo-booth-chart {
+  @apply !rounded-none !shadow-none;
+}
+
+.photo-booth-export .photo-booth-chart > div {
+  @apply !rounded-none !shadow-none;
+}

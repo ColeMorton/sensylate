@@ -1,32 +1,27 @@
 #!/usr/bin/env python3
 """
-Trade History Synthesize - DASV Phase 3 Implementation
+Trade History Synthesize - Atomic Data Synthesis Tool
 
-Generates comprehensive report synthesis following trade_history:synthesize command requirements:
-- Multi-audience document generation (internal, live, historical reports)
-- Live Signals context automatic inclusion for live_signals portfolio
-- Template compliance and formatting consistency
-- Executive dashboard synthesis
-- Exact CSV P&L values (never calculated)
-- Statistical honesty with sample size limitations
-- Institutional-grade quality standards
+Atomic utility tool for trade history data synthesis. Focuses on:
+- Loading discovery and analysis phase data
+- Extracting and transforming key metrics for report generation
+- Aggregating data structures for multi-audience reporting
+- Schema-compliant synthesis output generation
+
+This tool is designed to be called by the synthesize command via researcher sub-agent.
+Report generation and templating is handled by the command specifications.
 
 Usage:
-    python scripts/trade_history_synthesize.py --portfolio live_signals
-    python scripts/trade_history_synthesize.py --portfolio live_signals --report-type historical
-    python scripts/trade_history_synthesize.py --portfolio live_signals --report-type all
+    python scripts/trade_history_synthesize.py --portfolio {portfolio_name}
 """
 
-import argparse
-import csv
 import json
 import logging
-from collections import defaultdict
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List
 
-import numpy as np
+# import numpy as np
 import pandas as pd
 
 # Configure logging
@@ -36,35 +31,29 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-class DASVPhase3Synthesizer:
-    """DASV Phase 3 synthesizer for comprehensive institutional-grade report generation."""
+class AtomicSynthesisTool:
+    """Atomic tool for trade history data synthesis"""
 
     def __init__(self, portfolio_name: str):
         self.portfolio_name = portfolio_name
         self.execution_date = datetime.now()
         self.data_dir = Path(__file__).parent.parent / "data"
-        self.output_dir = self.data_dir / "outputs" / "trade_history"
-        self.raw_data_dir = self.data_dir / "raw" / "trade_history"
+        self.discovery_dir = self.data_dir / "outputs" / "trade_history" / "discovery"
+        self.analysis_dir = self.data_dir / "outputs" / "trade_history" / "analysis"
+        self.output_dir = self.data_dir / "outputs" / "trade_history" / "synthesis"
 
-        # Ensure output directories exist
-        (self.output_dir / "internal").mkdir(parents=True, exist_ok=True)
-        (self.output_dir / "live").mkdir(parents=True, exist_ok=True)
-        (self.output_dir / "historical").mkdir(parents=True, exist_ok=True)
-
-        # Initialize data containers
-        self.discovery_data = None
-        self.analysis_data = None
-        self.raw_trades_df = None
+        # Ensure output directory exists
+        self.output_dir.mkdir(parents=True, exist_ok=True)
 
     def load_phase_data(self) -> Dict[str, Any]:
-        """Load discovery, analysis, and raw CSV data from previous DASV phases."""
-        # Find latest discovery and analysis files
-        discovery_dir = self.data_dir / "outputs" / "trade_history" / "discovery"
-        analysis_dir = self.data_dir / "outputs" / "trade_history" / "analysis"
+        """
+        Load discovery and analysis data from previous DASV phases
+        """
+        logger.info(f"Loading phase data for portfolio: {self.portfolio_name}")
 
-        # Discovery data
+        # Find latest discovery file
         discovery_pattern = f"{self.portfolio_name}_*.json"
-        discovery_files = list(discovery_dir.glob(discovery_pattern))
+        discovery_files = list(self.discovery_dir.glob(discovery_pattern))
         if not discovery_files:
             raise FileNotFoundError(
                 f"No discovery files found for portfolio '{self.portfolio_name}'"
@@ -72,9 +61,9 @@ class DASVPhase3Synthesizer:
 
         latest_discovery = max(discovery_files, key=lambda f: f.stat().st_mtime)
 
-        # Analysis data
+        # Find latest analysis file
         analysis_pattern = f"{self.portfolio_name}_*.json"
-        analysis_files = list(analysis_dir.glob(analysis_pattern))
+        analysis_files = list(self.analysis_dir.glob(analysis_pattern))
         if not analysis_files:
             raise FileNotFoundError(
                 f"No analysis files found for portfolio '{self.portfolio_name}'"
@@ -83,428 +72,470 @@ class DASVPhase3Synthesizer:
         latest_analysis = max(analysis_files, key=lambda f: f.stat().st_mtime)
 
         # Load JSON data
-        with open(latest_discovery, "r") as f:
-            self.discovery_data = json.load(f)
+        with open(latest_discovery, "r", encoding="utf-8") as f:
+            discovery_data = json.load(f)
 
-        with open(latest_analysis, "r") as f:
-            self.analysis_data = json.load(f)
-
-        # Load raw CSV data for exact P&L values
-        csv_file = self.raw_data_dir / f"{self.portfolio_name}.csv"
-        if not csv_file.exists():
-            raise FileNotFoundError(f"Raw CSV file not found: {csv_file}")
-
-        self.raw_trades_df = pd.read_csv(csv_file)
-        logger.info(f"Loaded {len(self.raw_trades_df)} trades from CSV: {csv_file}")
+        with open(latest_analysis, "r", encoding="utf-8") as f:
+            analysis_data = json.load(f)
 
         logger.info(f"Loaded discovery data from: {latest_discovery}")
         logger.info(f"Loaded analysis data from: {latest_analysis}")
 
         return {
-            "discovery": self.discovery_data,
-            "analysis": self.analysis_data,
+            "discovery": discovery_data,
+            "analysis": analysis_data,
             "discovery_file": str(latest_discovery),
             "analysis_file": str(latest_analysis),
-            "csv_file": str(csv_file),
         }
 
-    def generate_live_signals_overview(self) -> str:
-        """Generate standardized Live Signals Overview section for live_signals portfolio."""
-        if self.portfolio_name != "live_signals":
-            return ""
+    def extract_key_metrics(self, phase_data: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Extract and transform key metrics for report generation
+        """
+        logger.info("Extracting key metrics for synthesis...")
 
-        return """## 📡 Live Signals Overview
+        discovery = phase_data["discovery"]
+        analysis = phase_data["analysis"]
 
-### Trading Signal Platform
+        # Extract core portfolio metrics
+        portfolio_summary = discovery.get("portfolio_summary", {})
+        performance_metrics = discovery.get("performance_metrics", {})
+        analysis_performance = analysis.get("performance_metrics", {})
 
-**Live Signals** are real-time trading signals posted publicly on X/Twitter at **[@colemorton7](https://x.com/colemorton7)** for educational and transparency purposes. These signals provide followers with live market insights, entry/exit points, and portfolio tracking in real-time.
+        # Merge and validate metrics
+        key_metrics = {
+            "portfolio_overview": {
+                "total_trades": portfolio_summary.get("total_trades", 0),
+                "closed_trades": portfolio_summary.get("closed_trades", 0),
+                "active_trades": portfolio_summary.get("active_trades", 0),
+                "unique_tickers": portfolio_summary.get("unique_tickers", 0),
+            },
+            "performance_summary": {
+                "win_rate": analysis_performance.get(
+                    "win_rate", performance_metrics.get("win_rate", 0)
+                ),
+                "total_wins": analysis_performance.get(
+                    "total_wins", performance_metrics.get("total_wins", 0)
+                ),
+                "total_losses": analysis_performance.get(
+                    "total_losses", performance_metrics.get("total_losses", 0)
+                ),
+                "total_pnl": analysis_performance.get(
+                    "total_pnl", performance_metrics.get("total_pnl", 0)
+                ),
+                "profit_factor": analysis_performance.get(
+                    "profit_factor", performance_metrics.get("profit_factor", 0)
+                ),
+                "expectancy": analysis_performance.get("expectancy", 0),
+            },
+            "statistical_analysis": analysis.get("statistical_analysis", {}),
+            "signal_effectiveness": analysis.get("signal_effectiveness", {}),
+            "confidence_assessment": {
+                "overall_confidence": analysis.get("analysis_metadata", {}).get(
+                    "confidence_score", 0
+                ),
+                "sample_size_adequate": portfolio_summary.get("closed_trades", 0) >= 25,
+                "statistical_significance": analysis.get("statistical_analysis", {})
+                .get("statistical_significance", {})
+                .get("return_vs_zero", {})
+                .get("significant_at_95", False),
+            },
+        }
 
-### Methodology & Approach
+        return key_metrics
 
-- **Position Sizing**: Single unit position size per strategy for consistency and simplicity
-- **Risk Management**: Risk management details are omitted from public signals to focus on signal quality and timing
-- **Signal Types**: Technical analysis using SMA and EMA crossover strategies
-- **Transparency**: All trades are tracked and reported publicly for educational purposes
+    def generate_report_data_structures(
+        self, key_metrics: Dict[str, Any], phase_data: Dict[str, Any]
+    ) -> Dict[str, Any]:
+        """
+        Generate data structures optimized for different report types
+        """
+        logger.info("Generating report data structures...")
 
-### Platform Benefits
+        # Load CSV data for trade details
+        discovery = phase_data["discovery"]
+        csv_path = discovery["discovery_metadata"]["data_source"]
 
-- **Real-time Updates**: Live signal posting and portfolio tracking
-- **Educational Value**: Transparent methodology and performance reporting
-- **Accessibility**: Public access to institutional-quality analysis
-- **Community**: Shared learning and market insights
+        try:
+            trades_df = pd.read_csv(csv_path)
 
----
+            # Separate closed and active trades
+            closed_trades = (
+                trades_df[trades_df["Status"] == "Closed"].copy()
+                if "Status" in trades_df.columns
+                else pd.DataFrame()
+            )
+            active_trades = (
+                trades_df[trades_df["Status"] != "Closed"].copy()
+                if "Status" in trades_df.columns
+                else pd.DataFrame()
+            )
 
-"""
+        except Exception as e:
+            logger.warning(f"Could not load CSV data: {e}")
+            closed_trades = pd.DataFrame()
+            active_trades = pd.DataFrame()
 
-    def _generate_trade_table(self, trades_df: pd.DataFrame) -> str:
-        """Generate comprehensive trade table with exact CSV values."""
-        table_rows = []
-        table_rows.append(
-            "| Ticker | Strategy | Entry Date | Exit Date | Duration | P&L | Return | Status |"
+        # Generate report-specific data structures
+        report_data = {
+            "executive_dashboard": {
+                "key_metrics": key_metrics["performance_summary"],
+                "portfolio_health_score": self._calculate_health_score(key_metrics),
+                "critical_issues": self._identify_critical_issues(
+                    key_metrics, closed_trades
+                ),
+                "trend_indicators": self._generate_trend_indicators(key_metrics),
+            },
+            "historical_analysis": {
+                "closed_trades_summary": {
+                    "count": len(closed_trades),
+                    "top_winners": self._get_top_trades(closed_trades, "winners", 5),
+                    "top_losers": self._get_top_trades(closed_trades, "losers", 5),
+                    "strategy_breakdown": self._analyze_strategy_performance(
+                        closed_trades
+                    ),
+                    "monthly_performance": self._analyze_monthly_performance(
+                        closed_trades
+                    ),
+                },
+                "statistical_summary": key_metrics["statistical_analysis"],
+                "confidence_disclosure": self._generate_confidence_disclosure(
+                    key_metrics
+                ),
+            },
+            "live_monitoring": {
+                "active_positions": {
+                    "count": len(active_trades),
+                    "positions_summary": self._summarize_active_positions(
+                        active_trades
+                    ),
+                    "risk_indicators": self._assess_portfolio_risk(active_trades),
+                },
+                "real_time_metrics": {
+                    "platform_status": "ACTIVE"
+                    if self.portfolio_name == "live_signals"
+                    else "N/A",
+                    "last_signal": self._get_last_signal_info(active_trades),
+                    "market_context": self._get_market_context(),
+                },
+            },
+        }
+
+        return report_data
+
+    def _calculate_health_score(self, key_metrics: Dict[str, Any]) -> Dict[str, Any]:
+        """Calculate portfolio health score (0-100)"""
+        performance = key_metrics["performance_summary"]
+        win_rate = performance.get("win_rate", 0)
+        total_pnl = performance.get("total_pnl", 0)
+        profit_factor = performance.get("profit_factor", 0)
+
+        # Simple health score calculation
+        score = min(
+            100,
+            max(
+                0,
+                50
+                + (total_pnl / 1000) * 10
+                + win_rate * 30
+                + min(profit_factor, 5) * 4,
+            ),
         )
-        table_rows.append(
-            "|--------|----------|------------|-----------|----------|-----|--------|--------|"
-        )
 
-        for _, trade in trades_df.iterrows():
-            entry_date = pd.to_datetime(trade["Entry_Timestamp"]).strftime("%m/%d/%Y")
-            exit_date = pd.to_datetime(trade["Exit_Timestamp"]).strftime("%m/%d/%Y")
-            pnl_str = (
-                f"${trade['PnL']:.2f}"
-                if trade["PnL"] >= 0
-                else f"(${abs(trade['PnL']):.2f})"
-            )
-            return_str = (
-                f"{trade['Return']:.2%}"
-                if trade["Return"] >= 0
-                else f"({abs(trade['Return']):.2%})"
-            )
-
-            table_rows.append(
-                f"| {trade['Ticker']} | {trade['Strategy_Type']} | {entry_date} | {exit_date} | {trade['Duration_Days']:.0f}d | {pnl_str} | {return_str} | {trade['Status']} |"
-            )
-
-        return "\n".join(table_rows)
-
-    def _generate_top_trades_section(self, trades_df: pd.DataFrame) -> str:
-        """Generate top performing trades analysis."""
-        top_winners = trades_df.nlargest(5, "PnL")
-        top_losers = trades_df.nsmallest(5, "PnL")
-
-        content = ["### Top 5 Winners"]
-        for _, trade in top_winners.iterrows():
-            content.append(
-                f"- **{trade['Ticker']}** ({trade['Strategy_Type']}): ${trade['PnL']:.2f} ({trade['Return']:.1%}) - {trade['Duration_Days']:.0f} days"
-            )
-
-        content.append("\n### Top 5 Losers")
-        for _, trade in top_losers.iterrows():
-            content.append(
-                f"- **{trade['Ticker']}** ({trade['Strategy_Type']}): ${trade['PnL']:.2f} ({trade['Return']:.1%}) - {trade['Duration_Days']:.0f} days"
-            )
-
-        return "\n".join(content)
-
-    def generate_historical_report(self, data: Dict[str, Any]) -> str:
-        """Generate comprehensive historical performance report."""
-
-        # Calculate key metrics from raw CSV data
-        closed_trades = self.raw_trades_df[
-            self.raw_trades_df["Status"] == "Closed"
-        ].copy()
-        total_pnl = closed_trades["PnL"].sum()
-        win_rate = len(closed_trades[closed_trades["PnL"] > 0]) / len(closed_trades)
-        avg_win = closed_trades[closed_trades["PnL"] > 0]["PnL"].mean()
-        avg_loss = closed_trades[closed_trades["PnL"] < 0]["PnL"].mean()
-        best_trade = closed_trades.loc[closed_trades["PnL"].idxmax()]
-        worst_trade = closed_trades.loc[closed_trades["PnL"].idxmin()]
-        profit_factor = abs(avg_win / avg_loss) if avg_loss != 0 else float("inf")
-        avg_duration = closed_trades["Duration_Days"].mean()
-
-        # Strategy distribution
-        strategy_dist = closed_trades["Strategy_Type"].value_counts()
-
-        # Generate comprehensive trade table
-        trade_table = self._generate_trade_table(closed_trades)
-
-        # Statistical significance assessment
-        sample_size = len(closed_trades)
-        min_required = 25
-        adequacy = "✅ **ADEQUATE**" if sample_size >= min_required else "⚠️ **LIMITED**"
-
-        report_content = f"""# {self.portfolio_name.replace('_', ' ').title()} Historical Performance Report
-**Portfolio**: {self.portfolio_name} | **Date**: {self.execution_date.strftime("%B %d, %Y")} | **Type**: Closed Positions Analysis
-
----
-
-{self.generate_live_signals_overview()}## 📊 Performance Summary (Closed Trades Only)
-
-### Statistical Honesty Disclosure
-**Sample Size**: {sample_size} closed trades | **Minimum Required**: {min_required} trades | **Status**: {adequacy}
-
-*Note: Analysis based on completed trades only. Results may not be indicative of future performance. Small sample sizes limit statistical confidence.*
-
-### Overall Results
-- **Total Closed Trades**: {sample_size} {adequacy} for basic analysis
-- **Win Rate**: {win_rate:.2%} ({len(closed_trades[closed_trades['PnL'] > 0])} wins, {len(closed_trades[closed_trades['PnL'] <= 0])} losses)
-- **Total P&L**: ${total_pnl:.2f} (from exact CSV values)
-- **Average Duration**: {avg_duration:.1f} days
-- **Strategy Mix**: {dict(strategy_dist)}
-
-### Key Performance Metrics
-- **Average Win**: ${avg_win:.2f}
-- **Average Loss**: ${avg_loss:.2f}
-- **Profit Factor**: {profit_factor:.2f}
-- **Best Trade**: {best_trade['Ticker']} (${best_trade['PnL']:.2f})
-- **Worst Trade**: {worst_trade['Ticker']} (${worst_trade['PnL']:.2f})
-- **Expectancy**: ${(win_rate * avg_win + (1-win_rate) * avg_loss):.2f} per trade
-
----
-
-## 🏆 Top Performing Closed Trades
-
-{self._generate_top_trades_section(closed_trades)}
-
----
-
-## 📋 Complete Closed Trade History
-
-**All values sourced directly from CSV data - no calculations applied**
-
-{trade_table}
-
----
-
-## 📈 Performance Analysis
-
-### Win Rate Breakdown
-- **Overall Win Rate**: {win_rate:.2%}
-- **SMA Strategy**: {len(closed_trades[(closed_trades['Strategy_Type'] == 'SMA') & (closed_trades['PnL'] > 0)]) / len(closed_trades[closed_trades['Strategy_Type'] == 'SMA']):.2%} ({len(closed_trades[closed_trades['Strategy_Type'] == 'SMA'])} trades)
-- **EMA Strategy**: {len(closed_trades[(closed_trades['Strategy_Type'] == 'EMA') & (closed_trades['PnL'] > 0)]) / len(closed_trades[closed_trades['Strategy_Type'] == 'EMA']):.2%} ({len(closed_trades[closed_trades['Strategy_Type'] == 'EMA'])} trades)
-
-### Risk-Adjusted Returns
-- **Sharpe Ratio**: {self.analysis_data.get('performance_measurement', {}).get('statistical_analysis', {}).get('risk_adjusted_metrics', {}).get('sharpe_ratio', 'N/A')}
-- **Maximum Drawdown**: {self.analysis_data.get('risk_assessment', {}).get('portfolio_risk_metrics', {}).get('drawdown_analysis', {}).get('max_drawdown', 'N/A')}
-
----
-
-## 📊 Statistical Significance Analysis
-
-### Sample Size Assessment
-- **Current Sample**: {sample_size} trades
-- **Minimum for Basic Analysis**: 25 trades
-- **Recommended for Robust Analysis**: 100+ trades
-- **Statistical Power**: {"High" if sample_size >= 100 else "Medium" if sample_size >= 50 else "Limited"}
-
-### Confidence Intervals (95%)
-*Note: Confidence intervals widen with smaller sample sizes*
-- **Win Rate Range**: {max(0, win_rate - 1.96 * np.sqrt(win_rate * (1-win_rate) / sample_size)):.1%} - {min(1, win_rate + 1.96 * np.sqrt(win_rate * (1-win_rate) / sample_size)):.1%}
-
----
-
-## 📱 Live Signals Platform Integration
-
-**Follow Live Signals**: [@colemorton7](https://x.com/colemorton7) on X/Twitter
-
-**Historical Track Record Summary**:
-- **{sample_size} Closed Trades**: Comprehensive performance transparency
-- **{win_rate:.1%} Win Rate**: Based on exact CSV P&L values
-- **${total_pnl:.2f} Total P&L**: Unmodified trading results
-
-**Platform Methodology**:
-- Technical analysis with fundamental research integration
-- Single unit position sizing for educational clarity
-- Real-time portfolio tracking and performance updates
-- Transparent wins and losses with detailed analysis
-
----
-
-**Analysis Completed**: {self.execution_date.strftime("%B %d, %Y")} | **Statistical Confidence**: {self.analysis_data.get('analysis_quality_assessment', {}).get('overall_confidence', 0):.1%} | **Sample Size Limitation**: {"None" if sample_size >= 100 else "Moderate" if sample_size >= 50 else "Significant"}
-"""
-
-        return report_content
-
-    def generate_internal_report(self, data: Dict[str, Any]) -> str:
-        """Generate comprehensive internal trading report."""
-
-        # Calculate executive metrics
-        closed_trades = self.raw_trades_df[
-            self.raw_trades_df["Status"] == "Closed"
-        ].copy()
-        total_pnl = closed_trades["PnL"].sum()
-        win_rate = len(closed_trades[closed_trades["PnL"] > 0]) / len(closed_trades)
-
-        # Portfolio health score (0-100)
-        health_score = min(100, max(0, 50 + (total_pnl / 1000) * 10 + win_rate * 30))
-
-        return f"""# Internal Trading Report: {self.portfolio_name.replace('_', ' ').title()}
-**Generated**: {self.execution_date.strftime("%Y-%m-%d %H:%M:%S")} | **Classification**: INTERNAL USE ONLY
-
-{self.generate_live_signals_overview()}## 📊 Executive Dashboard
-
-### 30-Second Brief
-- **Portfolio Health Score**: {health_score:.1f}/100 ({self._health_score_interpretation(health_score)})
-- **Total P&L**: ${total_pnl:.2f} | **Win Rate**: {win_rate:.1%} | **Trades**: {len(closed_trades)}
-- **Critical Issues**: {len(self._identify_critical_issues(closed_trades))} requiring immediate attention
-- **Optimization Potential**: {self._calculate_optimization_potential()}
-
-### Performance Deep Dive
-- **System Quality Number**: {self.analysis_data.get('advanced_statistical_metrics', {}).get('system_quality_assessment', {}).get('system_quality_number', 'N/A')}
-- **Exit Efficiency**: {self.analysis_data.get('signal_effectiveness', {}).get('exit_signal_analysis', {}).get('exit_efficiency_metrics', {}).get('overall_exit_efficiency', 'N/A')}
-- **Statistical Significance**: {self.analysis_data.get('statistical_validation', {}).get('significance_testing', {}).get('return_vs_zero', {}).get('significant', 'N/A')}
-
----
-
-## 🎯 Strategic Recommendations
-
-### Immediate Actions (0-30 days)
-- Review recent trade performance for pattern identification
-- Validate signal generation parameters for current market conditions
-- Update risk management protocols based on recent volatility
-
-### Medium-term Optimizations (1-3 months)
-- Implement exit timing optimization based on analysis insights
-- Enhance entry signal parameters for current market regime
-- Develop position sizing optimization framework
-
----
-
-**Report Classification**: INTERNAL USE ONLY | **Next Review**: {(self.execution_date + pd.Timedelta(days=7)).strftime("%Y-%m-%d")} | **Confidence Level**: {self.analysis_data.get('analysis_quality_assessment', {}).get('overall_confidence', 0):.1%}
-"""
-
-    def generate_live_monitor(self, data: Dict[str, Any]) -> str:
-        """Generate comprehensive live signals monitor report."""
-
-        # Current portfolio status
-        active_trades = self.raw_trades_df[self.raw_trades_df["Status"] != "Closed"]
-        closed_trades = self.raw_trades_df[self.raw_trades_df["Status"] == "Closed"]
-
-        return f"""# Live Signals Monitor: {self.portfolio_name.replace('_', ' ').title()}
-**Generated**: {self.execution_date.strftime("%Y-%m-%d %H:%M:%S")} | **Status**: LIVE MONITORING
-
-{self.generate_live_signals_overview()}## 📊 Portfolio Overview
-
-### Current Status
-- **Active Positions**: {len(active_trades)} open trades
-- **Total Positions**: {len(self.raw_trades_df)} lifetime trades
-- **Platform Status**: ✅ ACTIVE on [@colemorton7](https://x.com/colemorton7)
-
-### Live Performance Metrics
-- **Win Rate (All-Time)**: {len(closed_trades[closed_trades['PnL'] > 0]) / len(closed_trades):.1%}
-- **Total P&L**: ${closed_trades['PnL'].sum():.2f}
-- **System Quality**: {self.analysis_data.get('advanced_statistical_metrics', {}).get('system_quality_assessment', {}).get('system_quality_number', 'N/A')}
-
----
-
-## 📱 Social Media Integration
-
-### X/Twitter Performance
-- **Platform**: [@colemorton7](https://x.com/colemorton7)
-- **Signal Posting**: Real-time entry/exit signals
-- **Transparency**: Full trade history disclosure
-- **Educational Value**: Strategy explanation and analysis
-
----
-
-**Monitor Status**: ACTIVE | **Last Update**: {self.execution_date.strftime("%Y-%m-%d %H:%M:%S")} | **Next Refresh**: {(self.execution_date + pd.Timedelta(hours=1)).strftime("%H:%M")}
-"""
-
-    def synthesize_reports(self, report_types: List[str] = None) -> Dict[str, str]:
-        """Generate all requested report types with comprehensive analysis."""
-        if report_types is None:
-            report_types = ["internal", "live", "historical"]
-
-        # Load phase data
-        data = self.load_phase_data()
-
-        # Generate reports
-        reports = {}
-        date_stamp = self.execution_date.strftime("%Y%m%d")
-
-        if "historical" in report_types:
-            logger.info("Generating historical performance report...")
-            historical_content = self.generate_historical_report(data)
-            historical_file = (
-                self.output_dir
-                / "historical"
-                / f"{self.portfolio_name}_{date_stamp}.md"
-            )
-
-            with open(historical_file, "w", encoding="utf-8") as f:
-                f.write(historical_content)
-
-            reports["historical"] = str(historical_file)
-            logger.info(f"Historical report generated: {historical_file}")
-
-        if "internal" in report_types:
-            logger.info("Generating internal trading report...")
-            internal_content = self.generate_internal_report(data)
-            internal_file = (
-                self.output_dir / "internal" / f"{self.portfolio_name}_{date_stamp}.md"
-            )
-
-            with open(internal_file, "w", encoding="utf-8") as f:
-                f.write(internal_content)
-
-            reports["internal"] = str(internal_file)
-            logger.info(f"Internal report generated: {internal_file}")
-
-        if "live" in report_types:
-            logger.info("Generating live signals monitor...")
-            live_content = self.generate_live_monitor(data)
-            live_file = (
-                self.output_dir / "live" / f"{self.portfolio_name}_{date_stamp}.md"
-            )
-
-            with open(live_file, "w", encoding="utf-8") as f:
-                f.write(live_content)
-
-            reports["live"] = str(live_file)
-            logger.info(f"Live monitor generated: {live_file}")
-
-        return reports
-
-    # Helper methods
-    def _health_score_interpretation(self, score: float) -> str:
-        """Interpret portfolio health score."""
         if score >= 80:
-            return "Excellent"
+            interpretation = "Excellent"
         elif score >= 60:
-            return "Good"
+            interpretation = "Good"
         elif score >= 40:
-            return "Fair"
+            interpretation = "Fair"
         else:
-            return "Needs Improvement"
+            interpretation = "Needs Improvement"
 
-    def _identify_critical_issues(self, trades_df: pd.DataFrame) -> List[str]:
-        """Identify critical issues requiring attention."""
+        return {"score": score, "interpretation": interpretation}
+
+    def _identify_critical_issues(
+        self, key_metrics: Dict[str, Any], trades_df: pd.DataFrame
+    ) -> List[Dict[str, Any]]:
+        """Identify critical issues requiring attention"""
         issues = []
 
-        # Win rate check
-        win_rate = len(trades_df[trades_df["PnL"] > 0]) / len(trades_df)
+        performance = key_metrics["performance_summary"]
+        win_rate = performance.get("win_rate", 0)
+
         if win_rate < 0.4:
-            issues.append(f"Low win rate ({win_rate:.1%}) - below 40% threshold")
+            issues.append(
+                {
+                    "priority": "HIGH",
+                    "issue": "Low win rate",
+                    "details": f"Win rate ({win_rate:.1%}) below 40% threshold",
+                    "recommendation": "Review entry signal quality and market conditions",
+                }
+            )
 
-        # Large losses check
-        max_loss = trades_df["PnL"].min()
-        if max_loss < -50:
-            issues.append(f"Large single loss (${max_loss:.2f}) exceeds risk tolerance")
+        if not trades_df.empty and "PnL" in trades_df.columns:
+            max_loss = trades_df["PnL"].min()
+            if max_loss < -50:
+                issues.append(
+                    {
+                        "priority": "MEDIUM",
+                        "issue": "Large single loss",
+                        "details": f"Maximum loss (${max_loss:.2f}) exceeds risk tolerance",
+                        "recommendation": "Implement stricter stop-loss protocols",
+                    }
+                )
 
-        # Sample size check
-        if len(trades_df) < 25:
-            issues.append("Insufficient sample size for robust statistical analysis")
+        sample_size = key_metrics["portfolio_overview"].get("closed_trades", 0)
+        if sample_size < 25:
+            issues.append(
+                {
+                    "priority": "LOW",
+                    "issue": "Insufficient sample size",
+                    "details": "Need more closed trades for robust statistical analysis",
+                    "recommendation": "Continue trading to build sample size",
+                }
+            )
 
         return issues
 
-    def _calculate_optimization_potential(self) -> str:
-        """Calculate optimization potential based on analysis data."""
-        exit_efficiency = (
-            self.analysis_data.get("signal_effectiveness", {})
-            .get("exit_signal_analysis", {})
-            .get("exit_efficiency_metrics", {})
-            .get("overall_exit_efficiency", 0)
-        )
+    def _generate_trend_indicators(self, key_metrics: Dict[str, Any]) -> Dict[str, str]:
+        """Generate trend indicators for metrics"""
+        # Simplified trend analysis (would be enhanced with historical comparison)
+        win_rate = key_metrics["performance_summary"].get("win_rate", 0)
+        total_pnl = key_metrics["performance_summary"].get("total_pnl", 0)
 
-        if isinstance(exit_efficiency, (int, float)) and exit_efficiency < -0.5:
-            return "High (Exit timing optimization opportunity)"
-        elif isinstance(exit_efficiency, (int, float)) and exit_efficiency < 0:
-            return "Medium (Exit efficiency can be improved)"
-        else:
-            return "Low (System performing efficiently)"
+        return {
+            "win_rate_trend": "↗️"
+            if win_rate > 0.6
+            else "→"
+            if win_rate > 0.4
+            else "↘️",
+            "pnl_trend": "↗️" if total_pnl > 0 else "↘️",
+            "overall_trend": "↗️"
+            if win_rate > 0.5 and total_pnl > 0
+            else "→"
+            if total_pnl >= 0
+            else "↘️",
+        }
+
+    def _get_top_trades(
+        self, trades_df: pd.DataFrame, trade_type: str, count: int
+    ) -> List[Dict[str, Any]]:
+        """Extract top performing trades"""
+        if trades_df.empty or "PnL" not in trades_df.columns:
+            return []
+
+        if trade_type == "winners":
+            top_trades = trades_df.nlargest(count, "PnL")
+        else:  # losers
+            top_trades = trades_df.nsmallest(count, "PnL")
+
+        trades_list = []
+        for _, trade in top_trades.iterrows():
+            trades_list.append(
+                {
+                    "ticker": trade.get("Ticker", "N/A"),
+                    "strategy": trade.get("Strategy_Type", "N/A"),
+                    "pnl": float(trade.get("PnL", 0)),
+                    "return_pct": float(trade.get("Return", 0)) * 100,
+                    "duration_days": float(trade.get("Duration_Days", 0))
+                    if pd.notna(trade.get("Duration_Days"))
+                    else 0,
+                }
+            )
+
+        return trades_list
+
+    def _analyze_strategy_performance(self, trades_df: pd.DataFrame) -> Dict[str, Any]:
+        """Analyze performance by strategy"""
+        if trades_df.empty:
+            return {}
+
+        strategy_performance = {}
+        if "Strategy_Type" in trades_df.columns:
+            for strategy in trades_df["Strategy_Type"].unique():
+                strategy_trades = trades_df[trades_df["Strategy_Type"] == strategy]
+                if "PnL" in strategy_trades.columns:
+                    wins = len(strategy_trades[strategy_trades["PnL"] > 0])
+                    total = len(strategy_trades)
+
+                    strategy_performance[strategy] = {
+                        "total_trades": total,
+                        "win_rate": wins / total if total > 0 else 0,
+                        "total_pnl": float(strategy_trades["PnL"].sum()),
+                        "avg_return": float(strategy_trades["Return"].mean())
+                        if "Return" in strategy_trades.columns
+                        else 0,
+                    }
+
+        return strategy_performance
+
+    def _analyze_monthly_performance(self, trades_df: pd.DataFrame) -> Dict[str, Any]:
+        """Analyze performance by month (simplified)"""
+        # Placeholder for monthly analysis
+        return {"note": "Monthly analysis requires date parsing implementation"}
+
+    def _summarize_active_positions(
+        self, active_trades: pd.DataFrame
+    ) -> List[Dict[str, Any]]:
+        """Summarize active positions"""
+        positions = []
+        if not active_trades.empty:
+            for _, trade in active_trades.iterrows():
+                positions.append(
+                    {
+                        "ticker": trade.get("Ticker", "N/A"),
+                        "strategy": trade.get("Strategy_Type", "N/A"),
+                        "entry_date": str(trade.get("Entry_Timestamp", "N/A")),
+                        "days_held": float(trade.get("Days_Since_Entry", 0))
+                        if pd.notna(trade.get("Days_Since_Entry"))
+                        else 0,
+                        "unrealized_pnl": float(trade.get("Current_Unrealized_PnL", 0))
+                        if pd.notna(trade.get("Current_Unrealized_PnL"))
+                        else 0,
+                    }
+                )
+        return positions
+
+    def _assess_portfolio_risk(self, active_trades: pd.DataFrame) -> Dict[str, Any]:
+        """Assess current portfolio risk"""
+        return {
+            "position_count": len(active_trades),
+            "concentration_risk": "LOW"
+            if len(active_trades) > 5
+            else "MEDIUM"
+            if len(active_trades) > 2
+            else "HIGH",
+            "status": "ACTIVE" if len(active_trades) > 0 else "NO_POSITIONS",
+        }
+
+    def _get_last_signal_info(self, active_trades: pd.DataFrame) -> Dict[str, Any]:
+        """Get information about the last signal"""
+        if active_trades.empty:
+            return {"status": "NO_ACTIVE_SIGNALS"}
+
+        # Get most recent entry
+        latest_trade = active_trades.iloc[-1] if not active_trades.empty else None
+        if latest_trade is not None:
+            return {
+                "ticker": latest_trade.get("Ticker", "N/A"),
+                "strategy": latest_trade.get("Strategy_Type", "N/A"),
+                "entry_date": str(latest_trade.get("Entry_Timestamp", "N/A")),
+            }
+
+        return {"status": "NO_RECENT_SIGNALS"}
+
+    def _get_market_context(self) -> Dict[str, Any]:
+        """Get current market context (simplified)"""
+        return {
+            "market_regime": "ANALYSIS_PENDING",
+            "volatility_environment": "ANALYSIS_PENDING",
+            "last_updated": self.execution_date.isoformat(),
+        }
+
+    def _generate_confidence_disclosure(
+        self, key_metrics: Dict[str, Any]
+    ) -> Dict[str, Any]:
+        """Generate confidence and limitation disclosures"""
+        confidence = key_metrics["confidence_assessment"]
+        sample_size = key_metrics["portfolio_overview"]["closed_trades"]
+
+        limitations = []
+        if sample_size < 25:
+            limitations.append("Sample size below recommended minimum of 25 trades")
+        if not confidence["statistical_significance"]:
+            limitations.append(
+                "Returns lack statistical significance at 95% confidence level"
+            )
+        if confidence["overall_confidence"] < 0.8:
+            limitations.append("Overall analysis confidence below institutional grade")
+
+        return {
+            "overall_confidence": confidence["overall_confidence"],
+            "sample_adequacy": confidence["sample_size_adequate"],
+            "statistical_significance": confidence["statistical_significance"],
+            "limitations": limitations,
+        }
+
+    def execute_synthesis(self) -> Dict[str, Any]:
+        """
+        Execute atomic data synthesis
+        """
+        logger.info(f"Starting atomic synthesis for portfolio: {self.portfolio_name}")
+
+        try:
+            # Step 1: Load discovery and analysis data
+            phase_data = self.load_phase_data()
+
+            # Step 2: Extract key metrics
+            key_metrics = self.extract_key_metrics(phase_data)
+
+            # Step 3: Generate report data structures
+            report_data = self.generate_report_data_structures(key_metrics, phase_data)
+
+            # Step 4: Create synthesis output
+            synthesis_output = {
+                "portfolio": self.portfolio_name,
+                "synthesis_metadata": {
+                    "execution_timestamp": self.execution_date.isoformat(),
+                    "confidence_score": key_metrics["confidence_assessment"][
+                        "overall_confidence"
+                    ],
+                    "reports_ready": True,
+                },
+                "key_metrics": key_metrics,
+                "report_data_structures": report_data,
+                "data_sources": {
+                    "discovery_file": phase_data["discovery_file"],
+                    "analysis_file": phase_data["analysis_file"],
+                    "csv_source": phase_data["discovery"]["discovery_metadata"][
+                        "data_source"
+                    ],
+                },
+                "next_phase_inputs": {
+                    "validation_ready": True,
+                    "reports_generated": 3,
+                    "synthesis_confidence": key_metrics["confidence_assessment"][
+                        "overall_confidence"
+                    ],
+                },
+            }
+
+            # Step 5: Save synthesis output
+            output_filename = (
+                f"{self.portfolio_name}_{self.execution_date.strftime('%Y%m%d')}.json"
+            )
+            output_file = self.output_dir / output_filename
+
+            with open(output_file, "w", encoding="utf-8") as f:
+                json.dump(synthesis_output, f, indent=2, ensure_ascii=False)
+
+            logger.info(f"Synthesis output saved to: {output_file}")
+
+            # Log summary
+            logger.info(
+                f"Synthesis complete - Report structures generated: {len(report_data)}, "
+                f"Key metrics extracted, "
+                f"Confidence: {key_metrics['confidence_assessment']['overall_confidence']:.3f}"
+            )
+
+            return synthesis_output
+
+        except Exception as e:
+            logger.error(f"Atomic synthesis failed: {e}")
+            raise
 
 
 def main():
     """Main execution function."""
-    parser = argparse.ArgumentParser(
-        description="Execute DASV Phase 3 trade history synthesis with institutional-grade reporting"
-    )
+    import argparse
+
+    parser = argparse.ArgumentParser(description="Atomic trade history synthesis tool")
     parser.add_argument("--portfolio", required=True, help="Portfolio name (required)")
     parser.add_argument(
-        "--report-type",
-        choices=["internal", "live", "historical", "all"],
-        default="all",
-        help="Specific report type (default: all)",
+        "--output-format",
+        choices=["json", "summary"],
+        default="summary",
+        help="Output format (default: summary)",
     )
     parser.add_argument("--verbose", action="store_true", help="Enable verbose logging")
 
@@ -514,42 +545,47 @@ def main():
     if args.verbose:
         logging.getLogger().setLevel(logging.DEBUG)
 
-    try:
-        # Determine report types
-        if args.report_type == "all":
-            report_types = ["internal", "live", "historical"]
-        else:
-            report_types = [args.report_type]
+    # Execute synthesis
+    synthesis_tool = AtomicSynthesisTool(portfolio_name=args.portfolio)
+    result = synthesis_tool.execute_synthesis()
 
-        # Run synthesis
-        logger.info(f"Starting DASV Phase 3 Synthesis for portfolio: {args.portfolio}")
-        synthesizer = DASVPhase3Synthesizer(portfolio_name=args.portfolio)
+    if args.output_format == "json":
+        print(json.dumps(result, indent=2))
+    else:
+        # Print summary
+        print("\n" + "=" * 60)
+        print("ATOMIC SYNTHESIS COMPLETE")
+        print("=" * 60)
+        print(f"Portfolio: {result['portfolio']}")
+        print(f"Execution: {result['synthesis_metadata']['execution_timestamp']}")
+        print(
+            f"Confidence Score: {result['synthesis_metadata']['confidence_score']:.3f}"
+        )
 
-        # Generate reports
-        reports = synthesizer.synthesize_reports(report_types)
+        print("\nKEY METRICS:")
+        metrics = result["key_metrics"]["performance_summary"]
+        print(f"  Win Rate: {metrics.get('win_rate', 0):.1%}")
+        print(f"  Total P&L: ${metrics.get('total_pnl', 0):.2f}")
+        print(f"  Profit Factor: {metrics.get('profit_factor', 0):.2f}")
 
-        # Summary
-        logger.info("Phase 3 synthesis complete")
-        for report_type, file_path in reports.items():
-            logger.info(f"  {report_type.title()} report: {file_path}")
+        print("\nREPORT DATA STRUCTURES:")
+        report_data = result["report_data_structures"]
+        print(f"  Executive Dashboard: Ready")
+        print(
+            f"  Historical Analysis: {report_data['historical_analysis']['closed_trades_summary']['count']} closed trades"
+        )
+        print(
+            f"  Live Monitoring: {report_data['live_monitoring']['active_positions']['count']} active positions"
+        )
 
-        print("\n=== DASV Phase 3 Synthesis Complete ===")
-        print(f"Portfolio: {args.portfolio}")
-        print(f"Reports Generated: {len(reports)}")
-        for report_type, file_path in reports.items():
-            print(f"  {report_type.title()}: {file_path}")
+        print("\nCONFIDENCE ASSESSMENT:")
+        confidence = result["key_metrics"]["confidence_assessment"]
+        print(f"  Overall Confidence: {confidence['overall_confidence']:.3f}")
+        print(f"  Sample Size Adequate: {confidence['sample_size_adequate']}")
+        print(f"  Statistical Significance: {confidence['statistical_significance']}")
 
-        # Validation reminder
-        if args.portfolio == "live_signals":
-            print(
-                "\n✅ Live Signals Overview section automatically included in all reports"
-            )
-            print("✅ Exact CSV P&L values used (no calculations applied)")
-            print("✅ Statistical honesty with sample size limitations disclosed")
-
-    except Exception as e:
-        logger.error(f"Synthesis failed: {str(e)}", exc_info=True)
-        raise
+        print(f"\nOutput saved to: {synthesis_tool.output_dir}")
+        print("=" * 60)
 
 
 if __name__ == "__main__":

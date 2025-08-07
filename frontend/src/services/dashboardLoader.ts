@@ -39,13 +39,13 @@ export class DashboardLoader {
 
   static getLayoutClasses(layout: string): string {
     const layoutMappings: Record<string, string> = {
-      "2x2_grid": "grid grid-cols-1 gap-6 lg:grid-cols-2",
-      "1x3_stack": "grid grid-cols-1 gap-6",
-      "2x1_stack": "grid grid-cols-1 gap-8",
-      "3x1_row": "grid grid-cols-1 gap-6 lg:grid-cols-3",
-      "1x2_column": "grid grid-cols-1 gap-6 lg:grid-cols-2",
+      "2x2_grid": "grid grid-cols-1 gap-6 lg:grid-cols-2 h-full",
+      "1x3_stack": "flex flex-col gap-6 h-full",
+      "2x1_stack": "flex flex-col h-full",
+      "3x1_row": "grid grid-cols-1 gap-6 lg:grid-cols-3 h-full",
+      "1x2_column": "grid grid-cols-1 gap-6 lg:grid-cols-2 h-full",
     };
 
-    return layoutMappings[layout] || "grid grid-cols-1 gap-6";
+    return layoutMappings[layout] || "flex flex-col gap-6 h-full";
   }
 }

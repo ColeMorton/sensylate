@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
+import html2canvas from "html2canvas";
 import photoBoothConfig from "@/config/photo-booth.json";
 import {
   DashboardLoader,
@@ -9,6 +10,15 @@ import ChartDisplay from "@/shortcodes/ChartDisplay";
 interface PhotoBoothDisplayProps {
   className?: string;
 }
+
+// Helper function to get dimensions for selected aspect ratio
+const getAspectRatioDimensions = (aspectRatio: "16:9" | "4:3" | "3:4") => {
+  const aspectRatioConfig =
+    photoBoothConfig.export_options.aspect_ratios.available.find(
+      (ar) => ar.id === aspectRatio,
+    );
+  return aspectRatioConfig?.dimensions || { width: 1920, height: 1080 }; // fallback to 16:9
+};
 
 const PhotoBoothDisplay: React.FC<PhotoBoothDisplayProps> = ({
   className = "",
@@ -32,6 +42,11 @@ const PhotoBoothDisplay: React.FC<PhotoBoothDisplayProps> = ({
   >("16:9");
   const [selectedDPI, setSelectedDPI] = useState<150 | 300 | 600>(300);
   const [selectedScaleFactor, setSelectedScaleFactor] = useState<2 | 3 | 4>(3);
+
+  // Export state
+  const [isExporting, setIsExporting] = useState(false);
+  const [exportMessage, setExportMessage] = useState<string | null>(null);
+  const [exportError, setExportError] = useState<string | null>(null);
 
   // Load dashboards on component mount
   useEffect(() => {
@@ -178,6 +193,158 @@ const PhotoBoothDisplay: React.FC<PhotoBoothDisplayProps> = ({
     url.searchParams.set("scale", scaleFactor.toString());
     window.history.replaceState({}, "", url.toString());
   }, []);
+
+  const hideControls = useCallback(() => {
+    const controls = document.querySelectorAll(".photo-booth-controls");
+    controls.forEach((element) => {
+      (element as HTMLElement).style.display = "none";
+    });
+  }, []);
+
+  const showControls = useCallback(() => {
+    const controls = document.querySelectorAll(".photo-booth-controls");
+    controls.forEach((element) => {
+      (element as HTMLElement).style.display = "";
+    });
+  }, []);
+
+  const handleExportDashboard = useCallback(async () => {
+    const currentDashboard = activeDashboards.find(
+      (d) => d.id === selectedDashboard,
+    );
+    if (!currentDashboard || isExporting) {
+      return;
+    }
+
+    setIsExporting(true);
+    setExportMessage(null);
+    setExportError(null);
+
+    try {
+      // Find the dashboard container
+      const dashboardElement = document.querySelector(".photo-booth-dashboard");
+      if (!dashboardElement) {
+        throw new Error("Dashboard element not found");
+      }
+
+      // Get dimensions for selected aspect ratio
+      const dimensions = getAspectRatioDimensions(selectedAspectRatio);
+
+      // Add export-specific class to remove rounded borders and apply sizing
+      dashboardElement.classList.add("photo-booth-export");
+
+      // Apply exact dimensions to the dashboard container
+      (dashboardElement as HTMLElement).style.width = `${dimensions.width}px`;
+      (dashboardElement as HTMLElement).style.height = `${dimensions.height}px`;
+      (dashboardElement as HTMLElement).style.maxWidth = "none";
+      (dashboardElement as HTMLElement).style.maxHeight = "none";
+      (dashboardElement as HTMLElement).style.overflow = "hidden";
+
+      // Hide controls for clean screenshot
+      hideControls();
+
+      // Wait a moment for UI to update and reflow
+      await new Promise((resolve) => setTimeout(resolve, 300));
+
+      // Capture screenshot using html2canvas
+      const canvas = await html2canvas(dashboardElement as HTMLElement, {
+        width: dimensions.width,
+        height: dimensions.height,
+        scale: 1, // Keep scale at 1, apply scaling factor via CSS transform if needed
+        backgroundColor: currentMode === "dark" ? "#1f2937" : "#ffffff",
+        useCORS: true,
+        allowTaint: false,
+        foreignObjectRendering: false,
+        logging: false,
+      });
+
+      // Clean up: remove export class and reset styles
+      dashboardElement.classList.remove("photo-booth-export");
+      (dashboardElement as HTMLElement).style.width = "";
+      (dashboardElement as HTMLElement).style.height = "";
+      (dashboardElement as HTMLElement).style.maxWidth = "";
+      (dashboardElement as HTMLElement).style.maxHeight = "";
+      (dashboardElement as HTMLElement).style.overflow = "";
+
+      // Show controls again
+      showControls();
+
+      // Convert canvas to blob
+      const blob = await new Promise<Blob>((resolve) => {
+        canvas.toBlob(
+          (blob) => {
+            if (blob) {
+              resolve(blob);
+            }
+          },
+          "image/png",
+          0.95,
+        );
+      });
+
+      // Prepare metadata
+      const metadata = {
+        dashboard_id: selectedDashboard,
+        mode: currentMode,
+        aspect_ratio: selectedAspectRatio,
+        format: selectedFormat,
+        dpi: selectedDPI,
+        scale_factor: selectedScaleFactor,
+      };
+
+      // Send to API for processing
+      const formData = new FormData();
+      formData.append("image", blob);
+      formData.append("metadata", JSON.stringify(metadata));
+
+      const response = await fetch("/api/process-export", {
+        method: "POST",
+        body: formData,
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        setExportMessage(result.message);
+        console.log("Export successful:", result.file);
+      } else {
+        setExportError(result.error || result.message);
+      }
+    } catch (error) {
+      console.error("Export failed:", error);
+      setExportError(
+        "Export failed: " +
+          (error instanceof Error ? error.message : "Unknown error"),
+      );
+
+      // Clean up: remove export class and reset styles even on error
+      const dashboardElement = document.querySelector(".photo-booth-dashboard");
+      if (dashboardElement) {
+        dashboardElement.classList.remove("photo-booth-export");
+        (dashboardElement as HTMLElement).style.width = "";
+        (dashboardElement as HTMLElement).style.height = "";
+        (dashboardElement as HTMLElement).style.maxWidth = "";
+        (dashboardElement as HTMLElement).style.maxHeight = "";
+        (dashboardElement as HTMLElement).style.overflow = "";
+      }
+
+      // Make sure controls are shown even if there's an error
+      showControls();
+    } finally {
+      setIsExporting(false);
+    }
+  }, [
+    activeDashboards,
+    isExporting,
+    selectedDashboard,
+    currentMode,
+    selectedAspectRatio,
+    selectedFormat,
+    selectedDPI,
+    selectedScaleFactor,
+    hideControls,
+    showControls,
+  ]);
 
   const currentDashboard = activeDashboards.find(
     (d) => d.id === selectedDashboard,
@@ -326,15 +493,37 @@ const PhotoBoothDisplay: React.FC<PhotoBoothDisplayProps> = ({
           </div>
 
           {/* Status Indicator */}
-          <div className="ml-auto flex items-center gap-2">
-            <div
-              className={`h-3 w-3 rounded-full ${
-                isReady ? "bg-green-500" : "bg-yellow-500"
+          <div className="ml-auto flex items-center gap-4">
+            <div className="flex items-center gap-2">
+              <div
+                className={`h-3 w-3 rounded-full ${
+                  isReady ? "bg-green-500" : "bg-yellow-500"
+                }`}
+              />
+              <span className="text-sm text-gray-600 dark:text-gray-400">
+                {isReady ? "Ready for screenshot" : "Loading..."}
+              </span>
+            </div>
+
+            {/* Export Button */}
+            <button
+              onClick={handleExportDashboard}
+              disabled={!isReady || isExporting}
+              className={`rounded-md px-4 py-2 text-sm font-medium transition-colors ${
+                isReady && !isExporting
+                  ? "bg-blue-500 text-white hover:bg-blue-600"
+                  : "cursor-not-allowed bg-gray-300 text-gray-500"
               }`}
-            />
-            <span className="text-sm text-gray-600 dark:text-gray-400">
-              {isReady ? "Ready for screenshot" : "Loading..."}
-            </span>
+            >
+              {isExporting ? (
+                <div className="flex items-center gap-2">
+                  <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"></div>
+                  <span>Exporting...</span>
+                </div>
+              ) : (
+                "Export Dashboard"
+              )}
+            </button>
           </div>
         </div>
 
@@ -389,6 +578,46 @@ const PhotoBoothDisplay: React.FC<PhotoBoothDisplayProps> = ({
           </div>
         </div>
 
+        {/* Export Status Messages */}
+        {(exportMessage || exportError) && (
+          <div
+            className={`mt-2 rounded-md p-3 ${
+              exportError
+                ? "bg-red-50 dark:bg-red-900/20"
+                : "bg-green-50 dark:bg-green-900/20"
+            }`}
+          >
+            {exportError && (
+              <div className="flex items-center gap-2">
+                <div className="h-4 w-4 rounded-full bg-red-500"></div>
+                <p className="text-sm text-red-700 dark:text-red-300">
+                  {exportError}
+                </p>
+                <button
+                  onClick={() => setExportError(null)}
+                  className="ml-auto text-red-500 hover:text-red-700"
+                >
+                  ×
+                </button>
+              </div>
+            )}
+            {exportMessage && (
+              <div className="flex items-center gap-2">
+                <div className="h-4 w-4 rounded-full bg-green-500"></div>
+                <p className="text-sm text-green-700 dark:text-green-300">
+                  {exportMessage}
+                </p>
+                <button
+                  onClick={() => setExportMessage(null)}
+                  className="ml-auto text-green-500 hover:text-green-700"
+                >
+                  ×
+                </button>
+              </div>
+            )}
+          </div>
+        )}
+
         {/* Dashboard Info */}
         <div className="mt-2 rounded-md bg-blue-50 p-3 dark:bg-blue-900/20">
           <h3 className="font-semibold text-blue-900 dark:text-blue-100">
@@ -415,7 +644,11 @@ const PhotoBoothDisplay: React.FC<PhotoBoothDisplayProps> = ({
         data-dpi={selectedDPI}
         data-scale-factor={selectedScaleFactor}
       >
-        <DashboardRenderer dashboard={currentDashboard} mode={currentMode} />
+        <DashboardRenderer
+          dashboard={currentDashboard}
+          mode={currentMode}
+          aspectRatio={selectedAspectRatio}
+        />
       </div>
     </div>
   );
@@ -425,26 +658,37 @@ const PhotoBoothDisplay: React.FC<PhotoBoothDisplayProps> = ({
 const DashboardRenderer: React.FC<{
   dashboard: DashboardConfig;
   mode: "light" | "dark";
-}> = ({ dashboard, mode }) => {
+  aspectRatio: "16:9" | "4:3" | "3:4";
+}> = ({ dashboard, mode, aspectRatio: _aspectRatio }) => {
   const layoutClasses = DashboardLoader.getLayoutClasses(dashboard.layout);
+
+  // Get dimensions for selected aspect ratio
+  // const dimensions = getAspectRatioDimensions(aspectRatio);
 
   // Enable title-only mode for Portfolio History Portrait dashboard
   const isPortfolioHistoryPortrait =
     dashboard.id === "portfolio_history_portrait";
 
   return (
-    <div className={`dashboard-content ${dashboard.layout} ${mode}-mode`}>
+    <div
+      className={`dashboard-content ${dashboard.layout} ${mode}-mode flex flex-col`}
+      style={{
+        width: "100%",
+        height: "100%",
+        overflow: "hidden",
+      }}
+    >
       {/* Header Section - Only for Portfolio History Portrait */}
       {isPortfolioHistoryPortrait && (
         <div className="dashboard-header text-center">
-          <h1 className="text-dark mb-2 text-4xl font-bold dark:text-white">
+          <h1 className="text-dark text-4xl font-bold dark:text-white">
             Twitter Live Signals
           </h1>
         </div>
       )}
 
       {/* Charts Section */}
-      <div className={layoutClasses}>
+      <div className={`${layoutClasses} min-h-0 flex-1`}>
         {dashboard.charts.map((chart, index) => (
           <ChartDisplay
             key={`${dashboard.id}-${chart.chartType}-${index}`}
@@ -460,7 +704,7 @@ const DashboardRenderer: React.FC<{
 
       {/* Footer Section - Only for Portfolio History Portrait */}
       {isPortfolioHistoryPortrait && (
-        <div className="dashboard-footer mt-8 flex justify-center">
+        <div className="dashboard-footer flex justify-center">
           <h1 className="brand-text text-text-dark dark:text-darkmode-text-dark m-0 text-4xl font-semibold">
             colemorton.com
           </h1>
