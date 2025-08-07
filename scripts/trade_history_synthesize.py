@@ -21,12 +21,13 @@ import argparse
 import csv
 import json
 import logging
+from collections import defaultdict
 from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List, Optional
-import pandas as pd
+
 import numpy as np
-from collections import defaultdict
+import pandas as pd
 
 # Configure logging
 logging.basicConfig(
@@ -44,12 +45,12 @@ class DASVPhase3Synthesizer:
         self.data_dir = Path(__file__).parent.parent / "data"
         self.output_dir = self.data_dir / "outputs" / "trade_history"
         self.raw_data_dir = self.data_dir / "raw" / "trade_history"
-        
+
         # Ensure output directories exist
         (self.output_dir / "internal").mkdir(parents=True, exist_ok=True)
         (self.output_dir / "live").mkdir(parents=True, exist_ok=True)
         (self.output_dir / "historical").mkdir(parents=True, exist_ok=True)
-        
+
         # Initialize data containers
         self.discovery_data = None
         self.analysis_data = None
@@ -87,12 +88,12 @@ class DASVPhase3Synthesizer:
 
         with open(latest_analysis, "r") as f:
             self.analysis_data = json.load(f)
-        
+
         # Load raw CSV data for exact P&L values
         csv_file = self.raw_data_dir / f"{self.portfolio_name}.csv"
         if not csv_file.exists():
             raise FileNotFoundError(f"Raw CSV file not found: {csv_file}")
-        
+
         self.raw_trades_df = pd.read_csv(csv_file)
         logger.info(f"Loaded {len(self.raw_trades_df)} trades from CSV: {csv_file}")
 
@@ -139,59 +140,79 @@ class DASVPhase3Synthesizer:
     def _generate_trade_table(self, trades_df: pd.DataFrame) -> str:
         """Generate comprehensive trade table with exact CSV values."""
         table_rows = []
-        table_rows.append("| Ticker | Strategy | Entry Date | Exit Date | Duration | P&L | Return | Status |")
-        table_rows.append("|--------|----------|------------|-----------|----------|-----|--------|--------|")
-        
+        table_rows.append(
+            "| Ticker | Strategy | Entry Date | Exit Date | Duration | P&L | Return | Status |"
+        )
+        table_rows.append(
+            "|--------|----------|------------|-----------|----------|-----|--------|--------|"
+        )
+
         for _, trade in trades_df.iterrows():
-            entry_date = pd.to_datetime(trade['Entry_Timestamp']).strftime('%m/%d/%Y')
-            exit_date = pd.to_datetime(trade['Exit_Timestamp']).strftime('%m/%d/%Y')
-            pnl_str = f"${trade['PnL']:.2f}" if trade['PnL'] >= 0 else f"(${abs(trade['PnL']):.2f})"
-            return_str = f"{trade['Return']:.2%}" if trade['Return'] >= 0 else f"({abs(trade['Return']):.2%})"
-            
-            table_rows.append(f"| {trade['Ticker']} | {trade['Strategy_Type']} | {entry_date} | {exit_date} | {trade['Duration_Days']:.0f}d | {pnl_str} | {return_str} | {trade['Status']} |")
-        
+            entry_date = pd.to_datetime(trade["Entry_Timestamp"]).strftime("%m/%d/%Y")
+            exit_date = pd.to_datetime(trade["Exit_Timestamp"]).strftime("%m/%d/%Y")
+            pnl_str = (
+                f"${trade['PnL']:.2f}"
+                if trade["PnL"] >= 0
+                else f"(${abs(trade['PnL']):.2f})"
+            )
+            return_str = (
+                f"{trade['Return']:.2%}"
+                if trade["Return"] >= 0
+                else f"({abs(trade['Return']):.2%})"
+            )
+
+            table_rows.append(
+                f"| {trade['Ticker']} | {trade['Strategy_Type']} | {entry_date} | {exit_date} | {trade['Duration_Days']:.0f}d | {pnl_str} | {return_str} | {trade['Status']} |"
+            )
+
         return "\n".join(table_rows)
 
     def _generate_top_trades_section(self, trades_df: pd.DataFrame) -> str:
         """Generate top performing trades analysis."""
-        top_winners = trades_df.nlargest(5, 'PnL')
-        top_losers = trades_df.nsmallest(5, 'PnL')
-        
+        top_winners = trades_df.nlargest(5, "PnL")
+        top_losers = trades_df.nsmallest(5, "PnL")
+
         content = ["### Top 5 Winners"]
         for _, trade in top_winners.iterrows():
-            content.append(f"- **{trade['Ticker']}** ({trade['Strategy_Type']}): ${trade['PnL']:.2f} ({trade['Return']:.1%}) - {trade['Duration_Days']:.0f} days")
-        
+            content.append(
+                f"- **{trade['Ticker']}** ({trade['Strategy_Type']}): ${trade['PnL']:.2f} ({trade['Return']:.1%}) - {trade['Duration_Days']:.0f} days"
+            )
+
         content.append("\n### Top 5 Losers")
         for _, trade in top_losers.iterrows():
-            content.append(f"- **{trade['Ticker']}** ({trade['Strategy_Type']}): ${trade['PnL']:.2f} ({trade['Return']:.1%}) - {trade['Duration_Days']:.0f} days")
-        
+            content.append(
+                f"- **{trade['Ticker']}** ({trade['Strategy_Type']}): ${trade['PnL']:.2f} ({trade['Return']:.1%}) - {trade['Duration_Days']:.0f} days"
+            )
+
         return "\n".join(content)
 
     def generate_historical_report(self, data: Dict[str, Any]) -> str:
         """Generate comprehensive historical performance report."""
-        
+
         # Calculate key metrics from raw CSV data
-        closed_trades = self.raw_trades_df[self.raw_trades_df['Status'] == 'Closed'].copy()
-        total_pnl = closed_trades['PnL'].sum()
-        win_rate = len(closed_trades[closed_trades['PnL'] > 0]) / len(closed_trades)
-        avg_win = closed_trades[closed_trades['PnL'] > 0]['PnL'].mean()
-        avg_loss = closed_trades[closed_trades['PnL'] < 0]['PnL'].mean()
-        best_trade = closed_trades.loc[closed_trades['PnL'].idxmax()]
-        worst_trade = closed_trades.loc[closed_trades['PnL'].idxmin()]
-        profit_factor = abs(avg_win / avg_loss) if avg_loss != 0 else float('inf')
-        avg_duration = closed_trades['Duration_Days'].mean()
-        
+        closed_trades = self.raw_trades_df[
+            self.raw_trades_df["Status"] == "Closed"
+        ].copy()
+        total_pnl = closed_trades["PnL"].sum()
+        win_rate = len(closed_trades[closed_trades["PnL"] > 0]) / len(closed_trades)
+        avg_win = closed_trades[closed_trades["PnL"] > 0]["PnL"].mean()
+        avg_loss = closed_trades[closed_trades["PnL"] < 0]["PnL"].mean()
+        best_trade = closed_trades.loc[closed_trades["PnL"].idxmax()]
+        worst_trade = closed_trades.loc[closed_trades["PnL"].idxmin()]
+        profit_factor = abs(avg_win / avg_loss) if avg_loss != 0 else float("inf")
+        avg_duration = closed_trades["Duration_Days"].mean()
+
         # Strategy distribution
-        strategy_dist = closed_trades['Strategy_Type'].value_counts()
-        
+        strategy_dist = closed_trades["Strategy_Type"].value_counts()
+
         # Generate comprehensive trade table
         trade_table = self._generate_trade_table(closed_trades)
-        
+
         # Statistical significance assessment
         sample_size = len(closed_trades)
         min_required = 25
         adequacy = "✅ **ADEQUATE**" if sample_size >= min_required else "⚠️ **LIMITED**"
-        
+
         report_content = f"""# {self.portfolio_name.replace('_', ' ').title()} Historical Performance Report
 **Portfolio**: {self.portfolio_name} | **Date**: {self.execution_date.strftime("%B %d, %Y")} | **Type**: Closed Positions Analysis
 
@@ -286,15 +307,17 @@ class DASVPhase3Synthesizer:
 
     def generate_internal_report(self, data: Dict[str, Any]) -> str:
         """Generate comprehensive internal trading report."""
-        
+
         # Calculate executive metrics
-        closed_trades = self.raw_trades_df[self.raw_trades_df['Status'] == 'Closed'].copy()
-        total_pnl = closed_trades['PnL'].sum()
-        win_rate = len(closed_trades[closed_trades['PnL'] > 0]) / len(closed_trades)
-        
+        closed_trades = self.raw_trades_df[
+            self.raw_trades_df["Status"] == "Closed"
+        ].copy()
+        total_pnl = closed_trades["PnL"].sum()
+        win_rate = len(closed_trades[closed_trades["PnL"] > 0]) / len(closed_trades)
+
         # Portfolio health score (0-100)
         health_score = min(100, max(0, 50 + (total_pnl / 1000) * 10 + win_rate * 30))
-        
+
         return f"""# Internal Trading Report: {self.portfolio_name.replace('_', ' ').title()}
 **Generated**: {self.execution_date.strftime("%Y-%m-%d %H:%M:%S")} | **Classification**: INTERNAL USE ONLY
 
@@ -332,11 +355,11 @@ class DASVPhase3Synthesizer:
 
     def generate_live_monitor(self, data: Dict[str, Any]) -> str:
         """Generate comprehensive live signals monitor report."""
-        
+
         # Current portfolio status
-        active_trades = self.raw_trades_df[self.raw_trades_df['Status'] != 'Closed']
-        closed_trades = self.raw_trades_df[self.raw_trades_df['Status'] == 'Closed']
-        
+        active_trades = self.raw_trades_df[self.raw_trades_df["Status"] != "Closed"]
+        closed_trades = self.raw_trades_df[self.raw_trades_df["Status"] == "Closed"]
+
         return f"""# Live Signals Monitor: {self.portfolio_name.replace('_', ' ').title()}
 **Generated**: {self.execution_date.strftime("%Y-%m-%d %H:%M:%S")} | **Status**: LIVE MONITORING
 
@@ -388,7 +411,7 @@ class DASVPhase3Synthesizer:
                 / f"{self.portfolio_name}_{date_stamp}.md"
             )
 
-            with open(historical_file, "w", encoding='utf-8') as f:
+            with open(historical_file, "w", encoding="utf-8") as f:
                 f.write(historical_content)
 
             reports["historical"] = str(historical_file)
@@ -401,7 +424,7 @@ class DASVPhase3Synthesizer:
                 self.output_dir / "internal" / f"{self.portfolio_name}_{date_stamp}.md"
             )
 
-            with open(internal_file, "w", encoding='utf-8') as f:
+            with open(internal_file, "w", encoding="utf-8") as f:
                 f.write(internal_content)
 
             reports["internal"] = str(internal_file)
@@ -414,7 +437,7 @@ class DASVPhase3Synthesizer:
                 self.output_dir / "live" / f"{self.portfolio_name}_{date_stamp}.md"
             )
 
-            with open(live_file, "w", encoding='utf-8') as f:
+            with open(live_file, "w", encoding="utf-8") as f:
                 f.write(live_content)
 
             reports["live"] = str(live_file)
@@ -433,31 +456,36 @@ class DASVPhase3Synthesizer:
             return "Fair"
         else:
             return "Needs Improvement"
-    
+
     def _identify_critical_issues(self, trades_df: pd.DataFrame) -> List[str]:
         """Identify critical issues requiring attention."""
         issues = []
-        
+
         # Win rate check
-        win_rate = len(trades_df[trades_df['PnL'] > 0]) / len(trades_df)
+        win_rate = len(trades_df[trades_df["PnL"] > 0]) / len(trades_df)
         if win_rate < 0.4:
             issues.append(f"Low win rate ({win_rate:.1%}) - below 40% threshold")
-        
+
         # Large losses check
-        max_loss = trades_df['PnL'].min()
+        max_loss = trades_df["PnL"].min()
         if max_loss < -50:
             issues.append(f"Large single loss (${max_loss:.2f}) exceeds risk tolerance")
-        
+
         # Sample size check
         if len(trades_df) < 25:
             issues.append("Insufficient sample size for robust statistical analysis")
-        
+
         return issues
-    
+
     def _calculate_optimization_potential(self) -> str:
         """Calculate optimization potential based on analysis data."""
-        exit_efficiency = self.analysis_data.get('signal_effectiveness', {}).get('exit_signal_analysis', {}).get('exit_efficiency_metrics', {}).get('overall_exit_efficiency', 0)
-        
+        exit_efficiency = (
+            self.analysis_data.get("signal_effectiveness", {})
+            .get("exit_signal_analysis", {})
+            .get("exit_efficiency_metrics", {})
+            .get("overall_exit_efficiency", 0)
+        )
+
         if isinstance(exit_efficiency, (int, float)) and exit_efficiency < -0.5:
             return "High (Exit timing optimization opportunity)"
         elif isinstance(exit_efficiency, (int, float)) and exit_efficiency < 0:

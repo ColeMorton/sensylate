@@ -71,7 +71,7 @@ The architecture has evolved into a sophisticated multi-modal platform featuring
 
 **Supported Services** (8 primary services):
 - `yahoo_finance`: Stock price and fundamental data retrieval
-- `alpha_vantage`: Alternative stock data provider  
+- `alpha_vantage`: Alternative stock data provider
 - `fred_economic`: Federal Reserve economic data
 - `coingecko`: Cryptocurrency market data
 - `fmp`: Financial Modeling Prep API integration
@@ -333,10 +333,10 @@ for ticker in closed_trades['Ticker'].unique():
 ```python
 class ValidationError(Exception):
     """Schema validation and data quality failures"""
-    
+
 class ConfigurationError(Exception):
     """Service configuration and availability issues"""
-    
+
 class ProcessingError(Exception):
     """Pipeline execution and data processing failures"""
 ```
@@ -352,7 +352,7 @@ class ProcessingResult:
     processing_time: float = 0.0
     metadata: Dict[str, Any] = field(default_factory=dict)
     error_context: Dict[str, Any] = field(default_factory=dict)
-    
+
     def add_metadata(self, key: str, value: Any) -> None
     def add_error_context(self, key: str, value: Any) -> None
 ```
@@ -375,7 +375,7 @@ class ErrorHandler:
 
 **Error Recovery Strategies**:
 - **Service Fallback**: CLI service global-to-local execution fallback
-- **Data Source Alternatives**: Multiple data source validation with consistency checking  
+- **Data Source Alternatives**: Multiple data source validation with consistency checking
 - **Graceful Degradation**: Frontend cache fallback for temporary service unavailability
 - **Retry Logic**: Configurable retry mechanisms for transient failures
 
@@ -524,7 +524,7 @@ class CustomAnalyzer(BaseScript):
     def validate_inputs(self, ticker: str, **kwargs) -> None:
         if not ticker or not ticker.isalpha():
             raise ValidationError("Invalid ticker symbol")
-    
+
     def execute(self, ticker: str, **kwargs) -> ProcessingResult:
         # Implementation here
         return ProcessingResult(success=True, operation="analysis", content=result)
@@ -606,7 +606,7 @@ python scripts/test_scalability.py
 
 ### Data Source Expansion
 1. **Real-time streaming**: WebSocket integration for live data feeds
-2. **Database integration**: PostgreSQL/TimescaleDB for historical data storage  
+2. **Database integration**: PostgreSQL/TimescaleDB for historical data storage
 3. **Cloud storage**: S3/GCS integration for large dataset management
 4. **Alternative data sources**: Social media sentiment, satellite data integration
 
