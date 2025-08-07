@@ -18,6 +18,14 @@
       "enabled": true
     },
     {
+      "id": "portfolio_history_portrait",
+      "name": "Portfolio History Portrait",
+      "file": "portfolio-history-portrait.mdx",
+      "description": "Portfolio trading history with waterfall and time series analysis",
+      "layout": "2x1_stack",
+      "enabled": true
+    },
+    {
       "id": "market_overview",
       "name": "Market Overview Dashboard",
       "file": "market-overview.mdx",
