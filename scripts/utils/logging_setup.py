@@ -8,23 +8,32 @@ from pathlib import Path
 from typing import Optional
 
 
-def setup_logging(level: str = "INFO", log_file: Optional[str] = None) -> None:
-    """Setup logging configuration."""
+def setup_logging(
+    level: str = "INFO", log_file: Optional[str] = None, quiet_mode: bool = False
+) -> None:
+    """Setup logging configuration with optimized verbosity control."""
 
     # Convert string level to logging constant
     numeric_level = getattr(logging, level.upper(), logging.INFO)
 
-    # Create formatter
-    formatter = logging.Formatter(
-        "%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-        datefmt="%Y-%m-%d %H:%M:%S",
-    )
+    # Use WARNING level for quiet mode to reduce verbosity
+    if quiet_mode:
+        numeric_level = logging.WARNING
+
+    # Create compact formatter for reduced output
+    if quiet_mode:
+        formatter = logging.Formatter("%(levelname)s: %(message)s")
+    else:
+        formatter = logging.Formatter(
+            "%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+            datefmt="%Y-%m-%d %H:%M:%S",
+        )
 
     # Setup root logger
     root_logger = logging.getLogger()
     root_logger.setLevel(numeric_level)
 
-    # Clear existing handlers
+    # Clear existing handlers to prevent duplicates
     root_logger.handlers.clear()
 
     # Console handler
@@ -42,6 +51,9 @@ def setup_logging(level: str = "INFO", log_file: Optional[str] = None) -> None:
         file_handler.setLevel(numeric_level)
         file_handler.setFormatter(formatter)
         root_logger.addHandler(file_handler)
+
+    # Prevent propagation to avoid duplicate messages
+    root_logger.propagate = False
 
 
 class LoggerMixin:

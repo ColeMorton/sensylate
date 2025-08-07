@@ -428,8 +428,22 @@ const DashboardRenderer: React.FC<{
 }> = ({ dashboard, mode }) => {
   const layoutClasses = DashboardLoader.getLayoutClasses(dashboard.layout);
 
+  // Enable title-only mode for Portfolio History Portrait dashboard
+  const isPortfolioHistoryPortrait =
+    dashboard.id === "portfolio_history_portrait";
+
   return (
     <div className={`dashboard-content ${dashboard.layout} ${mode}-mode`}>
+      {/* Header Section - Only for Portfolio History Portrait */}
+      {isPortfolioHistoryPortrait && (
+        <div className="dashboard-header text-center">
+          <h1 className="text-dark mb-2 text-4xl font-bold dark:text-white">
+            Twitter Live Signals
+          </h1>
+        </div>
+      )}
+
+      {/* Charts Section */}
       <div className={layoutClasses}>
         {dashboard.charts.map((chart, index) => (
           <ChartDisplay
@@ -439,9 +453,19 @@ const DashboardRenderer: React.FC<{
             description={chart.description}
             chartType={chart.chartType as string}
             className="photo-booth-chart"
+            titleOnly={isPortfolioHistoryPortrait}
           />
         ))}
       </div>
+
+      {/* Footer Section - Only for Portfolio History Portrait */}
+      {isPortfolioHistoryPortrait && (
+        <div className="dashboard-footer mt-8 flex justify-center">
+          <h1 className="brand-text text-text-dark dark:text-darkmode-text-dark m-0 text-4xl font-semibold">
+            colemorton.com
+          </h1>
+        </div>
+      )}
     </div>
   );
 };

@@ -1,0 +1,49 @@
+---
+title: "Portfolio History Portrait"
+description: "Portfolio trading history with waterfall and time series analysis"
+layout: "2x1_stack"
+mode: "both"
+enabled: true
+draft: false
+---
+
+<div class="portfolio-history-portrait-dashboard">
+
+{/* Header Section */}
+<div class="dashboard-header text-center">
+  <h1 class="text-4xl font-bold text-dark dark:text-white mb-2">
+    Twitter Live Signals
+  </h1>
+</div>
+
+{/* Charts Section */}
+<div class="grid grid-cols-1 gap-8">
+
+<ChartDisplay
+  client:only="react"
+  title="Trade PnL Waterfall Chart"
+  category="Trading Performance"
+  description="Waterfall chart showing individual trade profits and losses from closed positions, sorted from highest to lowest PnL. Visualizes contribution of each trade to overall portfolio performance."
+  chartType="trade-pnl-waterfall"
+  titleOnly={true}
+/>
+
+<ChartDisplay
+  client:only="react"
+  title="Closed Position PnL Performance"
+  category="Trading Performance"
+  description="Multi-line time series showing cumulative PnL for each closed position, indexed to $0 at entry date. Track performance progression across the closed portfolio with individual lines for each ticker."
+  chartType="closed-positions-pnl-timeseries"
+  titleOnly={true}
+/>
+
+</div>
+
+{/* Footer Section */}
+<div className="dashboard-footer mt-8 flex justify-center">
+  <h1 className="brand-text m-0 text-4xl font-semibold text-text-dark dark:text-darkmode-text-dark">
+    colemorton.com
+  </h1>
+</div>
+
+</div>

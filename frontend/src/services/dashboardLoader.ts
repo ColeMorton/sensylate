@@ -39,6 +39,7 @@ export class DashboardLoader {
     const layoutMappings: Record<string, string> = {
       "2x2_grid": "grid grid-cols-1 gap-6 lg:grid-cols-2",
       "1x3_stack": "grid grid-cols-1 gap-6",
+      "2x1_stack": "grid grid-cols-1 gap-8",
       "3x1_row": "grid grid-cols-1 gap-6 lg:grid-cols-3",
       "1x2_column": "grid grid-cols-1 gap-6 lg:grid-cols-2",
     };

@@ -4,7 +4,10 @@ import type {
   StockDataRow,
   LiveSignalsDataRow,
   TradeHistoryDataRow,
+  ClosedPositionPnLDataRow,
   OpenPositionPnLDataRow,
+  BenchmarkDataRow,
+  LiveSignalsBenchmarkDataRow,
   ChartType,
   DataServiceResponse,
 } from "@/types/ChartTypes";
@@ -111,8 +114,8 @@ export function usePortfolioData(chartType: ChartType): DataServiceResponse<{
           }
 
           case "live-signals-equity-curve":
+          case "live-signals-benchmark-comparison":
           case "live-signals-drawdowns":
-          case "live-signals-performance-metrics":
           case "live-signals-weekly-candlestick": {
             // Live signals charts are handled by useLiveSignalsData hook
             setData({});
@@ -125,14 +128,14 @@ export function usePortfolioData(chartType: ChartType): DataServiceResponse<{
             break;
           }
 
-          case "open-positions-pnl-timeseries": {
-            // Open positions PnL charts are handled by useOpenPositionsPnLData hook
+          case "closed-positions-pnl-timeseries": {
+            // Closed positions PnL charts are handled by useTradeHistoryData hook
             setData({});
             break;
           }
 
-          case "open-positions-pnl-timeseries-weekly": {
-            // Weekly open positions PnL charts are handled by useOpenPositionsPnLData hook
+          case "open-positions-pnl-timeseries": {
+            // Open positions PnL charts are handled by useOpenPositionsPnLData hook
             setData({});
             break;
           }
@@ -166,8 +169,8 @@ export function usePortfolioData(chartType: ChartType): DataServiceResponse<{
       chartType !== "apple-stock" &&
       !chartType.startsWith("live-signals-") &&
       chartType !== "trade-pnl-waterfall" &&
-      chartType !== "open-positions-pnl-timeseries" &&
-      chartType !== "open-positions-pnl-timeseries-weekly"
+      chartType !== "closed-positions-pnl-timeseries" &&
+      chartType !== "open-positions-pnl-timeseries"
     ) {
       fetchDataForChartType(abortController.signal);
     } else {
@@ -368,6 +371,98 @@ export function useOpenPositionsPnLData(): DataServiceResponse<
   return { data, loading, error };
 }
 
+// Hook for waterfall chart data (uses pre-sorted backend data)
+export function useWaterfallTradeData(): DataServiceResponse<
+  TradeHistoryDataRow[]
+> {
+  const [data, setData] = useState<TradeHistoryDataRow[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        const result = await chartDataService.getWaterfallTradeData();
+        setData(result);
+      } catch (err) {
+        setError(
+          err instanceof Error
+            ? err.message
+            : "Failed to load waterfall trade data",
+        );
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  return { data, loading, error };
+}
+
+// Hook for closed positions with real price history
+export function useClosedPositionsPnLData(): DataServiceResponse<
+  ClosedPositionPnLDataRow[]
+> {
+  const [data, setData] = useState<ClosedPositionPnLDataRow[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        const result = await chartDataService.getClosedTradesWithPriceHistory();
+        setData(result);
+      } catch (err) {
+        setError(
+          err instanceof Error
+            ? err.message
+            : "Failed to load closed positions PnL data with price history",
+        );
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  return { data, loading, error };
+}
+
+// Hook for benchmark data (SPY, QQQ, BTC-USD)
+export function useBenchmarkData(): DataServiceResponse<BenchmarkDataRow[]> {
+  const [data, setData] = useState<BenchmarkDataRow[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        const result = await chartDataService.getBenchmarkData();
+        setData(result);
+      } catch (err) {
+        setError(
+          err instanceof Error ? err.message : "Failed to load benchmark data",
+        );
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  return { data, loading, error };
+}
+
 // Utility hook for data service status
 export function useDataServiceStatus() {
   const [status, setStatus] = useState(chartDataService.getCacheStatus());
@@ -386,4 +481,36 @@ export function useDataServiceStatus() {
     refreshStatus,
     clearCache,
   };
+}
+
+// Hook for live signals benchmark comparison data
+export function useLiveSignalsBenchmarkData(): DataServiceResponse<
+  LiveSignalsBenchmarkDataRow[]
+> {
+  const [data, setData] = useState<LiveSignalsBenchmarkDataRow[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        const result = await chartDataService.getLiveSignalsBenchmarkData();
+        setData(result);
+      } catch (err) {
+        setError(
+          err instanceof Error
+            ? err.message
+            : "Failed to load live signals benchmark comparison data",
+        );
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  return { data, loading, error };
 }

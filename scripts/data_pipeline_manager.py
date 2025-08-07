@@ -17,7 +17,7 @@ import logging
 import sys
 from datetime import datetime, timedelta
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Tuple, Union
 
 import numpy as np
 import pandas as pd
@@ -325,9 +325,11 @@ class DataPipelineManager:
     Frontend Contracts → Contract Discovery → CLI Services → Schema Validation → Frontend Data
     """
 
-    def __init__(self, frontend_data_path: Optional[Path] = None):
+    def __init__(
+        self, frontend_data_path: Optional[Path] = None, quiet_mode: bool = False
+    ):
         """Initialize contract-driven data pipeline manager"""
-        setup_logging("INFO")
+        setup_logging("INFO", quiet_mode=quiet_mode)
         self.logger = logging.getLogger("data_pipeline_manager")
         self.scripts_dir = Path(__file__).parent
         self.project_root = self.scripts_dir.parent
@@ -440,7 +442,7 @@ class DataPipelineManager:
                 "data_types": ["time_series", "trading"],
                 "refresh_frequency": "hourly",
             },
-            "trade_history_cli": {
+            "trade_history": {
                 "provides": ["trade_records", "position_data", "pnl_analysis"],
                 "categories": ["trade-history", "open-positions"],
                 "data_types": ["transactional", "trading"],
@@ -524,6 +526,446 @@ class DataPipelineManager:
 
         return result
 
+    def validate_service_dependencies(self) -> ProcessingResult:
+        """
+        Comprehensive validation of service dependencies and data contracts.
+
+        Validates:
+        1. Service availability (services exist and are executable)
+        2. Service health (services can execute basic operations)
+        3. Service dependency chains (all required services are available)
+        4. Data contract schema compliance (deep validation)
+
+        Returns:
+            ProcessingResult with detailed validation status
+        """
+        start_time = datetime.now()
+        validation_results = []
+        failed_services = []
+
+        try:
+            self.logger.info("Starting comprehensive service dependency validation")
+
+            # Step 1: Validate service availability
+            self.logger.info("Validating service availability...")
+            service_availability = self._validate_service_availability()
+
+            if not service_availability["success"]:
+                failed_services.extend(service_availability.get("failed_services", []))
+                validation_results.append(
+                    f"Service availability check failed: {service_availability['error']}"
+                )
+
+            # Step 2: Validate service health
+            self.logger.info("Validating service health...")
+            service_health = self._validate_service_health()
+
+            if not service_health["success"]:
+                failed_services.extend(service_health.get("failed_services", []))
+                validation_results.append(
+                    f"Service health check failed: {service_health['error']}"
+                )
+
+            # Step 3: Discover contracts and validate dependency chains
+            self.logger.info(
+                "Discovering contracts and validating dependency chains..."
+            )
+            discovery_result = self.discover_contracts()
+
+            for contract in discovery_result.contracts:
+                capable_services = self.map_contract_to_services(contract)
+                if not capable_services:
+                    validation_results.append(
+                        f"No services available for contract {contract.contract_id}"
+                    )
+                    continue
+
+                # Check if any capable service is actually available and healthy
+                available_capable_services = [
+                    svc for svc in capable_services if svc not in failed_services
+                ]
+
+                if not available_capable_services:
+                    validation_results.append(
+                        f"Contract {contract.contract_id} requires services {capable_services} "
+                        f"but none are available/healthy"
+                    )
+
+            # Step 4: Validate existing data contracts schema compliance
+            self.logger.info("Validating data contract schema compliance...")
+            schema_validation = self._validate_contract_schemas(
+                discovery_result.contracts
+            )
+
+            if not schema_validation["success"]:
+                validation_results.extend(schema_validation.get("schema_errors", []))
+
+            # Generate final result
+            success = len(validation_results) == 0
+            duration = datetime.now() - start_time
+
+            result = ProcessingResult(
+                success=success,
+                operation="validate_service_dependencies",
+                error="; ".join(validation_results) if validation_results else None,
+            )
+
+            result.add_metadata("duration_seconds", duration.total_seconds())
+            result.add_metadata("failed_services", failed_services)
+            result.add_metadata("validation_results", validation_results)
+            result.add_metadata("contracts_checked", len(discovery_result.contracts))
+            result.add_metadata("services_checked", len(self.cli_service_capabilities))
+
+            if success:
+                self.logger.info(
+                    f"Service dependency validation passed in {duration.total_seconds():.2f}s"
+                )
+            else:
+                self.logger.error(
+                    f"Service dependency validation failed: {len(validation_results)} issues found"
+                )
+                for issue in validation_results:
+                    self.logger.error(f"  - {issue}")
+
+            return result
+
+        except Exception as e:
+            duration = datetime.now() - start_time
+            self.logger.error(
+                f"Service dependency validation failed with exception: {e}"
+            )
+
+            return ProcessingResult(
+                success=False,
+                operation="validate_service_dependencies",
+                error=f"Validation failed with exception: {e}",
+                metadata={
+                    "duration_seconds": duration.total_seconds(),
+                    "failed_services": failed_services,
+                    "validation_results": validation_results,
+                },
+            )
+
+    def _validate_service_availability(self) -> Dict[str, Any]:
+        """Validate that CLI services are available and executable"""
+        from cli_wrapper import get_service_manager
+
+        failed_services = []
+        availability_details = {}
+
+        try:
+            service_manager = get_service_manager()
+
+            for service_name in self.cli_service_capabilities.keys():
+                # Special case: live_signals_dashboard is handled directly, not via CLI wrapper
+                if service_name == "live_signals_dashboard":
+                    # Check if the live_signals_dashboard.py file exists
+                    dashboard_script = self.scripts_dir / "live_signals_dashboard.py"
+                    is_available = dashboard_script.exists()
+                    availability_details[service_name] = {
+                        "available": is_available,
+                        "error": None
+                        if is_available
+                        else f"Dashboard script not found: {dashboard_script}",
+                    }
+                    if not is_available:
+                        failed_services.append(service_name)
+                    continue
+
+                try:
+                    # Check if service is available via service manager
+                    service_wrapper = service_manager.get_service(service_name)
+                    is_available = service_wrapper.is_available()
+
+                    availability_details[service_name] = {
+                        "available": is_available,
+                        "error": None
+                        if is_available
+                        else f"Service {service_name} not available",
+                    }
+
+                    if not is_available:
+                        failed_services.append(service_name)
+
+                except Exception as e:
+                    availability_details[service_name] = {
+                        "available": False,
+                        "error": str(e),
+                    }
+                    failed_services.append(service_name)
+
+            success = len(failed_services) == 0
+            error_msg = None
+
+            if not success:
+                error_msg = f"Services not available: {', '.join(failed_services)}"
+
+            return {
+                "success": success,
+                "failed_services": failed_services,
+                "availability_details": availability_details,
+                "error": error_msg,
+            }
+
+        except Exception as e:
+            return {
+                "success": False,
+                "failed_services": list(self.cli_service_capabilities.keys()),
+                "availability_details": {},
+                "error": f"Service manager initialization failed: {e}",
+            }
+
+    def _validate_service_health(self) -> Dict[str, Any]:
+        """Validate that available services are healthy and can execute basic operations"""
+        from cli_wrapper import get_service_manager
+
+        failed_services = []
+        health_details: dict[str, dict[str, Union[bool, str, None]]] = {}
+
+        try:
+            service_manager = get_service_manager()
+
+            for service_name in self.cli_service_capabilities.keys():
+                # Special case: live_signals_dashboard is handled directly, not via CLI wrapper
+                if service_name == "live_signals_dashboard":
+                    # Check if the dashboard script can be imported (basic health check)
+                    try:
+                        import importlib.util
+
+                        dashboard_script = (
+                            self.scripts_dir / "live_signals_dashboard.py"
+                        )
+                        if dashboard_script.exists():
+                            spec = importlib.util.spec_from_file_location(
+                                "live_signals_dashboard", dashboard_script
+                            )
+                            module = importlib.util.module_from_spec(spec)
+                            spec.loader.exec_module(module)
+                            health_details[service_name] = {
+                                "healthy": True,
+                                "error": None,
+                            }
+                        else:
+                            health_details[service_name] = {
+                                "healthy": False,
+                                "error": "Dashboard script not found",
+                            }
+                            failed_services.append(service_name)
+                    except Exception as e:
+                        health_details[service_name] = {
+                            "healthy": False,
+                            "error": f"Dashboard script import failed: {e}",
+                        }
+                        failed_services.append(service_name)
+                    continue
+
+                try:
+                    # Get service wrapper and check if available
+                    service_wrapper = service_manager.get_service(service_name)
+
+                    if not service_wrapper.is_available():
+                        health_details[service_name] = {
+                            "healthy": False,
+                            "error": "Service not available for health check",
+                        }
+                        failed_services.append(service_name)
+                        continue
+
+                    # Execute health check
+                    health_result = service_wrapper.health_check()
+
+                    if health_result.get("status") == "healthy":
+                        health_details[service_name] = {
+                            "healthy": True,
+                            "error": None,
+                            "health_data": health_result,
+                        }
+                    else:
+                        health_details[service_name] = {
+                            "healthy": False,
+                            "error": health_result.get("error", "Health check failed"),
+                        }
+                        failed_services.append(service_name)
+
+                except Exception as e:
+                    health_details[service_name] = {
+                        "healthy": False,
+                        "error": f"Health check exception: {e}",
+                    }
+                    failed_services.append(service_name)
+
+            success = len(failed_services) == 0
+            error_msg = None
+
+            if not success:
+                error_msg = (
+                    f"Services failed health check: {', '.join(failed_services)}"
+                )
+
+            return {
+                "success": success,
+                "failed_services": failed_services,
+                "health_details": health_details,
+                "error": error_msg,
+            }
+
+        except Exception as e:
+            return {
+                "success": False,
+                "failed_services": list(self.cli_service_capabilities.keys()),
+                "health_details": {},
+                "error": f"Service health validation failed: {e}",
+            }
+
+    def _validate_contract_schemas(
+        self, contracts: List[DataContract]
+    ) -> Dict[str, Any]:
+        """Validate that contract data meets expected schemas with warning vs error categorization"""
+        schema_errors = []
+        schema_warnings = []
+        validated_contracts = 0
+
+        for contract in contracts:
+            try:
+                if not contract.file_path.exists():
+                    continue  # Skip non-existent files, will be handled by other validation
+
+                # Enhanced CSV validation
+                df = pd.read_csv(contract.file_path)
+
+                # Validate data types based on contract category - now returns (errors, warnings)
+                if contract.category == "trade-history":
+                    errors, warnings = self._validate_trade_history_schema(df, contract)
+                    schema_errors.extend(errors)
+                    schema_warnings.extend(warnings)
+                elif contract.category == "portfolio":
+                    errors, warnings = self._validate_portfolio_schema(df, contract)
+                    schema_errors.extend(errors)
+                    schema_warnings.extend(warnings)
+                elif contract.category == "open-positions":
+                    errors, warnings = self._validate_open_positions_schema(
+                        df, contract
+                    )
+                    schema_errors.extend(errors)
+                    schema_warnings.extend(warnings)
+
+                validated_contracts += 1
+
+            except Exception as e:
+                schema_errors.append(
+                    f"Schema validation failed for {contract.contract_id}: {e}"
+                )
+
+        # Only fail on critical errors, not warnings
+        success = len(schema_errors) == 0
+
+        # Log warnings separately
+        for warning in schema_warnings:
+            self.logger.warning(f"Schema validation warning: {warning}")
+
+        return {
+            "success": success,
+            "schema_errors": schema_errors,
+            "schema_warnings": schema_warnings,
+            "validated_contracts": validated_contracts,
+        }
+
+    def _validate_trade_history_schema(
+        self, df: pd.DataFrame, contract: DataContract
+    ) -> Tuple[List[str], List[str]]:
+        """Validate trade history specific schema requirements - returns (errors, warnings)"""
+        errors: list[str] = []
+        warnings: list[str] = []
+
+        # Required columns for trade history
+        required_columns = {
+            "Ticker",
+            "PnL",
+            "Status",
+            "Entry_Timestamp",
+            "Exit_Timestamp",
+        }
+        missing_columns = required_columns - set(df.columns)
+        if missing_columns:
+            errors.append(
+                f"Missing trade history columns in {contract.contract_id}: {missing_columns}"
+            )
+
+        if len(df) > 0:
+            # Validate PnL is numeric
+            try:
+                pd.to_numeric(df["PnL"], errors="coerce")
+            except Exception:
+                errors.append(
+                    f"PnL column contains non-numeric values in {contract.contract_id}"
+                )
+
+            # Validate Status values
+            valid_statuses = {"Open", "Closed"}
+            invalid_statuses = set(df["Status"].unique()) - valid_statuses
+            if invalid_statuses:
+                errors.append(
+                    f"Invalid Status values in {contract.contract_id}: {invalid_statuses}"
+                )
+
+        return errors, warnings
+
+    def _validate_portfolio_schema(
+        self, df: pd.DataFrame, contract: DataContract
+    ) -> Tuple[List[str], List[str]]:
+        """Validate portfolio specific schema requirements - returns (errors, warnings)"""
+        errors: list[str] = []
+        warnings: list[str] = []
+
+        # Check for Date column - treat as warning since portfolio data might have different structures
+        required_columns = {"Date"}
+        missing_columns = required_columns - set(df.columns)
+        if missing_columns:
+            warnings.append(
+                f"Missing portfolio columns in {contract.contract_id}: {missing_columns}"
+            )
+
+        if len(df) > 0 and "Date" in df.columns:
+            # Validate Date format - treat as warning since data might be parseable in different format
+            try:
+                pd.to_datetime(df["Date"])
+            except Exception:
+                warnings.append(f"Invalid Date format in {contract.contract_id}")
+
+        return errors, warnings
+
+    def _validate_open_positions_schema(
+        self, df: pd.DataFrame, contract: DataContract
+    ) -> Tuple[List[str], List[str]]:
+        """Validate open positions specific schema requirements - returns (errors, warnings)"""
+        errors: list[str] = []
+        warnings: list[str] = []
+
+        # Required columns for open positions
+        required_columns = {"Ticker", "PnL", "Date"}
+        missing_columns = required_columns - set(df.columns)
+        if missing_columns:
+            errors.append(
+                f"Missing open positions columns in {contract.contract_id}: {missing_columns}"
+            )
+
+        if len(df) > 0:
+            # Validate PnL is numeric
+            try:
+                pd.to_numeric(df["PnL"], errors="coerce")
+            except Exception:
+                errors.append(
+                    f"PnL column contains non-numeric values in {contract.contract_id}"
+                )
+
+            # Validate Date format
+            try:
+                pd.to_datetime(df["Date"])
+            except Exception:
+                errors.append(f"Invalid Date format in {contract.contract_id}")
+
+        return errors, warnings
+
     def refresh_all_chart_data(self, skip_errors: bool = False) -> ProcessingResult:
         """
         Contract-driven data refresh: discovers frontend requirements and fulfills them
@@ -551,7 +993,23 @@ class DataPipelineManager:
                 f"Processing {len(discovery_result.contracts)} discovered contracts"
             )
 
-            # Step 2: Validate contract fulfillment capabilities
+            # Step 2: Comprehensive service dependency validation
+            self.logger.info(
+                "Performing comprehensive service dependency validation..."
+            )
+            dependency_validation = self.validate_service_dependencies()
+
+            if not dependency_validation.success:
+                if not skip_errors:
+                    raise ValidationError(
+                        f"Service dependency validation failed: {dependency_validation.error}"
+                    )
+                else:
+                    self.logger.warning(
+                        f"Service dependency validation failed but continuing due to skip_errors: {dependency_validation.error}"
+                    )
+
+            # Step 3: Validate contract fulfillment capabilities
             unfulfillable_contracts = []
 
             for contract in discovery_result.contracts:
@@ -617,12 +1075,34 @@ class DataPipelineManager:
             successful_count = len(successful_contracts)
             failed_count = len(failed_contracts) + len(unfulfillable_contracts)
 
-            overall_success = failed_count == 0
+            # Determine overall success considering all validation aspects
+            contracts_successful = failed_count == 0
+            dependencies_valid = dependency_validation.success
+
+            # Pipeline is only successful if ALL validations pass
+            overall_success = contracts_successful and dependencies_valid
+
+            # Build detailed error message if pipeline failed
+            error_reasons = []
+            if not dependencies_valid:
+                error_reasons.append(
+                    f"Service dependencies failed: {dependency_validation.error}"
+                )
+            if not contracts_successful:
+                if failed_contracts:
+                    error_reasons.append(
+                        f"Contract processing failed: {failed_contracts}"
+                    )
+                if unfulfillable_contracts:
+                    error_reasons.append(
+                        f"Contracts unfulfillable: {unfulfillable_contracts}"
+                    )
 
             result = ProcessingResult(
                 success=overall_success,
                 operation="refresh_all_chart_data",
                 processing_time=processing_time,
+                error="; ".join(error_reasons) if error_reasons else None,
             )
 
             # Add comprehensive metadata
@@ -650,18 +1130,32 @@ class DataPipelineManager:
                 },
             )
 
-            if failed_contracts or unfulfillable_contracts:
-                error_details = []
-                if failed_contracts:
-                    error_details.append(f"Failed: {failed_contracts}")
-                if unfulfillable_contracts:
-                    error_details.append(f"Unfulfillable: {unfulfillable_contracts}")
-                result.error = "; ".join(error_details)
-
-            self.logger.info(
-                f"Contract-driven refresh completed: {successful_count}/{total_contracts} "
-                f"contracts successful in {processing_time:.2f}s"
+            # Add service dependency validation metadata
+            result.add_metadata(
+                "service_dependency_validation",
+                {
+                    "success": dependency_validation.success,
+                    "error": dependency_validation.error,
+                    "failed_services": dependency_validation.metadata.get(
+                        "failed_services", []
+                    ),
+                    "validation_results": dependency_validation.metadata.get(
+                        "validation_results", []
+                    ),
+                },
             )
+
+            # Log final pipeline status
+            if overall_success:
+                self.logger.info(
+                    f"Contract-driven refresh SUCCESSFUL: {successful_count}/{total_contracts} "
+                    f"contracts successful, all services healthy in {processing_time:.2f}s"
+                )
+            else:
+                self.logger.error(
+                    f"Contract-driven refresh FAILED: {successful_count}/{total_contracts} "
+                    f"contracts successful in {processing_time:.2f}s. Errors: {result.error}"
+                )
 
             return result
 
@@ -778,7 +1272,7 @@ class DataPipelineManager:
         # Map service names to execution methods
         if service_name == "live_signals_dashboard":
             return self._fetch_live_signals_data()
-        elif service_name == "trade_history_cli":
+        elif service_name == "trade_history":
             return self._fetch_trade_history_data()
         elif service_name == "yahoo_finance":
             return self._fetch_yahoo_finance_data()
@@ -1141,7 +1635,7 @@ class DataPipelineManager:
             return self._fetch_alpha_vantage_data()
         elif source == "live_signals_dashboard":
             return self._fetch_live_signals_data()
-        elif source == "trade_history_cli":
+        elif source == "trade_history":
             return self._fetch_trade_history_data()
         else:
             return ProcessingResult(
@@ -1153,13 +1647,13 @@ class DataPipelineManager:
     def _fetch_yahoo_finance_data(self) -> ProcessingResult:
         """Fetch portfolio data from Yahoo Finance"""
         try:
-            # Use existing Yahoo Finance CLI to fetch portfolio symbols
-            # This would typically fetch data for Bitcoin, major indices, etc.
+            # Use existing Yahoo Finance CLI with valid command: batch
+            # This fetches data for portfolio symbols
             result = self.cli_service.execute(
                 service_name="yahoo_finance",
-                command="fetch_portfolio_data",
-                args=["BTC-USD", "SPY", "QQQ"],
-                timeout=60,
+                command="batch",
+                args=["BTC-USD,SPY,QQQ"],
+                timeout=180,
             )
             return result
         except Exception as e:
@@ -1170,8 +1664,12 @@ class DataPipelineManager:
     def _fetch_alpha_vantage_data(self) -> ProcessingResult:
         """Fetch supplementary data from Alpha Vantage"""
         try:
+            # Use existing Alpha Vantage CLI with valid command: analyze
             result = self.cli_service.execute(
-                service_name="alpha_vantage", command="fetch_market_data", timeout=60
+                service_name="alpha_vantage",
+                command="analyze",
+                args=["SPY"],
+                timeout=60,
             )
             return result
         except Exception as e:
@@ -1216,10 +1714,629 @@ class DataPipelineManager:
                 args=[today],
                 timeout=180,
             )
+            # Generate chart-ready data files regardless of image generation success
+            # Chart data only needs the CSV data, not the theme-dependent images
+            chart_result = self._generate_chart_ready_data()
+            if not chart_result.success:
+                self.logger.warning(
+                    f"Chart data generation failed: {chart_result.error}"
+                )
+            else:
+                self.logger.info("Chart data generation completed successfully")
+
             return result
         except Exception as e:
             return ProcessingResult(
                 success=False, operation="fetch_trade_history", error=str(e)
+            )
+
+    def _generate_chart_ready_data(self) -> ProcessingResult:
+        """Generate pre-calculated chart data files for frontend consumption"""
+        try:
+            self.logger.info("Generating chart-ready data files")
+
+            # Read the main trade history data from raw data source
+            raw_trade_history_file = (
+                self.project_root
+                / "data"
+                / "raw"
+                / "trade_history"
+                / "live_signals.csv"
+            )
+            frontend_trade_history_file = (
+                self.frontend_data_dir / "trade-history" / "live_signals.csv"
+            )
+
+            # Prefer raw data source, fallback to frontend if needed
+            if raw_trade_history_file.exists():
+                trade_history_file = raw_trade_history_file
+                self.logger.info(f"Using raw data source: {raw_trade_history_file}")
+            elif frontend_trade_history_file.exists():
+                trade_history_file = frontend_trade_history_file
+                self.logger.warning(
+                    f"Raw data not found, using frontend data: {frontend_trade_history_file}"
+                )
+            else:
+                return ProcessingResult(
+                    success=False,
+                    operation="generate_chart_data",
+                    error=f"Trade history file not found in either raw ({raw_trade_history_file}) or frontend ({frontend_trade_history_file}) locations",
+                )
+
+            # Load trade history data
+            df = pd.read_csv(trade_history_file)
+
+            # Generate trade PnL waterfall data (sorted by PnL magnitude)
+            waterfall_result = self._generate_waterfall_data(df)
+
+            # Generate closed positions PnL progression data
+            closed_positions_result = self._generate_closed_positions_data(df)
+
+            # Generate open positions PnL data
+            open_positions_result = self._generate_chart_open_positions_data(df)
+
+            # Check if all generations were successful
+            if all(
+                [
+                    waterfall_result.success,
+                    closed_positions_result.success,
+                    open_positions_result.success,
+                ]
+            ):
+                self.logger.info("Successfully generated all chart-ready data files")
+                return ProcessingResult(success=True, operation="generate_chart_data")
+            else:
+                errors: list[str] = []
+                if not waterfall_result.success:
+                    errors.append(f"Waterfall: {waterfall_result.error}")
+                if not closed_positions_result.success:
+                    errors.append(f"Closed positions: {closed_positions_result.error}")
+                if not open_positions_result.success:
+                    errors.append(f"Open positions: {open_positions_result.error}")
+
+                return ProcessingResult(
+                    success=False,
+                    operation="generate_chart_data",
+                    error="; ".join(errors),
+                )
+
+        except Exception as e:
+            return ProcessingResult(
+                success=False,
+                operation="generate_chart_data",
+                error=f"Chart data generation failed: {str(e)}",
+            )
+
+    def _generate_waterfall_data(self, df: pd.DataFrame) -> ProcessingResult:
+        """Generate trade PnL waterfall data sorted by PnL magnitude with unique ticker numbering"""
+        try:
+            # Filter for closed trades only
+            closed_trades = df[df["Status"] == "Closed"].copy()
+
+            if closed_trades.empty:
+                return ProcessingResult(
+                    success=False,
+                    operation="generate_waterfall_data",
+                    error="No closed trades found",
+                )
+
+            # Convert Exit_Timestamp to datetime for proper sorting
+            closed_trades["Exit_Timestamp_dt"] = pd.to_datetime(
+                closed_trades["Exit_Timestamp"]
+            )
+
+            # Handle ticker uniqueness: number duplicate tickers by Exit_Timestamp order
+            unique_tickers = []
+
+            # Group by ticker and sort each group by Exit_Timestamp (oldest first)
+            for ticker in closed_trades["Ticker"].unique():
+                ticker_trades = closed_trades[closed_trades["Ticker"] == ticker].copy()
+                ticker_trades = ticker_trades.sort_values(
+                    "Exit_Timestamp_dt", ascending=True
+                )
+
+                if len(ticker_trades) == 1:
+                    # Single trade - keep original ticker name
+                    unique_tickers.extend(ticker_trades.index.tolist())
+                else:
+                    # Multiple trades - number them by exit timestamp order
+                    for i, idx in enumerate(ticker_trades.index.tolist()):
+                        sequence_number = i + 1
+                        numbered_ticker = f"{ticker}{sequence_number}"
+                        closed_trades.loc[idx, "Ticker"] = numbered_ticker
+                        unique_tickers.append(idx)
+
+            # Sort by PnL magnitude (highest gains to highest losses)
+            closed_trades["PnL_numeric"] = pd.to_numeric(
+                closed_trades["PnL"], errors="coerce"
+            )
+            sorted_trades = closed_trades.sort_values("PnL_numeric", ascending=False)
+
+            # Create waterfall data with required columns (excluding temporary columns)
+            waterfall_data = sorted_trades[
+                [
+                    "Ticker",
+                    "PnL",
+                    "Entry_Timestamp",
+                    "Exit_Timestamp",
+                    "Avg_Entry_Price",
+                    "Avg_Exit_Price",
+                    "Position_Size",
+                    "Direction",
+                    "Duration_Days",
+                    "Position_UUID",
+                ]
+            ].copy()
+
+            # Add Status column for schema compatibility (all waterfall trades are closed)
+            waterfall_data["Status"] = "Closed"
+
+            # Reorder columns to match expected format
+            waterfall_data = waterfall_data[
+                [
+                    "Ticker",
+                    "PnL",
+                    "Status",
+                    "Entry_Timestamp",
+                    "Exit_Timestamp",
+                    "Avg_Entry_Price",
+                    "Avg_Exit_Price",
+                    "Position_Size",
+                    "Direction",
+                    "Duration_Days",
+                    "Position_UUID",
+                ]
+            ]
+
+            # Save to trade-history directory
+            output_file = (
+                self.frontend_data_dir
+                / "trade-history"
+                / "trade_pnl_waterfall_sorted.csv"
+            )
+            output_file.parent.mkdir(parents=True, exist_ok=True)
+            waterfall_data.to_csv(output_file, index=False)
+
+            # Count duplicates for logging
+            ticker_duplicates = len(closed_trades) - len(
+                closed_trades["Ticker"].str.extract(r"^([A-Z]+)", expand=False).unique()
+            )
+
+            self.logger.info(
+                f"Generated waterfall data with {len(waterfall_data)} trades ({ticker_duplicates} tickers numbered for uniqueness)"
+            )
+            return ProcessingResult(success=True, operation="generate_waterfall_data")
+
+        except Exception as e:
+            return ProcessingResult(
+                success=False, operation="generate_waterfall_data", error=str(e)
+            )
+
+    def _load_historical_price_data(self, ticker: str) -> Dict[str, float]:
+        """Load historical price data for a ticker from raw data stocks directory with enhanced validation"""
+        price_data: dict[str, float] = {}
+
+        try:
+            # Try to load historical price data from raw stocks directory
+            price_file = (
+                self.project_root / "data" / "raw" / "stocks" / ticker / "daily.csv"
+            )
+
+            if not price_file.exists():
+                self.logger.warning(
+                    f"No historical price data found for {ticker} at {price_file}"
+                )
+                return price_data
+
+            # Read CSV with error handling
+            try:
+                price_df = pd.read_csv(price_file)
+            except pd.errors.EmptyDataError:
+                self.logger.warning(f"Empty CSV file for {ticker}")
+                return price_data
+            except pd.errors.ParserError as e:
+                self.logger.warning(f"Failed to parse CSV for {ticker}: {e}")
+                return price_data
+
+            # Validate required columns
+            required_columns = ["date", "close"]
+            missing_columns = [
+                col for col in required_columns if col not in price_df.columns
+            ]
+            if missing_columns:
+                self.logger.warning(
+                    f"Missing required columns for {ticker}: {missing_columns}"
+                )
+                return price_data
+
+            # Validate data quality and convert to dict
+            valid_rows = 0
+            invalid_rows = 0
+
+            for _, row in price_df.iterrows():
+                try:
+                    # Validate and parse date
+                    if pd.isna(row["date"]) or row["date"] == "":
+                        invalid_rows += 1
+                        continue
+
+                    date_parsed = pd.to_datetime(row["date"], errors="coerce")
+                    if pd.isna(date_parsed):
+                        invalid_rows += 1
+                        continue
+
+                    date_str = date_parsed.strftime("%Y-%m-%d")
+
+                    # Validate and parse price
+                    if pd.isna(row["close"]) or row["close"] == "":
+                        invalid_rows += 1
+                        continue
+
+                    close_price = float(row["close"])
+                    if (
+                        close_price <= 0 or close_price > 1000000
+                    ):  # Sanity check for reasonable price range
+                        invalid_rows += 1
+                        continue
+
+                    price_data[date_str] = close_price
+                    valid_rows += 1
+
+                except (ValueError, TypeError, OverflowError):
+                    invalid_rows += 1
+                    continue
+
+            # Log data quality statistics
+            total_rows = valid_rows + invalid_rows
+            if total_rows > 0:
+                quality_pct = (valid_rows / total_rows) * 100
+                self.logger.debug(
+                    f"Loaded {valid_rows} valid price points for {ticker} "
+                    f"({quality_pct:.1f}% quality, {invalid_rows} invalid rows)"
+                )
+
+                # Warn if data quality is poor
+                if quality_pct < 50:
+                    self.logger.warning(
+                        f"Poor data quality for {ticker}: {quality_pct:.1f}% valid rows"
+                    )
+                elif invalid_rows > 0:
+                    self.logger.debug(
+                        f"Filtered out {invalid_rows} invalid rows for {ticker}"
+                    )
+            else:
+                self.logger.warning(f"No valid price data found for {ticker}")
+
+        except Exception as e:
+            self.logger.warning(
+                f"Failed to load historical price data for {ticker}: {e}"
+            )
+
+        return price_data
+
+    def _generate_closed_positions_data(self, df: pd.DataFrame) -> ProcessingResult:
+        """Generate closed positions daily PnL progression time series data with enhanced validation"""
+        try:
+            # Validate input DataFrame
+            if df.empty:
+                return ProcessingResult(
+                    success=False,
+                    operation="generate_closed_positions_data",
+                    error="Empty input DataFrame",
+                )
+
+            # Validate required columns
+            required_columns = [
+                "Status",
+                "Ticker",
+                "Entry_Timestamp",
+                "Exit_Timestamp",
+                "Avg_Entry_Price",
+                "Avg_Exit_Price",
+                "Position_Size",
+                "Direction",
+                "PnL",
+                "Position_UUID",
+                "Duration_Days",
+            ]
+            missing_columns = [col for col in required_columns if col not in df.columns]
+            if missing_columns:
+                return ProcessingResult(
+                    success=False,
+                    operation="generate_closed_positions_data",
+                    error=f"Missing required columns: {missing_columns}",
+                )
+
+            closed_trades = df[df["Status"] == "Closed"].copy()
+
+            if closed_trades.empty:
+                return ProcessingResult(
+                    success=False,
+                    operation="generate_closed_positions_data",
+                    error="No closed trades found",
+                )
+
+            self.logger.info(
+                f"Processing {len(closed_trades)} closed positions for time series generation"
+            )
+
+            # Generate daily time series data for each closed position
+            time_series_data = []
+            price_data_cache = {}  # Cache for loaded price data
+            positions_with_real_data = 0
+            positions_with_interpolated_data = 0
+
+            for _, trade in closed_trades.iterrows():
+                try:
+                    # Validate individual trade data
+                    ticker = trade["Ticker"]
+                    if pd.isna(ticker) or ticker == "":
+                        self.logger.warning(
+                            f"Skipping trade with empty ticker: {trade.get('Position_UUID', 'unknown')}"
+                        )
+                        continue
+
+                    # Validate and parse timestamps
+                    try:
+                        entry_timestamp = pd.to_datetime(
+                            trade["Entry_Timestamp"], errors="coerce"
+                        )
+                        exit_timestamp = pd.to_datetime(
+                            trade["Exit_Timestamp"], errors="coerce"
+                        )
+
+                        if pd.isna(entry_timestamp) or pd.isna(exit_timestamp):
+                            self.logger.warning(
+                                f"Skipping {ticker} trade with invalid timestamps: {trade.get('Position_UUID', 'unknown')}"
+                            )
+                            continue
+
+                        entry_date = entry_timestamp.date()
+                        exit_date = exit_timestamp.date()
+
+                        # Validate date logic
+                        if exit_date < entry_date:
+                            self.logger.warning(
+                                f"Skipping {ticker} trade with exit before entry: {trade.get('Position_UUID', 'unknown')}"
+                            )
+                            continue
+
+                    except Exception as e:
+                        self.logger.warning(
+                            f"Skipping {ticker} trade due to timestamp parsing error: {e}"
+                        )
+                        continue
+
+                    # Validate price data
+                    try:
+                        entry_price = float(trade["Avg_Entry_Price"])
+                        exit_price = float(trade["Avg_Exit_Price"])
+                        position_size = float(trade["Position_Size"])
+
+                        if entry_price <= 0 or exit_price <= 0 or position_size <= 0:
+                            self.logger.warning(
+                                f"Skipping {ticker} trade with invalid prices/size: {trade.get('Position_UUID', 'unknown')}"
+                            )
+                            continue
+
+                    except (ValueError, TypeError) as e:
+                        self.logger.warning(
+                            f"Skipping {ticker} trade due to price parsing error: {e}"
+                        )
+                        continue
+
+                    # Load historical price data first to determine available trading dates
+                    if ticker not in price_data_cache:
+                        price_data_cache[ticker] = self._load_historical_price_data(
+                            ticker
+                        )
+
+                    historical_prices = price_data_cache[ticker]
+
+                    # Generate progression using only trading days (dates with actual price data)
+                    if len(historical_prices) > 0:
+                        # Use only dates that exist in historical price data within trade period
+                        available_dates = []
+                        for date_str, _ in historical_prices.items():
+                            try:
+                                price_date = pd.to_datetime(date_str).date()
+                                if entry_date <= price_date <= exit_date:
+                                    available_dates.append(pd.to_datetime(date_str))
+                            except (ValueError, TypeError, AttributeError):
+                                continue
+
+                        if available_dates:
+                            date_range = sorted(available_dates)
+                        else:
+                            # Fallback: single day with entry date if no trading days found
+                            date_range = [pd.to_datetime(entry_date)]
+                    else:
+                        # Fallback: single day with entry date if no price data available
+                        date_range = [pd.to_datetime(entry_date)]
+
+                    use_real_data = len(historical_prices) > 0
+
+                    if use_real_data:
+                        positions_with_real_data += 1
+                    else:
+                        positions_with_interpolated_data += 1
+                        self.logger.warning(
+                            f"Using linear interpolation for {ticker} - no historical data available"
+                        )
+
+                    # Get trade parameters (already validated above)
+                    direction = trade["Direction"]
+
+                    # Get the actual market entry price for proper PnL calculation
+                    entry_date_str = entry_date.strftime("%Y-%m-%d")
+                    entry_market_price = entry_price  # Default to trade entry price
+                    if use_real_data and entry_date_str in historical_prices:
+                        entry_market_price = historical_prices[entry_date_str]
+                        self.logger.debug(
+                            f"Using actual market price for {ticker} entry: {entry_market_price} vs trade price: {entry_price}"
+                        )
+
+                    for i, date in enumerate(date_range):
+                        date_str = date.strftime("%Y-%m-%d")
+
+                        if use_real_data and date_str in historical_prices:
+                            # Use real historical price data
+                            current_market_price = historical_prices[date_str]
+
+                            # Calculate actual PnL based on real price movement from entry market price
+                            if direction == "Long":
+                                current_pnl = (
+                                    current_market_price - entry_market_price
+                                ) * position_size
+                            else:  # Short position
+                                current_pnl = (
+                                    entry_market_price - current_market_price
+                                ) * position_size
+
+                            current_price = current_market_price
+
+                        else:
+                            # Fallback to linear interpolation
+                            if len(date_range) > 1:
+                                progress_ratio = i / (len(date_range) - 1)
+                            else:
+                                progress_ratio = (
+                                    1.0  # Single day trade gets final PnL immediately
+                                )
+
+                            current_pnl = float(trade["PnL"]) * progress_ratio
+                            price_progress = (exit_price - entry_price) * progress_ratio
+                            current_price = entry_price + price_progress
+
+                        # Create daily data point matching ClosedPositionPnLDataRow schema
+                        time_series_data.append(
+                            {
+                                "Date": date_str,
+                                "Ticker": ticker,
+                                "Price": f"{current_price:.4f}",
+                                "PnL": f"{current_pnl:.2f}",
+                                "Position_Size": str(trade["Position_Size"]),
+                                "Entry_Date": entry_date.strftime("%Y-%m-%d"),
+                                "Entry_Price": f"{entry_market_price:.4f}",  # Use actual market entry price
+                                "Direction": direction,
+                                "Position_UUID": trade["Position_UUID"],
+                                "Duration_Days": str(trade["Duration_Days"]),
+                            }
+                        )
+
+                except Exception as e:
+                    self.logger.warning(
+                        f"Failed to process trade {trade.get('Position_UUID', 'unknown')}: {e}"
+                    )
+                    continue
+
+            if not time_series_data:
+                return ProcessingResult(
+                    success=False,
+                    operation="generate_closed_positions_data",
+                    error="No valid time series data generated from closed trades",
+                )
+
+            # Convert to DataFrame and save
+            closed_positions_df = pd.DataFrame(time_series_data)
+
+            # Create portfolio subdirectory for closed positions data
+            output_file = (
+                self.frontend_data_dir
+                / "portfolio"
+                / "closed_positions_pnl_progression.csv"
+            )
+            output_file.parent.mkdir(parents=True, exist_ok=True)
+            closed_positions_df.to_csv(output_file, index=False)
+
+            # Log summary statistics
+            unique_positions = closed_positions_df["Position_UUID"].nunique()
+            total_data_points = len(closed_positions_df)
+            avg_duration = closed_positions_df.groupby("Position_UUID").size().mean()
+
+            self.logger.info(
+                f"Generated closed positions time series data: {unique_positions} positions, "
+                f"{total_data_points} data points, avg {avg_duration:.1f} days per position "
+                f"({positions_with_real_data} positions with real price data, "
+                f"{positions_with_interpolated_data} with linear interpolation)"
+            )
+
+            return ProcessingResult(
+                success=True, operation="generate_closed_positions_data"
+            )
+
+        except Exception as e:
+            return ProcessingResult(
+                success=False, operation="generate_closed_positions_data", error=str(e)
+            )
+
+    def _generate_chart_open_positions_data(self, df: pd.DataFrame) -> ProcessingResult:
+        """Generate open positions PnL data"""
+        try:
+            # Filter for open positions only
+            open_trades = df[df["Status"] != "Closed"].copy()
+
+            # If no open positions, create empty file with correct structure
+            if open_trades.empty:
+                open_positions_data = pd.DataFrame(
+                    columns=[
+                        "Position_UUID",
+                        "Ticker",
+                        "Entry_Date",
+                        "Entry_Price",
+                        "Current_Price",
+                        "PnL",
+                        "Position_Size",
+                        "Direction",
+                        "Date",
+                    ]
+                )
+            else:
+                # Create open positions data structure
+                open_positions_data = open_trades[
+                    [
+                        "Position_UUID",
+                        "Ticker",
+                        "Entry_Timestamp",
+                        "Avg_Entry_Price",
+                        "Current_Unrealized_PnL",
+                        "Position_Size",
+                        "Direction",
+                    ]
+                ].copy()
+
+                # Rename columns to match frontend expectations
+                open_positions_data = open_positions_data.rename(
+                    columns={
+                        "Entry_Timestamp": "Entry_Date",
+                        "Avg_Entry_Price": "Entry_Price",
+                        "Current_Unrealized_PnL": "PnL",
+                    }
+                )
+
+                # Add current date and price columns (would need real-time data)
+                open_positions_data["Date"] = datetime.now().strftime("%Y-%m-%d")
+                open_positions_data["Current_Price"] = open_positions_data[
+                    "Entry_Price"
+                ]  # Placeholder
+
+            # Save to portfolio directory
+            output_file = (
+                self.frontend_data_dir / "portfolio" / "open_positions_pnl_current.csv"
+            )
+            output_file.parent.mkdir(parents=True, exist_ok=True)
+            open_positions_data.to_csv(output_file, index=False)
+
+            self.logger.info(
+                f"Generated open positions data with {len(open_positions_data)} positions"
+            )
+            return ProcessingResult(
+                success=True, operation="generate_open_positions_data"
+            )
+
+        except Exception as e:
+            return ProcessingResult(
+                success=False, operation="generate_open_positions_data", error=str(e)
             )
 
     def _run_processing_script(self, script: str) -> ProcessingResult:
@@ -1954,6 +3071,9 @@ def main():
     )
     parser.add_argument("--verbose", action="store_true", help="Enable verbose logging")
     parser.add_argument(
+        "--quiet", action="store_true", help="Enable quiet mode (warnings only)"
+    )
+    parser.add_argument(
         "--dry-run",
         action="store_true",
         help="Analyze what would be updated without making changes",
@@ -1970,8 +3090,8 @@ def main():
     if args.verbose:
         logging.getLogger().setLevel(logging.DEBUG)
 
-    # Initialize pipeline manager
-    pipeline = DataPipelineManager()
+    # Initialize pipeline manager with quiet mode if requested
+    pipeline = DataPipelineManager(quiet_mode=args.quiet)
 
     if args.validate_only:
         # Validate data freshness only

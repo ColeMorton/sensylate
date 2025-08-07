@@ -1,4 +1,4 @@
-import type { Data, Layout } from "plotly.js";
+import type { Data, Layout, Config } from "plotly.js";
 
 // Portfolio data structure from CSV files
 export interface PortfolioDataRow {
@@ -70,6 +70,20 @@ export interface TradeHistoryDataRow {
   X_Status: string;
 }
 
+// Enhanced closed position data with real daily price progression
+export interface ClosedPositionPnLDataRow {
+  Date: string;
+  Ticker: string;
+  Price: string;
+  PnL: string;
+  Position_Size: string;
+  Entry_Date: string;
+  Entry_Price: string;
+  Direction: string;
+  Position_UUID: string;
+  Duration_Days: string;
+}
+
 // Open positions PnL time series data structure
 export interface OpenPositionPnLDataRow {
   Date: string;
@@ -91,6 +105,21 @@ export interface StockDataRow {
   [key: string]: string;
 }
 
+// Benchmark data structure for comparison charts
+export interface BenchmarkDataRow {
+  date: string;
+  ticker: string;
+  close: string;
+}
+
+// Live Signals Benchmark Comparison data structure from pre-processed CSV
+export interface LiveSignalsBenchmarkDataRow {
+  Date: string;
+  Portfolio: string;
+  SPY: string;
+  QQQ: string;
+  "BTC-USD": string;
+}
 // Chart configuration types
 export type ChartType =
   | "apple-stock"
@@ -98,10 +127,12 @@ export type ChartType =
   | "returns-comparison"
   | "portfolio-drawdowns"
   | "live-signals-equity-curve"
+  | "live-signals-benchmark-comparison"
   | "live-signals-drawdowns"
   | "live-signals-weekly-candlestick"
   | "trade-pnl-waterfall"
-  | "open-positions-pnl-timeseries";
+  | "open-positions-pnl-timeseries"
+  | "closed-positions-pnl-timeseries";
 
 export interface ChartConfig {
   title: string;
@@ -136,7 +167,9 @@ export interface ChartDisplayProps {
   chartType?: ChartType;
   timeframe?: "daily" | "weekly";
   indexed?: boolean;
+  positionType?: "open" | "closed" | "auto";
   className?: string;
+  titleOnly?: boolean;
 }
 
 export interface ChartContainerProps {
@@ -145,12 +178,13 @@ export interface ChartContainerProps {
   description?: string;
   children: React.ReactNode;
   className?: string;
+  titleOnly?: boolean;
 }
 
 export interface ChartRendererProps {
   data: Data[];
   layout: Partial<Layout>;
-  config?: Partial<Plotly.Config>;
+  config?: Partial<Config>;
   loading?: boolean;
   error?: string | null;
 }
