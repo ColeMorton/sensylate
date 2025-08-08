@@ -303,7 +303,7 @@ class DataDrivenMacroAnalyzer:
     ) -> Dict[str, float]:
         """Assess supply vs demand inflation drivers from data"""
         cpi_trend = inflation_data.get("cpi_data", {}).get("trend", "")
-        core_trend = inflation_data.get("core_cpi_data", {}).get("trend", "")
+        inflation_data.get("core_cpi_data", {}).get("trend", "")
 
         # Basic heuristic: declining trends suggest supply-side improvement
         supply_weight = 0.6 if "declining" in cpi_trend else 0.4
@@ -378,9 +378,7 @@ class DataDrivenMacroAnalyzer:
         )
 
         # Regional central bank coordination using region-specific logic
-        central_bank_name = (
-            "Federal Reserve" if self.region == "US" else "Regional Central Bank"
-        )
+        "Federal Reserve" if self.region == "US" else "Regional Central Bank"
 
         policy_coordination = self._calculate_policy_coordination(
             monetary_policy_context
@@ -495,7 +493,7 @@ class DataDrivenMacroAnalyzer:
         vix_analysis = volatility_analysis.get("vix_analysis", {})
 
         vix_level = vix_analysis.get("current_level", 20.0)
-        vix_percentile = vix_analysis.get("percentile_rank", 50.0)
+        vix_analysis.get("percentile_rank", 50.0)
 
         # Use regional volatility parameters from config
         long_term_mean = self.regional_volatility_config.get("long_term_mean", 19.5)
@@ -1303,7 +1301,7 @@ class DataDrivenMacroAnalyzer:
                     "Payroll trends",
                     "Initial claims",
                 ],
-                "risk_escalation_triggers": f"GDP < 1.0% or Employment decline > 100k/month",
+                "risk_escalation_triggers": "GDP < 1.0% or Employment decline > 100k/month",
             },
             "confidence": confidence,
         }
