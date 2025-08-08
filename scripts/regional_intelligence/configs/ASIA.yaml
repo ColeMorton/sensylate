@@ -1,0 +1,310 @@
+region: ASIA
+display_name: "Asia Pacific Region"
+
+central_bank:
+  name: "Regional Central Banks"
+  short_name: "Regional CBs"
+  policy_rate_name: "Policy Rates"
+  policy_framework: "mixed_mandates"
+  primary_banks:
+    - bank: "Bank of Japan"
+      short: "BoJ"
+      currency: "JPY"
+      policy_rate: "policy_balance_rate"
+      framework: "yield_curve_control"
+    - bank: "People's Bank of China"
+      short: "PBoC"
+      currency: "CNY"
+      policy_rate: "loan_prime_rate"
+      framework: "multiple_tools"
+    - bank: "Bank of Korea"
+      short: "BoK"
+      currency: "KRW"
+      policy_rate: "base_rate"
+      framework: "inflation_targeting"
+    - bank: "Reserve Bank of Australia"
+      short: "RBA"
+      currency: "AUD"
+      policy_rate: "cash_rate"
+      framework: "inflation_targeting"
+
+currency:
+  code: "MULTI"
+  name: "Multi-Currency Region"
+  regime: "mixed"
+  major_currencies:
+    - code: "JPY"
+      regime: "floating"
+      safe_haven_status: true
+      carry_trade_role: "funding_currency"
+    - code: "CNY"
+      regime: "managed_float"
+      capital_controls: true
+      internationalization: "developing"
+    - code: "KRW"
+      regime: "floating"
+      volatility: "moderate"
+    - code: "AUD"
+      regime: "floating"
+      commodity_currency: true
+      carry_trade_role: "target_currency"
+
+key_economic_indicators:
+  japan:
+    - name: "Tankan Survey - Large Manufacturing"
+      code: "TANKAN_LMF"
+      frequency: "quarterly"
+      importance: "critical"
+      typical_range: [-50, 50]
+      neutral_threshold: 0
+
+    - name: "Core CPI (ex fresh food)"
+      code: "JAPAN_CORE_CPI"
+      frequency: "monthly"
+      importance: "critical"
+      typical_range: [-1.0, 2.5]
+      target_level: 2.0
+
+    - name: "Industrial Production"
+      code: "JAPAN_IP"
+      frequency: "monthly"
+      importance: "high"
+      typical_range: [-15, 15]  # YoY % change
+
+  china:
+    - name: "Caixin PMI Manufacturing"
+      code: "CAIXIN_MFG_PMI"
+      frequency: "monthly"
+      importance: "high"
+      typical_range: [35, 65]
+      expansion_threshold: 50
+
+    - name: "Official PMI Manufacturing"
+      code: "CHINA_OFFICIAL_PMI"
+      frequency: "monthly"
+      importance: "high"
+      typical_range: [35, 65]
+      expansion_threshold: 50
+
+    - name: "CPI"
+      code: "CHINA_CPI"
+      frequency: "monthly"
+      importance: "high"
+      typical_range: [-2, 6]
+      target_level: 3.0
+
+    - name: "PPI"
+      code: "CHINA_PPI"
+      frequency: "monthly"
+      importance: "high"
+      typical_range: [-8, 12]
+
+  south_korea:
+    - name: "KOSPI Business Survey Index"
+      code: "KOSPI_BSI"
+      frequency: "monthly"
+      importance: "medium"
+      typical_range: [60, 140]
+      neutral_threshold: 100
+
+    - name: "CPI"
+      code: "KOREA_CPI"
+      frequency: "monthly"
+      importance: "high"
+      typical_range: [0, 4]
+      target_level: 2.0
+
+  australia:
+    - name: "RBA Cash Rate"
+      code: "RBA_CASH_RATE"
+      frequency: "monthly"
+      importance: "critical"
+      typical_range: [0.1, 6.0]
+
+    - name: "Consumer Price Index"
+      code: "AUS_CPI"
+      frequency: "quarterly"
+      importance: "high"
+      typical_range: [0, 5]
+      target_range: [2.0, 3.0]
+
+  regional:
+    - name: "Asian Development Bank Economic Outlook"
+      code: "ADB_OUTLOOK"
+      frequency: "quarterly"
+      importance: "medium"
+      coverage: "regional_aggregate"
+
+benchmark_securities:
+  government_bonds:
+    japan:
+      - name: "Japanese Government Bond 10-Year"
+        code: "JGB_10Y"
+        maturity: 10
+        typical_range: [-0.3, 1.5]
+        yield_curve_control: true
+    china:
+      - name: "China Government Bond 10-Year"
+        code: "CGB_10Y"
+        maturity: 10
+        typical_range: [2.5, 4.5]
+    australia:
+      - name: "Australian Government Bond 10-Year"
+        code: "ACGB_10Y"
+        maturity: 10
+        typical_range: [0.5, 4.5]
+
+  equity_indices:
+    - name: "Nikkei 225"
+      code: "N225"
+      country: "Japan"
+      sector_focus: "japanese_large_cap"
+
+    - name: "TOPIX"
+      code: "TOPIX"
+      country: "Japan"
+      sector_focus: "broad_japanese_market"
+
+    - name: "Shanghai Composite"
+      code: "SHCOMP"
+      country: "China"
+      sector_focus: "chinese_a_shares"
+
+    - name: "Hang Seng"
+      code: "HSI"
+      country: "Hong Kong"
+      sector_focus: "hong_kong_large_cap"
+
+    - name: "KOSPI"
+      code: "KOSPI"
+      country: "South Korea"
+      sector_focus: "korean_large_cap"
+
+    - name: "ASX 200"
+      code: "AS51"
+      country: "Australia"
+      sector_focus: "australian_large_cap"
+
+market_structure:
+  banking_system: "mixed"  # varies by country
+  regional_characteristics:
+    japan:
+      banking_system: "bank_based"
+      corporate_governance: "keiretsu"
+      demographics: "aging"
+    china:
+      banking_system: "state_influenced"
+      capital_controls: true
+      development_stage: "emerging"
+    australia:
+      banking_system: "concentrated_market_based"
+      commodity_exposure: "high"
+    south_korea:
+      banking_system: "concentrated_bank_based"
+      chaebol_influence: "high"
+
+economic_transmission_channels:
+  monetary_policy:
+    effectiveness_varies_by_country: true
+    japan:
+      primary: "portfolio_balance_channel"
+      effectiveness: 0.6
+      lag_quarters: 8
+      zero_bound_constraint: true
+    china:
+      primary: "quantity_based_tools"
+      effectiveness: 0.8
+      lag_quarters: 4
+      capital_controls: true
+    australia:
+      primary: "interest_rate_channel"
+      effectiveness: 0.85
+      lag_quarters: 4
+
+risk_factors:
+  regional:
+    - name: "china_slowdown_spillover"
+      probability: 0.35
+      impact: 5
+
+    - name: "supply_chain_disruption"
+      probability: 0.30
+      impact: 4
+
+    - name: "commodity_price_volatility"
+      probability: 0.40
+      impact: 3
+
+    - name: "geopolitical_tensions"
+      probability: 0.45
+      impact: 4
+
+    - name: "demographic_transition"
+      probability: 0.50
+      impact: 3
+
+  country_specific:
+    japan:
+      - name: "deflation_risk"
+        probability: 0.25
+        impact: 3
+    china:
+      - name: "property_sector_stress"
+        probability: 0.40
+        impact: 4
+      - name: "debt_sustainability"
+        probability: 0.30
+        impact: 4
+    australia:
+      - name: "housing_market_correction"
+        probability: 0.35
+        impact: 3
+
+correlation_patterns:
+  intra_regional: 0.6  # average correlation within Asia
+  with_china: 0.7     # China's regional influence
+  with_us: 0.5        # correlation with US markets
+  with_commodities: 0.4  # resource economies influence
+
+regional_specifics:
+  business_cycle_characteristics:
+    synchronization_level: "moderate"
+    china_influence: "dominant"
+    export_dependency: "high"
+
+  trade_integration:
+    intra_regional_trade: "high"
+    supply_chain_integration: "very_high"
+    commodity_importers: ["Japan", "South Korea", "China"]
+    commodity_exporters: ["Australia", "Indonesia", "Malaysia"]
+
+  financial_integration:
+    capital_market_development: "varied"
+    regional_payment_systems: "developing"
+    currency_internationalization: "limited"
+
+data_sources:
+  primary: ["BoJ", "PBoC", "RBA", "BoK", "National Statistical Offices"]
+  secondary: ["ADB", "IMF", "Markit", "Bloomberg"]
+  alternative: ["ASEAN+3 Macroeconomic Research Office", "Regional Surveys"]
+
+special_features:
+  demographics:
+    aging_societies: ["Japan", "South Korea", "Singapore"]
+    labor_force_trends: "declining_in_developed"
+
+  technology_leadership:
+    semiconductor_industry: "critical_global_role"
+    digital_transformation: "rapid"
+    fintech_adoption: "high_but_varied"
+
+  sustainability:
+    carbon_neutrality_commitments: "increasing"
+    renewable_energy_transition: "accelerating"
+    green_finance: "developing"
+
+quality_standards:
+  min_confidence_threshold: 0.75  # lower due to data complexity
+  data_freshness_requirement: 45  # days, longer for diverse sources
+  cross_validation_threshold: 0.85
+  regional_specificity_target: 0.88

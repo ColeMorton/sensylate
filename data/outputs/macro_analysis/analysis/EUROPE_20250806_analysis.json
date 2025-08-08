@@ -1,0 +1,292 @@
+{
+  "metadata": {
+    "command_name": "macro_analyst_analyze",
+    "execution_timestamp": "2025-08-08T01:29:13.944122Z",
+    "framework_phase": "analyze",
+    "region": "EUROPE",
+    "analysis_methodology": "unified_data_driven_regional_analysis",
+    "discovery_file_reference": "data/outputs/macro_analysis/discovery/europe_20250806_discovery.json",
+    "confidence_threshold": 0.9
+  },
+  "business_cycle_modeling": {
+    "current_phase": "expansion",
+    "recession_probability": 0.23,
+    "phase_transition_probabilities": {
+      "expansion_to_peak": 0.27,
+      "peak_to_contraction": 0.12,
+      "contraction_to_trough": 0.05,
+      "trough_to_expansion": 0.68
+    },
+    "interest_rate_sensitivity": {
+      "duration_analysis": "moderate_sensitivity_with_3.8_duration",
+      "leverage_impact": "corporate_debt_refinancing_pressure_at_current_4.25_ecb_main_refinancing_rate",
+      "rate_coefficients": "gdp_growth_negative_0.62_correlation_with_rate_increases"
+    },
+    "inflation_hedge_assessment": {
+      "pricing_power": "manufacturing_sector_maintaining_pricing_flexibility_core_cpi_2.4_pct",
+      "real_return_protection": "sovereign_real_yields_positive_1.9_pct",
+      "cost_structure_flexibility": "labor_cost_moderation_wage_growth_decelerating"
+    },
+    "gdp_growth_correlation": {
+      "gdp_elasticity": "1.3_business_cycle_score_indicating_below_trend_sensitivity",
+      "historical_correlation": 0.68,
+      "expansion_performance": "current_1.2_pct_moderation_from_trend",
+      "contraction_performance": "estimated_negative_1.7_pct_sensitivity_in_recession",
+      "leading_lagging_relationship": "coincident_indicator_with_2_quarter_policy_transmission_lag"
+    },
+    "confidence": 0.9175
+  },
+  "liquidity_cycle_positioning": {
+    "ecb_policy_stance": "neutral",
+    "credit_market_conditions": {
+      "corporate_bond_issuance": "adequate_access_with_115bps_investment_grade_spreads",
+      "credit_spreads": "360bps_high_yield_indicating_moderate_stress_manageable",
+      "refinancing_risk": "elevated_for_2025_2026_maturities_at_higher_rates",
+      "banking_standards": "tightening_per_ecb_lending_survey"
+    },
+    "money_supply_impact": {
+      "m2_growth_sensitivity": "moderate_correlation_with_m2_contraction_impacting_liquidity",
+      "velocity_implications": "money_velocity_normalization_supporting_policy_transmission",
+      "asset_price_inflation": "equity_valuations_under_pressure"
+    },
+    "liquidity_preferences": {
+      "sector_allocation_flows": "risk_off_sentiment_0.41_score_challenging_risk_assets",
+      "risk_appetite_correlation": "low_vix_19.0_widening_credit_spreads"
+    },
+    "employment_sensitivity": {
+      "payroll_correlation": 0.63,
+      "labor_participation_impact": "stable_73.8_pct_participation_supporting_consumer_spending",
+      "initial_claims_signaling": "elevated_correlation_with_claims_early_warning",
+      "employment_cycle_positioning": "late_cycle_with_unemployment_6.4_pct",
+      "consumer_spending_linkage": "employment_moderation_constraining_1.0_pct_consumer_spending_growth"
+    },
+    "confidence": 0.925
+  },
+  "industry_dynamics_scorecard": {
+    "profitability_score": {
+      "grade": "D",
+      "trend": "declining",
+      "key_metrics": "industrial_margins_under_pressure_despite_higher_financing_costs",
+      "supporting_evidence": "productivity_growth_1.9_pct_offsetting_input_pressures"
+    },
+    "balance_sheet_score": {
+      "grade": "F",
+      "trend": "stable",
+      "debt_trends": "moderate_leverage_with_refinancing_challenges_ahead",
+      "liquidity_adequacy": "adequate_with_ecb_normalization"
+    },
+    "competitive_moat_score": {
+      "score": 6.2,
+      "moat_strength": "sustainability_efficiency_advantages_creating_differentiation",
+      "sustainability": "green_transition_supporting_sustainable_competitive_advantages",
+      "evidence": "sustainability_sector_earnings_strength_and_market_outperformance"
+    },
+    "regulatory_environment_rating": {
+      "rating": "favorable",
+      "policy_timeline": "evolving_regulatory_framework_with_ecb_policy_normalization",
+      "compliance_costs": "manageable_with_established_regulatory_infrastructure",
+      "industry_influence": "strong_policy_influence_through_established_channels"
+    },
+    "confidence": 0.9166666666666666
+  },
+  "multi_method_valuation": {
+    "dcf_analysis": {
+      "fair_value": "economic_growth_1.2_pct_supporting_economic_earnings_expansion",
+      "wacc": "elevated_cost_of_capital_from_4.25_pct_ecb_main_refinancing_rate",
+      "growth_assumptions": "1.8_pct_long_term_gdp_growth_with_productivity_enhancements",
+      "sensitivity_analysis": "100bps_rate_increase_reduces_valuations_12.0_pct",
+      "weight": "40_percent"
+    },
+    "relative_comps": {
+      "fair_value": "europe_peer_multiple_analysis_current_valuations",
+      "peer_multiples": "price_earnings_ratios_vs_europe_comparables",
+      "premium_discount": "trading_at_discount_to_regional_peers",
+      "multiple_trends": "valuation_multiples_compressing_with_rate_environment",
+      "weight": "35_percent"
+    },
+    "technical_analysis": {
+      "fair_value": "technical_targets_based_on_EUR_denominated_indices",
+      "support_resistance": "key_support_at_current_levels",
+      "momentum_indicators": "negative_momentum_with_neutral_trend",
+      "volume_profile": "institutional_flows_supportive",
+      "weight": "25_percent"
+    },
+    "blended_valuation": {
+      "weighted_fair_value": "probability_weighted_economic_value_assessment",
+      "confidence_intervals": "valuation_range_accounting_for_19.0_volatility",
+      "scenario_weighting": "gdp_and_policy_scenario_weighted_valuations"
+    },
+    "confidence": 0.9233333333333333
+  },
+  "quantified_risk_assessment": {
+    "risk_matrix": {
+      "economic_recession": {
+        "probability": 0.35,
+        "impact": 4,
+        "risk_score": 1.4
+      },
+      "interest_rate_shock": {
+        "probability": 0.4,
+        "impact": 4,
+        "risk_score": 1.6
+      },
+      "eur_strength": {
+        "probability": 0.42,
+        "impact": 3,
+        "risk_score": 1.26
+      },
+      "regulatory_changes": {
+        "probability": 0.25,
+        "impact": 3,
+        "risk_score": 0.75
+      },
+      "market_volatility": {
+        "probability": 0.47,
+        "impact": 2,
+        "risk_score": 0.94
+      }
+    },
+    "stress_testing": {
+      "bear_market_scenario": {
+        "probability": "47.0",
+        "economic_impact": "-24.0_pct_decline",
+        "recovery_timeline": "6.0_quarters"
+      },
+      "recession_scenario": {
+        "probability": "35.0",
+        "economic_impact": "gdp_contraction_-3.4_pct",
+        "recovery_phases": "9.0_quarter_recovery"
+      },
+      "policy_shock_scenario": {
+        "probability": "40.0",
+        "rate_impact": "ECB_emergency_rate_action"
+      }
+    },
+    "sensitivity_analysis": {
+      "key_variables": [
+        "interest_rates",
+        "gdp_growth",
+        "inflation",
+        "exchange_rates"
+      ],
+      "elasticity_calculations": "calculated_impacts_per_unit_change",
+      "break_even_analysis": "critical_thresholds_at_-0.3_pct_growth",
+      "tornado_diagram": "interest_rates_highest_impact_followed_by_growth"
+    },
+    "aggregate_risk_score": 1.19,
+    "confidence": 0.9433333333333334
+  },
+  "enhanced_economic_sensitivity": {
+    "ecb_main_refinancing_rate_correlation": -0.77,
+    "eur_impact": -0.27,
+    "yield_curve_analysis": -0.69,
+    "crypto_correlation": 0.32,
+    "economic_indicators": {
+      "unemployment_sensitivity": -0.53,
+      "inflation_sensitivity": 0.69,
+      "gdp_correlation": 0.77
+    },
+    "confidence": 0.9333333333333332
+  },
+  "macroeconomic_risk_scoring": {
+    "gdp_based_risk_assessment": {
+      "gdp_deceleration_probability": 0.45,
+      "recession_vulnerability": "high_vulnerability_to_gdp_contraction",
+      "gdp_elasticity_impact": "impact_modeling_based_on_1.6_gdp_elasticity",
+      "early_warning_signals": "below_trend_growth"
+    },
+    "employment_based_risk_assessment": {
+      "payroll_decline_probability": 0.7,
+      "labor_market_impact": "significant_demand_impact_from_employment",
+      "claims_spike_scenarios": "initial_claims_stress_at_480.0k_level",
+      "employment_cycle_risk": "mid_cycle_employment_risks"
+    },
+    "combined_macroeconomic_risk": {
+      "composite_risk_index": 0.57,
+      "cross_correlation_analysis": "gdp_employment_shock_correlation_0.83",
+      "recession_probability": 0.35,
+      "stress_test_outcomes": "severe_scenario_-4.9_pct_gdp_impact"
+    },
+    "early_warning_system": {
+      "leading_indicators": [
+        "yield_curve_flattening_caution",
+        "claims_elevated_warning",
+        "credit_stable_positive"
+      ],
+      "threshold_breach_probability": 0.4,
+      "monitoring_kpis": [
+        "yield_curve_slope",
+        "initial_claims_trend",
+        "credit_spreads",
+        "money_supply_growth"
+      ],
+      "risk_escalation_triggers": {
+        "gdp_growth_below": 1.0,
+        "unemployment_above": 5.0,
+        "initial_claims_above": 350000,
+        "yield_curve_inversion": -25,
+        "credit_spreads_above": 250,
+        "volatility_above": 30
+      }
+    },
+    "confidence": 0.9275
+  },
+  "investment_recommendation_gap_analysis": {
+    "portfolio_allocation_context": {
+      "macro_allocation_recommendations": "underweight_risk_assets_in_europe",
+      "cross_regional_optimization": "correlation_based_allocation_favoring_defensive_regions",
+      "economic_cycle_rotation": "early_cycle_positioning_probability_0.69",
+      "risk_adjusted_positioning": "portfolio_risk_increase_recommended",
+      "confidence": 0.9
+    },
+    "economic_cycle_investment_positioning": {
+      "rotation_probability_analysis": "sector_rotation_probability_0.52_next_6m",
+      "economic_timing_considerations": "ecb_policy_continuation_expected",
+      "business_cycle_allocation": "tactical_underweight_cyclicals",
+      "policy_impact_assessment": "ecb main refinancing rate_impact_on_duration_assets",
+      "confidence": 0.935
+    },
+    "risk_adjusted_investment_metrics": {
+      "macro_sharpe_calculation": 0.45,
+      "downside_risk_assessment": "moderate_downside_risk",
+      "volatility_adjusted_returns": "economic_cycle_volatility_low",
+      "stress_testing_scenarios": "portfolio_resilience_to_-3.4_pct_gdp_shock",
+      "confidence": 0.9
+    },
+    "investment_conclusion_confidence": {
+      "thesis_confidence_methodology": "multi_factor_economic_analysis_with_cli_validation",
+      "economic_factor_weighting": "gdp_0.35_employment_0.25_policy_0.4",
+      "allocation_guidance_confidence": 0.9,
+      "relative_positioning_confidence": 0.76,
+      "confidence": 0.9
+    },
+    "investment_characteristics": {
+      "growth_defensive_classification": "defensive_oriented_positioning",
+      "interest_rate_sensitivity": "moderate_duration_risk",
+      "economic_sensitivity_profile": "europe_economic_cycle_moderate_sensitivity",
+      "investment_risk_opportunities": "macro_driven_risks_in_eur_assets",
+      "confidence": 0.9
+    }
+  },
+  "analysis_quality_metrics": {
+    "gap_coverage": 1.0,
+    "confidence_propagation": 0.93,
+    "analytical_rigor": 0.81,
+    "evidence_strength": 0.97,
+    "regional_specificity": 0.95,
+    "data_driven_score": 0.92,
+    "template_artifacts_detected": 0,
+    "high_severity_artifacts": 0,
+    "automated_validation_passed": true
+  },
+  "cli_service_attribution": {
+    "services_utilized": [
+      "Alpha Vantage",
+      "FRED"
+    ],
+    "data_quality_score": 0.9,
+    "service_health": "all_operational",
+    "last_updated": "2025-08-08",
+    "regional_service_compliance": true
+  }
+}

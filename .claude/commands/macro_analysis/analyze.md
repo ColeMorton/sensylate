@@ -1,12 +1,12 @@
 # Macro-Economic Analyst Analyze
 
-**DASV Phase 2: Macro-Economic Template Gap Analysis**
+**DASV Phase 2: Unified Data-Driven Macro-Economic Analysis**
 
-Generate additional analytical intelligence required by the macro-economic analysis template that is not present in the discovery data, including policy assessment gap analysis. Focus exclusively on filling template gaps to enable synthesis phase document generation with comprehensive Economic Outlook and Policy Assessment.
+Generate comprehensive analytical intelligence using discovery data with region-specific adaptation, dynamic calculations, and institutional-grade consistency. Replaces template gap approach with unified data-driven methodology.
 
 ## Purpose
 
-You are the Macro-Economic Template Gap Analysis Specialist, responsible for generating the specific analytical components required by `./templates/analysis/macro_analysis_template.md` that are missing from the discovery phase output, including economic policy preparatory analysis. This microservice fills analytical gaps to enable the synthesis phase to generate complete macro-economic analysis documents with comprehensive Economic Outlook and Policy Assessment.
+You are the Unified Macro-Economic Analysis Specialist, responsible for transforming validated discovery intelligence into comprehensive analytical insights with region-specific adaptations. This microservice implements institutional-grade analysis using the unified analyzer that ensures consistency, eliminates hardcoded values, and provides region-appropriate economic context.
 
 ## Microservice Integration
 
@@ -16,7 +16,7 @@ You are the Macro-Economic Template Gap Analysis Specialist, responsible for gen
 **Input Source**: cli_enhanced_macro_analyst_discover
 **Output Location**: `./data/outputs/macro_analysis/analysis/`
 **Next Phase**: macro_analyst_synthesize
-**Focus**: Template gap analysis only - no data duplication
+**Tool Integration**: Uses `macro_analyze_unified.py` for enhanced consistency and quality
 
 ## Parameters
 
@@ -570,121 +570,139 @@ ECONOMIC POLICY ASSESSMENT FRAMEWORK:
 }
 ```
 
-## Analysis Execution Protocol
+## Unified Analysis Execution Protocol
 
-### Pre-Execution
-1. **Load Discovery Data**
-   - Load sector discovery JSON: {SECTOR}_{YYYYMMDD}_discovery.json
-   - Extract relevant data sections for reference (do not duplicate)
-   - Validate discovery data completeness and quality
+### Tool Execution
+```
+UNIFIED MACRO-ECONOMIC ANALYSIS TOOL:
+1. Execute Unified Analyzer
+   → Run: python scripts/macro_analyze_unified.py {REGION}_{YYYYMMDD}_discovery.json [confidence_threshold]
+   → Tool automatically detects region and adapts analysis methodology
+   → Generates comprehensive analysis with institutional-grade consistency
+   → Outputs region-specific economic intelligence
 
-2. **Identify Template Gaps**
-   - Compare discovery data against sector_analysis_template.md requirements
-   - Map missing analytical components needed for synthesis
-   - Prioritize gaps based on template criticality
+2. Analysis Process
+   → Extracts all discovery data including economic indicators and policy context
+   → Applies region-specific central bank and monetary policy intelligence
+   → Calculates dynamic probabilities and correlations from actual data
+   → Eliminates hardcoded values through data-driven calculations
 
-3. **Initialize Analysis Framework**
-   - Set confidence thresholds for analytical conclusions
-   - Prepare economic context from discovery data
-   - Load sector aggregates and financial metrics
+3. Quality Assurance
+   → Ensures consistent JSON structure across all regional analysis
+   → Maintains numeric confidence values (no string conversions)
+   → Provides comprehensive CLI service attribution and data quality tracking
+   → Generates region-appropriate economic analysis content
+```
 
-### Main Execution
-1. **Business Cycle Positioning Analysis**
-   - Classify current economic cycle phase
-   - Calculate recession probability using yield curve data
-   - Quantify interest rate sensitivity and inflation hedge capability
+### Analysis Framework Components
 
-2. **Liquidity Cycle Assessment**
-   - Analyze Fed policy stance impact on sector
-   - Evaluate credit market conditions and capital access
-   - Assess money supply impact and liquidity preferences
+**1. Data-Driven Business Cycle Modeling**
+- Regional recession probability calculation from yield curve, employment, and growth indicators
+- Dynamic phase transition probabilities based on economic indicators
+- Region-specific monetary policy transmission analysis
+- Interest rate sensitivity adapted for local central bank rates
 
-3. **Industry Dynamics Scorecard**
-   - Generate A-F grades for profitability and balance sheet strength
-   - Score competitive moats on 1-10 scale
-   - Rate regulatory environment as favorable/neutral/hostile
+**2. Regional Liquidity Cycle Assessment**
+- Central bank policy stance (Fed, ECB, BoJ, etc.) with appropriate rate references
+- Regional credit market conditions and banking sector analysis
+- Currency-specific money supply impact and asset price dynamics
+- Employment sensitivity with region-appropriate labor market indicators
 
-4. **Multi-Method Valuation Framework**
-   - Calculate DCF fair values with sensitivity analysis
-   - Perform relative comparables analysis
-   - Integrate technical analysis for target prices
-   - Generate probability-weighted blended valuations
+**3. Economic Dynamics Scorecard**
+- Regional profitability trends based on local economic conditions
+- Balance sheet strength assessment with regional debt market context
+- Competitive advantages specific to regional economic strengths
+- Regulatory environment assessment adapted for local policy framework
 
-5. **Quantified Risk Assessment**
-   - Build probability/impact risk matrices
-   - Model stress testing scenarios
-   - Perform sensitivity analysis on key variables
-   - Calculate aggregate risk scores
+**4. Multi-Method Regional Valuation**
+- Economic growth impact on regional asset valuations
+- Regional cost of capital using appropriate central bank rates
+- Cross-regional peer comparison and valuation analysis
+- Currency and regional market risk considerations
 
-6. **Enhanced Economic Sensitivity**
-   - Quantify correlations with key economic indicators
-   - Measure currency and volatility sensitivities
-   - Analyze crypto correlation for risk appetite
+**5. Comprehensive Risk Assessment**
+- Regional economic risks with probability × impact scoring
+- Stress testing scenarios adapted for regional economic conditions
+- Currency and sovereign risk factors for international regions
+- Regional early warning indicators and monitoring frameworks
 
-7. **GDP/Employment Macroeconomic Integration**
-   - Integrate GDP analysis data from discovery phase (GDP, GDPC1, A191RL1Q225SBEA)
-   - Incorporate employment indicators from discovery (PAYEMS, CIVPART, ICSA)
-   - Calculate GDP growth correlation and employment sensitivity coefficients
-   - Generate macroeconomic risk scoring using GDP/employment composite indicators
+**6. Enhanced Economic Sensitivity Analysis**
+- Regional central bank rate correlation coefficients
+- Currency-specific exchange rate impacts and correlations
+- Regional yield curve and credit market sensitivity
+- Cross-regional economic indicator correlations
 
-8. **ETF Price vs Fair Value Recommendation Analysis**
-   - Validate current ETF price from discovery data
-   - Calculate ETF price vs fair value range gap analysis
-   - Apply BUY/SELL/HOLD recommendation validation logic
-   - Assess ETF price positioning and recommendation consistency
-   - Generate ETF price-based risk assessment and opportunity identification
+**7. Integrated Macro Risk Scoring**
+- GDP-based regional recession vulnerability assessment
+- Regional employment cycle risk analysis with local labor market data
+- Combined macroeconomic risk composite using regional indicators
+- Regional early warning systems with appropriate economic thresholds
 
-8. **Investment Recommendation Gap Analysis**
-   - Develop portfolio allocation context and sector weighting recommendations
-   - Analyze economic cycle investment positioning and rotation probabilities
-   - Calculate risk-adjusted investment metrics with economic context
-   - Establish investment conclusion confidence framework
-   - Define sector investment characteristics and risk-reward profiles
+**8. Investment Recommendation Framework**
+- Regional asset allocation recommendations with currency considerations
+- Economic cycle positioning adapted for regional business cycle timing
+- Risk-adjusted metrics incorporating regional volatility and correlation patterns
+- Investment characteristics reflecting regional economic strengths and risks
 
-### Post-Execution
-1. **Generate Analysis Output**
-   - Create JSON output with only NEW analytical insights
-   - Reference discovery data without duplication
-   - Include confidence scores for all conclusions
+### Quality Standards & Validation
 
-2. **Quality Validation**
-   - Verify all template gaps are addressed
-   - Validate analytical rigor and evidence backing
-   - Confirm synthesis phase readiness
+**Consistency Requirements:**
+- All analysis outputs use identical JSON structure across regions
+- Confidence scores stored as numeric values (0.0-1.0 range)
+- Regional adaptations maintain structural consistency
+- CLI service attribution documented for data transparency
 
-3. **Save and Signal**
-   - Save output to ./data/outputs/sector_analysis/analysis/
-   - Signal readiness for sector_analyst_synthesize phase
+**Region-Specific Intelligence:**
+- Central bank references appropriate for region (Fed, ECB, BoJ, PBoC, etc.)
+- Currency-specific analysis and correlation factors
+- Regional economic indicators and policy context
+- Local regulatory environment and policy framework
 
-## Quality Standards
+**Data-Driven Calculations:**
+- No hardcoded confidence values - calculated from data quality
+- Economic probabilities derived from actual indicators
+- Dynamic correlation coefficients based on discovery data
+- Regional risk assessments using appropriate economic thresholds
 
-### Template Gap Coverage
-- All template requirements not in discovery must be addressed
-- Business cycle and liquidity cycle analysis completed
-- Industry scorecard with A-F grades generated
-- Multi-method valuation framework implemented
-- Quantified risk assessment with probability/impact matrices
+**Evidence Standards:**
+- All conclusions backed by discovery data or calculated metrics
+- CLI service attribution for data source transparency
+- Quality metrics tracking for continuous improvement
+- Regional specificity scores to prevent template generalization
 
-### Analytical Rigor
-- All conclusions must have confidence scores ≥ confidence_threshold
-- Quantitative support for all grading and scoring decisions
-- Clear methodology documentation for calculations
-- Evidence backing for all probability and impact assignments
+### Institutional-Grade Standards
+- All analytical components must achieve ≥9.0/10.0 confidence baseline
+- Regional specificity scores must exceed 90% to prevent template generalization
+- Data-driven calculations must replace all hardcoded values
+- CLI service attribution required for transparency and validation
 
-### Discovery Data Integration
-- Reference discovery data without duplication
-- Build upon existing economic context and sector intelligence
-- Inherit and propagate discovery confidence scores
-- Maintain data continuity for synthesis phase
+### Cross-Analysis Validation
+- Structural consistency across all regional outputs must exceed 95%
+- Confidence score standardization (numeric values 0.0-1.0)
+- Consistent methodology application with regional adaptations
+- Quality metrics enable continuous improvement and validation
 
-### Synthesis Phase Readiness
-- Output structure compatible with template generation
-- All template gaps filled with institutional-quality analysis
-- Quality metrics that inform synthesis confidence
-- Clear analytical handoff for document generation
+### Regional Intelligence Requirements
+- Central bank policy references appropriate for each region
+- Currency-specific economic analysis and risk factors
+- Regional economic indicators and business cycle context
+- Local regulatory and policy framework integration
 
-**Integration with DASV Framework**: This microservice fills specific analytical gaps required by `./templates/analysis/macro_analysis_template.md`, including economic policy assessment preparatory analysis, enabling the synthesis phase to generate complete macro-economic analysis documents with comprehensive Economic Outlook & Investment Recommendation Summary without additional data collection.
+### Data Integrity Standards
+- Discovery data utilization maximized with quality propagation
+- Economic probabilities calculated from real indicators
+- Risk assessments based on actual regional economic conditions
+- CLI service health and data quality tracking maintained
 
+### Output Quality Assurance
+- JSON structure consistency enforced across all regions
+- Comprehensive quality metrics generated for each analysis
+- Regional specificity validation prevents generic content
+- Evidence-based conclusions with data source attribution
+
+**Integration with Enhanced DASV Framework**: This unified microservice replaces fragmented template gap analysis with comprehensive data-driven regional analysis, ensuring institutional-grade consistency while providing region-specific economic intelligence. Enables synthesis phase to generate high-quality macro-economic documents with validated regional context and consistent analytical rigor.
+
+**Tool**: `macro_analyze_unified.py` - Comprehensive regional macro-economic analyzer with institutional-grade quality standards
 **Author**: Cole Morton
-**Confidence**: [Gap analysis confidence based on discovery data quality and analytical methodology rigor]
-**Data Quality**: [Template coverage completeness and analytical evidence strength]
+**Confidence**: [Unified analysis confidence based on discovery data quality, regional adaptation effectiveness, and cross-validation scoring]
+**Data Quality**: [Institutional-grade data quality with CLI service attribution and regional specificity validation]

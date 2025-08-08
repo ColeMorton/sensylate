@@ -35,6 +35,8 @@ from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
+import numpy as np
+
 # Import configuration manager and schema selector (always required)
 from utils.config_manager import ConfigManager, ConfigurationError
 from utils.schema_selector import create_schema_selector, get_schema_for_region
