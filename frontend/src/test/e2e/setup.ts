@@ -68,13 +68,16 @@ export class E2ETestHelper {
 
   // Helper function for request interception (replaces page.route)
   static async setupRequestInterception(
-    page: Page, 
-    urlPattern: string, 
-    handler: (request: any) => void
+    page: Page,
+    urlPattern: string,
+    handler: (request: any) => void,
   ): Promise<void> {
     await page.setRequestInterception(true);
-    page.on('request', (request) => {
-      if (request.url().includes(urlPattern) || new RegExp(urlPattern).test(request.url())) {
+    page.on("request", (request) => {
+      if (
+        request.url().includes(urlPattern) ||
+        new RegExp(urlPattern).test(request.url())
+      ) {
         handler(request);
       } else {
         request.continue();

@@ -154,14 +154,18 @@ class AtomicSynthesisTool:
 
         # Use enhanced discovery data with X Links
         discovery = phase_data["discovery"]
-        
+
         # Get detailed trades with X Links from unified calculation engine
         detailed_trades = discovery.get("detailed_trades", [])
-        closed_trades_with_xlinks = pd.DataFrame(detailed_trades) if detailed_trades else pd.DataFrame()
-        
-        # Get active positions from discovery data  
+        closed_trades_with_xlinks = (
+            pd.DataFrame(detailed_trades) if detailed_trades else pd.DataFrame()
+        )
+
+        # Get active positions from discovery data
         active_positions = discovery.get("active_positions", [])
-        active_trades = pd.DataFrame(active_positions) if active_positions else pd.DataFrame()
+        active_trades = (
+            pd.DataFrame(active_positions) if active_positions else pd.DataFrame()
+        )
 
         # Generate report-specific data structures
         report_data = {
@@ -176,8 +180,12 @@ class AtomicSynthesisTool:
             "historical_analysis": {
                 "closed_trades_summary": {
                     "count": len(closed_trades_with_xlinks),
-                    "top_winners": self._get_top_trades(closed_trades_with_xlinks, "winners", 5),
-                    "top_losers": self._get_top_trades(closed_trades_with_xlinks, "losers", 5),
+                    "top_winners": self._get_top_trades(
+                        closed_trades_with_xlinks, "winners", 5
+                    ),
+                    "top_losers": self._get_top_trades(
+                        closed_trades_with_xlinks, "losers", 5
+                    ),
                     "strategy_breakdown": self._analyze_strategy_performance(
                         closed_trades_with_xlinks
                     ),

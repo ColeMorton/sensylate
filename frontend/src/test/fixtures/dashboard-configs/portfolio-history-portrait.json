@@ -13,7 +13,7 @@
       "chartType": "trade-pnl-waterfall"
     },
     {
-      "title": "Closed Position PnL Performance", 
+      "title": "Closed Position PnL Performance",
       "category": "Trading Performance",
       "description": "Multi-line time series showing cumulative PnL for each closed position, indexed to $0 at entry date. Track performance progression across the closed portfolio with individual lines for each ticker.",
       "chartType": "closed-positions-pnl-timeseries"

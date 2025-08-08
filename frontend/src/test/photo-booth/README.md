@@ -32,11 +32,13 @@ src/test/photo-booth/
 ## 🚀 Quick Start
 
 ### Run All Tests
+
 ```bash
 npm run test:photo-booth
 ```
 
 ### Run Specific Test Types
+
 ```bash
 npm run test:photo-booth:unit         # Unit tests only
 npm run test:photo-booth:integration  # Integration tests only
@@ -44,6 +46,7 @@ npm run test:photo-booth:e2e          # E2E tests only
 ```
 
 ### Development & Debugging
+
 ```bash
 npm run test:photo-booth:watch        # Watch mode
 npm run test:photo-booth:coverage     # With coverage report
@@ -53,34 +56,43 @@ npm run test:photo-booth -- --verbose # Verbose output
 ## 🧪 Test Types
 
 ### Unit Tests (`unit/`)
+
 Component-level tests focusing on individual functionality:
+
 - **PhotoBoothDisplay.test.tsx**: Main component behavior, props, state management
 - **DashboardRenderer.test.tsx**: Dashboard rendering logic and layout
 
 **Key Features:**
+
 - Isolated component testing
 - Mocked external dependencies
 - Fast execution (< 2 seconds)
 - High test coverage of core logic
 
 ### Integration Tests (`integration/`)
+
 Workflow tests covering component interactions:
+
 - **workflow.test.tsx**: Complete user workflows, parameter synchronization, export processes
 
 **Key Features:**
+
 - Multi-component interaction testing
 - Real user event simulation
 - State management validation
 - API integration testing
 
 ### E2E Tests (`e2e/`)
+
 Browser-based tests covering complete user journeys:
-- **photo-booth-e2e.test.ts**: Full page functionality, navigation, user interactions  
+
+- **photo-booth-e2e.test.ts**: Full page functionality, navigation, user interactions
 - **aspect-ratio.test.ts**: Aspect ratio handling and dimension validation
 - **visual-regression.test.ts**: Visual consistency and screenshot validation
 - **error-handling.test.ts**: Error scenarios and edge cases
 
 **Key Features:**
+
 - Real browser testing with Puppeteer
 - Screenshot comparison
 - Network error simulation
@@ -90,30 +102,34 @@ Browser-based tests covering complete user journeys:
 ## 🛠 Utilities & Helpers
 
 ### Test Helpers (`utils/test-helpers.ts`)
+
 Common utilities for unit and integration tests:
+
 ```typescript
-import { mockURLSearchParams, waitForPhotoBoothReady } from '../utils/test-helpers';
+import { mockURLSearchParams, waitForPhotoBoothReady } from "../utils/test-helpers";
 
 // Mock URL parameters
-mockURLSearchParams({ dashboard: 'portfolio_history_portrait', mode: 'dark' });
+mockURLSearchParams({ dashboard: "portfolio_history_portrait", mode: "dark" });
 
 // Wait for component to be ready
 await waitForPhotoBoothReady();
 
 // Simulate parameter changes
-await changePhotoBoothParams(user, { aspectRatio: '3:4', mode: 'dark' });
+await changePhotoBoothParams(user, { aspectRatio: "3:4", mode: "dark" });
 ```
 
-### E2E Setup (`utils/e2e-setup.ts`)  
+### E2E Setup (`utils/e2e-setup.ts`)
+
 Browser test utilities and page management:
+
 ```typescript
-import { setupPhotoBoothE2E, photoBoothE2EHelper } from '../utils/e2e-setup';
+import { setupPhotoBoothE2E, photoBoothE2EHelper } from "../utils/e2e-setup";
 
 // Setup E2E test environment
 const { page, browser } = await setupPhotoBoothE2E();
 
 // Navigate to photo-booth with parameters
-await photoBoothE2EHelper.navigateToPhotoBooth(page, { dashboard: 'test', mode: 'light' });
+await photoBoothE2EHelper.navigateToPhotoBooth(page, { dashboard: "test", mode: "light" });
 
 // Wait for ready state
 await photoBoothE2EHelper.waitForPhotoBoothReady(page);
@@ -122,15 +138,18 @@ await photoBoothE2EHelper.waitForPhotoBoothReady(page);
 ## 🎭 Mocks & Test Data
 
 ### Mock Setup (`__mocks__/setup.ts`)
+
 Centralized mock configuration that handles:
+
 - Photo-booth config import mocking
-- Dashboard loader service mocking  
+- Dashboard loader service mocking
 - Chart component mocking
 - Default mock behaviors
 
 **Usage:**
+
 ```typescript
-import { setupPhotoBoothMocks } from '../__mocks__/setup';
+import { setupPhotoBoothMocks } from "../__mocks__/setup";
 
 beforeEach(() => {
   setupPhotoBoothMocks();
@@ -138,16 +157,19 @@ beforeEach(() => {
 ```
 
 ### Test Data (`__mocks__/test-data.mock.ts`)
+
 Centralized test data including:
+
 - URL parameter scenarios
 - Viewport configurations
-- Export configurations  
+- Export configurations
 - Error scenarios
 - XSS test payloads
 
 **Usage:**
+
 ```typescript
-import { testURLParams, testViewports } from '../__mocks__/test-data.mock';
+import { testURLParams, testViewports } from "../__mocks__/test-data.mock";
 
 mockURLSearchParams(testURLParams.portraitMode);
 ```
@@ -155,6 +177,7 @@ mockURLSearchParams(testURLParams.portraitMode);
 ## 🧩 Test Patterns
 
 ### Component Testing Pattern
+
 ```typescript
 import { setupPhotoBoothMocks } from '../__mocks__/setup';
 import { mockURLSearchParams } from '../utils/test-helpers';
@@ -167,7 +190,7 @@ describe('Component Name', () => {
   it('should test specific behavior', async () => {
     mockURLSearchParams({ mode: 'dark' });
     render(<Component />);
-    
+
     await waitFor(() => {
       expect(screen.getByText('Expected Text')).toBeInTheDocument();
     });
@@ -176,10 +199,11 @@ describe('Component Name', () => {
 ```
 
 ### E2E Testing Pattern
-```typescript
-import { setupPhotoBoothE2E, cleanupPhotoBoothE2E } from '../utils/e2e-setup';
 
-describe('E2E Feature', () => {
+```typescript
+import { setupPhotoBoothE2E, cleanupPhotoBoothE2E } from "../utils/e2e-setup";
+
+describe("E2E Feature", () => {
   let context: E2ETestContext;
 
   beforeEach(async () => {
@@ -190,12 +214,12 @@ describe('E2E Feature', () => {
     await cleanupPhotoBoothE2E();
   });
 
-  it('should test complete workflow', async () => {
+  it("should test complete workflow", async () => {
     const { page } = context;
-    
-    await page.goto('/photo-booth');
-    await page.waitForSelector('.photo-booth-ready');
-    
+
+    await page.goto("/photo-booth");
+    await page.waitForSelector(".photo-booth-ready");
+
     // Test interactions...
   });
 });
@@ -206,10 +230,12 @@ describe('E2E Feature', () => {
 ### Common Issues
 
 1. **Mock Import Errors**
+
    - Ensure imports are from `../__mocks__/setup`
    - Check that `setupPhotoBoothMocks()` is called in beforeEach
 
-2. **E2E Test Timeouts**  
+2. **E2E Test Timeouts**
+
    - Ensure development server is running for E2E tests
    - Increase timeout for slower CI environments
    - Check network conditions and browser resources
@@ -228,11 +254,13 @@ describe('E2E Feature', () => {
 ## 📊 Coverage & Performance
 
 ### Coverage Targets
+
 - **Unit Tests**: > 90% line coverage
-- **Integration Tests**: > 80% workflow coverage  
+- **Integration Tests**: > 80% workflow coverage
 - **E2E Tests**: 100% critical user journey coverage
 
 ### Performance Expectations
+
 - **Unit Tests**: < 5 seconds total
 - **Integration Tests**: < 15 seconds total
 - **E2E Tests**: < 2 minutes total (including server startup)
@@ -240,6 +268,7 @@ describe('E2E Feature', () => {
 ## 🔧 Configuration
 
 ### Environment Variables
+
 ```bash
 E2E_BASE_URL=http://localhost:4321    # E2E test server URL
 E2E_SCREENSHOTS=true                  # Enable screenshot capture
@@ -248,7 +277,9 @@ CI=true                              # CI environment detection
 ```
 
 ### Vitest Configuration
+
 The module uses the existing `vitest.config.ts` with:
+
 - JSdom environment for unit/integration tests
 - 30-second default timeout
 - Path aliases for imports

@@ -23,8 +23,8 @@ describe('Error Handling and Edge Cases E2E Tests', () => {
           request.respond({
             status: 500,
             contentType: 'application/json',
-            body: JSON.stringify({ 
-              success: false, 
+            body: JSON.stringify({
+              success: false,
               error: 'Internal server error',
               message: 'Database connection failed'
             })
@@ -41,10 +41,10 @@ describe('Error Handling and Edge Cases E2E Tests', () => {
 
       // Should show error state
       await page.waitForSelector('text=Failed to Load Dashboards', { timeout: 10000 });
-      
+
       // Should show specific error message
       await page.waitForSelector('text=Could not load dashboard configurations', { timeout: 5000 });
-      
+
       // Should show retry button
       const retryButton = await page.waitForSelector('button:has-text("Retry")', { timeout: 5000 });
       expect(retryButton).toBeTruthy();
@@ -77,10 +77,10 @@ describe('Error Handling and Edge Cases E2E Tests', () => {
 
       // Should show loading state indefinitely
       await page.waitForSelector('text=Loading dashboards...', { timeout: 5000 });
-      
+
       // Wait longer to ensure it stays in loading state
       await E2ETestHelper.sleep(10000);
-      
+
       const loadingText = await page.$('text=Loading dashboards...');
       expect(loadingText).toBeTruthy();
 
@@ -91,7 +91,7 @@ describe('Error Handling and Edge Cases E2E Tests', () => {
       const { page, baseURL } = context;
 
       let requestCount = 0;
-      
+
       await page.setRequestInterception(true);
       page.on('request', (request) => {
         if (request.url().includes('/api/dashboards.json')) {
@@ -119,14 +119,14 @@ describe('Error Handling and Edge Cases E2E Tests', () => {
 
       // Should show error initially
       await page.waitForSelector('button:has-text("Retry")', { timeout: 10000 });
-      
+
       // First retry - should fail again
       await page.click('button:has-text("Retry")');
       await page.waitForSelector('button:has-text("Retry")', { timeout: 10000 });
 
       // Second retry - should succeed
       await page.click('button:has-text("Retry")');
-      
+
       // Should eventually load successfully
       await page.waitForSelector('.photo-booth-ready', { timeout: 20000 });
 
@@ -209,7 +209,7 @@ describe('Error Handling and Edge Cases E2E Tests', () => {
 
       // Should show exporting state
       await page.waitForSelector('text=Exporting...', { timeout: 5000 });
-      
+
       // Button should be disabled during export
       const isDisabled = await exportButton.evaluate(el => (el as HTMLButtonElement).disabled);
       expect(isDisabled).toBe(true);
@@ -226,7 +226,7 @@ describe('Error Handling and Edge Cases E2E Tests', () => {
       const { page } = context;
 
       let requestCount = 0;
-      
+
       // Mock slow export API using Puppeteer request interception
       await page.setRequestInterception(true);
       page.on('request', async (request) => {
@@ -246,7 +246,7 @@ describe('Error Handling and Edge Cases E2E Tests', () => {
       });
 
       const exportButton = await page.waitForSelector('button:has-text("Export Dashboard")', { timeout: 5000 });
-      
+
       // Start first export
       await exportButton.click();
       await page.waitForSelector('text=Exporting...', { timeout: 5000 });
@@ -265,7 +265,7 @@ describe('Error Handling and Edge Cases E2E Tests', () => {
 
       // Wait for export to complete
       await page.waitForSelector('text=Export completed successfully', { timeout: 10000 });
-      
+
       // Button should be enabled again
       const isEnabledAfterExport = await exportButton.evaluate(el => (el as HTMLButtonElement).disabled);
       expect(isEnabledAfterExport).toBe(false);
@@ -319,10 +319,10 @@ describe('Error Handling and Edge Cases E2E Tests', () => {
 
       // Should show dashboard not found error
       await page.waitForSelector('text=Dashboard Not Found', { timeout: 10000 });
-      
+
       // Should show helpful message
       await page.waitForSelector('text=The requested dashboard "nonexistent_dashboard" is not available', { timeout: 5000 });
-      
+
       // Should show available dashboards
       await page.waitForSelector('text=Available dashboards:', { timeout: 5000 });
 
@@ -345,7 +345,7 @@ describe('Error Handling and Edge Cases E2E Tests', () => {
       // Should handle large viewport without breaking
       const dashboard = await page.$('.photo-booth-dashboard');
       const dashboardBox = await dashboard?.boundingBox();
-      
+
       expect(dashboardBox).toBeTruthy();
       expect(dashboardBox!.width).toBeGreaterThan(1000);
       expect(dashboardBox!.height).toBeGreaterThan(500);
@@ -418,7 +418,7 @@ describe('Error Handling and Edge Cases E2E Tests', () => {
       await page.waitForSelector('.photo-booth-ready', { timeout: 40000 });
 
       const loadTime = Date.now() - startTime;
-      
+
       // Should still load within reasonable time even with CPU throttling
       expect(loadTime).toBeLessThan(40000);
 
@@ -514,7 +514,7 @@ describe('Error Handling and Edge Cases E2E Tests', () => {
       // Check for security headers or CSP violations
       const securityErrors: string[] = [];
       page.on('pageerror', error => {
-        if (error.message.includes('Content Security Policy') || 
+        if (error.message.includes('Content Security Policy') ||
             error.message.includes('blocked')) {
           securityErrors.push(error.message);
         }
@@ -565,7 +565,7 @@ describe('Error Handling and Edge Cases E2E Tests', () => {
       // Final state should be consistent
       const finalRatio = await page.$eval('#aspect-ratio-select', el => (el as HTMLSelectElement).value);
       const finalFormat = await page.$eval('#format-select', el => (el as HTMLSelectElement).value);
-      
+
       expect(['16:9', '4:3', '3:4']).toContain(finalRatio);
       expect(['png', 'svg', 'both']).toContain(finalFormat);
 

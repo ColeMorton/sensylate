@@ -95,7 +95,7 @@ export default defineConfig({
             'user-event',
             'jsdom'
           ];
-          
+
           return testPatterns.some(pattern => id.includes(pattern));
         }
       }

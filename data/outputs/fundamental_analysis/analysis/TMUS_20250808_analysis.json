@@ -11,7 +11,7 @@
     "economic_context_integration": true,
     "cli_services_utilized": [
       "yahoo_finance_cli",
-      "alpha_vantage_cli", 
+      "alpha_vantage_cli",
       "fmp_cli",
       "fred_economic_cli",
       "coingecko_cli",
@@ -42,7 +42,7 @@
   "company_overview": {
     "name": "T-Mobile US, Inc.",
     "sector": "Communication Services",
-    "industry": "Telecommunications Services", 
+    "industry": "Telecommunications Services",
     "description": "Mobile communications services provider in US, Puerto Rico, and US Virgin Islands with 108.7 million customers",
     "ceo": "Mike Sievert",
     "employees": "75000+",
@@ -107,7 +107,7 @@
         "relationship": "Primary telecommunications competitor with similar nationwide coverage"
       },
       {
-        "ticker": "T", 
+        "ticker": "T",
         "name": "AT&T Inc.",
         "market_cap": 120000000000,
         "pe_ratio": 8.5,
@@ -296,7 +296,7 @@
           "evidence": "nationwide 5G deployment with 102K macro cells and 41K small cells creating competitive advantages"
         },
         "spectrum_assets_moat": {
-          "strength": "strong", 
+          "strength": "strong",
           "durability": "long-term",
           "evidence": "valuable spectrum holdings in key frequency bands supporting 5G services and capacity advantages"
         },
@@ -307,7 +307,7 @@
         },
         "customer_switching_costs_moat": {
           "strength": "moderate",
-          "durability": "medium-term", 
+          "durability": "medium-term",
           "evidence": "device financing, family plans, and service bundling creating switching friction"
         },
         "regulatory_moat": {
@@ -383,7 +383,7 @@
     "future_catalysts": {
       "identified_catalysts": [
         "5G service monetization through premium offerings and enterprise solutions",
-        "Sprint synergy realization with $43B+ in expected cost and revenue synergies", 
+        "Sprint synergy realization with $43B+ in expected cost and revenue synergies",
         "Fixed wireless broadband expansion competing with cable internet services",
         "IoT and enterprise services growth in B2B market segments",
         "Network densification improving coverage and capacity for customer growth"
@@ -574,7 +574,7 @@
       "aggregate_risk_score": 2.8,
       "risk_probability_distribution": {
         "low_risk_0_2": "45% of identified risks",
-        "medium_risk_2_4": "40% of identified risks", 
+        "medium_risk_2_4": "40% of identified risks",
         "high_risk_4_5": "15% of identified risks"
       },
       "detailed_probability_impact_matrix": {
@@ -594,7 +594,7 @@
           "fcf_impact": "-20% to -30%"
         },
         "competitive_price_war_scenario": {
-          "probability": 0.25, 
+          "probability": 0.25,
           "revenue_impact": "-5% to -8%",
           "margin_impact": "-300 to -500 bps",
           "market_share_impact": "+2% to +3%"
@@ -612,7 +612,7 @@
           "valuation_impact": "±8% to ±12%"
         },
         "arpu_10pct_change": {
-          "revenue_impact": "±8% to ±10%", 
+          "revenue_impact": "±8% to ±10%",
           "margin_impact": "±400 to ±600 bps",
           "valuation_impact": "±15% to ±20%"
         },
@@ -659,7 +659,7 @@
         "scenario_description": "Stable economic growth, rational competition, and successful 5G monetization",
         "probability": 0.60,
         "revenue_impact": "+4% to +6% annual growth",
-        "margin_impact": "+100 to +200 bps expansion over 3 years", 
+        "margin_impact": "+100 to +200 bps expansion over 3 years",
         "valuation_impact": "Current valuation justified with modest upside",
         "key_assumptions": "Economic stability, Sprint synergy realization, 5G service adoption"
       },
@@ -673,7 +673,7 @@
       },
       "scenario_probabilities": {
         "bear_case_weighting": 0.20,
-        "base_case_weighting": 0.60, 
+        "base_case_weighting": 0.60,
         "bull_case_weighting": 0.20,
         "probability_adjusted_returns": "base case scenario most likely with balanced risk-reward profile"
       },
@@ -690,7 +690,7 @@
       },
       "margin_projections": {
         "operating_margin_2025": "23% to 24%",
-        "operating_margin_2026": "24% to 26%", 
+        "operating_margin_2026": "24% to 26%",
         "operating_margin_2027": "25% to 27%",
         "ebitda_margin_target": "36% to 38% long-term"
       },
@@ -734,7 +734,7 @@
       "5G infrastructure investment creating sustainable competitive advantages and premium service monetization opportunities"
     ],
     "investment_implications": [
-      "Current valuation reflects growth expectations requiring successful 5G monetization and continued market share gains for return justification", 
+      "Current valuation reflects growth expectations requiring successful 5G monetization and continued market share gains for return justification",
       "Strong balance sheet and cash generation provide financial flexibility for growth investments and shareholder returns in current interest rate environment",
       "Telecommunications sector positioning benefits from recession-resistant demand characteristics and essential utility nature of wireless services",
       "Risk-adjusted returns favorable given defensive characteristics, dividend yield, and growth catalysts from 5G deployment and synergy realization",

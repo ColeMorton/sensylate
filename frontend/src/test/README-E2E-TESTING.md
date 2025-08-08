@@ -15,6 +15,7 @@ This comprehensive testing suite provides complete coverage for the photo booth 
 ### 2. Unit Tests (`/src/test/components/`)
 
 #### PhotoBoothDisplay Component (`PhotoBoothDisplay.test.tsx`)
+
 - ✅ Component initialization and loading states
 - ✅ URL parameter parsing (dashboard, mode, aspect_ratio, format, dpi, scale)
 - ✅ State management and URL synchronization
@@ -23,6 +24,7 @@ This comprehensive testing suite provides complete coverage for the photo booth 
 - ✅ Error handling and fallbacks
 
 #### DashboardRenderer Component (`DashboardRenderer.test.tsx`)
+
 - ✅ Portfolio history portrait specific rendering
 - ✅ Header/footer conditional display
 - ✅ Chart rendering with `titleOnly` flag
@@ -33,6 +35,7 @@ This comprehensive testing suite provides complete coverage for the photo booth 
 ### 3. Integration Tests (`/src/test/integration/`)
 
 #### Photo Booth Workflow (`photo-booth-workflow.test.tsx`)
+
 - ✅ Complete dashboard loading flow
 - ✅ Parameter synchronization workflows
 - ✅ Aspect ratio changes with dimension updates
@@ -44,6 +47,7 @@ This comprehensive testing suite provides complete coverage for the photo booth 
 ### 4. E2E Tests (`/src/test/e2e/`)
 
 #### Core Dashboard Functionality (`photo-booth-e2e.test.ts`)
+
 - ✅ Page loading and navigation
 - ✅ Dashboard interaction (theme switching, parameter changes)
 - ✅ Content verification and structure validation
@@ -52,6 +56,7 @@ This comprehensive testing suite provides complete coverage for the photo booth 
 - ✅ Error handling and recovery
 
 #### Aspect Ratio Validation (`aspect-ratio-validation.test.ts`)
+
 - ✅ Dimension validation for all aspect ratios (16:9, 4:3, 3:4)
 - ✅ Visual consistency across ratios and themes
 - ✅ Smooth transitions between aspect ratios
@@ -60,6 +65,7 @@ This comprehensive testing suite provides complete coverage for the photo booth 
 - ✅ Edge cases and parameter validation
 
 #### Visual Regression Testing (`visual-regression.test.ts`)
+
 - ✅ Screenshot baseline creation and management
 - ✅ Cross-theme visual consistency
 - ✅ Responsive visual testing across viewports
@@ -68,6 +74,7 @@ This comprehensive testing suite provides complete coverage for the photo booth 
 - ✅ Cross-browser compatibility testing
 
 #### Error Handling (`error-handling.test.ts`)
+
 - ✅ Network error scenarios (API failures, timeouts)
 - ✅ Export error handling (API failures, timeouts, race conditions)
 - ✅ Invalid parameter handling and XSS prevention
@@ -76,6 +83,7 @@ This comprehensive testing suite provides complete coverage for the photo booth 
 - ✅ Security validation
 
 ### 5. Visual Testing Infrastructure (`/src/test/e2e/screenshot-baseline-manager.ts`)
+
 - ✅ Baseline screenshot management
 - ✅ Visual comparison utilities
 - ✅ Metadata tracking for test configurations
@@ -85,12 +93,14 @@ This comprehensive testing suite provides complete coverage for the photo booth 
 ## Key Test Scenarios Covered
 
 ### Priority 1 (Core Functionality)
+
 1. **Dashboard Loading**: Component initialization with URL parameters ✅
 2. **Aspect Ratio Switching**: 3:4 portrait mode with correct dimensions ✅
 3. **Theme Toggle**: Light/dark mode with proper chart theming ✅
 4. **Export Simulation**: Mock API export workflow ✅
 
 ### Priority 2 (Edge Cases)
+
 1. **Error Handling**: Network failures, invalid configurations ✅
 2. **Loading States**: Skeleton screens, progress indicators ✅
 3. **Parameter Validation**: Invalid aspect ratios, malformed URLs ✅
@@ -99,6 +109,7 @@ This comprehensive testing suite provides complete coverage for the photo booth 
 ## Running the Tests
 
 ### Unit Tests
+
 ```bash
 # Run all unit tests
 yarn test
@@ -112,6 +123,7 @@ yarn test:coverage
 ```
 
 ### Integration Tests
+
 ```bash
 # Run integration tests
 yarn test src/test/integration
@@ -121,6 +133,7 @@ yarn test:watch src/test/integration
 ```
 
 ### E2E Tests
+
 ```bash
 # Run all E2E tests
 yarn test:e2e
@@ -133,6 +146,7 @@ yarn test:e2e src/test/e2e/photo-booth-e2e.test.ts
 ```
 
 ### Visual Testing
+
 ```bash
 # Create/update baselines (run this first)
 UPDATE_BASELINES=true yarn test:e2e src/test/e2e/visual-regression.test.ts
@@ -147,12 +161,15 @@ E2E_SCREENSHOTS=true yarn test:e2e
 ## Test Configuration
 
 ### Environment Variables
+
 - `E2E_BASE_URL`: Base URL for E2E tests (default: http://localhost:4321)
 - `E2E_SCREENSHOTS`: Enable screenshot capture (default: false)
 - `UPDATE_BASELINES`: Update visual regression baselines (default: false)
 
 ### Vitest Configuration
+
 The test suite uses Vitest with the following key configurations:
+
 - **Environment**: jsdom for unit tests, puppeteer for E2E
 - **Timeout**: 30s for E2E tests, 5s for unit tests
 - **Coverage**: v8 provider with HTML/LCOV reports
@@ -168,6 +185,7 @@ The test suite uses Vitest with the following key configurations:
 ## Regression Prevention
 
 This test suite prevents regressions in:
+
 1. **Layout Issues**: Aspect ratio dimension mismatches
 2. **Theme Problems**: Inconsistent styling across light/dark modes
 3. **Export Failures**: API integration and parameter passing
@@ -178,19 +196,24 @@ This test suite prevents regressions in:
 ## Maintenance
 
 ### Adding New Tests
+
 1. Follow existing naming conventions (`*.test.tsx` for components, `*.test.ts` for E2E)
 2. Use appropriate test helpers and mocks from `/src/test/mocks/`
 3. Update baselines when visual changes are intentional
 4. Document new test scenarios in this README
 
 ### Updating Baselines
+
 When UI changes are intentional:
+
 1. Run with `UPDATE_BASELINES=true` to create new baselines
 2. Review generated screenshots for accuracy
 3. Commit new baselines with descriptive commit messages
 
 ### Performance Monitoring
+
 Monitor test execution times and screenshot sizes:
+
 - Unit tests should complete in <5s total
 - Integration tests should complete in <30s total
 - E2E tests may take up to 2 minutes per suite

@@ -1,11 +1,17 @@
-import { existsSync, mkdirSync, readFileSync, writeFileSync, readdirSync } from 'fs';
-import { join, dirname } from 'path';
-import { execSync } from 'child_process';
+import {
+  existsSync,
+  mkdirSync,
+  readFileSync,
+  writeFileSync,
+  readdirSync,
+} from "fs";
+import { join, dirname } from "path";
+import { execSync } from "child_process";
 
 export interface BaselineConfig {
   name: string;
   aspectRatio: string;
-  mode: 'light' | 'dark';
+  mode: "light" | "dark";
   viewport: { width: number; height: number };
   dashboard: string;
 }
@@ -22,20 +28,22 @@ export class ScreenshotBaselineManager {
   private comparisonDir: string;
   private metadataFile: string;
 
-  constructor(testDir: string = './src/test/e2e/screenshots') {
-    this.baselineDir = join(testDir, 'baselines');
-    this.comparisonDir = join(testDir, 'comparisons');
-    this.metadataFile = join(testDir, 'baseline-metadata.json');
+  constructor(testDir: string = "./src/test/e2e/screenshots") {
+    this.baselineDir = join(testDir, "baselines");
+    this.comparisonDir = join(testDir, "comparisons");
+    this.metadataFile = join(testDir, "baseline-metadata.json");
 
     this.ensureDirectoriesExist();
   }
 
   private ensureDirectoriesExist(): void {
-    [this.baselineDir, this.comparisonDir, dirname(this.metadataFile)].forEach(dir => {
-      if (!existsSync(dir)) {
-        mkdirSync(dir, { recursive: true });
-      }
-    });
+    [this.baselineDir, this.comparisonDir, dirname(this.metadataFile)].forEach(
+      (dir) => {
+        if (!existsSync(dir)) {
+          mkdirSync(dir, { recursive: true });
+        }
+      },
+    );
   }
 
   /**
@@ -45,62 +53,62 @@ export class ScreenshotBaselineManager {
     return [
       // Portfolio History Portrait - All aspect ratios in both themes
       {
-        name: 'portfolio-history-portrait-16x9-light',
-        aspectRatio: '16:9',
-        mode: 'light',
+        name: "portfolio-history-portrait-16x9-light",
+        aspectRatio: "16:9",
+        mode: "light",
         viewport: { width: 1920, height: 1080 },
-        dashboard: 'portfolio_history_portrait'
+        dashboard: "portfolio_history_portrait",
       },
       {
-        name: 'portfolio-history-portrait-16x9-dark',
-        aspectRatio: '16:9',
-        mode: 'dark',
+        name: "portfolio-history-portrait-16x9-dark",
+        aspectRatio: "16:9",
+        mode: "dark",
         viewport: { width: 1920, height: 1080 },
-        dashboard: 'portfolio_history_portrait'
+        dashboard: "portfolio_history_portrait",
       },
       {
-        name: 'portfolio-history-portrait-4x3-light',
-        aspectRatio: '4:3',
-        mode: 'light',
+        name: "portfolio-history-portrait-4x3-light",
+        aspectRatio: "4:3",
+        mode: "light",
         viewport: { width: 1440, height: 1080 },
-        dashboard: 'portfolio_history_portrait'
+        dashboard: "portfolio_history_portrait",
       },
       {
-        name: 'portfolio-history-portrait-4x3-dark',
-        aspectRatio: '4:3',
-        mode: 'dark',
+        name: "portfolio-history-portrait-4x3-dark",
+        aspectRatio: "4:3",
+        mode: "dark",
         viewport: { width: 1440, height: 1080 },
-        dashboard: 'portfolio_history_portrait'
+        dashboard: "portfolio_history_portrait",
       },
       {
-        name: 'portfolio-history-portrait-3x4-light',
-        aspectRatio: '3:4',
-        mode: 'light',
+        name: "portfolio-history-portrait-3x4-light",
+        aspectRatio: "3:4",
+        mode: "light",
         viewport: { width: 1080, height: 1440 },
-        dashboard: 'portfolio_history_portrait'
+        dashboard: "portfolio_history_portrait",
       },
       {
-        name: 'portfolio-history-portrait-3x4-dark',
-        aspectRatio: '3:4',
-        mode: 'dark',
+        name: "portfolio-history-portrait-3x4-dark",
+        aspectRatio: "3:4",
+        mode: "dark",
         viewport: { width: 1080, height: 1440 },
-        dashboard: 'portfolio_history_portrait'
+        dashboard: "portfolio_history_portrait",
       },
       // Export mode scenarios (no controls visible)
       {
-        name: 'export-mode-3x4-light-clean',
-        aspectRatio: '3:4',
-        mode: 'light',
+        name: "export-mode-3x4-light-clean",
+        aspectRatio: "3:4",
+        mode: "light",
         viewport: { width: 1080, height: 1440 },
-        dashboard: 'portfolio_history_portrait'
+        dashboard: "portfolio_history_portrait",
       },
       {
-        name: 'export-mode-16x9-dark-clean',
-        aspectRatio: '16:9',
-        mode: 'dark',
+        name: "export-mode-16x9-dark-clean",
+        aspectRatio: "16:9",
+        mode: "dark",
         viewport: { width: 1920, height: 1080 },
-        dashboard: 'portfolio_history_portrait'
-      }
+        dashboard: "portfolio_history_portrait",
+      },
     ];
   }
 
@@ -113,10 +121,10 @@ export class ScreenshotBaselineManager {
     }
 
     try {
-      const content = readFileSync(this.metadataFile, 'utf-8');
+      const content = readFileSync(this.metadataFile, "utf-8");
       return JSON.parse(content);
     } catch (error) {
-      console.warn('Failed to load baseline metadata:', error);
+      console.warn("Failed to load baseline metadata:", error);
       return {};
     }
   }
@@ -187,11 +195,13 @@ export class ScreenshotBaselineManager {
 
     try {
       // Use system command to generate hash (fallback to simple approach)
-      const hash = execSync(`shasum -a 256 "${imagePath}"`, { encoding: 'utf-8' });
-      return hash.split(' ')[0];
+      const hash = execSync(`shasum -a 256 "${imagePath}"`, {
+        encoding: "utf-8",
+      });
+      return hash.split(" ")[0];
     } catch (error) {
       // Fallback: use file size and modification time as pseudo-hash
-      const stats = require('fs').statSync(imagePath);
+      const stats = require("fs").statSync(imagePath);
       return `${stats.size}-${stats.mtime.getTime()}`;
     }
   }
@@ -212,7 +222,7 @@ export class ScreenshotBaselineManager {
       createdAt: new Date().toISOString(),
       config,
       hash: this.generateImageHash(baselinePath),
-      version: process.env.npm_package_version || '1.0.0'
+      version: process.env.npm_package_version || "1.0.0",
     };
 
     this.saveMetadata(metadata);
@@ -222,7 +232,10 @@ export class ScreenshotBaselineManager {
   /**
    * Compare screenshot with baseline
    */
-  async compareWithBaseline(config: BaselineConfig, screenshotPath: string): Promise<{
+  async compareWithBaseline(
+    config: BaselineConfig,
+    screenshotPath: string,
+  ): Promise<{
     matches: boolean;
     baselinePath: string;
     comparisonPath: string;
@@ -233,7 +246,9 @@ export class ScreenshotBaselineManager {
     const comparisonPath = this.getComparisonPath(config);
 
     if (!existsSync(baselinePath)) {
-      throw new Error(`No baseline found for ${config.name}. Run with UPDATE_BASELINES=true to create it.`);
+      throw new Error(
+        `No baseline found for ${config.name}. Run with UPDATE_BASELINES=true to create it.`,
+      );
     }
 
     // Copy current screenshot to comparison location
@@ -258,11 +273,11 @@ export class ScreenshotBaselineManager {
       console.log(`Visual difference detected for ${config.name}`);
       console.log(`Baseline: ${baselinePath}`);
       console.log(`Current: ${comparisonPath}`);
-      
+
       return {
         ...result,
         differencePath: this.getDifferencePath(config),
-        similarity: this.calculateSimilarity(baselinePath, comparisonPath)
+        similarity: this.calculateSimilarity(baselinePath, comparisonPath),
       };
     }
 
@@ -275,14 +290,14 @@ export class ScreenshotBaselineManager {
    */
   private calculateSimilarity(baseline: string, comparison: string): number {
     try {
-      const baselineStats = require('fs').statSync(baseline);
-      const comparisonStats = require('fs').statSync(comparison);
-      
+      const baselineStats = require("fs").statSync(baseline);
+      const comparisonStats = require("fs").statSync(comparison);
+
       // Simple size-based similarity (not accurate but serves as placeholder)
       const sizeDiff = Math.abs(baselineStats.size - comparisonStats.size);
       const maxSize = Math.max(baselineStats.size, comparisonStats.size);
-      
-      return Math.max(0, 1 - (sizeDiff / maxSize));
+
+      return Math.max(0, 1 - sizeDiff / maxSize);
     } catch (error) {
       return 0;
     }
@@ -294,9 +309,9 @@ export class ScreenshotBaselineManager {
   cleanupComparisons(): void {
     if (existsSync(this.comparisonDir)) {
       const files = readdirSync(this.comparisonDir);
-      files.forEach(file => {
+      files.forEach((file) => {
         const filePath = join(this.comparisonDir, file);
-        require('fs').unlinkSync(filePath);
+        require("fs").unlinkSync(filePath);
       });
       console.log(`Cleaned up ${files.length} comparison files`);
     }
@@ -307,7 +322,7 @@ export class ScreenshotBaselineManager {
    */
   listBaselines(): BaselineConfig[] {
     const metadata = this.loadMetadata();
-    return Object.values(metadata).map(m => m.config);
+    return Object.values(metadata).map((m) => m.config);
   }
 
   /**
@@ -320,7 +335,11 @@ export class ScreenshotBaselineManager {
   /**
    * Validate baseline integrity
    */
-  validateBaselines(): { valid: string[]; invalid: string[]; missing: string[] } {
+  validateBaselines(): {
+    valid: string[];
+    invalid: string[];
+    missing: string[];
+  } {
     const metadata = this.loadMetadata();
     const valid: string[] = [];
     const invalid: string[] = [];
@@ -328,7 +347,7 @@ export class ScreenshotBaselineManager {
 
     for (const [name, meta] of Object.entries(metadata)) {
       const baselinePath = this.getBaselinePath(meta.config);
-      
+
       if (!existsSync(baselinePath)) {
         missing.push(name);
         continue;

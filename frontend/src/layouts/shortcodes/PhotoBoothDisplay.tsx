@@ -597,7 +597,7 @@ const DashboardRenderer: React.FC<{
       {/* Header Section - Only for Portfolio History Portrait */}
       {isPortfolioHistoryPortrait && (
         <div className="dashboard-header text-center">
-          <h1 className="text-dark text-4xl mt-8 font-bold dark:text-white">
+          <h1 className="text-dark mt-8 text-4xl font-bold dark:text-white">
             Twitter Live Signals
           </h1>
         </div>
@@ -621,7 +621,7 @@ const DashboardRenderer: React.FC<{
       {/* Footer Section - Only for Portfolio History Portrait */}
       {isPortfolioHistoryPortrait && (
         <div className="dashboard-footer flex justify-center">
-          <h1 className="brand-text mb-8 text-text-dark dark:text-darkmode-text-dark m-0 text-4xl font-semibold">
+          <h1 className="brand-text text-text-dark dark:text-darkmode-text-dark m-0 mb-8 text-4xl font-semibold">
             colemorton.com
           </h1>
         </div>

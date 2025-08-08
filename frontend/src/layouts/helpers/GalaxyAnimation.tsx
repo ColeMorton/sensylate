@@ -24,9 +24,11 @@ const GalaxyAnimation: React.FC<GalaxyAnimationProps> = ({
     }
 
     // Skip WebGL initialization in test environments
-    if (typeof window !== 'undefined' && 
-        (window.navigator.webdriver || process.env.NODE_ENV === 'test')) {
-      console.log('Skipping WebGL initialization in test environment');
+    if (
+      typeof window !== "undefined" &&
+      (window.navigator.webdriver || process.env.NODE_ENV === "test")
+    ) {
+      console.log("Skipping WebGL initialization in test environment");
       return;
     }
 
@@ -64,7 +66,7 @@ const GalaxyAnimation: React.FC<GalaxyAnimationProps> = ({
       refs.renderer.setClearColor(0x000000, 0); // Transparent background
       container.appendChild(refs.renderer.domElement);
     } catch (error) {
-      console.warn('WebGL not supported, skipping galaxy animation:', error);
+      console.warn("WebGL not supported, skipping galaxy animation:", error);
       return;
     }
 

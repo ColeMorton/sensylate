@@ -232,13 +232,13 @@
               "description": "Path to internal audience trading report document"
             },
             "live": {
-              "type": "string", 
+              "type": "string",
               "pattern": ".*/(live|synthesis)/.*\\.md$",
               "description": "Path to live signals monitoring report document"
             },
             "historical": {
               "type": "string",
-              "pattern": ".*/(historical|synthesis)/.*\\.md$", 
+              "pattern": ".*/(historical|synthesis)/.*\\.md$",
               "description": "Path to historical performance report document"
             }
           }
@@ -254,7 +254,7 @@
               "description": "Internal report focuses on strategic recommendations and institutional insights"
             },
             "live_focus": {
-              "type": "boolean", 
+              "type": "boolean",
               "const": true,
               "description": "Live report focuses on real-time monitoring and active position management"
             },
@@ -281,7 +281,7 @@
               "description": "Report type parameter correctly passed for audience differentiation"
             },
             "conditional_content_blocks": {
-              "type": "boolean", 
+              "type": "boolean",
               "const": true,
               "description": "Conditional content blocks render different content per audience"
             }
@@ -294,7 +294,7 @@
           "properties": {
             "p1_p2_p3_framework": {
               "type": "boolean",
-              "const": true, 
+              "const": true,
               "description": "P1/P2/P3 critical issues framework implemented with dynamic metrics"
             },
             "economic_context_integration": {

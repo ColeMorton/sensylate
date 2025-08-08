@@ -1,21 +1,27 @@
-import React from 'react';
-import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { render, screen, fireEvent, waitFor, cleanup } from '@testing-library/react';
-import PhotoBoothDisplay from '@/shortcodes/PhotoBoothDisplay';
-import { 
+import React from "react";
+import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
+import {
+  render,
+  screen,
+  fireEvent,
+  waitFor,
+  cleanup,
+} from "@testing-library/react";
+import PhotoBoothDisplay from "@/shortcodes/PhotoBoothDisplay";
+import {
   setupPhotoBoothMocks,
-  mockAllDashboards, 
+  mockAllDashboards,
   mockDashboardLoader,
   mockFetchSuccess,
   mockFetchError,
   mockNetworkError,
   mockExportSuccess,
-  mockExportError
-} from '../__mocks__/setup.tsx';
-import { testURLParams } from '../__mocks__/test-data.mock';
-import { mockURLSearchParams, mockWindowHistory } from '../utils/test-helpers';
+  mockExportError,
+} from "../__mocks__/setup.tsx";
+import { testURLParams } from "../__mocks__/test-data.mock";
+import { mockURLSearchParams, mockWindowHistory } from "../utils/test-helpers";
 
-describe('PhotoBoothDisplay Component', () => {
+describe("PhotoBoothDisplay Component", () => {
   beforeEach(() => {
     setupPhotoBoothMocks();
   });
@@ -25,257 +31,285 @@ describe('PhotoBoothDisplay Component', () => {
     vi.restoreAllMocks();
   });
 
-  describe('Component Initialization', () => {
-    it('renders loading state initially', () => {
+  describe("Component Initialization", () => {
+    it("renders loading state initially", () => {
       render(<PhotoBoothDisplay />);
-      
-      expect(screen.getByText('Loading dashboards...')).toBeInTheDocument();
+
+      expect(screen.getByText("Loading dashboards...")).toBeInTheDocument();
     });
 
-    it('renders dashboard after successful loading', async () => {
+    it("renders dashboard after successful loading", async () => {
       render(<PhotoBoothDisplay />);
-      
+
       await waitFor(() => {
-        expect(screen.getByText('Portfolio History Portrait')).toBeInTheDocument();
+        expect(
+          screen.getByText("Portfolio History Portrait"),
+        ).toBeInTheDocument();
       });
     });
 
-    it('displays error when dashboard loading fails', async () => {
-      mockDashboardLoader.getAllDashboards.mockRejectedValue(new Error('Network error'));
-      
+    it("displays error when dashboard loading fails", async () => {
+      mockDashboardLoader.getAllDashboards.mockRejectedValue(
+        new Error("Network error"),
+      );
+
       render(<PhotoBoothDisplay />);
-      
+
       await waitFor(() => {
-        expect(screen.getByText('Failed to Load Dashboards')).toBeInTheDocument();
+        expect(
+          screen.getByText("Failed to Load Dashboards"),
+        ).toBeInTheDocument();
       });
     });
   });
 
-  describe('URL Parameter Parsing', () => {
-    it('parses dashboard parameter from URL', async () => {
+  describe("URL Parameter Parsing", () => {
+    it("parses dashboard parameter from URL", async () => {
       mockURLSearchParams(testURLParams.portraitMode);
-      
+
       render(<PhotoBoothDisplay />);
-      
+
       await waitFor(() => {
-        const select = screen.getByDisplayValue('Portfolio History Portrait');
+        const select = screen.getByDisplayValue("Portfolio History Portrait");
         expect(select).toBeInTheDocument();
       });
     });
 
-    it('parses mode parameter and sets theme', async () => {
-      mockURLSearchParams({ mode: 'dark' });
-      
+    it("parses mode parameter and sets theme", async () => {
+      mockURLSearchParams({ mode: "dark" });
+
       render(<PhotoBoothDisplay />);
-      
+
       await waitFor(() => {
-        const darkButton = screen.getByRole('button', { name: /dark/i });
-        expect(darkButton).toHaveClass('bg-blue-500');
+        const darkButton = screen.getByRole("button", { name: /dark/i });
+        expect(darkButton).toHaveClass("bg-blue-500");
       });
     });
 
-    it('parses aspect ratio parameter', async () => {
-      mockURLSearchParams({ aspect_ratio: '3:4' });
-      
+    it("parses aspect ratio parameter", async () => {
+      mockURLSearchParams({ aspect_ratio: "3:4" });
+
       render(<PhotoBoothDisplay />);
-      
+
       await waitFor(() => {
-        const aspectSelect = screen.getByDisplayValue('3:4 Portrait');
+        const aspectSelect = screen.getByDisplayValue("3:4 Portrait");
         expect(aspectSelect).toBeInTheDocument();
       });
     });
 
-    it('parses format parameter', async () => {
-      mockURLSearchParams({ format: 'svg' });
-      
+    it("parses format parameter", async () => {
+      mockURLSearchParams({ format: "svg" });
+
       render(<PhotoBoothDisplay />);
-      
+
       await waitFor(() => {
-        const formatSelect = screen.getByDisplayValue('SVG');
+        const formatSelect = screen.getByDisplayValue("SVG");
         expect(formatSelect).toBeInTheDocument();
       });
     });
 
-    it('parses DPI parameter', async () => {
-      mockURLSearchParams({ dpi: '600' });
-      
+    it("parses DPI parameter", async () => {
+      mockURLSearchParams({ dpi: "600" });
+
       render(<PhotoBoothDisplay />);
-      
+
       await waitFor(() => {
-        const dpiSelect = screen.getByDisplayValue('600 (Ultra)');
+        const dpiSelect = screen.getByDisplayValue("600 (Ultra)");
         expect(dpiSelect).toBeInTheDocument();
       });
     });
 
-    it('parses scale factor parameter', async () => {
-      mockURLSearchParams({ scale: '4' });
-      
+    it("parses scale factor parameter", async () => {
+      mockURLSearchParams({ scale: "4" });
+
       render(<PhotoBoothDisplay />);
-      
+
       await waitFor(() => {
-        const scaleSelect = screen.getByDisplayValue('4x');
+        const scaleSelect = screen.getByDisplayValue("4x");
         expect(scaleSelect).toBeInTheDocument();
       });
     });
   });
 
-  describe('State Management', () => {
-    it('updates URL when dashboard changes', async () => {
+  describe("State Management", () => {
+    it("updates URL when dashboard changes", async () => {
       const { mockReplaceState } = mockWindowHistory();
-      
+
       render(<PhotoBoothDisplay />);
-      
+
       await waitFor(() => {
         const select = screen.getByLabelText(/dashboard/i);
-        fireEvent.change(select, { target: { value: 'portfolio_history_portrait' } });
+        fireEvent.change(select, {
+          target: { value: "portfolio_history_portrait" },
+        });
       });
-      
+
       expect(mockReplaceState).toHaveBeenCalledWith(
         {},
-        '',
-        expect.stringContaining('dashboard=portfolio_history_portrait')
+        "",
+        expect.stringContaining("dashboard=portfolio_history_portrait"),
       );
     });
 
-    it('updates URL when mode changes', async () => {
+    it("updates URL when mode changes", async () => {
       const { mockReplaceState } = mockWindowHistory();
-      
+
       render(<PhotoBoothDisplay />);
-      
+
       await waitFor(() => {
-        const darkButton = screen.getByRole('button', { name: /dark/i });
+        const darkButton = screen.getByRole("button", { name: /dark/i });
         fireEvent.click(darkButton);
       });
-      
+
       expect(mockReplaceState).toHaveBeenCalledWith(
         {},
-        '',
-        expect.stringContaining('mode=dark')
+        "",
+        expect.stringContaining("mode=dark"),
       );
     });
 
-    it('updates URL when aspect ratio changes', async () => {
+    it("updates URL when aspect ratio changes", async () => {
       const { mockReplaceState } = mockWindowHistory();
-      
+
       render(<PhotoBoothDisplay />);
-      
+
       await waitFor(() => {
         const aspectSelect = screen.getByLabelText(/ratio/i);
-        fireEvent.change(aspectSelect, { target: { value: '3:4' } });
+        fireEvent.change(aspectSelect, { target: { value: "3:4" } });
       });
-      
+
       expect(mockReplaceState).toHaveBeenCalledWith(
         {},
-        '',
-        expect.stringContaining('aspect_ratio=3:4')
+        "",
+        expect.stringContaining("aspect_ratio=3:4"),
       );
     });
   });
 
-  describe('CSS Custom Properties', () => {
-    it('sets CSS custom properties based on aspect ratio', async () => {
+  describe("CSS Custom Properties", () => {
+    it("sets CSS custom properties based on aspect ratio", async () => {
       const mockSetProperty = vi.fn();
       const mockRef = {
         current: {
           style: {
-            setProperty: mockSetProperty
-          }
-        }
+            setProperty: mockSetProperty,
+          },
+        },
       };
-      
+
       // Mock useRef to return our controlled ref
-      vi.spyOn(React, 'useRef').mockReturnValue(mockRef);
-      
-      mockURLSearchParams({ aspect_ratio: '3:4' });
-      
+      vi.spyOn(React, "useRef").mockReturnValue(mockRef);
+
+      mockURLSearchParams({ aspect_ratio: "3:4" });
+
       render(<PhotoBoothDisplay />);
-      
+
       await waitFor(() => {
-        expect(mockSetProperty).toHaveBeenCalledWith('--photo-booth-width', '1080px');
-        expect(mockSetProperty).toHaveBeenCalledWith('--photo-booth-height', '1440px');
+        expect(mockSetProperty).toHaveBeenCalledWith(
+          "--photo-booth-width",
+          "1080px",
+        );
+        expect(mockSetProperty).toHaveBeenCalledWith(
+          "--photo-booth-height",
+          "1440px",
+        );
       });
     });
   });
 
-  describe('Export Functionality', () => {
-    it('shows export button when dashboard is ready', async () => {
+  describe("Export Functionality", () => {
+    it("shows export button when dashboard is ready", async () => {
       render(<PhotoBoothDisplay />);
-      
+
       await waitFor(() => {
-        const exportButton = screen.getByRole('button', { name: /export dashboard/i });
+        const exportButton = screen.getByRole("button", {
+          name: /export dashboard/i,
+        });
         expect(exportButton).toBeInTheDocument();
         expect(exportButton).not.toBeDisabled();
       });
     });
 
-    it('disables export button when dashboard is loading', () => {
+    it("disables export button when dashboard is loading", () => {
       render(<PhotoBoothDisplay />);
-      
-      const exportButton = screen.getByRole('button', { name: /export dashboard/i });
+
+      const exportButton = screen.getByRole("button", {
+        name: /export dashboard/i,
+      });
       expect(exportButton).toBeDisabled();
     });
 
-    it('calls export API with correct parameters', async () => {
+    it("calls export API with correct parameters", async () => {
       mockURLSearchParams(testURLParams.portraitMode);
-      
+
       render(<PhotoBoothDisplay />);
-      
+
       await waitFor(async () => {
-        const exportButton = screen.getByRole('button', { name: /export dashboard/i });
+        const exportButton = screen.getByRole("button", {
+          name: /export dashboard/i,
+        });
         fireEvent.click(exportButton);
-        
-        expect(global.fetch).toHaveBeenCalledWith('/api/export-dashboard', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+
+        expect(global.fetch).toHaveBeenCalledWith("/api/export-dashboard", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            dashboard_id: 'portfolio_history_portrait',
-            mode: 'light',
-            aspect_ratio: '3:4',
-            format: 'png',
+            dashboard_id: "portfolio_history_portrait",
+            mode: "light",
+            aspect_ratio: "3:4",
+            format: "png",
             dpi: 300,
-            scale_factor: 3
-          })
+            scale_factor: 3,
+          }),
         });
       });
     });
 
-    it('shows success message after successful export', async () => {
+    it("shows success message after successful export", async () => {
       render(<PhotoBoothDisplay />);
-      
+
       await waitFor(async () => {
-        const exportButton = screen.getByRole('button', { name: /export dashboard/i });
+        const exportButton = screen.getByRole("button", {
+          name: /export dashboard/i,
+        });
         fireEvent.click(exportButton);
-        
+
         await waitFor(() => {
-          expect(screen.getByText(/successfully exported/i)).toBeInTheDocument();
+          expect(
+            screen.getByText(/successfully exported/i),
+          ).toBeInTheDocument();
         });
       });
     });
 
-    it('shows error message after failed export', async () => {
-      global.fetch = mockFetchError(500, 'Export failed') as any;
-      
+    it("shows error message after failed export", async () => {
+      global.fetch = mockFetchError(500, "Export failed") as any;
+
       render(<PhotoBoothDisplay />);
-      
+
       await waitFor(async () => {
-        const exportButton = screen.getByRole('button', { name: /export dashboard/i });
+        const exportButton = screen.getByRole("button", {
+          name: /export dashboard/i,
+        });
         fireEvent.click(exportButton);
-        
+
         await waitFor(() => {
           expect(screen.getByText(/export failed/i)).toBeInTheDocument();
         });
       });
     });
 
-    it('handles network errors gracefully', async () => {
+    it("handles network errors gracefully", async () => {
       global.fetch = mockNetworkError() as any;
-      
+
       render(<PhotoBoothDisplay />);
-      
+
       await waitFor(async () => {
-        const exportButton = screen.getByRole('button', { name: /export dashboard/i });
+        const exportButton = screen.getByRole("button", {
+          name: /export dashboard/i,
+        });
         fireEvent.click(exportButton);
-        
+
         await waitFor(() => {
           expect(screen.getByText(/export failed/i)).toBeInTheDocument();
         });
@@ -283,104 +317,110 @@ describe('PhotoBoothDisplay Component', () => {
     });
   });
 
-  describe('Dashboard Content Rendering', () => {
-    it('renders portfolio history portrait with header and footer', async () => {
-      mockURLSearchParams({ dashboard: 'portfolio_history_portrait' });
-      
+  describe("Dashboard Content Rendering", () => {
+    it("renders portfolio history portrait with header and footer", async () => {
+      mockURLSearchParams({ dashboard: "portfolio_history_portrait" });
+
       render(<PhotoBoothDisplay />);
-      
+
       await waitFor(() => {
-        expect(screen.getByText('Twitter Live Signals')).toBeInTheDocument();
-        expect(screen.getByText('colemorton.com')).toBeInTheDocument();
+        expect(screen.getByText("Twitter Live Signals")).toBeInTheDocument();
+        expect(screen.getByText("colemorton.com")).toBeInTheDocument();
       });
     });
 
-    it('passes titleOnly=true to charts in portfolio history portrait', async () => {
-      mockURLSearchParams({ dashboard: 'portfolio_history_portrait' });
-      
+    it("passes titleOnly=true to charts in portfolio history portrait", async () => {
+      mockURLSearchParams({ dashboard: "portfolio_history_portrait" });
+
       render(<PhotoBoothDisplay />);
-      
+
       await waitFor(() => {
-        const titleOnlyElements = screen.getAllByTestId('chart-title-only');
-        titleOnlyElements.forEach(element => {
-          expect(element).toHaveTextContent('true');
+        const titleOnlyElements = screen.getAllByTestId("chart-title-only");
+        titleOnlyElements.forEach((element) => {
+          expect(element).toHaveTextContent("true");
         });
       });
     });
 
-    it('applies correct theme class to dashboard', async () => {
-      mockURLSearchParams({ mode: 'dark' });
-      
+    it("applies correct theme class to dashboard", async () => {
+      mockURLSearchParams({ mode: "dark" });
+
       render(<PhotoBoothDisplay />);
-      
+
       await waitFor(() => {
-        const dashboard = screen.getByTestId('dashboard-content') || 
-                         document.querySelector('.photo-booth-dashboard');
-        expect(dashboard).toHaveClass('dark');
+        const dashboard =
+          screen.getByTestId("dashboard-content") ||
+          document.querySelector(".photo-booth-dashboard");
+        expect(dashboard).toHaveClass("dark");
       });
     });
   });
 
-  describe('Ready State Management', () => {
-    it('marks component as ready after timeout', async () => {
+  describe("Ready State Management", () => {
+    it("marks component as ready after timeout", async () => {
       render(<PhotoBoothDisplay />);
-      
+
       // Initially should show loading
-      expect(screen.getByText('Loading...')).toBeInTheDocument();
-      
+      expect(screen.getByText("Loading...")).toBeInTheDocument();
+
       // After timeout should show ready
-      await waitFor(() => {
-        expect(screen.getByText('Ready for screenshot')).toBeInTheDocument();
-      }, { timeout: 16000 }); // Slightly longer than render_timeout
+      await waitFor(
+        () => {
+          expect(screen.getByText("Ready for screenshot")).toBeInTheDocument();
+        },
+        { timeout: 16000 },
+      ); // Slightly longer than render_timeout
     });
 
-    it('resets ready state when parameters change', async () => {
+    it("resets ready state when parameters change", async () => {
       render(<PhotoBoothDisplay />);
-      
+
       await waitFor(() => {
-        expect(screen.getByText('Ready for screenshot')).toBeInTheDocument();
+        expect(screen.getByText("Ready for screenshot")).toBeInTheDocument();
       });
-      
+
       // Change a parameter
-      const modeButton = screen.getByRole('button', { name: /dark/i });
+      const modeButton = screen.getByRole("button", { name: /dark/i });
       fireEvent.click(modeButton);
-      
+
       // Should reset to loading
-      expect(screen.getByText('Loading...')).toBeInTheDocument();
+      expect(screen.getByText("Loading...")).toBeInTheDocument();
     });
   });
 
-  describe('Error Handling', () => {
-    it('shows retry button when dashboard loading fails', async () => {
-      mockDashboardLoader.getAllDashboards.mockRejectedValue(new Error('Network error'));
-      
+  describe("Error Handling", () => {
+    it("shows retry button when dashboard loading fails", async () => {
+      mockDashboardLoader.getAllDashboards.mockRejectedValue(
+        new Error("Network error"),
+      );
+
       render(<PhotoBoothDisplay />);
-      
+
       await waitFor(() => {
-        const retryButton = screen.getByRole('button', { name: /retry/i });
+        const retryButton = screen.getByRole("button", { name: /retry/i });
         expect(retryButton).toBeInTheDocument();
       });
     });
 
-    it('handles invalid dashboard ID gracefully', async () => {
-      mockURLSearchParams({ dashboard: 'invalid_dashboard' });
-      
+    it("handles invalid dashboard ID gracefully", async () => {
+      mockURLSearchParams({ dashboard: "invalid_dashboard" });
+
       render(<PhotoBoothDisplay />);
-      
+
       await waitFor(() => {
-        expect(screen.getByText('Dashboard Not Found')).toBeInTheDocument();
+        expect(screen.getByText("Dashboard Not Found")).toBeInTheDocument();
       });
     });
 
-    it('falls back to defaults for invalid parameters', async () => {
+    it("falls back to defaults for invalid parameters", async () => {
       mockURLSearchParams(testURLParams.invalidParams);
-      
+
       render(<PhotoBoothDisplay />);
-      
+
       await waitFor(() => {
         // Should fall back to default values
-        expect(screen.getByDisplayValue('16:9 Wide')).toBeInTheDocument();
-        expect(screen.getByDisplayValue('PNG')).toBeInTheDocument();
+        expect(screen.getByDisplayValue("16:9 Wide")).toBeInTheDocument();
+        expect(screen.getByDisplayValue("PNG")).toBeInTheDocument();
       });
     });
   });

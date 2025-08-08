@@ -170,7 +170,7 @@ Portfolio: **{{ data.portfolio_name | default(portfolio) | title }}** | Confiden
 #### Market Regime Performance Matrix
 {{ market_regime_performance_matrix(data) }}
 
-#### Economic Scenario Stress Testing  
+#### Economic Scenario Stress Testing
 {{ economic_stress_testing(data) }}
 
 #### Sector Economic Sensitivity Analysis
@@ -191,7 +191,7 @@ Portfolio: **{{ data.portfolio_name | default(portfolio) | title }}** | Confiden
 {%- elif report_type == "live" -%}
 ### Portfolio Overview
 {%- elif report_type == "historical" -%}
-### Performance Summary  
+### Performance Summary
 {%- else -%}
 {# Default executive dashboard content #}
 {%- endif -%}
@@ -470,7 +470,7 @@ Portfolio: **{{ data.portfolio_name | default(portfolio) | title }}** | Confiden
 
 {%- if (data.max_drawdown_pct | default(0) | float) > 20 %}
 {{ "2" if (data.exit_efficiency | default(0) | float) < -50 else "1" }}. **Maximum Drawdown Risk**: Current level {{ data.max_drawdown_pct | default("-31.22") }}% (exceeding {{ data.drawdown_target | default("-15") }}% target by {{ ((data.max_drawdown_pct | default(31.22) | float) - 15) | round(2) }}%)
-   - **Impact**: Risk management breach / Single large loss triggered limit violation  
+   - **Impact**: Risk management breach / Single large loss triggered limit violation
    - **Action**: Implement {{ data.position_size_cap | default("2") }}% position size cap and sector concentration limits ({{ data.sector_limit | default("25") }}% max)
    - **Deadline**: Implement immediately on next signals
 {%- endif %}
@@ -682,7 +682,7 @@ Since all positions are currently closed, here are the three best recent complet
 - **Interpretation**: {{ data.win_rate_interpretation | default("Cannot reject null hypothesis of random performance") }}
 - **Sample Size Impact**: {{ data.sample_impact | default("Wider confidence intervals due to limited sample") }}
 
-### Alpha vs Benchmark  
+### Alpha vs Benchmark
 - **Status**: {{ data.alpha_status | default("Requires SPY comparison data for statistical significance testing") }}
 - **Estimated Alpha**: {{ data.estimated_alpha | default("+30.11% YTD suggests substantial outperformance") }}
 - **Confidence Assessment**: {{ data.alpha_confidence | default("High likelihood of positive alpha generation") }}

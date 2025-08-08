@@ -64,7 +64,7 @@ class TradeMetrics:
     mae: Optional[float] = None
     exit_efficiency: Optional[float] = None
     x_status: Optional[str] = None  # Twitter/X status ID
-    x_link: Optional[str] = None    # Generated Twitter/X URL
+    x_link: Optional[str] = None  # Generated Twitter/X URL
 
     def validate_consistency(self) -> bool:
         """Validate internal consistency of trade metrics"""
@@ -187,8 +187,12 @@ class TradingCalculationEngine:
                         if pd.notna(row["Exit_Efficiency"])
                         else None
                     ),
-                    x_status=str(row["X_Status"]) if pd.notna(row.get("X_Status")) else None,
-                    x_link=self._generate_twitter_url(str(row["X_Status"])) if pd.notna(row.get("X_Status")) else None,
+                    x_status=str(row["X_Status"])
+                    if pd.notna(row.get("X_Status"))
+                    else None,
+                    x_link=self._generate_twitter_url(str(row["X_Status"]))
+                    if pd.notna(row.get("X_Status"))
+                    else None,
                 )
 
                 self.trades.append(trade)
@@ -229,19 +233,23 @@ class TradingCalculationEngine:
         """Get detailed trade data including X Links for synthesis"""
         detailed_trades = []
         for trade in self.get_closed_trades():
-            detailed_trades.append({
-                "ticker": trade.ticker,
-                "strategy_type": trade.strategy_type,
-                "entry_date": trade.entry_date.isoformat(),
-                "exit_date": trade.exit_date.isoformat() if trade.exit_date else None,
-                "pnl": trade.pnl_csv,
-                "return_pct": trade.return_csv * 100,
-                "duration_days": trade.duration_days,
-                "outcome": trade.outcome.value,
-                "x_status": trade.x_status,
-                "x_link": trade.x_link,
-                "quality": self._determine_trade_quality(trade),
-            })
+            detailed_trades.append(
+                {
+                    "ticker": trade.ticker,
+                    "strategy_type": trade.strategy_type,
+                    "entry_date": trade.entry_date.isoformat(),
+                    "exit_date": trade.exit_date.isoformat()
+                    if trade.exit_date
+                    else None,
+                    "pnl": trade.pnl_csv,
+                    "return_pct": trade.return_csv * 100,
+                    "duration_days": trade.duration_days,
+                    "outcome": trade.outcome.value,
+                    "x_status": trade.x_status,
+                    "x_link": trade.x_link,
+                    "quality": self._determine_trade_quality(trade),
+                }
+            )
         return detailed_trades
 
     def _determine_trade_quality(self, trade: TradeMetrics) -> str:
@@ -249,7 +257,7 @@ class TradingCalculationEngine:
         if trade.pnl_csv > 50:
             return "Excellent"
         elif trade.pnl_csv > 10:
-            return "Good" 
+            return "Good"
         elif trade.pnl_csv > 0:
             return "Fair"
         elif trade.pnl_csv == 0:
@@ -626,7 +634,10 @@ class TradingCalculationEngine:
             "x_status_completeness": {
                 "total_closed_trades": len(closed_trades),
                 "trades_with_x_status": len([t for t in closed_trades if t.x_status]),
-                "x_status_coverage": len([t for t in closed_trades if t.x_status]) / len(closed_trades) if closed_trades else 0.0,
+                "x_status_coverage": len([t for t in closed_trades if t.x_status])
+                / len(closed_trades)
+                if closed_trades
+                else 0.0,
                 "x_links_generated": len([t for t in closed_trades if t.x_link]),
             },
             "data_quality_assessment": {

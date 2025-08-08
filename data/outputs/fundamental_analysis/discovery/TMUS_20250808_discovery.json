@@ -62,7 +62,7 @@
     "business_model": {
       "revenue_streams": [
         "Postpaid wireless services",
-        "Prepaid wireless services", 
+        "Prepaid wireless services",
         "Wholesale services",
         "Device sales and accessories",
         "Roaming and other services"
@@ -157,7 +157,7 @@
     "service_health": {
       "yahoo_finance_cli": "operational",
       "alpha_vantage_cli": "operational_with_limitations",
-      "fmp_cli": "fully_operational", 
+      "fmp_cli": "fully_operational",
       "fred_economic_cli": "operational",
       "coingecko_cli": "operational",
       "imf_cli": "operational",
@@ -173,7 +173,7 @@
     "institutional_grade": true,
     "data_sources_via_cli": [
       "yahoo_finance_cli",
-      "fmp_cli", 
+      "fmp_cli",
       "alpha_vantage_cli",
       "fred_economic_cli",
       "coingecko_cli",
@@ -189,7 +189,7 @@
     ],
     "data_quality_insights": [
       "Financial statement data from FMP CLI demonstrates exceptional completeness with comprehensive historical ratios and metrics",
-      "Yahoo Finance CLI provided robust market data and performance analytics with 250 data points of historical analysis", 
+      "Yahoo Finance CLI provided robust market data and performance analytics with 250 data points of historical analysis",
       "Cross-validation between CLI services achieved 97% overall data quality score meeting institutional grade requirements"
     ],
     "market_context_insights": [
@@ -214,7 +214,7 @@
         "relationship": "Primary telecommunications competitor with similar nationwide coverage"
       },
       {
-        "ticker": "T", 
+        "ticker": "T",
         "name": "AT&T Inc.",
         "market_cap": 120000000000,
         "pe_ratio": 8.5,
