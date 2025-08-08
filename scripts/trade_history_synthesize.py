@@ -152,29 +152,16 @@ class AtomicSynthesisTool:
         """
         logger.info("Generating report data structures...")
 
-        # Load CSV data for trade details
+        # Use enhanced discovery data with X Links
         discovery = phase_data["discovery"]
-        csv_path = discovery["discovery_metadata"]["data_source"]
-
-        try:
-            trades_df = pd.read_csv(csv_path)
-
-            # Separate closed and active trades
-            closed_trades = (
-                trades_df[trades_df["Status"] == "Closed"].copy()
-                if "Status" in trades_df.columns
-                else pd.DataFrame()
-            )
-            active_trades = (
-                trades_df[trades_df["Status"] != "Closed"].copy()
-                if "Status" in trades_df.columns
-                else pd.DataFrame()
-            )
-
-        except Exception as e:
-            logger.warning(f"Could not load CSV data: {e}")
-            closed_trades = pd.DataFrame()
-            active_trades = pd.DataFrame()
+        
+        # Get detailed trades with X Links from unified calculation engine
+        detailed_trades = discovery.get("detailed_trades", [])
+        closed_trades_with_xlinks = pd.DataFrame(detailed_trades) if detailed_trades else pd.DataFrame()
+        
+        # Get active positions from discovery data  
+        active_positions = discovery.get("active_positions", [])
+        active_trades = pd.DataFrame(active_positions) if active_positions else pd.DataFrame()
 
         # Generate report-specific data structures
         report_data = {
@@ -182,20 +169,20 @@ class AtomicSynthesisTool:
                 "key_metrics": key_metrics["performance_summary"],
                 "portfolio_health_score": self._calculate_health_score(key_metrics),
                 "critical_issues": self._identify_critical_issues(
-                    key_metrics, closed_trades
+                    key_metrics, closed_trades_with_xlinks
                 ),
                 "trend_indicators": self._generate_trend_indicators(key_metrics),
             },
             "historical_analysis": {
                 "closed_trades_summary": {
-                    "count": len(closed_trades),
-                    "top_winners": self._get_top_trades(closed_trades, "winners", 5),
-                    "top_losers": self._get_top_trades(closed_trades, "losers", 5),
+                    "count": len(closed_trades_with_xlinks),
+                    "top_winners": self._get_top_trades(closed_trades_with_xlinks, "winners", 5),
+                    "top_losers": self._get_top_trades(closed_trades_with_xlinks, "losers", 5),
                     "strategy_breakdown": self._analyze_strategy_performance(
-                        closed_trades
+                        closed_trades_with_xlinks
                     ),
                     "monthly_performance": self._analyze_monthly_performance(
-                        closed_trades
+                        closed_trades_with_xlinks
                     ),
                 },
                 "statistical_summary": key_metrics["statistical_analysis"],
@@ -272,8 +259,8 @@ class AtomicSynthesisTool:
                 }
             )
 
-        if not trades_df.empty and "PnL" in trades_df.columns:
-            max_loss = trades_df["PnL"].min()
+        if not trades_df.empty and "pnl" in trades_df.columns:
+            max_loss = trades_df["pnl"].min()
             if max_loss < -50:
                 issues.append(
                     {
@@ -320,26 +307,30 @@ class AtomicSynthesisTool:
     def _get_top_trades(
         self, trades_df: pd.DataFrame, trade_type: str, count: int
     ) -> List[Dict[str, Any]]:
-        """Extract top performing trades"""
-        if trades_df.empty or "PnL" not in trades_df.columns:
+        """Extract top performing trades with X Links"""
+        if trades_df.empty or "pnl" not in trades_df.columns:
             return []
 
         if trade_type == "winners":
-            top_trades = trades_df.nlargest(count, "PnL")
+            top_trades = trades_df.nlargest(count, "pnl")
         else:  # losers
-            top_trades = trades_df.nsmallest(count, "PnL")
+            top_trades = trades_df.nsmallest(count, "pnl")
 
         trades_list = []
         for _, trade in top_trades.iterrows():
             trades_list.append(
                 {
-                    "ticker": trade.get("Ticker", "N/A"),
-                    "strategy": trade.get("Strategy_Type", "N/A"),
-                    "pnl": float(trade.get("PnL", 0)),
-                    "return_pct": float(trade.get("Return", 0)) * 100,
-                    "duration_days": float(trade.get("Duration_Days", 0))
-                    if pd.notna(trade.get("Duration_Days"))
+                    "ticker": trade.get("ticker", "N/A"),
+                    "strategy": trade.get("strategy_type", "N/A"),
+                    "pnl": float(trade.get("pnl", 0)),
+                    "return_pct": float(trade.get("return_pct", 0)),
+                    "duration_days": float(trade.get("duration_days", 0))
+                    if pd.notna(trade.get("duration_days"))
                     else 0,
+                    "quality": trade.get("quality", "N/A"),
+                    "x_link": trade.get("x_link", "N/A"),
+                    "entry_date": trade.get("entry_date", "N/A"),
+                    "exit_date": trade.get("exit_date", "N/A"),
                 }
             )
 
@@ -351,19 +342,19 @@ class AtomicSynthesisTool:
             return {}
 
         strategy_performance = {}
-        if "Strategy_Type" in trades_df.columns:
-            for strategy in trades_df["Strategy_Type"].unique():
-                strategy_trades = trades_df[trades_df["Strategy_Type"] == strategy]
-                if "PnL" in strategy_trades.columns:
-                    wins = len(strategy_trades[strategy_trades["PnL"] > 0])
+        if "strategy_type" in trades_df.columns:
+            for strategy in trades_df["strategy_type"].unique():
+                strategy_trades = trades_df[trades_df["strategy_type"] == strategy]
+                if "pnl" in strategy_trades.columns:
+                    wins = len(strategy_trades[strategy_trades["pnl"] > 0])
                     total = len(strategy_trades)
 
                     strategy_performance[strategy] = {
                         "total_trades": total,
                         "win_rate": wins / total if total > 0 else 0,
-                        "total_pnl": float(strategy_trades["PnL"].sum()),
-                        "avg_return": float(strategy_trades["Return"].mean())
-                        if "Return" in strategy_trades.columns
+                        "total_pnl": float(strategy_trades["pnl"].sum()),
+                        "avg_return": float(strategy_trades["return_pct"].mean())
+                        if "return_pct" in strategy_trades.columns
                         else 0,
                     }
 

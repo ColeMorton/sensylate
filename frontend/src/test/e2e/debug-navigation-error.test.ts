@@ -4,7 +4,7 @@
  * when navigating from homepage to blog and analysis pages
  */
 import { describe, test, beforeAll, afterAll, expect } from "vitest";
-import { setupE2ETest, cleanupE2ETest, type TestContext } from "./setup";
+import { setupE2ETest, cleanupE2ETest, e2eHelper, type TestContext } from "./setup";
 
 interface ConsoleMessage {
   type: string;

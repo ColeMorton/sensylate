@@ -71,9 +71,34 @@ export default defineConfig({
     plugins: [tailwindcss()],
     optimizeDeps: {
       include: ["three"],
+      exclude: [
+        "vitest",
+        "@testing-library/user-event",
+        "@testing-library/dom",
+        "@testing-library/jest-dom",
+        "@testing-library/react"
+      ]
     },
     ssr: {
       noExternal: ["three"],
+    },
+    build: {
+      rollupOptions: {
+        external: (id) => {
+          // Exclude test files and directories from builds
+          const testPatterns = [
+            'src/test/',
+            '.test.',
+            '.spec.',
+            '@testing-library/',
+            'vitest',
+            'user-event',
+            'jsdom'
+          ];
+          
+          return testPatterns.some(pattern => id.includes(pattern));
+        }
+      }
     },
     define: {
       // Build-time feature flags for dead code elimination

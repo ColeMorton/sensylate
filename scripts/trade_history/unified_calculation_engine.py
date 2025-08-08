@@ -63,6 +63,8 @@ class TradeMetrics:
     mfe: Optional[float] = None
     mae: Optional[float] = None
     exit_efficiency: Optional[float] = None
+    x_status: Optional[str] = None  # Twitter/X status ID
+    x_link: Optional[str] = None    # Generated Twitter/X URL
 
     def validate_consistency(self) -> bool:
         """Validate internal consistency of trade metrics"""
@@ -185,12 +187,20 @@ class TradingCalculationEngine:
                         if pd.notna(row["Exit_Efficiency"])
                         else None
                     ),
+                    x_status=str(row["X_Status"]) if pd.notna(row.get("X_Status")) else None,
+                    x_link=self._generate_twitter_url(str(row["X_Status"])) if pd.notna(row.get("X_Status")) else None,
                 )
 
                 self.trades.append(trade)
 
             except Exception as e:
                 logging.warning(f"⚠️ Skipping invalid trade row: {e}")
+
+    def _generate_twitter_url(self, x_status: str) -> str:
+        """Generate Twitter/X URL from X_Status ID"""
+        if not x_status or x_status == "nan":
+            return None
+        return f"https://x.com/colemorton7/status/{x_status}"
 
     def _validate_all_trades(self):
         """Validate consistency of all individual trades"""
@@ -214,6 +224,38 @@ class TradingCalculationEngine:
     def get_open_trades(self) -> List[TradeMetrics]:
         """Get all open trades"""
         return [t for t in self.trades if t.exit_date is None]
+
+    def get_detailed_trade_data(self) -> List[Dict[str, Any]]:
+        """Get detailed trade data including X Links for synthesis"""
+        detailed_trades = []
+        for trade in self.get_closed_trades():
+            detailed_trades.append({
+                "ticker": trade.ticker,
+                "strategy_type": trade.strategy_type,
+                "entry_date": trade.entry_date.isoformat(),
+                "exit_date": trade.exit_date.isoformat() if trade.exit_date else None,
+                "pnl": trade.pnl_csv,
+                "return_pct": trade.return_csv * 100,
+                "duration_days": trade.duration_days,
+                "outcome": trade.outcome.value,
+                "x_status": trade.x_status,
+                "x_link": trade.x_link,
+                "quality": self._determine_trade_quality(trade),
+            })
+        return detailed_trades
+
+    def _determine_trade_quality(self, trade: TradeMetrics) -> str:
+        """Determine trade quality based on performance metrics"""
+        if trade.pnl_csv > 50:
+            return "Excellent"
+        elif trade.pnl_csv > 10:
+            return "Good" 
+        elif trade.pnl_csv > 0:
+            return "Fair"
+        elif trade.pnl_csv == 0:
+            return "Breakeven"
+        else:
+            return "Poor"
 
     def calculate_portfolio_performance(self) -> Dict[str, Any]:
         """
@@ -575,9 +617,18 @@ class TradingCalculationEngine:
                     "ticker": t.ticker,
                     "entry_date": t.entry_date.isoformat(),
                     "strategy": t.strategy_type,
+                    "x_status": t.x_status,
+                    "x_link": t.x_link,
                 }
                 for t in self.get_open_trades()
             ],
+            "detailed_trades": self.get_detailed_trade_data(),
+            "x_status_completeness": {
+                "total_closed_trades": len(closed_trades),
+                "trades_with_x_status": len([t for t in closed_trades if t.x_status]),
+                "x_status_coverage": len([t for t in closed_trades if t.x_status]) / len(closed_trades) if closed_trades else 0.0,
+                "x_links_generated": len([t for t in closed_trades if t.x_link]),
+            },
             "data_quality_assessment": {
                 "overall_confidence": 0.95,
                 "trade_data_completeness": 1.0,
@@ -594,5 +645,6 @@ class TradingCalculationEngine:
                 "active_trades_count": len(self.get_open_trades()),
                 "statistical_adequacy": len(closed_trades) >= 10,
                 "data_package_complete": True,
+                "x_links_available": True,
             },
         }

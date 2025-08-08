@@ -9,7 +9,7 @@
     "synthesis_metadata",
     "confidence_propagation",
     "key_metrics",
-    "report_data_structures",
+    "multi_report_generation",
     "quality_assurance",
     "data_sources",
     "validation_inputs"
@@ -209,313 +209,103 @@
         }
       }
     },
-    "report_data_structures": {
+    "multi_report_generation": {
       "type": "object",
-      "description": "Data structures optimized for different report types",
-      "required": ["executive_dashboard", "historical_analysis", "live_monitoring"],
+      "description": "Multi-audience institutional report generation tracking for internal/live/historical reports",
+      "required": ["reports_generated", "document_paths", "audience_specific_content", "template_compliance"],
       "additionalProperties": true,
       "properties": {
-        "executive_dashboard": {
+        "reports_generated": {
+          "type": "integer",
+          "minimum": 3,
+          "maximum": 3,
+          "description": "Number of audience-specific reports generated (internal/live/historical)"
+        },
+        "document_paths": {
           "type": "object",
-          "description": "Executive-level dashboard data structure",
-          "required": ["key_metrics", "portfolio_health_score"],
+          "description": "File paths for each generated audience-specific report",
+          "required": ["internal", "live", "historical"],
           "properties": {
-            "key_metrics": {
-              "type": "object",
-              "description": "Key metrics for executive reporting",
-              "additionalProperties": true
+            "internal": {
+              "type": "string",
+              "pattern": ".*/(internal|synthesis)/.*\\.md$",
+              "description": "Path to internal audience trading report document"
             },
-            "portfolio_health_score": {
-              "type": "object",
-              "description": "Portfolio health assessment",
-              "required": ["score", "interpretation"],
-              "properties": {
-                "score": {
-                  "type": "number",
-                  "minimum": 0,
-                  "maximum": 100,
-                  "description": "Portfolio health score (0-100)"
-                },
-                "interpretation": {
-                  "type": "string",
-                  "enum": ["Excellent", "Good", "Fair", "Needs Improvement"],
-                  "description": "Health score interpretation"
-                }
-              }
+            "live": {
+              "type": "string", 
+              "pattern": ".*/(live|synthesis)/.*\\.md$",
+              "description": "Path to live signals monitoring report document"
             },
-            "critical_issues": {
-              "type": "array",
-              "description": "Critical issues requiring attention",
-              "items": {
-                "type": "object",
-                "required": ["priority", "issue", "details", "recommendation"],
-                "properties": {
-                  "priority": {
-                    "type": "string",
-                    "enum": ["HIGH", "MEDIUM", "LOW"],
-                    "description": "Issue priority level"
-                  },
-                  "issue": {
-                    "type": "string",
-                    "description": "Issue description"
-                  },
-                  "details": {
-                    "type": "string",
-                    "description": "Detailed issue information"
-                  },
-                  "recommendation": {
-                    "type": "string",
-                    "description": "Recommended action"
-                  }
-                }
-              }
-            },
-            "trend_indicators": {
-              "type": "object",
-              "description": "Trend indicators for key metrics",
-              "additionalProperties": {
-                "type": "string"
-              }
+            "historical": {
+              "type": "string",
+              "pattern": ".*/(historical|synthesis)/.*\\.md$", 
+              "description": "Path to historical performance report document"
             }
           }
         },
-        "historical_analysis": {
+        "audience_specific_content": {
           "type": "object",
-          "description": "Historical performance analysis data structure",
-          "required": ["closed_trades_summary"],
+          "description": "Validation that audience-specific content differentiation is implemented",
+          "required": ["internal_focus", "live_focus", "historical_focus"],
           "properties": {
-            "closed_trades_summary": {
-              "type": "object",
-              "description": "Summary of closed trades analysis",
-              "required": ["count"],
-              "properties": {
-                "count": {
-                  "type": "integer",
-                  "minimum": 0,
-                  "description": "Number of closed trades analyzed"
-                },
-                "top_winners": {
-                  "type": "array",
-                  "description": "Top performing winning trades",
-                  "items": {
-                    "type": "object",
-                    "required": ["ticker", "pnl"],
-                    "properties": {
-                      "ticker": {
-                        "type": "string",
-                        "description": "Ticker symbol"
-                      },
-                      "strategy": {
-                        "type": "string",
-                        "description": "Trading strategy used"
-                      },
-                      "pnl": {
-                        "type": "number",
-                        "description": "Profit/loss amount"
-                      },
-                      "return_pct": {
-                        "type": "number",
-                        "description": "Return percentage"
-                      },
-                      "duration_days": {
-                        "type": "number",
-                        "minimum": 0,
-                        "description": "Trade duration in days"
-                      }
-                    }
-                  }
-                },
-                "top_losers": {
-                  "type": "array",
-                  "description": "Top performing losing trades",
-                  "items": {
-                    "type": "object",
-                    "required": ["ticker", "pnl"],
-                    "properties": {
-                      "ticker": {
-                        "type": "string",
-                        "description": "Ticker symbol"
-                      },
-                      "strategy": {
-                        "type": "string",
-                        "description": "Trading strategy used"
-                      },
-                      "pnl": {
-                        "type": "number",
-                        "description": "Profit/loss amount"
-                      },
-                      "return_pct": {
-                        "type": "number",
-                        "description": "Return percentage"
-                      },
-                      "duration_days": {
-                        "type": "number",
-                        "minimum": 0,
-                        "description": "Trade duration in days"
-                      }
-                    }
-                  }
-                },
-                "strategy_breakdown": {
-                  "type": "object",
-                  "description": "Performance breakdown by strategy",
-                  "additionalProperties": {
-                    "type": "object",
-                    "required": ["total_trades", "win_rate", "total_pnl"],
-                    "properties": {
-                      "total_trades": {
-                        "type": "integer",
-                        "minimum": 0,
-                        "description": "Total trades for this strategy"
-                      },
-                      "win_rate": {
-                        "type": "number",
-                        "minimum": 0,
-                        "maximum": 1,
-                        "description": "Win rate for this strategy"
-                      },
-                      "total_pnl": {
-                        "type": "number",
-                        "description": "Total PnL for this strategy"
-                      },
-                      "avg_return": {
-                        "type": "number",
-                        "description": "Average return for this strategy"
-                      }
-                    }
-                  }
-                },
-                "monthly_performance": {
-                  "type": "object",
-                  "description": "Monthly performance analysis",
-                  "additionalProperties": true
-                }
-              }
+            "internal_focus": {
+              "type": "boolean",
+              "const": true,
+              "description": "Internal report focuses on strategic recommendations and institutional insights"
             },
-            "statistical_summary": {
-              "type": "object",
-              "description": "Statistical analysis summary for historical reporting",
-              "additionalProperties": true
+            "live_focus": {
+              "type": "boolean", 
+              "const": true,
+              "description": "Live report focuses on real-time monitoring and active position management"
             },
-            "confidence_disclosure": {
-              "type": "object",
-              "description": "Confidence and limitation disclosures",
-              "required": ["overall_confidence"],
-              "properties": {
-                "overall_confidence": {
-                  "type": "number",
-                  "minimum": 0.5,
-                  "maximum": 1.0,
-                  "description": "Overall confidence score"
-                },
-                "sample_adequacy": {
-                  "type": "boolean",
-                  "description": "Whether sample size is adequate"
-                },
-                "statistical_significance": {
-                  "type": "boolean",
-                  "description": "Whether results are statistically significant"
-                },
-                "limitations": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "description": "List of analysis limitations"
-                }
-              }
+            "historical_focus": {
+              "type": "boolean",
+              "const": true,
+              "description": "Historical report focuses on closed trade analysis and statistical validation"
             }
           }
         },
-        "live_monitoring": {
+        "template_compliance": {
           "type": "object",
-          "description": "Live monitoring data structure for active positions",
-          "required": ["active_positions"],
+          "description": "Enhanced template system compliance with multi-audience rendering",
+          "required": ["enhanced_template_used", "report_type_parameter", "conditional_content_blocks"],
           "properties": {
-            "active_positions": {
-              "type": "object",
-              "description": "Active positions summary",
-              "required": ["count"],
-              "properties": {
-                "count": {
-                  "type": "integer",
-                  "minimum": 0,
-                  "description": "Number of active positions"
-                },
-                "positions_summary": {
-                  "type": "array",
-                  "description": "Summary of active positions",
-                  "items": {
-                    "type": "object",
-                    "required": ["ticker"],
-                    "properties": {
-                      "ticker": {
-                        "type": "string",
-                        "description": "Ticker symbol"
-                      },
-                      "strategy": {
-                        "type": "string",
-                        "description": "Trading strategy"
-                      },
-                      "entry_date": {
-                        "type": "string",
-                        "description": "Entry date"
-                      },
-                      "days_held": {
-                        "type": "number",
-                        "minimum": 0,
-                        "description": "Days position has been held"
-                      },
-                      "unrealized_pnl": {
-                        "type": "number",
-                        "description": "Unrealized profit/loss"
-                      }
-                    }
-                  }
-                },
-                "risk_indicators": {
-                  "type": "object",
-                  "description": "Portfolio risk indicators",
-                  "required": ["position_count", "concentration_risk", "status"],
-                  "properties": {
-                    "position_count": {
-                      "type": "integer",
-                      "minimum": 0,
-                      "description": "Current position count"
-                    },
-                    "concentration_risk": {
-                      "type": "string",
-                      "enum": ["LOW", "MEDIUM", "HIGH"],
-                      "description": "Concentration risk level"
-                    },
-                    "status": {
-                      "type": "string",
-                      "enum": ["ACTIVE", "NO_POSITIONS"],
-                      "description": "Portfolio status"
-                    }
-                  }
-                }
-              }
+            "enhanced_template_used": {
+              "type": "boolean",
+              "const": true,
+              "description": "Enhanced Jinja2 template (trade_history_enhanced.j2) successfully used"
             },
-            "real_time_metrics": {
-              "type": "object",
-              "description": "Real-time portfolio metrics",
-              "properties": {
-                "platform_status": {
-                  "type": "string",
-                  "description": "Platform operational status"
-                },
-                "last_signal": {
-                  "type": "object",
-                  "description": "Information about the last signal",
-                  "additionalProperties": true
-                },
-                "market_context": {
-                  "type": "object",
-                  "description": "Current market context information",
-                  "additionalProperties": true
-                }
-              }
+            "report_type_parameter": {
+              "type": "boolean",
+              "const": true,
+              "description": "Report type parameter correctly passed for audience differentiation"
+            },
+            "conditional_content_blocks": {
+              "type": "boolean", 
+              "const": true,
+              "description": "Conditional content blocks render different content per audience"
+            }
+          }
+        },
+        "institutional_quality_features": {
+          "type": "object",
+          "description": "Institutional quality features validation across all reports",
+          "required": ["p1_p2_p3_framework", "economic_context_integration", "statistical_validation"],
+          "properties": {
+            "p1_p2_p3_framework": {
+              "type": "boolean",
+              "const": true, 
+              "description": "P1/P2/P3 critical issues framework implemented with dynamic metrics"
+            },
+            "economic_context_integration": {
+              "type": "boolean",
+              "const": true,
+              "description": "Economic context integration with market regime analysis"
+            },
+            "statistical_validation": {
+              "type": "boolean",
+              "const": true,
+              "description": "Enhanced statistical validation with confidence propagation"
             }
           }
         }
@@ -569,8 +359,8 @@
     },
     "validation_inputs": {
       "type": "object",
-      "description": "Enhanced validation inputs for institutional-grade assessment",
-      "required": ["validation_ready", "structural_integrity_complete", "confidence_threshold_met", "strategic_recommendations_included"],
+      "description": "Enhanced validation inputs for institutional-grade assessment with multi-report validation",
+      "required": ["validation_ready", "structural_integrity_complete", "confidence_threshold_met", "strategic_recommendations_included", "multi_report_validation"],
       "additionalProperties": true,
       "properties": {
         "validation_ready": {
@@ -581,7 +371,7 @@
         "structural_integrity_complete": {
           "type": "boolean",
           "const": true,
-          "description": "All 4 required sections structurally complete"
+          "description": "All 4 required sections structurally complete across all 3 reports"
         },
         "confidence_threshold_met": {
           "type": "boolean",
@@ -593,11 +383,27 @@
           "const": true,
           "description": "Strategic recommendations section included with quantified targets"
         },
-        "reports_generated": {
-          "type": "integer",
-          "minimum": 3,
-          "maximum": 3,
-          "description": "Number of report structures generated"
+        "multi_report_validation": {
+          "type": "object",
+          "description": "Multi-report specific validation requirements",
+          "required": ["all_reports_generated", "audience_differentiation_verified", "template_compliance_validated"],
+          "properties": {
+            "all_reports_generated": {
+              "type": "boolean",
+              "const": true,
+              "description": "All 3 audience-specific reports successfully generated"
+            },
+            "audience_differentiation_verified": {
+              "type": "boolean",
+              "const": true,
+              "description": "Content differentiation verified across internal/live/historical reports"
+            },
+            "template_compliance_validated": {
+              "type": "boolean",
+              "const": true,
+              "description": "Enhanced template system compliance validated for all reports"
+            }
+          }
         },
         "synthesis_confidence": {
           "type": "number",

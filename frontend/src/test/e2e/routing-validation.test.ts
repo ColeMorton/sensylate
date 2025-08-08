@@ -3,7 +3,7 @@
  * Tests to identify and prevent routing collision between charts page and blog routes
  */
 import { describe, test, beforeAll, afterAll, expect } from "vitest";
-import { setupE2ETest, cleanupE2ETest, type TestContext } from "./setup";
+import { setupE2ETest, cleanupE2ETest, type TestContext, E2ETestHelper } from "./setup";
 
 describe("Route Collision Detection", () => {
   let testContext: TestContext;
@@ -149,7 +149,7 @@ describe("Route Collision Detection", () => {
       expect(h1Text).toMatch(expectedTitle);
 
       // Short delay between navigations
-      await page.waitForTimeout(500);
+      await E2ETestHelper.sleep(500);
     }
 
     // Analyze for any routing errors

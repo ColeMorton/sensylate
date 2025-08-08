@@ -1,4 +1,5 @@
 import "@testing-library/jest-dom";
+import { vi } from 'vitest';
 
 // Mock JSON data for tests
 const mockSearchData = [

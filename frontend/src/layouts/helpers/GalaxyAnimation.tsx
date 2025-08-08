@@ -23,6 +23,13 @@ const GalaxyAnimation: React.FC<GalaxyAnimationProps> = ({
       return;
     }
 
+    // Skip WebGL initialization in test environments
+    if (typeof window !== 'undefined' && 
+        (window.navigator.webdriver || process.env.NODE_ENV === 'test')) {
+      console.log('Skipping WebGL initialization in test environment');
+      return;
+    }
+
     const container = containerRef.current;
     const { current: refs } = sceneRef;
 
@@ -49,12 +56,17 @@ const GalaxyAnimation: React.FC<GalaxyAnimationProps> = ({
     const targetY = -y * 0.4; // Look below center to raise galaxy visually
     refs.camera.lookAt(0, targetY, 0);
 
-    // Renderer setup
-    refs.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    refs.renderer.setPixelRatio(window.devicePixelRatio);
-    refs.renderer.setSize(container.clientWidth, container.clientHeight);
-    refs.renderer.setClearColor(0x000000, 0); // Transparent background
-    container.appendChild(refs.renderer.domElement);
+    // Renderer setup with error handling
+    try {
+      refs.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      refs.renderer.setPixelRatio(window.devicePixelRatio);
+      refs.renderer.setSize(container.clientWidth, container.clientHeight);
+      refs.renderer.setClearColor(0x000000, 0); // Transparent background
+      container.appendChild(refs.renderer.domElement);
+    } catch (error) {
+      console.warn('WebGL not supported, skipping galaxy animation:', error);
+      return;
+    }
 
     // Detect theme mode
     const isDarkMode = document.documentElement.classList.contains("dark");

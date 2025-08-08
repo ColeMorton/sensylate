@@ -123,7 +123,7 @@ class PhotoBoothGenerator:
             )
 
         # Build URL with parameters
-        url = f"{self.base_url}/photo-booth?dashboard={dashboard_id}&mode={mode}"
+        url = f"{self.base_url}/photo-booth?dashboard={dashboard_id}&mode={mode}&aspect_ratio={aspect_ratio}"
 
         # Get aspect ratio dimensions from config
         aspect_dimensions = self._get_aspect_ratio_dimensions(aspect_ratio)
