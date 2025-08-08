@@ -1,0 +1,341 @@
+region: AMERICAS
+display_name: "Americas (excluding US)"
+
+central_bank:
+  name: "Regional Central Banks"
+  short_name: "Regional CBs"
+  policy_rate_name: "Policy Rates"
+  policy_framework: "mixed_mandates"
+  primary_banks:
+    - bank: "Bank of Canada"
+      short: "BoC"
+      currency: "CAD"
+      policy_rate: "overnight_rate"
+      framework: "inflation_targeting"
+    - bank: "Banco de Mexico"
+      short: "Banxico"
+      currency: "MXN"
+      policy_rate: "reference_rate"
+      framework: "inflation_targeting"
+    - bank: "Central Bank of Brazil"
+      short: "BCB"
+      currency: "BRL"
+      policy_rate: "selic_rate"
+      framework: "inflation_targeting"
+    - bank: "Central Bank of Chile"
+      short: "BCCh"
+      currency: "CLP"
+      policy_rate: "monetary_policy_rate"
+      framework: "inflation_targeting"
+
+currency:
+  code: "MULTI"
+  name: "Multi-Currency Region"
+  regime: "mixed"
+  major_currencies:
+    - code: "CAD"
+      regime: "floating"
+      commodity_currency: true
+      safe_haven_status: false
+      correlation_with_oil: 0.7
+    - code: "MXN"
+      regime: "floating"
+      emerging_market: true
+      nafta_integration: true
+    - code: "BRL"
+      regime: "floating"
+      emerging_market: true
+      commodity_currency: true
+      volatility: "high"
+    - code: "CLP"
+      regime: "floating"
+      commodity_currency: true
+      copper_exposure: "very_high"
+
+key_economic_indicators:
+  canada:
+    - name: "Bank of Canada Overnight Rate"
+      code: "BOC_OVERNIGHT"
+      frequency: "8_per_year"
+      importance: "critical"
+      typical_range: [0.25, 5.0]
+
+    - name: "Ivey Purchasing Managers Index"
+      code: "IVEY_PMI"
+      frequency: "monthly"
+      importance: "high"
+      typical_range: [35, 75]
+      expansion_threshold: 50
+
+    - name: "CPI"
+      code: "CANADA_CPI"
+      frequency: "monthly"
+      importance: "critical"
+      typical_range: [0, 4]
+      target_level: 2.0
+
+    - name: "Employment Change"
+      code: "CANADA_EMPLOYMENT"
+      frequency: "monthly"
+      importance: "high"
+      typical_range: [-100000, 100000]  # monthly change
+
+  mexico:
+    - name: "CPI"
+      code: "MEXICO_CPI"
+      frequency: "monthly"
+      importance: "critical"
+      typical_range: [2, 8]
+      target_level: 3.0
+
+    - name: "Industrial Production"
+      code: "MEXICO_IP"
+      frequency: "monthly"
+      importance: "high"
+      typical_range: [-10, 10]  # YoY % change
+
+    - name: "Consumer Confidence"
+      code: "MEXICO_CONSUMER_CONF"
+      frequency: "monthly"
+      importance: "medium"
+      typical_range: [30, 50]
+
+  brazil:
+    - name: "IPCA Inflation"
+      code: "BRAZIL_IPCA"
+      frequency: "monthly"
+      importance: "critical"
+      typical_range: [2, 12]
+      target_level: 3.5
+      target_range: [2.0, 5.0]
+
+    - name: "IBC-Br (GDP Proxy)"
+      code: "BRAZIL_IBC_BR"
+      frequency: "monthly"
+      importance: "high"
+      typical_range: [-8, 8]  # YoY % change
+
+    - name: "FGV Consumer Confidence"
+      code: "BRAZIL_FGV_CONF"
+      frequency: "monthly"
+      importance: "medium"
+      typical_range: [60, 120]
+
+  chile:
+    - name: "CPI"
+      code: "CHILE_CPI"
+      frequency: "monthly"
+      importance: "high"
+      typical_range: [1, 6]
+      target_level: 3.0
+
+    - name: "Copper Prices"
+      code: "COPPER_PRICE"
+      frequency: "daily"
+      importance: "critical"
+      typical_range: [2.0, 5.0]  # USD per pound
+
+    - name: "IMACEC (Monthly GDP Indicator)"
+      code: "CHILE_IMACEC"
+      frequency: "monthly"
+      importance: "high"
+      typical_range: [-5, 8]  # YoY % change
+
+  regional:
+    - name: "ECLAC Economic Survey"
+      code: "ECLAC_SURVEY"
+      frequency: "annual"
+      importance: "medium"
+      coverage: "latin_america_caribbean"
+
+benchmark_securities:
+  government_bonds:
+    canada:
+      - name: "Government of Canada 10-Year"
+        code: "CAN_10Y"
+        maturity: 10
+        typical_range: [0.5, 4.0]
+    mexico:
+      - name: "Mexican Government Bond 10-Year"
+        code: "MBONO_10Y"
+        maturity: 10
+        typical_range: [5.0, 10.0]
+    brazil:
+      - name: "Brazilian Government Bond 10-Year"
+        code: "BRL_10Y"
+        maturity: 10
+        typical_range: [8.0, 15.0]
+
+  equity_indices:
+    - name: "S&P/TSX Composite"
+      code: "TSX"
+      country: "Canada"
+      sector_focus: "resource_heavy"
+
+    - name: "IPC Mexico"
+      code: "MEXBOL"
+      country: "Mexico"
+      sector_focus: "consumer_telecom_heavy"
+
+    - name: "Bovespa"
+      code: "IBOV"
+      country: "Brazil"
+      sector_focus: "commodity_financial_heavy"
+
+    - name: "IPSA"
+      code: "IPSA"
+      country: "Chile"
+      sector_focus: "mining_utility_heavy"
+
+  commodity_markets:
+    - name: "WTI Crude Oil"
+      code: "WTI"
+      importance: "critical"
+      typical_range: [30, 120]  # USD per barrel
+      regional_impact: "very_high"
+
+    - name: "Copper Futures"
+      code: "COPPER"
+      importance: "high"
+      typical_range: [2.0, 5.0]  # USD per pound
+      chile_correlation: 0.8
+
+    - name: "Gold"
+      code: "GOLD"
+      importance: "medium"
+      safe_haven_role: true
+      mining_economies: ["Canada", "Mexico", "Peru"]
+
+market_structure:
+  banking_system: "mixed"
+  regional_characteristics:
+    canada:
+      banking_system: "oligopolistic_stable"
+      mortgage_market: "regulated"
+      resource_sector_exposure: "high"
+    mexico:
+      banking_system: "foreign_owned"
+      nafta_integration: "high"
+      remittance_dependence: "significant"
+    brazil:
+      banking_system: "concentrated_high_spreads"
+      domestic_savings_rate: "low"
+      real_plan_legacy: "low_inflation_credibility"
+    chile:
+      banking_system: "private_pension_system"
+      copper_dependence: "very_high"
+      economic_institutions: "strong"
+
+economic_transmission_channels:
+  commodity_prices:
+    oil_exporters: ["Canada", "Mexico", "Brazil", "Colombia", "Venezuela"]
+    copper_exporters: ["Chile", "Peru"]
+    agricultural_exporters: ["Brazil", "Argentina", "Uruguay"]
+    transmission_effectiveness: 0.85
+    lag_quarters: 2
+
+  us_economic_linkage:
+    trade_integration: ["Canada", "Mexico"]
+    remittance_flows: ["Mexico", "Central America"]
+    financial_linkage: "high"
+    effectiveness: 0.80
+
+  china_commodity_demand:
+    affected_economies: ["Brazil", "Chile", "Peru"]
+    transmission_strength: 0.70
+    lag_quarters: 1
+
+risk_factors:
+  regional:
+    - name: "commodity_price_volatility"
+      probability: 0.50
+      impact: 4
+
+    - name: "us_recession_spillover"
+      probability: 0.30
+      impact: 4
+
+    - name: "china_slowdown"
+      probability: 0.35
+      impact: 3
+
+    - name: "political_instability"
+      probability: 0.40
+      impact: 3
+
+    - name: "climate_change_impact"
+      probability: 0.45
+      impact: 3
+
+  country_specific:
+    canada:
+      - name: "housing_market_correction"
+        probability: 0.30
+        impact: 3
+      - name: "oil_price_collapse"
+        probability: 0.25
+        impact: 4
+    mexico:
+      - name: "nafta_renegotiation_risk"
+        probability: 0.20
+        impact: 3
+    brazil:
+      - name: "fiscal_sustainability"
+        probability: 0.35
+        impact: 4
+      - name: "currency_crisis"
+        probability: 0.25
+        impact: 4
+
+correlation_patterns:
+  with_us_economy: 0.75  # especially Canada and Mexico
+  with_commodity_prices: 0.65
+  with_china_growth: 0.45  # South American economies
+  intra_regional: 0.35
+
+regional_specifics:
+  development_levels:
+    developed: ["Canada"]
+    emerging: ["Mexico", "Brazil", "Chile", "Colombia"]
+    frontier: ["Central America", "Caribbean"]
+
+  trade_integration:
+    nafta_usmca: ["Canada", "Mexico"]
+    mercosur: ["Brazil", "Argentina", "Uruguay", "Paraguay"]
+    pacific_alliance: ["Mexico", "Chile", "Peru", "Colombia"]
+
+  resource_endowments:
+    energy_exporters: ["Canada", "Mexico", "Brazil", "Venezuela"]
+    mining_economies: ["Chile", "Peru", "Canada"]
+    agricultural_powerhouses: ["Brazil", "Argentina"]
+
+data_sources:
+  primary: ["National Central Banks", "Statistical Offices", "Finance Ministries"]
+  secondary: ["ECLAC", "IMF", "World Bank", "IDB"]
+  alternative: ["Regional Development Banks", "Commodity Exchanges"]
+
+special_features:
+  demographic_dividend:
+    younger_populations: ["Mexico", "Central America"]
+    aging_transition: ["Canada", "Chile"]
+
+  natural_resources:
+    abundance: "comparative_advantage"
+    curse_risk: "institutional_quality_dependent"
+    sustainability_focus: "increasing"
+
+  financial_development:
+    pension_systems: ["Chile_pioneering", "Mexico_reforming"]
+    capital_markets: "developing_but_varied"
+    financial_inclusion: "improving_with_fintech"
+
+  climate_vulnerability:
+    physical_risks: "varied_by_geography"
+    transition_risks: "commodity_dependent_economies"
+    adaptation_needs: "infrastructure_investment"
+
+quality_standards:
+  min_confidence_threshold: 0.75  # lower due to emerging market complexity
+  data_freshness_requirement: 40  # days
+  cross_validation_threshold: 0.83
+  regional_specificity_target: 0.87

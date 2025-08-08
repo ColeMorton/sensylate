@@ -1,0 +1,260 @@
+region: EUROPE
+display_name: "European Union / Euro Area"
+
+central_bank:
+  name: "European Central Bank"
+  short_name: "ECB"
+  policy_rate_name: "Main Refinancing Rate"
+  policy_framework: "inflation_targeting"
+  meeting_frequency: 8  # per year
+  key_officials:
+    - "President"
+    - "Vice-President"
+    - "Executive Board"
+    - "Governing Council"
+  policy_tools:
+    - "main_refinancing_rate"
+    - "deposit_facility_rate"
+    - "marginal_lending_rate"
+    - "asset_purchase_programme"
+    - "targeted_ltros"
+    - "forward_guidance"
+    - "macroprudential_measures"
+
+currency:
+  code: "EUR"
+  name: "Euro"
+  regime: "floating"
+  is_reserve_currency: true
+  safe_haven_status: false
+  carry_trade_characteristics:
+    typical_volatility: 11.8
+    correlation_with_risk_sentiment: 0.15
+
+key_economic_indicators:
+  primary:
+    - name: "Harmonized Index of Consumer Prices"
+      code: "HICP"
+      frequency: "monthly"
+      importance: "critical"
+      typical_range: [-1.0, 4.0]
+      target_level: 2.0
+
+    - name: "Core HICP"
+      code: "CORE_HICP"
+      frequency: "monthly"
+      importance: "critical"
+      typical_range: [0.5, 3.5]
+      target_level: 2.0
+
+    - name: "Eurozone PMI Manufacturing"
+      code: "PMI_MFG"
+      frequency: "monthly"
+      importance: "high"
+      typical_range: [35, 65]
+      expansion_threshold: 50
+
+    - name: "Eurozone PMI Services"
+      code: "PMI_SERVICES"
+      frequency: "monthly"
+      importance: "high"
+      typical_range: [35, 70]
+      expansion_threshold: 50
+
+    - name: "ZEW Economic Sentiment"
+      code: "ZEW"
+      frequency: "monthly"
+      importance: "high"
+      typical_range: [-80, 80]
+      neutral_threshold: 0
+
+    - name: "Economic Sentiment Indicator"
+      code: "ESI"
+      frequency: "monthly"
+      importance: "high"
+      typical_range: [70, 130]
+      neutral_threshold: 100
+
+    - name: "ECB Bank Lending Survey"
+      code: "BLS"
+      frequency: "quarterly"
+      importance: "high"
+      measures: "net_percentage_tightening"
+
+  secondary:
+    - name: "German IFO Business Climate"
+      code: "IFO"
+      frequency: "monthly"
+      importance: "high"
+      typical_range: [75, 130]
+
+    - name: "French INSEE Business Climate"
+      code: "INSEE"
+      frequency: "monthly"
+      importance: "medium"
+      typical_range: [80, 120]
+
+    - name: "Italy ISTAT Business Confidence"
+      code: "ISTAT"
+      frequency: "monthly"
+      importance: "medium"
+      typical_range: [70, 130]
+
+    - name: "Spanish INE Business Confidence"
+      code: "INE"
+      frequency: "monthly"
+      importance: "medium"
+      typical_range: [-20, 20]
+
+benchmark_securities:
+  government_bonds:
+    - name: "German Bund 10-Year"
+      code: "BUND_10Y"
+      maturity: 10
+      typical_range: [-0.5, 3.0]
+      benchmark_status: true
+
+    - name: "French OAT 10-Year"
+      code: "OAT_10Y"
+      maturity: 10
+      typical_range: [-0.3, 3.2]
+
+    - name: "Italian BTP 10-Year"
+      code: "BTP_10Y"
+      maturity: 10
+      typical_range: [0.5, 4.5]
+      spread_monitor: true
+
+    - name: "Spanish Bonos 10-Year"
+      code: "BONOS_10Y"
+      maturity: 10
+      typical_range: [0.0, 4.0]
+
+  equity_indices:
+    - name: "Euro STOXX 50"
+      code: "SX5E"
+      sector_focus: "eurozone_large_cap"
+
+    - name: "German DAX"
+      code: "DAX"
+      sector_focus: "german_blue_chip"
+
+    - name: "French CAC 40"
+      code: "CAC"
+      sector_focus: "french_large_cap"
+
+    - name: "Italian FTSE MIB"
+      code: "FTSEMIB"
+      sector_focus: "italian_large_cap"
+
+  credit_markets:
+    - name: "Euro IG Corporate Spreads"
+      code: "EUR_IG_SPREADS"
+      typical_range: [60, 250]
+      units: "basis_points"
+
+    - name: "Euro HY Corporate Spreads"
+      code: "EUR_HY_SPREADS"
+      typical_range: [180, 600]
+      units: "basis_points"
+
+    - name: "Covered Bond Spreads"
+      code: "COVERED_BONDS"
+      typical_range: [10, 80]
+      units: "basis_points"
+
+market_structure:
+  banking_system: "bank_based"
+  mortgage_market: "bank_originated"
+  corporate_funding: "bank_heavy"
+  household_debt_ratio: [55, 70]  # % of GDP
+  corporate_debt_ratio: [75, 85]  # % of GDP
+
+economic_transmission_channels:
+  monetary_policy:
+    primary: "bank_lending_channel"
+    secondary: ["interest_rate_channel", "asset_price_channel", "exchange_rate_channel"]
+    effectiveness: 0.75
+    lag_quarters: 6
+    fragmentation_risk: true
+
+  fiscal_policy:
+    automatic_stabilizers: 0.45  # effectiveness score
+    discretionary_multiplier: 1.1
+    debt_sustainability_threshold: 90  # % of GDP (Maastricht)
+    stability_and_growth_pact: true
+
+risk_factors:
+  domestic:
+    - name: "fragmentation_risk"
+      probability: 0.25
+      impact: 4
+
+    - name: "banking_sector_stress"
+      probability: 0.20
+      impact: 4
+
+    - name: "political_integration_risk"
+      probability: 0.30
+      impact: 3
+
+    - name: "demographic_transition"
+      probability: 0.40
+      impact: 3
+
+  external:
+    - name: "energy_dependency"
+      probability: 0.45
+      impact: 4
+
+    - name: "trade_disruption"
+      probability: 0.25
+      impact: 3
+
+    - name: "geopolitical_instability"
+      probability: 0.35
+      impact: 4
+
+correlation_patterns:
+  equity_bond: -0.2  # typically weaker than US
+  equity_euro: 0.1
+  bond_euro: -0.3
+  commodity_euro: 0.4
+  bund_btp_spread: 0.7  # fragmentation indicator
+
+regional_specifics:
+  business_cycle_length: 84  # months average
+  recession_frequency: 8  # years average
+  typical_recession_duration: 14  # months
+  recovery_characteristics: "L_shaped"
+  integration_level: "monetary_union"
+  fiscal_coordination: "limited"
+
+data_sources:
+  primary: ["ECB", "Eurostat", "National Statistical Offices"]
+  secondary: ["Markit", "Alpha Vantage", "Bloomberg"]
+  alternative: ["ZEW", "IFO", "Sentix", "Regional Surveys"]
+
+special_features:
+  green_transition:
+    taxonomy_regulation: true
+    sustainable_finance_framework: true
+    carbon_pricing_mechanism: true
+    green_bond_market: "leading"
+
+  digital_transformation:
+    digital_euro_development: true
+    fintech_regulation: "mifid_ii"
+    open_banking: "psd2"
+
+  policy_frameworks:
+    next_generation_eu: true
+    green_deal: true
+    banking_union: "partial"
+    capital_markets_union: "developing"
+
+quality_standards:
+  min_confidence_threshold: 0.80
+  data_freshness_requirement: 35  # days
+  cross_validation_threshold: 0.88
+  regional_specificity_target: 0.93

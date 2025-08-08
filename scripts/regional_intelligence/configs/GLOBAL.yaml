@@ -1,0 +1,351 @@
+region: GLOBAL
+display_name: "Global Economy"
+
+central_bank:
+  name: "G4 Central Banks"
+  short_name: "G4 CBs"
+  policy_rate_name: "Average Policy Rate"
+  policy_framework: "coordinated_responses"
+  primary_banks:
+    - bank: "Federal Reserve"
+      weight: 0.40
+      influence: "dominant"
+    - bank: "European Central Bank"
+      weight: 0.25
+      influence: "high"
+    - bank: "Bank of Japan"
+      weight: 0.20
+      influence: "moderate"
+    - bank: "Bank of England"
+      weight: 0.15
+      influence: "moderate"
+
+currency:
+  code: "MULTI"
+  name: "Global Currency System"
+  regime: "floating_with_interventions"
+  reserve_currencies:
+    - code: "USD"
+      share: 0.59
+      role: "dominant"
+    - code: "EUR"
+      share: 0.21
+      role: "secondary"
+    - code: "JPY"
+      share: 0.06
+      role: "safe_haven"
+    - code: "GBP"
+      share: 0.05
+      role: "legacy"
+
+key_economic_indicators:
+  growth:
+    - name: "Global GDP Growth"
+      code: "GLOBAL_GDP"
+      frequency: "quarterly"
+      importance: "critical"
+      typical_range: [-3.0, 6.0]
+      trend_growth: 3.2
+
+    - name: "OECD Composite Leading Indicators"
+      code: "OECD_CLI"
+      frequency: "monthly"
+      importance: "high"
+      typical_range: [95, 105]
+      neutral_threshold: 100
+
+    - name: "World Trade Growth"
+      code: "WORLD_TRADE"
+      frequency: "monthly"
+      importance: "high"
+      typical_range: [-15, 15]  # YoY % change
+
+  inflation:
+    - name: "Global Core Inflation"
+      code: "GLOBAL_CORE_INFLATION"
+      frequency: "monthly"
+      importance: "critical"
+      typical_range: [0, 5]
+      target_average: 2.0
+
+    - name: "Commodity Price Index"
+      code: "COMMODITY_INDEX"
+      frequency: "daily"
+      importance: "high"
+      typical_range: [80, 200]  # index basis
+
+  financial_conditions:
+    - name: "Goldman Sachs Financial Conditions Index"
+      code: "GS_FCI"
+      frequency: "daily"
+      importance: "high"
+      typical_range: [-2, 2]
+      neutral_threshold: 0
+
+    - name: "VIX (Fear Index)"
+      code: "VIX"
+      frequency: "daily"
+      importance: "critical"
+      typical_range: [10, 80]
+      low_volatility: 15
+      high_volatility: 30
+
+    - name: "Global Risk Appetite Index"
+      code: "GRAI"
+      frequency: "daily"
+      importance: "high"
+      risk_on_threshold: 0.6
+
+  policy_coordination:
+    - name: "G20 Policy Coordination Index"
+      code: "G20_COORD"
+      frequency: "quarterly"
+      importance: "medium"
+      typical_range: [0, 1]
+
+    - name: "IMF Financial Stability Index"
+      code: "IMF_FSI"
+      frequency: "quarterly"
+      importance: "high"
+      typical_range: [0, 5]
+
+benchmark_securities:
+  government_bonds:
+    - name: "Global Aggregate Bond Index"
+      code: "GLOBAL_AGG"
+      duration: 7.2
+      typical_range: [-5, 15]  # annual returns
+
+    - name: "US Treasury 10Y (Global Benchmark)"
+      code: "UST_10Y_GLOBAL"
+      influence_weight: 0.6
+      typical_range: [0.5, 5.0]
+
+  equity_indices:
+    - name: "MSCI World Index"
+      code: "MSCI_WORLD"
+      coverage: "developed_markets"
+      typical_range: [-40, 40]  # annual returns
+
+    - name: "MSCI Emerging Markets"
+      code: "MSCI_EM"
+      coverage: "emerging_markets"
+      typical_range: [-50, 60]  # annual returns
+
+    - name: "MSCI All Country World Index"
+      code: "MSCI_ACWI"
+      coverage: "global"
+      typical_range: [-35, 45]  # annual returns
+
+  currency_indices:
+    - name: "DXY Dollar Index"
+      code: "DXY"
+      importance: "critical"
+      typical_range: [70, 120]
+      neutral_level: 95
+
+    - name: "Trade-Weighted Dollar"
+      code: "TWEXB"
+      importance: "high"
+      typical_range: [85, 130]
+
+  commodity_indices:
+    - name: "Bloomberg Commodity Index"
+      code: "BCOM"
+      importance: "high"
+      typical_range: [60, 200]
+
+    - name: "CRB Commodity Index"
+      code: "CRB"
+      importance: "medium"
+      typical_range: [150, 600]
+
+market_structure:
+  global_characteristics:
+    financial_integration: "high_but_segmented"
+    trade_integration: "very_high"
+    policy_coordination: "crisis_dependent"
+
+  regional_weights:
+    north_america: 0.35
+    europe: 0.25
+    asia_pacific: 0.30
+    emerging_markets: 0.10
+
+  sectoral_distribution:
+    technology: 0.22
+    financials: 0.15
+    healthcare: 0.13
+    consumer_discretionary: 0.11
+    industrials: 0.10
+    others: 0.29
+
+economic_transmission_channels:
+  trade_linkages:
+    effectiveness: 0.85
+    lag_quarters: 2
+    key_chokepoints: ["shipping_routes", "supply_chains"]
+
+  financial_linkages:
+    effectiveness: 0.90
+    lag_quarters: 1
+    key_channels: ["cross_border_banking", "portfolio_flows"]
+
+  commodity_linkages:
+    effectiveness: 0.70
+    lag_quarters: 1
+    key_markets: ["energy", "base_metals", "agriculture"]
+
+  technology_spillovers:
+    effectiveness: 0.60
+    lag_quarters: 4
+    key_channels: ["innovation_diffusion", "digital_platforms"]
+
+risk_factors:
+  systemic:
+    - name: "global_financial_crisis"
+      probability: 0.05
+      impact: 5
+
+    - name: "major_geopolitical_conflict"
+      probability: 0.15
+      impact: 5
+
+    - name: "pandemic_recurrence"
+      probability: 0.20
+      impact: 4
+
+    - name: "climate_tipping_point"
+      probability: 0.25
+      impact: 5
+
+    - name: "cyber_systemic_attack"
+      probability: 0.10
+      impact: 4
+
+  economic:
+    - name: "synchronized_recession"
+      probability: 0.20
+      impact: 5
+
+    - name: "inflation_persistence"
+      probability: 0.30
+      impact: 4
+
+    - name: "debt_crisis_cascade"
+      probability: 0.15
+      impact: 4
+
+    - name: "trade_war_escalation"
+      probability: 0.35
+      impact: 3
+
+    - name: "monetary_policy_error"
+      probability: 0.25
+      impact: 3
+
+  technological:
+    - name: "ai_displacement_acceleration"
+      probability: 0.40
+      impact: 3
+
+    - name: "quantum_computing_breakthrough"
+      probability: 0.10
+      impact: 4
+
+    - name: "digital_currency_disruption"
+      probability: 0.30
+      impact: 3
+
+correlation_patterns:
+  cross_asset:
+    equity_bond: -0.25  # global average
+    equity_commodity: 0.45
+    bond_commodity: -0.15
+    currency_equity: 0.20
+
+  cross_regional:
+    us_europe: 0.75
+    us_asia: 0.65
+    europe_asia: 0.60
+    developed_emerging: 0.70
+
+  crisis_correlations:
+    equity_bond: 0.60  # positive during crises
+    all_risk_assets: 0.85  # high during stress
+    safe_havens: -0.80  # flight to quality
+
+business_cycle:
+  global_characteristics:
+    synchronization_level: 0.65
+    average_length: 84  # months
+    recession_frequency: 8  # years
+
+  leading_indicators:
+    - "yield_curve_slopes"
+    - "credit_spreads"
+    - "commodity_prices"
+    - "trade_volumes"
+    - "confidence_surveys"
+
+  regional_leads_lags:
+    us_leads: 2  # quarters on average
+    china_influences: "commodity_exporters"
+    europe_lags: 1  # quarter typically
+
+data_sources:
+  primary: ["IMF", "World Bank", "OECD", "BIS", "IIF"]
+  secondary: ["G20", "FSB", "Regional Development Banks"]
+  market_data: ["Bloomberg", "Thomson Reuters", "Global Exchanges"]
+  alternative: ["Policy Uncertainty Indices", "Satellite Data", "Alternative Data"]
+
+special_features:
+  globalization_trends:
+    trade_intensity: "stabilizing_after_peak"
+    financial_integration: "high_but_fragmenting"
+    technology_diffusion: "accelerating"
+
+  sustainability_transition:
+    carbon_pricing_coverage: "expanding"
+    renewable_energy_growth: "exponential"
+    esg_investment_flows: "mainstream"
+
+  demographic_transitions:
+    aging_developed_economies: "fiscal_pressure"
+    youth_bulge_emerging: "growth_opportunity"
+    urbanization: "continuing"
+
+  technological_disruption:
+    artificial_intelligence: "transformative"
+    automation: "accelerating"
+    digitalization: "pandemic_accelerated"
+
+  geopolitical_realignment:
+    us_china_competition: "defining"
+    supply_chain_regionalization: "ongoing"
+    multilateral_institution_stress: "increasing"
+
+monitoring_frameworks:
+  financial_stability:
+    - "systemic_risk_indicators"
+    - "cross_border_capital_flows"
+    - "global_liquidity_conditions"
+    - "interconnectedness_measures"
+
+  economic_imbalances:
+    - "current_account_imbalances"
+    - "debt_sustainability_metrics"
+    - "commodity_dependence_ratios"
+    - "inequality_measures"
+
+  policy_coordination:
+    - "g20_policy_alignment"
+    - "central_bank_communication"
+    - "trade_policy_uncertainty"
+    - "regulatory_coordination"
+
+quality_standards:
+  min_confidence_threshold: 0.70  # lower due to aggregation complexity
+  data_freshness_requirement: 30  # days
+  cross_validation_threshold: 0.80
+  regional_specificity_target: 0.75  # lower for global aggregate

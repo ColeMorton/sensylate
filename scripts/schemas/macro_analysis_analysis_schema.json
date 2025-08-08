@@ -1,0 +1,707 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sensylate.com/schemas/macro_analysis_analysis.json",
+  "title": "Macro-Economic Analysis Analysis Schema",
+  "description": "Comprehensive validation schema for macro-economic analysis analysis JSON outputs from CLI-enhanced template gap analysis framework",
+  "type": "object",
+  "required": [
+    "metadata",
+    "business_cycle_modeling",
+    "liquidity_cycle_positioning",
+    "industry_dynamics_scorecard",
+    "multi_method_valuation",
+    "quantified_risk_assessment",
+    "enhanced_economic_sensitivity",
+    "macroeconomic_risk_scoring",
+    "investment_recommendation_gap_analysis",
+    "analysis_quality_metrics"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "description": "Core metadata about the macro-economic analysis execution",
+      "required": [
+        "command_name",
+        "execution_timestamp",
+        "framework_phase",
+        "region",
+        "analysis_methodology",
+        "discovery_file_reference",
+        "confidence_threshold"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "command_name": {
+          "type": "string",
+          "const": "macro_analyst_analyze",
+          "description": "Must be the standardized macro analysis command name"
+        },
+        "execution_timestamp": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d{6})?Z?$",
+          "description": "ISO 8601 timestamp with optional microseconds and timezone"
+        },
+        "framework_phase": {
+          "type": "string",
+          "const": "analyze",
+          "description": "Must be 'analyze' for analysis phase"
+        },
+        "region": {
+          "type": "string",
+          "pattern": "^[A-Z_]+$",
+          "description": "Geographic region focus (US, GLOBAL, EUROPE, ASIA, etc.)"
+        },
+        "analysis_methodology": {
+          "type": "string",
+          "const": "macro_template_gap_analysis",
+          "description": "Must use macro template gap analysis methodology"
+        },
+        "discovery_file_reference": {
+          "type": "string",
+          "pattern": "^\\./data/outputs/macro_analysis/discovery/.*_discovery\\.json$",
+          "description": "Path to the discovery file that was analyzed"
+        },
+        "confidence_threshold": {
+          "type": "number",
+          "minimum": 0.8,
+          "maximum": 1.0,
+          "description": "Minimum confidence threshold for analytical conclusions"
+        }
+      }
+    },
+    "business_cycle_modeling": {
+      "type": "object",
+      "description": "Advanced business cycle phase identification and modeling",
+      "required": [
+        "current_phase",
+        "recession_probability",
+        "phase_transition_probabilities",
+        "interest_rate_sensitivity",
+        "inflation_hedge_assessment",
+        "gdp_growth_correlation",
+        "confidence"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "current_phase": {
+          "type": "string",
+          "enum": ["expansion", "peak", "contraction", "trough"],
+          "description": "Current business cycle phase"
+        },
+        "recession_probability": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Probability of recession in next 12 months"
+        },
+        "phase_transition_probabilities": {
+          "type": "object",
+          "required": ["expansion_to_peak", "peak_to_contraction", "contraction_to_trough", "trough_to_expansion"],
+          "properties": {
+            "expansion_to_peak": {"type": "number", "minimum": 0.0, "maximum": 1.0},
+            "peak_to_contraction": {"type": "number", "minimum": 0.0, "maximum": 1.0},
+            "contraction_to_trough": {"type": "number", "minimum": 0.0, "maximum": 1.0},
+            "trough_to_expansion": {"type": "number", "minimum": 0.0, "maximum": 1.0}
+          }
+        },
+        "interest_rate_sensitivity": {
+          "type": "object",
+          "required": ["duration_analysis", "leverage_impact", "rate_coefficients"],
+          "properties": {
+            "duration_analysis": {"type": "string", "minLength": 10},
+            "leverage_impact": {"type": "string", "minLength": 10},
+            "rate_coefficients": {"type": "object"}
+          }
+        },
+        "inflation_hedge_assessment": {
+          "type": "object",
+          "required": ["pricing_power", "real_return_protection", "cost_structure_flexibility"],
+          "properties": {
+            "pricing_power": {"type": "string", "minLength": 10},
+            "real_return_protection": {"type": "string", "minLength": 10},
+            "cost_structure_flexibility": {"type": "string", "minLength": 10}
+          }
+        },
+        "gdp_growth_correlation": {
+          "type": "object",
+          "required": ["gdp_elasticity", "historical_correlation", "expansion_performance", "contraction_performance", "leading_lagging_relationship"],
+          "properties": {
+            "gdp_elasticity": {"type": "number", "minimum": -5.0, "maximum": 5.0},
+            "historical_correlation": {"type": "number", "minimum": -1.0, "maximum": 1.0},
+            "expansion_performance": {"type": "string", "minLength": 10},
+            "contraction_performance": {"type": "string", "minLength": 10},
+            "leading_lagging_relationship": {"type": "string", "minLength": 10}
+          }
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Confidence in business cycle modeling"
+        }
+      }
+    },
+    "liquidity_cycle_positioning": {
+      "type": "object",
+      "description": "Global liquidity and monetary policy analysis",
+      "required": [
+        "fed_policy_stance",
+        "credit_market_conditions",
+        "money_supply_impact",
+        "liquidity_preferences",
+        "employment_sensitivity",
+        "confidence"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "fed_policy_stance": {
+          "type": "string",
+          "enum": ["accommodative", "neutral", "restrictive"],
+          "description": "Current Federal Reserve policy stance"
+        },
+        "credit_market_conditions": {
+          "type": "object",
+          "required": ["corporate_bond_issuance", "credit_spreads", "refinancing_risk", "banking_standards"],
+          "properties": {
+            "corporate_bond_issuance": {"type": "string", "minLength": 10},
+            "credit_spreads": {"type": "string", "minLength": 10},
+            "refinancing_risk": {"type": "string", "minLength": 10},
+            "banking_standards": {"type": "string", "minLength": 10}
+          }
+        },
+        "money_supply_impact": {
+          "type": "object",
+          "required": ["m2_growth_sensitivity", "velocity_implications", "asset_price_inflation"],
+          "properties": {
+            "m2_growth_sensitivity": {"type": "string", "minLength": 10},
+            "velocity_implications": {"type": "string", "minLength": 10},
+            "asset_price_inflation": {"type": "string", "minLength": 10}
+          }
+        },
+        "liquidity_preferences": {
+          "type": "object",
+          "required": ["sector_allocation_flows", "risk_appetite_correlation"],
+          "properties": {
+            "sector_allocation_flows": {"type": "string", "minLength": 10},
+            "risk_appetite_correlation": {"type": "string", "minLength": 10}
+          }
+        },
+        "employment_sensitivity": {
+          "type": "object",
+          "required": [
+            "payroll_correlation",
+            "labor_participation_impact",
+            "initial_claims_signaling",
+            "employment_cycle_positioning",
+            "consumer_spending_linkage"
+          ],
+          "properties": {
+            "payroll_correlation": {"type": "number", "minimum": -1.0, "maximum": 1.0},
+            "labor_participation_impact": {"type": "string", "minLength": 10},
+            "initial_claims_signaling": {"type": "string", "minLength": 10},
+            "employment_cycle_positioning": {"type": "string", "minLength": 10},
+            "consumer_spending_linkage": {"type": "string", "minLength": 10}
+          }
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0
+        }
+      }
+    },
+    "industry_dynamics_scorecard": {
+      "type": "object",
+      "description": "Economic sector and industry dynamics assessment",
+      "required": [
+        "profitability_score",
+        "balance_sheet_score",
+        "competitive_moat_score",
+        "regulatory_environment_rating",
+        "confidence"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "profitability_score": {
+          "type": "object",
+          "required": ["grade", "trend", "key_metrics", "supporting_evidence"],
+          "properties": {
+            "grade": {"type": "string", "pattern": "^[A-F][+-]?$"},
+            "trend": {"type": "string", "enum": ["improving", "stable", "declining"]},
+            "key_metrics": {"type": "string", "minLength": 10},
+            "supporting_evidence": {"type": "string", "minLength": 10}
+          }
+        },
+        "balance_sheet_score": {
+          "type": "object",
+          "required": ["grade", "trend", "debt_trends", "liquidity_adequacy"],
+          "properties": {
+            "grade": {"type": "string", "pattern": "^[A-F][+-]?$"},
+            "trend": {"type": "string", "enum": ["improving", "stable", "declining"]},
+            "debt_trends": {"type": "string", "minLength": 10},
+            "liquidity_adequacy": {"type": "string", "minLength": 10}
+          }
+        },
+        "competitive_moat_score": {
+          "type": "object",
+          "required": ["score", "moat_strength", "sustainability", "evidence"],
+          "properties": {
+            "score": {"type": "integer", "minimum": 1, "maximum": 10},
+            "moat_strength": {"type": "string", "minLength": 10},
+            "sustainability": {"type": "string", "minLength": 10},
+            "evidence": {"type": "string", "minLength": 10}
+          }
+        },
+        "regulatory_environment_rating": {
+          "type": "object",
+          "required": ["rating", "policy_timeline", "compliance_costs", "industry_influence"],
+          "properties": {
+            "rating": {"type": "string", "enum": ["favorable", "neutral", "hostile"]},
+            "policy_timeline": {"type": "string", "minLength": 10},
+            "compliance_costs": {"type": "string", "minLength": 10},
+            "industry_influence": {"type": "string", "minLength": 10}
+          }
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0
+        }
+      }
+    },
+    "multi_method_valuation": {
+      "type": "object",
+      "description": "Multi-method economic valuation framework",
+      "required": [
+        "dcf_analysis",
+        "relative_comps",
+        "technical_analysis",
+        "blended_valuation",
+        "economic_policy_vs_fair_value_analysis",
+        "confidence"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "dcf_analysis": {
+          "type": "object",
+          "required": ["fair_value", "wacc", "growth_assumptions", "sensitivity_analysis", "weight"],
+          "properties": {
+            "fair_value": {"type": "number"},
+            "wacc": {"type": "number", "minimum": 0.0, "maximum": 1.0},
+            "growth_assumptions": {"type": "string", "minLength": 10},
+            "sensitivity_analysis": {"type": "string", "minLength": 10},
+            "weight": {"type": "string", "pattern": "^\\d+_percent$"}
+          }
+        },
+        "relative_comps": {
+          "type": "object",
+          "required": ["fair_value", "peer_multiples", "premium_discount", "multiple_trends", "weight"],
+          "properties": {
+            "fair_value": {"type": "number"},
+            "peer_multiples": {"type": "string", "minLength": 10},
+            "premium_discount": {"type": "string", "minLength": 10},
+            "multiple_trends": {"type": "string", "minLength": 10},
+            "weight": {"type": "string", "pattern": "^\\d+_percent$"}
+          }
+        },
+        "technical_analysis": {
+          "type": "object",
+          "required": ["fair_value", "support_resistance", "momentum_indicators", "volume_profile", "weight"],
+          "properties": {
+            "fair_value": {"type": "number"},
+            "support_resistance": {"type": "string", "minLength": 10},
+            "momentum_indicators": {"type": "string", "minLength": 10},
+            "volume_profile": {"type": "string", "minLength": 10},
+            "weight": {"type": "string", "pattern": "^\\d+_percent$"}
+          }
+        },
+        "blended_valuation": {
+          "type": "object",
+          "required": ["weighted_fair_value", "confidence_intervals", "scenario_weighting"],
+          "properties": {
+            "weighted_fair_value": {"type": "number"},
+            "confidence_intervals": {"type": "string", "minLength": 10},
+            "scenario_weighting": {"type": "string", "minLength": 10}
+          }
+        },
+        "economic_policy_vs_fair_value_analysis": {
+          "type": "object",
+          "required": [
+            "current_policy_stance",
+            "fair_value_range",
+            "policy_gap_analysis",
+            "recommendation_validation",
+            "policy_positioning",
+            "policy_consistency"
+          ],
+          "properties": {
+            "current_policy_stance": {"type": "string", "minLength": 10},
+            "fair_value_range": {"type": "string", "minLength": 10},
+            "policy_gap_analysis": {"type": "string", "minLength": 10},
+            "recommendation_validation": {"type": "string", "minLength": 10},
+            "policy_positioning": {"type": "string", "minLength": 10},
+            "policy_consistency": {"type": "number", "minimum": 0.0, "maximum": 1.0}
+          }
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0
+        }
+      }
+    },
+    "quantified_risk_assessment": {
+      "type": "object",
+      "description": "Comprehensive quantified risk assessment matrix",
+      "required": [
+        "risk_matrix",
+        "stress_testing",
+        "sensitivity_analysis",
+        "aggregate_risk_score",
+        "confidence"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "risk_matrix": {
+          "type": "object",
+          "required": [
+            "economic_recession",
+            "interest_rate_shock",
+            "dollar_strength",
+            "regulatory_changes",
+            "market_volatility"
+          ],
+          "properties": {
+            "economic_recession": {
+              "type": "object",
+              "required": ["probability", "impact", "risk_score"],
+              "properties": {
+                "probability": {"type": "number", "minimum": 0.0, "maximum": 1.0},
+                "impact": {"type": "integer", "minimum": 1, "maximum": 5},
+                "risk_score": {"type": "number", "minimum": 0.0}
+              }
+            },
+            "interest_rate_shock": {
+              "type": "object",
+              "required": ["probability", "impact", "risk_score"],
+              "properties": {
+                "probability": {"type": "number", "minimum": 0.0, "maximum": 1.0},
+                "impact": {"type": "integer", "minimum": 1, "maximum": 5},
+                "risk_score": {"type": "number", "minimum": 0.0}
+              }
+            },
+            "dollar_strength": {
+              "type": "object",
+              "required": ["probability", "impact", "risk_score"],
+              "properties": {
+                "probability": {"type": "number", "minimum": 0.0, "maximum": 1.0},
+                "impact": {"type": "integer", "minimum": 1, "maximum": 5},
+                "risk_score": {"type": "number", "minimum": 0.0}
+              }
+            },
+            "regulatory_changes": {
+              "type": "object",
+              "required": ["probability", "impact", "risk_score"],
+              "properties": {
+                "probability": {"type": "number", "minimum": 0.0, "maximum": 1.0},
+                "impact": {"type": "integer", "minimum": 1, "maximum": 5},
+                "risk_score": {"type": "number", "minimum": 0.0}
+              }
+            },
+            "market_volatility": {
+              "type": "object",
+              "required": ["probability", "impact", "risk_score"],
+              "properties": {
+                "probability": {"type": "number", "minimum": 0.0, "maximum": 1.0},
+                "impact": {"type": "integer", "minimum": 1, "maximum": 5},
+                "risk_score": {"type": "number", "minimum": 0.0}
+              }
+            }
+          }
+        },
+        "stress_testing": {
+          "type": "object",
+          "required": ["bear_market_scenario", "recession_scenario", "policy_shock_scenario"],
+          "properties": {
+            "bear_market_scenario": {
+              "type": "object",
+              "required": ["probability", "sector_impact", "recovery_timeline"],
+              "properties": {
+                "probability": {"type": "string"},
+                "sector_impact": {"type": "string"},
+                "recovery_timeline": {"type": "string"}
+              }
+            },
+            "recession_scenario": {
+              "type": "object",
+              "required": ["probability", "sector_impact", "recovery_phases"],
+              "properties": {
+                "probability": {"type": "string"},
+                "sector_impact": {"type": "string"},
+                "recovery_phases": {"type": "string"}
+              }
+            },
+            "policy_shock_scenario": {
+              "type": "object",
+              "required": ["probability", "regulatory_impact"],
+              "properties": {
+                "probability": {"type": "string"},
+                "regulatory_impact": {"type": "string"}
+              }
+            }
+          }
+        },
+        "sensitivity_analysis": {
+          "type": "object",
+          "required": ["key_variables", "elasticity_calculations", "break_even_analysis", "tornado_diagram"],
+          "properties": {
+            "key_variables": {"type": "string", "minLength": 10},
+            "elasticity_calculations": {"type": "string", "minLength": 10},
+            "break_even_analysis": {"type": "string", "minLength": 10},
+            "tornado_diagram": {"type": "string", "minLength": 10}
+          }
+        },
+        "aggregate_risk_score": {
+          "type": "number",
+          "minimum": 0.0,
+          "description": "Weighted total risk assessment score"
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0
+        }
+      }
+    },
+    "enhanced_economic_sensitivity": {
+      "type": "object",
+      "description": "Enhanced economic sensitivity analysis",
+      "required": [
+        "fed_funds_correlation",
+        "dxy_impact",
+        "yield_curve_analysis",
+        "crypto_correlation",
+        "economic_indicators",
+        "confidence"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "fed_funds_correlation": {
+          "type": "number",
+          "minimum": -1.0,
+          "maximum": 1.0,
+          "description": "Correlation coefficient with Federal Funds Rate"
+        },
+        "dxy_impact": {
+          "type": "string",
+          "minLength": 10,
+          "description": "Dollar strength correlation and impact analysis"
+        },
+        "yield_curve_analysis": {
+          "type": "string",
+          "minLength": 10,
+          "description": "Basis point impact per yield curve change"
+        },
+        "crypto_correlation": {
+          "type": "number",
+          "minimum": -1.0,
+          "maximum": 1.0,
+          "description": "Bitcoin correlation coefficient"
+        },
+        "economic_indicators": {
+          "type": "object",
+          "required": ["unemployment_sensitivity", "inflation_sensitivity", "gdp_correlation"],
+          "properties": {
+            "unemployment_sensitivity": {"type": "number", "minimum": -1.0, "maximum": 1.0},
+            "inflation_sensitivity": {"type": "number", "minimum": -1.0, "maximum": 1.0},
+            "gdp_correlation": {"type": "number", "minimum": -1.0, "maximum": 1.0}
+          }
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0
+        }
+      }
+    },
+    "macroeconomic_risk_scoring": {
+      "type": "object",
+      "description": "Comprehensive macroeconomic risk scoring framework",
+      "required": [
+        "gdp_based_risk_assessment",
+        "employment_based_risk_assessment",
+        "combined_macroeconomic_risk",
+        "early_warning_system",
+        "confidence"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "gdp_based_risk_assessment": {
+          "type": "object",
+          "required": ["gdp_deceleration_probability", "recession_vulnerability", "gdp_elasticity_impact", "early_warning_signals"],
+          "properties": {
+            "gdp_deceleration_probability": {"type": "number", "minimum": 0.0, "maximum": 1.0},
+            "recession_vulnerability": {"type": "string", "minLength": 10},
+            "gdp_elasticity_impact": {"type": "string", "minLength": 10},
+            "early_warning_signals": {"type": "string", "minLength": 10}
+          }
+        },
+        "employment_based_risk_assessment": {
+          "type": "object",
+          "required": ["payroll_decline_probability", "labor_market_impact", "claims_spike_scenarios", "employment_cycle_risk"],
+          "properties": {
+            "payroll_decline_probability": {"type": "number", "minimum": 0.0, "maximum": 1.0},
+            "labor_market_impact": {"type": "string", "minLength": 10},
+            "claims_spike_scenarios": {"type": "string", "minLength": 10},
+            "employment_cycle_risk": {"type": "string", "minLength": 10}
+          }
+        },
+        "combined_macroeconomic_risk": {
+          "type": "object",
+          "required": ["composite_risk_index", "cross_correlation_analysis", "recession_probability", "stress_test_outcomes"],
+          "properties": {
+            "composite_risk_index": {"type": "number", "minimum": 0.0, "maximum": 1.0},
+            "cross_correlation_analysis": {"type": "string", "minLength": 10},
+            "recession_probability": {"type": "number", "minimum": 0.0, "maximum": 1.0},
+            "stress_test_outcomes": {"type": "string", "minLength": 10}
+          }
+        },
+        "early_warning_system": {
+          "type": "object",
+          "required": ["leading_indicators", "threshold_breach_probability", "monitoring_kpis", "risk_escalation_triggers"],
+          "properties": {
+            "leading_indicators": {"type": "array", "items": {"type": "string"}, "minItems": 3},
+            "threshold_breach_probability": {"type": "number", "minimum": 0.0, "maximum": 1.0},
+            "monitoring_kpis": {"type": "array", "items": {"type": "string"}, "minItems": 3},
+            "risk_escalation_triggers": {"type": "array", "items": {"type": "string"}, "minItems": 2}
+          }
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0
+        }
+      }
+    },
+    "investment_recommendation_gap_analysis": {
+      "type": "object",
+      "description": "Investment recommendation gap analysis for synthesis preparation",
+      "required": [
+        "portfolio_allocation_context",
+        "economic_cycle_investment_positioning",
+        "risk_adjusted_investment_metrics",
+        "investment_conclusion_confidence",
+        "sector_investment_characteristics",
+        "economic_policy_recommendation_framework"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "portfolio_allocation_context": {
+          "type": "object",
+          "required": ["sector_weighting_recommendations", "cross_sector_optimization", "economic_cycle_rotation", "risk_adjusted_positioning", "confidence"],
+          "properties": {
+            "sector_weighting_recommendations": {"type": "string", "minLength": 20},
+            "cross_sector_optimization": {"type": "string", "minLength": 20},
+            "economic_cycle_rotation": {"type": "string", "minLength": 20},
+            "risk_adjusted_positioning": {"type": "string", "minLength": 20},
+            "confidence": {"type": "number", "minimum": 0.0, "maximum": 1.0}
+          }
+        },
+        "economic_cycle_investment_positioning": {
+          "type": "object",
+          "required": ["rotation_probability_analysis", "economic_timing_considerations", "business_cycle_allocation", "policy_impact_assessment", "confidence"],
+          "properties": {
+            "rotation_probability_analysis": {"type": "string", "minLength": 20},
+            "economic_timing_considerations": {"type": "string", "minLength": 20},
+            "business_cycle_allocation": {"type": "string", "minLength": 20},
+            "policy_impact_assessment": {"type": "string", "minLength": 20},
+            "confidence": {"type": "number", "minimum": 0.0, "maximum": 1.0}
+          }
+        },
+        "risk_adjusted_investment_metrics": {
+          "type": "object",
+          "required": ["sector_sharpe_calculation", "downside_risk_assessment", "volatility_adjusted_returns", "stress_testing_scenarios", "confidence"],
+          "properties": {
+            "sector_sharpe_calculation": {"type": "string", "minLength": 20},
+            "downside_risk_assessment": {"type": "string", "minLength": 20},
+            "volatility_adjusted_returns": {"type": "string", "minLength": 20},
+            "stress_testing_scenarios": {"type": "string", "minLength": 20},
+            "confidence": {"type": "number", "minimum": 0.0, "maximum": 1.0}
+          }
+        },
+        "investment_conclusion_confidence": {
+          "type": "object",
+          "required": ["thesis_confidence_methodology", "economic_factor_weighting", "allocation_guidance_confidence", "relative_positioning_confidence", "confidence"],
+          "properties": {
+            "thesis_confidence_methodology": {"type": "string", "minLength": 20},
+            "economic_factor_weighting": {"type": "string", "minLength": 20},
+            "allocation_guidance_confidence": {"type": "string", "minLength": 20},
+            "relative_positioning_confidence": {"type": "string", "minLength": 20},
+            "confidence": {"type": "number", "minimum": 0.0, "maximum": 1.0}
+          }
+        },
+        "sector_investment_characteristics": {
+          "type": "object",
+          "required": ["growth_defensive_classification", "interest_rate_sensitivity", "economic_sensitivity_profile", "investment_risk_opportunities", "confidence"],
+          "properties": {
+            "growth_defensive_classification": {"type": "string", "minLength": 20},
+            "interest_rate_sensitivity": {"type": "string", "minLength": 20},
+            "economic_sensitivity_profile": {"type": "string", "minLength": 20},
+            "investment_risk_opportunities": {"type": "string", "minLength": 20},
+            "confidence": {"type": "number", "minimum": 0.0, "maximum": 1.0}
+          }
+        },
+        "economic_policy_recommendation_framework": {
+          "type": "object",
+          "required": ["policy_validation", "fair_value_positioning", "recommendation_logic", "policy_gap_assessment", "policy_risk_assessment", "confidence"],
+          "properties": {
+            "policy_validation": {"type": "string", "minLength": 20},
+            "fair_value_positioning": {"type": "string", "minLength": 20},
+            "recommendation_logic": {"type": "string", "minLength": 20},
+            "policy_gap_assessment": {"type": "string", "minLength": 20},
+            "policy_risk_assessment": {"type": "string", "minLength": 20},
+            "confidence": {"type": "number", "minimum": 0.0, "maximum": 1.0}
+          }
+        }
+      }
+    },
+    "analysis_quality_metrics": {
+      "type": "object",
+      "description": "Quality metrics for analysis completion and readiness",
+      "required": [
+        "gap_coverage",
+        "confidence_propagation",
+        "analytical_rigor",
+        "evidence_strength"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "gap_coverage": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Percentage of template gaps filled"
+        },
+        "confidence_propagation": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Discovery confidence inheritance score"
+        },
+        "analytical_rigor": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Methodology quality score"
+        },
+        "evidence_strength": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Supporting data quality assessment"
+        }
+      }
+    }
+  }
+}

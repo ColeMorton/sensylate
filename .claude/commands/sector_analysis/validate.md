@@ -20,11 +20,54 @@ You are the Sector Analysis Validation Specialist, functioning as a comprehensiv
 
 ## Parameters
 
+### Mode 1: Single Sector Validation
+**Trigger**: Filename argument matching `{SECTOR}_{YYYYMMDD}.md`
 - `synthesis_filename`: Path to synthesis output file (required) - format: {SECTOR}_{YYYYMMDD}.md
 - `confidence_threshold`: Minimum confidence requirement - `9.0` | `9.5` | `9.8` (optional, default: 9.0)
 - `validation_depth`: Validation rigor - `standard` | `comprehensive` | `institutional` (optional, default: institutional)
 - `real_time_validation`: Use current market data for validation - `true` | `false` (optional, default: true)
 - `etf_validation`: Enable sector ETF composition validation - `true` | `false` (optional, default: true)
+
+### Mode 2: Sector DASV Phase Cross-Analysis
+**Trigger**: Phase argument matching `discovery|analysis|synthesis|validation`
+- `dasv_phase`: DASV phase for cross-analysis (required) - `discovery` | `analysis` | `synthesis` | `validation`
+- `file_count`: Number of latest files to analyze (optional, default: 7)
+- `confidence_threshold`: Minimum confidence requirement - `9.0` | `9.5` | `9.8` (optional, default: 9.0)
+- `validation_depth`: Validation rigor - `standard` | `comprehensive` | `institutional` (optional, default: institutional)
+
+**Note**: `synthesis_filename` and `dasv_phase` are mutually exclusive - use one or the other, not both.
+
+## Parameter Detection and Execution Flow
+
+### Argument Parsing Logic
+```bash
+# Command Invocation Examples:
+/sector_analysis:validate SECTOR_20250725.md          # Single Sector Mode
+/sector_analysis:validate analysis                     # Sector DASV Cross-Analysis Mode
+/sector_analysis:validate discovery --file_count=5    # Sector DASV Cross-Analysis Mode (custom count)
+```
+
+**Detection Algorithm**:
+1. If argument matches pattern `{SECTOR}_{YYYYMMDD}.md` → Single Sector Validation Mode
+2. If argument matches `discovery|analysis|synthesis|validation` → Sector DASV Phase Cross-Analysis Mode
+3. If no arguments provided → Error: Missing required parameter
+4. If invalid argument → Error: Invalid parameter format
+
+### Execution Routing
+- **Single Sector Mode**: Extract sector and date from filename, validate complete sector DASV workflow
+- **Sector DASV Cross-Analysis Mode**: Analyze latest files in specified phase directory for consistency
+
+### Parameter Validation Rules
+- **Mutually Exclusive**: Cannot specify both synthesis_filename and dasv_phase
+- **Required**: Must specify either synthesis_filename OR dasv_phase
+- **Format Validation**: synthesis_filename must match exact pattern {SECTOR}_{YYYYMMDD}.md
+- **Phase Validation**: dasv_phase must be one of the four valid DASV phases
+
+### Error Handling for Invalid Parameters
+- **Invalid Filename Format**: Must match {SECTOR}_{YYYYMMDD}.md pattern exactly
+- **Non-existent Phase**: Phase must be discovery, analysis, synthesis, or validation
+- **Missing Required Parameters**: Must provide either filename or phase argument
+- **Conflicting Parameters**: Cannot combine single sector and cross-analysis modes
 
 ## Enhanced Validation via Production CLI Services
 
@@ -66,6 +109,155 @@ Use production CLI financial services for comprehensive multi-company sector val
 - **GDP/Employment Validation**: Real-time macroeconomic data validation with sector correlation analysis
 - **Institutional-Grade Quality**: Advanced sector validation, caching optimization, and quality scoring (targeting >97%)
 - **Error Resilience**: Comprehensive error handling with graceful degradation and sector-wide reliability scoring
+
+## Sector DASV Phase Cross-Analysis Methodology
+
+**Purpose**: Validate consistency, quality, and sector-specificity across the latest files within a specific DASV phase to ensure systematic analysis quality and eliminate hardcoded template artifacts.
+
+### Cross-Analysis Framework
+
+**File Discovery and Selection**:
+- Automatically locate latest 7 files (configurable) in specified phase directory
+- Sort by modification timestamp for most recent analysis outputs
+- Phase-specific directory mapping:
+  - `discovery`: `./data/outputs/sector_analysis/discovery/`
+  - `analysis`: `./data/outputs/sector_analysis/analysis/`
+  - `synthesis`: `./data/outputs/sector_analysis/` (root level)
+  - `validation`: `./data/outputs/sector_analysis/validation/`
+
+### Core Validation Dimensions
+
+#### 1. Structural Consistency Analysis
+**Objective**: Ensure uniform structure and format compliance across phase outputs
+```
+STRUCTURAL VALIDATION PROTOCOL:
+- JSON Schema Consistency: Validate all files follow identical structure
+- Required Field Verification: Confirm all mandatory fields are present
+- Data Type Consistency: Ensure consistent field types across files
+- Metadata Format Compliance: Verify consistent metadata structure
+- Confidence Score Format: Validate decimal format (0.0-1.0) consistency
+- CLI Services Integration: Confirm consistent service utilization patterns
+- Overall Structural Score: 9.0+/10.0 for institutional quality
+```
+
+#### 2. Hardcoded/Magic Value Detection
+**Objective**: Identify and flag non-sector-specific repeated values that indicate template artifacts
+```
+MAGIC VALUE DETECTION FRAMEWORK:
+- Repeated String Patterns: Detect identical non-sector strings across files
+- Numerical Value Analysis: Flag suspicious repeated numbers not related to market data
+- Template Artifact Identification: Identify placeholder text or example values
+- Generic Description Detection: Find non-specific sector descriptions
+- Default Value Flagging: Identify unchanged template defaults
+- Threshold: <5% repeated non-sector-specific content for institutional quality
+```
+
+#### 3. Sector Specificity Validation
+**Objective**: Ensure all data and analysis content is appropriately specific to each sector/ETF
+```
+SECTOR SPECIFICITY ASSESSMENT:
+- Sector Name Accuracy: Verify correct sector names match ETF symbols
+- Industry Classification: Confirm sector/industry assignments are sector-specific
+- Financial Metrics Uniqueness: Validate financial data varies appropriately by sector
+- Business Model Descriptions: Ensure sector-specific business model analysis
+- Competitive Analysis Specificity: Verify sector-appropriate competitive positioning
+- Price Data Correlation: Confirm price ranges and market caps align with sector
+- Specificity Score: 9.5+/10.0 for institutional sector-specific analysis
+```
+
+#### 4. CLI Services Integration Consistency
+**Objective**: Validate consistent and appropriate use of CLI financial services across phase files
+```
+CLI INTEGRATION VALIDATION:
+- Service Utilization Patterns: Verify consistent CLI service usage
+- Data Source Attribution: Confirm proper CLI service citations
+- Quality Score Consistency: Validate CLI confidence scoring alignment
+- Service Health Documentation: Ensure operational status tracking
+- Multi-Source Validation: Confirm cross-validation across CLI services
+- Service Integration Score: 9.0+/10.0 for production-grade integration
+```
+
+### Cross-Analysis Output Structure
+
+**File Naming**: `{PHASE}_cross_analysis_{YYYYMMDD}_validation.json`
+**Location**: `./data/outputs/sector_analysis/validation/`
+
+```json
+{
+  "metadata": {
+    "command_name": "sector_analyst_validate_dasv_cross_analysis",
+    "execution_timestamp": "ISO_8601_format",
+    "framework_phase": "dasv_phase_cross_analysis",
+    "dasv_phase_analyzed": "discovery|analysis|synthesis|validation",
+    "files_analyzed_count": 7,
+    "analysis_methodology": "comprehensive_cross_phase_consistency_validation"
+  },
+  "files_analyzed": [
+    {
+      "filename": "SECTOR_YYYYMMDD_phase.json",
+      "sector": "SECTOR_SYMBOL",
+      "modification_timestamp": "ISO_8601_format",
+      "file_size_bytes": "numeric_file_size",
+      "structural_compliance": "9.X/10.0"
+    }
+  ],
+  "cross_analysis_results": {
+    "structural_consistency_score": "9.X/10.0",
+    "hardcoded_values_score": "9.X/10.0",
+    "sector_specificity_score": "9.X/10.0",
+    "cli_integration_score": "9.X/10.0",
+    "overall_cross_analysis_score": "9.X/10.0"
+  },
+  "detected_issues": {
+    "structural_inconsistencies": [
+      {
+        "issue_type": "missing_field|data_type_mismatch|format_violation",
+        "files_affected": ["filename_array"],
+        "description": "specific_issue_description",
+        "severity": "high|medium|low",
+        "recommendation": "specific_fix_recommendation"
+      }
+    ],
+    "hardcoded_values": [
+      {
+        "value": "detected_hardcoded_string_or_number",
+        "files_affected": ["filename_array"],
+        "occurrences": "count_of_occurrences",
+        "suspected_template_artifact": "true|false",
+        "recommendation": "sector_specific_replacement_suggestion"
+      }
+    ],
+    "sector_specificity_violations": [
+      {
+        "field_path": "json_path_to_field",
+        "generic_content": "detected_generic_content",
+        "files_affected": ["filename_array"],
+        "recommendation": "sector_specific_content_requirement"
+      }
+    ],
+    "cli_integration_inconsistencies": [
+      {
+        "service_name": "cli_service_name",
+        "inconsistency_type": "missing_service|inconsistent_usage|data_quality_variation",
+        "files_affected": ["filename_array"],
+        "recommendation": "standardization_approach"
+      }
+    ]
+  },
+  "quality_assessment": {
+    "institutional_quality_certified": "true|false",
+    "minimum_threshold_met": "true|false",
+    "phase_consistency_grade": "A+|A|A-|B+|B|B-|C+|C|F",
+    "ready_for_production": "true|false"
+  },
+  "recommendations": {
+    "immediate_fixes": ["array_of_critical_issues_to_address"],
+    "template_improvements": ["suggestions_for_template_enhancement"],
+    "validation_enhancements": ["process_improvement_recommendations"],
+    "cli_integration_optimizations": ["service_utilization_improvements"]
+  }
+}
+```
 
 ## Comprehensive Sector DASV Validation Methodology
 
@@ -556,6 +748,82 @@ GATE 6 VALIDATION REQUIREMENTS:
    - Validate institutional-grade quality across all sectors
    - Document usage safety for portfolio allocation decisions
    - Generate validation metadata and performance metrics
+
+## Usage Examples
+
+### Single Sector Validation Examples
+
+**Basic Single Sector Validation:**
+```bash
+/sector_analysis:validate XLK_20250725.md
+```
+- Validates complete DASV workflow for Technology sector on July 25, 2025
+- Uses default institutional validation depth
+- Performs real-time sector data validation
+- Output: `XLK_20250725_validation.json`
+
+**Advanced Single Sector Validation:**
+```bash
+/sector_analysis:validate XLF_20250725.md --confidence_threshold=9.5 --validation_depth=comprehensive
+```
+- Higher confidence threshold requiring 9.5/10 minimum
+- Comprehensive validation rigor
+- Output: `XLF_20250725_validation.json`
+
+### Sector DASV Phase Cross-Analysis Examples
+
+**Analysis Phase Cross-Analysis:**
+```bash
+/sector_analysis:validate analysis
+```
+- Analyzes latest 7 analysis files for consistency
+- Detects hardcoded values and template artifacts
+- Validates sector specificity across files
+- Output: `analysis_cross_analysis_20250725_validation.json`
+
+**Discovery Phase Cross-Analysis:**
+```bash
+/sector_analysis:validate discovery --file_count=5
+```
+- Analyzes latest 5 discovery files
+- Focuses on sector data collection consistency
+- Output: `discovery_cross_analysis_20250725_validation.json`
+
+**Synthesis Phase Cross-Analysis:**
+```bash
+/sector_analysis:validate synthesis --confidence_threshold=9.8
+```
+- Institutional-grade synthesis validation
+- Higher confidence threshold for final documents
+- Output: `synthesis_cross_analysis_20250725_validation.json`
+
+**Validation Phase Cross-Analysis:**
+```bash
+/sector_analysis:validate validation
+```
+- Meta-validation of validation reports
+- Ensures validation consistency and quality
+- Output: `validation_cross_analysis_20250725_validation.json`
+
+### Error Examples
+
+**Invalid Parameter Format:**
+```bash
+/sector_analysis:validate XLK_2025  # Missing .md extension
+# Error: Invalid filename format. Must match {SECTOR}_{YYYYMMDD}.md
+```
+
+**Invalid Phase Specification:**
+```bash
+/sector_analysis:validate testing   # Invalid phase name
+# Error: Invalid phase. Must be discovery, analysis, synthesis, or validation
+```
+
+**Missing Parameters:**
+```bash
+/sector_analysis:validate           # No arguments
+# Error: Missing required parameter. Specify filename or phase
+```
 
 ## Security and Compliance
 
