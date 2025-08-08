@@ -42,7 +42,7 @@
     "device_scale_factor": 2,
     "format": "png",
     "quality": 95,
-    "full_page": true,
+    "full_page": false,
     "timeout": 30000,
     "wait_for_selector": ".photo-booth-ready"
   },

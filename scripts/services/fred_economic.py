@@ -9,12 +9,14 @@ Production-grade Federal Reserve Economic Data (FRED) integration with:
 - Real-time economic indicators
 """
 
+import os
 import sys
 from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Any, Dict
 
-from .base_financial_service import (
+sys.path.append(os.path.join(os.path.dirname(__file__)))
+from base_financial_service import (
     BaseFinancialService,
     DataNotFoundError,
     ServiceConfig,
@@ -640,7 +642,7 @@ def create_fred_economic_service(env: str = "dev") -> FREDEconomicService:
     service_config = config_loader.get_service_config("fred", env)
 
     # Convert to ServiceConfig format
-    from .base_financial_service import CacheConfig, RateLimitConfig, ServiceConfig
+    from base_financial_service import CacheConfig, RateLimitConfig, ServiceConfig
 
     config = ServiceConfig(
         name=service_config.name,

@@ -43,18 +43,18 @@ def collect_yahoo_finance_data(ticker="3350.T"):
             "balance_sheet": df_to_serializable(balance_sheet),
             "cash_flow": df_to_serializable(cash_flow),
             "price_history": {
-                "current_price": float(hist_data["Close"].iloc[-1])
-                if not hist_data.empty
-                else None,
-                "52_week_high": float(hist_data["High"].max())
-                if not hist_data.empty
-                else None,
-                "52_week_low": float(hist_data["Low"].min())
-                if not hist_data.empty
-                else None,
-                "volume": float(hist_data["Volume"].iloc[-1])
-                if not hist_data.empty
-                else None,
+                "current_price": (
+                    float(hist_data["Close"].iloc[-1]) if not hist_data.empty else None
+                ),
+                "52_week_high": (
+                    float(hist_data["High"].max()) if not hist_data.empty else None
+                ),
+                "52_week_low": (
+                    float(hist_data["Low"].min()) if not hist_data.empty else None
+                ),
+                "volume": (
+                    float(hist_data["Volume"].iloc[-1]) if not hist_data.empty else None
+                ),
             },
         }
     except Exception as e:

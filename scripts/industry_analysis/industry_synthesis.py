@@ -202,7 +202,7 @@ class IndustrySynthesis:
             "market_trends": trend_data.get("market_trends", {}),
             "consumer_trends": trend_data.get("consumer_behavior_trends", {}),
             "regulatory_trends": trend_data.get("regulatory_trends", {}),
-            "trend_confidence": trend_data.get("confidence", 9.0),
+            "trend_confidence": trend_data.get("confidence", 0.90),
             "trend_sources": self._identify_trend_sources(),
             "trend_implications": self._analyze_trend_implications(),
         }
@@ -269,7 +269,7 @@ class IndustrySynthesis:
                 "industry": self.industry,
                 "discovery_reference": self.discovery_file,
                 "analysis_reference": self.analysis_file,
-                "confidence_threshold": 9.0,
+                "confidence_threshold": 0.9,
             },
             "investment_thesis": self.investment_thesis,
             "positioning_framework": self.positioning_framework,
@@ -553,31 +553,31 @@ class IndustrySynthesis:
 
         # Data quality factor
         if self.discovery_data and self.analysis_data:
-            factors.append(9.5)
+            factors.append(0.95)
         elif self.discovery_data or self.analysis_data:
-            factors.append(8.5)
+            factors.append(0.85)
         else:
-            factors.append(7.0)
+            factors.append(0.70)
 
         # Evidence backing factor
-        factors.append(9.0)
+        factors.append(0.90)
 
         # Market understanding factor
-        factors.append(9.2)
+        factors.append(0.92)
 
-        return round(sum(factors) / len(factors), 1)
+        return round(sum(factors) / len(factors), 2)
 
     def _calculate_positioning_confidence(self) -> float:
         """Calculate confidence in positioning framework"""
-        return 9.1
+        return 0.91
 
     def _calculate_risk_confidence(self) -> float:
         """Calculate confidence in risk analysis"""
-        return 9.0
+        return 0.90
 
     def _calculate_recommendation_confidence(self) -> float:
         """Calculate confidence in recommendation"""
-        return 9.0
+        return 0.90
 
     def _calculate_overall_confidence(self) -> float:
         """Calculate overall synthesis confidence"""
@@ -586,7 +586,7 @@ class IndustrySynthesis:
             self._calculate_positioning_confidence(),
             self._calculate_risk_confidence(),
         ]
-        return round(sum(confidences) / len(confidences), 1)
+        return round(sum(confidences) / len(confidences), 2)
 
     def _verify_template_compliance(self) -> Dict[str, bool]:
         """Verify template compliance"""
@@ -599,30 +599,30 @@ class IndustrySynthesis:
 
     def _assess_thesis_coherence(self) -> float:
         """Assess thesis coherence"""
-        return 9.0
+        return 0.90
 
     def _assess_data_integration(self) -> float:
         """Assess data integration quality"""
-        integration_score = 8.0
+        integration_score = 0.80
         if self.discovery_data:
-            integration_score += 0.5
+            integration_score += 0.05
         if self.analysis_data:
-            integration_score += 0.5
-        return min(integration_score, 10.0)
+            integration_score += 0.05
+        return min(integration_score, 1.0)
 
     def _assess_evidence_backing(self) -> float:
         """Assess evidence backing strength"""
-        return 9.1
+        return 0.91
 
     def _assess_professional_quality(self) -> float:
         """Assess professional quality"""
-        return 9.2
+        return 0.92
 
     def _generate_fallback_document(self, context: Dict[str, Any]) -> str:
         """Generate fallback document if template fails"""
         return f"""# {context['industry_name']} Industry Analysis
 
-*Generated: {context['generation_timestamp']} | Confidence: {context['confidence']}/10.0*
+*Generated: {context['generation_timestamp']} | Confidence: {context['confidence']:.1f}/1.0*
 
 ## Executive Summary
 
@@ -638,7 +638,7 @@ Target allocation: 15-20% of sector exposure
 
 **Author**: {context['author']}
 **Framework**: Industry DASV Methodology
-**Confidence**: {context['confidence']}/10.0
+**Confidence**: {context['confidence']:.1f}/1.0
 """
 
 
@@ -767,7 +767,7 @@ def main():
     metadata_path = synthesis.save_synthesis_metadata(synthesis_data)
 
     print(f"\n✅ Industry synthesis complete!")
-    print(f"📊 Confidence Score: {synthesis_data['synthesis_confidence']}/10.0")
+    print(f"📊 Confidence Score: {synthesis_data['synthesis_confidence']:.1f}/1.0")
     print(f"📄 Document saved to: {document_path}")
     print(f"📋 Metadata saved to: {metadata_path}")
 

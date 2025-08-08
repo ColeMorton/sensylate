@@ -11,7 +11,7 @@ const ChartContainer: React.FC<ChartContainerProps> = ({
 }) => {
   return (
     <div
-      className={`bg-body dark:bg-darkmode-body rounded-lg p-6 shadow-sm transition-all duration-300 hover:shadow-lg ${className}`}
+      className={`bg-body dark:bg-darkmode-body flex min-h-0 flex-1 flex-col rounded-lg p-6 shadow-sm transition-all duration-300 hover:shadow-lg ${className}`}
     >
       {!titleOnly && category && (
         <div className="mb-4">
@@ -31,7 +31,9 @@ const ChartContainer: React.FC<ChartContainerProps> = ({
         <p className="text-text mb-6 dark:text-gray-300">{description}</p>
       )}
 
-      <div className="chart-container min-h-[400px] w-full">{children}</div>
+      <div className="chart-container flex h-full min-h-0 w-full flex-col">
+        {children}
+      </div>
     </div>
   );
 };

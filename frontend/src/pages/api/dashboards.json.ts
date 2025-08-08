@@ -1,11 +1,12 @@
 import type { APIRoute } from "astro";
 import { getCollection } from "astro:content";
+import type { ChartType } from "@/types/ChartTypes";
 
 export interface DashboardChart {
   title: string;
   category?: string;
   description?: string;
-  chartType: string;
+  chartType: ChartType;
 }
 
 export interface DashboardConfig {
@@ -81,7 +82,7 @@ const DASHBOARD_CONFIGS: Record<string, DashboardConfig> = {
         chartType: "live-signals-drawdowns",
       },
       {
-        title: "Trade PnL Waterfall Chart",
+        title: "Closed Position PnL Waterfall",
         category: "Live Trading Individual Trades",
         description:
           "Waterfall chart showing individual trade profits and losses from closed positions, sorted from highest to lowest PnL. Visualizes contribution of each trade to overall portfolio performance.",
@@ -106,7 +107,7 @@ const DASHBOARD_CONFIGS: Record<string, DashboardConfig> = {
     enabled: true,
     charts: [
       {
-        title: "Trade PnL Waterfall Chart",
+        title: "Closed Position PnL Waterfall",
         category: "Trading Performance",
         description:
           "Waterfall chart showing individual trade profits and losses from closed positions, sorted from highest to lowest PnL. Visualizes contribution of each trade to overall portfolio performance.",

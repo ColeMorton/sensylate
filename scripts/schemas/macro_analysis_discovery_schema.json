@@ -1,0 +1,770 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sensylate.com/schemas/macro_analysis_discovery.json",
+  "title": "Macro-Economic Analysis Discovery Schema",
+  "description": "Comprehensive validation schema for macro-economic analysis discovery JSON outputs from CLI-enhanced analyst framework",
+  "type": "object",
+  "required": [
+    "metadata",
+    "cli_comprehensive_analysis",
+    "economic_indicators",
+    "business_cycle_data",
+    "monetary_policy_context",
+    "cli_market_intelligence",
+    "global_economic_context",
+    "energy_market_integration",
+    "cli_service_validation",
+    "cli_data_quality",
+    "cli_insights",
+    "cross_regional_data",
+    "discovery_insights",
+    "data_quality_assessment",
+    "local_data_references",
+    "automated_quality_validation"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "description": "Core metadata about the macro-economic discovery analysis execution",
+      "required": [
+        "command_name",
+        "execution_timestamp",
+        "framework_phase",
+        "region",
+        "data_collection_methodology",
+        "cli_services_utilized",
+        "api_keys_configured"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "command_name": {
+          "type": "string",
+          "const": "cli_enhanced_macro_analyst_discover",
+          "description": "Must be the standardized macro discovery command name"
+        },
+        "execution_timestamp": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d{6})?Z?$",
+          "description": "ISO 8601 timestamp with optional microseconds and timezone"
+        },
+        "framework_phase": {
+          "type": "string",
+          "const": "discover",
+          "description": "Must be 'discover' for discovery phase"
+        },
+        "region": {
+          "type": "string",
+          "pattern": "^[A-Z_]+$",
+          "description": "Geographic region focus (US, GLOBAL, EUROPE, ASIA, etc.)"
+        },
+        "indicators": {
+          "type": "string",
+          "enum": ["gdp", "employment", "inflation", "monetary_policy", "business_cycle", "all"],
+          "description": "Economic indicators analyzed in this discovery"
+        },
+        "timeframe": {
+          "type": "string",
+          "enum": ["1y", "2y", "5y", "10y", "full"],
+          "description": "Analysis period for economic data"
+        },
+        "data_collection_methodology": {
+          "type": "string",
+          "enum": ["comprehensive_cli", "multi_source_validation", "institutional_grade"],
+          "description": "Methodology used for data collection"
+        },
+        "cli_services_utilized": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["fred_economic_cli", "imf_cli", "alpha_vantage_cli", "eia_energy_cli", "coingecko_cli", "fmp_cli", "yahoo_finance_cli", "economic_calendar_cli"]
+          },
+          "minItems": 4,
+          "description": "CLI services successfully utilized (minimum 4 for institutional grade)"
+        },
+        "api_keys_configured": {
+          "type": "boolean",
+          "const": true,
+          "description": "API keys must be properly configured"
+        }
+      }
+    },
+    "cli_comprehensive_analysis": {
+      "type": "object",
+      "description": "Comprehensive CLI-driven economic analysis results",
+      "required": ["central_bank_economic_data", "imf_global_data", "alpha_vantage_market_data", "cross_source_validation"],
+      "additionalProperties": false,
+      "properties": {
+        "central_bank_economic_data": {
+          "type": "object",
+          "description": "Region-appropriate central bank economic data analysis",
+          "required": ["gdp_data", "employment_data", "inflation_data", "monetary_policy_data"],
+          "properties": {
+            "gdp_data": {
+              "type": "object",
+              "required": ["observations", "analysis", "confidence"],
+              "properties": {
+                "observations": {"type": "array", "minItems": 1},
+                "analysis": {"type": "string", "minLength": 10},
+                "confidence": {"type": "number", "minimum": 0.0, "maximum": 1.0}
+              }
+            },
+            "employment_data": {
+              "type": "object",
+              "required": ["payroll_data", "unemployment_data", "participation_data", "confidence"],
+              "properties": {
+                "payroll_data": {"type": "object", "required": ["observations", "trend"]},
+                "unemployment_data": {"type": "object", "required": ["observations", "trend"]},
+                "participation_data": {"type": "object", "required": ["observations", "trend"]},
+                "confidence": {"type": "number", "minimum": 0.0, "maximum": 1.0}
+              }
+            },
+            "inflation_data": {
+              "type": "object",
+              "required": ["cpi_data", "core_cpi_data", "pce_data", "confidence"],
+              "properties": {
+                "cpi_data": {"type": "object", "required": ["observations", "trend"]},
+                "core_cpi_data": {"type": "object", "required": ["observations", "trend"]},
+                "pce_data": {"type": "object", "required": ["observations", "trend"]},
+                "confidence": {"type": "number", "minimum": 0.0, "maximum": 1.0}
+              }
+            },
+            "monetary_policy_data": {
+              "type": "object",
+              "required": ["fed_funds_rate", "balance_sheet_data", "forward_guidance", "confidence"],
+              "properties": {
+                "fed_funds_rate": {"type": "object", "required": ["current_rate", "trajectory"]},
+                "balance_sheet_data": {"type": "object", "required": ["size", "composition"]},
+                "forward_guidance": {"type": "object", "required": ["stance", "communication"]},
+                "confidence": {"type": "number", "minimum": 0.0, "maximum": 1.0}
+              }
+            }
+          }
+        },
+        "imf_global_data": {
+          "type": "object",
+          "description": "IMF global economic indicators",
+          "required": ["global_growth", "country_risk", "international_flows"],
+          "properties": {
+            "global_growth": {"type": "object", "required": ["forecasts", "confidence"]},
+            "country_risk": {"type": "object", "required": ["assessments", "confidence"]},
+            "international_flows": {"type": "object", "required": ["capital_flows", "confidence"]}
+          }
+        },
+        "alpha_vantage_market_data": {
+          "type": "object",
+          "description": "Market sentiment and technical indicators",
+          "required": ["market_sentiment", "technical_indicators", "economic_events"],
+          "properties": {
+            "market_sentiment": {"type": "object", "required": ["sentiment_score", "confidence"]},
+            "technical_indicators": {"type": "object", "required": ["indicators", "confidence"]},
+            "economic_events": {"type": "object", "required": ["calendar", "confidence"]}
+          }
+        },
+        "cross_source_validation": {
+          "type": "object",
+          "description": "Cross-validation results across CLI services",
+          "required": ["validation_score", "consistency_check", "confidence"],
+          "properties": {
+            "validation_score": {"type": "number", "minimum": 0.0, "maximum": 1.0},
+            "consistency_check": {"type": "string", "enum": ["passed", "failed", "partial"]},
+            "confidence": {"type": "number", "minimum": 0.0, "maximum": 1.0}
+          }
+        }
+      }
+    },
+    "economic_indicators": {
+      "type": "object",
+      "description": "Comprehensive economic indicators analysis",
+      "required": ["leading_indicators", "coincident_indicators", "lagging_indicators", "composite_scores"],
+      "properties": {
+        "leading_indicators": {
+          "type": "object",
+          "required": ["yield_curve", "consumer_confidence", "stock_market", "confidence"],
+          "properties": {
+            "yield_curve": {"type": "object", "required": ["current_spread", "trend", "recession_signal"]},
+            "consumer_confidence": {"type": "object", "required": ["current_level", "trend", "components"]},
+            "stock_market": {"type": "object", "required": ["performance", "volatility", "correlation"]},
+            "confidence": {"type": "number", "minimum": 0.0, "maximum": 1.0}
+          }
+        },
+        "coincident_indicators": {
+          "type": "object",
+          "required": ["gdp_current", "employment_current", "industrial_production", "confidence"],
+          "properties": {
+            "gdp_current": {"type": "object", "required": ["current_growth", "components", "sustainability"]},
+            "employment_current": {"type": "object", "required": ["current_data", "trends", "quality"]},
+            "industrial_production": {"type": "object", "required": ["current_level", "capacity_utilization", "trends"]},
+            "confidence": {"type": "number", "minimum": 0.0, "maximum": 1.0}
+          }
+        },
+        "lagging_indicators": {
+          "type": "object",
+          "required": ["unemployment_rate", "inflation_confirmation", "labor_costs", "confidence"],
+          "properties": {
+            "unemployment_rate": {"type": "object", "required": ["current_rate", "duration", "structural_factors"]},
+            "inflation_confirmation": {"type": "object", "required": ["confirmed_trends", "persistence", "expectations"]},
+            "labor_costs": {"type": "object", "required": ["unit_costs", "productivity", "wage_growth"]},
+            "confidence": {"type": "number", "minimum": 0.0, "maximum": 1.0}
+          }
+        },
+        "composite_scores": {
+          "type": "object",
+          "required": ["business_cycle_score", "recession_probability", "confidence"],
+          "properties": {
+            "business_cycle_score": {"type": "number", "minimum": -3.0, "maximum": 3.0},
+            "recession_probability": {"type": "number", "minimum": 0.0, "maximum": 1.0},
+            "confidence": {"type": "number", "minimum": 0.0, "maximum": 1.0}
+          }
+        }
+      }
+    },
+    "business_cycle_data": {
+      "type": "object",
+      "description": "Business cycle phase analysis and positioning",
+      "required": ["current_phase", "transition_probabilities", "historical_context", "confidence"],
+      "properties": {
+        "current_phase": {
+          "type": "string",
+          "enum": ["expansion", "peak", "contraction", "trough"],
+          "description": "Current business cycle phase"
+        },
+        "transition_probabilities": {
+          "type": "object",
+          "required": ["next_6m", "next_12m", "methodology"],
+          "properties": {
+            "next_6m": {"type": "number", "minimum": 0.0, "maximum": 1.0},
+            "next_12m": {"type": "number", "minimum": 0.0, "maximum": 1.0},
+            "methodology": {"type": "string", "minLength": 10}
+          }
+        },
+        "historical_context": {
+          "type": "object",
+          "required": ["phase_duration", "comparison_to_average", "cycle_maturity"],
+          "properties": {
+            "phase_duration": {"type": "integer", "minimum": 0},
+            "comparison_to_average": {"type": "string", "enum": ["shorter", "average", "longer"]},
+            "cycle_maturity": {"type": "string", "enum": ["early", "mid", "late"]}
+          }
+        },
+        "confidence": {"type": "number", "minimum": 0.0, "maximum": 1.0}
+      }
+    },
+    "monetary_policy_context": {
+      "type": "object",
+      "description": "Monetary policy stance and transmission analysis",
+      "required": ["policy_stance", "transmission_mechanisms", "forward_guidance", "international_coordination"],
+      "properties": {
+        "policy_stance": {
+          "type": "object",
+          "required": ["current_stance", "policy_rate", "balance_sheet_size", "stance_assessment"],
+          "properties": {
+            "current_stance": {"type": "string", "enum": ["accommodative", "neutral", "restrictive"]},
+            "policy_rate": {"type": "number", "minimum": 0.0},
+            "balance_sheet_size": {"type": "number", "minimum": 0.0},
+            "stance_assessment": {"type": "string", "minLength": 20}
+          }
+        },
+        "transmission_mechanisms": {
+          "type": "object",
+          "required": ["credit_channel", "asset_price_channel", "exchange_rate_channel", "effectiveness"],
+          "properties": {
+            "credit_channel": {"type": "object", "required": ["functioning", "impact_assessment"]},
+            "asset_price_channel": {"type": "object", "required": ["functioning", "impact_assessment"]},
+            "exchange_rate_channel": {"type": "object", "required": ["functioning", "impact_assessment"]},
+            "effectiveness": {"type": "number", "minimum": 0.0, "maximum": 1.0}
+          }
+        },
+        "forward_guidance": {
+          "type": "object",
+          "required": ["guidance_type", "market_expectations", "credibility_assessment"],
+          "properties": {
+            "guidance_type": {"type": "string", "enum": ["date_based", "state_contingent", "qualitative"]},
+            "market_expectations": {"type": "object", "required": ["rate_path", "balance_sheet_path"]},
+            "credibility_assessment": {"type": "number", "minimum": 0.0, "maximum": 1.0}
+          }
+        },
+        "international_coordination": {
+          "type": "object",
+          "required": ["coordination_level", "policy_divergence", "spillover_effects"],
+          "properties": {
+            "coordination_level": {"type": "string", "enum": ["high", "medium", "low"]},
+            "policy_divergence": {"type": "object", "required": ["fed_ecb", "fed_boj", "assessment"]},
+            "spillover_effects": {"type": "object", "required": ["to_emerging_markets", "currency_effects"]}
+          }
+        }
+      }
+    },
+    "cli_market_intelligence": {
+      "type": "object",
+      "description": "Market-based intelligence and cross-asset analysis",
+      "required": ["volatility_analysis", "cross_asset_correlations", "risk_appetite", "market_regime"],
+      "properties": {
+        "volatility_analysis": {
+          "type": "object",
+          "required": ["vix_analysis", "regime_classification", "mean_reversion"],
+          "properties": {
+            "vix_analysis": {"type": "object", "required": ["current_level", "percentile_rank", "trend"]},
+            "regime_classification": {"type": "string", "enum": ["low", "normal", "elevated", "extreme", "crisis"]},
+            "mean_reversion": {"type": "object", "required": ["reversion_speed", "long_term_mean"]}
+          }
+        },
+        "cross_asset_correlations": {
+          "type": "object",
+          "required": ["equity_bond", "dollar_commodities", "crypto_risk_assets"],
+          "properties": {
+            "equity_bond": {"type": "number", "minimum": -1.0, "maximum": 1.0},
+            "dollar_commodities": {"type": "number", "minimum": -1.0, "maximum": 1.0},
+            "crypto_risk_assets": {"type": "number", "minimum": -1.0, "maximum": 1.0}
+          }
+        },
+        "risk_appetite": {
+          "type": "object",
+          "required": ["current_level", "trend", "indicators"],
+          "properties": {
+            "current_level": {"type": "string", "enum": ["risk_on", "risk_off", "neutral", "transition"]},
+            "trend": {"type": "string", "enum": ["improving", "deteriorating", "stable"]},
+            "indicators": {"type": "array", "items": {"type": "string"}, "minItems": 3}
+          }
+        },
+        "market_regime": {
+          "type": "object",
+          "required": ["regime_type", "regime_probability", "duration_estimate"],
+          "properties": {
+            "regime_type": {"type": "string", "enum": ["bull", "bear", "consolidation", "transition"]},
+            "regime_probability": {"type": "number", "minimum": 0.0, "maximum": 1.0},
+            "duration_estimate": {"type": "integer", "minimum": 0}
+          }
+        }
+      }
+    },
+    "global_economic_context": {
+      "type": "object",
+      "description": "International economic indicators and cross-country analysis",
+      "required": ["regional_analysis", "trade_flows", "currency_dynamics", "geopolitical_assessment"],
+      "properties": {
+        "regional_analysis": {
+          "type": "object",
+          "required": ["us_economy", "european_economy", "asian_economies", "emerging_markets"],
+          "properties": {
+            "us_economy": {"type": "object", "required": ["growth_outlook", "policy_stance", "key_risks"]},
+            "european_economy": {"type": "object", "required": ["growth_outlook", "policy_stance", "key_risks"]},
+            "asian_economies": {"type": "object", "required": ["growth_outlook", "policy_stance", "key_risks"]},
+            "emerging_markets": {"type": "object", "required": ["growth_outlook", "capital_flows", "key_risks"]}
+          }
+        },
+        "trade_flows": {
+          "type": "object",
+          "required": ["global_trade_growth", "trade_tensions", "supply_chain_status"],
+          "properties": {
+            "global_trade_growth": {"type": "number"},
+            "trade_tensions": {"type": "string", "enum": ["low", "medium", "high"]},
+            "supply_chain_status": {"type": "string", "enum": ["normal", "stressed", "disrupted"]}
+          }
+        },
+        "currency_dynamics": {
+          "type": "object",
+          "required": ["dxy_analysis", "major_pairs", "emerging_market_currencies"],
+          "properties": {
+            "dxy_analysis": {"type": "object", "required": ["current_level", "trend", "drivers"]},
+            "major_pairs": {"type": "object", "required": ["eur_usd", "usd_jpy", "gbp_usd"]},
+            "emerging_market_currencies": {"type": "object", "required": ["stress_level", "capital_flows"]}
+          }
+        },
+        "geopolitical_assessment": {
+          "type": "object",
+          "required": ["risk_level", "key_conflicts", "economic_impact"],
+          "properties": {
+            "risk_level": {"type": "string", "enum": ["low", "medium", "high", "extreme"]},
+            "key_conflicts": {"type": "array", "items": {"type": "string"}},
+            "economic_impact": {"type": "string", "enum": ["minimal", "moderate", "significant", "severe"]}
+          }
+        }
+      }
+    },
+    "energy_market_integration": {
+      "type": "object",
+      "description": "Energy market analysis and economic implications",
+      "required": ["oil_analysis", "natural_gas_analysis", "electricity_markets", "inflation_implications"],
+      "properties": {
+        "oil_analysis": {
+          "type": "object",
+          "required": ["price_levels", "supply_demand", "geopolitical_premium", "economic_impact"],
+          "properties": {
+            "price_levels": {"type": "object", "required": ["wti_current", "brent_current", "trend"]},
+            "supply_demand": {"type": "object", "required": ["supply_outlook", "demand_outlook", "balance"]},
+            "geopolitical_premium": {"type": "number", "minimum": 0.0},
+            "economic_impact": {"type": "object", "required": ["inflation_impact", "growth_impact"]}
+          }
+        },
+        "natural_gas_analysis": {
+          "type": "object",
+          "required": ["price_dynamics", "storage_levels", "seasonal_factors"],
+          "properties": {
+            "price_dynamics": {"type": "object", "required": ["current_price", "volatility", "trend"]},
+            "storage_levels": {"type": "object", "required": ["current_level", "seasonal_normal", "outlook"]},
+            "seasonal_factors": {"type": "object", "required": ["heating_demand", "cooling_demand", "industrial_demand"]}
+          }
+        },
+        "electricity_markets": {
+          "type": "object",
+          "required": ["generation_mix", "capacity_factors", "grid_stability"],
+          "properties": {
+            "generation_mix": {"type": "object", "required": ["renewable_share", "fossil_share", "nuclear_share"]},
+            "capacity_factors": {"type": "object", "required": ["utilization_rate", "peak_demand"]},
+            "grid_stability": {"type": "string", "enum": ["stable", "stressed", "critical"]}
+          }
+        },
+        "inflation_implications": {
+          "type": "object",
+          "required": ["energy_inflation_contribution", "pass_through_effects", "policy_implications"],
+          "properties": {
+            "energy_inflation_contribution": {"type": "number"},
+            "pass_through_effects": {"type": "object", "required": ["direct_effects", "indirect_effects"]},
+            "policy_implications": {"type": "array", "items": {"type": "string"}, "minItems": 1}
+          }
+        }
+      }
+    },
+    "cli_service_validation": {
+      "type": "object",
+      "description": "CLI service health and reliability validation",
+      "required": ["service_health_scores", "api_response_times", "data_freshness"],
+      "additionalProperties": false,
+      "properties": {
+        "service_health_scores": {
+          "type": "object",
+          "required": ["fred_economic_cli", "imf_cli", "alpha_vantage_cli", "overall_health"],
+          "properties": {
+            "fred_economic_cli": {"type": "number", "minimum": 0.0, "maximum": 1.0},
+            "imf_cli": {"type": "number", "minimum": 0.0, "maximum": 1.0},
+            "alpha_vantage_cli": {"type": "number", "minimum": 0.0, "maximum": 1.0},
+            "eia_energy_cli": {"type": "number", "minimum": 0.0, "maximum": 1.0},
+            "overall_health": {"type": "number", "minimum": 0.8, "maximum": 1.0}
+          }
+        },
+        "api_response_times": {
+          "type": "object",
+          "description": "Response time validation for all services",
+          "patternProperties": {
+            ".*_cli$": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 30000.0
+            }
+          }
+        },
+        "data_freshness": {
+          "type": "object",
+          "description": "Data recency validation",
+          "required": ["overall_freshness", "stale_data_count"],
+          "properties": {
+            "overall_freshness": {"type": "number", "minimum": 0.7, "maximum": 1.0},
+            "stale_data_count": {"type": "integer", "minimum": 0}
+          }
+        }
+      }
+    },
+    "cli_data_quality": {
+      "type": "object",
+      "description": "Comprehensive data quality assessment",
+      "required": ["overall_quality_score", "completeness_metrics", "consistency_validation"],
+      "properties": {
+        "overall_quality_score": {
+          "type": "number",
+          "minimum": 0.85,
+          "maximum": 1.0,
+          "description": "Must meet institutional quality threshold"
+        },
+        "completeness_metrics": {
+          "type": "object",
+          "required": ["required_indicators_coverage", "optional_indicators_coverage"],
+          "properties": {
+            "required_indicators_coverage": {"type": "number", "minimum": 0.9, "maximum": 1.0},
+            "optional_indicators_coverage": {"type": "number", "minimum": 0.0, "maximum": 1.0}
+          }
+        },
+        "consistency_validation": {
+          "type": "object",
+          "required": ["cross_source_consistency", "temporal_consistency", "logical_consistency"],
+          "properties": {
+            "cross_source_consistency": {"type": "number", "minimum": 0.0, "maximum": 1.0},
+            "temporal_consistency": {"type": "number", "minimum": 0.0, "maximum": 1.0},
+            "logical_consistency": {"type": "number", "minimum": 0.0, "maximum": 1.0}
+          }
+        }
+      }
+    },
+    "cli_insights": {
+      "type": "object",
+      "description": "Key analytical insights from CLI analysis",
+      "required": ["primary_insights", "risk_alerts", "opportunity_identification"],
+      "properties": {
+        "primary_insights": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["insight", "confidence", "supporting_data"],
+            "properties": {
+              "insight": {"type": "string", "minLength": 20},
+              "confidence": {"type": "number", "minimum": 0.0, "maximum": 1.0},
+              "supporting_data": {"type": "array", "items": {"type": "string"}}
+            }
+          },
+          "minItems": 3
+        },
+        "risk_alerts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["risk_type", "severity", "probability", "impact"],
+            "properties": {
+              "risk_type": {"type": "string", "enum": ["recession", "inflation", "policy_error", "geopolitical", "financial_stability"]},
+              "severity": {"type": "string", "enum": ["low", "medium", "high", "critical"]},
+              "probability": {"type": "number", "minimum": 0.0, "maximum": 1.0},
+              "impact": {"type": "string", "enum": ["minimal", "moderate", "significant", "severe"]}
+            }
+          }
+        },
+        "opportunity_identification": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["opportunity_type", "probability", "time_horizon"],
+            "properties": {
+              "opportunity_type": {"type": "string"},
+              "probability": {"type": "number", "minimum": 0.0, "maximum": 1.0},
+              "time_horizon": {"type": "string", "enum": ["3m", "6m", "12m", "24m"]}
+            }
+          }
+        }
+      }
+    },
+    "cross_regional_data": {
+      "type": "object",
+      "description": "Cross-regional economic comparison and correlation analysis",
+      "required": ["regional_correlations", "relative_positioning", "contagion_risks"],
+      "properties": {
+        "regional_correlations": {
+          "type": "object",
+          "required": ["us_europe", "us_asia", "europe_asia"],
+          "properties": {
+            "us_europe": {"type": "number", "minimum": -1.0, "maximum": 1.0},
+            "us_asia": {"type": "number", "minimum": -1.0, "maximum": 1.0},
+            "europe_asia": {"type": "number", "minimum": -1.0, "maximum": 1.0}
+          }
+        },
+        "relative_positioning": {
+          "type": "object",
+          "required": ["growth_ranking", "policy_stance_comparison", "risk_assessment"],
+          "properties": {
+            "growth_ranking": {"type": "array", "items": {"type": "string"}},
+            "policy_stance_comparison": {"type": "object"},
+            "risk_assessment": {"type": "object"}
+          }
+        },
+        "contagion_risks": {
+          "type": "object",
+          "required": ["financial_contagion", "trade_contagion", "policy_spillovers"],
+          "properties": {
+            "financial_contagion": {"type": "string", "enum": ["low", "medium", "high"]},
+            "trade_contagion": {"type": "string", "enum": ["low", "medium", "high"]},
+            "policy_spillovers": {"type": "string", "enum": ["low", "medium", "high"]}
+          }
+        }
+      }
+    },
+    "discovery_insights": {
+      "type": "object",
+      "description": "Comprehensive discovery insights and themes",
+      "required": ["macro_themes", "policy_implications", "market_implications", "research_priorities"],
+      "properties": {
+        "macro_themes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["theme", "importance", "evidence"],
+            "properties": {
+              "theme": {"type": "string", "minLength": 10},
+              "importance": {"type": "string", "enum": ["low", "medium", "high", "critical"]},
+              "evidence": {"type": "array", "items": {"type": "string"}, "minItems": 2}
+            }
+          },
+          "minItems": 3
+        },
+        "policy_implications": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["policy_area", "implication", "probability"],
+            "properties": {
+              "policy_area": {"type": "string", "enum": ["monetary", "fiscal", "regulatory", "trade"]},
+              "implication": {"type": "string", "minLength": 20},
+              "probability": {"type": "number", "minimum": 0.0, "maximum": 1.0}
+            }
+          },
+          "minItems": 2
+        },
+        "market_implications": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["asset_class", "implication", "confidence"],
+            "properties": {
+              "asset_class": {"type": "string", "enum": ["equities", "bonds", "commodities", "currencies", "alternatives"]},
+              "implication": {"type": "string", "minLength": 20},
+              "confidence": {"type": "number", "minimum": 0.0, "maximum": 1.0}
+            }
+          },
+          "minItems": 3
+        },
+        "research_priorities": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["priority", "rationale", "urgency"],
+            "properties": {
+              "priority": {"type": "string", "minLength": 10},
+              "rationale": {"type": "string", "minLength": 20},
+              "urgency": {"type": "string", "enum": ["low", "medium", "high", "urgent"]}
+            }
+          },
+          "minItems": 2
+        }
+      }
+    },
+    "data_quality_assessment": {
+      "type": "object",
+      "description": "Overall data quality and reliability assessment",
+      "required": ["institutional_grade_certification", "confidence_scores", "data_completeness"],
+      "properties": {
+        "institutional_grade_certification": {
+          "type": "boolean",
+          "const": true,
+          "description": "Must achieve institutional grade certification"
+        },
+        "confidence_scores": {
+          "type": "object",
+          "required": ["discovery_confidence", "analysis_readiness", "synthesis_readiness"],
+          "properties": {
+            "discovery_confidence": {"type": "number", "minimum": 0.85, "maximum": 1.0},
+            "analysis_readiness": {"type": "number", "minimum": 0.85, "maximum": 1.0},
+            "synthesis_readiness": {"type": "number", "minimum": 0.85, "maximum": 1.0}
+          }
+        },
+        "data_completeness": {
+          "type": "object",
+          "required": ["required_data_coverage", "enhancement_opportunities"],
+          "properties": {
+            "required_data_coverage": {"type": "number", "minimum": 0.9, "maximum": 1.0},
+            "enhancement_opportunities": {"type": "array", "items": {"type": "string"}}
+          }
+        }
+      }
+    },
+    "local_data_references": {
+      "type": "object",
+      "description": "References to local economic data files and cache",
+      "required": ["cached_economic_data", "historical_data_references"],
+      "properties": {
+        "cached_economic_data": {
+          "type": "object",
+          "description": "References to cached economic indicator data",
+          "patternProperties": {
+            "^[A-Z0-9_]+$": {
+              "type": "object",
+              "required": ["file_path", "last_updated", "data_quality"],
+              "properties": {
+                "file_path": {"type": "string", "pattern": "^\\./data/"},
+                "last_updated": {"type": "string", "format": "date-time"},
+                "data_quality": {"type": "number", "minimum": 0.0, "maximum": 1.0}
+              }
+            }
+          }
+        },
+        "historical_data_references": {
+          "type": "object",
+          "description": "References to historical economic data for trend analysis",
+          "required": ["business_cycle_history", "policy_history"],
+          "properties": {
+            "business_cycle_history": {"type": "array", "items": {"type": "string"}},
+            "policy_history": {"type": "array", "items": {"type": "string"}}
+          }
+        }
+      }
+    },
+    "automated_quality_validation": {
+      "type": "object",
+      "description": "Automated quality validation results and institutional certification",
+      "required": ["overall_quality_score", "institutional_grade_achieved", "validation_checks"],
+      "properties": {
+        "overall_quality_score": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Overall quality score based on validation checks"
+        },
+        "institutional_grade_achieved": {
+          "type": "boolean",
+          "description": "Whether institutional grade quality was achieved (>= 9.0/10.0)"
+        },
+        "validation_checks": {
+          "type": "object",
+          "required": ["service_availability", "data_completeness", "cross_source_consistency", "region_specificity", "confidence_calibration"],
+          "properties": {
+            "service_availability": {
+              "type": "object",
+              "required": ["passed", "score"],
+              "properties": {
+                "passed": {"type": "boolean"},
+                "score": {"type": "number", "minimum": 0.0, "maximum": 1.0}
+              }
+            },
+            "data_completeness": {
+              "type": "object",
+              "required": ["passed", "score"],
+              "properties": {
+                "passed": {"type": "boolean"},
+                "score": {"type": "number", "minimum": 0.0, "maximum": 1.0}
+              }
+            },
+            "cross_source_consistency": {
+              "type": "object",
+              "required": ["passed", "score"],
+              "properties": {
+                "passed": {"type": "boolean"},
+                "score": {"type": "number", "minimum": 0.0, "maximum": 1.0}
+              }
+            },
+            "region_specificity": {
+              "type": "object",
+              "required": ["passed", "score"],
+              "properties": {
+                "passed": {"type": "boolean"},
+                "score": {"type": "number", "minimum": 0.0, "maximum": 1.0}
+              }
+            },
+            "confidence_calibration": {
+              "type": "object",
+              "required": ["passed", "score"],
+              "properties": {
+                "passed": {"type": "boolean"},
+                "score": {"type": "number", "minimum": 0.0, "maximum": 1.0}
+              }
+            }
+          }
+        },
+        "blocking_issues": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "List of blocking issues preventing institutional grade"
+        },
+        "recommendations": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Recommendations for improving quality score"
+        }
+      }
+    }
+  }
+}

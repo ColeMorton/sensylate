@@ -8,6 +8,7 @@ import puppeteer from "puppeteer";
 import { spawn } from "child_process";
 import { promises as fs } from "fs";
 import path from "path";
+import { setTimeout } from "node:timers/promises";
 
 describe("Core Web Vitals Monitoring", () => {
   let browser;
@@ -160,7 +161,7 @@ describe("Core Web Vitals Monitoring", () => {
     });
 
     // Give some time for metrics to be collected
-    await page.waitForTimeout(3000);
+    await setTimeout(3000);
 
     // Check that metrics are being collected
     const metrics = await page.evaluate(() => {
@@ -199,7 +200,7 @@ describe("Core Web Vitals Monitoring", () => {
 
     // Trigger some interactions to generate metrics
     await page.click("body");
-    await page.waitForTimeout(2000);
+    await setTimeout(2000);
 
     const score = await page.evaluate(() => {
       return window.webVitalsMonitor.getPerformanceScore();
@@ -284,7 +285,7 @@ describe("Core Web Vitals Monitoring", () => {
       window.scrollTo(0, document.body.scrollHeight * 0.6);
     });
 
-    await page.waitForTimeout(1000);
+    await setTimeout(1000);
 
     // Check that scroll tracking is working (variables are set)
     const scrollTracking = await page.evaluate(() => {

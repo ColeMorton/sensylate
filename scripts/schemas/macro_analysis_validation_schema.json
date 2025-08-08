@@ -1,0 +1,1023 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sensylate.com/schemas/macro_analysis_validation.json",
+  "title": "Macro-Economic Analysis Validation Schema",
+  "description": "Comprehensive validation schema for macro-economic analysis validation JSON outputs from CLI-enhanced DASV framework",
+  "type": "object",
+  "required": [
+    "metadata",
+    "overall_assessment",
+    "dasv_validation_breakdown",
+    "critical_findings_matrix",
+    "decision_impact_assessment",
+    "usage_recommendations",
+    "methodology_notes"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "description": "Core metadata about the macro-economic validation execution",
+      "required": [
+        "command_name",
+        "execution_timestamp",
+        "framework_phase",
+        "region",
+        "validation_date",
+        "validation_methodology"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "command_name": {
+          "type": "string",
+          "enum": [
+            "macro_analyst_validate",
+            "cli_enhanced_macro_analyst_validate"
+          ],
+          "description": "Must be the standardized macro analysis validation command name"
+        },
+        "execution_timestamp": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d{6})?Z?$",
+          "description": "ISO 8601 timestamp with optional microseconds and timezone"
+        },
+        "framework_phase": {
+          "type": "string",
+          "enum": [
+            "validate",
+            "cli_enhanced_validate_macro_economic",
+            "institutional_dasv_macro_validation"
+          ],
+          "description": "Must indicate the macro-economic validation phase methodology"
+        },
+        "region": {
+          "type": "string",
+          "pattern": "^[A-Z_]+$",
+          "description": "Geographic region focus (US, GLOBAL, EUROPE, ASIA, etc.)"
+        },
+        "validation_date": {
+          "type": "string",
+          "pattern": "^\\d{8}$",
+          "description": "Validation date in YYYYMMDD format"
+        },
+        "validation_methodology": {
+          "type": "string",
+          "enum": [
+            "comprehensive_dasv_macro_validation_via_cli_services",
+            "institutional_dasv_macro_validation",
+            "macro_economic_multi_source_validation"
+          ],
+          "description": "Systematic macro-economic validation methodology identifier"
+        },
+        "cli_services_utilized": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 8,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": [
+              "fred_economic_cli",
+              "imf_cli",
+              "alpha_vantage_cli",
+              "eia_cli",
+              "coingecko_cli",
+              "yahoo_finance_cli",
+              "fmp_cli",
+              "sec_edgar_cli"
+            ]
+          },
+          "description": "CLI services utilized for macro-economic validation (minimum 3 required, FRED/IMF priority)"
+        },
+        "api_keys_configured": {
+          "type": "string",
+          "description": "API key configuration reference for economic data sources"
+        },
+        "confidence_threshold": {
+          "type": "number",
+          "minimum": 0.8,
+          "maximum": 1.0,
+          "description": "Minimum confidence threshold for institutional economic analysis certification"
+        }
+      }
+    },
+    "overall_assessment": {
+      "type": "object",
+      "description": "High-level macro-economic validation assessment and certification status",
+      "required": [
+        "overall_reliability_score",
+        "decision_confidence",
+        "minimum_threshold_met",
+        "institutional_quality_certified"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "overall_reliability_score": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Overall reliability score in 0.0-1.0 format"
+        },
+        "decision_confidence": {
+          "type": "string",
+          "enum": ["High", "Medium", "Low", "Do_Not_Use"],
+          "description": "Economic decision confidence level based on validation results"
+        },
+        "minimum_threshold_met": {
+          "oneOf": [
+            {"type": "boolean"},
+            {"type": "string", "enum": ["true", "false"]}
+          ],
+          "description": "Whether minimum economic analysis quality threshold is met"
+        },
+        "institutional_quality_certified": {
+          "oneOf": [
+            {"type": "boolean"},
+            {"type": "string", "enum": ["true", "false"]}
+          ],
+          "description": "Institutional quality certification status for economic analysis"
+        },
+        "economic_indicators_accuracy_validated": {
+          "oneOf": [
+            {"type": "boolean"},
+            {"type": "string", "enum": ["true", "false"]}
+          ],
+          "description": "Economic indicators accuracy validation status"
+        },
+        "economic_indicators_consistency_blocking_issue": {
+          "oneOf": [
+            {"type": "boolean"},
+            {"type": "string", "enum": ["true", "false"]}
+          ],
+          "description": "Whether economic indicators consistency creates blocking issues"
+        },
+        "cli_validation_quality": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "CLI service validation quality score"
+        },
+        "cli_services_health": {
+          "type": "string",
+          "enum": ["operational", "degraded", "failed"],
+          "description": "Overall CLI services health status for economic data"
+        },
+        "multi_source_economic_consistency": {
+          "oneOf": [
+            {"type": "boolean"},
+            {"type": "string", "enum": ["true", "false"]}
+          ],
+          "description": "Multi-source economic data consistency validation"
+        },
+        "business_cycle_assessment_validated": {
+          "oneOf": [
+            {"type": "boolean"},
+            {"type": "string", "enum": ["true", "false"]}
+          ],
+          "description": "Business cycle assessment validation status"
+        },
+        "policy_analysis_coherence_validated": {
+          "oneOf": [
+            {"type": "boolean"},
+            {"type": "string", "enum": ["true", "false"]}
+          ],
+          "description": "Monetary/fiscal policy analysis coherence validation status"
+        }
+      }
+    },
+    "dasv_validation_breakdown": {
+      "type": "object",
+      "description": "Detailed validation breakdown across macro-economic DASV phases",
+      "required": [
+        "discovery_validation",
+        "analysis_validation",
+        "synthesis_validation"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "discovery_validation": {
+          "type": "object",
+          "required": [
+            "economic_indicators_accuracy",
+            "cross_regional_data_integrity",
+            "data_quality_assessment",
+            "overall_discovery_score",
+            "evidence_quality"
+          ],
+          "additionalProperties": true,
+          "properties": {
+            "economic_indicators_accuracy": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "description": "Economic indicators accuracy validation score"
+            },
+            "cross_regional_data_integrity": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "description": "Cross-regional economic data integrity validation score"
+            },
+            "data_quality_assessment": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "description": "Overall economic data quality assessment score"
+            },
+            "cli_multi_source_economic_validation": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "description": "CLI multi-source economic data validation score"
+            },
+            "enhanced_economic_metrics_accuracy": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "description": "Enhanced economic metrics accuracy score"
+            },
+            "cli_service_health_validation": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "description": "CLI service health validation score for economic data sources"
+            },
+            "monetary_policy_context_validation": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "description": "Monetary policy context validation score"
+            },
+            "business_cycle_data_validation": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "description": "Business cycle data validation score"
+            },
+            "overall_discovery_score": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "description": "Overall discovery phase validation score"
+            },
+            "evidence_quality": {
+              "type": "string",
+              "enum": ["CLI_Primary", "CLI_Secondary", "Unverified", "Mixed"],
+              "description": "Quality level of economic data evidence sources"
+            },
+            "key_issues": {
+              "type": "array",
+              "items": {"type": "string"},
+              "description": "Key issues identified during economic discovery validation"
+            }
+          }
+        },
+        "analysis_validation": {
+          "type": "object",
+          "required": [
+            "business_cycle_modeling_verification",
+            "liquidity_cycle_assessment_validation",
+            "macroeconomic_risk_assessment_validation",
+            "overall_analysis_score",
+            "evidence_quality"
+          ],
+          "additionalProperties": true,
+          "properties": {
+            "business_cycle_modeling_verification": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "description": "Business cycle modeling verification score"
+            },
+            "liquidity_cycle_assessment_validation": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "description": "Liquidity cycle assessment validation score"
+            },
+            "macroeconomic_risk_assessment_validation": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "description": "Macroeconomic risk assessment validation score"
+            },
+            "cli_economic_context_validation": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "description": "CLI economic context validation score"
+            },
+            "enhanced_economic_sensitivity_accuracy": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "description": "Enhanced economic sensitivity analysis accuracy score"
+            },
+            "investment_recommendation_gap_analysis_validation": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "description": "Investment recommendation gap analysis validation score"
+            },
+            "multi_method_economic_forecast_validation": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "description": "Multi-method economic forecast validation score"
+            },
+            "overall_analysis_score": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "description": "Overall analysis phase validation score"
+            },
+            "evidence_quality": {
+              "type": "string",
+              "enum": ["CLI_Primary", "CLI_Secondary", "Unverified", "Mixed"],
+              "description": "Quality level of economic analysis evidence sources"
+            },
+            "key_issues": {
+              "type": "array",
+              "items": {"type": "string"},
+              "description": "Key issues identified during economic analysis validation"
+            }
+          }
+        },
+        "synthesis_validation": {
+          "type": "object",
+          "required": [
+            "economic_thesis_coherence",
+            "asset_allocation_framework_verification",
+            "professional_presentation",
+            "overall_synthesis_score",
+            "evidence_quality"
+          ],
+          "additionalProperties": true,
+          "properties": {
+            "economic_thesis_coherence": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "description": "Economic thesis coherence validation score"
+            },
+            "asset_allocation_framework_verification": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "description": "Asset allocation framework verification score"
+            },
+            "professional_presentation": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "description": "Professional presentation quality score"
+            },
+            "cli_economic_data_integration_quality": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "description": "CLI economic data integration quality score"
+            },
+            "multi_source_economic_evidence_strength": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "description": "Multi-source economic evidence strength score"
+            },
+            "policy_analysis_integration_validation": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "description": "Policy analysis integration validation score"
+            },
+            "cross_regional_comparison_accuracy": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "description": "Cross-regional economic comparison accuracy score"
+            },
+            "economic_forecasting_methodology_validation": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "description": "Economic forecasting methodology validation score"
+            },
+            "overall_synthesis_score": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "description": "Overall synthesis phase validation score"
+            },
+            "evidence_quality": {
+              "type": "string",
+              "enum": ["CLI_Primary", "CLI_Secondary", "Unverified", "Mixed"],
+              "description": "Quality level of economic synthesis evidence sources"
+            },
+            "key_issues": {
+              "type": "array",
+              "items": {"type": "string"},
+              "description": "Key issues identified during economic synthesis validation"
+            }
+          }
+        }
+      }
+    },
+    "enhanced_validation_breakdown": {
+      "type": "object",
+      "description": "Additional enhanced validation metrics for comprehensive economic validation",
+      "additionalProperties": true,
+      "properties": {
+        "business_cycle_analysis_integration": {
+          "type": "object",
+          "additionalProperties": true,
+          "description": "Business cycle analysis integration validation"
+        },
+        "monetary_policy_validation": {
+          "type": "object",
+          "additionalProperties": true,
+          "description": "Monetary policy analysis validation"
+        },
+        "economic_stress_testing_validation": {
+          "type": "object",
+          "additionalProperties": true,
+          "description": "Economic stress testing scenarios validation"
+        },
+        "institutional_economic_standards": {
+          "type": "object",
+          "additionalProperties": true,
+          "description": "Institutional economic analysis standards validation"
+        },
+        "cross_regional_economic_reference": {
+          "type": "object",
+          "additionalProperties": true,
+          "description": "Cross-regional economic comparison validation"
+        },
+        "asset_allocation_guidance_validation": {
+          "type": "object",
+          "additionalProperties": true,
+          "description": "Asset allocation guidance validation"
+        }
+      }
+    },
+    "cli_service_validation": {
+      "type": "object",
+      "description": "CLI service operational status and health validation for economic data",
+      "required": [
+        "service_health",
+        "health_score",
+        "services_operational",
+        "services_healthy",
+        "multi_source_economic_consistency"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "service_health": {
+          "type": "object",
+          "description": "Individual CLI service health status for economic data sources",
+          "additionalProperties": false,
+          "patternProperties": {
+            "^(fred_economic|imf|alpha_vantage|eia|coingecko|yahoo_finance|fmp|sec_edgar)$": {
+              "type": "string",
+              "enum": ["healthy", "degraded", "unhealthy", "not_utilized"]
+            }
+          }
+        },
+        "health_score": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Overall health score for economic data sources (0.0-1.0)"
+        },
+        "services_operational": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 8,
+          "description": "Number of operational economic data services"
+        },
+        "services_healthy": {
+          "oneOf": [
+            {"type": "boolean"},
+            {"type": "string", "enum": ["true", "false"]}
+          ],
+          "description": "Overall economic data service health status"
+        },
+        "multi_source_economic_consistency": {
+          "oneOf": [
+            {"type": "number", "minimum": 0.0, "maximum": 1.0},
+            {"type": "boolean"},
+            {"type": "string", "enum": ["true", "false"]}
+          ],
+          "description": "Multi-source economic data consistency score"
+        },
+        "data_quality_scores": {
+          "type": "object",
+          "description": "Data quality scores for each economic CLI service",
+          "additionalProperties": false,
+          "patternProperties": {
+            "^(fred_economic_cli|imf_cli|alpha_vantage_cli|eia_cli|coingecko_cli|yahoo_finance_cli|fmp_cli|sec_edgar_cli)$": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0
+            }
+          }
+        },
+        "economic_data_freshness": {
+          "type": "object",
+          "description": "Economic data freshness validation for each service",
+          "additionalProperties": false,
+          "patternProperties": {
+            "^(fred_economic_cli|imf_cli|alpha_vantage_cli|eia_cli|coingecko_cli|yahoo_finance_cli|fmp_cli|sec_edgar_cli)$": {
+              "type": "string",
+              "enum": ["current", "stale", "unavailable"]
+            }
+          }
+        }
+      }
+    },
+    "critical_findings_matrix": {
+      "type": "object",
+      "description": "Categorized economic validation findings by confidence level",
+      "required": [
+        "verified_economic_claims_high_confidence",
+        "questionable_economic_claims_medium_confidence",
+        "inaccurate_economic_claims_low_confidence",
+        "unverifiable_economic_claims"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "verified_economic_claims_high_confidence": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 10},
+          "description": "Economic claims with high confidence verification"
+        },
+        "questionable_economic_claims_medium_confidence": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 10},
+          "description": "Economic claims requiring additional verification"
+        },
+        "inaccurate_economic_claims_low_confidence": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 10},
+          "description": "Economic claims identified as potentially inaccurate"
+        },
+        "unverifiable_economic_claims": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 10},
+          "description": "Economic claims that cannot be verified with available data"
+        }
+      }
+    },
+    "decision_impact_assessment": {
+      "type": "object",
+      "description": "Assessment of validation impact on economic and investment decisions",
+      "required": [
+        "economic_thesis_breaking_issues",
+        "material_economic_concerns",
+        "refinement_needed"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "economic_thesis_breaking_issues": {
+          "oneOf": [
+            {"type": "string", "enum": ["none"]},
+            {"type": "array", "items": {"type": "string"}}
+          ],
+          "description": "Issues that invalidate the economic thesis"
+        },
+        "material_economic_concerns": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Material concerns affecting economic and investment decisions"
+        },
+        "refinement_needed": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Areas requiring refinement or correction in economic analysis"
+        },
+        "policy_analysis_concerns": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Policy analysis concerns requiring attention"
+        },
+        "asset_allocation_guidance_concerns": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Asset allocation guidance concerns requiring review"
+        }
+      }
+    },
+    "usage_recommendations": {
+      "type": "object",
+      "description": "Recommendations for safe usage of the macro-economic analysis",
+      "required": [
+        "safe_for_economic_decision_making",
+        "required_corrections",
+        "follow_up_research",
+        "monitoring_requirements"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "safe_for_economic_decision_making": {
+          "oneOf": [
+            {"type": "boolean"},
+            {"type": "string", "enum": ["true", "false"]}
+          ],
+          "description": "Whether economic analysis is safe for investment and policy decisions"
+        },
+        "economic_indicators_accuracy_blocking_issue": {
+          "oneOf": [
+            {"type": "boolean"},
+            {"type": "string", "enum": ["true", "false"]}
+          ],
+          "description": "Whether economic indicators accuracy creates blocking issues"
+        },
+        "required_corrections": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Corrections required before economic analysis usage"
+        },
+        "follow_up_research": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Additional economic research recommendations"
+        },
+        "monitoring_requirements": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Ongoing economic monitoring requirements"
+        },
+        "policy_monitoring_requirements": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Policy monitoring requirements for economic analysis validity"
+        },
+        "cross_regional_validation_requirements": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Cross-regional validation requirements"
+        }
+      }
+    },
+    "methodology_notes": {
+      "type": "object",
+      "description": "Economic validation methodology details and limitations",
+      "required": [
+        "validation_standards_applied"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "cli_services_consulted": {
+          "type": "string",
+          "description": "Economic CLI services consultation summary"
+        },
+        "economic_data_sources_consulted": {
+          "type": "string",
+          "description": "Economic data sources consulted summary"
+        },
+        "validation_approach": {
+          "type": "string",
+          "description": "Economic validation approach methodology"
+        },
+        "multi_source_economic_validation": {
+          "type": "string",
+          "description": "Multi-source economic validation methodology"
+        },
+        "business_cycle_validation": {
+          "type": "string",
+          "description": "Business cycle analysis validation approach"
+        },
+        "policy_analysis_validation": {
+          "type": "string",
+          "description": "Policy analysis validation methodology"
+        },
+        "enhanced_economic_metrics_validation": {
+          "type": "string",
+          "description": "Enhanced economic metrics validation methodology"
+        },
+        "cli_health_monitoring": {
+          "type": "string",
+          "description": "CLI health monitoring approach for economic data"
+        },
+        "research_limitations": {
+          "oneOf": [
+            {"type": "string"},
+            {"type": "array", "items": {"type": "string"}}
+          ],
+          "description": "Economic research limitations and constraints"
+        },
+        "confidence_intervals": {
+          "type": "string",
+          "description": "Economic confidence interval methodology"
+        },
+        "validation_standards_applied": {
+          "oneOf": [
+            {"type": "string"},
+            {"type": "object"}
+          ],
+          "description": "Economic validation standards and thresholds applied"
+        },
+        "cross_regional_validation_methodology": {
+          "type": "string",
+          "description": "Cross-regional economic comparison validation methodology"
+        },
+        "economic_forecasting_validation": {
+          "type": "string",
+          "description": "Economic forecasting methodology validation approach"
+        }
+      }
+    },
+    "enhanced_validation_features": {
+      "type": "object",
+      "description": "Enhanced economic validation feature results",
+      "additionalProperties": true,
+      "properties": {
+        "economic_indicators_consistency_validation": {
+          "type": "string",
+          "description": "Economic indicators consistency validation results"
+        },
+        "economic_indicators_accuracy_blocking_validation": {
+          "type": "string",
+          "description": "Economic indicators accuracy blocking validation results"
+        },
+        "synthesis_economic_reference_validation": {
+          "type": "string",
+          "description": "Synthesis economic reference validation results"
+        },
+        "economic_metrics_calculation_verification": {
+          "type": "string",
+          "description": "Economic metrics calculation verification results"
+        },
+        "business_cycle_context_integration": {
+          "type": "string",
+          "description": "Business cycle context integration validation results"
+        },
+        "cross_regional_analysis_validation": {
+          "type": "string",
+          "description": "Cross-regional analysis validation results"
+        },
+        "policy_intelligence_validation": {
+          "type": "string",
+          "description": "Policy intelligence validation results"
+        },
+        "asset_allocation_framework_validation": {
+          "type": "string",
+          "description": "Asset allocation framework validation results"
+        },
+        "economic_stress_testing_validation": {
+          "type": "string",
+          "description": "Economic stress testing validation results"
+        }
+      }
+    },
+    "economic_indicators_validation_details": {
+      "type": "object",
+      "description": "Detailed economic indicators validation metrics",
+      "additionalProperties": true,
+      "properties": {
+        "fred_gdp_growth": {
+          "type": "number"
+        },
+        "imf_gdp_growth": {
+          "type": "number"
+        },
+        "fred_unemployment_rate": {
+          "type": "number"
+        },
+        "fred_inflation_rate": {
+          "type": "number"
+        },
+        "fred_policy_rate": {
+          "type": "number"
+        },
+        "economic_indicators_deviation_percentage": {
+          "type": "number",
+          "minimum": 0
+        },
+        "consistency_score": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0
+        },
+        "validation_timestamp": {
+          "type": "string"
+        },
+        "blocking_threshold": {
+          "type": "number"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["PASSED", "FAILED", "WARNING"]
+        }
+      }
+    },
+    "business_cycle_validation": {
+      "type": "object",
+      "description": "Business cycle analysis validation details",
+      "additionalProperties": true,
+      "properties": {
+        "phase_identification_accuracy": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0
+        },
+        "recession_probability_validation": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0
+        },
+        "leading_indicators_consistency": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0
+        },
+        "policy_transmission_analysis_quality": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0
+        }
+      }
+    },
+    "policy_analysis_validation": {
+      "type": "object",
+      "description": "Policy analysis validation details",
+      "additionalProperties": true,
+      "properties": {
+        "monetary_policy_stance_accuracy": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0
+        },
+        "fiscal_policy_assessment_quality": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0
+        },
+        "policy_effectiveness_analysis_validation": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0
+        },
+        "cross_regional_policy_comparison_accuracy": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0
+        }
+      }
+    },
+    "institutional_quality_certification": {
+      "type": "object",
+      "description": "Institutional quality certification details for economic analysis",
+      "additionalProperties": true,
+      "properties": {
+        "threshold_requirement": {
+          "type": "number",
+          "minimum": 0.9,
+          "maximum": 1.0
+        },
+        "achieved_score": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0
+        },
+        "certification_status": {
+          "type": "string",
+          "enum": ["CERTIFIED", "NOT_CERTIFIED", "PENDING"]
+        },
+        "areas_of_excellence": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "improvement_opportunities": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "economic_analysis_quality_grade": {
+          "type": "string",
+          "enum": ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D", "F"]
+        }
+      }
+    },
+    "cli_validation_summary": {
+      "type": "object",
+      "description": "Comprehensive CLI validation summary for economic analysis",
+      "additionalProperties": true,
+      "properties": {
+        "total_services_available": {
+          "type": "integer"
+        },
+        "total_services_utilized": {
+          "type": "integer"
+        },
+        "primary_economic_services_health": {
+          "type": "string",
+          "enum": ["excellent", "good", "fair", "poor"]
+        },
+        "data_consistency_across_sources": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0
+        },
+        "overall_cli_integration_quality": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0
+        }
+      }
+    },
+    "asset_allocation_validation": {
+      "type": "object",
+      "description": "Asset allocation framework validation details",
+      "additionalProperties": true,
+      "properties": {
+        "allocation_coherence_with_economic_cycle": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0
+        },
+        "sector_rotation_logic_validation": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0
+        },
+        "risk_management_framework_quality": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0
+        },
+        "portfolio_construction_guidance_validation": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0
+        }
+      }
+    }
+  },
+  "examples": [
+    {
+      "metadata": {
+        "command_name": "macro_analyst_validate",
+        "execution_timestamp": "2024-08-04T14:25:30.000000Z",
+        "framework_phase": "validate",
+        "region": "US",
+        "validation_date": "20240804",
+        "validation_methodology": "comprehensive_dasv_macro_validation_via_cli_services",
+        "cli_services_utilized": ["fred_economic_cli", "imf_cli", "alpha_vantage_cli", "eia_cli", "coingecko_cli"]
+      },
+      "overall_assessment": {
+        "overall_reliability_score": 0.93,
+        "decision_confidence": "High",
+        "minimum_threshold_met": true,
+        "institutional_quality_certified": true
+      }
+    }
+  ],
+  "definitions": {
+    "validation_score": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0,
+      "description": "Validation score in 0.0-1.0 format"
+    },
+    "confidence_score": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0,
+      "description": "Confidence score between 0.0 and 1.0"
+    },
+    "institutional_grade_threshold": {
+      "type": "number",
+      "minimum": 0.9,
+      "maximum": 1.0,
+      "description": "Institutional grade requires minimum 0.9/1.0 score"
+    },
+    "region_identifier": {
+      "type": "string",
+      "pattern": "^[A-Z_]+$",
+      "description": "Valid region identifier (US, GLOBAL, EUROPE, ASIA, etc.)"
+    },
+    "cli_economic_service_name": {
+      "type": "string",
+      "enum": [
+        "fred_economic_cli",
+        "imf_cli",
+        "alpha_vantage_cli",
+        "eia_cli",
+        "coingecko_cli",
+        "yahoo_finance_cli",
+        "fmp_cli",
+        "sec_edgar_cli"
+      ],
+      "description": "Supported CLI economic service names"
+    },
+    "evidence_quality_level": {
+      "type": "string",
+      "enum": ["CLI_Primary", "CLI_Secondary", "Unverified", "Mixed"],
+      "description": "Quality classification for economic evidence sources"
+    },
+    "decision_confidence_level": {
+      "type": "string",
+      "enum": ["High", "Medium", "Low", "Do_Not_Use"],
+      "description": "Economic decision confidence classification"
+    }
+  }
+}

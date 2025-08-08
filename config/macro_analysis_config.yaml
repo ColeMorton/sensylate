@@ -1,0 +1,585 @@
+# Macro-Economic Analysis Configuration
+# Centralized configuration for macro-economic analysis tools and commands
+# Date: 2025-08-05
+
+# Default confidence thresholds for analysis phases
+confidence_thresholds:
+  discovery_minimum: 0.85
+  analysis_minimum: 0.90
+  synthesis_minimum: 0.90
+  validation_minimum: 0.95
+  institutional_grade: 0.95
+
+# Economic data validation thresholds
+data_validation:
+  economic_indicator_variance_threshold: 0.02  # 2% maximum variance
+  real_time_data_age_hours: 24
+  gdp_data_age_days: 90  # Quarterly data
+  employment_data_age_days: 30  # Monthly data
+  policy_data_age_hours: 24
+  cross_regional_correlation_threshold: 0.85
+
+# Business cycle modeling parameters
+business_cycle:
+  recession_probability_models:
+    - yield_curve_inversion
+    - nber_indicators
+    - leading_indicators_composite
+  transition_probability_confidence: 0.90
+  cycle_phase_indicators:
+    - gdp_growth_trend
+    - employment_momentum
+    - inflation_trajectory
+    - monetary_policy_stance
+
+# Economic risk assessment parameters
+risk_assessment:
+  probability_scale: [0.0, 1.0]  # Decimal format
+  impact_scale: [1, 5]  # 1-5 scale
+  risk_categories:
+    - gdp_recession_risk
+    - employment_shock_risk
+    - inflation_acceleration_risk
+    - financial_instability_risk
+    - policy_error_risk
+    - geopolitical_risk
+  stress_test_scenarios:
+    - gdp_contraction_3pct
+    - employment_decline_1m_jobs
+    - inflation_spike_5pct
+    - financial_crisis
+    - currency_crisis
+
+# Regional economic analysis configuration
+regional_analysis:
+  primary_regions:
+    - US
+    - EU
+    - ASIA
+    - EMERGING_MARKETS
+  economic_indicators:
+    gdp_growth: ["GDP", "GDPC1", "A191RL1Q225SBEA"]
+    employment: ["PAYEMS", "CIVPART", "ICSA"]
+    inflation: ["CPIAUCSL", "CPILFESL", "PCEPI"]
+    monetary_policy: ["FEDFUNDS", "DGS10", "DGS2"]
+    credit_conditions: ["BAA10Y", "AAA10Y", "TEDRATE"]
+
+# Regional Central Bank Configuration
+regional_central_banks:
+  US:
+    central_bank_name: "Federal Reserve"
+    policy_rate_name: "Fed Funds Rate"
+    policy_rate_symbol: "FEDFUNDS"
+    policy_meetings_name: "FOMC"
+    currency: "USD"
+    jurisdiction: "United States"
+    economic_indicators:
+      gdp: ["GDP", "GDPC1", "A191RL1Q225SBEA"]
+      employment: ["PAYEMS", "UNRATE", "CIVPART"]
+      inflation: ["CPIAUCSL", "CPILFESL", "PCEPI"]
+      monetary_policy: ["FEDFUNDS", "DGS10", "DGS2"]
+    template_variables:
+      central_bank_rate: "Fed Funds Rate"
+      central_bank_meetings: "FOMC meetings"
+      employment_metric: "nonfarm payrolls"
+      primary_currency: "USD"
+
+  AMERICAS:
+    central_bank_name: "Federal Reserve"
+    policy_rate_name: "Fed Funds Rate"
+    policy_rate_symbol: "FEDFUNDS"
+    policy_meetings_name: "FOMC"
+    currency: "USD"
+    jurisdiction: "United States"
+    economic_indicators:
+      gdp: ["GDP", "GDPC1", "A191RL1Q225SBEA"]
+      employment: ["PAYEMS", "UNRATE", "CIVPART"]
+      inflation: ["CPIAUCSL", "CPILFESL", "PCEPI"]
+      monetary_policy: ["FEDFUNDS", "DGS10", "DGS2"]
+    template_variables:
+      central_bank_rate: "Fed Funds Rate"
+      central_bank_meetings: "FOMC meetings"
+      employment_metric: "nonfarm payrolls"
+      primary_currency: "USD"
+
+  EUROPE:
+    central_bank_name: "European Central Bank"
+    policy_rate_name: "ECB Deposit Rate"
+    policy_rate_symbol: "IRSTCB01EZM156N"
+    policy_meetings_name: "ECB Governing Council"
+    currency: "EUR"
+    jurisdiction: "Eurozone"
+    economic_indicators:
+      gdp: ["CLVMNACSCAB1GQEA19", "NAEXKP01EZQ652S"]
+      employment: ["LRHUTTTTEZM156S", "LRHUTTTTEZQ156S"]
+      inflation: ["CP0000EZ17M086NEST", "CPHPTT01EZM661N"]
+      monetary_policy: ["IRSTCB01EZM156N", "IRLTLT01EZM156N"]
+    template_variables:
+      central_bank_rate: "ECB Deposit Rate"
+      central_bank_meetings: "ECB Governing Council meetings"
+      employment_metric: "unemployment rate"
+      primary_currency: "EUR"
+
+  ASIA:
+    central_bank_name: "Multi-Central Bank (BoJ/PBOC/RBI)"
+    policy_rate_name: "BoJ Policy Rate"
+    policy_rate_symbol: "IRSTCB01JPM156N"
+    policy_meetings_name: "BoJ Policy Board"
+    currency: "JPY/CNY/INR"
+    jurisdiction: "Asia-Pacific"
+    economic_indicators:
+      gdp: ["JPNRGDPEXP", "CLVMNACSCAB1GQJP"]
+      employment: ["LRHUTTTTJPM156S", "JPNUEMPQ"]
+      inflation: ["JPNCPIALLMINMEI", "CPALTT01JPM661S"]
+      monetary_policy: ["IRSTCB01JPM156N", "IRLTLT01JPM156N"]
+    template_variables:
+      central_bank_rate: "BoJ Policy Rate"
+      central_bank_meetings: "BoJ Policy Board meetings"
+      employment_metric: "unemployment rate"
+      primary_currency: "JPY"
+
+  EMERGING_MARKETS:
+    central_bank_name: "Multi-Central Bank (Various EM)"
+    policy_rate_name: "EM Aggregate Policy Rate"
+    policy_rate_symbol: "IRSTCB01BRM156N"
+    policy_meetings_name: "Various EM Central Banks"
+    currency: "Various"
+    jurisdiction: "Emerging Markets"
+    economic_indicators:
+      gdp: ["BRAGDPNQDSMEI", "CHNGDPNQDSMEI"]
+      employment: ["LRHUTTTTBRM156S", "LRHUTTTTCNM156S"]
+      inflation: ["BRACPIALLMINMEI", "CHNCPIALLMINMEI"]
+      monetary_policy: ["IRSTCB01BRM156N", "IRSTCB01CNM156N"]
+    template_variables:
+      central_bank_rate: "EM Policy Rates"
+      central_bank_meetings: "Various EM Central Bank meetings"
+      employment_metric: "unemployment rate"
+      primary_currency: "Various"
+
+# Regional volatility parameters (region-specific market intelligence)
+regional_volatility_parameters:
+  US:
+    volatility_index: "VIX"
+    long_term_mean: 19.5
+    reversion_speed: 0.15
+    percentile_calculation_base: "SPX_volatility"
+    market_characteristics: "mature_liquid_low_intervention"
+    calculation_methodology: "cboe_vix_methodology"
+
+  AMERICAS:
+    volatility_index: "VIX"
+    long_term_mean: 19.5
+    reversion_speed: 0.15
+    percentile_calculation_base: "SPX_volatility"
+    market_characteristics: "mature_liquid_low_intervention"
+    calculation_methodology: "cboe_vix_methodology"
+
+  EUROPE:
+    volatility_index: "VSTOXX"
+    long_term_mean: 22.3
+    reversion_speed: 0.18
+    percentile_calculation_base: "STOXX50_volatility"
+    market_characteristics: "mature_moderate_intervention"
+    calculation_methodology: "stoxx_vstoxx_methodology"
+
+  ASIA:
+    volatility_index: "Nikkei_Vol"
+    long_term_mean: 21.8
+    reversion_speed: 0.12
+    percentile_calculation_base: "Nikkei_volatility"
+    market_characteristics: "mixed_maturity_high_intervention"
+    calculation_methodology: "nikkei_volatility_methodology"
+
+  EMERGING_MARKETS:
+    volatility_index: "EM_Vol_Composite"
+    long_term_mean: 24.2
+    reversion_speed: 0.20
+    percentile_calculation_base: "EM_composite_volatility"
+    market_characteristics: "developing_high_volatility_intervention"
+    calculation_methodology: "em_composite_volatility"
+
+# Regional data validation rules
+regional_validation:
+  cross_contamination_prevention: true
+  fail_fast_validation: true
+  minimum_region_specificity: 0.90
+  blocking_validation_rules:
+    - no_fed_data_in_europe: true
+    - no_ecb_data_in_americas: true
+    - region_appropriate_currencies: true
+    - central_bank_consistency: true
+    - regional_volatility_parameters_unique: true
+
+  template_artifact_detection:
+    volatility_parameter_variance_threshold: 0.02  # 2% minimum variance between regions
+    identical_value_flags:
+      - long_term_mean
+      - reversion_speed
+      - percentile_rank
+    cross_regional_comparison_enabled: true
+    fail_on_template_artifacts: false  # Warning mode initially
+
+# Economic data sources configuration
+data_sources:
+  fred:
+    priority: 1
+    reliability_score: 1.0
+    refresh_frequency: "daily"
+    key_indicators:
+      - GDP
+      - GDPC1
+      - A191RL1Q225SBEA
+      - PAYEMS
+      - CIVPART
+      - ICSA
+      - FEDFUNDS
+      - DGS10
+      - DGS2
+      - CPIAUCSL
+      - CPILFESL
+
+  imf:
+    priority: 2
+    reliability_score: 0.95
+    refresh_frequency: "weekly"
+    focus: "global_economic_indicators"
+
+  alpha_vantage:
+    priority: 3
+    reliability_score: 0.90
+    refresh_frequency: "real_time"
+    focus: "market_indicators_currency_data"
+
+  eia:
+    priority: 4
+    reliability_score: 0.90
+    refresh_frequency: "daily"
+    focus: "energy_market_data"
+
+  coingecko:
+    priority: 5
+    reliability_score: 0.85
+    refresh_frequency: "real_time"
+    focus: "risk_sentiment_indicators"
+
+# File paths and naming conventions
+file_paths:
+  discovery_output: "./data/outputs/macro_analysis/discovery/"
+  analysis_output: "./data/outputs/macro_analysis/analysis/"
+  synthesis_output: "./data/outputs/macro_analysis/"
+  validation_output: "./data/outputs/macro_analysis/validation/"
+
+  naming_convention:
+    discovery: "{region}_{date}_discovery.json"
+    analysis: "{region}_{date}_analysis.json"
+    synthesis: "{region}_{date}.md"
+    validation: "{region}_{date}_validation.json"
+
+  template_path: "./templates/analysis/macro_analysis_template.md"
+  schema_path: "./scripts/schemas/"
+
+# Economic policy assessment configuration
+policy_assessment:
+  monetary_policy:
+    central_banks:
+      - FED
+      - ECB
+      - BOJ
+      - PBOC
+    policy_tools:
+      - interest_rates
+      - quantitative_easing
+      - forward_guidance
+      - yield_curve_control
+    transmission_channels:
+      - credit_channel
+      - asset_price_channel
+      - exchange_rate_channel
+      - expectations_channel
+
+  fiscal_policy:
+    indicators:
+      - debt_to_gdp_ratio
+      - fiscal_deficit
+      - automatic_stabilizers
+      - discretionary_spending
+    effectiveness_metrics:
+      - fiscal_multiplier
+      - debt_sustainability
+      - crowding_out_effects
+
+# Economic forecasting framework
+forecasting:
+  methods:
+    econometric_models:
+      weight: 0.40
+      confidence_base: 0.85
+    leading_indicators:
+      weight: 0.35
+      confidence_base: 0.88
+    survey_based:
+      weight: 0.25
+      confidence_base: 0.82
+
+  scenarios:
+    base_case:
+      probability: 0.60
+      confidence_threshold: 0.90
+    bull_case:
+      probability: 0.20
+      confidence_threshold: 0.85
+    bear_case:
+      probability: 0.20
+      confidence_threshold: 0.85
+
+# Asset allocation framework
+asset_allocation:
+  asset_classes:
+    - equities
+    - fixed_income
+    - commodities
+    - real_estate
+    - cash_short_term_bonds
+    - international
+
+  portfolio_types:
+    growth:
+      equity_range: [70, 85]
+      fixed_income_range: [10, 25]
+      alternatives_range: [5, 15]
+    balanced:
+      equity_range: [50, 65]
+      fixed_income_range: [25, 40]
+      alternatives_range: [10, 20]
+    conservative:
+      equity_range: [25, 40]
+      fixed_income_range: [50, 65]
+      alternatives_range: [5, 15]
+
+  rebalancing_triggers:
+    vix_threshold: 25
+    correlation_limit: 0.8
+    allocation_drift_threshold: 0.05
+
+# Quality assurance parameters
+quality_assurance:
+  validation_checks:
+    template_compliance: true
+    schema_validation: true
+    confidence_propagation: true
+    economic_consistency: true
+    cross_regional_validation: true
+
+  blocking_thresholds:
+    economic_data_variance: 0.02
+    confidence_minimum: 0.90
+    template_gap_coverage: 0.95
+
+  institutional_certification:
+    minimum_confidence: 0.95
+    evidence_backing_required: true
+    multi_source_validation: true
+    real_time_data_current: true
+
+  document_quality:
+    minimum_document_length: 15000  # Minimum characters for institutional quality
+
+# Command execution parameters
+command_execution:
+  timeout_seconds: 300
+  retry_attempts: 3
+  parallel_processing: true
+  cache_results: true
+
+  discover:
+    default_region: "US"
+    multi_source_required: true
+    economic_context_integration: true
+
+  analyze:
+    business_cycle_modeling: true
+    monetary_policy_analysis: true
+    economic_scenario_analysis: true
+    cross_asset_analysis: true
+    policy_transmission_analysis: true
+
+  synthesize:
+    synthesis_depth: "institutional"
+    cross_regional_analysis: true
+    economic_context: true
+    risk_quantification: "institutional"
+    policy_analysis: true
+
+  validate:
+    confidence_threshold: 0.90
+    validation_depth: "institutional"
+    real_time_validation: true
+    policy_validation: true
+
+# Error handling and logging
+error_handling:
+  fail_fast: true
+  meaningful_exceptions: true
+  fallback_mechanisms: false
+  graceful_degradation: false
+
+  log_levels:
+    discovery: "INFO"
+    analysis: "INFO"
+    synthesis: "INFO"
+    validation: "INFO"
+    errors: "ERROR"
+
+# Performance optimization
+performance:
+  cache_enabled: true
+  cache_ttl_hours: 24
+  parallel_api_calls: true
+  rate_limiting: true
+  connection_pooling: true
+
+  memory_limits:
+    discovery: "512MB"
+    analysis: "1GB"
+    synthesis: "512MB"
+    validation: "512MB"
+
+# API configuration references
+api_configuration:
+  service_health_monitoring: true
+  automatic_failover: false
+  circuit_breaker_enabled: true
+  request_timeout_seconds: 30
+  max_retries: 3
+
+# Data quality parameters (NO FALLBACK VALUES - fail fast when data unavailable)
+data_quality_parameters:
+  # Confidence decay parameters (for aging data)
+  market_data_half_life_hours: 24.0  # Market data half-life (24 hours)
+  market_data_min_confidence: 0.3    # Minimum confidence floor
+  market_data_critical_age_hours: 72.0  # Critical age threshold
+  economic_data_half_life_hours: 168.0  # Economic data half-life (1 week)
+  economic_data_min_confidence: 0.4     # Economic data minimum confidence
+  economic_data_critical_age_hours: 720.0  # Economic data critical age (30 days)
+  volatility_data_half_life_hours: 6.0     # Volatility data half-life (6 hours)
+  volatility_data_min_confidence: 0.2      # Volatility minimum confidence
+  volatility_data_critical_age_hours: 24.0 # Volatility critical age (1 day)
+  consumer_conf_half_life_hours: 336.0     # Consumer confidence half-life (2 weeks)
+  consumer_conf_min_confidence: 0.5        # Consumer confidence minimum
+  consumer_conf_critical_age_hours: 2160.0 # Consumer confidence critical age (90 days)
+
+  # Quality assessment weights
+  quality_weight_completeness: 0.25  # Data completeness weight
+  quality_weight_freshness: 0.30     # Data freshness weight
+  quality_weight_reliability: 0.25   # Source reliability weight
+  quality_weight_consistency: 0.15   # Cross-source consistency weight
+  quality_weight_statistical: 0.05   # Statistical confidence weight
+
+# Time window configurations (replacing hardcoded time values)
+time_windows:
+  economic_calendar_days: 30  # Days ahead for economic calendar events
+  surprise_index_lookback_days: 90  # Days lookback for economic surprise index
+  fomc_advance_days: 15  # Days ahead for FOMC meeting mock data
+  market_regime_duration_days: 45  # Estimated market regime duration
+  m2_money_supply_timeframe: "2y"  # Money supply data timeframe
+  fed_rates_timeframe: "1y"  # Fed funds rate data timeframe
+  balance_sheet_timeframe: "2y"  # Fed balance sheet data timeframe
+
+# API performance thresholds (replacing hardcoded performance values)
+api_performance:
+  max_response_time_ms: 30000  # Maximum acceptable response time
+  fred_response_time_ms: 1250  # Expected FRED API response time
+  imf_response_time_ms: 2100  # Expected IMF API response time
+  alpha_vantage_response_time_ms: 800  # Expected Alpha Vantage response time
+  eia_response_time_ms: 1500  # Expected EIA API response time
+  min_success_rate: 0.80  # Minimum API success rate
+  min_data_freshness: 0.92  # Minimum data freshness score
+  health_score_threshold: 0.85  # Minimum health score threshold
+  stale_data_count_threshold: 2  # Maximum stale data items
+
+# Volatility analysis parameters (NO HARDCODED VALUES - calculate from real-time data)
+volatility_analysis:
+  # Analysis parameters (not fallback values)
+  volatility_lookback_periods: [20, 50, 200]  # Days for volatility calculation
+  percentile_calculation_periods: [252, 504, 1260]  # Trading days for percentile ranking
+  mean_reversion_detection_threshold: 0.05  # Threshold for mean reversion detection
+  regime_change_detection_sensitivity: 2.0  # Standard deviations for regime change
+  minimum_data_points_for_analysis: 50  # Minimum data points for reliable volatility analysis
+
+# Cross-asset correlation analysis (NO HARDCODED VALUES - calculate from real-time data)
+correlation_analysis:
+  # Analysis parameters (not fallback values)
+  correlation_lookback_periods: [30, 90, 252]  # Days for correlation calculation
+  rolling_correlation_window: 60  # Days for rolling correlation
+  correlation_significance_threshold: 0.05  # Statistical significance threshold
+  minimum_correlation_data_points: 30  # Minimum data points for reliable correlation
+
+# Business cycle analysis parameters (NO HARDCODED VALUES - use BusinessCycleEngine)
+business_cycle_analysis:
+  # Historical cycle statistics for reference (not fallback values)
+  average_expansion_duration: 58  # Average expansion duration (months) - historical reference
+  average_contraction_duration: 11  # Average contraction duration (months) - historical reference
+  expansion_std_dev: 24  # Expansion duration standard deviation - historical reference
+  contraction_std_dev: 6  # Contraction duration standard deviation - historical reference
+
+  # Analysis parameters (not fallback values)
+  minimum_data_points_required: 10  # Minimum data points for cycle analysis
+  confidence_threshold_for_phase_identification: 0.8  # Confidence threshold for phase calls
+  statistical_significance_level: 0.05  # Statistical significance for cycle identification
+
+# Risk assessment framework (NO HARDCODED VALUES - calculate from real-time analysis)
+risk_assessment_framework:
+  # Risk calculation parameters (not fallback values)
+  risk_assessment_lookback_periods: [30, 90, 252]  # Days for risk calculation
+  probability_confidence_threshold: 0.8  # Minimum confidence for probability estimates
+  impact_assessment_methodology: "monte_carlo"  # Risk impact assessment method
+  minimum_data_points_for_risk_assessment: 30  # Minimum data for reliable risk analysis
+
+# Service reliability parameters (replacing hardcoded service scores)
+service_reliability:
+  fred_economic_cli: 0.95  # FRED service reliability score
+  imf_cli: 0.85  # IMF service reliability score
+  alpha_vantage_cli: 0.90  # Alpha Vantage service reliability score
+  eia_energy_cli: 0.88  # EIA service reliability score
+  coingecko_cli: 0.85  # CoinGecko service reliability score
+  fmp_cli: 0.90  # FMP service reliability score
+  overall_health_minimum: 0.90  # Overall service health minimum
+
+# Dynamic confidence calculation parameters
+confidence_calculation:
+  base_confidence_adjustment: 0.6  # Base confidence multiplier
+  source_confidence_increment: 0.1  # Confidence increment per data source
+  max_source_multiplier: 1.0  # Maximum source multiplier
+
+  # Quality factor adjustments
+  real_time_data_bonus: 0.05  # Bonus for real-time data
+  cross_validated_bonus: 0.08  # Bonus for cross-validated data
+  institutional_source_bonus: 0.10  # Bonus for institutional source
+  complete_data_set_bonus: 0.05  # Bonus for complete data set
+  missing_data_penalty: -0.10  # Penalty for missing data
+  stale_data_penalty: -0.05  # Penalty for stale data
+
+# Sector analysis framework (NO HARDCODED VALUES - calculate from real-time data)
+sector_analysis_framework:
+  # Analysis parameters (not fallback values)
+  sensitivity_calculation_periods: [30, 90, 252]  # Days for sensitivity calculation
+  correlation_lookback_periods: [60, 180, 504]  # Days for correlation analysis
+  sector_classification_methodology: "gics"  # Sector classification system
+  minimum_data_points_for_sector_analysis: 50  # Minimum data points for reliable analysis
+
+# Development and testing
+development:
+  debug_mode: false
+  test_data_enabled: false
+  mock_api_calls: false
+  validation_strict_mode: true
+
+  test_regions:
+    - "US"
+    - "TEST"
+
+  test_confidence_overrides:
+    discovery: 0.95
+    analysis: 0.95
+    synthesis: 0.95
+    validation: 0.95

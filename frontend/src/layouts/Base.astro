@@ -137,7 +137,7 @@ const { title, meta_title, description, image, noindex, canonical } =
     {canonical && <link rel="canonical" href={canonical} item-prop="url" />}
 
     <!-- Resource preload hints for critical assets -->
-    <link rel="preload" href="/styles/main.css" as="style" />
+    <!-- CSS is imported via Vite, preload handled automatically -->
     <link rel="preload" href="/fonts/heebo/heebo.css" as="style" />
     <link
       rel="preload"

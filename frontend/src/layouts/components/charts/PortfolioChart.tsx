@@ -1018,7 +1018,7 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
         case "live-signals-weekly-candlestick":
           return "Live Signals Weekly Candlestick Chart";
         case "trade-pnl-waterfall":
-          return "Trade PnL Waterfall Chart";
+          return "Closed Position PnL Waterfall";
         case "closed-positions-pnl-timeseries":
           return "Closed Position PnL Performance";
         case "open-positions-pnl-timeseries": {

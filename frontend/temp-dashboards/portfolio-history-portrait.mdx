@@ -11,17 +11,17 @@ draft: false
 
 {/* Header Section */}
 <div class="dashboard-header text-center">
-  <h1 class="text-4xl font-bold text-dark dark:text-white mb-2">
+  <h1 class="text-4xl mt-8 font-bold text-dark dark:text-white">
     Twitter Live Signals
   </h1>
 </div>
 
 {/* Charts Section */}
-<div class="grid grid-cols-1 gap-8">
+<div class="grid grid-cols-1">
 
 <ChartDisplay
   client:only="react"
-  title="Trade PnL Waterfall Chart"
+  title="Closed Position PnL Waterfall"
   category="Trading Performance"
   description="Waterfall chart showing individual trade profits and losses from closed positions, sorted from highest to lowest PnL. Visualizes contribution of each trade to overall portfolio performance."
   chartType="trade-pnl-waterfall"
@@ -40,8 +40,8 @@ draft: false
 </div>
 
 {/* Footer Section */}
-<div className="dashboard-footer mt-8 flex justify-center">
-  <h1 className="brand-text m-0 text-4xl font-semibold text-text-dark dark:text-darkmode-text-dark">
+<div className="dashboard-footer flex justify-center">
+  <h1 className="brand-text mb-8 m-0 text-4xl font-semibold text-text-dark dark:text-darkmode-text-dark">
     colemorton.com
   </h1>
 </div>

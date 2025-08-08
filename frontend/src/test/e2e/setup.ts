@@ -1,4 +1,5 @@
 import puppeteer, { type Browser, type Page } from "puppeteer";
+import { setTimeout } from "node:timers/promises";
 
 export interface TestContext {
   browser: Browser;
@@ -58,6 +59,30 @@ export class E2ETestHelper {
 
     this.pages.push(page);
     return page;
+  }
+
+  // Helper function to replace page.waitForTimeout
+  static async sleep(milliseconds: number): Promise<void> {
+    await setTimeout(milliseconds);
+  }
+
+  // Helper function for request interception (replaces page.route)
+  static async setupRequestInterception(
+    page: Page,
+    urlPattern: string,
+    handler: (request: any) => void,
+  ): Promise<void> {
+    await page.setRequestInterception(true);
+    page.on("request", (request) => {
+      if (
+        request.url().includes(urlPattern) ||
+        new RegExp(urlPattern).test(request.url())
+      ) {
+        handler(request);
+      } else {
+        request.continue();
+      }
+    });
   }
 
   async navigateToCalculator(

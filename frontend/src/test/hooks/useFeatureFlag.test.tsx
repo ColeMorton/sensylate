@@ -6,7 +6,7 @@ import React from "react";
 const mockEnv = {
   ...import.meta.env,
   PUBLIC_FEATURE_SEARCH: "true",
-  PUBLIC_FEATURE_THEME_SWITCHER: "false",
+  PUBLIC_FEATURE_THEME_SWITCHER: undefined, // Test fallback to config
   PUBLIC_FEATURE_COMMENTS: "true",
   PUBLIC_FEATURE_GTM: "false",
   PUBLIC_FEATURE_CALCULATOR_ADVANCED: "true",
@@ -22,7 +22,7 @@ vi.mock("@/config/config.json", () => ({
   default: {
     settings: {
       search: false,
-      themeSwitcher: true,
+      theme_switcher: true,
     },
     disqus: {
       enable: false,

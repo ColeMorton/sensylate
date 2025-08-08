@@ -1,0 +1,218 @@
+region: US
+display_name: "United States"
+
+central_bank:
+  name: "Federal Reserve"
+  short_name: "Fed"
+  policy_rate_name: "Fed Funds Rate"
+  policy_framework: "dual_mandate"
+  meeting_frequency: 8  # per year
+  key_officials:
+    - "Chair"
+    - "Vice Chair"
+    - "Governors"
+  policy_tools:
+    - "fed_funds_rate"
+    - "quantitative_easing"
+    - "forward_guidance"
+    - "balance_sheet_policy"
+    - "regulatory_measures"
+
+currency:
+  code: "USD"
+  name: "US Dollar"
+  regime: "floating"
+  is_reserve_currency: true
+  safe_haven_status: true
+  carry_trade_characteristics:
+    typical_volatility: 12.5
+    correlation_with_risk_sentiment: -0.25
+
+key_economic_indicators:
+  primary:
+    - name: "Personal Consumption Expenditures"
+      code: "PCE"
+      frequency: "monthly"
+      importance: "high"
+      fred_code: "PCE"
+      typical_range: [1.5, 4.0]
+      target_level: 2.0
+
+    - name: "Core PCE Price Index"
+      code: "CORE_PCE"
+      frequency: "monthly"
+      importance: "critical"
+      fred_code: "PCEPILFE"
+      typical_range: [1.0, 3.5]
+      target_level: 2.0
+
+    - name: "JOLTS Job Openings"
+      code: "JOLTS"
+      frequency: "monthly"
+      importance: "high"
+      fred_code: "JTSJOL"
+      typical_range: [5000000, 12000000]
+      units: "thousands"
+
+    - name: "ISM Manufacturing PMI"
+      code: "ISM_MFG"
+      frequency: "monthly"
+      importance: "high"
+      typical_range: [35, 65]
+      expansion_threshold: 50
+
+    - name: "ISM Services PMI"
+      code: "ISM_SERVICES"
+      frequency: "monthly"
+      importance: "high"
+      typical_range: [35, 70]
+      expansion_threshold: 50
+
+    - name: "Consumer Confidence Index"
+      code: "CONSUMER_CONFIDENCE"
+      frequency: "monthly"
+      importance: "medium"
+      typical_range: [50, 140]
+
+    - name: "Philadelphia Fed Index"
+      code: "PHIL_FED"
+      frequency: "monthly"
+      importance: "medium"
+      typical_range: [-30, 40]
+      expansion_threshold: 0
+
+  secondary:
+    - name: "NFIB Small Business Optimism"
+      code: "NFIB"
+      frequency: "monthly"
+      importance: "medium"
+      typical_range: [75, 110]
+
+    - name: "Initial Jobless Claims"
+      code: "INITIAL_CLAIMS"
+      frequency: "weekly"
+      importance: "high"
+      fred_code: "ICSA"
+      typical_range: [200000, 600000]
+      units: "persons"
+
+    - name: "Housing Starts"
+      code: "HOUSING_STARTS"
+      frequency: "monthly"
+      importance: "medium"
+      fred_code: "HOUST"
+      typical_range: [800000, 1800000]
+
+benchmark_securities:
+  government_bonds:
+    - name: "US Treasury 10-Year"
+      code: "UST_10Y"
+      maturity: 10
+      typical_range: [1.0, 6.0]
+
+    - name: "US Treasury 2-Year"
+      code: "UST_2Y"
+      maturity: 2
+      typical_range: [0.5, 5.5]
+
+    - name: "US Treasury 3-Month"
+      code: "UST_3M"
+      maturity: 0.25
+      typical_range: [0.0, 5.0]
+
+  equity_indices:
+    - name: "S&P 500"
+      code: "SPX"
+      sector_focus: "broad_market"
+
+    - name: "NASDAQ Composite"
+      code: "NDX"
+      sector_focus: "technology"
+
+    - name: "Russell 2000"
+      code: "RTY"
+      sector_focus: "small_cap"
+
+    - name: "Dow Jones Industrial"
+      code: "DJI"
+      sector_focus: "blue_chip"
+
+  credit_markets:
+    - name: "Investment Grade Credit Spreads"
+      code: "IG_SPREADS"
+      typical_range: [70, 300]
+      units: "basis_points"
+
+    - name: "High Yield Credit Spreads"
+      code: "HY_SPREADS"
+      typical_range: [200, 800]
+      units: "basis_points"
+
+    - name: "Municipal Bond Index"
+      code: "MUNI"
+      tax_equivalent: true
+
+market_structure:
+  banking_system: "market_based"
+  mortgage_market: "securitized"
+  corporate_funding: "market_heavy"
+  household_debt_ratio: [70, 85]  # % of GDP
+  corporate_debt_ratio: [45, 55]  # % of GDP
+
+economic_transmission_channels:
+  monetary_policy:
+    primary: "interest_rate_channel"
+    secondary: ["credit_channel", "asset_price_channel", "exchange_rate_channel"]
+    effectiveness: 0.85
+    lag_quarters: 4
+
+  fiscal_policy:
+    automatic_stabilizers: 0.35  # effectiveness score
+    discretionary_multiplier: 1.2
+    debt_sustainability_threshold: 100  # % of GDP
+
+risk_factors:
+  domestic:
+    - name: "inflation_persistence"
+      probability: 0.25
+      impact: 4
+
+    - name: "financial_stability"
+      probability: 0.15
+      impact: 5
+
+    - name: "labor_market_tightness"
+      probability: 0.30
+      impact: 3
+
+  external:
+    - name: "trade_policy_uncertainty"
+      probability: 0.35
+      impact: 3
+
+    - name: "global_recession_spillover"
+      probability: 0.20
+      impact: 4
+
+correlation_patterns:
+  equity_bond: -0.3  # typical correlation in normal times
+  equity_dollar: -0.1
+  bond_dollar: 0.4
+  commodity_dollar: -0.6
+
+regional_specifics:
+  business_cycle_length: 96  # months average
+  recession_frequency: 7  # years average
+  typical_recession_duration: 11  # months
+  recovery_characteristics: "V_shaped"
+
+data_sources:
+  primary: ["FRED", "BEA", "BLS", "Fed"]
+  secondary: ["Alpha Vantage", "Bloomberg", "Yahoo Finance"]
+  alternative: ["Regional Fed Surveys", "NFIB", "Conference Board"]
+
+quality_standards:
+  min_confidence_threshold: 0.85
+  data_freshness_requirement: 30  # days
+  cross_validation_threshold: 0.90
+  regional_specificity_target: 0.95
