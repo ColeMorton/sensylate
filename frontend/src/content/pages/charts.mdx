@@ -41,10 +41,18 @@ import ChartDisplay from "@/layouts/shortcodes/ChartDisplay.tsx";
 
 <ChartDisplay
   client:only="react"
-  title="Live Signals Equity Curve"
-  category="Live Trading Performance"
-  description="Comprehensive live trading analysis showing equity curve, MFE (Maximum Favorable Excursion), and MAE (Maximum Adverse Excursion). Real-time performance from April to August 2025 with risk management insights."
+  title="Live Signals MFE/MAE Analysis"
+  category="Live Trading Risk Analysis"
+  description="Risk-reward analysis focusing on Maximum Favorable Excursion (MFE) and Maximum Adverse Excursion (MAE) with portfolio equity as context. Shows potential upside vs downside exposure in live trading."
   chartType="live-signals-equity-curve"
+/>
+
+<ChartDisplay
+  client:only="react"
+  title="Live Signals vs Market Benchmarks"
+  category="Live Trading Performance Comparison"
+  description="Comparative performance analysis showing live signals portfolio against major market benchmarks: SPY (S&P 500), QQQ (Nasdaq 100), and Bitcoin. All series normalized to 100% for relative performance comparison."
+  chartType="live-signals-benchmark-comparison"
 />
 
 <ChartDisplay
@@ -69,7 +77,7 @@ import ChartDisplay from "@/layouts/shortcodes/ChartDisplay.tsx";
 
 <ChartDisplay
   client:only="react"
-  title="Trade PnL Waterfall Chart"
+  title="Closed Position PnL Waterfall"
   category="Live Trading Individual Trades"
   description="Waterfall chart showing individual trade profits and losses from closed positions, sorted from highest to lowest PnL. Visualizes contribution of each trade to overall portfolio performance."
   chartType="trade-pnl-waterfall"
@@ -77,29 +85,43 @@ import ChartDisplay from "@/layouts/shortcodes/ChartDisplay.tsx";
 
 <ChartDisplay
   client:only="react"
-  title="Open Positions Cumulative PnL Time Series"
-  category="Live Trading Open Positions"
-  description="Multi-line time series showing cumulative PnL for each open position, indexed to $0 at entry date. Track real-time performance across the live portfolio with individual lines for each ticker."
+  title="Position Cumulative PnL Time Series"
+  category="Live Trading Positions"
+  description="Multi-line time series showing cumulative PnL for each position, indexed to $0 at entry date. Shows closed positions data when no open positions are available (38 completed trades)."
   chartType="open-positions-pnl-timeseries"
+  positionType="auto"
 />
 
 <ChartDisplay
   client:only="react"
-  title="Open Positions Cumulative PnL Time Series (Weekly)"
-  category="Live Trading Open Positions"
-  description="Weekly aggregated view of open positions PnL showing end-of-week cumulative values for each ticker. Provides cleaner visualization of longer-term trends with reduced data noise."
+  title="Position Cumulative PnL Time Series (Weekly)"
+  category="Live Trading Positions"
+  description="Weekly aggregated view of position PnL showing end-of-week cumulative values for each ticker. Shows closed positions data when no open positions are available, providing cleaner visualization of longer-term trends."
   chartType="open-positions-pnl-timeseries"
   timeframe="weekly"
+  positionType="auto"
 />
 
 <ChartDisplay
   client:only="react"
-  title="Open Positions Cumulative PnL Time Series (Indexed)"
-  category="Live Trading Open Positions"
-  description="Indexed view of open positions PnL showing cumulative values by position bar rather than date. Each bar represents sequential position progression from entry (bar 0) onwards for cleaner comparative analysis."
+  title="Open Position PnL Time Series (Indexed)"
+  category="Live Trading Positions"
+  description="Indexed view of position PnL showing cumulative values by position bar rather than date. Shows closed positions data when no open positions are available (38 completed trades), with each bar representing sequential position progression from entry onwards."
   chartType="open-positions-pnl-timeseries"
   timeframe="daily"
   indexed={true}
+  positionType="open"
+/>
+
+<ChartDisplay
+  client:only="react"
+  title="Closed Position PnL Performance"
+  category="Live Trading Positions"
+  description="Indexed view of position PnL showing cumulative values by position bar rather than date. Shows closed positions data when no open positions are available (38 completed trades), with each bar representing sequential position progression from entry onwards."
+  chartType="closed-positions-pnl-timeseries"
+  timeframe="daily"
+  indexed={true}
+  positionType="closed"
 />
 
 </div>

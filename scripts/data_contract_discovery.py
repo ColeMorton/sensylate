@@ -374,11 +374,16 @@ class DataContractDiscovery:
             pass
 
         try:
-            # Try to convert to datetime
-            pd.to_datetime(series, errors="raise")
+            # Try to convert to datetime with explicit format to avoid warnings
+            pd.to_datetime(series, errors="raise", format="ISO8601")
             return "datetime"
         except (ValueError, TypeError):
-            pass
+            try:
+                # Fallback to mixed format parsing
+                pd.to_datetime(series, errors="raise", format="mixed")
+                return "datetime"
+            except (ValueError, TypeError):
+                pass
 
         # Default to string
         return "string"

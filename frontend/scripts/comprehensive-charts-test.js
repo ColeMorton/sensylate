@@ -178,7 +178,7 @@ class ComprehensiveChartsValidator {
       { type: 'live-signals-equity-curve', title: 'Live Signals Equity Curve' },
       { type: 'live-signals-drawdowns', title: 'Live Signals Drawdown Analysis' },
       { type: 'live-signals-weekly-candlestick', title: 'Live Signals Weekly Candlestick Chart' },
-      { type: 'trade-pnl-waterfall', title: 'Trade PnL Waterfall Chart' },
+      { type: 'trade-pnl-waterfall', title: 'Closed Position PnL Waterfall' },
       { type: 'open-positions-pnl-timeseries', title: 'Open Positions Cumulative PnL Time Series' },
       { type: 'apple-stock', title: 'Apple Stock Reference' }
     ];

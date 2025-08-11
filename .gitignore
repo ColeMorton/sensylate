@@ -133,3 +133,8 @@ scripts/.hypothesis/
 /.claude/logs/
 **/*_conversation_log_*.md
 *.conversation.md
+src/test/e2e/screenshots/homepage-dark-mode-2025-08-08T03-38-17-419Z.png
+src/test/e2e/screenshots/homepage-initial-load-2025-08-08T03-38-08-925Z.png
+src/test/e2e/screenshots/homepage-light-mode-2025-08-08T03-38-13-432Z.png
+/frontend/src/test/photo-booth/e2e/screenshots
+/frontend/frontend/src/test/photo-booth/e2e/screenshots

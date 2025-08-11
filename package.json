@@ -4,5 +4,8 @@
     "plotly.js-basic-dist-min": "^3.0.1",
     "puppeteer": "^24.10.2",
     "typescript": "^5.8.3"
+  },
+  "devDependencies": {
+    "@testing-library/user-event": "^14.6.1"
   }
 }

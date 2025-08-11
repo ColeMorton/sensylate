@@ -1,0 +1,624 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sensylate.com/schemas/trade_history_validation.json",
+  "title": "Trade History Validation Schema",
+  "description": "Comprehensive validation schema for trade history validation JSON outputs from DASV Phase 4 framework",
+  "type": "object",
+  "required": [
+    "portfolio",
+    "validation_metadata",
+    "statistical_validation",
+    "report_integrity",
+    "business_logic_validation",
+    "confidence_scoring",
+    "overall_assessment",
+    "validation_summary"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "portfolio": {
+      "type": "string",
+      "description": "Portfolio identifier for trade history validation"
+    },
+    "validation_metadata": {
+      "type": "object",
+      "description": "Core metadata about the validation execution",
+      "required": [
+        "execution_timestamp",
+        "validation_depth",
+        "confidence_threshold",
+        "protocol_version"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "execution_timestamp": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d{6})?[+-]\\d{2}:\\d{2}$",
+          "description": "ISO 8601 timestamp with timezone"
+        },
+        "validation_depth": {
+          "type": "string",
+          "enum": ["basic", "standard", "comprehensive", "institutional"],
+          "description": "Validation rigor level"
+        },
+        "confidence_threshold": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Minimum confidence threshold for institutional certification"
+        },
+        "protocol_version": {
+          "type": "string",
+          "enum": ["DASV_Phase_4_Comprehensive", "DASV_Phase_4_Institutional"],
+          "description": "Validation protocol version identifier"
+        }
+      }
+    },
+    "statistical_validation": {
+      "type": "object",
+      "description": "Statistical validation results with finance-grade precision",
+      "required": [
+        "pnl_accuracy_validation",
+        "win_rate_validation",
+        "sharpe_ratio_validation",
+        "sample_adequacy_validation",
+        "overall_statistical_confidence"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "pnl_accuracy_validation": {
+          "type": "object",
+          "description": "P&L accuracy validation with ±$0.01 tolerance",
+          "required": [
+            "csv_total_pnl",
+            "calculated_total_pnl",
+            "variance",
+            "tolerance_met",
+            "validation_confidence"
+          ],
+          "properties": {
+            "csv_total_pnl": {
+              "type": "number",
+              "description": "Total P&L from CSV source"
+            },
+            "calculated_total_pnl": {
+              "type": "number",
+              "description": "Total P&L from calculations"
+            },
+            "variance": {
+              "type": "number",
+              "minimum": 0,
+              "description": "Absolute variance between CSV and calculated P&L"
+            },
+            "tolerance_met": {
+              "type": "boolean",
+              "description": "Whether P&L variance is within ±$0.01 tolerance"
+            },
+            "validation_confidence": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "description": "P&L validation confidence score"
+            }
+          }
+        },
+        "win_rate_validation": {
+          "type": "object",
+          "description": "Win rate validation with breakeven trade handling",
+          "required": [
+            "authoritative_win_rate",
+            "discovery_win_rate",
+            "discovery_tolerance_met",
+            "validation_confidence"
+          ],
+          "properties": {
+            "authoritative_win_rate": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "description": "Authoritative win rate from unified calculation engine"
+            },
+            "discovery_win_rate": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "description": "Win rate from discovery phase"
+            },
+            "analysis_win_rate": {
+              "type": ["number", "null"],
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "description": "Win rate from analysis phase (if available)"
+            },
+            "discovery_variance": {
+              "type": "number",
+              "minimum": 0,
+              "description": "Variance between authoritative and discovery win rates"
+            },
+            "discovery_tolerance_met": {
+              "type": "boolean",
+              "description": "Whether discovery win rate meets tolerance threshold"
+            },
+            "validation_confidence": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "description": "Win rate validation confidence score"
+            },
+            "breakeven_trades_count": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Number of breakeven trades"
+            }
+          }
+        },
+        "sharpe_ratio_validation": {
+          "type": "object",
+          "description": "Sharpe ratio validation with ±0.02 tolerance",
+          "required": [
+            "authoritative_sharpe",
+            "reported_sharpe",
+            "variance",
+            "tolerance_met",
+            "validation_confidence"
+          ],
+          "properties": {
+            "authoritative_sharpe": {
+              "type": "number",
+              "description": "Authoritative Sharpe ratio from unified calculation engine"
+            },
+            "reported_sharpe": {
+              "type": "number",
+              "description": "Reported Sharpe ratio from analysis phase"
+            },
+            "variance": {
+              "type": "number",
+              "minimum": 0,
+              "description": "Absolute variance between authoritative and reported Sharpe ratios"
+            },
+            "tolerance_met": {
+              "oneOf": [
+                {"type": "boolean"},
+                {"type": "string", "enum": ["True", "False"]}
+              ],
+              "description": "Whether Sharpe ratio variance is within ±0.02 tolerance"
+            },
+            "validation_confidence": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "description": "Sharpe ratio validation confidence score"
+            },
+            "issue_severity": {
+              "type": "string",
+              "enum": ["NONE", "MINOR", "MAJOR", "CRITICAL"],
+              "description": "Issue severity classification"
+            }
+          }
+        },
+        "sample_adequacy_validation": {
+          "type": "object",
+          "description": "Statistical power and sample size adequacy assessment",
+          "required": [
+            "total_trades",
+            "closed_trades",
+            "adequacy_level",
+            "threshold_met",
+            "statistical_power",
+            "validation_confidence"
+          ],
+          "properties": {
+            "total_trades": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Total number of trades"
+            },
+            "closed_trades": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Number of closed trades for statistical analysis"
+            },
+            "adequacy_level": {
+              "type": "string",
+              "enum": ["ADEQUATE", "MINIMAL", "INSUFFICIENT"],
+              "description": "Sample adequacy level classification"
+            },
+            "threshold_met": {
+              "type": "boolean",
+              "description": "Whether minimum sample size threshold is met"
+            },
+            "statistical_power": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "description": "Statistical power of the sample"
+            },
+            "validation_confidence": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "description": "Sample adequacy validation confidence"
+            }
+          }
+        },
+        "distribution_analysis_validation": {
+          "type": "object",
+          "description": "Distribution analysis parameter validation",
+          "additionalProperties": true
+        },
+        "advanced_metrics_validation": {
+          "type": "object",
+          "description": "Advanced metrics validation (SQN, etc.)",
+          "additionalProperties": true
+        },
+        "overall_statistical_confidence": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Overall statistical validation confidence score"
+        },
+        "critical_issues": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Critical statistical validation issues"
+        },
+        "validation_success": {
+          "type": "boolean",
+          "description": "Whether statistical validation passed"
+        }
+      }
+    },
+    "report_integrity": {
+      "type": "object",
+      "description": "Report integrity and completeness verification",
+      "required": [
+        "structural_completeness",
+        "content_accuracy",
+        "overall_integrity_confidence"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "structural_completeness": {
+          "type": "object",
+          "description": "Report structural completeness assessment",
+          "required": [
+            "sections_found",
+            "required_sections",
+            "completeness_score",
+            "validation_confidence"
+          ],
+          "properties": {
+            "sections_found": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Number of required sections found"
+            },
+            "required_sections": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "Total number of required sections"
+            },
+            "completeness_score": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "description": "Structural completeness score"
+            },
+            "validation_confidence": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "description": "Structural completeness confidence"
+            }
+          }
+        },
+        "content_accuracy": {
+          "type": "object",
+          "description": "Content accuracy cross-validation",
+          "required": [
+            "validation_confidence"
+          ],
+          "properties": {
+            "discovery_analysis_consistency": {
+              "type": "boolean",
+              "description": "Consistency between discovery and analysis phases"
+            },
+            "validation_confidence": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "description": "Content accuracy confidence"
+            }
+          }
+        },
+        "overall_integrity_confidence": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Overall report integrity confidence score"
+        }
+      }
+    },
+    "business_logic_validation": {
+      "type": "object",
+      "description": "Business logic validation and coherence checking",
+      "required": [
+        "signal_effectiveness_coherence",
+        "optimization_feasibility",
+        "risk_assessment_coherence",
+        "overall_business_logic_confidence"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "signal_effectiveness_coherence": {
+          "type": "object",
+          "description": "Signal effectiveness coherence validation",
+          "required": [
+            "validation_confidence"
+          ],
+          "properties": {
+            "win_rate_bounds_valid": {
+              "type": "boolean",
+              "description": "Whether win rates are within valid bounds [0,1]"
+            },
+            "confidence_scores_valid": {
+              "type": "boolean",
+              "description": "Whether confidence scores are within valid bounds [0,1]"
+            },
+            "validation_confidence": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "description": "Signal effectiveness coherence confidence"
+            }
+          }
+        },
+        "optimization_feasibility": {
+          "type": "object",
+          "description": "Optimization feasibility assessment",
+          "required": [
+            "validation_confidence"
+          ],
+          "properties": {
+            "feasibility_assessment": {
+              "type": "string",
+              "enum": ["High", "Moderate", "Low"],
+              "description": "Overall feasibility assessment"
+            },
+            "validation_confidence": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "description": "Optimization feasibility confidence"
+            }
+          }
+        },
+        "risk_assessment_coherence": {
+          "type": "object",
+          "description": "Risk assessment coherence validation",
+          "required": [
+            "validation_confidence"
+          ],
+          "properties": {
+            "correlation_bounds_valid": {
+              "type": "boolean",
+              "description": "Whether correlation values are within bounds [-1,1]"
+            },
+            "logical_consistency": {
+              "type": "boolean",
+              "description": "Whether risk metrics show logical consistency"
+            },
+            "validation_confidence": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "description": "Risk assessment coherence confidence"
+            }
+          }
+        },
+        "overall_business_logic_confidence": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Overall business logic validation confidence score"
+        }
+      }
+    },
+    "confidence_scoring": {
+      "type": "object",
+      "description": "Comprehensive confidence scores and quality assessment",
+      "required": [
+        "component_confidence",
+        "overall_confidence",
+        "quality_band",
+        "quality_description",
+        "threshold_assessment"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "component_confidence": {
+          "type": "object",
+          "description": "Individual component confidence scores",
+          "required": [
+            "discovery_phase",
+            "analysis_phase",
+            "statistical_validation",
+            "integrity_validation",
+            "business_logic_validation",
+            "synthesis_phase"
+          ],
+          "properties": {
+            "discovery_phase": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "description": "Discovery phase confidence score"
+            },
+            "analysis_phase": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "description": "Analysis phase confidence score"
+            },
+            "statistical_validation": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "description": "Statistical validation confidence score"
+            },
+            "integrity_validation": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "description": "Report integrity validation confidence score"
+            },
+            "business_logic_validation": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "description": "Business logic validation confidence score"
+            },
+            "synthesis_phase": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "description": "Synthesis phase confidence score"
+            }
+          }
+        },
+        "overall_confidence": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Overall weighted confidence score"
+        },
+        "quality_band": {
+          "type": "string",
+          "enum": ["institutional_grade", "operational_grade", "standard_grade", "developmental_grade", "inadequate"],
+          "description": "Quality band classification"
+        },
+        "quality_description": {
+          "type": "string",
+          "description": "Detailed quality description"
+        },
+        "threshold_assessment": {
+          "type": "object",
+          "description": "Confidence threshold assessment",
+          "required": [
+            "minimum_threshold",
+            "threshold_met",
+            "threshold_margin"
+          ],
+          "properties": {
+            "minimum_threshold": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "description": "Minimum confidence threshold"
+            },
+            "threshold_met": {
+              "type": "boolean",
+              "description": "Whether minimum threshold is met"
+            },
+            "threshold_margin": {
+              "type": "number",
+              "description": "Margin above/below threshold (negative if below)"
+            }
+          }
+        }
+      }
+    },
+    "overall_assessment": {
+      "type": "object",
+      "description": "Overall validation assessment and certification",
+      "required": [
+        "validation_success",
+        "quality_gates",
+        "quality_certification"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "validation_success": {
+          "type": "boolean",
+          "description": "Whether overall validation passed"
+        },
+        "quality_gates": {
+          "type": "object",
+          "description": "Individual quality gate results",
+          "required": [
+            "statistical_validation",
+            "report_integrity",
+            "business_logic",
+            "overall_confidence"
+          ],
+          "properties": {
+            "statistical_validation": {
+              "type": "boolean",
+              "description": "Statistical validation quality gate result"
+            },
+            "report_integrity": {
+              "type": "boolean",
+              "description": "Report integrity quality gate result"
+            },
+            "business_logic": {
+              "type": "boolean",
+              "description": "Business logic quality gate result"
+            },
+            "overall_confidence": {
+              "type": "boolean",
+              "description": "Overall confidence quality gate result"
+            }
+          }
+        },
+        "quality_certification": {
+          "type": "string",
+          "enum": ["institutional_grade", "operational_grade", "standard_grade", "developmental_grade", "inadequate"],
+          "description": "Final quality certification level"
+        }
+      }
+    },
+    "validation_summary": {
+      "type": "object",
+      "description": "Executive validation summary",
+      "required": [
+        "validation_success",
+        "quality_certification",
+        "confidence_score",
+        "gates_passed"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "validation_success": {
+          "type": "boolean",
+          "description": "Overall validation success status"
+        },
+        "quality_certification": {
+          "type": "string",
+          "enum": ["institutional_grade", "operational_grade", "standard_grade", "developmental_grade", "inadequate"],
+          "description": "Quality certification level"
+        },
+        "confidence_score": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Overall confidence score"
+        },
+        "gates_passed": {
+          "type": "string",
+          "pattern": "^\\d+/\\d+$",
+          "description": "Number of quality gates passed (format: 'passed/total')"
+        },
+        "critical_issues": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "List of critical issues identified"
+        },
+        "recommendations": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "List of recommendations for improvement"
+        }
+      }
+    }
+  }
+}

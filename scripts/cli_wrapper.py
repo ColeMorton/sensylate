@@ -22,10 +22,9 @@ from error_handler import ErrorHandler
 
 # Import new architectural components
 from errors import ConfigurationError, ProcessingError, ValidationError
-from logging_config import TwitterSystemLogger
 from result_types import ProcessingResult
 from script_config import ScriptConfig
-from script_registry import ScriptRegistry, get_global_registry
+from script_registry import get_global_registry
 
 
 class CLIServiceWrapper:
@@ -59,7 +58,27 @@ class CLIServiceWrapper:
 
         # Initialize new architectural components
         self.error_handler = ErrorHandler()
-        self.logger = TwitterSystemLogger(f"cli_wrapper.{service_name}")
+        # Disable structured JSON logging to reduce verbosity - use standard logging instead
+        import logging
+
+        self.logger = logging.getLogger(f"cli_wrapper.{service_name}")
+
+        # Add minimal adapter methods for compatibility
+        class LogAdapter:
+            def __init__(self, logger):
+                self._logger = logger
+
+            def log_operation(self, message, context=None):
+                self._logger.info(f"Operation: {message}")
+
+            def log_error(self, message, error=None, context=None):
+                self._logger.error(f"Operation failed: {message}")
+
+        if not hasattr(self.logger, "log_operation"):
+            # Wrap standard logger with adapter for compatibility
+            adapter = LogAdapter(self.logger)
+            self.logger.log_operation = adapter.log_operation
+            self.logger.log_error = adapter.log_error
 
         # CLI service configuration
         self.cli_script_name = f"{service_name}_cli.py"
@@ -263,7 +282,7 @@ class CLIServiceWrapper:
                     )
                 except Exception as e:
                     self.logger.log_operation(
-                        f"Global command failed, falling back to local",
+                        "Global command failed, falling back to local",
                         {
                             "service_name": self.service_name,
                             "error": str(e),
@@ -370,7 +389,7 @@ class CLIServiceWrapper:
         cmd = [self.global_command_name] + args
 
         self.logger.log_operation(
-            f"Executing global command",
+            "Executing global command",
             {
                 "service_name": self.service_name,
                 "command": " ".join(cmd),
@@ -425,7 +444,7 @@ class CLIServiceWrapper:
         cmd = [sys.executable, str(self.cli_script_path)] + args
 
         self.logger.log_operation(
-            f"Executing local command",
+            "Executing local command",
             {
                 "service_name": self.service_name,
                 "command": " ".join(cmd),
@@ -513,13 +532,13 @@ class CLIServiceWrapper:
 
             # Try to get version or help info
             try:
-                success, stdout, stderr = self.execute_command("--help")
-                if success:
+                result = self.execute_command("--help")
+                if result.success:
                     health_info["status"] = "healthy"
                     health_info["details"]["help_available"] = True
                 else:
                     health_info["status"] = "unhealthy"
-                    health_info["details"]["error"] = stderr
+                    health_info["details"]["error"] = result.error
             except Exception as e:
                 health_info["status"] = "unhealthy"
                 health_info["details"]["error"] = str(e)
@@ -553,7 +572,22 @@ class CLIServiceManager:
             self.scripts_dir = scripts_dir or Path(__file__).parent
             self.config = None
 
-        self.logger = TwitterSystemLogger("cli_service_manager")
+        # Use standard logging instead of structured JSON logging
+        import logging
+
+        self.logger = logging.getLogger("cli_service_manager")
+
+        # Add minimal adapter for compatibility
+        if not hasattr(self.logger, "log_operation"):
+
+            def log_operation(message, context=None):
+                self.logger.info(f"Operation: {message}")
+
+            def log_error(message, error=None, context=None):
+                self.logger.error(f"Operation failed: {message}")
+
+            self.logger.log_operation = log_operation
+            self.logger.log_error = log_error
         self.error_handler = ErrorHandler()
         self.services = {}
 
@@ -607,6 +641,7 @@ class CLIServiceManager:
             "fmp",
             "sec_edgar",
             "imf",
+            "trade_history",
         ]
 
         discovered_count = 0
@@ -866,8 +901,10 @@ if __name__ == "__main__":
         print(f"\n=== Testing {test_service} service ===")
         try:
             service = get_cli_service(test_service)
-            success, stdout, stderr = service.execute_command("--help")
-            print(f"Success: {success}")
-            print(f"Output: {stdout[:200]}...")
+            result = service.execute_command("--help")
+            print(f"Success: {result.success}")
+            print(
+                f"Output: {result.content[:200] if result.content else 'No output'}..."
+            )
         except Exception as e:
             print(f"Error: {e}")

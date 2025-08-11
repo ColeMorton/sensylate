@@ -48,7 +48,7 @@ const ChartRenderer: React.FC<ChartRendererProps> = ({
 
   if (!data || data.length === 0) {
     return (
-      <div className="flex min-h-[400px] items-center justify-center rounded-lg bg-blue-100 p-8 text-center dark:bg-blue-900">
+      <div className="flex h-full items-center justify-center rounded-lg bg-blue-100 p-8 text-center dark:bg-blue-900">
         <div>
           <p className="font-semibold text-blue-700 dark:text-blue-300">
             📊 No Data Available
@@ -64,11 +64,10 @@ const ChartRenderer: React.FC<ChartRendererProps> = ({
   return (
     <div
       ref={containerRef}
-      className="h-full min-h-[400px] w-full"
+      className="h-full w-full flex-1"
       style={{
         position: "relative",
         overflow: "hidden",
-        minHeight: "400px",
       }}
     >
       <Suspense fallback={<ChartLoadingSkeleton />}>
@@ -77,7 +76,7 @@ const ChartRenderer: React.FC<ChartRendererProps> = ({
           layout={layout}
           config={config}
           onInitialized={handleInitialized}
-          useResizeHandler={false}
+          useResizeHandler={true}
           style={{
             width: "100%",
             height: "100%",

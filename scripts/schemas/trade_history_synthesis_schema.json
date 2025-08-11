@@ -1,0 +1,417 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sensylate.com/schemas/trade_history_synthesis.json",
+  "title": "Trade History Synthesis Schema",
+  "description": "JSON Schema for validating trade history synthesis phase outputs with institutional-grade report generation standards",
+  "type": "object",
+  "required": [
+    "portfolio",
+    "synthesis_metadata",
+    "confidence_propagation",
+    "key_metrics",
+    "multi_report_generation",
+    "quality_assurance",
+    "data_sources",
+    "validation_inputs"
+  ],
+  "additionalProperties": true,
+  "properties": {
+    "portfolio": {
+      "type": "string",
+      "description": "Portfolio identifier for trade history synthesis"
+    },
+    "synthesis_metadata": {
+      "type": "object",
+      "description": "Trade synthesis execution metadata and quality metrics",
+      "required": ["execution_timestamp", "confidence_score", "reports_ready", "quality_grade", "structural_integrity"],
+      "additionalProperties": true,
+      "properties": {
+        "execution_timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO 8601 timestamp of synthesis execution"
+        },
+        "confidence_score": {
+          "type": "number",
+          "minimum": 0.7,
+          "maximum": 1.0,
+          "description": "Overall synthesis confidence (institutional threshold: >0.9)"
+        },
+        "quality_grade": {
+          "type": "string",
+          "enum": ["institutional", "operational", "standard", "developmental"],
+          "description": "Quality grade classification"
+        },
+        "reports_ready": {
+          "type": "boolean",
+          "const": true,
+          "description": "Whether reports are ready for generation"
+        },
+        "structural_integrity": {
+          "type": "object",
+          "required": ["sections_found", "required_sections", "completeness_score", "strategic_recommendations"],
+          "properties": {
+            "sections_found": {
+              "type": "integer",
+              "minimum": 4,
+              "description": "Number of sections found in report"
+            },
+            "required_sections": {
+              "type": "integer",
+              "const": 4,
+              "description": "Number of required sections"
+            },
+            "completeness_score": {
+              "type": "number",
+              "minimum": 1.0,
+              "maximum": 1.0,
+              "description": "Structural completeness score"
+            },
+            "strategic_recommendations": {
+              "type": "boolean",
+              "const": true,
+              "description": "Strategic recommendations section included"
+            }
+          }
+        }
+      }
+    },
+    "confidence_propagation": {
+      "type": "object",
+      "description": "DASV framework confidence propagation tracking",
+      "required": ["discovery_inherited", "analysis_inherited", "synthesis_achieved", "validation_target"],
+      "properties": {
+        "discovery_inherited": {
+          "type": "number",
+          "minimum": 0.7,
+          "maximum": 1.0,
+          "description": "Confidence inherited from discovery phase"
+        },
+        "analysis_inherited": {
+          "type": "number",
+          "minimum": 0.7,
+          "maximum": 1.0,
+          "description": "Confidence inherited from analysis phase"
+        },
+        "synthesis_achieved": {
+          "type": "number",
+          "minimum": 0.9,
+          "maximum": 1.0,
+          "description": "Confidence achieved in synthesis phase"
+        },
+        "validation_target": {
+          "type": "number",
+          "minimum": 0.92,
+          "maximum": 1.0,
+          "description": "Target confidence for validation phase"
+        }
+      }
+    },
+    "key_metrics": {
+      "type": "object",
+      "description": "Extracted key metrics for report generation",
+      "required": ["portfolio_overview", "performance_summary", "confidence_assessment"],
+      "additionalProperties": true,
+      "properties": {
+        "portfolio_overview": {
+          "type": "object",
+          "description": "Portfolio composition and trade statistics",
+          "required": ["total_trades", "closed_trades", "active_trades"],
+          "properties": {
+            "total_trades": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Total number of trades in portfolio"
+            },
+            "closed_trades": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Number of closed/completed trades"
+            },
+            "active_trades": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Number of active/open trades"
+            },
+            "unique_tickers": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Number of unique ticker symbols traded"
+            }
+          }
+        },
+        "performance_summary": {
+          "type": "object",
+          "description": "Core performance metrics for reporting",
+          "required": ["win_rate", "total_wins", "total_losses", "total_pnl"],
+          "properties": {
+            "win_rate": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "description": "Overall win rate from closed trades"
+            },
+            "total_wins": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Number of winning trades"
+            },
+            "total_losses": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Number of losing trades"
+            },
+            "total_pnl": {
+              "type": "number",
+              "description": "Total profit and loss in base currency"
+            },
+            "profit_factor": {
+              "type": "number",
+              "minimum": 0,
+              "description": "Profit factor metric"
+            },
+            "expectancy": {
+              "type": "number",
+              "description": "Expected value per trade"
+            }
+          }
+        },
+        "statistical_analysis": {
+          "type": "object",
+          "description": "Statistical analysis data for reporting",
+          "additionalProperties": true
+        },
+        "signal_effectiveness": {
+          "type": "object",
+          "description": "Signal effectiveness analysis data for reporting",
+          "additionalProperties": true
+        },
+        "confidence_assessment": {
+          "type": "object",
+          "description": "Confidence assessment for synthesis quality",
+          "required": ["overall_confidence"],
+          "properties": {
+            "overall_confidence": {
+              "type": "number",
+              "minimum": 0.5,
+              "maximum": 1.0,
+              "description": "Overall analysis confidence score"
+            },
+            "sample_size_adequate": {
+              "type": "boolean",
+              "description": "Whether sample size meets adequacy requirements"
+            },
+            "statistical_significance": {
+              "type": "boolean",
+              "description": "Whether results achieve statistical significance"
+            }
+          }
+        }
+      }
+    },
+    "multi_report_generation": {
+      "type": "object",
+      "description": "Multi-audience institutional report generation tracking for internal/live/historical reports",
+      "required": ["reports_generated", "document_paths", "audience_specific_content", "template_compliance"],
+      "additionalProperties": true,
+      "properties": {
+        "reports_generated": {
+          "type": "integer",
+          "minimum": 3,
+          "maximum": 3,
+          "description": "Number of audience-specific reports generated (internal/live/historical)"
+        },
+        "document_paths": {
+          "type": "object",
+          "description": "File paths for each generated audience-specific report",
+          "required": ["internal", "live", "historical"],
+          "properties": {
+            "internal": {
+              "type": "string",
+              "pattern": ".*/(internal|synthesis)/.*\\.md$",
+              "description": "Path to internal audience trading report document"
+            },
+            "live": {
+              "type": "string",
+              "pattern": ".*/(live|synthesis)/.*\\.md$",
+              "description": "Path to live signals monitoring report document"
+            },
+            "historical": {
+              "type": "string",
+              "pattern": ".*/(historical|synthesis)/.*\\.md$",
+              "description": "Path to historical performance report document"
+            }
+          }
+        },
+        "audience_specific_content": {
+          "type": "object",
+          "description": "Validation that audience-specific content differentiation is implemented",
+          "required": ["internal_focus", "live_focus", "historical_focus"],
+          "properties": {
+            "internal_focus": {
+              "type": "boolean",
+              "const": true,
+              "description": "Internal report focuses on strategic recommendations and institutional insights"
+            },
+            "live_focus": {
+              "type": "boolean",
+              "const": true,
+              "description": "Live report focuses on real-time monitoring and active position management"
+            },
+            "historical_focus": {
+              "type": "boolean",
+              "const": true,
+              "description": "Historical report focuses on closed trade analysis and statistical validation"
+            }
+          }
+        },
+        "template_compliance": {
+          "type": "object",
+          "description": "Enhanced template system compliance with multi-audience rendering",
+          "required": ["enhanced_template_used", "report_type_parameter", "conditional_content_blocks"],
+          "properties": {
+            "enhanced_template_used": {
+              "type": "boolean",
+              "const": true,
+              "description": "Enhanced Jinja2 template (trade_history_enhanced.j2) successfully used"
+            },
+            "report_type_parameter": {
+              "type": "boolean",
+              "const": true,
+              "description": "Report type parameter correctly passed for audience differentiation"
+            },
+            "conditional_content_blocks": {
+              "type": "boolean",
+              "const": true,
+              "description": "Conditional content blocks render different content per audience"
+            }
+          }
+        },
+        "institutional_quality_features": {
+          "type": "object",
+          "description": "Institutional quality features validation across all reports",
+          "required": ["p1_p2_p3_framework", "economic_context_integration", "statistical_validation"],
+          "properties": {
+            "p1_p2_p3_framework": {
+              "type": "boolean",
+              "const": true,
+              "description": "P1/P2/P3 critical issues framework implemented with dynamic metrics"
+            },
+            "economic_context_integration": {
+              "type": "boolean",
+              "const": true,
+              "description": "Economic context integration with market regime analysis"
+            },
+            "statistical_validation": {
+              "type": "boolean",
+              "const": true,
+              "description": "Enhanced statistical validation with confidence propagation"
+            }
+          }
+        }
+      }
+    },
+    "quality_assurance": {
+      "type": "object",
+      "description": "Quality assurance and institutional standards compliance",
+      "required": ["template_compliance", "content_accuracy_verified", "institutional_standards_met", "fundamental_analysis_quality_achieved"],
+      "properties": {
+        "template_compliance": {
+          "type": "boolean",
+          "const": true,
+          "description": "Template compliance with institutional standards"
+        },
+        "content_accuracy_verified": {
+          "type": "boolean",
+          "const": true,
+          "description": "Content accuracy cross-validation completed"
+        },
+        "institutional_standards_met": {
+          "type": "boolean",
+          "const": true,
+          "description": "Institutional quality standards achieved"
+        },
+        "fundamental_analysis_quality_achieved": {
+          "type": "boolean",
+          "const": true,
+          "description": "Fundamental analysis quality standards matched"
+        }
+      }
+    },
+    "data_sources": {
+      "type": "object",
+      "description": "Source data files used in synthesis",
+      "required": ["discovery_file", "analysis_file", "csv_source"],
+      "properties": {
+        "discovery_file": {
+          "type": "string",
+          "description": "Path to discovery phase output file"
+        },
+        "analysis_file": {
+          "type": "string",
+          "description": "Path to analysis phase output file"
+        },
+        "csv_source": {
+          "type": "string",
+          "description": "Path to source CSV data file"
+        }
+      }
+    },
+    "validation_inputs": {
+      "type": "object",
+      "description": "Enhanced validation inputs for institutional-grade assessment with multi-report validation",
+      "required": ["validation_ready", "structural_integrity_complete", "confidence_threshold_met", "strategic_recommendations_included", "multi_report_validation"],
+      "additionalProperties": true,
+      "properties": {
+        "validation_ready": {
+          "type": "boolean",
+          "const": true,
+          "description": "Whether synthesis is ready for validation phase"
+        },
+        "structural_integrity_complete": {
+          "type": "boolean",
+          "const": true,
+          "description": "All 4 required sections structurally complete across all 3 reports"
+        },
+        "confidence_threshold_met": {
+          "type": "boolean",
+          "const": true,
+          "description": "Institutional confidence threshold (0.9+) achieved"
+        },
+        "strategic_recommendations_included": {
+          "type": "boolean",
+          "const": true,
+          "description": "Strategic recommendations section included with quantified targets"
+        },
+        "multi_report_validation": {
+          "type": "object",
+          "description": "Multi-report specific validation requirements",
+          "required": ["all_reports_generated", "audience_differentiation_verified", "template_compliance_validated"],
+          "properties": {
+            "all_reports_generated": {
+              "type": "boolean",
+              "const": true,
+              "description": "All 3 audience-specific reports successfully generated"
+            },
+            "audience_differentiation_verified": {
+              "type": "boolean",
+              "const": true,
+              "description": "Content differentiation verified across internal/live/historical reports"
+            },
+            "template_compliance_validated": {
+              "type": "boolean",
+              "const": true,
+              "description": "Enhanced template system compliance validated for all reports"
+            }
+          }
+        },
+        "synthesis_confidence": {
+          "type": "number",
+          "minimum": 0.9,
+          "maximum": 1.0,
+          "description": "Institutional-grade synthesis confidence score"
+        }
+      }
+    }
+  }
+}

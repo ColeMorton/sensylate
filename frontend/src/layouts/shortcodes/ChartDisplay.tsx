@@ -10,7 +10,9 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({
   chartType = "apple-stock",
   timeframe = "daily",
   indexed = false,
+  positionType = "auto",
   className = "",
+  titleOnly = false,
 }) => {
   // Handle unsupported chart types
   const supportedChartTypes = [
@@ -19,10 +21,12 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({
     "returns-comparison",
     "portfolio-drawdowns",
     "live-signals-equity-curve",
+    "live-signals-benchmark-comparison",
     "live-signals-drawdowns",
     "live-signals-weekly-candlestick",
     "trade-pnl-waterfall",
     "open-positions-pnl-timeseries",
+    "closed-positions-pnl-timeseries",
   ];
 
   if (!supportedChartTypes.includes(chartType)) {
@@ -32,6 +36,7 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({
         category={category}
         description={description}
         className={className}
+        titleOnly={titleOnly}
       >
         <div className="flex min-h-[400px] items-center justify-center rounded-lg bg-blue-100 p-8 text-center dark:bg-blue-900">
           <div>
@@ -53,12 +58,14 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({
       category={category}
       description={description}
       className={className}
+      titleOnly={titleOnly}
     >
       <PortfolioChart
         chartType={chartType}
         title={title}
         timeframe={timeframe}
         indexed={indexed}
+        positionType={positionType}
       />
     </ChartContainer>
   );

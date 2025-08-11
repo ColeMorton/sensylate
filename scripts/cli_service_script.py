@@ -10,11 +10,10 @@ BaseScript implementation for executing CLI services through the script registry
 """
 
 from datetime import datetime
-from pathlib import Path
 from typing import Any, Dict, List, Optional
 
-from cli_wrapper import CLIServiceManager, CLIServiceWrapper
-from errors import ConfigurationError, ValidationError
+from cli_wrapper import CLIServiceManager
+from errors import ValidationError
 from result_types import ProcessingResult
 from script_config import ScriptConfig
 from script_registry import BaseScript, twitter_script
@@ -48,12 +47,8 @@ class CLIServiceScript(BaseScript):
         # Available services
         self.available_services = self.cli_manager.get_available_services()
 
-        self.logger.log_operation(
-            "CLI service script initialized",
-            {
-                "available_services": self.available_services,
-                "total_services": len(self.cli_manager.services),
-            },
+        self.logger.info(
+            f"CLI service script initialized with {len(self.cli_manager.services)} services"
         )
 
     def execute(
@@ -125,7 +120,7 @@ class CLIServiceScript(BaseScript):
                     result.processing_time = processing_time
 
                     self.logger.log_operation(
-                        f"CLI command executed successfully",
+                        "CLI command executed successfully",
                         {
                             "service_name": service_name,
                             "command": command,
@@ -142,7 +137,7 @@ class CLIServiceScript(BaseScript):
 
                     if attempt < max_retries - 1:
                         self.logger.log_operation(
-                            f"CLI command failed, retrying",
+                            "CLI command failed, retrying",
                             {
                                 "service_name": service_name,
                                 "command": command,

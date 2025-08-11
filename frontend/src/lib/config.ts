@@ -115,8 +115,7 @@ function getFeatureFlags(): FeatureFlags {
         envToBoolean(
           import.meta.env.PUBLIC_FEATURE_PHOTO_BOOTH,
           "PUBLIC_FEATURE_PHOTO_BOOTH",
-        ) ??
-        (isDevelopment() || isStaging()), // Enable only in dev and staging
+        ) ?? true, // Enable in all environments for E2E testing
     };
   } catch (error) {
     if (error instanceof FeatureFlagValidationError) {

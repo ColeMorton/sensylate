@@ -7,14 +7,19 @@ import type {
   LiveSignalsDataRow,
   WeeklyOHLCDataRow,
   TradeHistoryDataRow,
+  ClosedPositionPnLDataRow,
   OpenPositionPnLDataRow,
+  LiveSignalsBenchmarkDataRow,
 } from "@/types/ChartTypes";
 import {
   usePortfolioData,
   useAppleStockData,
   useLiveSignalsData,
-  useTradeHistoryData,
+  // useTradeHistoryData,
+  useWaterfallTradeData,
+  useClosedPositionsPnLData,
   useOpenPositionsPnLData,
+  useLiveSignalsBenchmarkData,
 } from "@/hooks/usePortfolioData";
 import { getChartColors, getPlotlyThemeColors } from "@/utils/chartTheme";
 import ChartRenderer from "./ChartRenderer";
@@ -24,6 +29,7 @@ interface PortfolioChartProps {
   title?: string;
   timeframe?: "daily" | "weekly";
   indexed?: boolean;
+  positionType?: "open" | "closed" | "auto";
 }
 
 const PortfolioChart: React.FC<PortfolioChartProps> = ({
@@ -31,6 +37,7 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
   title,
   timeframe = "daily",
   indexed = false,
+  positionType = "auto",
 }) => {
   const [isDarkMode, setIsDarkMode] = useState(false);
 
@@ -38,20 +45,87 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
   const portfolioData = usePortfolioData(chartType);
   const appleData = useAppleStockData();
   const liveSignalsData = useLiveSignalsData();
-  const tradeHistoryData = useTradeHistoryData();
+  // const tradeHistoryData = useTradeHistoryData(); // Not currently used
+  // Removed import for now
+  const waterfallTradeData = useWaterfallTradeData();
+  const closedPositionsPnLData = useClosedPositionsPnLData();
   const openPositionsPnLData = useOpenPositionsPnLData();
+  const liveSignalsBenchmarkData = useLiveSignalsBenchmarkData();
+
+  // Smart position data selection logic
+  const isPositionChart = chartType === "open-positions-pnl-timeseries";
+  const shouldUseClosedData =
+    isPositionChart &&
+    (positionType === "closed" ||
+      (positionType === "auto" &&
+        (!openPositionsPnLData.data ||
+          openPositionsPnLData.data.length === 0)));
+  const actualDataType = isPositionChart
+    ? shouldUseClosedData
+      ? "closed"
+      : "open"
+    : null;
 
   // Use appropriate data source based on chart type
   const { data, loading, error } =
     chartType === "apple-stock"
       ? appleData
-      : chartType.startsWith("live-signals-")
-        ? liveSignalsData
-        : chartType === "trade-pnl-waterfall"
-          ? tradeHistoryData
-          : chartType === "open-positions-pnl-timeseries"
-            ? openPositionsPnLData
-            : portfolioData;
+      : chartType === "live-signals-benchmark-comparison"
+        ? liveSignalsBenchmarkData
+        : chartType.startsWith("live-signals-")
+          ? liveSignalsData
+          : chartType === "trade-pnl-waterfall"
+            ? waterfallTradeData
+            : chartType === "closed-positions-pnl-timeseries"
+              ? closedPositionsPnLData
+              : chartType === "open-positions-pnl-timeseries"
+                ? shouldUseClosedData
+                  ? closedPositionsPnLData
+                  : openPositionsPnLData
+                : portfolioData;
+
+  // Dynamic legend visibility based on data volume
+  const shouldShowLegend = useMemo(() => {
+    // Hide legend for specific chart types
+    const hideLegendChartTypes = [
+      "live-signals-drawdowns",
+      "live-signals-weekly-candlestick",
+      "trade-pnl-waterfall",
+    ];
+
+    if (hideLegendChartTypes.includes(chartType)) {
+      return false;
+    }
+
+    const isAnyPositionChart =
+      chartType === "open-positions-pnl-timeseries" ||
+      chartType === "closed-positions-pnl-timeseries";
+
+    if (isAnyPositionChart && shouldUseClosedData) {
+      // For closed data, hide legend if > 7 positions
+      const closedData = data as ClosedPositionPnLDataRow[];
+      if (closedData && closedData.length > 0) {
+        const uniquePositions = new Set(
+          closedData.map((row) => row.Position_UUID),
+        ).size;
+        return uniquePositions <= 7;
+      }
+      return true;
+    }
+
+    if (isAnyPositionChart && !shouldUseClosedData) {
+      // For open data, hide legend if > 7 positions
+      const openData = data as OpenPositionPnLDataRow[];
+      if (openData && openData.length > 0) {
+        const uniquePositions = new Set(openData.map((row) => row.Ticker)).size;
+        return uniquePositions <= 7;
+      }
+      return true;
+    }
+
+    // For all other charts, show legend
+    return true;
+  }, [chartType, shouldUseClosedData, data]);
 
   // Dark mode detection
   useEffect(() => {
@@ -205,7 +279,7 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
       const firstRow = rows[0];
       if (!firstRow.Entry_Date || !firstRow.Entry_Price) {
         // If no entry information available, return original data
-        console.warn(`Missing entry information for ticker ${firstRow.Ticker}`);
+        // console.warn(`Missing entry information for ticker ${firstRow.Ticker}`);
         return rows;
       }
 
@@ -224,6 +298,114 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
 
       // Combine entry point with existing data
       return [entryPoint, ...rows];
+    },
+    [],
+  );
+
+  // Create indexed data for closed positions using real historical price data
+  const createClosedPositionIndexedData = useCallback(
+    (
+      closedPositionsData: ClosedPositionPnLDataRow[],
+    ): Array<{
+      ticker: string;
+      data: Array<{ bar: number; pnl: number }>;
+      color: string;
+      finalPnL: number;
+    }> => {
+      if (!closedPositionsData || closedPositionsData.length === 0) {
+        return [];
+      }
+
+      // Group data by ticker (Position_UUID for unique trades)
+      const tradeMap: { [uuid: string]: ClosedPositionPnLDataRow[] } = {};
+
+      closedPositionsData.forEach((row) => {
+        const uuid = row.Position_UUID;
+        if (!tradeMap[uuid]) {
+          tradeMap[uuid] = [];
+        }
+        tradeMap[uuid].push(row);
+      });
+
+      return Object.entries(tradeMap).map(([_uuid, tradeData]) => {
+        // Sort by date to ensure proper position bar ordering
+        const sortedData = tradeData.sort(
+          (a, b) => new Date(a.Date).getTime() - new Date(b.Date).getTime(),
+        );
+
+        if (sortedData.length === 0) {
+          return { ticker: "", data: [], color: "#26c6da", finalPnL: 0 };
+        }
+
+        const ticker = sortedData[0].Ticker;
+        const finalPnL = parseFloat(sortedData[sortedData.length - 1].PnL);
+
+        // Create indexed data points from real price data
+        const data: Array<{ bar: number; pnl: number }> = sortedData.map(
+          (row, index) => ({
+            bar: index,
+            pnl: parseFloat(row.PnL),
+          }),
+        );
+
+        return {
+          ticker,
+          data,
+          color: finalPnL >= 0 ? "#26c6da" : "#7e57c2", // Exact hex colors: cyan for winners, purple for losers
+          finalPnL,
+        };
+      });
+    },
+    [],
+  );
+
+  // Calculate average trade progression across all closed positions
+  const calculateAverageTradeProgression = useCallback(
+    (
+      positionsData: Array<{
+        ticker: string;
+        data: Array<{ bar: number; pnl: number }>;
+        color: string;
+        finalPnL: number;
+      }>,
+    ): Array<{ bar: number; pnl: number }> => {
+      if (!positionsData || positionsData.length === 0) {
+        return [];
+      }
+
+      // Find the maximum trade length to determine the range
+      const maxLength = Math.max(
+        ...positionsData.map((position) => position.data.length),
+      );
+
+      if (maxLength === 0) {
+        return [];
+      }
+
+      // Calculate average PnL at each position bar
+      const averageData: Array<{ bar: number; pnl: number }> = [];
+
+      for (let bar = 0; bar < maxLength; bar++) {
+        let totalPnL = 0;
+        let count = 0;
+
+        // Sum PnL values from all positions that have data at this bar
+        positionsData.forEach((position) => {
+          if (position.data.length > bar) {
+            totalPnL += position.data[bar].pnl;
+            count++;
+          }
+        });
+
+        if (count > 0) {
+          averageData.push({
+            bar,
+            pnl: totalPnL / count,
+          });
+        }
+      }
+
+      return averageData;
     },
     [],
   );
@@ -426,16 +608,8 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
             type: "scatter",
             mode: "lines",
             x: unpackLiveSignals(liveSignalsRows, "timestamp"),
-            y: unpackLiveSignals(liveSignalsRows, "equity"),
-            line: { color: colors.tertiary, width: 2 },
-            name: "Live Signals Equity",
-          },
-          {
-            type: "scatter",
-            mode: "lines",
-            x: unpackLiveSignals(liveSignalsRows, "timestamp"),
             y: unpackLiveSignals(liveSignalsRows, "mfe"),
-            line: { color: colors.multiStrategy, width: 2 },
+            line: { color: "#26C6DA", width: 3 }, // Prominent cyan for MFE
             name: "MFE (Maximum Favorable Excursion)",
           },
           {
@@ -443,10 +617,66 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
             mode: "lines",
             x: unpackLiveSignals(liveSignalsRows, "timestamp"),
             y: unpackLiveSignals(liveSignalsRows, "mae"),
-            line: { color: colors.buyHold, width: 2 },
+            line: { color: "#FF5722", width: 3 }, // Prominent red for MAE
             name: "MAE (Maximum Adverse Excursion)",
           },
+          {
+            type: "scatter",
+            mode: "lines",
+            x: unpackLiveSignals(liveSignalsRows, "timestamp"),
+            y: unpackLiveSignals(liveSignalsRows, "equity"),
+            line: { color: colors.neutral, width: 2, dash: "dot" }, // Muted dotted line for context
+            name: "Portfolio Equity",
+          },
         ];
+      }
+
+      case "live-signals-benchmark-comparison": {
+        const benchmarkRows = data as LiveSignalsBenchmarkDataRow[];
+
+        if (!benchmarkRows || benchmarkRows.length === 0) {
+          return [];
+        }
+
+        const chartData: Data[] = [];
+
+        // Define color mapping for series
+        const seriesColors = {
+          Portfolio: colors.tertiary, // Cyan for portfolio
+          SPY: colors.multiStrategy, // Blue for SPY
+          QQQ: colors.buyHold, // Purple for QQQ
+          "BTC-USD": colors.drawdown, // Orange for BTC
+        };
+
+        // Define display names
+        const seriesNames = {
+          Portfolio: "Live Signals Portfolio",
+          SPY: "SPY",
+          QQQ: "QQQ",
+          "BTC-USD": "Bitcoin",
+        };
+
+        // Create series for each column (Portfolio, SPY, QQQ, BTC-USD)
+        const seriesColumns = ["Portfolio", "SPY", "QQQ", "BTC-USD"] as const;
+
+        seriesColumns.forEach((column) => {
+          const values = benchmarkRows.map((row) => parseFloat(row[column]));
+          const dates = benchmarkRows.map((row) => row.Date);
+
+          chartData.push({
+            type: "scatter",
+            mode: "lines",
+            x: dates,
+            y: values,
+            line: {
+              color: seriesColors[column],
+              width: column === "Portfolio" ? 3 : 2,
+            },
+            name: seriesNames[column],
+          });
+        });
+
+        return chartData;
       }
 
       case "live-signals-drawdowns": {
@@ -501,6 +731,7 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
           return [];
         }
 
+        // Data is already pre-sorted by PnL magnitude from backend
         const pnlValues = tradeHistoryRows.map((trade) =>
           parseFloat(trade.PnL),
         );
@@ -532,6 +763,68 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
       }
 
       case "open-positions-pnl-timeseries": {
+        // Handle both open and closed position data based on shouldUseClosedData
+        if (shouldUseClosedData) {
+          // Use existing closed positions logic when showing closed data
+          const closedPositionsRows = data as ClosedPositionPnLDataRow[];
+          if (!closedPositionsRows || closedPositionsRows.length === 0) {
+            return [];
+          }
+
+          const closedPositionsData =
+            createClosedPositionIndexedData(closedPositionsRows);
+          if (closedPositionsData.length === 0) {
+            return [];
+          }
+
+          const chartData: Data[] = [];
+
+          // Add individual positions as scatter plots
+          closedPositionsData.forEach((position) => {
+            chartData.push({
+              type: "scatter",
+              mode: "markers",
+              x: position.data.map((point) => point.bar),
+              y: position.data.map((point) => point.pnl),
+              name: position.ticker,
+              marker: {
+                color: position.color,
+                size: 6,
+              },
+              hovertemplate:
+                "<b>%{fullData.name}</b><br>" +
+                "Position Bar: %{x}<br>" +
+                "PnL: $%{y:.2f}<br>" +
+                "<extra></extra>",
+            });
+          });
+
+          // Calculate and add average trade progression line
+          const averageTradeData =
+            calculateAverageTradeProgression(closedPositionsData);
+          if (averageTradeData.length > 0) {
+            chartData.push({
+              type: "scatter",
+              mode: "lines",
+              x: averageTradeData.map((point) => point.bar),
+              y: averageTradeData.map((point) => point.pnl),
+              name: "Average Trade",
+              line: {
+                color: "#3179f5", // tertiary_data color
+                width: 3,
+              },
+              hovertemplate:
+                "<b>Average Trade</b><br>" +
+                "Position Bar: %{x}<br>" +
+                "Avg PnL: $%{y:.2f}<br>" +
+                "<extra></extra>",
+            });
+          }
+
+          return chartData;
+        }
+
+        // Original open positions logic
         const openPositionsPnLRows = data as OpenPositionPnLDataRow[];
         if (!openPositionsPnLRows || openPositionsPnLRows.length === 0) {
           return [];
@@ -620,6 +913,65 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
         return chartData;
       }
 
+      case "closed-positions-pnl-timeseries": {
+        const closedPositionsRows = data as ClosedPositionPnLDataRow[];
+        if (!closedPositionsRows || closedPositionsRows.length === 0) {
+          return [];
+        }
+
+        const closedPositionsData =
+          createClosedPositionIndexedData(closedPositionsRows);
+        if (closedPositionsData.length === 0) {
+          return [];
+        }
+
+        const chartData: Data[] = [];
+
+        // Add individual positions as scatter plots
+        closedPositionsData.forEach((position) => {
+          chartData.push({
+            type: "scatter",
+            mode: "markers",
+            x: position.data.map((point) => point.bar),
+            y: position.data.map((point) => point.pnl),
+            name: position.ticker,
+            marker: {
+              color: position.color,
+              size: 6,
+            },
+            hovertemplate:
+              "<b>%{fullData.name}</b><br>" +
+              "Position Bar: %{x}<br>" +
+              "PnL: $%{y:.2f}<br>" +
+              "<extra></extra>",
+          });
+        });
+
+        // Calculate and add average trade progression line
+        const averageTradeData =
+          calculateAverageTradeProgression(closedPositionsData);
+        if (averageTradeData.length > 0) {
+          chartData.push({
+            type: "scatter",
+            mode: "lines",
+            x: averageTradeData.map((point) => point.bar),
+            y: averageTradeData.map((point) => point.pnl),
+            name: "Average Trade",
+            line: {
+              color: "#3179f5", // tertiary_data color
+              width: 3,
+            },
+            hovertemplate:
+              "<b>Average Trade</b><br>" +
+              "Position Bar: %{x}<br>" +
+              "Avg PnL: $%{y:.2f}<br>" +
+              "<extra></extra>",
+          });
+        }
+
+        return chartData;
+      }
+
       default:
         return [];
     }
@@ -631,9 +983,12 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
     error,
     timeframe,
     indexed,
+    shouldUseClosedData,
     convertToWeeklyOHLC,
     convertOpenPositionsPnLToWeekly,
     createIndexedDataWithEntry,
+    createClosedPositionIndexedData,
+    calculateAverageTradeProgression,
   ]);
 
   // Chart layout
@@ -655,20 +1010,27 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
         case "portfolio-drawdowns":
           return "Portfolio Drawdown Analysis";
         case "live-signals-equity-curve":
-          return "Live Signals Portfolio Equity Curve";
+          return "Live Signals MFE/MAE Analysis";
+        case "live-signals-benchmark-comparison":
+          return "Live Signals vs Market Benchmarks";
         case "live-signals-drawdowns":
           return "Live Signals Portfolio Drawdowns";
         case "live-signals-weekly-candlestick":
           return "Live Signals Weekly Candlestick Chart";
         case "trade-pnl-waterfall":
-          return "Trade PnL Waterfall Chart";
-        case "open-positions-pnl-timeseries":
+          return "Closed Position PnL Waterfall";
+        case "closed-positions-pnl-timeseries":
+          return "Closed Position PnL Performance";
+        case "open-positions-pnl-timeseries": {
+          const positionTypeText =
+            actualDataType === "closed" ? "Closed" : "Open";
           if (indexed) {
-            return "Open Positions Cumulative PnL Time Series (Indexed)";
+            return `${positionTypeText} Positions Cumulative PnL Time Series (Indexed)`;
           }
           return timeframe === "weekly"
-            ? "Open Positions Cumulative PnL Time Series (Weekly)"
-            : "Open Positions Cumulative PnL Time Series";
+            ? `${positionTypeText} Positions Cumulative PnL Time Series (Weekly)`
+            : `${positionTypeText} Positions Cumulative PnL Time Series`;
+        }
         default:
           return "Chart";
       }
@@ -685,12 +1047,16 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
         case "portfolio-drawdowns":
           return "Drawdown (%)";
         case "live-signals-equity-curve":
-          return "Equity ($)";
+          return "Value ($)";
+        case "live-signals-benchmark-comparison":
+          return "Relative Performance (%)";
         case "live-signals-drawdowns":
           return "Drawdown ($)";
         case "live-signals-weekly-candlestick":
           return "Equity ($)";
         case "trade-pnl-waterfall":
+          return "PnL ($)";
+        case "closed-positions-pnl-timeseries":
           return "PnL ($)";
         case "open-positions-pnl-timeseries":
           return "Cumulative PnL ($)";
@@ -713,7 +1079,7 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
       modebar: {
         orientation: "h",
       },
-      showlegend: true,
+      showlegend: shouldShowLegend,
       legend: {
         x: 0,
         xanchor: "left",
@@ -734,16 +1100,20 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
         type:
           chartType === "trade-pnl-waterfall"
             ? "category"
-            : chartType === "open-positions-pnl-timeseries" && indexed
+            : chartType === "closed-positions-pnl-timeseries"
               ? "linear"
-              : "date",
+              : chartType === "open-positions-pnl-timeseries" && indexed
+                ? "linear"
+                : "date",
         title: {
           text:
             chartType === "trade-pnl-waterfall"
               ? "Ticker"
-              : chartType === "open-positions-pnl-timeseries" && indexed
+              : chartType === "closed-positions-pnl-timeseries"
                 ? "Position Bar"
-                : "Date",
+                : chartType === "open-positions-pnl-timeseries" && indexed
+                  ? "Position Bar"
+                  : "Date",
           font: themeColors.font,
         },
         gridcolor: themeColors.gridColor,
@@ -770,9 +1140,17 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
         tickcolor: themeColors.tickColor,
         tickfont: themeColors.font,
       },
-      hovermode: chartType === "trade-pnl-waterfall" ? "closest" : "x unified",
+      hovermode: "closest",
     };
-  }, [isDarkMode, chartType, title, timeframe, indexed]);
+  }, [
+    isDarkMode,
+    chartType,
+    title,
+    timeframe,
+    indexed,
+    shouldShowLegend,
+    actualDataType,
+  ]);
 
   // Chart config
   const config = useMemo(
@@ -781,7 +1159,7 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
       displayModeBar: false,
       displaylogo: false,
       toImageButtonOptions: {
-        format: "png",
+        format: "png" as const,
         filename: `${chartType}-chart`,
         height: 500,
         width: 700,
