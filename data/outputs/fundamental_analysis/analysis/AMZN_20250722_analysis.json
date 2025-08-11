@@ -51,7 +51,7 @@
     "interest_rate_environment": "restrictive",
     "yield_curve_signal": "normal",
     "economic_indicators": {
-      "fed_funds_rate": "5.25-5.50%",
+      "fed_funds_rate": "4.33%",
       "unemployment_rate": "3.6%",
       "10_year_treasury": "4.25%",
       "3_month_treasury": "5.10%",

@@ -2,195 +2,67 @@
   "regional_validation_entries": [
     {
       "region": "US",
-      "gdp_growth": 2.8,
-      "unemployment_rate": 3.7,
+      "gdp_growth": 2.4,
+      "unemployment_rate": 3.8,
       "participation_rate": 63.1,
-      "policy_rate": 5.375,
-      "analysis_timestamp": "2025-08-08T11:09:08.968122"
+      "policy_rate": 4.75,
+      "analysis_timestamp": "2025-08-11T17:20:50.032590"
     },
     {
       "region": "US",
-      "gdp_growth": 2.8,
-      "unemployment_rate": 3.7,
+      "gdp_growth": 2.4,
+      "unemployment_rate": 3.8,
       "participation_rate": 63.1,
-      "policy_rate": 5.375,
-      "analysis_timestamp": "2025-08-08T11:09:08.969375"
+      "policy_rate": 4.75,
+      "analysis_timestamp": "2025-08-11T17:20:50.033449"
     },
     {
       "region": "US",
-      "gdp_growth": 2.8,
-      "unemployment_rate": 3.7,
+      "gdp_growth": 2.4,
+      "unemployment_rate": 3.8,
       "participation_rate": 63.1,
-      "policy_rate": 5.375,
-      "analysis_timestamp": "2025-08-08T11:09:08.969736"
+      "policy_rate": 4.75,
+      "analysis_timestamp": "2025-08-11T17:20:50.033839"
     },
     {
       "region": "US",
-      "gdp_growth": 2.8,
-      "unemployment_rate": 3.7,
+      "gdp_growth": 2.4,
+      "unemployment_rate": 3.8,
       "participation_rate": 63.1,
-      "policy_rate": 5.375,
-      "analysis_timestamp": "2025-08-08T11:09:08.970168"
+      "policy_rate": 4.75,
+      "analysis_timestamp": "2025-08-11T17:20:50.034022"
     },
     {
       "region": "US",
-      "gdp_growth": 2.8,
-      "unemployment_rate": 3.7,
+      "gdp_growth": 2.4,
+      "unemployment_rate": 3.8,
       "participation_rate": 63.1,
-      "policy_rate": 5.375,
-      "analysis_timestamp": "2025-08-08T11:09:08.971741"
+      "policy_rate": 4.75,
+      "analysis_timestamp": "2025-08-11T17:20:50.034193"
     },
     {
       "region": "US",
-      "gdp_growth": 2.8,
-      "unemployment_rate": 3.7,
+      "gdp_growth": 2.4,
+      "unemployment_rate": 3.8,
       "participation_rate": 63.1,
-      "policy_rate": 5.375,
-      "analysis_timestamp": "2025-08-08T11:09:08.974170"
+      "policy_rate": 4.75,
+      "analysis_timestamp": "2025-08-11T17:20:50.034395"
     },
     {
       "region": "US",
-      "gdp_growth": 2.8,
-      "unemployment_rate": 3.7,
+      "gdp_growth": 2.4,
+      "unemployment_rate": 3.8,
       "participation_rate": 63.1,
-      "policy_rate": 5.375,
-      "analysis_timestamp": "2025-08-08T11:09:08.974489"
+      "policy_rate": 4.75,
+      "analysis_timestamp": "2025-08-11T17:20:50.034572"
     },
     {
       "region": "US",
-      "gdp_growth": 2.8,
-      "unemployment_rate": 3.7,
+      "gdp_growth": 2.4,
+      "unemployment_rate": 3.8,
       "participation_rate": 63.1,
-      "policy_rate": 5.375,
-      "analysis_timestamp": "2025-08-08T11:09:08.974734"
-    },
-    {
-      "region": "US",
-      "gdp_growth": 2.8,
-      "unemployment_rate": 3.7,
-      "participation_rate": 63.1,
-      "policy_rate": 5.375,
-      "analysis_timestamp": "2025-08-08T11:14:46.324442"
-    },
-    {
-      "region": "US",
-      "gdp_growth": 2.8,
-      "unemployment_rate": 3.7,
-      "participation_rate": 63.1,
-      "policy_rate": 5.375,
-      "analysis_timestamp": "2025-08-08T11:14:46.326131"
-    },
-    {
-      "region": "US",
-      "gdp_growth": 2.8,
-      "unemployment_rate": 3.7,
-      "participation_rate": 63.1,
-      "policy_rate": 5.375,
-      "analysis_timestamp": "2025-08-08T11:14:46.326528"
-    },
-    {
-      "region": "US",
-      "gdp_growth": 2.8,
-      "unemployment_rate": 3.7,
-      "participation_rate": 63.1,
-      "policy_rate": 5.375,
-      "analysis_timestamp": "2025-08-08T11:14:46.326758"
-    },
-    {
-      "region": "US",
-      "gdp_growth": 2.8,
-      "unemployment_rate": 3.7,
-      "participation_rate": 63.1,
-      "policy_rate": 5.375,
-      "analysis_timestamp": "2025-08-08T11:14:46.326963"
-    },
-    {
-      "region": "US",
-      "gdp_growth": 2.8,
-      "unemployment_rate": 3.7,
-      "participation_rate": 63.1,
-      "policy_rate": 5.375,
-      "analysis_timestamp": "2025-08-08T11:14:46.327211"
-    },
-    {
-      "region": "US",
-      "gdp_growth": 2.8,
-      "unemployment_rate": 3.7,
-      "participation_rate": 63.1,
-      "policy_rate": 5.375,
-      "analysis_timestamp": "2025-08-08T11:14:46.327422"
-    },
-    {
-      "region": "US",
-      "gdp_growth": 2.8,
-      "unemployment_rate": 3.7,
-      "participation_rate": 63.1,
-      "policy_rate": 5.375,
-      "analysis_timestamp": "2025-08-08T11:14:46.327658"
-    },
-    {
-      "region": "EUROPE",
-      "gdp_growth": 1.2,
-      "unemployment_rate": 6.4,
-      "participation_rate": 73.8,
-      "policy_rate": 4.25,
-      "analysis_timestamp": "2025-08-08T11:29:13.944145"
-    },
-    {
-      "region": "EUROPE",
-      "gdp_growth": 1.2,
-      "unemployment_rate": 6.4,
-      "participation_rate": 73.8,
-      "policy_rate": 4.25,
-      "analysis_timestamp": "2025-08-08T11:29:13.945192"
-    },
-    {
-      "region": "EUROPE",
-      "gdp_growth": 1.2,
-      "unemployment_rate": 6.4,
-      "participation_rate": 73.8,
-      "policy_rate": 4.25,
-      "analysis_timestamp": "2025-08-08T11:29:13.945547"
-    },
-    {
-      "region": "EUROPE",
-      "gdp_growth": 1.2,
-      "unemployment_rate": 6.4,
-      "participation_rate": 73.8,
-      "policy_rate": 4.25,
-      "analysis_timestamp": "2025-08-08T11:29:13.945825"
-    },
-    {
-      "region": "EUROPE",
-      "gdp_growth": 1.2,
-      "unemployment_rate": 6.4,
-      "participation_rate": 73.8,
-      "policy_rate": 4.25,
-      "analysis_timestamp": "2025-08-08T11:29:13.946602"
-    },
-    {
-      "region": "EUROPE",
-      "gdp_growth": 1.2,
-      "unemployment_rate": 6.4,
-      "participation_rate": 73.8,
-      "policy_rate": 4.25,
-      "analysis_timestamp": "2025-08-08T11:29:13.947232"
-    },
-    {
-      "region": "EUROPE",
-      "gdp_growth": 1.2,
-      "unemployment_rate": 6.4,
-      "participation_rate": 73.8,
-      "policy_rate": 4.25,
-      "analysis_timestamp": "2025-08-08T11:29:13.947593"
-    },
-    {
-      "region": "EUROPE",
-      "gdp_growth": 1.2,
-      "unemployment_rate": 6.4,
-      "participation_rate": 73.8,
-      "policy_rate": 4.25,
-      "analysis_timestamp": "2025-08-08T11:29:13.947996"
+      "policy_rate": 4.75,
+      "analysis_timestamp": "2025-08-11T17:20:50.034783"
     }
   ]
 }

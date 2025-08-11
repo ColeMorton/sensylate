@@ -1,0 +1,330 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sensylate.com/schemas/industry_analysis_discovery.json",
+  "title": "Industry Analysis Discovery Schema",
+  "description": "Comprehensive validation schema for industry analysis discovery JSON outputs from DASV framework",
+  "type": "object",
+  "required": [
+    "metadata",
+    "industry_scope",
+    "representative_companies",
+    "trend_analysis",
+    "economic_indicators",
+    "competitive_landscape",
+    "cli_service_validation",
+    "cli_data_quality",
+    "cli_insights",
+    "discovery_insights",
+    "data_quality_assessment",
+    "local_data_references"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "description": "Core metadata about the industry discovery analysis execution",
+      "required": [
+        "command_name",
+        "execution_timestamp",
+        "framework_phase",
+        "industry",
+        "sector",
+        "data_collection_methodology",
+        "cli_services_utilized",
+        "quality_certification"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "command_name": {
+          "type": "string",
+          "const": "industry_analyst_discover",
+          "description": "Must be the standardized discovery command name"
+        },
+        "execution_timestamp": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d{6})?Z?$",
+          "description": "ISO 8601 timestamp with optional microseconds and timezone"
+        },
+        "framework_phase": {
+          "type": "string",
+          "const": "discovery",
+          "description": "Must indicate discovery phase of DASV framework"
+        },
+        "industry": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Industry identifier being analyzed"
+        },
+        "sector": {
+          "type": "string",
+          "description": "Parent sector classification (optional)"
+        },
+        "data_collection_methodology": {
+          "type": "string",
+          "const": "researcher_sub_agent_orchestration",
+          "description": "Must indicate researcher sub-agent delegation methodology"
+        },
+        "cli_services_utilized": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          },
+          "description": "Array of CLI services successfully utilized during discovery"
+        },
+        "quality_certification": {
+          "type": "string",
+          "enum": ["institutional_grade", "professional_standard", "preliminary"],
+          "description": "Quality tier achieved in discovery"
+        }
+      }
+    },
+    "industry_scope": {
+      "type": "object",
+      "description": "Industry definition and classification framework",
+      "required": ["definition", "classification", "boundaries"],
+      "properties": {
+        "definition": {
+          "type": "string",
+          "minLength": 50,
+          "description": "Comprehensive industry definition and scope"
+        },
+        "classification": {
+          "type": "object",
+          "description": "Industry classification and sub-industry breakdown"
+        },
+        "boundaries": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Clear industry boundary definitions"
+        }
+      }
+    },
+    "representative_companies": {
+      "type": "object",
+      "description": "Leading companies representing industry dynamics",
+      "required": ["selection_criteria", "companies", "analysis"],
+      "properties": {
+        "selection_criteria": {
+          "type": "string",
+          "description": "Rationale for company selection"
+        },
+        "companies": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 15,
+          "items": {
+            "type": "object",
+            "required": ["ticker", "company_name", "market_position"],
+            "properties": {
+              "ticker": {"type": "string"},
+              "company_name": {"type": "string"},
+              "market_position": {"type": "string"}
+            }
+          }
+        },
+        "analysis": {
+          "type": "object",
+          "description": "Aggregate analysis of representative companies"
+        }
+      }
+    },
+    "trend_analysis": {
+      "type": "object",
+      "description": "Technology, market, and regulatory trend assessment",
+      "required": ["technology_trends", "market_trends", "regulatory_trends"],
+      "properties": {
+        "technology_trends": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "type": "object",
+            "required": ["trend", "impact", "confidence"],
+            "properties": {
+              "trend": {"type": "string"},
+              "impact": {"type": "string"},
+              "confidence": {"type": "number", "minimum": 0.0, "maximum": 1.0}
+            }
+          }
+        },
+        "market_trends": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "type": "object",
+            "required": ["trend", "impact", "confidence"],
+            "properties": {
+              "trend": {"type": "string"},
+              "impact": {"type": "string"}, 
+              "confidence": {"type": "number", "minimum": 0.0, "maximum": 1.0}
+            }
+          }
+        },
+        "regulatory_trends": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["trend", "impact", "confidence"],
+            "properties": {
+              "trend": {"type": "string"},
+              "impact": {"type": "string"},
+              "confidence": {"type": "number", "minimum": 0.0, "maximum": 1.0}
+            }
+          }
+        }
+      }
+    },
+    "economic_indicators": {
+      "type": "object",
+      "description": "Industry-sensitive economic data and correlation analysis",
+      "required": ["correlations", "sensitivity_analysis"],
+      "properties": {
+        "correlations": {
+          "type": "object",
+          "description": "Economic indicator correlations with industry performance"
+        },
+        "sensitivity_analysis": {
+          "type": "object",
+          "description": "Industry sensitivity to economic factors"
+        }
+      }
+    },
+    "competitive_landscape": {
+      "type": "object",
+      "description": "Market structure and competitive dynamic evaluation",
+      "required": ["market_structure", "competitive_dynamics", "concentration_metrics"],
+      "properties": {
+        "market_structure": {
+          "type": "string",
+          "description": "Overall market structure assessment"
+        },
+        "competitive_dynamics": {
+          "type": "object",
+          "description": "Analysis of competitive forces and dynamics"
+        },
+        "concentration_metrics": {
+          "type": "object",
+          "description": "Market concentration and competitive positioning metrics"
+        }
+      }
+    },
+    "cli_service_validation": {
+      "type": "object",
+      "description": "CLI service health and operational status",
+      "required": ["service_health", "health_score", "services_operational", "services_healthy"],
+      "properties": {
+        "service_health": {
+          "type": "string",
+          "enum": ["operational", "degraded", "offline"]
+        },
+        "health_score": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0
+        },
+        "services_operational": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "services_healthy": {
+          "type": "boolean"
+        }
+      }
+    },
+    "cli_data_quality": {
+      "type": "object",
+      "description": "Overall data quality assessment",
+      "required": ["overall_data_quality", "institutional_grade"],
+      "properties": {
+        "overall_data_quality": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0
+        },
+        "institutional_grade": {
+          "type": "boolean",
+          "description": "Whether quality meets institutional standards (≥0.90)"
+        }
+      }
+    },
+    "cli_insights": {
+      "type": "object",
+      "description": "Framework-level observations and insights",
+      "required": ["key_observations", "data_quality_insights"],
+      "properties": {
+        "key_observations": {
+          "type": "array",
+          "minItems": 3,
+          "items": {"type": "string"}
+        },
+        "data_quality_insights": {
+          "type": "array",
+          "minItems": 2,
+          "items": {"type": "string"}
+        }
+      }
+    },
+    "discovery_insights": {
+      "type": "object", 
+      "description": "Initial analytical observations and research priorities",
+      "required": ["initial_observations", "research_priorities", "data_gaps"],
+      "properties": {
+        "initial_observations": {
+          "type": "array",
+          "minItems": 3,
+          "items": {"type": "string"}
+        },
+        "research_priorities": {
+          "type": "array",
+          "minItems": 2,
+          "items": {"type": "string"}
+        },
+        "data_gaps": {
+          "type": "array",
+          "items": {"type": "string"}
+        }
+      }
+    },
+    "data_quality_assessment": {
+      "type": "object",
+      "description": "Comprehensive quality validation results",
+      "required": ["overall_confidence", "completeness_score", "source_reliability"],
+      "properties": {
+        "overall_confidence": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Overall confidence in discovery results"
+        },
+        "completeness_score": {
+          "type": "number", 
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Data completeness assessment"
+        },
+        "source_reliability": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Reliability of data sources used"
+        }
+      }
+    },
+    "local_data_references": {
+      "type": "object",
+      "description": "References to local data files discovered and utilized",
+      "properties": {
+        "related_analyses": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Related analysis files referenced"
+        },
+        "coverage_assessment": {
+          "type": "object",
+          "description": "Assessment of local data coverage and relevance"
+        }
+      }
+    }
+  }
+}

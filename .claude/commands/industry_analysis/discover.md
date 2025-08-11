@@ -2,11 +2,11 @@
 
 **DASV Phase 1: Industry-Wide Data Collection and Context Gathering**
 
-Comprehensive industry-wide data collection and market intelligence gathering for institutional-quality industry analysis using systematic discovery protocols and production-grade CLI data acquisition methodologies.
+Comprehensive industry-wide data collection and market intelligence gathering for institutional-quality industry analysis using systematic discovery protocols and researcher sub-agent orchestration.
 
 ## Purpose
 
-The Industry Analysis Discovery phase represents the systematic collection and initial structuring of all data required for comprehensive industry analysis. This command provides the requirements for the "Discover" phase of the DASV (Discover → Analyze → Synthesize → Validate) framework, focusing on industry-wide data acquisition standards, trend analysis requirements, and foundational industry research requirements.
+The Industry Analysis Discovery phase defines the requirements for systematic collection and initial structuring of all data required for comprehensive industry analysis. This specification focuses on **what** industry-wide data and competitive intelligence is needed rather than **how** to obtain it, delegating technical implementation to the researcher sub-agent.
 
 **Expected Output Schema**: `/scripts/schemas/industry_analysis_discovery_schema.json`
 **Researcher Sub Task**: Use the researcher sub-agent to execute industry analysis discovery. Ensure output conforms to `/scripts/schemas/industry_analysis_discovery_schema.json`.
@@ -22,6 +22,7 @@ The Industry Analysis Discovery phase represents the systematic collection and i
 
 ## Parameters
 
+### Core Parameters
 - `industry`: Industry identifier (required) - `software_infrastructure` | `semiconductors` | `consumer_electronics` | `internet_retail` | etc.
 - `sector`: Parent sector (optional) - `technology` | `healthcare` | `financials` | `consumer` | etc.
 - `depth`: Analysis depth - `summary` | `standard` | `comprehensive` | `institutional` (optional, default: comprehensive)
@@ -29,74 +30,44 @@ The Industry Analysis Discovery phase represents the systematic collection and i
 - `confidence_threshold`: Minimum confidence for data quality - `0.6` | `0.7` | `0.8` (optional, default: 0.7)
 - `validation_enhancement`: Enable validation-based enhancement - `true` | `false` (optional, default: true)
 
-## Data Sources and Integration
-
-**Required Financial Services:**
-1. **Yahoo Finance CLI** - Industry performance metrics and representative company analysis
-2. **Alpha Vantage CLI** - Real-time industry sentiment and trend validation
-3. **FMP CLI** - Industry financial intelligence and competitive landscape data
-4. **SEC EDGAR CLI** - Industry regulatory environment and compliance trends
-5. **FRED Economic CLI** - Industry economic sensitivity and macroeconomic correlations
-6. **CoinGecko CLI** - Risk appetite assessment and technology adoption indicators
-7. **IMF CLI** - Global industry context and international expansion potential
-
-**Integration Requirements:**
-- Multi-source industry trend validation across financial services
-- Automatic cross-validation with confidence scoring and institutional-grade data quality assessment
-- Real-time economic context integration with industry sensitivity analysis
-- Technology adoption and innovation metrics for competitive analysis
-- Production-grade caching and rate limiting for API efficiency
-- Comprehensive error handling with graceful degradation and source reliability scoring
-
-## Data Flow Integration
-
-### Input Requirements
-- `industry`: Industry identifier (required)
-- `sector`: Parent sector classification (optional)
-- `confidence_threshold`: Data quality threshold (0.6-0.8, default: 0.7)
-- `validation_enhancement`: Optional optimization based on existing validation files
-
-### CLI Services Integration
-- **7 Required Services**: Yahoo Finance, Alpha Vantage, FMP, SEC EDGAR, FRED, CoinGecko, IMF
-- **Multi-Source Validation**: Cross-validation across industry data sources
-- **Economic Context**: Industry-specific economic indicators and correlations
-- **Technology Trends**: Innovation metrics and competitive intelligence
-
-### Output Integration
-**Primary Output**: `./data/outputs/industry_analysis/discovery/{INDUSTRY}_{YYYYMMDD}_discovery.json`
-**Schema Compliance**: Must conform to `/scripts/schemas/industry_analysis_discovery_schema.json`
-**Downstream Dependencies**:
-- industry_analyst_analyze (next DASV phase)
-- twitter_industry_analysis (social media content generation)
-- sector_analyst (cross-sector comparative analysis)
-- social_media_strategist (industry themes)
-
-## Data Collection Requirements
+## Data Requirements
 
 ### Core Data Categories
-**Industry Intelligence**:
-- Industry scope definition and sub-industry classification
-- Market size, growth rates, and competitive landscape
-- Technology trends and innovation metrics
-- Regulatory environment and compliance requirements
 
-**Representative Companies**:
-- Leading companies representing industry dynamics
-- Market position and competitive assessment
-- Financial performance and operational metrics
-- Geographic distribution and market exposure
+**Industry Intelligence Requirements**:
+- Industry scope definition and sub-industry classification framework
+- Market size estimation and growth rate analysis across timeframes
+- Technology trend identification and innovation pattern analysis
+- Regulatory environment assessment and compliance requirement analysis
+- Competitive landscape structure and market concentration metrics
 
-**Economic Context**:
-- Industry-specific economic indicators and correlations
-- Interest rate sensitivity and cyclical analysis
-- Global economic factors and international exposure
-- Policy implications and regulatory trends
+**Representative Company Requirements**:
+- Leading company identification representing industry dynamics
+- Market position assessment and competitive advantage analysis
+- Financial performance evaluation and operational efficiency metrics
+- Geographic distribution mapping and international market exposure
+- Innovation pipeline analysis and R&D investment patterns
 
-**Trend Analysis**:
-- Technology adoption and innovation patterns
-- Market evolution and competitive dynamics
-- Consumer behavior and demand drivers
-- Regulatory changes and policy implications
+**Economic Context Requirements**:
+- Industry-specific economic sensitivity and correlation analysis
+- Interest rate impact assessment and cyclical behavior patterns
+- Global economic factor influence and international trade implications
+- Policy impact analysis and regulatory change sensitivity
+- Supply chain dynamics and cost structure analysis
+
+**Trend Analysis Requirements**:
+- Technology adoption patterns and innovation diffusion analysis
+- Market evolution assessment and competitive dynamic shifts  
+- Consumer behavior analysis and demand driver identification
+- Regulatory change impact and policy implication assessment
+- Disruption risk evaluation and competitive threat analysis
+
+### Quality Standards
+- **Industry Coverage**: Comprehensive industry scope with clear boundary definition
+- **Representative Sample**: Balanced selection of industry-leading companies
+- **Trend Validation**: Multi-source validation of industry trend analysis
+- **Economic Integration**: Industry-specific economic correlation assessment
+- **Competitive Intelligence**: Thorough market structure and competitive analysis
 
 ## Output Structure and Schema
 
@@ -105,76 +76,35 @@ The Industry Analysis Discovery phase represents the systematic collection and i
 **Schema Definition**: `/scripts/schemas/industry_analysis_discovery_schema.json`
 
 ### Required Output Components
-- **Industry Scope**: Industry definition, classification, and boundaries
-- **Representative Companies**: Leading companies with selection rationale
-- **Trend Analysis**: Technology, market, consumer, and regulatory trends
-- **Economic Indicators**: Industry-sensitive economic data and correlations
-- **Competitive Landscape**: Market structure and competitive dynamics
-- **Quality Metrics**: Confidence scores, data completeness, source reliability
+- **Industry Scope**: Industry definition, classification, and boundary framework
+- **Representative Companies**: Leading companies with selection rationale and analysis
+- **Trend Analysis**: Technology, market, consumer, and regulatory trend assessment
+- **Economic Indicators**: Industry-sensitive economic data and correlation analysis
+- **Competitive Landscape**: Market structure and competitive dynamic evaluation
+- **Quality Metrics**: Confidence scores, data completeness, and source reliability assessment
 
 ### Schema Compliance Standards
-- Minimum 5 CLI services utilized for institutional-grade analysis
-- Industry trend consistency validation across multiple sources
-- Overall data quality ≥ 0.90 for institutional standards
-- Complete industry insights with research priorities identified
-
-## Quality Standards and Requirements
-
-### Pre-Execution Requirements
-- Industry identifier format validation and classification
-- CLI services configuration and API key validation
-- Confidence threshold configuration based on depth parameter
-- Optional validation enhancement protocol activation
-
-### Data Quality Standards
-**Multi-Source Validation**:
-- Industry trend consistency verification across 3+ sources
-- Economic indicator correlation validation
-- Technology adoption metrics cross-validation
-- Competitive landscape data consistency checks
-
-**Institutional-Grade Thresholds**:
-- Overall data quality ≥ 0.90
-- Service reliability ≥ 80% health score
-- Confidence scoring for all major data categories
-- Complete data validation with gap identification
-
-### Enhanced Analysis Requirements
-- Representative company analysis with 3-15 industry leaders
-- Discovery insights with minimum 3 initial observations
-- Data gaps identification for next phase planning
-- Source reliability scoring for all CLI services
-
-## Security and Implementation Notes
-
-### API Key Security
-- API keys stored securely in `./config/financial_services.yaml`
-- API keys MUST NEVER be included in discovery outputs or logs
-- CLI services automatically access keys from secure configuration
-- Output references config file without exposing sensitive information
-
-### Service Reliability
-- Dynamic tracking of successful CLI service responses
-- Include only services that successfully provided data in output
-- Graceful degradation when services are unavailable
-- Service health monitoring and performance metrics
+- Industry classification with clear scope and boundary definitions
+- Representative company analysis with selection rationale and competitive positioning
+- Trend analysis with multi-source validation and confidence measurement
+- Economic context integration with industry-specific sensitivity assessment
 
 ## Expected Outcomes
 
 ### Discovery Quality Targets
-- **Overall Data Quality**: ≥ 97% confidence through multi-source validation
-- **Data Completeness**: ≥ 92% across all required categories
-- **Industry Trend Confidence**: ≥ 95% with complete trend integration
-- **Service Health**: ≥ 80% operational status across all CLI services
+- **Industry Definition**: ≥ 95% confidence in scope and classification accuracy
+- **Company Representation**: ≥ 90% confidence in industry leadership coverage
+- **Trend Analysis**: ≥ 85% confidence in trend identification and validation
+- **Economic Integration**: ≥ 88% confidence in economic correlation analysis
 
 ### Key Deliverables
-- Comprehensive industry scope with classification and boundaries
-- Multi-source validated industry trends and competitive dynamics
-- Economic context with industry-specific correlations and sensitivity
-- Representative company analysis with selection rationale
-- Discovery insights identifying research priorities and data gaps
+- Comprehensive industry scope with classification and competitive framework
+- Representative company analysis with competitive positioning and market dynamics
+- Technology and market trend analysis with innovation pattern identification
+- Economic context with industry-specific correlation and sensitivity assessment
+- Competitive landscape evaluation with market structure and concentration analysis
 - Quality assessment with confidence scoring and source reliability metrics
 
-**Integration with DASV Framework**: This command provides the foundational data required for the subsequent analyze phase, ensuring high-quality input for systematic industry analysis.
+**Integration with DASV Framework**: This command provides the foundational industry data required for the subsequent analyze phase, ensuring high-quality input for systematic industry analysis.
 
 **Author**: Cole Morton

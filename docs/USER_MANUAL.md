@@ -139,6 +139,81 @@ The Python backend provides a complete trading analysis framework:
 
 ---
 
+## 🔧 DASV Framework & Sub-Agent Architecture
+
+> **⭐ NEW FEATURE**: Institutional-grade analysis framework with universal sub-agent delegation pattern.
+
+### Framework Overview
+
+The **DASV (Discovery → Analyze → Synthesize → Validate)** Framework provides systematic progression from raw data to validated analysis outputs with institutional-grade quality standards (≥9.0/10.0 confidence).
+
+**Core Documentation**:
+- **Framework Specification**: `.claude/DASV_Framework_Specification.md` - Complete framework architecture and implementation guidelines
+- **Implementation Summary**: `.claude/DASV_Implementation_Summary.md` - Current status and optimization results
+
+### Sub-Agent Trilogy
+
+**Researcher Sub-Agent** (`.claude/agents/researcher.md`):
+- **Purpose**: Data collection and discovery phase execution
+- **Capabilities**: Multi-source validation, CLI service orchestration, institutional quality enforcement
+- **Usage**: Automatically handles all `*_discover` command implementations
+
+**Analyst Sub-Agent** (`.claude/agents/analyst.md`):
+- **Purpose**: Statistical analysis and insights generation
+- **Capabilities**: Financial health assessment, risk quantification, validation enhancement
+- **Usage**: Automatically handles all `*_analyze` command implementations
+
+**Synthesist Sub-Agent** (`.claude/agents/synthesist.md`):
+- **Purpose**: Publication-ready document generation
+- **Capabilities**: Template integration, professional presentation, evidence integration
+- **Usage**: Automatically handles all `*_synthesize` command implementations
+
+### Analysis Domains
+
+The framework supports 6 analysis domains with **56% complexity reduction** achieved through sub-agent delegation:
+
+| Domain | Purpose | Template Location | Status |
+|--------|---------|-------------------|--------|
+| **Fundamental Analysis** | Company financial health | `./templates/analysis/fundamental_analysis_template.md` | ✅ Optimized |
+| **Sector Analysis** | 11-sector ETF framework | `./templates/analysis/sector_analysis_template.md` | ✅ Optimized |
+| **Industry Analysis** | Competitive landscape | `./templates/analysis/industry_analysis_template.md` | ✅ Optimized |
+| **Macro Analysis** | Business cycle assessment | `./templates/analysis/macro_analysis_template.md` | ✅ Optimized |
+| **Comparative Analysis** | Winner/loser determination | `./templates/analysis/comparative_analysis_template.md` | ✅ Optimized |
+| **Trade History** | Performance tracking | `./templates/analysis/trade_history_template.md` | ✅ Optimized |
+
+### Quality Standards
+
+**Universal Quality Tiers**:
+- **Institutional Excellence** (≥9.5): Premium grade, publication-ready
+- **Institutional Standard** (≥9.0): Professional analysis baseline
+- **Professional Standard** (≥8.0): Internal analysis minimum
+
+**Enhancement Protocol**: When validation files exist, sub-agents automatically target 9.5+ confidence scores through systematic optimization.
+
+### File Organization
+
+```
+data/outputs/{analysis_type}/
+├── {IDENTIFIER}_{YYYYMMDD}.md                          # Synthesis output
+├── discovery/{IDENTIFIER}_{YYYYMMDD}_discovery.json    # Discovery data
+├── analysis/{IDENTIFIER}_{YYYYMMDD}_analysis.json      # Analysis insights
+└── validation/{IDENTIFIER}_{YYYYMMDD}_validation.json  # Validation assessment
+```
+
+**Usage Examples**:
+```bash
+# Run discovery phase (handled by researcher sub-agent)
+/fundamental_analyst_discover ticker=AAPL confidence_threshold=0.9
+
+# Run analysis phase (handled by analyst sub-agent)  
+/fundamental_analyst_analyze analysis_file=data/outputs/fundamental_analysis/discovery/AAPL_20250811_discovery.json
+
+# Run synthesis phase (handled by synthesist sub-agent)
+/fundamental_analyst_synthesize analysis_file=data/outputs/fundamental_analysis/analysis/AAPL_20250811_analysis.json
+```
+
+---
+
 ## 📊 Trading Analysis
 
 ### Data Processing Pipeline

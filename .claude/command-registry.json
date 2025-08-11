@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "last_updated": "2024-12-30",
+  "last_updated": "2025-08-10",
   "registry": {
     "collaboration_infrastructure": {
       "description": "Commands that enable product development and maintain system architecture",
@@ -209,6 +209,42 @@
           "pre_execution_required": "optional"
         }
       }
+    },
+    "sub_agents": {
+      "description": "Specialized sub-agents for systematic data processing within DASV framework",
+      "lifecycle_management_required": true,
+      "knowledge_authority": false,
+      "pre_execution_mandatory": true,
+      "framework": "DASV",
+      "agents": {
+        "researcher": {
+          "location": ".claude/agents/researcher.md",
+          "classification": "sub-agent",
+          "framework_phase": "discover",
+          "capabilities": ["data discovery", "CLI service orchestration", "schema validation", "quality enhancement"],
+          "summary": "Systematic data discovery and collection for *_discovery.json file creation",
+          "collaboration": "Provides discovery data to analyst sub-agent for processing",
+          "outputs_to": "./data/outputs/{domain}/discovery/"
+        },
+        "analyst": {
+          "location": ".claude/agents/analyst.md",
+          "classification": "sub-agent",
+          "framework_phase": "analyze",
+          "capabilities": ["analytical processing", "risk quantification", "valuation modeling", "quality enforcement"],
+          "summary": "Systematic analysis and processing of discovery data for *_analysis.json file creation",
+          "collaboration": "Processes discovery data from researcher, prepares for synthesis phase",
+          "outputs_to": "./data/outputs/{domain}/analysis/"
+        },
+        "twitter_writer": {
+          "location": ".claude/agents/twitter_writer.md",
+          "classification": "sub-agent",
+          "framework_phase": "synthesis",
+          "capabilities": ["viral content creation", "thread development", "engagement optimization"],
+          "summary": "Expert Twitter/X content creation and social media optimization",
+          "collaboration": "Transforms analysis outputs into engaging social media content",
+          "outputs_to": "./outputs/social-media/"
+        }
+      }
     }
   },
   "validation": {
@@ -217,6 +253,7 @@
     "product_commands": 11,
     "microservice_commands": 4,
     "utility_commands": 1,
+    "sub_agents": 3,
     "pre_execution_enforcement": "All commands except utilities require pre-execution validation"
   },
   "documentation_hierarchy": {

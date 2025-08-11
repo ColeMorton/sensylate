@@ -82,6 +82,28 @@ ALWAYS prefer editing an existing file to creating a new one.
 
 **Strict YAGNI**: Implement only the specific functionality requested without anticipating future needs, avoiding generic frameworks or extensibility that isn't explicitly required.
 
+## Documentation Lifecycle Rules
+
+**CRITICAL**: Prevent documentation bloat through strict YAGNI enforcement.
+
+**Documentation Minimization Standards**:
+- **Single Source of Truth**: All DASV framework information consolidated in `.claude/DASV_Framework_Specification.md`
+- **No Analysis Reports**: Implementation summaries limited to `.claude/DASV_Implementation_Summary.md` only
+- **Agent Specifications**: Essential definitions only in `.claude/agents/` (50 lines max per agent)
+- **Framework Documentation**: Maximum 1,000 lines for complete framework specification
+
+**Anti-Bloat Enforcement**:
+- **No Multiple Specifications**: Consolidate overlapping documentation immediately
+- **No Analysis Reports**: Delete detailed reports, preserve essential outcomes only
+- **No Historical Artifacts**: Remove outdated documentation when requirements change
+- **No Duplicate Framework Files**: Single master specification serves all needs
+
+**Creation Restrictions**:
+- **Prohibited**: New documentation files in `docs/analysis_reports/`, `docs/specifications/`
+- **Prohibited**: Framework explanation files beyond master specification
+- **Prohibited**: Implementation detail documentation (delegate to sub-agents)
+- **Required**: All new documentation must justify existence and consolidate existing content
+
 ## Project Configuration
 
 **Timezone**: Brisbane, Australia (default)
