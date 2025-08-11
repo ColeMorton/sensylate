@@ -10,14 +10,14 @@ Define the analytical requirements for transforming multi-company discovery data
 
 ## Microservice Integration
 
-**Framework**: DASV Phase 2  
-**Role**: comparative_analyst  
-**Action**: analyze  
-**Input Source**: Two complete fundamental analysis outputs (required)  
-**Output Location**: `./data/outputs/comparative_analysis/analysis/`  
-**Next Phase**: comparative_analyst_synthesize  
-**Template Integration**: `./templates/analysis/comparative_analysis_template.md`  
-**Implementation Delegation**: Analyst sub-agent handles cross-entity comparison methodology  
+**Framework**: DASV Phase 2
+**Role**: comparative_analyst
+**Action**: analyze
+**Input Source**: Two complete fundamental analysis outputs (required)
+**Output Location**: `./data/outputs/comparative_analysis/analysis/`
+**Next Phase**: comparative_analyst_synthesize
+**Template Integration**: `./templates/analysis/comparative_analysis_template.md`
+**Implementation Delegation**: Analyst sub-agent handles cross-entity comparison methodology
 
 ## Analysis Parameters
 
@@ -172,7 +172,7 @@ Define the analytical requirements for transforming multi-company discovery data
 
 ## Output Structure Requirements
 
-**File Naming**: `{TICKER_A}_vs_{TICKER_B}_{YYYYMMDD}_analysis.json`  
+**File Naming**: `{TICKER_A}_vs_{TICKER_B}_{YYYYMMDD}_analysis.json`
 **Primary Location**: `./data/outputs/comparative_analysis/analysis/`
 
 ### Required Output Sections
@@ -243,7 +243,7 @@ Define the analytical requirements for transforming multi-company discovery data
 
 **Analyst Sub-Agent Integration**: This specification defines WHAT comparative analysis is required. The analyst sub-agent handles HOW through:
 - Cross-entity comparison framework execution
-- Universal quality standards and confidence scoring enforcement  
+- Universal quality standards and confidence scoring enforcement
 - Comprehensive risk-return profiling methodology
 - Winner/loser determination with evidence-based conclusions
 
@@ -260,6 +260,6 @@ Define the analytical requirements for transforming multi-company discovery data
 
 **Framework Integration**: Optimized for DASV analyst sub-agent execution focusing on cross-stock comparative domain expertise and institutional-grade investment decision support.
 
-**Author**: Cole Morton  
-**Optimization**: 40% complexity reduction through cross-entity methodology delegation to analyst sub-agent  
+**Author**: Cole Morton
+**Optimization**: 40% complexity reduction through cross-entity methodology delegation to analyst sub-agent
 **Confidence**: Comparative analysis domain specification with institutional-grade winner determination

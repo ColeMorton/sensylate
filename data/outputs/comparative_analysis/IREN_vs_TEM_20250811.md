@@ -37,7 +37,7 @@ tags:
 ### Key Quantified Catalysts Comparison
 **TEM Growth Catalysts (Next 12-18 Months)**:
 1. Profitability pathway demonstration - Probability: 0.75 | Impact: $8.50/share | Timeline: 12mo
-2. FDA regulatory approvals expansion - Probability: 0.65 | Impact: $6.30/share | Timeline: 15mo  
+2. FDA regulatory approvals expansion - Probability: 0.65 | Impact: $6.30/share | Timeline: 15mo
 3. Platform market penetration acceleration - Probability: 0.70 | Impact: $5.50/share | Timeline: 9mo
 
 **IREN Growth Catalysts (Next 12-18 Months)**:
@@ -89,7 +89,7 @@ tags:
 - **Sector Context**: High-beta crypto exposure with 6.0x market sensitivity, GDP correlation variable
 
 **TEM (Healthcare Technology Sector)**:
-- **Primary Sector**: Healthcare Technology | **Industry**: AI-Driven Healthcare Diagnostics  
+- **Primary Sector**: Healthcare Technology | **Industry**: AI-Driven Healthcare Diagnostics
 - **Sector Ranking**: Top Quartile | **Performance Scores**: Growth rate 99th percentile, Innovation 85th percentile
 - **Relative Strengths**: Revenue growth acceleration, platform scalability, regulatory moats
 - **Improvement Areas**: Profitability timeline, debt burden management
@@ -105,7 +105,7 @@ tags:
 - **Tactical Considerations**: Bitcoin price levels, regulatory clarity, energy policy developments
 
 **TEM Healthcare AI Analysis**:
-- **Sector Rotation Score**: 7.8/10 | **Current Market Environment**: Favorable Defensive Positioning  
+- **Sector Rotation Score**: 7.8/10 | **Current Market Environment**: Favorable Defensive Positioning
 - **Cycle Preference**: Late-cycle defensive phases (current environment supportive)
 - **Interest Rate Sensitivity**: Low Negative | Current environment: Manageable Impact
 - **Economic Sensitivity**: Low with essential healthcare characteristics
@@ -175,7 +175,7 @@ tags:
 - **Scenario Analysis**: $22-28 range based on Bitcoin price scenarios
 - **Current Price**: $18.45
 - **Bull Case** ($150K+ Bitcoin): $35-40 target (+90-117% upside)
-- **Base Case** ($100-130K Bitcoin): $25-30 target (+35-63% upside)  
+- **Base Case** ($100-130K Bitcoin): $25-30 target (+35-63% upside)
 - **Bear Case** (<$80K Bitcoin): $12-16 target (-35 to -13% downside)
 - **Probability-Weighted Target**: $25 (+35% upside)
 
@@ -330,7 +330,7 @@ tags:
 - **Rationale**: TEM's growth profile with defensive characteristics better suited for growth portfolios
 - **Risk Management**: Monitor profitability progress, FDA pipeline, competitive positioning
 
-#### Conservative Investors (Lower Risk Tolerance)  
+#### Conservative Investors (Lower Risk Tolerance)
 - **Primary Pick**: TEM - 1-2% position
 - **Secondary**: IREN - 0-1% allocation due to volatility
 - **Rationale**: TEM's healthcare characteristics more compatible with defensive objectives
@@ -363,7 +363,7 @@ tags:
 
 ### Qualitative Considerations
 1. **Technology Leadership**: IREN operational efficiency vs TEM's AI-genomics platform innovation
-2. **Regulatory Environment**: TEM benefits from established FDA framework vs IREN regulatory uncertainty  
+2. **Regulatory Environment**: TEM benefits from established FDA framework vs IREN regulatory uncertainty
 3. **Management Quality**: Both demonstrate strong execution with different industry expertise
 4. **Market Positioning**: TEM operates in larger, more predictable healthcare market vs IREN crypto volatility
 
@@ -385,7 +385,7 @@ Current restrictive monetary policy (Fed funds 4.33%) and late-cycle economic po
 ### Institutional Certification & Quality Assurance
 **Multi-Source Validation Results**:
 - **Price Consistency**: 0.0% variance across sources (Target: ≤2%) | **Status**: PASSED for both securities
-- **Economic Indicator Freshness**: FRED data within 4 hours | **Status**: CURRENT  
+- **Economic Indicator Freshness**: FRED data within 4 hours | **Status**: CURRENT
 - **Cross-Sector Analysis Integration**: Validated healthcare vs crypto sector positioning framework
 - **CLI Service Health**: 7/7 services operational (100% uptime) | **Status**: OPERATIONAL
 
@@ -397,7 +397,7 @@ Current restrictive monetary policy (Fed funds 4.33%) and late-cycle economic po
 ### Portfolio Construction Recommendations
 
 **Primary Recommendation: TEMPUS AI (TEM)**
-- **Position Size**: 3-5% for growth portfolios, 1-2% for balanced portfolios  
+- **Position Size**: 3-5% for growth portfolios, 1-2% for balanced portfolios
 - **Investment Rationale**: Superior competitive moats (7.2/10 vs 6.8/10), better risk-adjusted returns, healthcare defensive characteristics, controllable growth catalysts
 - **Risk Management**: Monitor quarterly profitability progress, FDA approval timeline, competitive technology threats, healthcare spending trends
 
@@ -413,7 +413,7 @@ Current restrictive monetary policy (Fed funds 4.33%) and late-cycle economic po
 
 ### Monitoring & Risk Management Framework
 **TEM Monitoring KPIs**: Quarterly path to profitability progress, FDA approval pipeline developments, platform adoption metrics, competitive positioning, healthcare AI market growth
-**IREN Monitoring KPIs**: Bitcoin price levels, regulatory environment changes, mining facility utilization, renewable energy partnerships, industry consolidation trends  
+**IREN Monitoring KPIs**: Bitcoin price levels, regulatory environment changes, mining facility utilization, renewable energy partnerships, industry consolidation trends
 **Portfolio Risk Limits**: Individual position maximum 5%, combined crypto exposure maximum 2%, healthcare AI concentration limits, volatility-adjusted position sizing
 
 ## 📋 Analysis Metadata & Validation
@@ -436,7 +436,7 @@ Current restrictive monetary policy (Fed funds 4.33%) and late-cycle economic po
 - **Template Compliance**: FULL adherence to institutional MU vs DHR template standards
 - **Winner Determination**: CLEAR TEM recommendation with 0.85 conviction and quantified rationale
 - **Risk Framework Validation**: PASSED quantified probability/impact assessment with comparative matrices
-- **Confidence Propagation**: ACHIEVED 0.91/1.0 baseline throughout comparative DASV workflow  
+- **Confidence Propagation**: ACHIEVED 0.91/1.0 baseline throughout comparative DASV workflow
 - **Cross-Sector Integration**: PASSED healthcare vs crypto positioning analysis with economic cycle context
 
 **Institutional Recommendation Certification**: This comparative analysis represents institutional-quality investment research with comprehensive cross-sector assessment, quantified risk framework, and clear winner determination achieving 0.91/1.0 overall confidence. TEM primary recommendation suitable for institutional decision-making with healthcare defensive characteristics and superior risk-adjusted return profile, while IREN secondary consideration for tactical crypto exposure with appropriate position sizing constraints.

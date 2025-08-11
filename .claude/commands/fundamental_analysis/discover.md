@@ -48,7 +48,7 @@ The Fundamental Analysis Discovery phase defines the requirements for systematic
 
 **Economic Context Requirements**:
 - Federal Reserve policy indicators and macroeconomic environment
-- Interest rate sensitivity and economic cycle positioning  
+- Interest rate sensitivity and economic cycle positioning
 - Global economic factors affecting company operations
 - Sector-specific economic implications and correlations
 

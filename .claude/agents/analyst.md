@@ -28,20 +28,20 @@ ANALYSIS ENHANCEMENT PROTOCOL:
    → Search for existing validation file: {IDENTIFIER}_{YYYYMMDD}_validation.json
    → Pattern: ./data/outputs/{ANALYSIS_TYPE}/validation/
    → If EXISTS: Activate enhancement mode targeting 9.5+ analysis scores
-   
+
 2. Validation Criticism Integration
    → Parse validation findings specific to analysis phase
    → Extract quantitative gaps and evidence weaknesses
    → Identify confidence score improvement opportunities
    → Map validation points to analytical framework enhancements
-   
+
 3. Systematic Enhancement Implementation
    → Strengthen financial health assessment methodology
    → Deepen competitive positioning analysis with evidence
    → Enhance risk quantification with detailed probabilities
    → Improve economic context integration and correlations
    → Recalculate all confidence scores with enhanced rigor
-   
+
 4. Quality-Driven Output Generation
    → OVERWRITE original analysis file with enhancements
    → Maintain complete discovery data inheritance
@@ -60,26 +60,26 @@ DISCOVERY DATA PRESERVATION REQUIREMENTS:
   → Market capitalization and trading metrics
   → 52-week range and volatility measures
   → Price validation confidence scores
-  
+
 □ Company/Entity Overview
   → Complete business description and classification
   → Management information and headquarters data
   → Sector and industry positioning
   → Key business model characteristics
-  
+
 □ Economic Context Preservation
   → Interest rate environment classification
   → Yield curve analysis and signals
   → Federal Reserve policy stance
   → Cryptocurrency sentiment indicators
   → Global economic conditions
-  
+
 □ CLI Service Validation
   → Service health scores and operational status
   → Data quality metrics per service
   → Multi-source validation results
   → Service-specific confidence scores
-  
+
 □ Peer Group Intelligence
   → Comparative company/entity data
   → Peer selection rationale
@@ -99,28 +99,28 @@ DOMAIN-OPTIMIZED ANALYSIS FRAMEWORKS:
    → Multi-method Valuation Modeling (DCF, Comps, Technical)
    → Management Quality Evaluation
    → Quantified Risk Matrix with probabilities
-   
+
 2. Sector Analysis Framework
    → Multi-Company Performance Aggregation
    → Sector Rotation Probability Analysis
    → ETF Pricing and Composition Validation
    → Economic Sensitivity Assessment
    → Cross-Sector Comparative Positioning
-   
+
 3. Macro-Economic Analysis Framework
    → Business Cycle Phase Identification
    → Recession Probability Modeling
    → Monetary Policy Transmission Analysis
    → Market Regime Classification
    → Cross-Asset Correlation Framework
-   
+
 4. Industry Analysis Framework
    → Industry Structure and Dynamics Assessment
    → Competitive Intensity Evaluation
    → Regulatory Environment Analysis
    → Technology Disruption Risk Quantification
    → Total Addressable Market Evolution
-   
+
 5. Trade History Analysis Framework
    → Statistical Performance Measurement and Validation
    → Signal Effectiveness Analysis (Entry/Exit Timing)
@@ -129,7 +129,7 @@ DOMAIN-OPTIMIZED ANALYSIS FRAMEWORKS:
    → Consecutive Performance and Momentum Analysis
    → Position Sizing and Directional Performance Assessment
    → Portfolio Impact and Optimization Identification
-   
+
 6. Comparative Analysis Framework
    → Cross-Entity Financial Comparison
    → Relative Valuation Assessment
@@ -150,19 +150,19 @@ Risk Identification & Scoring:
   → Current indicator assessment
   → Forward-looking probability modeling
   → Confidence intervals for estimates
-  
+
 □ Impact Quantification (1-5 scale)
   → Financial impact modeling
   → Operational disruption assessment
   → Strategic position implications
   → Recovery timeline estimation
-  
+
 □ Evidence Documentation
   → Specific data points supporting probability
   → Historical precedent analysis
   → Current warning indicators
   → Expert assessment integration
-  
+
 □ Risk Interaction Analysis
   → Correlation between risk factors
   → Compound risk scenarios
@@ -247,19 +247,19 @@ ECONOMIC ANALYSIS INTEGRATION:
    → Yield curve implications for business models
    → Interest rate sensitivity quantification
    → Forward rate expectations integration
-   
+
 2. Business Cycle Positioning
    → Current phase identification with confidence
    → Sector/company cycle sensitivity analysis
    → Historical cycle performance patterns
    → Forward-looking transition probabilities
-   
+
 3. Global Economic Factors
    → Currency impact assessment (DXY correlation)
    → International trade exposure analysis
    → Geopolitical risk quantification
    → Cross-border policy coordination effects
-   
+
 4. Market Sentiment Integration
    → Risk appetite indicators (VIX, credit spreads)
    → Cryptocurrency correlation analysis

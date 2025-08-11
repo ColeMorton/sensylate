@@ -155,7 +155,7 @@
             "required": ["trend", "impact", "confidence"],
             "properties": {
               "trend": {"type": "string"},
-              "impact": {"type": "string"}, 
+              "impact": {"type": "string"},
               "confidence": {"type": "number", "minimum": 0.0, "maximum": 1.0}
             }
           }
@@ -266,7 +266,7 @@
       }
     },
     "discovery_insights": {
-      "type": "object", 
+      "type": "object",
       "description": "Initial analytical observations and research priorities",
       "required": ["initial_observations", "research_priorities", "data_gaps"],
       "properties": {
@@ -298,7 +298,7 @@
           "description": "Overall confidence in discovery results"
         },
         "completeness_score": {
-          "type": "number", 
+          "type": "number",
           "minimum": 0.0,
           "maximum": 1.0,
           "description": "Data completeness assessment"

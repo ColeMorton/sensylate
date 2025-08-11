@@ -21,7 +21,7 @@
     "investment_recommendation": "TEM over IREN for growth portfolios, IREN for income/defensive positioning",
     "key_differentiators": [
       "TEM's healthcare defensive characteristics vs IREN's crypto volatility exposure",
-      "TEM's proprietary technology platform vs IREN's commodity mining operations", 
+      "TEM's proprietary technology platform vs IREN's commodity mining operations",
       "TEM's regulatory advantages vs IREN's regulatory uncertainty",
       "IREN's superior balance sheet strength vs TEM's profitability challenges"
     ]
@@ -29,7 +29,7 @@
   "financial_health_comparison": {
     "overall_assessment": {
       "iren_grade": "C+",
-      "tem_grade": "C+", 
+      "tem_grade": "C+",
       "grade_differential": "TIED",
       "winner": "NEUTRAL",
       "confidence": 0.92
@@ -69,7 +69,7 @@
       "confidence": 0.89
     },
     "balance_sheet_comparison": {
-      "iren_grade": "A-", 
+      "iren_grade": "A-",
       "tem_grade": "B-",
       "winner": "IREN",
       "key_metrics_comparison": {
@@ -104,13 +104,13 @@
         "working_capital": {
           "iren": 1097351000,
           "tem": "Adequate but constrained by debt service",
-          "winner": "IREN", 
+          "winner": "IREN",
           "insight": "IREN's $1.1B working capital provides massive operational runway"
         }
       },
       "trend_analysis": {
         "iren_trend": "stable",
-        "tem_trend": "stable", 
+        "tem_trend": "stable",
         "comparative_momentum": "IREN's balance sheet strength provides significant competitive advantage"
       },
       "confidence": 0.96
@@ -150,7 +150,7 @@
     },
     "capital_efficiency_comparison": {
       "iren_grade": "B",
-      "tem_grade": "C+", 
+      "tem_grade": "C+",
       "winner": "IREN",
       "key_metrics_comparison": {
         "asset_utilization": {
@@ -250,7 +250,7 @@
       },
       "tem_position": {
         "market_share": "Emerging leader in AI diagnostics",
-        "competitive_ranking": "Top 3 in integrated AI-genomics platforms", 
+        "competitive_ranking": "Top 3 in integrated AI-genomics platforms",
         "differentiation": "Superior AI integration vs traditional diagnostics peers"
       },
       "winner": "TEM",
@@ -295,7 +295,7 @@
     },
     "relative_valuation_comparison": {
       "iren_multiples": {
-        "ev_revenue": "15-25x based on peer group", 
+        "ev_revenue": "15-25x based on peer group",
         "price_to_book": "3-5x reflecting growth premium",
         "peer_comparison": "Mid-tier positioning with renewable energy premium"
       },
@@ -311,7 +311,7 @@
     "risk_adjusted_valuation": {
       "iren_risk_factors": [
         "Bitcoin price volatility (35% probability of major decline)",
-        "Regulatory uncertainty (40% probability of adverse changes)", 
+        "Regulatory uncertainty (40% probability of adverse changes)",
         "Technology obsolescence (40% probability of equipment issues)"
       ],
       "tem_risk_factors": [
@@ -341,7 +341,7 @@
       },
       "bear_case_comparison": {
         "iren": "Bitcoin crash creates severe losses (-50-65%)",
-        "tem": "Profitability delays but defensive characteristics (-25-35%)", 
+        "tem": "Profitability delays but defensive characteristics (-25-35%)",
         "winner": "TEM",
         "probability": "IREN 25%, TEM 25%"
       }
@@ -384,7 +384,7 @@
           "mitigation": "Limited - core to business model"
         },
         {
-          "risk": "Cryptocurrency regulation", 
+          "risk": "Cryptocurrency regulation",
           "impact": "High - 40% probability with 5x impact",
           "mitigation": "Geographic diversification provides some protection"
         },
@@ -407,7 +407,7 @@
         },
         {
           "risk": "Economic recession",
-          "impact": "Low - healthcare spending inelasticity", 
+          "impact": "Low - healthcare spending inelasticity",
           "mitigation": "Non-discretionary cancer care demand"
         }
       ],
@@ -523,7 +523,7 @@
           "catalyst": "Profitability pathway demonstration",
           "probability": 0.75,
           "impact": "$8.50 per share",
-          "timeline": "12 months", 
+          "timeline": "12 months",
           "controllability": "High - management execution"
         },
         {
@@ -543,7 +543,7 @@
         "expected_outperformance": "50-100% vs TEM's 25-40%"
       },
       "bear_market_scenario": {
-        "recommendation": "TEM", 
+        "recommendation": "TEM",
         "rationale": "Healthcare defensive characteristics and lower correlation to crypto markets",
         "expected_outperformance": "TEM -20-30% vs IREN -50-65%"
       },
@@ -570,7 +570,7 @@
       ],
       "when_to_choose_tem": [
         "Healthcare sector exposure desired",
-        "Growth with defensive characteristics preferred", 
+        "Growth with defensive characteristics preferred",
         "Technology platform investments prioritized",
         "More predictable execution timeline required"
       ]
@@ -651,7 +651,7 @@
     },
     "maximum_drawdown_estimate": {
       "iren": "65-80% in adverse crypto conditions",
-      "tem": "35-45% in adverse healthcare/market conditions", 
+      "tem": "35-45% in adverse healthcare/market conditions",
       "winner": "TEM"
     },
     "recovery_timeline": {

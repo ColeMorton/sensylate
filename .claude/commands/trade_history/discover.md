@@ -76,7 +76,7 @@ The Trade History Discovery phase defines the requirements for systematic collec
 
 ### Required Output Components
 - **Authoritative Trade Data**: Complete trade history with proper categorization
-- **Market Context**: Benchmark data, volatility environment, economic indicators  
+- **Market Context**: Benchmark data, volatility environment, economic indicators
 - **Portfolio Analysis**: Composition, risk metrics, performance attribution
 - **Fundamental Integration**: Cross-reference with existing fundamental analysis
 - **Quality Metrics**: Confidence scores, data completeness, validation results

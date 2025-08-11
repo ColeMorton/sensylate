@@ -205,7 +205,7 @@ data/outputs/{analysis_type}/
 # Run discovery phase (handled by researcher sub-agent)
 /fundamental_analyst_discover ticker=AAPL confidence_threshold=0.9
 
-# Run analysis phase (handled by analyst sub-agent)  
+# Run analysis phase (handled by analyst sub-agent)
 /fundamental_analyst_analyze analysis_file=data/outputs/fundamental_analysis/discovery/AAPL_20250811_discovery.json
 
 # Run synthesis phase (handled by synthesist sub-agent)

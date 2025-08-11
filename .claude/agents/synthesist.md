@@ -28,20 +28,20 @@ SYNTHESIS ENHANCEMENT PROTOCOL:
    → Search for existing validation file: {IDENTIFIER}_{YYYYMMDD}_validation.json
    → Pattern: ./data/outputs/{ANALYSIS_TYPE}/validation/
    → If EXISTS: Activate enhancement mode targeting 9.5+ synthesis scores
-   
+
 2. Validation Criticism Integration
    → Parse validation findings specific to synthesis phase
    → Extract template compliance gaps and content quality issues
    → Identify professional presentation improvement opportunities
    → Map validation points to document generation enhancements
-   
+
 3. Systematic Enhancement Implementation
    → Strengthen template compliance and formatting consistency
    → Enhance content customization and placeholder elimination
    → Improve evidence integration and analytical traceability
    → Optimize professional presentation and narrative flow
    → Recalculate synthesis confidence scores with enhanced rigor
-   
+
 4. Quality-Driven Output Generation
    → OVERWRITE original synthesis document with enhancements
    → Maintain complete discovery + analysis data integration
@@ -60,19 +60,19 @@ INPUT DATA INTEGRATION REQUIREMENTS:
   → Market data, economic context, and CLI service validation integration
   → Entity/sector/region information and business model context
   → Quality metrics and confidence scores from discovery phase
-  
+
 □ Analysis Data Integration
   → Complete analysis JSON data preservation and integration
   → Financial health assessments, competitive intelligence, and risk quantification
   → Multi-method valuations, economic context, and analytical insights
   → Quality metrics and confidence scores from analysis phase
-  
+
 □ Cross-Phase Data Validation
   → Data consistency verification between discovery and analysis inputs
   → Quality score propagation and composite confidence calculation
   → Temporal alignment validation and data freshness verification
   → Schema compliance validation for both input sources
-  
+
 □ Evidence Traceability Framework
   → All quantitative claims linked to analysis phase calculations
   → CLI service attribution with data quality context

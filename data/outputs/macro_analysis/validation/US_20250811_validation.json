@@ -224,7 +224,7 @@
   "cli_service_performance": {
     "service_utilization": [
       "fred_economic_cli",
-      "imf_cli", 
+      "imf_cli",
       "alpha_vantage_cli",
       "eia_energy_cli",
       "yahoo_finance_cli"

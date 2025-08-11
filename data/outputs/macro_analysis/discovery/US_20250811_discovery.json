@@ -9,7 +9,7 @@
     "data_collection_methodology": "comprehensive_cli",
     "cli_services_utilized": [
       "fred_economic_cli",
-      "imf_cli", 
+      "imf_cli",
       "alpha_vantage_cli",
       "eia_energy_cli",
       "yahoo_finance_cli"
@@ -158,7 +158,7 @@
       },
       "stock_market": {
         "performance": "positive_ytd",
-        "volatility": "moderate", 
+        "volatility": "moderate",
         "correlation": 0.78
       },
       "confidence": 0.88

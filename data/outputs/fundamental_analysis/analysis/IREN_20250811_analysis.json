@@ -11,7 +11,7 @@
     "economic_context_integration": true,
     "cli_services_utilized": [
       "yahoo_finance_cli",
-      "alpha_vantage_cli", 
+      "alpha_vantage_cli",
       "fmp_cli",
       "fred_economic_cli",
       "coingecko_cli"
@@ -67,7 +67,7 @@
     },
     "policy_implications": [
       "Higher funding costs for expansion projects",
-      "Potential pressure on high-growth tech valuations", 
+      "Potential pressure on high-growth tech valuations",
       "Increased focus on operational efficiency and cash flow generation"
     ],
     "sector_sensitivity": "Crypto mining sector highly sensitive to both Bitcoin prices and energy costs, moderately sensitive to interest rates for financing"
@@ -106,7 +106,7 @@
       },
       {
         "ticker": "RIOT",
-        "company_name": "Riot Platforms Inc", 
+        "company_name": "Riot Platforms Inc",
         "market_cap": 5183900672,
         "sector": "Crypto Mining",
         "business_model": "Bitcoin mining and electrical infrastructure",
@@ -199,7 +199,7 @@
         "lease_obligations": "Standard facility and equipment leases"
       },
       "grade": "A-",
-      "trend": "stable", 
+      "trend": "stable",
       "confidence": 0.96
     },
     "cash_flow_analysis": {
@@ -276,7 +276,7 @@
         "diversification": "Limited - primarily Bitcoin mining focused"
       },
       "competitive_dynamics": {
-        "industry_consolidation": "Increasing consolidation among larger players", 
+        "industry_consolidation": "Increasing consolidation among larger players",
         "barriers_to_entry": "High capital requirements and technical expertise",
         "competitive_intensity": "High competition for low-cost energy sources"
       },
@@ -292,7 +292,7 @@
       "moat_strength_ratings": {
         "renewable_energy_access": "Moderate - sustainable cost advantage",
         "geographic_diversification": "Moderate - regulatory risk mitigation",
-        "technical_expertise": "Moderate - operational efficiency advantages", 
+        "technical_expertise": "Moderate - operational efficiency advantages",
         "financial_strength": "Strong - substantial cash position for growth"
       },
       "durability_analysis": {
@@ -412,7 +412,7 @@
           "risk_factor": "Energy cost inflation or supply disruptions",
           "probability": 0.3,
           "impact": 4,
-          "evidence": "Energy represents major cost component for mining operations", 
+          "evidence": "Energy represents major cost component for mining operations",
           "mitigation": "Renewable energy partnerships provide cost stability"
         }
       ],
@@ -450,7 +450,7 @@
       ],
       "regulatory_risks": [
         {
-          "risk_factor": "Adverse cryptocurrency mining regulations", 
+          "risk_factor": "Adverse cryptocurrency mining regulations",
           "probability": 0.4,
           "impact": 5,
           "evidence": "Increasing regulatory scrutiny on environmental impact",

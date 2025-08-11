@@ -617,7 +617,7 @@
         "relationship_description": "Complete fundamental analysis discovery data for IREN providing comprehensive company intelligence, financial metrics, and market positioning"
       },
       {
-        "file_path": "./data/outputs/fundamental_analysis/discovery/TEM_20250811_discovery.json", 
+        "file_path": "./data/outputs/fundamental_analysis/discovery/TEM_20250811_discovery.json",
         "file_type": "discovery",
         "relevance_score": 1.0,
         "relationship_description": "Complete fundamental analysis discovery data for TEM providing comprehensive company intelligence, financial metrics, and healthcare sector positioning"
@@ -642,7 +642,7 @@
       },
       {
         "file_path": "./data/outputs/sector_analysis/discovery/healthcare_20250711_discovery.json",
-        "file_type": "discovery", 
+        "file_type": "discovery",
         "relevance_score": 0.80,
         "relationship_description": "Healthcare sector analysis providing industry context and competitive landscape for TEM positioning"
       }

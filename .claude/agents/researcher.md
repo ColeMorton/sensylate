@@ -77,7 +77,7 @@ Execute comprehensive multi-source data collection using production CLI financia
 
 **Context-Adaptive Data Collection Standards**:
 - **NEVER use hardcoded years** (especially "2024") in any search queries
-- **ALWAYS use current year (2025)** or context-appropriate temporal terms  
+- **ALWAYS use current year (2025)** or context-appropriate temporal terms
 - **Dynamic search strategies** based on discovery file specifications
 - **Intelligent service prioritization** based on domain-specific requirements
 
@@ -99,7 +99,7 @@ DOMAIN-OPTIMIZED 7-SOURCE DATA COLLECTION:
    → Multi-source price validation and trading metrics
    → Real-time market performance and historical data
 
-2. Alpha Vantage CLI Integration  
+2. Alpha Vantage CLI Integration
    → PRIMARY for: All domains requiring sentiment analysis
    → Real-time quotes with AI-powered market sentiment
    → Technical indicators and volatility assessment

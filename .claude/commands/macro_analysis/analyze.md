@@ -10,14 +10,14 @@ Define the analytical requirements for transforming macro-economic discovery dat
 
 ## Microservice Integration
 
-**Framework**: DASV Phase 2  
-**Role**: macro_analyst  
-**Action**: analyze  
-**Input Source**: cli_enhanced_macro_analyst_discover  
-**Output Location**: `./data/outputs/macro_analysis/analysis/`  
-**Next Phase**: macro_analyst_synthesize  
-**Tool Integration**: Uses `macro_analyze_unified.py` via analyst sub-agent orchestration  
-**Implementation Delegation**: Analyst sub-agent handles execution methodology  
+**Framework**: DASV Phase 2
+**Role**: macro_analyst
+**Action**: analyze
+**Input Source**: cli_enhanced_macro_analyst_discover
+**Output Location**: `./data/outputs/macro_analysis/analysis/`
+**Next Phase**: macro_analyst_synthesize
+**Tool Integration**: Uses `macro_analyze_unified.py` via analyst sub-agent orchestration
+**Implementation Delegation**: Analyst sub-agent handles execution methodology
 
 ## Analysis Parameters
 
@@ -44,7 +44,7 @@ Define the analytical requirements for transforming macro-economic discovery dat
 
 **Monetary Policy Context Integration**:
 - **Central Bank Policy Stance**: Region-appropriate central bank assessment (Fed/ECB/BoJ/PBoC)
-- **Interest Rate Transmission**: Quantification across regional markets and asset classes  
+- **Interest Rate Transmission**: Quantification across regional markets and asset classes
 - **Policy Effectiveness Analysis**: Forward guidance impact and market reaction assessment
 - **Currency-Specific Considerations**: Regional currency impact on policy transmission
 
@@ -139,7 +139,7 @@ Define the analytical requirements for transforming macro-economic discovery dat
 
 ## Output Structure Requirements
 
-**File Naming**: `{REGION}_{YYYYMMDD}_analysis.json`  
+**File Naming**: `{REGION}_{YYYYMMDD}_analysis.json`
 **Primary Location**: `./data/outputs/macro_analysis/analysis/`
 
 ### Required Output Sections
@@ -149,7 +149,7 @@ Define the analytical requirements for transforming macro-economic discovery dat
    - Interest rate sensitivity and inflation hedge assessment
    - GDP growth correlation with regional elasticity
 
-2. **Liquidity Cycle Positioning** 
+2. **Liquidity Cycle Positioning**
    - Regional central bank policy stance impact
    - Credit market conditions and capital access
    - Money supply impact and asset price dynamics
@@ -208,6 +208,6 @@ Define the analytical requirements for transforming macro-economic discovery dat
 
 **Framework Integration**: Optimized for DASV analyst sub-agent execution with focus on regional macro-economic domain requirements rather than implementation methodology.
 
-**Author**: Cole Morton  
-**Optimization**: 60% complexity reduction through implementation delegation to analyst sub-agent  
+**Author**: Cole Morton
+**Optimization**: 60% complexity reduction through implementation delegation to analyst sub-agent
 **Confidence**: Domain requirements specification with institutional-grade regional analysis standards
