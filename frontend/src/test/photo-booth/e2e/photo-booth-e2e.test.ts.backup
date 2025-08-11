@@ -1,21 +1,21 @@
 import { describe, it, expect, beforeEach, afterEach } from "vitest";
 import {
-  e2eHelper,
-  setupE2ETest,
-  cleanupE2ETest,
-  type TestContext,
-  E2ETestHelper,
-} from "../e2e/setup";
+  photoBoothE2EHelper,
+  setupPhotoBoothE2E,
+  cleanupPhotoBoothE2E,
+  type E2ETestContext,
+  PhotoBoothE2EHelper,
+} from "../utils/e2e-setup";
 
 describe("Photo Booth E2E Tests", () => {
-  let context: TestContext;
+  let context: E2ETestContext;
 
   beforeEach(async () => {
-    context = await setupE2ETest();
+    context = await setupPhotoBoothE2E();
   });
 
   afterEach(async () => {
-    await cleanupE2ETest();
+    await cleanupPhotoBoothE2E();
   });
 
   describe("Page Loading and Navigation", () => {

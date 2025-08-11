@@ -89,7 +89,7 @@ export const mockPhotoBoothConfig = {
   },
   performance: {
     preload_charts: true,
-    render_timeout: 15000,
+    render_timeout: 100, // Much shorter for testing
     retry_attempts: 3,
     cache_bust: false,
   },

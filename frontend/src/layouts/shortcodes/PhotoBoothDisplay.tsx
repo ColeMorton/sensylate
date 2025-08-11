@@ -63,7 +63,7 @@ const PhotoBoothDisplay: React.FC<PhotoBoothDisplayProps> = ({
         const dpiParam = urlParams.get("dpi");
         const scaleParam = urlParams.get("scale");
 
-        if (dashboardParam && dashboards.some((d) => d.id === dashboardParam)) {
+        if (dashboardParam) {
           setSelectedDashboard(dashboardParam);
         }
 
@@ -91,10 +91,11 @@ const PhotoBoothDisplay: React.FC<PhotoBoothDisplayProps> = ({
         }
 
         setLoading(false);
-      } catch {
+      } catch (error) {
         // Failed to load dashboards
+        console.error("Failed to load dashboard configurations:", error);
 
-        // Show user-friendly error message
+        // Ensure we always have a valid array state
         setActiveDashboards([]);
         setLoading(false);
 
@@ -205,7 +206,7 @@ const PhotoBoothDisplay: React.FC<PhotoBoothDisplayProps> = ({
   }, []);
 
   const handleExportDashboard = useCallback(async () => {
-    const currentDashboard = activeDashboards.find(
+    const currentDashboard = (activeDashboards || []).find(
       (d) => d.id === selectedDashboard,
     );
     if (!currentDashboard || isExporting) {
@@ -261,7 +262,7 @@ const PhotoBoothDisplay: React.FC<PhotoBoothDisplayProps> = ({
     selectedScaleFactor,
   ]);
 
-  const currentDashboard = activeDashboards.find(
+  const currentDashboard = (activeDashboards || []).find(
     (d) => d.id === selectedDashboard,
   );
 
@@ -283,22 +284,22 @@ const PhotoBoothDisplay: React.FC<PhotoBoothDisplayProps> = ({
       <div className="flex min-h-[400px] items-center justify-center">
         <div className="text-center">
           <h3 className="text-lg font-semibold text-red-600">
-            {activeDashboards.length === 0
+            {(activeDashboards || []).length === 0
               ? "Failed to Load Dashboards"
               : "Dashboard Not Found"}
           </h3>
           <p className="text-gray-600">
-            {activeDashboards.length === 0
+            {(activeDashboards || []).length === 0
               ? "Could not load dashboard configurations. Please check your connection and try again."
               : `The requested dashboard "${selectedDashboard}" is not available.`}
           </p>
-          {activeDashboards.length > 0 && (
+          {(activeDashboards || []).length > 0 && (
             <p className="mt-2 text-sm text-gray-500">
               Available dashboards:{" "}
-              {activeDashboards.map((d) => d.id).join(", ")}
+              {(activeDashboards || []).map((d) => d.id).join(", ")}
             </p>
           )}
-          {activeDashboards.length === 0 && (
+          {(activeDashboards || []).length === 0 && (
             <button
               onClick={() => window.location.reload()}
               className="mt-4 rounded-md bg-blue-500 px-4 py-2 text-white transition-colors hover:bg-blue-600"
@@ -329,7 +330,7 @@ const PhotoBoothDisplay: React.FC<PhotoBoothDisplayProps> = ({
               onChange={(e) => handleDashboardChange(e.target.value)}
               className="rounded-md border border-gray-300 bg-white px-3 py-1 text-sm dark:border-gray-600 dark:bg-gray-700"
             >
-              {activeDashboards.map((dashboard) => (
+              {(activeDashboards || []).map((dashboard) => (
                 <option key={dashboard.id} value={dashboard.id}>
                   {dashboard.title}
                 </option>

@@ -240,10 +240,10 @@ describe('Error Handling and Edge Cases E2E Tests', () => {
             body: JSON.stringify({
               success: true,
               message: 'Export completed successfully',
-            files: ['test-file.png']
-          })
+              files: ['test-file.png']
+            })
+          });
         });
-      });
 
       const exportButton = await page.waitForSelector('button:has-text("Export Dashboard")', { timeout: 5000 });
 
