@@ -25,12 +25,14 @@ Define the analytical requirements for transforming macro-economic discovery dat
 - `discovery_file`: Path to macro discovery JSON file (required) - format: {REGION}_{YYYYMMDD}_discovery.json
 - `confidence_threshold`: Minimum confidence for analytical conclusions - `0.8` | `0.9` | `0.95` (optional, default: 0.9)
 
-### Analysis Feature Toggles
-- `business_cycle_modeling`: Enable advanced business cycle positioning - `true` | `false` (optional, default: true)
-- `monetary_policy_analysis`: Enable comprehensive monetary policy assessment - `true` | `false` (optional, default: true)
-- `economic_scenario_analysis`: Enable multi-scenario economic modeling - `true` | `false` (optional, default: true)
-- `cross_asset_analysis`: Enable cross-asset correlation framework - `true` | `false` (optional, default: true)
-- `policy_transmission_analysis`: Enable policy transmission mechanism assessment - `true` | `false` (optional, default: true)
+### Enhanced Analysis Feature Toggles
+- `business_cycle_modeling`: Enable advanced business cycle positioning with validation - `true` | `false` (optional, default: true)
+- `monetary_policy_analysis`: Enable comprehensive monetary policy assessment with real-time validation - `true` | `false` (optional, default: true)
+- `economic_scenario_analysis`: Enable multi-scenario economic modeling with cross-validation - `true` | `false` (optional, default: true)
+- `cross_asset_analysis`: Enable cross-asset correlation framework with variance monitoring - `true` | `false` (optional, default: true)
+- `policy_transmission_analysis`: Enable policy transmission mechanism assessment with consistency checks - `true` | `false` (optional, default: true)
+- `real_time_validation`: Enable fail-fast validation against current market data - `true` | `false` (optional, default: true)
+- `staleness_detection`: Enable automatic detection of outdated data - `true` | `false` (optional, default: true)
 
 ## Regional Economic Analysis Requirements
 
@@ -175,11 +177,14 @@ Define the analytical requirements for transforming macro-economic discovery dat
 - **Economic Indicators**: Regional indicators and business cycle context
 - **Policy Framework**: Local regulatory and monetary policy integration
 
-### Institutional-Grade Standards
-- **Analysis Confidence**: ≥9.0/10.0 institutional baseline with regional validation
-- **Regional Specificity**: >90% regional adaptation to prevent template generalization
-- **Data-Driven Quality**: Real calculations replacing hardcoded values
-- **CLI Attribution**: Service transparency and data quality validation
+### Enhanced Institutional-Grade Standards
+- **Analysis Confidence**: ≥9.0/10.0 institutional baseline with real-time validation
+- **Data Freshness Validation**: All key indicators validated against real-time consensus data
+- **Regional Specificity**: >90% regional adaptation with fail-fast on template artifacts
+- **Data-Driven Quality**: Real calculations with staleness detection and cross-validation
+- **CLI Attribution**: Service transparency with health monitoring and quality validation
+- **Variance Monitoring**: Configurable deviation thresholds from consensus with automatic flagging
+- **Cross-Validation Requirements**: Multi-source validation across all key indicators
 
 ### Evidence Requirements
 - **Quantitative Backing**: All regional conclusions supported by discovery data

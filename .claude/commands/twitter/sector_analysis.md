@@ -1,8 +1,11 @@
-# Short-Form Sector Analysis X Post Generator
+# Sector Analysis Twitter Synthesis Command
 
-**Command Classification**: 📊 **Core Product Command**
-**Knowledge Domain**: `social-media-strategy`
-**Ecosystem Version**: `2.1.0` *(Last Updated: 2025-07-18)*
+**Command Classification**: 📊 **DASV Synthesis Command**
+**DASV Phase**: Synthesis (Twitter Sub-Domain)
+**Input Phase**: Synthesis (Sector Analysis Domain)
+**Quality Requirement**: ≥9.0/10.0 synthesis confidence
+**Enhancement Target**: ≥9.5/10.0 with validation enhancement
+**Ecosystem Version**: `2.1.0` *(Last Updated: 2025-08-11)*
 **Outputs To**: `{DATA_OUTPUTS}/twitter/sector_analysis/`
 
 ## Script Integration Mapping
@@ -360,7 +363,60 @@ python {SCRIPTS_BASE}/base_scripts/sector_twitter_script.py \
 /twitter_sector_analysis {DATA_OUTPUTS}/twitter/sector_analysis/validation/technology_20250718_validation.json
 ```
 
-You are an expert sector strategist and social media strategist. Your specialty is distilling comprehensive sector analysis into compelling, bite-sized X posts that make complex sector allocation insights accessible and actionable for investors seeking portfolio optimization guidance.
+You are a **sector analysis data processor** specialized in extracting domain-specific insights from comprehensive sector analysis and preparing structured data for the twitter_writer agent.
+
+**Separation of Concerns:**
+- **This Command**: Domain data processing, DASV compliance, template selection
+- **Twitter Writer Agent**: Content creation, hooks, engagement optimization
+- **Integration**: Structured data handoff for optimal content generation
+
+## DASV Synthesis Framework Integration
+
+### Sector-Specific Input Validation
+```python
+def validate_sector_synthesis(source_path):
+    """Validate sector analysis synthesis input"""
+
+    # Check source synthesis exists and is current
+    if not source_path.exists() or data_age > timedelta(hours=48):
+        raise SynthesisStalenessException("Source sector synthesis too old or missing")
+
+    # Verify source synthesis quality
+    if source_confidence < 0.9:
+        raise QualityThresholdException("Source sector synthesis below institutional grade")
+
+    # Validate sector-specific schema
+    if not validate_sector_schema(source_path):
+        raise SchemaValidationException("Source sector synthesis schema invalid")
+```
+
+### Sector Twitter Synthesis Confidence
+```python
+def calculate_sector_synthesis_confidence(source_conf, cross_sector_data, etf_integration):
+    """Calculate sector-specific Twitter synthesis confidence"""
+
+    # Base confidence from source synthesis
+    base_confidence = source_conf
+
+    # Apply sector-specific factors
+    cross_sector_consistency = assess_sector_correlation_accuracy()
+    etf_data_integration = assess_etf_validation_quality()
+    economic_sensitivity_precision = assess_economic_correlation_accuracy()
+    allocation_guidance_clarity = assess_portfolio_recommendation_quality()
+
+    # Calculate sector Twitter synthesis confidence
+    sector_confidence = (base_confidence *
+                        cross_sector_consistency *
+                        etf_data_integration *
+                        economic_sensitivity_precision *
+                        allocation_guidance_clarity)
+
+    # Enforce institutional threshold
+    if sector_confidence < 0.9:
+        raise SynthesisQualityException(f"Sector synthesis confidence {sector_confidence:.3f} below institutional threshold")
+
+    return sector_confidence
+```
 
 ## Phase 0A: Existing Post Enhancement Protocol
 
@@ -532,72 +588,212 @@ VALIDATION-DRIVEN SUCCESS CRITERIA:
    - Correlation matrix and diversification benefits
    - Sector allocation optimization insights
 
-## Your Methodology
+## Sector Analysis Data Processing Pipeline
 
-**PRIMARY OBJECTIVE: Extract 2-3 key sector insights and present them in engaging, Twitter-optimized format for portfolio allocation guidance**
+### Domain-Specific Data Extraction
+```python
+def load_sector_synthesis(sector, date):
+    """Load and validate source sector analysis synthesis"""
 
-**Content Strategy Framework:**
-1. **Sector Insight Selection**: Identify the most compelling allocation/rotation/positioning findings
-2. **Accessibility**: Translate complex sector analysis into actionable investment guidance
-3. **Engagement**: Use hooks that create curiosity about sector opportunities
-4. **Actionability**: Provide clear takeaways for portfolio allocation decisions
-5. **Credibility**: Back every claim with specific sector data points and economic context
-6. **Virality**: Structure content for maximum shareability among investors
+    source_path = f"data/outputs/sector_analysis/{sector}_{date}.md"
 
-## Data Extraction Protocol
+    # DASV Input Validation
+    validate_sector_synthesis(source_path)
 
-### Phase 1: Sector Analysis Mining
-**Extract Key Components from Sector Analysis:**
+    # Extract synthesis data
+    synthesis_data = parse_sector_synthesis(source_path)
 
-1. **Sector Investment Thesis & Recommendation**
-   - Core sector thesis (2-3 sentences max)
-   - OVERWEIGHT/NEUTRAL/UNDERWEIGHT recommendation with conviction score
-   - Sector fair value range vs current ETF price
-   - Expected returns and economic cycle timeline
+    # Validate sector-specific completeness
+    required_sections = ['investment_thesis', 'cross_sector_positioning', 'economic_sensitivity', 'allocation_guidance']
+    validate_sector_completeness(synthesis_data, required_sections)
 
-2. **Most Compelling Sector Metrics**
-   - Cross-sector relative valuation (P/E, P/B, EV/EBITDA vs other sectors)
-   - Economic sensitivity coefficients (GDP correlation, employment beta)
-   - Sector rotation signals and business cycle positioning
-   - Risk-adjusted returns and correlation benefits
+    return synthesis_data
+```
 
-3. **Key Sector Catalysts & Risks**
-   - Top 3 sector catalysts with probability and market impact estimates
-   - Major sector risk factors with quantified economic assessments
-   - Economic sensitivity analysis (interest rate impact, recession vulnerability)
+### Sector Template Selection Logic
+```python
+def select_sector_template(sector_data):
+    """Domain-specific template selection for sector analysis"""
 
-4. **Cross-Sector Positioning Insights**
-   - Relative performance vs other sectors
-   - Correlation breakdown and diversification opportunities
-   - Economic cycle advantages and rotation timing
+    # Template A: Sector Rotation (Economic cycle positioning)
+    if (sector_data.get('cycle_positioning_strength', 0) > 0.8 and
+        sector_data.get('gdp_correlation', 0) > 0.6):
+        return 'sector_rotation'
 
-### Phase 2: Sector Hook Development
-**Content Angle Selection (choose 1):**
+    # Template B: Cross-Sector Comparison (Ranking extremes)
+    elif (sector_data.get('sector_rank') in [1, 2, 3, 9, 10, 11] and
+          sector_data.get('relative_valuation_extreme', False)):
+        return 'cross_sector_comparison'
 
-**A. Sector Rotation Angle**
-- Economic cycle positioning advantages
-- GDP/employment correlation insights
-- Business cycle timing opportunities
+    # Template C: Allocation Strategy (Portfolio guidance)
+    elif (sector_data.get('allocation_guidance') and
+          sector_data.get('risk_return_profile_complete', False)):
+        return 'allocation_strategy'
 
-**B. Cross-Sector Comparison Angle**
-- Relative valuation vs other sectors
-- Performance leadership/lagging analysis
-- Risk-adjusted return opportunities
+    # Template D: Economic Sensitivity (Macro analysis)
+    elif (sector_data.get('economic_sensitivity_comprehensive', False) and
+          len(sector_data.get('significant_correlations', [])) > 2):
+        return 'economic_sensitivity'
 
-**C. Allocation Strategy Angle**
-- Portfolio weighting recommendations
-- Risk-adjusted sector allocation
-- Diversification and correlation benefits
+    # Template E: ETF vs Individual Stocks (Default)
+    return 'etf_vs_stocks'
+```
 
-**D. Economic Sensitivity Angle**
-- Interest rate impact analysis
-- Economic indicator correlations
-- Recession/expansion positioning
+### ETF Data Integration
+```python
+def integrate_sector_etf_data(sector, sector_data):
+    """Integrate real-time ETF data for sector context validation"""
 
-**E. ETF vs Stock Picking Angle**
-- Sector ETF efficiency analysis
-- Individual stock selection vs ETF approach
-- Sector exposure optimization
+    # ETF mapping for major sectors
+    etf_mapping = {
+        'technology': 'XLK', 'healthcare': 'XLV', 'financials': 'XLF',
+        'energy': 'XLE', 'industrials': 'XLI', 'consumer_discretionary': 'XLY',
+        'utilities': 'XLU', 'materials': 'XLB', 'consumer_staples': 'XLP',
+        'real_estate': 'XLRE', 'communication': 'XLC'
+    }
+
+    sector_etf = etf_mapping.get(sector.lower())
+    if sector_etf:
+        # Real-time ETF data collection
+        current_etf_data = collect_etf_data(sector_etf)
+
+        # Validate against sector analysis fair value
+        price_variance = calculate_etf_variance(sector_data['fair_value'], current_etf_data['price'])
+        if price_variance > 0.03:  # 3% threshold for sectors
+            log_sector_variance_warning(price_variance)
+
+        # Update sector context
+        sector_data['current_etf_price'] = current_etf_data['price']
+        sector_data['etf_flows'] = current_etf_data['flows']
+        sector_data['etf_performance'] = current_etf_data['performance']
+
+    return sector_data
+```
+
+## Twitter Writer Agent Integration
+
+### Structured Data Handoff Protocol
+```json
+{
+  "command_type": "sector_analysis",
+  "synthesis_confidence": 0.93,
+  "template_recommendation": "sector_rotation|cross_sector_comparison|allocation_strategy|economic_sensitivity|etf_vs_stocks",
+  "sector": "technology",
+  "date": "20250811",
+  "domain_data": {
+    "investment_thesis": "Technology sector positioned for late-cycle outperformance",
+    "allocation_recommendation": {
+      "rating": "OVERWEIGHT",
+      "conviction": 0.85,
+      "target_allocation": "12-15%",
+      "vs_benchmark": "+3%"
+    },
+    "cross_sector_positioning": {
+      "sector_rank": 2,
+      "relative_valuation": "15% discount to historical average",
+      "performance_rank": "3/11 YTD",
+      "correlation_benefits": ["low_correlation_utilities", "high_beta_growth"]
+    },
+    "economic_sensitivity": {
+      "gdp_correlation": 0.73,
+      "interest_rate_sensitivity": "-0.65",
+      "employment_correlation": 0.68,
+      "cycle_positioning": "late_expansion_favorable"
+    },
+    "etf_analysis": {
+      "primary_etf": "XLK",
+      "current_price": "$195.50",
+      "fair_value_range": "$185-$210",
+      "flows": "positive_3_months",
+      "composition_changes": "AI_concentration_increasing"
+    },
+    "key_catalysts": [
+      {"catalyst": "AI adoption acceleration", "probability": 0.8, "impact": "high", "timeline": "6_months"},
+      {"catalyst": "Fed rate cuts", "probability": 0.7, "impact": "medium", "timeline": "Q4_2025"}
+    ],
+    "risk_factors": ["valuation_multiple_compression", "regulatory_scrutiny", "growth_deceleration"]
+  },
+  "engagement_parameters": {
+    "urgency": "standard",
+    "audience": "retail_investors",
+    "complexity": "intermediate"
+  },
+  "compliance_requirements": {
+    "disclaimers": ["investment_advice", "sector_allocation_risk"],
+    "risk_factors": ["economic_cycles", "sector_concentration"],
+    "transparency_level": "standard"
+  },
+  "quality_metadata": {
+    "source_confidence": 0.91,
+    "etf_integration_quality": 0.95,
+    "cross_sector_validation": 0.92,
+    "template_rationale": "Selected sector_rotation due to strong cycle positioning (0.8) and GDP correlation (0.73)"
+  }
+}
+```
+
+### Sector Analysis Processing Flow
+1. **Load and validate** source sector analysis synthesis (≥9.0 confidence)
+2. **Extract sector-specific** insights and cross-sector positioning
+3. **Integrate ETF data** for real-time validation and context
+4. **Select optimal template** based on sector characteristics and market position
+5. **Calculate sector synthesis confidence** with cross-sector validation
+6. **Prepare structured data** for twitter_writer agent handoff
+7. **Use the twitter_writer sub-agent** to create engaging sector allocation content
+8. **Validate output quality** and apply enhancement targeting 9.5+ if needed
+
+## DASV Quality Assurance Framework
+
+### Sector-Specific Validation Gates
+```python
+def validate_sector_synthesis_quality(sector_data, etf_data, cross_sector_data):
+    """Enforce sector-specific DASV quality standards"""
+
+    quality_checks = {
+        'source_confidence': sector_data['confidence'] >= 0.9,
+        'etf_integration_quality': etf_data['validation_score'] >= 0.9,
+        'cross_sector_consistency': cross_sector_data['correlation_score'] >= 0.85,
+        'allocation_guidance_clarity': validate_allocation_recommendations(sector_data),
+        'economic_sensitivity_accuracy': validate_correlation_coefficients(sector_data)
+    }
+
+    # Fail-fast on quality gate failures
+    for check, passed in quality_checks.items():
+        if not passed:
+            raise SectorQualityGateException(f"Sector synthesis quality gate failed: {check}")
+
+    return True
+```
+
+### Enhancement Protocol for Sectors
+```python
+def apply_sector_validation_enhancement(sector, date, validation_file_path):
+    """Sector-specific DASV enhancement targeting 9.5+ confidence"""
+
+    # Parse sector validation assessment
+    validation_data = load_sector_validation_assessment(validation_file_path)
+
+    # Load original synthesis and identify enhancement opportunities
+    original_synthesis = load_sector_synthesis(sector, date)
+
+    enhancement_targets = {
+        'cross_sector_positioning_gaps': validation_data.get('positioning_issues', []),
+        'etf_integration_needs': validation_data.get('etf_data_conflicts', []),
+        'allocation_guidance_clarity': validation_data.get('allocation_issues', []),
+        'economic_correlation_precision': validation_data.get('sensitivity_gaps', [])
+    }
+
+    # Re-process with enhancement focus
+    enhanced_data = enhance_sector_processing(original_synthesis, enhancement_targets)
+    enhanced_confidence = calculate_enhanced_sector_confidence(enhanced_data)
+
+    # Prepare enhanced data for twitter_writer sub-agent
+    enhanced_writer_input = prepare_sector_writer_data(enhanced_data, enhanced_confidence)
+
+    # Target: 9.5+ synthesis confidence through systematic improvement
+
+    return enhanced_writer_input
+```
 
 ## MANDATORY COMPLIANCE FRAMEWORK
 
@@ -876,30 +1072,37 @@ quality_assurance:
 
 ## Command Usage
 
-**To create short-form content from existing sector analysis:**
+**Execute Twitter synthesis from sector analysis:**
 ```
 /twitter_sector_analysis {SECTOR}_{YYYYMMDD}
 ```
 
 **Examples:**
-- `/twitter_sector_analysis technology_20250710`
-- `/twitter_sector_analysis healthcare_20250711`
-- `/twitter_sector_analysis energy_20250711`
+- `/twitter_sector_analysis technology_20250811`
+- `/twitter_sector_analysis healthcare_20250811`
+- `/twitter_sector_analysis energy_20250811`
 
-**Processing Steps:**
-1. **CRITICAL: Get real-time economic context** - Use FRED MCP server for current economic indicators
-2. **Load and validate sector sources** - Check for sector analysis document first, then ETF data
-3. **Economic context integration** - If economic vs sector discrepancies exist, prioritize current economic data
-4. Load sector analysis from `@data/outputs/sector_analysis/{SECTOR}_{YYYYMMDD}.md`
-5. **Apply template framework** - Use template specifications for URL generation, content structure, and compliance
-6. **Update all economic references** - Use current economic context throughout content
-7. Extract 2-3 most compelling sector insights with cross-sector attribution
-8. Select optimal template based on sector insight type (templates automatically include mandatory disclaimers)
-9. **Reference template standards** - Follow all template requirements for engagement, compliance, and quality
-10. **MANDATORY COMPLIANCE CHECK** - Verify disclaimer text is present (automatic in templates)
-11. **Include full analysis link** - Add generated URL to selected template
-12. **FINAL COMPLIANCE VALIDATION** - Ensure disclaimer, risk warnings, and character limits are met
-13. Export clean, copy-paste ready content with institutional quality standards and regulatory compliance
+**DASV Processing Flow:**
+1. **Load & validate** source sector analysis synthesis (≥9.0 confidence)
+2. **Extract sector data** (thesis, positioning, sensitivity, allocation guidance)
+3. **Integrate ETF data** for real-time validation and current pricing context
+4. **Validate cross-sector** positioning and correlation accuracy
+5. **Select optimal template** based on sector analysis characteristics
+6. **Calculate sector synthesis confidence** with DASV standards
+7. **Use twitter_writer sub-agent** to create engaging allocation content from structured data
+8. **Apply enhancement** if validation file exists (target: ≥9.5 confidence)
+9. **Export results** with complete sector quality metrics and traceability
+
+**Enhancement Workflow:**
+```
+# Phase 1: Generate sector Twitter synthesis
+/twitter_sector_analysis technology_20250811
+
+# Phase 2: If synthesis confidence <9.5, apply validation enhancement
+/twitter_sector_analysis {DATA_OUTPUTS}/twitter/sector_analysis/validation/technology_20250811_validation.json
+
+# Phase 3: Validate institutional excellence achieved (≥9.5/10.0)
+```
 
 ---
 
@@ -944,4 +1147,24 @@ quality_assurance:
 
 ---
 
-**Ready to transform institutional-quality sector analysis into viral Twitter content for portfolio allocation guidance. Provide the {SECTOR}_{YYYYMMDD} identifier to begin extraction and optimization.**
+## DASV Architecture Benefits
+
+**Clean Separation of Concerns**:
+- **Domain Focus**: Command handles sector analysis data processing and ETF integration
+- **Content Delegation**: Twitter_writer sub-agent handles all content creation and engagement
+- **Quality Assurance**: DASV framework ensures institutional allocation guidance standards
+- **Enhancement Protocol**: Systematic improvement targeting 9.5+ confidence with cross-sector validation
+
+**Sector-Specific Quality Standards**:
+- **Source Validation**: ≥9.0/10.0 synthesis confidence required
+- **ETF Integration**: Real-time pricing validation with 3% variance threshold
+- **Cross-Sector Consistency**: ≥0.85 correlation accuracy requirement
+- **Allocation Guidance**: Clear portfolio weighting recommendations with risk-return profiles
+
+**Integration Excellence**:
+- **Twitter Writer**: Structured sector data handoff for optimal allocation content
+- **ETF Data**: Real-time integration for sector pricing and flow validation
+- **Enhancement Loop**: Validation-driven improvement targeting institutional excellence
+- **Audit Trail**: Complete sector quality metrics and decision rationale
+
+**Ready to generate DASV-compliant Twitter synthesis from institutional-grade sector analysis. Provide {SECTOR}_{YYYYMMDD} identifier to begin sector-focused data processing and twitter_writer integration.**

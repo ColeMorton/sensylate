@@ -31,7 +31,9 @@ The Macro-Economic Analysis Discovery phase defines the requirements for systema
 ### Advanced Parameters
 - `depth`: Analysis depth - `summary` | `standard` | `comprehensive` | `institutional` (optional, default: comprehensive)
 - `confidence_threshold`: Minimum confidence for data quality - `0.6` | `0.7` | `0.8` (optional, default: 0.7)
-- `validation_enhancement`: Enable validation-based enhancement - `true` | `false` (optional, default: true)
+- `validation_enhancement`: Enable fail-fast validation with real-time data cross-validation - `true` | `false` (optional, default: true)
+- `staleness_threshold`: Maximum acceptable data age in hours - `1` | `6` | `24` (optional, default: 6)
+- `variance_threshold`: Maximum acceptable variance from consensus - `0.02` | `0.05` | `0.10` (optional, default: 0.02)
 - `business_cycle_focus`: Include detailed business cycle analysis - `true` | `false` (optional, default: true)
 - `market_regime_analysis`: Include market regime classification - `true` | `false` (optional, default: true)
 
@@ -74,12 +76,13 @@ The Macro-Economic Analysis Discovery phase defines the requirements for systema
 - Geopolitical risk assessment and economic policy coordination
 - Regional economic development and emerging market dynamics
 
-### Quality Standards
-- **Multi-Source Validation**: Cross-validation across multiple economic data providers
-- **Economic Data Freshness**: Current quarter economic indicators with <24 hour latency
-- **Business Cycle Accuracy**: Statistical validation of cycle classification methodology
-- **Policy Analysis Depth**: Comprehensive central bank communication analysis
-- **Global Integration**: Multi-regional economic context with correlation assessment
+### Enhanced Quality Standards
+- **Multi-Source Validation**: Cross-validation across multiple economic data providers with fail-fast validation
+- **Economic Data Freshness**: Current quarter economic indicators with <24 hour latency and staleness detection
+- **Real-Time Data Requirements**: Dynamic validation against consensus data from FRED/Bloomberg/Reuters
+- **Business Cycle Accuracy**: Statistical validation of cycle classification methodology with cross-validation
+- **Policy Analysis Depth**: Comprehensive central bank communication analysis with consistency checks
+- **Global Integration**: Multi-regional economic context with correlation assessment and validation
 
 ## Output Structure and Schema
 
@@ -103,11 +106,13 @@ The Macro-Economic Analysis Discovery phase defines the requirements for systema
 
 ## Expected Outcomes
 
-### Discovery Quality Targets
-- **Economic Data Quality**: ≥ 97% confidence through multi-source validation
-- **Business Cycle Confidence**: ≥ 90% confidence in phase classification accuracy
-- **Policy Analysis Depth**: ≥ 95% confidence in monetary policy assessment
-- **Global Integration**: ≥ 85% confidence in cross-regional correlation analysis
+### Enhanced Discovery Quality Targets
+- **Economic Data Quality**: ≥ 97% confidence through multi-source validation with fail-fast on staleness
+- **Data Freshness Validation**: <2% variance from real-time consensus or fail-fast rejection
+- **Business Cycle Confidence**: ≥ 90% confidence in phase classification with cross-validation
+- **Policy Analysis Depth**: ≥ 95% confidence in monetary policy assessment with consistency validation
+- **Global Integration**: ≥ 85% confidence in cross-regional correlation analysis with variance monitoring
+- **Real-Time Accuracy**: All key indicators validated against current market consensus
 
 ### Key Deliverables
 - Comprehensive economic indicator analysis with statistical significance validation

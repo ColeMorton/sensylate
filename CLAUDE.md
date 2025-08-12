@@ -73,6 +73,9 @@ All quality checks run on every commit. Failed checks prevent commits.
 ## Code Quality Principles
 
 ALWAYS prefer editing an existing file to creating a new one.
+Do NOT include or consider rollbacks, migration, and backwards compatibility unless explicity specified.
+
+**Introduction of hard coded/magic numbers introduces fragility and should be avoided when possible and objectively valuable when selected.**
 
 **No narrative bloat**: Generate only essential comments that explain non-obvious business logic, avoiding redundant descriptions of what code obviously does.
 
@@ -85,24 +88,6 @@ ALWAYS prefer editing an existing file to creating a new one.
 ## Documentation Lifecycle Rules
 
 **CRITICAL**: Prevent documentation bloat through strict YAGNI enforcement.
-
-**Documentation Minimization Standards**:
-- **Single Source of Truth**: All DASV framework information consolidated in `.claude/DASV_Framework_Specification.md`
-- **No Analysis Reports**: Implementation summaries limited to `.claude/DASV_Implementation_Summary.md` only
-- **Agent Specifications**: Essential definitions only in `.claude/agents/` (50 lines max per agent)
-- **Framework Documentation**: Maximum 1,000 lines for complete framework specification
-
-**Anti-Bloat Enforcement**:
-- **No Multiple Specifications**: Consolidate overlapping documentation immediately
-- **No Analysis Reports**: Delete detailed reports, preserve essential outcomes only
-- **No Historical Artifacts**: Remove outdated documentation when requirements change
-- **No Duplicate Framework Files**: Single master specification serves all needs
-
-**Creation Restrictions**:
-- **Prohibited**: New documentation files in `docs/analysis_reports/`, `docs/specifications/`
-- **Prohibited**: Framework explanation files beyond master specification
-- **Prohibited**: Implementation detail documentation (delegate to sub-agents)
-- **Required**: All new documentation must justify existence and consolidate existing content
 
 ## Project Configuration
 

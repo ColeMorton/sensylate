@@ -673,7 +673,9 @@
         "gap_coverage",
         "confidence_propagation",
         "analytical_rigor",
-        "evidence_strength"
+        "evidence_strength",
+        "data_freshness_validation",
+        "variance_compliance"
       ],
       "additionalProperties": false,
       "properties": {
@@ -700,6 +702,54 @@
           "minimum": 0.0,
           "maximum": 1.0,
           "description": "Supporting data quality assessment"
+        },
+        "data_freshness_validation": {
+          "type": "object",
+          "required": ["freshness_score", "stale_indicators", "max_age_hours"],
+          "properties": {
+            "freshness_score": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0
+            },
+            "stale_indicators": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "max_age_hours": {
+              "type": "number",
+              "minimum": 0
+            }
+          }
+        },
+        "variance_compliance": {
+          "type": "object",
+          "required": ["variance_score", "exceeded_thresholds", "max_variance"],
+          "properties": {
+            "variance_score": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0
+            },
+            "exceeded_thresholds": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["indicator", "variance", "threshold"],
+                "properties": {
+                  "indicator": {"type": "string"},
+                  "variance": {"type": "number"},
+                  "threshold": {"type": "number"}
+                }
+              }
+            },
+            "max_variance": {
+              "type": "number",
+              "minimum": 0
+            }
+          }
         }
       }
     }
