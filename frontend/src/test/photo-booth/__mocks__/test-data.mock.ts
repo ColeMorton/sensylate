@@ -20,6 +20,14 @@ export const testURLParams = {
     mode: "invalid_mode",
     aspect_ratio: "invalid_ratio",
   },
+  invalidFormatParams: {
+    dashboard: "trading_performance", // Valid dashboard
+    mode: "invalid_mode",
+    aspect_ratio: "invalid_ratio",
+    format: "invalid_format",
+    dpi: "invalid_dpi",
+    scale: "invalid_scale",
+  },
 };
 
 export const testAspectRatios = [

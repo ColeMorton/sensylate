@@ -27,6 +27,8 @@
     "test:photo-booth:unit": "vitest run src/test/photo-booth/unit",
     "test:photo-booth:integration": "vitest run src/test/photo-booth/integration",
     "test:photo-booth:e2e": "vitest run src/test/photo-booth/e2e --testTimeout=60000",
+    "test:photo-booth:e2e:dev": "PHOTOBOOTH_E2E_DEV=true NODE_ENV=development vitest run src/test/photo-booth/e2e --testTimeout=60000",
+    "test:photo-booth:e2e:prod": "PHOTOBOOTH_E2E_DEV=false NODE_ENV=production vitest run src/test/photo-booth/e2e --testTimeout=60000",
     "test:photo-booth:watch": "vitest watch src/test/photo-booth",
     "test:photo-booth:coverage": "vitest run src/test/photo-booth --coverage",
     "photo-booth:generate": "python3 ../scripts/photo_booth_generator.py",

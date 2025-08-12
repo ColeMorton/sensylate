@@ -1,37 +1,11 @@
-import React from "react";
 import { vi } from "vitest";
-import { mockPhotoBoothConfig } from "./photo-booth-config.mock";
-import {
-  mockDashboardLoader,
-  mockAllDashboards,
-} from "./dashboard-loader.mock";
-
-// Mock the photo booth config import
-vi.mock("@/config/photo-booth.json", () => ({
-  default: mockPhotoBoothConfig,
-}));
-
-// Mock the dashboard loader service
-vi.mock("@/services/dashboardLoader", () => ({
-  DashboardLoader: mockDashboardLoader,
-}));
-
-// Mock ChartDisplay component to avoid complex chart rendering in unit tests
-vi.mock("@/shortcodes/ChartDisplay", () => ({
-  default: ({ title, chartType, titleOnly, className }: any) => (
-    <div data-testid={`mock-chart-${chartType}`} className={className || ""}>
-      <div data-testid="chart-title">{title}</div>
-      <div data-testid="chart-title-only">{titleOnly ? "true" : "false"}</div>
-    </div>
-  ),
-}));
 
 // Setup default mock behaviors
 export const setupPhotoBoothMocks = () => {
   vi.clearAllMocks();
 
-  // Mock successful dashboard loading by default
-  mockDashboardLoader.getAllDashboards.mockResolvedValue(mockAllDashboards);
+  // Note: Dashboard loader is now mocked at module level via vi.mock()
+  // Individual tests can override specific methods as needed
 
   // Mock successful fetch by default
   global.fetch = vi.fn(() =>
