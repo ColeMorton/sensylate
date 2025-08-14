@@ -182,6 +182,34 @@
             {"type": "string", "enum": ["true", "false"]}
           ],
           "description": "Monetary/fiscal policy analysis coherence validation status"
+        },
+        "data_freshness_validation": {
+          "type": "object",
+          "required": ["freshness_passed", "staleness_threshold_hours", "violations_count"],
+          "properties": {
+            "freshness_passed": {
+              "oneOf": [
+                {"type": "boolean"},
+                {"type": "string", "enum": ["true", "false"]}
+              ]
+            },
+            "staleness_threshold_hours": {"type": "number"},
+            "violations_count": {"type": "integer", "minimum": 0}
+          }
+        },
+        "variance_validation": {
+          "type": "object",
+          "required": ["variance_passed", "variance_threshold", "max_variance_detected"],
+          "properties": {
+            "variance_passed": {
+              "oneOf": [
+                {"type": "boolean"},
+                {"type": "string", "enum": ["true", "false"]}
+              ]
+            },
+            "variance_threshold": {"type": "number"},
+            "max_variance_detected": {"type": "number"}
+          }
         }
       }
     },

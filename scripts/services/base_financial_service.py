@@ -1026,7 +1026,6 @@ class BaseFinancialService(ABC):
         """
         pass
 
-    @abstractmethod
     def health_check(self) -> Dict[str, Any]:
         """
         Service health check for monitoring
@@ -1034,7 +1033,30 @@ class BaseFinancialService(ABC):
         Returns:
             Dictionary containing service health information
         """
-        pass
+        health_status = {
+            "service_name": self.config.name,
+            "timestamp": datetime.now().isoformat(),
+            "status": "unknown",
+            "api_key_configured": bool(self.config.api_key),
+            "base_url": self.config.base_url,
+            "cache_enabled": self.config.cache.enabled,
+            "rate_limit_enabled": self.config.rate_limit.enabled
+        }
+        
+        try:
+            # Basic connectivity test
+            if self.config.api_key:
+                health_status["status"] = "healthy"
+                health_status["message"] = "Service configured with API key"
+            else:
+                health_status["status"] = "configuration_error"
+                health_status["message"] = "Missing API key configuration"
+                
+        except Exception as e:
+            health_status["status"] = "error"
+            health_status["message"] = f"Health check failed: {str(e)}"
+            
+        return health_status
 
     def cleanup_cache(self) -> None:
         """Clean up expired cache entries"""

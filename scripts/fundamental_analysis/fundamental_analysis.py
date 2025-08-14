@@ -13,9 +13,9 @@ from typing import Any, Dict, List, Optional
 
 import numpy as np
 
-# FRED API configuration for economic data
-FRED_API_KEY = "your_fred_api_key_here"  # Should be configured in environment
-FRED_BASE_URL = "https://api.stlouisfed.org/fred/series/observations"
+# Real-time economic data service
+sys.path.append(os.path.join(os.path.dirname(__file__), "..", "services"))
+from real_time_economic_data import RealTimeEconomicData
 
 
 class FundamentalAnalyzer:
@@ -39,6 +39,9 @@ class FundamentalAnalyzer:
         self.discovery_data = discovery_data
         self.output_dir = output_dir
         self.timestamp = datetime.now()
+
+        # Initialize real-time economic data service
+        self.econ_data = RealTimeEconomicData(env="prod")
 
         # Industry-specific benchmarks for scoring
         self.industry_benchmarks = {
@@ -1002,7 +1005,11 @@ class FundamentalAnalyzer:
         # For now, return sample/default economic indicators
         # In production, this would fetch from FRED CLI or API
         return {
-            "fed_funds_rate": {"value": 4.33, "source": "FRED", "confidence": 0.95},
+            "fed_funds_rate": {
+                "value": self.econ_data.get_fed_funds_rate(),
+                "source": "FRED_Real_Time",
+                "confidence": 0.95,
+            },
             "gdp_growth_rate": {"value": 2.8, "source": "FRED", "confidence": 0.95},
             "employment_growth": {
                 "value": 159700,
@@ -1188,7 +1195,7 @@ class FundamentalAnalyzer:
                 if estimated_duration > 2.0
                 else "Low"
             ),
-            "current_rate_environment": "Restrictive",  # Based on Fed Funds Rate > 4%
+            "current_rate_environment": self.econ_data.get_economic_environment_assessment(),
         }
 
     def _assess_economic_risks(
@@ -1427,7 +1434,7 @@ class FundamentalAnalyzer:
 
         # Current environment assessment
         current_environment = {
-            "interest_rate_environment": "Restrictive",  # Fed Funds > 4%
+            "interest_rate_environment": self.econ_data.get_economic_environment_assessment(),
             "economic_cycle": "Late cycle",  # Based on current indicators
             "market_volatility": "Moderate",  # VIX context
         }

@@ -133,7 +133,16 @@
               "type": "object",
               "required": ["fed_funds_rate", "balance_sheet_data", "forward_guidance", "confidence"],
               "properties": {
-                "fed_funds_rate": {"type": "object", "required": ["current_rate", "trajectory"]},
+                "fed_funds_rate": {
+              "type": "object",
+              "required": ["current_rate", "trajectory", "data_timestamp", "variance_from_consensus"],
+              "properties": {
+                "current_rate": {"type": "object"},
+                "trajectory": {"type": "object"},
+                "data_timestamp": {"type": "string", "format": "date-time"},
+                "variance_from_consensus": {"type": "number"}
+              }
+            },
                 "balance_sheet_data": {"type": "object", "required": ["size", "composition"]},
                 "forward_guidance": {"type": "object", "required": ["stance", "communication"]},
                 "confidence": {"type": "number", "minimum": 0.0, "maximum": 1.0}
@@ -456,11 +465,24 @@
         },
         "data_freshness": {
           "type": "object",
-          "description": "Data recency validation",
-          "required": ["overall_freshness", "stale_data_count"],
+          "description": "Enhanced data recency validation with staleness thresholds",
+          "required": ["overall_freshness", "stale_data_count", "max_data_age_hours", "freshness_violations"],
           "properties": {
             "overall_freshness": {"type": "number", "minimum": 0.7, "maximum": 1.0},
-            "stale_data_count": {"type": "integer", "minimum": 0}
+            "stale_data_count": {"type": "integer", "minimum": 0},
+            "max_data_age_hours": {"type": "number", "minimum": 0},
+            "freshness_violations": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["indicator", "age_hours", "threshold_hours"],
+                "properties": {
+                  "indicator": {"type": "string"},
+                  "age_hours": {"type": "number"},
+                  "threshold_hours": {"type": "number"}
+                }
+              }
+            }
           }
         }
       }
@@ -486,11 +508,32 @@
         },
         "consistency_validation": {
           "type": "object",
-          "required": ["cross_source_consistency", "temporal_consistency", "logical_consistency"],
+          "required": ["cross_source_consistency", "temporal_consistency", "logical_consistency", "variance_analysis"],
           "properties": {
             "cross_source_consistency": {"type": "number", "minimum": 0.0, "maximum": 1.0},
             "temporal_consistency": {"type": "number", "minimum": 0.0, "maximum": 1.0},
-            "logical_consistency": {"type": "number", "minimum": 0.0, "maximum": 1.0}
+            "logical_consistency": {"type": "number", "minimum": 0.0, "maximum": 1.0},
+            "variance_analysis": {
+              "type": "object",
+              "required": ["key_indicators", "max_variance_threshold", "violations"],
+              "properties": {
+                "key_indicators": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": ["indicator", "variance", "consensus_value", "reported_value"],
+                    "properties": {
+                      "indicator": {"type": "string"},
+                      "variance": {"type": "number"},
+                      "consensus_value": {"type": "number"},
+                      "reported_value": {"type": "number"}
+                    }
+                  }
+                },
+                "max_variance_threshold": {"type": "number"},
+                "violations": {"type": "array", "items": {"type": "string"}}
+              }
+            }
           }
         }
       }
@@ -710,7 +753,7 @@
         },
         "validation_checks": {
           "type": "object",
-          "required": ["service_availability", "data_completeness", "cross_source_consistency", "region_specificity", "confidence_calibration"],
+          "required": ["service_availability", "data_completeness", "cross_source_consistency", "region_specificity", "confidence_calibration", "freshness_validation", "variance_validation"],
           "properties": {
             "service_availability": {
               "type": "object",
@@ -750,6 +793,24 @@
               "properties": {
                 "passed": {"type": "boolean"},
                 "score": {"type": "number", "minimum": 0.0, "maximum": 1.0}
+              }
+            },
+            "freshness_validation": {
+              "type": "object",
+              "required": ["passed", "score", "staleness_threshold_hours"],
+              "properties": {
+                "passed": {"type": "boolean"},
+                "score": {"type": "number", "minimum": 0.0, "maximum": 1.0},
+                "staleness_threshold_hours": {"type": "number"}
+              }
+            },
+            "variance_validation": {
+              "type": "object",
+              "required": ["passed", "score", "variance_threshold"],
+              "properties": {
+                "passed": {"type": "boolean"},
+                "score": {"type": "number", "minimum": 0.0, "maximum": 1.0},
+                "variance_threshold": {"type": "number"}
               }
             }
           }

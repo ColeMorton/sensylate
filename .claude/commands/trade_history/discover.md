@@ -1,6 +1,6 @@
 # Trade History Discover
 
-**DASV Phase 1: Data Collection and Market Context Gathering**
+**DASV Phase 1: Trading Performance Data Collection and Market Context Gathering**
 
 Comprehensive trading data collection and market intelligence gathering for institutional-quality trading performance analysis using systematic discovery protocols and production-grade data acquisition methodologies.
 
@@ -22,6 +22,7 @@ The Trading Performance Discovery phase represents the systematic collection and
 
 ## Parameters
 
+### Core Parameters
 - `portfolio`: Portfolio name or full filename (required)
 - `timeframe`: Analysis period - `1m` | `3m` | `6m` | `1y` | `ytd` | `all` (optional, default: all)
 - `benchmark`: Benchmark comparison - `SPY` | `QQQ` | `VTI` (optional, default: SPY)

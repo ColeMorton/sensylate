@@ -1,6 +1,6 @@
 # Trade History Synthesize
 
-**DASV Phase 3: Report Generation and Document Creation**
+**DASV Phase 3: Trading Performance Content Specification**
 
 Comprehensive report generation and document creation for institutional-quality trading performance communication using systematic synthesis protocols and advanced content generation methodologies.
 
@@ -16,8 +16,8 @@ The Trading Performance Synthesis phase represents the systematic integration an
 **Framework**: DASV Phase 3
 **Role**: trade_history
 **Action**: synthesize
+**Input Sources**: trade_history_discover, trade_history_analyze
 **Output Location**: `./data/outputs/trade_history/`
-**Previous Phases**: trade_history_discover, trade_history_analyze
 **Next Phase**: trade_history_validate
 **Template Reference**: `./templates/analysis/trade_history_template.md` (institutional-quality structure matching fundamental analysis standards)
 

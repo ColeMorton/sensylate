@@ -7,13 +7,17 @@ interface DynamicHomepageHookProps {
 }
 
 const DEFAULT_PHRASES = [
-  "I built an AI team that turns market chaos into human clarity.",
+  "Turn market chaos into human clarity.",
   "What if complex financial data could think its way to simplicity?",
-  "My AI agents collaborate so you don't have to decode markets alone.",
-  "89% faster insights when artificial intelligence works as a team.",
-  "I don't just analyze markets - I've automated the art of making sense.",
+  "When AI agents collaborate - you don't have to decode markets alone.",
+  "Don't just analyze markets - automate the art of making sense.",
   "Complex market signals → AI collaboration → insights you actually understand.",
   "While others dump data, my AI refinery delivers clarity.",
+  "What if your market analysis had a team of AI specialists behind it?",
+  "From raw market data to clear insights in four automated steps.",
+  "18+ data sources, one systematic process, insights you can trust.",
+  "My AI doesn't guess - it validates everything across multiple sources.",
+  "Beyond gut feelings: systematic analysis that scales with the markets.",
 ];
 
 const DynamicHomepageHook: React.FC<DynamicHomepageHookProps> = ({

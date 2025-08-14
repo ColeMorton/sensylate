@@ -101,6 +101,21 @@ class GlobalLiquidityMonitor(BaseFinancialService):
         # Liquidity assessment matrix
         self.liquidity_matrix = self._initialize_liquidity_matrix()
 
+    def _validate_response(self, data: Dict[str, Any], endpoint: str) -> Dict[str, Any]:
+        """Validate global liquidity response data"""
+        if not isinstance(data, dict):
+            raise ValidationError(f"Invalid response format for {endpoint}")
+
+        # Check for API errors
+        if "error_message" in data:
+            raise DataNotFoundError(data["error_message"])
+
+        # Add timestamp if not present
+        if "timestamp" not in data:
+            data["timestamp"] = datetime.now().isoformat()
+
+        return data
+
     def _initialize_central_bank_config(self) -> Dict[str, Any]:
         """Initialize central bank monitoring configuration"""
         return {
@@ -686,7 +701,34 @@ class GlobalLiquidityMonitor(BaseFinancialService):
 
 def create_global_liquidity_monitor(env: str = "prod") -> GlobalLiquidityMonitor:
     """Factory function to create global liquidity monitor"""
-    config_loader = ConfigLoader()
-    config = config_loader.get_service_config("global_liquidity_monitor", env)
+    from pathlib import Path
+    from utils.config_loader import ConfigLoader
+    from .base_financial_service import CacheConfig, RateLimitConfig, ServiceConfig, HistoricalStorageConfig
+    
+    # Use absolute path to config directory
+    config_dir = Path(__file__).parent.parent.parent / "config"
+    config_loader = ConfigLoader(str(config_dir))
+    service_config = config_loader.get_service_config("global_liquidity_monitor", env)
+
+    # Convert to ServiceConfig format with historical_storage
+    config = ServiceConfig(
+        name=service_config.name,
+        base_url=service_config.base_url,
+        api_key=service_config.api_key,
+        timeout_seconds=service_config.timeout_seconds,
+        max_retries=service_config.max_retries,
+        cache=CacheConfig(**service_config.cache),
+        rate_limit=RateLimitConfig(**service_config.rate_limit),
+        headers=service_config.headers,
+        historical_storage=HistoricalStorageConfig(
+            enabled=False,
+            store_stock_prices=False,
+            store_financials=False,
+            store_fundamentals=False,
+            store_news_sentiment=False,
+            auto_detect_data_type=False,
+            auto_collection_enabled=False
+        )
+    )
 
     return GlobalLiquidityMonitor(config)

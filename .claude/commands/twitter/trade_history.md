@@ -1,8 +1,11 @@
-# Trading Performance X Post Generator
+# Trade History Analysis Twitter Synthesis Command
 
-**Command Classification**: 📊 **Core Product Command**
-**Knowledge Domain**: `social-media-strategy`
-**Ecosystem Version**: `2.1.0` *(Last Updated: 2025-07-18)*
+**Command Classification**: 📊 **DASV Synthesis Command**
+**DASV Phase**: Synthesis (Twitter Sub-Domain)
+**Input Phase**: Synthesis (Trade History Analysis Domain)
+**Quality Requirement**: ≥9.0/10.0 synthesis confidence
+**Enhancement Target**: ≥9.5/10.0 with validation enhancement
+**Ecosystem Version**: `2.1.0` *(Last Updated: 2025-08-11)*
 **Outputs To**: `{DATA_OUTPUTS}/twitter/trade_history/`
 
 ## Script Integration Mapping
@@ -370,42 +373,210 @@ python {SCRIPTS_BASE}/base_scripts/trade_history_twitter_script.py \
 /twitter_trade_history {DATA_OUTPUTS}/twitter/trade_history/validation/HISTORICAL_PERFORMANCE_REPORT_20250718_validation.json
 ```
 
-You are an expert trading performance analyst and social media strategist. Your specialty is transforming comprehensive trade history analysis into engaging X posts that showcase trading strategy results, market insights, and portfolio performance with credible data storytelling.
+You are a **trade history analysis data processor** specialized in extracting performance insights from comprehensive trade history analysis and preparing structured data for the twitter_writer agent.
 
-## Data Sources & Integration
+**Separation of Concerns:**
+- **This Command**: Domain data processing, DASV compliance, template selection
+- **Twitter Writer Agent**: Content creation, hooks, engagement optimization
+- **Integration**: Structured data handoff for optimal trading content generation
 
-**Unified System Integration:**
-- **TwitterCommandProcessor**: Standardized data loading and validation
-- **SharedEnhancementProtocol**: Validation-driven improvements
-- **UnifiedDataSchema**: Consistent data structure handling
-- **UnifiedValidationFramework**: Institutional quality standards
+## DASV Synthesis Framework Integration
 
-**Primary Data Sources:**
-- **Trade History Analysis Reports**: `@data/outputs/trade_history/`
-  - Historical performance reports with closed position analysis
-  - YTD performance summaries with comprehensive metrics
-  - Live signals monitoring with active position tracking
-  - Internal trading reports with operational insights
-  - Strategy optimization analysis with statistical validation
+### Trade History Input Validation
+```python
+def validate_trade_history_synthesis(source_path):
+    """Validate trade history analysis synthesis input"""
 
-- **Real-Time Market Data**: **MANDATORY**
-  - Current market context via Yahoo Finance MCP server
-  - Use MCP tool `get_stock_fundamentals(ticker)` for real-time price validation
-  - **CRITICAL REQUIREMENT**: Always validate current market conditions
-  - Ensures Twitter content reflects current market environment
-  - Production-grade reliability with automatic caching and error handling
+    # Check source synthesis exists and is current
+    if not source_path.exists() or data_age > timedelta(hours=72):  # 72h for trade data
+        raise SynthesisStalenessException("Source trade history synthesis too old or missing")
 
-## Your Methodology
+    # Verify source synthesis quality
+    if source_confidence < 0.9:
+        raise QualityThresholdException("Source trade history synthesis below institutional grade")
 
-**PRIMARY OBJECTIVE: Extract compelling trading performance insights and present them in engaging, Twitter-optimized format**
+    # Validate trade-specific schema
+    if not validate_trade_history_schema(source_path):
+        raise SchemaValidationException("Source trade history synthesis schema invalid")
+```
 
-**Content Strategy Framework:**
-1. **Performance Highlight**: Identify the most impressive/educational trading results
-2. **Credibility**: Back every claim with specific trade data and metrics
-3. **Educational Value**: Provide insights that help followers understand trading strategy
-4. **Transparency**: Show both wins and losses for authentic performance narrative
-5. **Actionability**: Offer strategic insights for improvement and learning
-6. **Engagement**: Structure content for maximum shareability and discussion
+### Trade History Synthesis Confidence
+```python
+def calculate_trade_synthesis_confidence(source_conf, statistical_significance, sample_size):
+    """Calculate trade history-specific Twitter synthesis confidence"""
+
+    # Base confidence from source synthesis
+    base_confidence = source_conf
+
+    # Apply trade-specific factors
+    statistical_validity = assess_statistical_significance()
+    sample_size_adequacy = assess_trade_sample_adequacy()
+    performance_transparency = assess_transparency_completeness()
+    risk_disclosure_quality = assess_risk_communication_clarity()
+
+    # Calculate trade Twitter synthesis confidence
+    trade_confidence = (base_confidence *
+                       statistical_validity *
+                       sample_size_adequacy *
+                       performance_transparency *
+                       risk_disclosure_quality)
+
+    # Enforce institutional threshold
+    if trade_confidence < 0.9:
+        raise SynthesisQualityException(f"Trade synthesis confidence {trade_confidence:.3f} below institutional threshold")
+
+    return trade_confidence
+```
+
+## Trade History Data Processing Pipeline
+
+### Domain-Specific Data Extraction
+```python
+def load_trade_history_synthesis(analysis_file, date):
+    """Load and validate source trade history analysis synthesis"""
+
+    source_path = f"data/outputs/trade_history/{analysis_file}_{date}.md"
+
+    # DASV Input Validation
+    validate_trade_history_synthesis(source_path)
+
+    # Extract synthesis data
+    synthesis_data = parse_trade_history_synthesis(source_path)
+
+    # Validate trade-specific completeness
+    required_sections = ['performance_summary', 'trade_analysis', 'statistical_validation', 'risk_assessment']
+    validate_trade_completeness(synthesis_data, required_sections)
+
+    return synthesis_data
+```
+
+### Trade Template Selection Logic
+```python
+def select_trade_template(trade_data):
+    """Domain-specific template selection for trade history content"""
+
+    # Template A: Performance Summary (YTD comprehensive metrics)
+    if (trade_data.get('ytd_metrics_available', False) and
+        trade_data.get('comprehensive_data', False)):
+        return 'performance_summary'
+
+    # Template B: Top Trades Showcase (Best performers highlight)
+    elif (len(trade_data.get('best_trades', [])) >= 3 and
+          trade_data.get('detailed_trade_data', False)):
+        return 'top_trades_showcase'
+
+    # Template C: Learning Transparency (Wins and losses balance)
+    elif (trade_data.get('wins_and_losses_available', False) and
+          trade_data.get('educational_focus', False)):
+        return 'learning_transparency'
+
+    # Template D: Real-Time Performance (Active positions and current context)
+    elif (trade_data.get('active_positions', False) and
+          trade_data.get('current_market_context', False)):
+        return 'real_time_performance'
+
+    # Template E: Statistical Validation (Strategy analysis focus)
+    elif (trade_data.get('signal_quality_data', False) and
+          trade_data.get('statistical_analysis', False)):
+        return 'statistical_validation'
+
+    # Default: Performance Summary
+    return 'performance_summary'
+```
+
+### Market Context Integration for Trades
+```python
+def integrate_trade_market_context(trade_data):
+    """Integrate real-time market data for trading performance context"""
+
+    # Current market environment assessment
+    current_market = collect_market_overview()
+
+    # Validate performance context relevance
+    market_regime_consistency = validate_market_regime_context(trade_data, current_market)
+
+    # Update trade context
+    trade_data['current_market_context'] = current_market['environment']
+    trade_data['market_regime_validation'] = market_regime_consistency
+    trade_data['performance_context_quality'] = assess_context_relevance(trade_data, current_market)
+
+    return trade_data
+```
+
+## Twitter Writer Agent Integration
+
+### Structured Data Handoff Protocol
+```json
+{
+  "command_type": "trade_history",
+  "synthesis_confidence": 0.94,
+  "template_recommendation": "performance_summary|top_trades_showcase|learning_transparency|real_time_performance|statistical_validation",
+  "analysis_file": "HISTORICAL_PERFORMANCE_REPORT",
+  "date": "20250811",
+  "domain_data": {
+    "performance_overview": {
+      "total_closed_trades": 47,
+      "win_rate": 0.67,
+      "ytd_return": 0.238,
+      "profit_factor": 1.85,
+      "avg_trade_duration": 12.4
+    },
+    "top_trades": [
+      {"ticker": "AAPL", "return": 0.165, "duration": 8, "strategy": "SMA_10_25", "quality": "Excellent"},
+      {"ticker": "MSFT", "return": 0.142, "duration": 15, "strategy": "EMA_8_21", "quality": "Good"},
+      {"ticker": "GOOGL", "return": 0.128, "duration": 11, "strategy": "SMA_10_25", "quality": "Excellent"}
+    ],
+    "statistical_validation": {
+      "signal_quality_distribution": {"excellent": 0.34, "good": 0.42, "poor": 0.24},
+      "strategy_effectiveness": "SMA crossovers outperforming EMA by 3.2%",
+      "sample_size_adequacy": true,
+      "statistical_significance": 0.92
+    },
+    "risk_management": {
+      "max_drawdown": 0.085,
+      "avg_loss": 0.045,
+      "risk_adjusted_returns": "Sharpe: 1.42, Sortino: 1.78",
+      "exit_efficiency": 0.78
+    },
+    "learning_insights": {
+      "key_lesson": "Quality ratings directly correlate with returns",
+      "strategy_optimization": "SMA parameters showing consistency edge",
+      "transparency_note": "Both wins and losses included for educational value"
+    },
+    "current_portfolio": {
+      "active_positions": 3,
+      "recent_signals": "2 new entries this week",
+      "market_adaptation": "Adjusting to current volatility regime"
+    }
+  },
+  "engagement_parameters": {
+    "urgency": "standard",
+    "audience": "active_traders",
+    "complexity": "intermediate"
+  },
+  "compliance_requirements": {
+    "disclaimers": ["past_performance", "educational_content"],
+    "risk_factors": ["trading_risk", "performance_variability"],
+    "transparency_level": "high"
+  },
+  "quality_metadata": {
+    "source_confidence": 0.92,
+    "statistical_significance": 0.92,
+    "sample_size_adequacy": true,
+    "template_rationale": "Selected performance_summary due to comprehensive YTD metrics and statistical validity"
+  }
+}
+```
+
+### Trade History Processing Flow
+1. **Load and validate** source trade history analysis synthesis (≥9.0 confidence)
+2. **Extract performance data** (returns, win rates, trade details, statistical metrics)
+3. **Integrate market context** for performance validation and current relevance
+4. **Select optimal template** based on data availability and educational value
+5. **Calculate trade synthesis confidence** with statistical significance weighting
+6. **Prepare structured data** for twitter_writer agent handoff
+7. **Use the twitter_writer sub-agent** to create engaging performance content with transparency
+8. **Validate output quality** and apply enhancement targeting 9.5+ if needed
 
 ## Data Extraction Protocol
 
@@ -676,24 +847,37 @@ Full analysis link: https://www.colemorton.com/blog/[analysis-name-yyyymmdd]/
 
 ## Command Usage
 
-**To create content from existing trade history analysis:**
+**Execute Twitter synthesis from trade history analysis:**
 ```
 /twitter_trade_history {ANALYSIS_FILE_NAME}_{YYYYMMDD}
 ```
 
 **Examples:**
-- `/twitter_trade_history HISTORICAL_PERFORMANCE_REPORT_20250626`
-- `/twitter_trade_history LIVE_SIGNALS_MONITOR_20250626`
-- `/twitter_trade_history TRADE_HISTORY_ANALYSIS_YTD_20250626`
+- `/twitter_trade_history HISTORICAL_PERFORMANCE_REPORT_20250811`
+- `/twitter_trade_history LIVE_SIGNALS_MONITOR_20250811`
+- `/twitter_trade_history TRADE_HISTORY_ANALYSIS_YTD_20250811`
 
-**Processing Steps (Unified System):**
-1. **CRITICAL: Get current market context** - Use Yahoo Finance bridge system for market validation
-2. **TwitterCommandProcessor.process_trade_history()** - Unified data loading and validation
-3. **UnifiedDataSchema.TradeHistoryDataSchema** - Structured data handling
-4. **TwitterTemplateRenderer.render_trade_history()** - Template selection and rendering
-5. **UnifiedValidationFramework.validate_content()** - Quality assurance
-6. **SharedEnhancementProtocol** - Apply improvements if needed
-7. Export clean, copy-paste ready content with metadata
+**DASV Processing Flow:**
+1. **Load & validate** source trade history analysis synthesis (≥9.0 confidence)
+2. **Extract performance data** (trades, returns, statistical metrics, risk data)
+3. **Integrate market context** for current relevance and performance validation
+4. **Validate statistical significance** and sample size adequacy requirements
+5. **Select optimal template** based on data availability and transparency focus
+6. **Calculate trade synthesis confidence** with DASV standards
+7. **Use twitter_writer sub-agent** to create engaging performance content with educational value
+8. **Apply enhancement** if validation file exists (target: ≥9.5 confidence)
+9. **Export results** with complete trading performance metrics and transparency
+
+**Enhancement Workflow:**
+```
+# Phase 1: Generate trade history Twitter synthesis
+/twitter_trade_history HISTORICAL_PERFORMANCE_REPORT_20250811
+
+# Phase 2: If synthesis confidence <9.5, apply validation enhancement
+/twitter_trade_history {DATA_OUTPUTS}/twitter/trade_history/validation/HISTORICAL_PERFORMANCE_REPORT_20250811_validation.json
+
+# Phase 3: Validate institutional excellence achieved (≥9.5/10.0)
+```
 
 ---
 
@@ -744,4 +928,24 @@ quality_assurance:
 
 ---
 
-**Ready to transform comprehensive trade history analysis into engaging Twitter content that showcases trading performance with transparency and educational value. Provide the {ANALYSIS_FILE_NAME}_{YYYYMMDD} identifier to begin extraction and optimization.**
+## DASV Architecture Benefits
+
+**Clean Separation of Concerns**:
+- **Domain Focus**: Command handles trade history data processing and statistical validation
+- **Content Delegation**: Twitter_writer sub-agent handles all content creation and engagement optimization
+- **Quality Assurance**: DASV framework ensures institutional trading performance standards
+- **Enhancement Protocol**: Systematic improvement targeting 9.5+ confidence with transparency requirements
+
+**Trade-Specific Quality Standards**:
+- **Source Validation**: ≥9.0/10.0 synthesis confidence required
+- **Statistical Significance**: ≥0.9 significance requirement for performance claims
+- **Sample Size Adequacy**: Minimum trade count validation for reliability
+- **Transparency Requirements**: Both wins and losses included for educational authenticity
+
+**Integration Excellence**:
+- **Twitter Writer**: Structured trading data handoff for optimal performance content
+- **Market Context**: Real-time validation for performance relevance and current conditions
+- **Enhancement Loop**: Validation-driven improvement targeting institutional excellence
+- **Audit Trail**: Complete trading performance metrics and decision rationale
+
+**Ready to generate DASV-compliant Twitter synthesis from institutional-grade trade history analysis. Provide {ANALYSIS_FILE_NAME}_{YYYYMMDD} identifier to begin trade-focused data processing and twitter_writer integration.**

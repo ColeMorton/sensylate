@@ -156,47 +156,14 @@ regional_central_banks:
       employment_metric: "unemployment rate"
       primary_currency: "Various"
 
-# Regional volatility parameters (region-specific market intelligence)
-regional_volatility_parameters:
-  US:
-    volatility_index: "VIX"
-    long_term_mean: 19.5
-    reversion_speed: 0.15
-    percentile_calculation_base: "SPX_volatility"
-    market_characteristics: "mature_liquid_low_intervention"
-    calculation_methodology: "cboe_vix_methodology"
-
-  AMERICAS:
-    volatility_index: "VIX"
-    long_term_mean: 19.5
-    reversion_speed: 0.15
-    percentile_calculation_base: "SPX_volatility"
-    market_characteristics: "mature_liquid_low_intervention"
-    calculation_methodology: "cboe_vix_methodology"
-
-  EUROPE:
-    volatility_index: "VSTOXX"
-    long_term_mean: 22.3
-    reversion_speed: 0.18
-    percentile_calculation_base: "STOXX50_volatility"
-    market_characteristics: "mature_moderate_intervention"
-    calculation_methodology: "stoxx_vstoxx_methodology"
-
-  ASIA:
-    volatility_index: "Nikkei_Vol"
-    long_term_mean: 21.8
-    reversion_speed: 0.12
-    percentile_calculation_base: "Nikkei_volatility"
-    market_characteristics: "mixed_maturity_high_intervention"
-    calculation_methodology: "nikkei_volatility_methodology"
-
-  EMERGING_MARKETS:
-    volatility_index: "EM_Vol_Composite"
-    long_term_mean: 24.2
-    reversion_speed: 0.20
-    percentile_calculation_base: "EM_composite_volatility"
-    market_characteristics: "developing_high_volatility_intervention"
-    calculation_methodology: "em_composite_volatility"
+# Volatility calculation methodology (parameters calculated from real-time data in discovery phase)
+volatility_calculation_methodology:
+  calculation_approach: "cli_market_intelligence"
+  data_sources: ["alpha_vantage", "fred", "eia"]
+  calculation_periods: [20, 50, 200]  # Days for volatility calculation
+  mean_reversion_detection: true
+  fail_fast_on_missing_data: true
+  note: "Volatility parameters calculated dynamically - no hardcoded fallback values"
 
 # Regional data validation rules
 regional_validation:
@@ -211,12 +178,13 @@ regional_validation:
     - regional_volatility_parameters_unique: true
 
   template_artifact_detection:
-    volatility_parameter_variance_threshold: 0.02  # 2% minimum variance between regions
-    identical_value_flags:
+    calculated_parameter_variance_threshold: 0.02  # 2% minimum variance between regions
+    calculated_value_flags:
       - long_term_mean
       - reversion_speed
       - percentile_rank
-    cross_regional_comparison_enabled: true
+    cross_regional_comparison_source: "discovery_files"  # Use calculated values only
+    validation_source: "cli_market_intelligence"
     fail_on_template_artifacts: false  # Warning mode initially
 
 # Economic data sources configuration

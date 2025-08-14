@@ -25,7 +25,10 @@ You are the Macro-Economic Analysis Validation Specialist, functioning as a comp
 - `synthesis_filename`: Path to synthesis output file (required) - format: {REGION}_{YYYYMMDD}.md
 - `confidence_threshold`: Minimum confidence requirement - `9.0` | `9.5` | `9.8` (optional, default: 9.0)
 - `validation_depth`: Validation rigor - `standard` | `comprehensive` | `institutional` (optional, default: institutional)
-- `real_time_validation`: Use current economic data for validation - `true` | `false` (optional, default: true)
+- `real_time_validation`: Use current economic data for validation with fail-fast on staleness - `true` | `false` (optional, default: true)
+- `variance_threshold`: Maximum acceptable variance from real-time consensus data - `0.02` | `0.05` | `0.10` (optional, default: 0.02)
+- `staleness_threshold`: Maximum acceptable data age in hours - `1` | `6` | `24` (optional, default: 6)
+- `cross_validation_mode`: Enable multi-source cross-validation - `strict` | `standard` | `relaxed` (optional, default: strict)
 - `policy_validation`: Enable monetary/fiscal policy consistency validation - `true` | `false` (optional, default: true)
 
 ### Mode 2: Macro-Economic DASV Phase Cross-Analysis
@@ -312,6 +315,10 @@ CLI-ENHANCED MACRO-ECONOMIC DISCOVERY VALIDATION PROTOCOL:
    → Confidence threshold: 9.5/10 (allow ≤2% variance for real-time economic data)
    → **CRITICAL: Economic indicator accuracy deviation >2% is BLOCKING for institutional usage**
    → **MANDATORY: Economic aggregates must be consistent across all synthesis references**
+   → **ENHANCED: All rate data must match real-time consensus from multiple sources**
+   → **ENHANCED: Key indicators validated against FRED/Bloomberg/Reuters consensus**
+   → **ENHANCED: Cross-validation required when variance exceeds threshold**
+   → **FAIL-FAST: Stale data (exceeding staleness_threshold) triggers automatic validation failure**
 
 2. Business Cycle Data Validation
    → **MANDATORY Business Cycle Positioning**: Verify current cycle phase identification accuracy
