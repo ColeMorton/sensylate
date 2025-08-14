@@ -49,7 +49,7 @@ services:
   alpha_vantage:
     name: "alpha_vantage"
     base_url: "https://www.alphavantage.co/query"
-    api_key: "Q4206ZINHPUCHHKM"
+    api_key: "${ALPHA_VANTAGE_API_KEY}"
     rate_limit:
       requests_per_minute: 5  # Free tier limit
     cache:
@@ -60,7 +60,7 @@ services:
   fred:
     name: "fred"
     base_url: "https://api.stlouisfed.org/fred"
-    api_key: "8e5ae1273bd7a0307a0323ff1ed6ce73"
+    api_key: "${FRED_API_KEY}"
     rate_limit:
       requests_per_minute: 120
     cache:
@@ -71,7 +71,7 @@ services:
   sec_edgar:
     name: "sec_edgar"
     base_url: "https://www.sec.gov"
-    api_key: "adf9715a6970ae8a72cb83119284516557c2ea0820c92e33b13689ef0cfa1926"
+    api_key: "${SEC_EDGAR_API_KEY}"
     rate_limit:
       requests_per_minute: 10
     cache:
@@ -83,7 +83,7 @@ services:
   fmp:
     name: "fmp"
     base_url: "https://financialmodelingprep.com/api/v3"
-    api_key: "I5GuqxrurLHLHjurnpFrSVXFsoXb1bfe"
+    api_key: "${FMP_API_KEY}"
     rate_limit:
       requests_per_minute: 250
     cache:
@@ -94,7 +94,7 @@ services:
   coingecko:
     name: "coingecko"
     base_url: "https://api.coingecko.com/api/v3"
-    api_key: ${COINGECKO_API_KEY}  # Optional for free tier
+    api_key: "${COINGECKO_API_KEY}"  # Optional for free tier
     rate_limit:
       requests_per_minute: 50
     cache:
@@ -126,14 +126,63 @@ services:
 
   economic_calendar:
     name: "economic_calendar"
-    base_url: "https://api.tradingeconomics.com"
-    api_key: null  # Many economic calendar services offer free tier
+    base_url: "https://api.stlouisfed.org/fred/series"  # Use FRED as fallback for economic data
+    api_key: "${FRED_API_KEY}"  # Use FRED API key as primary source
     rate_limit:
-      requests_per_minute: 60
+      requests_per_minute: 120
     cache:
       ttl_seconds: 900  # 15 minutes
     headers:
       Accept: "application/json"
+    timeout_seconds: 30
+    historical_storage:
+      enabled: false  # Economic calendar data doesn't need historical storage
+      store_stock_prices: false
+      store_financials: false
+      store_fundamentals: false
+      store_news_sentiment: false
+      auto_detect_data_type: false
+      auto_collection_enabled: false
+
+  global_liquidity_monitor:
+    name: "global_liquidity_monitor"
+    base_url: "https://api.stlouisfed.org/fred/series"  # Uses FRED as primary data source
+    api_key: "${FRED_API_KEY}"  # Uses same FRED API key
+    rate_limit:
+      requests_per_minute: 120
+    cache:
+      ttl_seconds: 3600  # 1 hour cache for liquidity data
+    headers:
+      Accept: "application/json"
+    timeout_seconds: 30
+    historical_storage:
+      enabled: false  # Liquidity data is real-time focused
+      store_stock_prices: false
+      store_financials: false
+      store_fundamentals: false
+      store_news_sentiment: false
+      auto_detect_data_type: false
+      auto_collection_enabled: false
+
+  sector_economic_correlations:
+    name: "sector_economic_correlations"
+    base_url: "https://api.stlouisfed.org/fred/series"  # Uses FRED for economic data
+    api_key: "${FRED_API_KEY}"  # Uses same FRED API key
+    rate_limit:
+      requests_per_minute: 120
+    cache:
+      ttl_seconds: 1800  # 30 minutes cache for correlation data
+    headers:
+      Accept: "application/json"
+    timeout_seconds: 30
+    historical_storage:
+      enabled: false  # Correlation data is calculated in real-time
+      store_stock_prices: false
+      store_financials: false
+      store_fundamentals: false
+      store_news_sentiment: false
+      auto_detect_data_type: false
+      auto_collection_enabled: false
 
 # Data orchestration configuration
 orchestration:

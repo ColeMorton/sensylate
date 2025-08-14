@@ -33,9 +33,80 @@ class FinancialServiceConfig(BaseModel):
 class ConfigLoader:
     """Loads and merges YAML configurations with environment support."""
 
-    def __init__(self, config_dir: Optional[str] = None) -> None:
+    def __init__(self, config_dir: Optional[str] = None, auto_load_env: bool = True) -> None:
         self.env_pattern = re.compile(r"\$\{([^}]+)\}")
         self.config_dir = Path(config_dir) if config_dir else Path.cwd() / "config"
+        
+        # Automatically detect and load environment files
+        if auto_load_env:
+            self._auto_detect_and_load_env()
+
+    def _auto_detect_and_load_env(self) -> None:
+        """Automatically detect and load .env files from project root or current directory."""
+        try:
+            # Look for .env files in common locations
+            search_paths = [
+                Path.cwd(),  # Current working directory
+                Path.cwd().parent,  # Parent directory
+                Path(__file__).parent.parent.parent,  # Project root (3 levels up from utils)
+            ]
+            
+            env_files_found = []
+            
+            for search_path in search_paths:
+                if search_path.exists():
+                    # Check for various .env file patterns
+                    env_patterns = [".env", ".env.local", ".env.dev", ".env.development"]
+                    
+                    for pattern in env_patterns:
+                        env_file = search_path / pattern
+                        if env_file.exists() and env_file.is_file():
+                            env_files_found.append(env_file)
+                            break  # Use first found env file per directory
+                    
+                    # Stop searching once we find an env file
+                    if env_files_found:
+                        break
+            
+            # Load the most appropriate .env file
+            if env_files_found:
+                env_file = env_files_found[0]  # Use the first (most specific) one found
+                self._load_env_file(env_file)
+        
+        except Exception:
+            # Silently continue if env file detection fails
+            # This ensures ConfigLoader still works even if env detection has issues
+            pass
+    
+    def _load_env_file(self, env_file_path: Path) -> None:
+        """Load environment variables from a .env file."""
+        try:
+            with open(env_file_path, 'r', encoding='utf-8') as f:
+                for line_num, line in enumerate(f, 1):
+                    line = line.strip()
+                    
+                    # Skip comments and empty lines
+                    if not line or line.startswith('#'):
+                        continue
+                    
+                    # Parse KEY=VALUE format
+                    if '=' in line:
+                        key, _, value = line.partition('=')
+                        key = key.strip()
+                        value = value.strip()
+                        
+                        # Remove quotes if present
+                        if (value.startswith('"') and value.endswith('"')) or \
+                           (value.startswith("'") and value.endswith("'")):
+                            value = value[1:-1]
+                        
+                        # Only set if not already in environment
+                        if key and key not in os.environ:
+                            os.environ[key] = value
+        
+        except Exception:
+            # Silently continue if env file loading fails
+            pass
 
     def load_config(self, config_path: str) -> Dict[str, Any]:
         """Load a single YAML configuration file."""
@@ -106,22 +177,33 @@ class ConfigLoader:
         self, config_path: str, env: str = "dev"
     ) -> Dict[str, Any]:
         """Load base config and overlay environment-specific settings."""
-        base_config = self.load_config(config_path)
+        try:
+            base_config = self.load_config(config_path)
+        except Exception as e:
+            raise FileNotFoundError(f"Failed to load base config from {config_path}: {e}")
 
-        # Try to load environment-specific config
+        # Try to load environment-specific config (optional)
         config_dir = Path(config_path).parent
         env_config_path = config_dir / "environments" / f"{env}.yaml"
 
         if env_config_path.exists():
-            env_config = self.load_config(str(env_config_path))
-            base_config = self._merge_configs(base_config, env_config)
+            try:
+                env_config = self.load_config(str(env_config_path))
+                base_config = self._merge_configs(base_config, env_config)
+            except Exception as e:
+                # Log warning but continue with base config
+                print(f"Warning: Failed to load environment config {env_config_path}: {e}")
 
-        # Load shared configs
+        # Load shared configs (optional)
         shared_dir = config_dir / "shared"
         if shared_dir.exists():
-            for shared_file in shared_dir.glob("*.yaml"):
-                shared_config = self.load_config(str(shared_file))
-                base_config = self._merge_configs(shared_config, base_config)
+            try:
+                for shared_file in shared_dir.glob("*.yaml"):
+                    shared_config = self.load_config(str(shared_file))
+                    base_config = self._merge_configs(shared_config, base_config)
+            except Exception as e:
+                # Log warning but continue with base config
+                print(f"Warning: Failed to load shared config from {shared_dir}: {e}")
 
         return base_config
 

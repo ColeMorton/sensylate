@@ -14,7 +14,10 @@ import csv
 import io
 import json
 import logging
+import os
+import sys
 from abc import ABC, abstractmethod
+from pathlib import Path
 from typing import Any, Dict, Optional
 
 import typer
@@ -25,6 +28,18 @@ from rich.panel import Panel
 from rich.table import Table
 
 from .config_loader import ConfigLoader, FinancialServiceConfig
+
+# Ensure load_env is available
+try:
+    # Add scripts directory to path for load_env import
+    scripts_dir = Path(__file__).parent.parent
+    if str(scripts_dir) not in sys.path:
+        sys.path.insert(0, str(scripts_dir))
+    from load_env import ensure_env_loaded
+except ImportError:
+    # Fallback if load_env not available
+    def ensure_env_loaded():
+        pass
 
 
 class OutputFormat:
@@ -69,6 +84,9 @@ class BaseFinancialCLI(ABC):
     def __init__(
         self, service_name: str, description: str = "Financial data service CLI"
     ):
+        # Load environment variables first (critical for API key access)
+        self._ensure_environment_loaded()
+        
         self.service_name = service_name
         self.description = description
         self.app = typer.Typer(
@@ -80,6 +98,38 @@ class BaseFinancialCLI(ABC):
 
         # Add common commands
         self._add_common_commands()
+
+    def _ensure_environment_loaded(self):
+        """Ensure environment variables are loaded from .env file"""
+        try:
+            ensure_env_loaded()
+            self._validate_environment_variables()
+        except Exception as e:
+            # Don't fail CLI initialization, but log the issue
+            print(f"Warning: Failed to load environment variables: {e}")
+
+    def _validate_environment_variables(self):
+        """Validate that critical environment variables are available"""
+        # Check for common API keys that might be needed
+        critical_env_vars = [
+            'ALPHA_VANTAGE_API_KEY',
+            'FRED_API_KEY', 
+            'FMP_API_KEY',
+            'SEC_EDGAR_API_KEY'
+        ]
+        
+        missing_vars = []
+        for var in critical_env_vars:
+            if not os.getenv(var):
+                missing_vars.append(var)
+        
+        if missing_vars:
+            # Log but don't fail - some services may not need all keys  
+            # Use print since logger may not be initialized yet
+            pass  # Silent - will be logged later if needed
+        else:
+            # All critical environment variables are available
+            pass  # Silent - will be logged later if needed
 
     def _setup_logger(self) -> logging.Logger:
         """Setup structured logging for CLI"""

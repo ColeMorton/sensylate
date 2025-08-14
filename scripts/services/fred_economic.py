@@ -636,6 +636,18 @@ def create_fred_economic_service(env: str = "dev") -> FREDEconomicService:
     Returns:
         Configured FRED Economic service instance
     """
+    # Ensure environment variables are loaded first
+    try:
+        # Add scripts directory to path for load_env import
+        import sys
+        scripts_dir = Path(__file__).parent.parent
+        if str(scripts_dir) not in sys.path:
+            sys.path.insert(0, str(scripts_dir))
+        from load_env import ensure_env_loaded
+        ensure_env_loaded()
+    except ImportError:
+        pass  # Continue if load_env not available
+    
     # Use absolute path to config directory
     config_dir = Path(__file__).parent.parent.parent / "config"
     config_loader = ConfigLoader(str(config_dir))

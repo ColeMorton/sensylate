@@ -77,10 +77,28 @@ data/outputs/trade_history/historical/*
 .temp/
 temp/
 
-# Environment variables
+# Environment variables and sensitive configuration
 .env
 .env.local
 .env.*.local
+*.env
+.envrc
+
+# API keys and secrets
+**/api_keys.json
+**/secrets.json
+**/secrets.yaml
+**/secrets.yml
+**/.secrets/
+**/config/secrets/
+
+# Local configuration overrides
+**/config/local.yaml
+**/config/local.yml
+**/config/local.json
+**/*local.json
+**/*local.yaml
+**/*local.yml
 
 # direnv
 .envrc

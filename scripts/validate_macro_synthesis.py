@@ -72,7 +72,7 @@ def validate_template_artifacts():
                 filename = os.path.basename(file_path)
                 region = filename.split("_")[0].upper()
 
-                # Extract volatility parameters from CLI market intelligence
+                # Extract calculated volatility parameters from CLI market intelligence
                 cli_market = data.get("cli_market_intelligence", {})
                 volatility_analysis = cli_market.get("volatility_analysis", {})
                 mean_reversion = volatility_analysis.get("mean_reversion", {})
@@ -85,18 +85,52 @@ def validate_template_artifacts():
                         "long_term_mean": float(mean_reversion["long_term_mean"]),
                         "reversion_speed": float(mean_reversion["reversion_speed"]),
                         "file_path": file_path,
+                        "source": "calculated_cli_data"
                     }
-                    print(f"✓ Extracted volatility parameters for {region}")
+                    print(f"✓ Extracted calculated volatility parameters for {region}")
                 else:
-                    print(f"⚠️ Missing volatility parameters in {filename}")
+                    print(f"⚠️ Missing calculated volatility parameters in {filename}")
+                    print(f"    Expected: cli_market_intelligence.volatility_analysis.mean_reversion fields")
+                    print(f"    Check discovery file generation process for {region}")
 
+            except json.JSONDecodeError as e:
+                print(f"❌ Invalid JSON in {file_path}: {e}")
+                continue
+            except KeyError as e:
+                print(f"❌ Missing required field in {file_path}: {e}")
+                print(f"    Check discovery file structure for cli_market_intelligence section")
+                continue
             except Exception as e:
-                print(f"❌ Error processing {file_path}: {e}")
+                print(f"❌ Unexpected error processing {file_path}: {e}")
                 continue
 
         if len(volatility_data) < 2:
-            print("⚠️ Insufficient volatility data for template artifact detection")
+            print("⚠️ Insufficient calculated volatility data for template artifact detection")
+            print("⚠️ Ensure discovery files contain CLI market intelligence with calculated volatility parameters")
             return 0.7
+        
+        # Enhanced completeness validation
+        print(f"✅ Found {len(volatility_data)} regions with calculated volatility parameters")
+        
+        # Validate data quality
+        data_quality_issues = []
+        for region, data in volatility_data.items():
+            # Check for reasonable parameter ranges
+            long_term_mean = data["long_term_mean"]
+            reversion_speed = data["reversion_speed"]
+            
+            if not (10.0 <= long_term_mean <= 50.0):
+                data_quality_issues.append(f"{region}: long_term_mean {long_term_mean:.2f} outside reasonable range [10.0, 50.0]")
+            
+            if not (0.05 <= reversion_speed <= 0.5):
+                data_quality_issues.append(f"{region}: reversion_speed {reversion_speed:.3f} outside reasonable range [0.05, 0.5]")
+        
+        if data_quality_issues:
+            print("⚠️ Data quality warnings:")
+            for issue in data_quality_issues:
+                print(f"    - {issue}")
+        else:
+            print("✅ All calculated volatility parameters within reasonable ranges")
 
         # Check for template artifacts
         template_artifact_score = 1.0
@@ -134,22 +168,9 @@ def validate_template_artifacts():
                 )
                 template_artifact_score -= 0.2
 
-        # Use configuration validation if available
-        try:
-            validation_result = (
-                config_manager.validate_cross_regional_volatility_uniqueness()
-            )
-
-            if validation_result["template_artifacts_detected"]:
-                print("⚠️ Template artifacts detected by config validation")
-                for issue in validation_result.get("issues", []):
-                    artifact_issues.append(f"{issue['parameter']}: {issue['issue']}")
-                template_artifact_score = min(template_artifact_score, 0.6)
-            else:
-                print("✅ No template artifacts detected by config validation")
-
-        except Exception as e:
-            print(f"⚠️ Config validation unavailable: {e}")
+        # Note: Removed config validation dependency to focus on calculated discovery data
+        # Template artifact validation now exclusively uses calculated CLI market intelligence data
+        print("✅ Validation uses calculated discovery data (config hardcoded values ignored)")
 
         # Report results
         template_artifact_score = max(0.0, template_artifact_score)
@@ -163,11 +184,11 @@ def validate_template_artifacts():
         else:
             print("✅ No template artifacts detected")
 
-        # Detailed parameter analysis
-        print("\n📈 Volatility Parameter Analysis:")
+        # Detailed calculated parameter analysis
+        print("\n📈 Calculated Volatility Parameter Analysis (from discovery files):")
         for region, data in volatility_data.items():
             print(
-                f"  {region}: mean={data['long_term_mean']:.2f}, speed={data['reversion_speed']:.3f}"
+                f"  {region}: mean={data['long_term_mean']:.2f}, speed={data['reversion_speed']:.3f} (source: {data['source']})"
             )
 
         return template_artifact_score

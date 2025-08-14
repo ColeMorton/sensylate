@@ -509,22 +509,32 @@ class ConfigManager:
 
         return default_value
 
-    def get_api_key(self, key_name: str) -> Optional[str]:
+    def get_api_key(self, key_name: str, required: bool = False) -> Optional[str]:
         """
-        Get API key from environment variables or configuration
+        Get API key from environment variables with enhanced validation and security
 
         Args:
             key_name: API key name (e.g., 'FRED_API_KEY', 'ALPHA_VANTAGE_API_KEY')
+            required: Whether the key is required (raises ConfigurationError if missing)
 
         Returns:
             API key value or None if not found
+
+        Raises:
+            ConfigurationError: If required key is missing or invalid
         """
         # First check environment variables
         env_value = os.getenv(key_name)
         if env_value and env_value.lower() not in ["none", "null", ""]:
-            return env_value
+            # Validate key format for security
+            if self._validate_api_key_format(key_name, env_value):
+                return env_value
+            else:
+                logger.warning(f"Invalid format for {key_name} from environment")
+                if required:
+                    raise ConfigurationError(f"Invalid API key format for {key_name}")
 
-        # Then check financial services configuration
+        # Then check financial services configuration with environment substitution
         try:
             financial_services_path = (
                 Path(__file__).parent.parent.parent
@@ -534,12 +544,23 @@ class ConfigManager:
             )
             if financial_services_path.exists():
                 with open(financial_services_path, "r") as f:
-                    financial_config = yaml.safe_load(f)
+                    config_content = f.read()
+                
+                # Substitute environment variables
+                import re
+                env_pattern = re.compile(r'\$\{([^}]+)\}')
+                def env_replacer(match):
+                    env_var = match.group(1)
+                    return os.getenv(env_var, match.group(0))
+                
+                config_content = env_pattern.sub(env_replacer, config_content)
+                financial_config = yaml.safe_load(config_content)
 
                 # Map key names to service configurations
                 service_mapping = {
                     "FRED_API_KEY": "fred",
                     "ALPHA_VANTAGE_API_KEY": "alpha_vantage",
+                    "SEC_EDGAR_API_KEY": "sec_edgar",
                     "IMF_API_KEY": "imf",
                     "FMP_API_KEY": "fmp",
                     "EIA_API_KEY": "eia",
@@ -547,248 +568,207 @@ class ConfigManager:
                 }
 
                 service_name = service_mapping.get(key_name)
-                if service_name and service_name in financial_config.get(
-                    "services", {}
-                ):
+                if service_name and service_name in financial_config.get("services", {}):
                     api_key = financial_config["services"][service_name].get("api_key")
                     # Handle services that don't require API keys
                     if api_key is None or str(api_key).lower() in ["none", "null"]:
-                        # Return 'not_required' for services that don't need API keys
+                        if required:
+                            raise ConfigurationError(f"Required API key {key_name} not configured")
                         return "not_required"
-                    elif api_key:
+                    elif api_key and self._validate_api_key_format(key_name, api_key):
                         return str(api_key)
+                    elif required:
+                        raise ConfigurationError(f"Invalid API key format for {key_name}")
+
+        except yaml.YAMLError as e:
+            logger.error(f"Invalid YAML in financial services config: {e}")
+            if required:
+                raise ConfigurationError(f"Failed to load configuration for {key_name}")
         except Exception as e:
             logger.warning(
                 f"Could not load financial services config for {key_name}: {e}"
             )
+            if required:
+                raise ConfigurationError(f"Failed to access configuration for {key_name}")
 
-        # Return None if not found anywhere
+        # Check if key is required but not found
+        if required:
+            raise ConfigurationError(
+                f"Required API key {key_name} not found in environment or configuration"
+            )
+
         return None
+
+    def _validate_api_key_format(self, key_name: str, api_key: str) -> bool:
+        """
+        Validate API key format for security and correctness
+
+        Args:
+            key_name: Name of the API key
+            api_key: The API key value to validate
+
+        Returns:
+            True if format is valid, False otherwise
+        """
+        if not isinstance(api_key, str) or len(api_key.strip()) == 0:
+            return False
+
+        # Check for placeholder values
+        invalid_patterns = [
+            "your_key_here",
+            "replace_me", 
+            "change_this",
+            "api_key_here",
+            "test_key",
+            "dummy_key"
+        ]
+        
+        api_key_lower = api_key.lower()
+        if any(pattern in api_key_lower for pattern in invalid_patterns):
+            return False
+
+        # Service-specific validation
+        if key_name == "ALPHA_VANTAGE_API_KEY":
+            # Alpha Vantage keys are typically 16-20 alphanumeric characters
+            return len(api_key) >= 10 and api_key.isalnum()
+        
+        elif key_name == "FRED_API_KEY":
+            # FRED keys are typically 32 character hex strings
+            return len(api_key) == 32 and all(c in "0123456789abcdef" for c in api_key.lower())
+        
+        elif key_name == "SEC_EDGAR_API_KEY":
+            # SEC EDGAR keys are long hex strings (64+ characters)
+            return len(api_key) >= 60 and all(c in "0123456789abcdef" for c in api_key.lower())
+        
+        elif key_name == "FMP_API_KEY":
+            # FMP keys are typically 32 alphanumeric characters
+            return len(api_key) >= 20 and api_key.replace("-", "").isalnum()
+
+        # Generic validation for other keys
+        return len(api_key) >= 8
+
+    def get_api_key_status(self, key_name: str) -> Dict[str, Any]:
+        """
+        Get detailed status information about an API key
+
+        Args:
+            key_name: API key name
+
+        Returns:
+            Dictionary with key status information
+        """
+        status = {
+            "key_name": key_name,
+            "found": False,
+            "source": None,
+            "valid_format": False,
+            "obfuscated_value": None,
+            "length": 0,
+            "required": key_name in ["ALPHA_VANTAGE_API_KEY", "FRED_API_KEY", "FMP_API_KEY"]
+        }
+
+        try:
+            api_key = self.get_api_key(key_name)
+            if api_key and api_key != "not_required":
+                status["found"] = True
+                status["source"] = "environment" if os.getenv(key_name) else "config"
+                status["valid_format"] = self._validate_api_key_format(key_name, api_key)
+                status["length"] = len(api_key)
+                # Obfuscate key for security (show first 4 and last 4 characters)
+                if len(api_key) > 8:
+                    status["obfuscated_value"] = f"{api_key[:4]}...{api_key[-4:]}"
+                else:
+                    status["obfuscated_value"] = f"{api_key[:2]}{'*' * (len(api_key)-4)}{api_key[-2:]}"
+            elif api_key == "not_required":
+                status["found"] = True
+                status["source"] = "config"
+                status["obfuscated_value"] = "not_required"
+        
+        except Exception as e:
+            status["error"] = str(e)
+
+        return status
 
     def get_regional_volatility_parameters(self, region: str) -> Dict[str, Any]:
         """
-        Get region-specific volatility parameters
+        DEPRECATED: Volatility parameters are now calculated dynamically in discovery phase
+        
+        This method now fails fast to prevent use of hardcoded values.
+        Use calculated values from discovery files instead.
 
         Args:
             region: Region name (US, AMERICAS, EUROPE, ASIA, etc.)
 
-        Returns:
-            Dictionary containing volatility parameters for the region
-
         Raises:
-            ConfigurationError: If region not found or parameters missing
+            ConfigurationError: Always raises - method deprecated in favor of calculated values
         """
-        self.reload_if_stale()
-
-        volatility_params = self._config_cache.get("regional_volatility_parameters", {})
-
-        if region.upper() not in volatility_params:
-            raise ConfigurationError(
-                f"No volatility parameters configured for region: {region}"
-            )
-
-        params = volatility_params[region.upper()].copy()
-
-        # Validate required parameters
-        required_params = ["volatility_index", "long_term_mean", "reversion_speed"]
-        missing_params = [p for p in required_params if p not in params]
-
-        if missing_params:
-            raise ConfigurationError(
-                f"Missing volatility parameters for {region}: {missing_params}"
-            )
-
-        # Validate parameter types and ranges
-        try:
-            params["long_term_mean"] = float(params["long_term_mean"])
-            params["reversion_speed"] = float(params["reversion_speed"])
-
-            # Validate reasonable ranges
-            if not (10.0 <= params["long_term_mean"] <= 50.0):
-                raise ConfigurationError(
-                    f"Invalid long_term_mean for {region}: {params['long_term_mean']} (should be 10-50)"
-                )
-
-            if not (0.05 <= params["reversion_speed"] <= 0.5):
-                raise ConfigurationError(
-                    f"Invalid reversion_speed for {region}: {params['reversion_speed']} (should be 0.05-0.5)"
-                )
-
-        except ValueError as e:
-            raise ConfigurationError(
-                f"Invalid volatility parameter types for {region}: {e}"
-            )
-
-        logger.debug(f"Retrieved volatility parameters for {region}: {params}")
-        return params
+        raise ConfigurationError(
+            f"Volatility parameters for region '{region}' are no longer configured as hardcoded values. "
+            f"Use calculated values from discovery phase CLI market intelligence data. "
+            f"Check discovery file: ./data/outputs/macro_analysis/discovery/{region.lower()}_YYYYMMDD_discovery.json"
+        )
 
     def get_volatility_parameter(
         self, region: str, parameter_name: str
     ) -> Union[float, str]:
         """
-        Get specific volatility parameter for a region
+        DEPRECATED: Volatility parameters are now calculated dynamically in discovery phase
+        
+        This method now fails fast to prevent use of hardcoded values.
 
         Args:
             region: Region name (US, AMERICAS, EUROPE, ASIA, etc.)
             parameter_name: Parameter name (long_term_mean, reversion_speed, volatility_index, etc.)
 
-        Returns:
-            Parameter value (float for numeric, str for names/descriptions)
+        Raises:
+            ConfigurationError: Always raises - method deprecated in favor of calculated values
         """
-        params = self.get_regional_volatility_parameters(region)
-
-        if parameter_name not in params:
-            raise ConfigurationError(
-                f"Unknown volatility parameter {parameter_name} for region {region}"
-            )
-
-        return params[parameter_name]
+        raise ConfigurationError(
+            f"Volatility parameter '{parameter_name}' for region '{region}' is no longer configured as hardcoded value. "
+            f"Use calculated values from discovery phase CLI market intelligence data."
+        )
 
     def validate_cross_regional_volatility_uniqueness(
         self, tolerance: float = 0.02
     ) -> Dict[str, Any]:
         """
-        Validate that volatility parameters are sufficiently different across regions
-        to prevent template artifacts
+        DEPRECATED: Volatility validation now handled by discovery file validation
+        
+        This method now fails fast since hardcoded volatility parameters were removed.
+        Use validate_template_artifacts() in validate_macro_synthesis.py instead.
 
         Args:
             tolerance: Minimum relative difference between regions (default 2%)
 
         Returns:
-            Validation results with detected issues
+            Validation results indicating deprecated status
         """
-        self.reload_if_stale()
-
-        volatility_params = self._config_cache.get("regional_volatility_parameters", {})
-        validation_config = self._config_cache.get("regional_validation", {})
-        template_detection = validation_config.get("template_artifact_detection", {})
-
-        # Use configured tolerance or fallback to parameter
-        configured_tolerance = template_detection.get(
-            "volatility_parameter_variance_threshold", tolerance
-        )
-
-        validation_results = {
+        return {
             "template_artifacts_detected": False,
-            "warnings": [],
+            "warnings": ["Method deprecated - volatility validation moved to discovery file validation"],
             "issues": [],
             "parameter_analysis": {},
+            "deprecated_notice": "Use calculated values from discovery files for volatility validation",
+            "replacement_method": "validate_template_artifacts() in validate_macro_synthesis.py"
         }
-
-        # Get all regions with volatility parameters
-        regions = list(volatility_params.keys())
-
-        if len(regions) < 2:
-            validation_results["warnings"].append(
-                "Less than 2 regions configured - cannot validate uniqueness"
-            )
-            return validation_results
-
-        # Check each numeric parameter for identical values across regions
-        numeric_params = ["long_term_mean", "reversion_speed"]
-
-        for param in numeric_params:
-            values = []
-            region_values = {}
-
-            for region in regions:
-                try:
-                    value = float(volatility_params[region][param])
-                    values.append(value)
-                    region_values[region] = value
-                except (KeyError, ValueError):
-                    validation_results["warnings"].append(
-                        f"Missing or invalid {param} for region {region}"
-                    )
-                    continue
-
-            # Analyze parameter variance
-            if len(values) >= 2:
-                min_val = min(values)
-                max_val = max(values)
-                value_range = max_val - min_val
-                relative_variance = value_range / max_val if max_val > 0 else 0
-
-                validation_results["parameter_analysis"][param] = {
-                    "min_value": min_val,
-                    "max_value": max_val,
-                    "range": value_range,
-                    "relative_variance": relative_variance,
-                    "region_values": region_values,
-                }
-
-                # Check for template artifacts (identical or nearly identical values)
-                if relative_variance < configured_tolerance:
-                    validation_results["template_artifacts_detected"] = True
-                    validation_results["issues"].append(
-                        {
-                            "type": "template_artifact",
-                            "parameter": param,
-                            "issue": f"Parameter {param} has insufficient variance across regions ({relative_variance:.3f} < {configured_tolerance})",
-                            "regions_affected": regions,
-                            "values": region_values,
-                        }
-                    )
-
-                # Check for exact duplicates
-                duplicate_groups = {}
-                for region, value in region_values.items():
-                    if value not in duplicate_groups:
-                        duplicate_groups[value] = []
-                    duplicate_groups[value].append(region)
-
-                for value, dup_regions in duplicate_groups.items():
-                    if len(dup_regions) > 1:
-                        validation_results["template_artifacts_detected"] = True
-                        validation_results["issues"].append(
-                            {
-                                "type": "exact_duplicate",
-                                "parameter": param,
-                                "issue": f"Parameter {param} has identical values across multiple regions: {value}",
-                                "regions_affected": dup_regions,
-                                "duplicate_value": value,
-                            }
-                        )
-
-        return validation_results
 
     def suggest_regional_volatility_adjustments(
         self, base_region: str = "US"
     ) -> Dict[str, Dict[str, float]]:
         """
-        Suggest volatility parameter adjustments to eliminate template artifacts
+        DEPRECATED: Volatility adjustments now calculated dynamically in discovery phase
+        
+        This method contained hardcoded template artifacts and is no longer used.
+        Volatility parameters are calculated from real market data in discovery phase.
 
         Args:
             base_region: Base region to use as reference (typically US/AMERICAS)
 
-        Returns:
-            Dictionary of suggested parameter adjustments by region
+        Raises:
+            ConfigurationError: Always raises - method deprecated to prevent hardcoded values
         """
-        self.reload_if_stale()
-
-        # Get current parameters
-        volatility_params = self._config_cache.get("regional_volatility_parameters", {})
-
-        # Historical volatility characteristics by region
-        regional_adjustments = {
-            "US": {"long_term_mean": 19.5, "reversion_speed": 0.15},
-            "AMERICAS": {"long_term_mean": 19.5, "reversion_speed": 0.15},
-            "EUROPE": {"long_term_mean": 22.3, "reversion_speed": 0.18},
-            "ASIA": {"long_term_mean": 21.8, "reversion_speed": 0.12},
-            "EMERGING_MARKETS": {"long_term_mean": 24.2, "reversion_speed": 0.20},
-        }
-
-        suggestions = {}
-
-        for region in volatility_params.keys():
-            if region in regional_adjustments:
-                suggestions[region] = regional_adjustments[region]
-            else:
-                # For unknown regions, suggest values based on economic development level
-                suggestions[region] = {
-                    "long_term_mean": 22.0,  # Moderate default
-                    "reversion_speed": 0.16,  # Moderate default
-                    "note": "Default suggested values - should be calibrated to actual market characteristics",
-                }
-
-        return suggestions
+        raise ConfigurationError(
+            f"Regional volatility adjustments are no longer provided as hardcoded suggestions. "
+            f"Volatility parameters are calculated dynamically from real market data in the discovery phase. "
+            f"This method was deprecated to eliminate template artifacts caused by hardcoded values."
+        )

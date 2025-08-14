@@ -37,6 +37,21 @@ from typing import Any, Dict, List, Optional
 
 import numpy as np
 
+
+class DateTimeEncoder(json.JSONEncoder):
+    """Custom JSON encoder for datetime objects"""
+
+    def default(self, obj):
+        if isinstance(obj, datetime):
+            return obj.isoformat()
+        if isinstance(obj, np.integer):
+            return int(obj)
+        if isinstance(obj, np.floating):
+            return float(obj)
+        if isinstance(obj, np.ndarray):
+            return obj.tolist()
+        return super().default(obj)
+
 # Import configuration manager and schema selector (always required)
 from utils.config_manager import ConfigManager, ConfigurationError
 from utils.schema_selector import create_schema_selector, get_schema_for_region
@@ -273,7 +288,7 @@ class MacroEconomicDiscovery:
         logger.info("✓ Configuration validation completed successfully")
 
     def _validate_api_keys(self) -> None:
-        """Validate API keys are configured for critical services with fail-fast behavior"""
+        """Validate API keys are configured for critical services with enhanced validation"""
         logger.info("Validating API key configuration...")
 
         # Define critical API keys by region
@@ -287,65 +302,45 @@ class MacroEconomicDiscovery:
         # Get region-appropriate keys
         required_keys = critical_api_keys.get(self.region, critical_api_keys["US"])
 
-        missing_keys = []
-        invalid_keys = []
+        validation_errors = []
+        validation_warnings = []
 
         for key_name in required_keys:
             try:
-                # Check if key exists in configuration
-                api_key = self.config.get_api_key(key_name)
-
-                if not api_key or api_key == "your_key_here":
-                    missing_keys.append(key_name)
-                elif api_key == "not_required":
-                    logger.debug(f"✓ API key not required: {key_name}")
-                elif len(api_key) < 10:
-                    missing_keys.append(key_name)
-                elif not self._validate_api_key_format(key_name, api_key):
-                    invalid_keys.append(key_name)
+                # Use enhanced ConfigManager validation with required=True for critical keys
+                api_key = self.config.get_api_key(key_name, required=True)
+                
+                # Get detailed status for logging
+                status = self.config.get_api_key_status(key_name)
+                
+                if status["found"] and status["valid_format"]:
+                    logger.debug(f"✓ API key validated: {key_name} ({status['source']}, {status['obfuscated_value']})")
+                elif status["found"] and not status["valid_format"]:
+                    validation_warnings.append(f"{key_name}: Invalid format ({status['length']} chars)")
+                    logger.warning(f"⚠️ API key format issue: {key_name}")
                 else:
-                    logger.debug(f"✓ API key validated: {key_name}")
+                    validation_errors.append(key_name)
 
+            except ConfigurationError as e:
+                validation_errors.append(f"{key_name}: {str(e)}")
+                logger.error(f"Failed to validate API key {key_name}: {e}")
             except Exception as e:
-                logger.error(f"Failed to retrieve API key {key_name}: {e}")
-                missing_keys.append(key_name)
+                validation_errors.append(f"{key_name}: Unexpected error - {str(e)}")
+                logger.error(f"Unexpected error validating API key {key_name}: {e}")
 
-        # Fail-fast on missing critical keys
-        if missing_keys:
-            error_msg = f"Critical API keys missing or invalid: {missing_keys}. Cannot proceed with institutional-grade analysis."
+        # Report validation results
+        if validation_errors:
+            error_msg = f"Critical API key validation failed: {validation_errors}. Cannot proceed with institutional-grade analysis."
             logger.error(error_msg)
             raise ConfigurationError(error_msg)
 
-        if invalid_keys:
-            error_msg = (
-                f"API keys have invalid format: {invalid_keys}. Check configuration."
-            )
-            logger.error(error_msg)
-            raise ConfigurationError(error_msg)
+        if validation_warnings:
+            logger.warning(f"API key format warnings: {validation_warnings}")
 
         logger.info(
             f"✓ All {len(required_keys)} required API keys validated for {self.region}"
         )
 
-    def _validate_api_key_format(self, key_name: str, api_key: str) -> bool:
-        """Validate API key format for specific services"""
-        # Skip validation for services that don't require API keys
-        if api_key == "not_required":
-            return True
-
-        # Basic format validation
-        if key_name == "FRED_API_KEY":
-            # FRED keys are typically 32 characters alphanumeric
-            return len(api_key) == 32 and api_key.isalnum()
-        elif key_name == "ALPHA_VANTAGE_API_KEY":
-            # Alpha Vantage keys are typically 16 characters alphanumeric
-            return len(api_key) >= 15 and api_key.replace("_", "").isalnum()
-        elif key_name in ["ECB_API_KEY", "IMF_API_KEY"]:
-            # Other API keys should be at least 20 characters
-            return len(api_key) >= 20
-        else:
-            # Generic validation - at least 15 characters
-            return len(api_key) >= 15
 
     def _validate_service_availability(self) -> None:
         """Validate which CLI services are actually available"""
@@ -3311,7 +3306,7 @@ class MacroEconomicDiscovery:
             output_file = self.output_dir / output_filename
 
             with open(output_file, "w", encoding="utf-8") as f:
-                json.dump(discovery_output, f, indent=2, ensure_ascii=False)
+                json.dump(discovery_output, f, indent=2, ensure_ascii=False, cls=DateTimeEncoder)
 
             logger.info(f"Macro-economic discovery output saved to: {output_file}")
 
@@ -4096,7 +4091,7 @@ def main():
     result = discovery.execute_discovery()
 
     if args.output_format == "json":
-        print(json.dumps(result, indent=2))
+        print(json.dumps(result, indent=2, cls=DateTimeEncoder))
     else:
         # Print summary
         print("\n" + "=" * 60)

@@ -70,6 +70,7 @@ class SchemaSelector:
             "EUROPE": "_europe",
             "ASIA": "_asia",
             "GLOBAL": "_global",
+            "AMERICAS": "_americas",
         }
 
         suffix = region_mapping.get(region, "")
@@ -84,7 +85,7 @@ class SchemaSelector:
     def validate_region_support(self, region: str) -> bool:
         """Check if region has schema support"""
         region = region.upper()
-        supported_regions = ["US", "EUROPE", "ASIA", "GLOBAL"]
+        supported_regions = ["US", "EUROPE", "ASIA", "GLOBAL", "AMERICAS"]
         return region in supported_regions
 
     def get_regional_requirements(self, region: str) -> Dict[str, Any]:
@@ -103,6 +104,20 @@ class SchemaSelector:
                     "fred_economic_cli",
                     "imf_cli",
                     "alpha_vantage_cli",
+                ],
+            },
+            "AMERICAS": {
+                "central_bank": "Regional_CBs",
+                "policy_rate_field": "regional_policy_rates",
+                "volatility_index": "VIX",
+                "currency_focus": "Multi_Currency",
+                "main_currency_pair": "USD/Regional",
+                "business_cycle_authority": "Regional",
+                "required_services": [
+                    "fred_economic_cli",
+                    "imf_cli",
+                    "alpha_vantage_cli",
+                    "fmp_cli",
                 ],
             },
             "EUROPE": {
@@ -160,6 +175,12 @@ class SchemaSelector:
                 "central_bank_balance_sheet": "fed_balance_sheet",
                 "volatility_index": "vix_analysis",
                 "currency_analysis": "dxy_analysis",
+            },
+            "AMERICAS": {
+                "policy_rate": "regional_policy_rates",
+                "central_bank_balance_sheet": "regional_balance_sheets",
+                "volatility_index": "vix_analysis",
+                "currency_analysis": "regional_currency_analysis",
             },
             "EUROPE": {
                 "policy_rate": "ecb_deposit_rate",

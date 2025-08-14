@@ -34,8 +34,14 @@ SYNTHESIS ENHANCEMENT PROTOCOL:
    → Extract template compliance gaps and content quality issues
    → Identify professional presentation improvement opportunities
    → Map validation points to document generation enhancements
+   → **CRITICAL**: Parse price_accuracy_blocking_issue and price_consistency_blocking_issue
+   → **CRITICAL**: Extract current_price discrepancies and valuation errors
+   → **CRITICAL**: Identify investment_recommendation inconsistencies
 
 3. Systematic Enhancement Implementation
+   → **PRIORITY 1**: Fix price data inheritance from analysis file (BLOCKING)
+   → **PRIORITY 2**: Fix valuation inheritance from analysis file (BLOCKING)  
+   → **PRIORITY 3**: Fix investment recommendation consistency (BLOCKING)
    → Strengthen template compliance and formatting consistency
    → Enhance content customization and placeholder elimination
    → Improve evidence integration and analytical traceability
@@ -44,6 +50,8 @@ SYNTHESIS ENHANCEMENT PROTOCOL:
 
 4. Quality-Driven Output Generation
    → OVERWRITE original synthesis document with enhancements
+   → **MANDATORY**: Preserve exact price and valuation data from analysis
+   → **MANDATORY**: Maintain investment recommendation consistency
    → Maintain complete discovery + analysis data integration
    → Target synthesis confidence score of 9.5+ for excellence
    → Remove all enhancement artifacts for clean publication output
@@ -78,6 +86,24 @@ INPUT DATA INTEGRATION REQUIREMENTS:
   → CLI service attribution with data quality context
   → Methodology transparency with confidence level documentation
   → Audit trail maintenance for institutional compliance
+
+□ CRITICAL: Price Data Inheritance Validation (BLOCKING)
+  → MANDATORY: Current price must be inherited exactly from analysis file
+  → FAIL-FAST: Price deviation >2% between analysis and synthesis is BLOCKING
+  → Validation: Cross-check current_price field in analysis vs synthesis output
+  → Error Handling: Halt synthesis generation if price inheritance fails
+
+□ CRITICAL: Valuation Data Inheritance Validation (BLOCKING) 
+  → MANDATORY: All valuation estimates must be inherited from analysis file
+  → Required Fields: DCF fair_value, relative_valuation fair_value, technical price_target
+  → FAIL-FAST: Valuation deviation >5% from analysis is BLOCKING
+  → Validation: Verify multi_method_valuation_analysis preservation
+
+□ CRITICAL: Investment Recommendation Inheritance (BLOCKING)
+  → MANDATORY: Investment recommendation must match analysis phase exactly
+  → Required Fields: recommendation, price_target, upside_downside, confidence
+  → FAIL-FAST: Recommendation change without explicit justification is BLOCKING
+  → Validation: Compare investment_recommendation section between phases
 ```
 
 ### Domain-Specific Template Management
@@ -86,11 +112,27 @@ INPUT DATA INTEGRATION REQUIREMENTS:
 ```
 DOMAIN-OPTIMIZED SYNTHESIS TEMPLATES:
 
+CRITICAL TEMPLATE COMPLIANCE REQUIREMENTS:
+- ALWAYS load the exact template file specified in command requirements
+- NEVER deviate from template structure, emojis, or formatting
+- MAINTAIN dashboard-style presentation with tables and KPI matrices
+- PRESERVE all structural elements exactly as defined in templates
+
 1. Fundamental Analysis Synthesis
-   → Investment thesis generation with quantified catalysts
-   → Financial health integration (A-F grading) with supporting evidence
-   → Multi-method valuation synthesis with fair value ranges
-   → Risk assessment integration with probability quantification
+   → **MANDATORY TEMPLATE**: `./templates/analysis/fundamental_analysis_template.md`
+   → **Dashboard Format**: Emojis (🎯, 📊, 🏆), Business Intelligence tables, KPI matrices
+   → **Structure Requirements**: Investment thesis, Financial Health Scorecard, Economic Sensitivity Matrix
+   → **CRITICAL DATA INHERITANCE REQUIREMENTS**:
+     - Current Price: MUST inherit exact price from analysis.investment_recommendation.current_price
+     - Fair Value Estimates: MUST inherit from analysis.multi_method_valuation_analysis
+     - Investment Recommendation: MUST inherit from analysis.investment_recommendation.recommendation
+     - Price Target: MUST inherit from analysis.investment_recommendation.price_target
+     - Financial Grades: MUST inherit from analysis.financial_health_scorecard grades
+   → **BLOCKING VALIDATIONS**: Price deviation >2%, valuation deviation >5%, recommendation changes
+   → Investment thesis generation with quantified catalysts (inherited from analysis)
+   → Financial health integration (A-F grading) with supporting evidence (inherited from analysis)
+   → Multi-method valuation synthesis with fair value ranges (inherited from analysis)
+   → Risk assessment integration with probability quantification (inherited from analysis)
    → Economic context integration with interest rate sensitivity
 
 2. Sector Analysis Synthesis
@@ -165,6 +207,24 @@ INSTITUTIONAL SYNTHESIS FRAMEWORK:
    → Template compliance verification with customization completeness
 ```
 
+## Template Loading and Structure Compliance Protocol
+
+### CRITICAL: Template Structure Preservation
+When generating fundamental analysis documents, you MUST:
+
+1. **READ THE TEMPLATE**: Always read and load `./templates/analysis/fundamental_analysis_template.md`
+2. **FOLLOW EXACTLY**: Follow the template structure precisely - do NOT create your own format
+3. **PRESERVE ELEMENTS**: Keep ALL emojis (🎯, 📊, 🏆), table structures, and section headers
+4. **DASHBOARD FORMAT**: Maintain the Business Intelligence Dashboard, KPI tables, and Economic Sensitivity Matrix
+5. **NO DEVIATION**: Do not use narrative format - stick to the structured dashboard approach
+
+### Template Compliance Validation
+Before generating any fundamental analysis document:
+- Load the fundamental_analysis_template.md file
+- Verify you understand the exact structure requirements
+- Maintain all formatting elements including emojis and tables
+- Use the template as your blueprint, not as a reference
+
 ## Enhanced Synthesis Execution Workflow
 
 ### Synthesis Phase Orchestration:
@@ -176,8 +236,15 @@ INSTITUTIONAL SYNTHESIS FRAMEWORK:
    - Validate temporal alignment and data consistency between discovery and analysis
    - Extract and propagate confidence scores for synthesis quality calculation
    - **FAIL-FAST** if critical discovery or analysis data missing or corrupted
+   - **CRITICAL VALIDATION**: Execute price inheritance validation (≤2% deviation)
+   - **CRITICAL VALIDATION**: Execute valuation inheritance validation (≤5% deviation)
+   - **CRITICAL VALIDATION**: Execute investment recommendation consistency check
+   - **BLOCKING CHECK**: Halt synthesis if any critical validation fails
 
 2. **Template Selection & Preparation**:
+   - **TEMPLATE LOADING**: Load exact template file specified in command (e.g., ./templates/analysis/fundamental_analysis_template.md)
+   - **STRUCTURE COMPLIANCE**: Follow template structure exactly - NO modifications to format, emojis, or sections
+   - **DASHBOARD FORMAT**: Maintain all dashboard elements including KPI tables and matrices
    - **DOMAIN-AWARE SELECTION**: Identify appropriate template for analysis type
    - Load domain-specific template with institutional formatting requirements
    - Prepare template customization framework for placeholder elimination
@@ -186,7 +253,9 @@ INSTITUTIONAL SYNTHESIS FRAMEWORK:
    - **MAINTAIN QUALITY CONTEXT**: Preserve upstream confidence and quality metrics
 
 3. **Document Generation & Content Integration**:
-   - **SYNTHESIS EXECUTION**: Generate publication-ready markdown document
+   - **TEMPLATE STRUCTURE**: Follow loaded template structure EXACTLY - preserve all emojis, headers, tables
+   - **SYNTHESIS EXECUTION**: Generate publication-ready markdown document using template format
+   - **DASHBOARD ELEMENTS**: Maintain Business Intelligence Dashboard, KPI tables, Economic Sensitivity Matrix
    - Integrate discovery and analysis data with professional narrative flow
    - Apply content customization to eliminate generic placeholders
    - **EVIDENCE INTEGRATION**: Link all quantitative claims to analytical foundation
