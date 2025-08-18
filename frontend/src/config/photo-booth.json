@@ -114,5 +114,79 @@
     "render_timeout": 15000,
     "retry_attempts": 3,
     "cache_bust": false
+  },
+  "data_dependencies": {
+    "enabled": true,
+    "config_path": "./chart-data-dependencies.json",
+    "show_status_indicators": true,
+    "allow_manual_refresh": true,
+    "refresh_policies": {
+      "auto_refresh_on_stale": false,
+      "refresh_on_dashboard_load": true,
+      "background_monitoring": true,
+      "file_watching": true
+    },
+    "status_display": {
+      "show_compact_indicators": true,
+      "show_detailed_dashboard": false,
+      "alert_on_stale_data": true,
+      "alert_threshold_hours": 12
+    },
+    "integration": {
+      "cli_services_enabled": true,
+      "cli_rate_limiting": true,
+      "file_monitoring": true,
+      "cache_coordination": true
+    }
+  },
+  "dashboard_data_mapping": {
+    "trading_performance": {
+      "primary_charts": [
+        "portfolio-value-comparison",
+        "returns-comparison", 
+        "live-signals-equity-curve",
+        "trade-pnl-waterfall"
+      ],
+      "data_freshness_requirements": {
+        "warning_threshold_hours": 6,
+        "error_threshold_hours": 24
+      },
+      "refresh_priority": "high"
+    },
+    "portfolio_analysis": {
+      "primary_charts": [
+        "portfolio-drawdowns",
+        "open-positions-pnl-timeseries",
+        "closed-positions-pnl-timeseries"
+      ],
+      "data_freshness_requirements": {
+        "warning_threshold_hours": 12,
+        "error_threshold_hours": 48
+      },
+      "refresh_priority": "medium"
+    },
+    "portfolio_history_portrait": {
+      "primary_charts": [
+        "trade-pnl-waterfall",
+        "closed-positions-pnl-timeseries",
+        "live-signals-weekly-candlestick"
+      ],
+      "data_freshness_requirements": {
+        "warning_threshold_hours": 24,
+        "error_threshold_hours": 72
+      },
+      "refresh_priority": "low"
+    },
+    "market_overview": {
+      "primary_charts": [
+        "live-signals-benchmark-comparison",
+        "apple-stock"
+      ],
+      "data_freshness_requirements": {
+        "warning_threshold_hours": 2,
+        "error_threshold_hours": 8
+      },
+      "refresh_priority": "high"
+    }
   }
 }

@@ -197,7 +197,7 @@ class ChartDataService {
   async fetchAppleStockData(signal?: AbortSignal): Promise<StockDataRow[]> {
     try {
       const response = await fetch(
-        "https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv",
+        "/data/raw/stocks/AAPL/daily.csv",
         { signal },
       );
 

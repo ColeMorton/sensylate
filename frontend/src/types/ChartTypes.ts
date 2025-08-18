@@ -97,11 +97,14 @@ export interface OpenPositionPnLDataRow {
   Position_UUID: string;
 }
 
-// Legacy stock data structure (for Apple stock chart)
+// Stock data structure (standard format)
 export interface StockDataRow {
-  Date: string;
-  "AAPL.High": string;
-  "AAPL.Low": string;
+  date: string;
+  open: string;
+  high: string;
+  low: string;
+  close: string;
+  volume: string;
   [key: string]: string;
 }
 

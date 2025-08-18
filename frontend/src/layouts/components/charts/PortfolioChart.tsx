@@ -503,18 +503,10 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
           {
             type: "scatter",
             mode: "lines",
-            x: unpack(stockRows, "Date"),
-            y: unpack(stockRows, "AAPL.High"),
+            x: unpack(stockRows, "date"),
+            y: unpack(stockRows, "close"),
             line: { color: colors.tertiary, width: 2 },
-            name: "AAPL High",
-          },
-          {
-            type: "scatter",
-            mode: "lines",
-            x: unpack(stockRows, "Date"),
-            y: unpack(stockRows, "AAPL.Low"),
-            line: { color: colors.neutral, width: 2 },
-            name: "AAPL Low",
+            name: "Apple Price",
           },
         ];
       }
@@ -1002,7 +994,7 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
 
       switch (chartType) {
         case "apple-stock":
-          return "Apple Stock Price Range (Custom Range)";
+          return "Apple Price";
         case "portfolio-value-comparison":
           return "Portfolio Value Comparison";
         case "returns-comparison":
@@ -1092,11 +1084,9 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
       },
       xaxis: {
         range:
-          chartType === "apple-stock"
-            ? ["2016-07-01", "2016-12-31"]
-            : chartType === "trade-pnl-waterfall"
-              ? undefined
-              : undefined,
+          chartType === "trade-pnl-waterfall"
+            ? undefined
+            : undefined,
         type:
           chartType === "trade-pnl-waterfall"
             ? "category"
@@ -1127,10 +1117,6 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
       },
       yaxis: {
         autorange: true,
-        range:
-          chartType === "apple-stock"
-            ? [86.8700008333, 138.870004167]
-            : undefined,
         type: "linear",
         title: {
           text: getYAxisTitle(),

@@ -2,16 +2,20 @@
 import Base from "@/layouts/Base.astro";
 import GalaxyAnimation from "@/helpers/GalaxyAnimation";
 import DynamicHomepageHook from "@/helpers/DynamicHomepageHook";
+import ScrollFadeHandler from "@/helpers/ScrollFadeHandler";
 ---
 
 <Base>
   <!-- Galaxy Animation Background -->
   <section
+    id="main-galaxy-section"
     class="bg-body dark:bg-darkmode-body relative h-screen overflow-hidden"
   >
-    <GalaxyAnimation client:only="react" className="absolute inset-0" />
+    <div id="galaxy-animation">
+      <GalaxyAnimation client:only="react" className="absolute inset-0" />
+    </div>
     <!-- Optional overlay content can be added here -->
-    <div class="absolute inset-0 z-10 flex items-center justify-center">
+    <div id="text-content" class="absolute inset-0 z-10 flex items-center justify-center">
       <DynamicHomepageHook
         client:only="react"
         className="text-text text-h1-sm md:text-h1 text-center font-bold dark:text-white"
@@ -19,6 +23,14 @@ import DynamicHomepageHook from "@/helpers/DynamicHomepageHook";
       />
     </div>
   </section>
+  
+  <!-- Scroll fade handler -->
+  <ScrollFadeHandler 
+    client:only="react" 
+    galaxyId="galaxy-animation"
+    textId="text-content"
+    fadeDistance={800} 
+  />
 </Base>
 
 <style>
@@ -28,3 +40,4 @@ import DynamicHomepageHook from "@/helpers/DynamicHomepageHook";
     height: 100vh;
   }
 </style>
+
