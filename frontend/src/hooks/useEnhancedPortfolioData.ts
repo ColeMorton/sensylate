@@ -1,6 +1,6 @@
 /**
  * Enhanced Portfolio Data Hooks
- * 
+ *
  * React hooks that provide data dependency management, refresh capabilities,
  * and data status information for chart components.
  */
@@ -23,8 +23,7 @@ import type {
   ChartRefreshCapability,
 } from "@/types/DataDependencyTypes";
 
-import type { EnhancedDataServiceResponse } from "@/services/EnhancedChartDataService";
-import { enhancedChartDataService } from "@/services/EnhancedChartDataService";
+import { enhancedChartDataService, type EnhancedDataServiceResponse } from "@/services/EnhancedChartDataService";
 
 /**
  * Enhanced data service response with refresh capabilities
@@ -47,17 +46,20 @@ export interface UseEnhancedDataResponse<T> {
 function useEnhancedData<T>(
   chartType: ChartType,
   dataFetcher: () => EnhancedDataServiceResponse<T>,
-  dependencies: any[] = []
+  dependencies: any[] = [],
 ): UseEnhancedDataResponse<T> {
   const [data, setData] = useState<T>({} as T);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [dataStatus, setDataStatus] = useState<DataSourceStatus>();
-  const [refreshCapability, setRefreshCapability] = useState<ChartRefreshCapability>();
+  const [refreshCapability, setRefreshCapability] =
+    useState<ChartRefreshCapability>();
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [lastRefreshed, setLastRefreshed] = useState<number>();
-  
-  const refreshFunctionRef = useRef<(() => Promise<DataRefreshResult>) | undefined>();
+
+  const refreshFunctionRef = useRef<
+    (() => Promise<DataRefreshResult>) | undefined
+  >();
   const unsubscribeRef = useRef<(() => void) | undefined>();
 
   // Enhanced refresh function with loading state management
@@ -92,11 +94,11 @@ function useEnhancedData<T>(
 
     try {
       const result = await refreshFunctionRef.current();
-      
+
       if (result.success) {
         setLastRefreshed(Date.now());
         setDataStatus(result.status);
-        
+
         // Trigger data reload
         const response = dataFetcher();
         setData(response.data);
@@ -108,9 +110,10 @@ function useEnhancedData<T>(
 
       return result;
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : "Unknown refresh error";
+      const errorMessage =
+        err instanceof Error ? err.message : "Unknown refresh error";
       setError(errorMessage);
-      
+
       return {
         success: false,
         status: dataStatus || {
@@ -140,16 +143,19 @@ function useEnhancedData<T>(
 
   // Subscribe to refresh notifications
   useEffect(() => {
-    const unsubscribe = enhancedChartDataService.subscribeToRefresh(chartType, () => {
-      // Data was refreshed externally, reload
-      const response = dataFetcher();
-      setData(response.data);
-      setError(response.error);
-      setDataStatus(response.dataStatus);
-      setRefreshCapability(response.refreshCapability);
-      refreshFunctionRef.current = response.refresh;
-      setLastRefreshed(Date.now());
-    });
+    const unsubscribe = enhancedChartDataService.subscribeToRefresh(
+      chartType,
+      () => {
+        // Data was refreshed externally, reload
+        const response = dataFetcher();
+        setData(response.data);
+        setError(response.error);
+        setDataStatus(response.dataStatus);
+        setRefreshCapability(response.refreshCapability);
+        refreshFunctionRef.current = response.refresh;
+        setLastRefreshed(Date.now());
+      },
+    );
 
     unsubscribeRef.current = unsubscribe;
     return unsubscribe;
@@ -190,18 +196,22 @@ function useEnhancedData<T>(
 /**
  * Enhanced Apple stock data hook with dependency management
  */
-export function useEnhancedAppleStockData(): UseEnhancedDataResponse<StockDataRow[]> {
+export function useEnhancedAppleStockData(): UseEnhancedDataResponse<
+  StockDataRow[]
+> {
   return useEnhancedData(
     "apple-stock",
     () => enhancedChartDataService.useAppleStockData(),
-    []
+    [],
   );
 }
 
 /**
  * Enhanced portfolio data hook with dependency management
  */
-export function useEnhancedPortfolioData(chartType: ChartType): UseEnhancedDataResponse<{
+export function useEnhancedPortfolioData(
+  chartType: ChartType,
+): UseEnhancedDataResponse<{
   multiStrategy?: PortfolioDataRow[];
   buyHold?: PortfolioDataRow[];
   drawdowns?: PortfolioDataRow[];
@@ -209,62 +219,72 @@ export function useEnhancedPortfolioData(chartType: ChartType): UseEnhancedDataR
   return useEnhancedData(
     chartType,
     () => enhancedChartDataService.usePortfolioData(chartType),
-    [chartType]
+    [chartType],
   );
 }
 
 /**
  * Enhanced live signals data hook with dependency management
  */
-export function useEnhancedLiveSignalsData(): UseEnhancedDataResponse<LiveSignalsDataRow[]> {
+export function useEnhancedLiveSignalsData(): UseEnhancedDataResponse<
+  LiveSignalsDataRow[]
+> {
   return useEnhancedData(
     "live-signals-equity-curve",
     () => enhancedChartDataService.useLiveSignalsData(),
-    []
+    [],
   );
 }
 
 /**
  * Enhanced trade history data hook with dependency management
  */
-export function useEnhancedTradeHistoryData(): UseEnhancedDataResponse<TradeHistoryDataRow[]> {
+export function useEnhancedTradeHistoryData(): UseEnhancedDataResponse<
+  TradeHistoryDataRow[]
+> {
   return useEnhancedData(
     "trade-pnl-waterfall",
     () => enhancedChartDataService.useTradeHistoryData(),
-    []
+    [],
   );
 }
 
 /**
  * Enhanced open positions PnL data hook with dependency management
  */
-export function useEnhancedOpenPositionsPnLData(): UseEnhancedDataResponse<OpenPositionPnLDataRow[]> {
+export function useEnhancedOpenPositionsPnLData(): UseEnhancedDataResponse<
+  OpenPositionPnLDataRow[]
+> {
   return useEnhancedData(
     "open-positions-pnl-timeseries",
     () => enhancedChartDataService.useOpenPositionsPnLData(),
-    []
+    [],
   );
 }
 
 /**
  * Enhanced closed positions PnL data hook with dependency management
  */
-export function useEnhancedClosedPositionsPnLData(): UseEnhancedDataResponse<ClosedPositionPnLDataRow[]> {
+export function useEnhancedClosedPositionsPnLData(): UseEnhancedDataResponse<
+  ClosedPositionPnLDataRow[]
+> {
   return useEnhancedData(
     "closed-positions-pnl-timeseries",
     () => enhancedChartDataService.useClosedPositionsPnLData(),
-    []
+    [],
   );
 }
 
 /**
  * Enhanced live signals benchmark data hook with dependency management
  */
-export function useEnhancedLiveSignalsBenchmarkData(): UseEnhancedDataResponse<LiveSignalsBenchmarkDataRow[]> {
+export function useEnhancedLiveSignalsBenchmarkData(): UseEnhancedDataResponse<
+  LiveSignalsBenchmarkDataRow[]
+> {
   return useEnhancedData(
     "live-signals-benchmark-comparison",
     () => enhancedChartDataService.useLiveSignalsBenchmarkData(),
-    []
+    [],
   );
 }
 
@@ -272,7 +292,9 @@ export function useEnhancedLiveSignalsBenchmarkData(): UseEnhancedDataResponse<L
  * Hook for managing data status across multiple chart types
  */
 export function useDataStatusManager() {
-  const [allStatuses, setAllStatuses] = useState<Map<ChartType, DataSourceStatus>>(new Map());
+  const [allStatuses, setAllStatuses] = useState<
+    Map<ChartType, DataSourceStatus>
+  >(new Map());
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -317,19 +339,22 @@ export function useDataStatusManager() {
     return staleCharts;
   }, [allStatuses]);
 
-  const refreshAll = useCallback(async (priority: "low" | "normal" | "high" = "normal") => {
-    const refreshPromises: Promise<DataRefreshResult>[] = [];
-    
-    allStatuses.forEach((status, chartType) => {
-      if (enhancedChartDataService.canRefreshChart(chartType)) {
-        refreshPromises.push(
-          enhancedChartDataService.refreshChartData(chartType, { priority })
-        );
-      }
-    });
+  const refreshAll = useCallback(
+    async (priority: "low" | "normal" | "high" = "normal") => {
+      const refreshPromises: Promise<DataRefreshResult>[] = [];
 
-    return Promise.allSettled(refreshPromises);
-  }, [allStatuses]);
+      allStatuses.forEach((status, chartType) => {
+        if (enhancedChartDataService.canRefreshChart(chartType)) {
+          refreshPromises.push(
+            enhancedChartDataService.refreshChartData(chartType, { priority }),
+          );
+        }
+      });
+
+      return Promise.allSettled(refreshPromises);
+    },
+    [allStatuses],
+  );
 
   return {
     allStatuses,
@@ -345,37 +370,49 @@ export function useDataStatusManager() {
  */
 export function useChartDataManager(chartType: ChartType) {
   const [dataStatus, setDataStatus] = useState<DataSourceStatus>();
-  const [refreshCapability, setRefreshCapability] = useState<ChartRefreshCapability>();
+  const [refreshCapability, setRefreshCapability] =
+    useState<ChartRefreshCapability>();
   const [isRefreshing, setIsRefreshing] = useState(false);
 
   useEffect(() => {
     const updateStatus = () => {
       setDataStatus(enhancedChartDataService.getDataStatus(chartType));
-      setRefreshCapability(enhancedChartDataService.getRefreshCapability(chartType));
+      setRefreshCapability(
+        enhancedChartDataService.getRefreshCapability(chartType),
+      );
     };
 
     updateStatus();
-    
+
     // Subscribe to refresh notifications
-    const unsubscribe = enhancedChartDataService.subscribeToRefresh(chartType, updateStatus);
-    
+    const unsubscribe = enhancedChartDataService.subscribeToRefresh(
+      chartType,
+      updateStatus,
+    );
+
     return unsubscribe;
   }, [chartType]);
 
-  const refresh = useCallback(async (options?: {
-    force?: boolean;
-    priority?: "low" | "normal" | "high";
-  }) => {
-    setIsRefreshing(true);
-    
-    try {
-      const result = await enhancedChartDataService.refreshChartData(chartType, options);
-      setDataStatus(result.status);
-      return result;
-    } finally {
-      setIsRefreshing(false);
-    }
-  }, [chartType]);
+  const refresh = useCallback(
+    async (options?: {
+      force?: boolean;
+      priority?: "low" | "normal" | "high";
+    }) => {
+      setIsRefreshing(true);
+
+      try {
+        const result = await enhancedChartDataService.refreshChartData(
+          chartType,
+          options,
+        );
+        setDataStatus(result.status);
+        return result;
+      } finally {
+        setIsRefreshing(false);
+      }
+    },
+    [chartType],
+  );
 
   const getDependencyInfo = useCallback(() => {
     return enhancedChartDataService.getDependencyInfo(chartType);

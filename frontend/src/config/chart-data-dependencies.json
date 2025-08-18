@@ -396,11 +396,11 @@
       "enabled": true,
       "timezone": "America/New_York",
       "schedule": [
-        {"day": "monday", "start": "09:30", "end": "16:00"},
-        {"day": "tuesday", "start": "09:30", "end": "16:00"},
-        {"day": "wednesday", "start": "09:30", "end": "16:00"},
-        {"day": "thursday", "start": "09:30", "end": "16:00"},
-        {"day": "friday", "start": "09:30", "end": "16:00"}
+        { "day": "monday", "start": "09:30", "end": "16:00" },
+        { "day": "tuesday", "start": "09:30", "end": "16:00" },
+        { "day": "wednesday", "start": "09:30", "end": "16:00" },
+        { "day": "thursday", "start": "09:30", "end": "16:00" },
+        { "day": "friday", "start": "09:30", "end": "16:00" }
       ]
     },
     "extended-hours": {
@@ -408,20 +408,18 @@
       "enabled": false,
       "timezone": "America/New_York",
       "schedule": [
-        {"day": "monday", "start": "04:00", "end": "20:00"},
-        {"day": "tuesday", "start": "04:00", "end": "20:00"},
-        {"day": "wednesday", "start": "04:00", "end": "20:00"},
-        {"day": "thursday", "start": "04:00", "end": "20:00"},
-        {"day": "friday", "start": "04:00", "end": "20:00"}
+        { "day": "monday", "start": "04:00", "end": "20:00" },
+        { "day": "tuesday", "start": "04:00", "end": "20:00" },
+        { "day": "wednesday", "start": "04:00", "end": "20:00" },
+        { "day": "thursday", "start": "04:00", "end": "20:00" },
+        { "day": "friday", "start": "04:00", "end": "20:00" }
       ]
     },
     "24-7": {
       "description": "Continuous updates for cryptocurrency and global markets",
       "enabled": true,
       "timezone": "UTC",
-      "schedule": [
-        {"day": "all", "start": "00:00", "end": "23:59"}
-      ]
+      "schedule": [{ "day": "all", "start": "00:00", "end": "23:59" }]
     }
   }
 }

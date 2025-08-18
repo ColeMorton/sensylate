@@ -35,19 +35,24 @@ describe("DataStatusIndicator Component", () => {
 
   beforeEach(async () => {
     vi.clearAllMocks();
-    
+
     // Get mocked function
     const module = await import("@/hooks/useEnhancedPortfolioData");
     mockUseChartDataManager = vi.mocked(module.useChartDataManager);
-    
+
     // Setup default mock implementation
     mockUseChartDataManager.mockReturnValue(getBaseReturn());
   });
 
   describe("Basic Rendering", () => {
     it("renders available status indicator", () => {
-      render(<DataStatusIndicator chartType="live-signals-equity-curve" compact={true} />);
-      
+      render(
+        <DataStatusIndicator
+          chartType="live-signals-equity-curve"
+          compact={true}
+        />,
+      );
+
       // Should show green indicator for available status
       const indicator = screen.getByTitle("Data Available");
       expect(indicator).toBeInTheDocument();
@@ -64,8 +69,13 @@ describe("DataStatusIndicator Component", () => {
         },
       });
 
-      render(<DataStatusIndicator chartType="live-signals-equity-curve" compact={true} />);
-      
+      render(
+        <DataStatusIndicator
+          chartType="live-signals-equity-curve"
+          compact={true}
+        />,
+      );
+
       const indicator = screen.getByTitle("Data Stale");
       expect(indicator).toBeInTheDocument();
       expect(indicator).toHaveClass("text-yellow-600");
@@ -81,8 +91,13 @@ describe("DataStatusIndicator Component", () => {
         },
       });
 
-      render(<DataStatusIndicator chartType="live-signals-equity-curve" compact={true} />);
-      
+      render(
+        <DataStatusIndicator
+          chartType="live-signals-equity-curve"
+          compact={true}
+        />,
+      );
+
       const indicator = screen.getByTitle("Data Error");
       expect(indicator).toBeInTheDocument();
       expect(indicator).toHaveClass("text-red-600");
@@ -92,16 +107,16 @@ describe("DataStatusIndicator Component", () => {
   describe("Compact Mode", () => {
     it("renders compact indicator with refresh button", () => {
       render(
-        <DataStatusIndicator 
-          chartType="live-signals-equity-curve" 
-          compact={true} 
-          showRefreshButton={true} 
-        />
+        <DataStatusIndicator
+          chartType="live-signals-equity-curve"
+          compact={true}
+          showRefreshButton={true}
+        />,
       );
-      
+
       // Should show compact status symbol
       expect(screen.getByTitle("Data Available")).toBeInTheDocument();
-      
+
       // Should show refresh button
       const refreshButton = screen.getByTitle("Refresh data");
       expect(refreshButton).toBeInTheDocument();
@@ -110,13 +125,13 @@ describe("DataStatusIndicator Component", () => {
 
     it("hides refresh button when showRefreshButton is false", () => {
       render(
-        <DataStatusIndicator 
-          chartType="live-signals-equity-curve" 
-          compact={true} 
-          showRefreshButton={false} 
-        />
+        <DataStatusIndicator
+          chartType="live-signals-equity-curve"
+          compact={true}
+          showRefreshButton={false}
+        />,
       );
-      
+
       expect(screen.queryByTitle("Refresh data")).not.toBeInTheDocument();
     });
 
@@ -132,13 +147,13 @@ describe("DataStatusIndicator Component", () => {
       });
 
       render(
-        <DataStatusIndicator 
-          chartType="apple-stock" 
-          compact={true} 
-          showRefreshButton={true} 
-        />
+        <DataStatusIndicator
+          chartType="apple-stock"
+          compact={true}
+          showRefreshButton={true}
+        />,
       );
-      
+
       // Refresh button should not be present for non-refreshable sources
       expect(screen.queryByTitle("Refresh data")).not.toBeInTheDocument();
     });
@@ -146,27 +161,37 @@ describe("DataStatusIndicator Component", () => {
 
   describe("Full Mode", () => {
     it("renders full status display", () => {
-      render(<DataStatusIndicator chartType="live-signals-equity-curve" compact={false} />);
-      
+      render(
+        <DataStatusIndicator
+          chartType="live-signals-equity-curve"
+          compact={false}
+        />,
+      );
+
       // Should show status label
       expect(screen.getByText("Data Available")).toBeInTheDocument();
-      
+
       // Should show age information
       expect(screen.getByText(/Updated 1h ago/)).toBeInTheDocument();
-      
+
       // Should show refresh button
       expect(screen.getByText("Refresh")).toBeInTheDocument();
-      
+
       // Should show details button
       expect(screen.getByText("Details")).toBeInTheDocument();
     });
 
     it("shows detailed information when expanded", () => {
-      render(<DataStatusIndicator chartType="live-signals-equity-curve" compact={false} />);
-      
+      render(
+        <DataStatusIndicator
+          chartType="live-signals-equity-curve"
+          compact={false}
+        />,
+      );
+
       // Click details button
       fireEvent.click(screen.getByText("Details"));
-      
+
       // Should show detailed information
       expect(screen.getByText("Source:")).toBeInTheDocument();
       expect(screen.getByText("manual")).toBeInTheDocument();
@@ -185,11 +210,16 @@ describe("DataStatusIndicator Component", () => {
         },
       });
 
-      render(<DataStatusIndicator chartType="live-signals-equity-curve" compact={false} />);
-      
+      render(
+        <DataStatusIndicator
+          chartType="live-signals-equity-curve"
+          compact={false}
+        />,
+      );
+
       // Click details button
       fireEvent.click(screen.getByText("Details"));
-      
+
       // Should show error information
       expect(screen.getByText("Error:")).toBeInTheDocument();
       expect(screen.getByText("Network timeout error")).toBeInTheDocument();
@@ -204,10 +234,15 @@ describe("DataStatusIndicator Component", () => {
         refresh: mockRefresh,
       });
 
-      render(<DataStatusIndicator chartType="live-signals-equity-curve" compact={false} />);
-      
+      render(
+        <DataStatusIndicator
+          chartType="live-signals-equity-curve"
+          compact={false}
+        />,
+      );
+
       fireEvent.click(screen.getByText("Refresh"));
-      
+
       expect(mockRefresh).toHaveBeenCalledWith({ priority: "high" });
     });
 
@@ -217,11 +252,16 @@ describe("DataStatusIndicator Component", () => {
         isRefreshing: true,
       });
 
-      render(<DataStatusIndicator chartType="live-signals-equity-curve" compact={false} />);
-      
+      render(
+        <DataStatusIndicator
+          chartType="live-signals-equity-curve"
+          compact={false}
+        />,
+      );
+
       // Should show refreshing text
       expect(screen.getByText("Refreshing...")).toBeInTheDocument();
-      
+
       // Button should be disabled
       const refreshButton = screen.getByText("Refreshing...");
       expect(refreshButton).toBeDisabled();
@@ -233,8 +273,13 @@ describe("DataStatusIndicator Component", () => {
         isRefreshing: true,
       });
 
-      render(<DataStatusIndicator chartType="live-signals-equity-curve" compact={true} />);
-      
+      render(
+        <DataStatusIndicator
+          chartType="live-signals-equity-curve"
+          compact={true}
+        />,
+      );
+
       // Should show refreshing indicator
       const refreshButton = screen.getByTitle("Refresh data");
       expect(refreshButton).toHaveTextContent("...");
@@ -246,7 +291,7 @@ describe("DataStatusIndicator Component", () => {
     it("calls useChartDataManager with correct chart type", () => {
       const chartType: ChartType = "trade-pnl-waterfall";
       render(<DataStatusIndicator chartType={chartType} />);
-      
+
       expect(mockUseChartDataManager).toHaveBeenCalledWith(chartType);
     });
 
@@ -256,8 +301,10 @@ describe("DataStatusIndicator Component", () => {
         dataStatus: undefined,
       });
 
-      const { container } = render(<DataStatusIndicator chartType="live-signals-equity-curve" />);
-      
+      const { container } = render(
+        <DataStatusIndicator chartType="live-signals-equity-curve" />,
+      );
+
       // Should render nothing when no data status
       expect(container.firstChild).toBeNull();
     });
@@ -274,8 +321,13 @@ describe("DataStatusIndicator Component", () => {
         },
       });
 
-      render(<DataStatusIndicator chartType="live-signals-equity-curve" compact={false} />);
-      
+      render(
+        <DataStatusIndicator
+          chartType="live-signals-equity-curve"
+          compact={false}
+        />,
+      );
+
       expect(screen.getByText(/Updated 30m ago/)).toBeInTheDocument();
     });
 
@@ -289,8 +341,13 @@ describe("DataStatusIndicator Component", () => {
         },
       });
 
-      render(<DataStatusIndicator chartType="live-signals-equity-curve" compact={false} />);
-      
+      render(
+        <DataStatusIndicator
+          chartType="live-signals-equity-curve"
+          compact={false}
+        />,
+      );
+
       expect(screen.getByText(/Updated 2d ago/)).toBeInTheDocument();
     });
 
@@ -303,8 +360,13 @@ describe("DataStatusIndicator Component", () => {
         },
       });
 
-      render(<DataStatusIndicator chartType="live-signals-equity-curve" compact={false} />);
-      
+      render(
+        <DataStatusIndicator
+          chartType="live-signals-equity-curve"
+          compact={false}
+        />,
+      );
+
       expect(screen.getByText("No update info")).toBeInTheDocument();
     });
   });

@@ -196,10 +196,9 @@ class ChartDataService {
   // Data fetching methods
   async fetchAppleStockData(signal?: AbortSignal): Promise<StockDataRow[]> {
     try {
-      const response = await fetch(
-        "/data/raw/stocks/AAPL/daily.csv",
-        { signal },
-      );
+      const response = await fetch("/data/raw/stocks/AAPL/daily.csv", {
+        signal,
+      });
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);

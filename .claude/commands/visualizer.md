@@ -1,9 +1,9 @@
 # Visualizer - Visual Systems Interface Agent
 
-**Command Classification**: 🎯 **Interface Agent**  
-**Knowledge Domain**: `visual-systems-orchestration`  
-**Ecosystem Version**: `1.0.0` *(Created: 2025-08-14)*  
-**Authority Level**: **Interface to Visual System Specifications**  
+**Command Classification**: 🎯 **Interface Agent**
+**Knowledge Domain**: `visual-systems-orchestration`
+**Ecosystem Version**: `1.0.0` *(Created: 2025-08-14)*
+**Authority Level**: **Interface to Visual System Specifications**
 
 ## Agent Overview
 
@@ -15,7 +15,7 @@ The Visualizer agent serves as the intelligent interface between users and Sensy
 
 ### 🎯 Primary Visual Systems
 - **Photo Booth System** → `docs/04-photo-booth-dashboard.md` (1,265 lines - Complete specification)
-- **Dashboard Generation** → `docs/04-dashboard-generation.md` (Dashboard creation workflows)  
+- **Dashboard Generation** → `docs/04-dashboard-generation.md` (Dashboard creation workflows)
 - **Testing Infrastructure** → `docs/04-photo-booth-testing.md` (Quality assurance standards)
 - **Data Architecture** → `docs/02-data-architecture.md` (Pipeline specifications)
 
@@ -86,7 +86,7 @@ cd frontend && npm run test:photo-booth:unit
 3. **Configure Export Settings**
    - Dashboard: Select from available options
    - Theme: Light/Dark
-   - Format: PNG/SVG/Both  
+   - Format: PNG/SVG/Both
    - Aspect Ratio: 16:9/4:3/3:4
    - DPI: 150/300/600
 
@@ -180,7 +180,7 @@ cd frontend && npm run test:photo-booth:unit
    ```bash
    # Development mode
    cd frontend && npm run test:photo-booth:e2e:dev
-   
+
    # Production mode
    cd frontend && npm run test:photo-booth:e2e:prod
    ```
@@ -201,7 +201,7 @@ cd frontend && npm run test:photo-booth:unit
 #### Photo Booth + Chart Integration
 When integrating new chart types with photo booth:
 1. **Chart Implementation**: Follow chart creation workflow above
-2. **Dashboard Configuration**: Add chart to dashboard layouts  
+2. **Dashboard Configuration**: Add chart to dashboard layouts
 3. **Export Testing**: Verify chart renders in photo booth exports
 4. **Theme Validation**: Test both light/dark mode rendering
 5. **Performance Check**: Ensure loading times meet standards
@@ -229,39 +229,39 @@ When adding export formats or settings:
 ### Issue Categories → Specification References
 
 #### 🔴 Photo Booth Not Loading
-**Symptoms**: Blank page, loading forever, JavaScript errors  
-**Diagnostic**: Check browser console, verify server status  
-**Reference**: `docs/04-photo-booth-dashboard.md` → Section 8.6 "Quality Standards"  
+**Symptoms**: Blank page, loading forever, JavaScript errors
+**Diagnostic**: Check browser console, verify server status
+**Reference**: `docs/04-photo-booth-dashboard.md` → Section 8.6 "Quality Standards"
 **Implementation**: `frontend/src/layouts/shortcodes/PhotoBoothDisplay.tsx:43-100`
 
-#### 🔴 Charts Not Rendering  
-**Symptoms**: Empty chart containers, data loading errors  
-**Diagnostic**: Check CSV data availability, inspect network requests  
-**Reference**: `docs/04-photo-booth-dashboard.md` → Section 4 "Chart Data Solutions"  
+#### 🔴 Charts Not Rendering
+**Symptoms**: Empty chart containers, data loading errors
+**Diagnostic**: Check CSV data availability, inspect network requests
+**Reference**: `docs/04-photo-booth-dashboard.md` → Section 4 "Chart Data Solutions"
 **Implementation**: `frontend/src/services/ChartDataService.ts:38-50`
 
 #### 🔴 Export Pipeline Failures
-**Symptoms**: Export timeouts, Python errors, missing files  
-**Diagnostic**: Check Python environment, server accessibility  
-**Reference**: `docs/04-photo-booth-dashboard.md` → Section 6 "Image Export System"  
+**Symptoms**: Export timeouts, Python errors, missing files
+**Diagnostic**: Check Python environment, server accessibility
+**Reference**: `docs/04-photo-booth-dashboard.md` → Section 6 "Image Export System"
 **Implementation**: `scripts/photo_booth_generator.py:27-50`
 
 #### 🔴 Theme Issues
-**Symptoms**: Inconsistent styling, dark mode not working  
-**Diagnostic**: Check CSS custom properties, DOM class application  
-**Reference**: `docs/04-photo-booth-dashboard.md` → Section 5.5 "Theme Integration"  
+**Symptoms**: Inconsistent styling, dark mode not working
+**Diagnostic**: Check CSS custom properties, DOM class application
+**Reference**: `docs/04-photo-booth-dashboard.md` → Section 5.5 "Theme Integration"
 **Implementation**: `frontend/src/utils/chartTheme.ts:454-468`
 
 #### 🔴 Dashboard Layout Problems
-**Symptoms**: Broken layouts, responsive issues, misaligned charts  
-**Diagnostic**: Verify layout mappings, test breakpoints  
-**Reference**: `docs/04-photo-booth-dashboard.md` → Section 3.2 "Dashboard Layout System"  
+**Symptoms**: Broken layouts, responsive issues, misaligned charts
+**Diagnostic**: Verify layout mappings, test breakpoints
+**Reference**: `docs/04-photo-booth-dashboard.md` → Section 3.2 "Dashboard Layout System"
 **Implementation**: `frontend/src/services/dashboardLoader.ts:223-231`
 
 #### 🔴 Performance Issues
-**Symptoms**: Slow loading, memory leaks, export timeouts  
-**Diagnostic**: Check cache usage, monitor resource consumption  
-**Reference**: `docs/04-photo-booth-dashboard.md` → Section 8.6 "Quality Standards"  
+**Symptoms**: Slow loading, memory leaks, export timeouts
+**Diagnostic**: Check cache usage, monitor resource consumption
+**Reference**: `docs/04-photo-booth-dashboard.md` → Section 8.6 "Quality Standards"
 **Solutions**: Data pagination, cache optimization, memory cleanup
 
 ---
@@ -274,12 +274,12 @@ When adding export formats or settings:
 1. **Requirements Analysis** → Reference existing specifications for patterns
 2. **Data Architecture** → Design CSV structure and processing pipeline
 3. **Chart Implementation** → Create chart components with theme support
-4. **Dashboard Integration** → Configure layouts and responsive behavior  
+4. **Dashboard Integration** → Configure layouts and responsive behavior
 5. **Export Support** → Add photo booth compatibility and export options
 6. **Testing Implementation** → Add unit, integration, and E2E test coverage
 7. **Documentation** → Update relevant specification sections
 
-#### Performance Optimization Workflow  
+#### Performance Optimization Workflow
 1. **Identify Bottleneck** → Use diagnostic workflows above
 2. **Reference Standards** → Check performance requirements in specifications
 3. **Implement Solution** → Apply optimization patterns from existing code
@@ -297,7 +297,7 @@ When adding export formats or settings:
    - **Implementation Files**: 40+ files with line number references
    - **Testing Coverage**: 98+ tests across 7 phases
 
-2. **[04-dashboard-generation.md](../docs/04-dashboard-generation.md)**  
+2. **[04-dashboard-generation.md](../docs/04-dashboard-generation.md)**
    - **Authority**: Dashboard generation workflows and Plotly integration
    - **Coverage**: Multi-format export, brand compliance, performance optimization
    - **CLI Usage**: Complete command reference and examples
@@ -321,7 +321,7 @@ When adding export formats or settings:
 
 ### Quick Links by Task
 - **Add Chart Type** → Section 8.7 in photo-booth-dashboard.md
-- **Configure Dashboard** → Section 3 in photo-booth-dashboard.md  
+- **Configure Dashboard** → Section 3 in photo-booth-dashboard.md
 - **Export Settings** → Section 6 in photo-booth-dashboard.md
 - **Test System** → Complete photo-booth-testing.md
 - **Data Pipeline** → Section 4 in photo-booth-dashboard.md
@@ -334,11 +334,11 @@ When adding export formats or settings:
 
 This agent serves as the **intelligent interface** to Sensylate's visual systems ecosystem. The agent:
 
-✅ **Orchestrates** user workflows across multiple visual systems  
-✅ **Routes** users to authoritative technical specifications  
-✅ **Manages** integration tasks between photo booth, charts, dashboards  
-✅ **Provides** diagnostic workflows and troubleshooting guidance  
-✅ **Coordinates** cross-system development and optimization tasks  
+✅ **Orchestrates** user workflows across multiple visual systems
+✅ **Routes** users to authoritative technical specifications
+✅ **Manages** integration tasks between photo booth, charts, dashboards
+✅ **Provides** diagnostic workflows and troubleshooting guidance
+✅ **Coordinates** cross-system development and optimization tasks
 
 The agent **does not duplicate** technical specifications but rather **leverages** the existing comprehensive documentation to provide intelligent user guidance and workflow management.
 

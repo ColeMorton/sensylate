@@ -64,7 +64,7 @@
     "business_model": {
       "revenue_streams": [
         "Platform advertising revenue",
-        "Player hardware sales", 
+        "Player hardware sales",
         "Content distribution partnerships",
         "Channel store revenue sharing",
         "Smart TV licensing fees"
@@ -170,7 +170,7 @@
   "cli_service_validation": {
     "service_health": {
       "yahoo_finance_cli": "operational",
-      "alpha_vantage_cli": "operational", 
+      "alpha_vantage_cli": "operational",
       "fmp_cli": "operational",
       "fred_economic_cli": "operational",
       "coingecko_cli": "operational",
@@ -188,7 +188,7 @@
     "data_sources_via_cli": [
       "yahoo_finance_cli",
       "alpha_vantage_cli",
-      "fmp_cli", 
+      "fmp_cli",
       "fred_economic_cli",
       "coingecko_cli",
       "sec_edgar_cli",
@@ -230,17 +230,17 @@
         "relationship_to_roku": "Content partner and competitive dynamic"
       },
       {
-        "ticker": "DIS", 
+        "ticker": "DIS",
         "name": "The Walt Disney Company",
         "category": "Diversified Media/Streaming",
-        "market_cap_range": "Large Cap ($200B+)", 
+        "market_cap_range": "Large Cap ($200B+)",
         "business_model": "Diversified entertainment + Disney+",
         "geographic_focus": "Global",
         "relationship_to_roku": "Content provider and platform competitor"
       },
       {
         "ticker": "PARA",
-        "name": "Paramount Global", 
+        "name": "Paramount Global",
         "category": "Traditional Media/Streaming",
         "market_cap_range": "Mid Cap ($10B-50B)",
         "business_model": "Traditional media + Paramount+",
@@ -253,14 +253,14 @@
         "category": "Sports Streaming/vMVPD",
         "market_cap_range": "Small Cap ($1B-5B)",
         "business_model": "Live TV streaming",
-        "geographic_focus": "US/Canada", 
+        "geographic_focus": "US/Canada",
         "relationship_to_roku": "Similar market cap, streaming TV focus"
       }
     ],
     "peer_selection_rationale": "Selected peers represent the streaming and connected TV ecosystem where ROKU competes. NFLX provides direct content streaming comparison, DIS represents content creator with streaming platform, PARA/WBD show traditional media transition, and FUBO offers similar market cap streaming focus. These peers enable comprehensive analysis across content, technology, and advertising-supported models.",
     "comparative_metrics": {
       "revenue_growth_comparison": "ROKU 18% vs peers typically 5-15% range",
-      "profitability_comparison": "ROKU improving losses vs mixed peer profitability", 
+      "profitability_comparison": "ROKU improving losses vs mixed peer profitability",
       "valuation_comparison": "ROKU P/S 3.1x vs peer range 1.5x-6x depending on growth profile",
       "market_position": "ROKU leads in connected TV OS market share"
     },
@@ -331,7 +331,7 @@
       {
         "filepath": "./data/raw/stocks/ROKU/fundamentals.json",
         "relevance_score": 1.0,
-        "relationship_type": "direct_analysis", 
+        "relationship_type": "direct_analysis",
         "file_description": "Core ROKU fundamental data including market metrics, recommendation, and sector classification",
         "accessibility_verified": true,
         "file_type": "data",
@@ -343,7 +343,7 @@
         "relationship_type": "direct_analysis",
         "file_description": "Comprehensive ROKU financial statements including income statement, balance sheet, and cash flow data",
         "accessibility_verified": true,
-        "file_type": "data", 
+        "file_type": "data",
         "date_relevance": "current"
       },
       {

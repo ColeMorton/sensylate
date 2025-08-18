@@ -1,6 +1,6 @@
 /**
  * CLI Service Integration Layer
- * 
+ *
  * Provides interface between frontend data dependency manager and
  * backend CLI services for automatic data refreshes.
  */
@@ -70,13 +70,11 @@ class RateLimiter {
   private cleanupOldRequests(serviceId: string, windowMs: number): void {
     const now = Date.now();
     const requests = this.requests.get(serviceId) || [];
-    const filtered = requests.filter(timestamp => now - timestamp < windowMs);
+    const filtered = requests.filter((timestamp) => now - timestamp < windowMs);
     this.requests.set(serviceId, filtered);
   }
 
   public canMakeRequest(serviceId: string, config: CLIServiceConfig): boolean {
-    const now = Date.now();
-    
     // Check per-minute limit
     this.cleanupOldRequests(serviceId, 60 * 1000); // 1 minute
     const minuteRequests = this.requests.get(serviceId) || [];
@@ -100,17 +98,20 @@ class RateLimiter {
     this.requests.set(serviceId, requests);
   }
 
-  public getNextAvailableTime(serviceId: string, config: CLIServiceConfig): number {
+  public getNextAvailableTime(
+    serviceId: string,
+    config: CLIServiceConfig,
+  ): number {
     this.cleanupOldRequests(serviceId, 60 * 1000);
     const requests = this.requests.get(serviceId) || [];
-    
+
     if (requests.length < config.rateLimits.requestsPerMinute) {
       return 0; // Can make request immediately
     }
 
     // Calculate when the oldest request in the window expires
     const oldestRequest = Math.min(...requests);
-    return oldestRequest + (60 * 1000) - Date.now();
+    return oldestRequest + 60 * 1000 - Date.now();
   }
 }
 
@@ -192,8 +193,11 @@ export class CLIServiceIntegration {
       },
     ];
 
-    services.forEach(service => {
-      this.services.set(service.name.toLowerCase().replace(/\s+/g, "-"), service);
+    services.forEach((service) => {
+      this.services.set(
+        service.name.toLowerCase().replace(/\s+/g, "-"),
+        service,
+      );
     });
   }
 
@@ -218,12 +222,11 @@ export class CLIServiceIntegration {
 
     this.processing = true;
 
+    const { request, resolve, reject } = this.requestQueue.shift()!;
     try {
-      const { request, resolve, reject } = this.requestQueue.shift()!;
       const result = await this.executeDataRefresh(request);
       resolve(result);
     } catch (error) {
-      const { reject } = this.requestQueue.shift()!;
       reject(error instanceof Error ? error : new Error("Unknown error"));
     } finally {
       this.processing = false;
@@ -255,7 +258,9 @@ export class CLIServiceIntegration {
   /**
    * Request data refresh through CLI service
    */
-  public async requestDataRefresh(request: CLIDataRefreshRequest): Promise<DataRefreshResult> {
+  public async requestDataRefresh(
+    request: CLIDataRefreshRequest,
+  ): Promise<DataRefreshResult> {
     const service = this.services.get(request.service);
     if (!service) {
       return {
@@ -285,8 +290,11 @@ export class CLIServiceIntegration {
 
     // Check rate limits
     if (!this.rateLimiter.canMakeRequest(request.service, service)) {
-      const nextAvailable = this.rateLimiter.getNextAvailableTime(request.service, service);
-      
+      const nextAvailable = this.rateLimiter.getNextAvailableTime(
+        request.service,
+        service,
+      );
+
       return {
         success: false,
         status: {
@@ -321,7 +329,9 @@ export class CLIServiceIntegration {
   /**
    * Execute data refresh through CLI service
    */
-  private async executeDataRefresh(request: CLIDataRefreshRequest): Promise<DataRefreshResult> {
+  private async executeDataRefresh(
+    request: CLIDataRefreshRequest,
+  ): Promise<DataRefreshResult> {
     const service = this.services.get(request.service)!;
     const startTime = Date.now();
 
@@ -331,10 +341,10 @@ export class CLIServiceIntegration {
 
       // Build CLI command
       const command = this.buildCLICommand(service, request);
-      
+
       // Execute CLI command
       const result = await this.executeCLICommand(command);
-      
+
       const duration = Date.now() - startTime;
 
       if (result.success) {
@@ -386,7 +396,7 @@ export class CLIServiceIntegration {
       }
     } catch (error) {
       const duration = Date.now() - startTime;
-      
+
       return {
         success: false,
         status: {
@@ -399,7 +409,8 @@ export class CLIServiceIntegration {
         },
         duration,
         error: {
-          message: error instanceof Error ? error.message : "CLI execution failed",
+          message:
+            error instanceof Error ? error.message : "CLI execution failed",
           code: "CLI_EXECUTION_ERROR",
           retryable: true,
         },
@@ -417,7 +428,10 @@ export class CLIServiceIntegration {
   /**
    * Build CLI command based on service and request
    */
-  private buildCLICommand(service: CLIServiceConfig, request: CLIDataRefreshRequest): CLICommandRequest {
+  private buildCLICommand(
+    service: CLIServiceConfig,
+    request: CLIDataRefreshRequest,
+  ): CLICommandRequest {
     // This would build the appropriate command based on chart type and data requirements
     let command = "";
     let args: string[] = [];
@@ -460,16 +474,20 @@ export class CLIServiceIntegration {
   /**
    * Execute CLI command (simulation - in real implementation would call actual CLI)
    */
-  private async executeCLICommand(request: CLICommandRequest): Promise<CLICommandResult> {
+  private async executeCLICommand(
+    request: CLICommandRequest,
+  ): Promise<CLICommandResult> {
     // Simulate CLI command execution
     const startTime = Date.now();
-    
+
     // Simulate network delay
-    await new Promise(resolve => setTimeout(resolve, Math.random() * 2000 + 1000));
-    
+    await new Promise((resolve) =>
+      setTimeout(resolve, Math.random() * 2000 + 1000),
+    );
+
     // Simulate different outcomes
     const success = Math.random() > 0.1; // 90% success rate
-    
+
     if (success) {
       return {
         success: true,
@@ -538,25 +556,39 @@ export class CLIServiceIntegration {
   /**
    * Get rate limit status for all services
    */
-  public getRateLimitStatus(): Record<string, {
-    remaining: {
-      minute: number;
-      hour: number;
-    };
-    resetTime: {
-      minute: number;
-      hour: number;
-    };
-  }> {
+  public getRateLimitStatus(): Record<
+    string,
+    {
+      remaining: {
+        minute: number;
+        hour: number;
+      };
+      resetTime: {
+        minute: number;
+        hour: number;
+      };
+    }
+  > {
     const status: Record<string, any> = {};
 
     this.services.forEach((config, serviceId) => {
-      const minuteRequests = this.rateLimiter.getNextAvailableTime(serviceId, config);
-      
+      const minuteRequests = this.rateLimiter.getNextAvailableTime(
+        serviceId,
+        config,
+      );
+
       status[serviceId] = {
         remaining: {
-          minute: Math.max(0, config.rateLimits.requestsPerMinute - (this.rateLimiter as any).requests.get(serviceId)?.length || 0),
-          hour: Math.max(0, config.rateLimits.requestsPerHour - (this.rateLimiter as any).requests.get(serviceId)?.length || 0),
+          minute: Math.max(
+            0,
+            config.rateLimits.requestsPerMinute -
+              (this.rateLimiter as any).requests.get(serviceId)?.length || 0,
+          ),
+          hour: Math.max(
+            0,
+            config.rateLimits.requestsPerHour -
+              (this.rateLimiter as any).requests.get(serviceId)?.length || 0,
+          ),
         },
         resetTime: {
           minute: minuteRequests,

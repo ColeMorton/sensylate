@@ -27,7 +27,7 @@
     "company_b_profile": {
       "ticker": "ROKU",
       "company_name": "Roku, Inc.",
-      "sector": "Communication Services", 
+      "sector": "Communication Services",
       "industry": "Entertainment",
       "business_model": "Connected TV platform and advertising-supported streaming operating system with platform-first monetization strategy",
       "market_position": "Leading connected TV OS platform in US market with 80M+ active accounts",
@@ -639,7 +639,7 @@
       },
       {
         "file_path": "/Users/colemorton/Projects/sensylate-command-system-enhancements/data/outputs/fundamental_analysis/discovery/ROKU_20250815_discovery.json",
-        "file_type": "discovery", 
+        "file_type": "discovery",
         "relevance_score": 1.0,
         "relationship_description": "Roku fundamental analysis discovery providing comprehensive company intelligence and platform metrics"
       },

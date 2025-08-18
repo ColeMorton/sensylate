@@ -1,6 +1,6 @@
 /**
  * Enhanced Chart Data Service
- * 
+ *
  * Extends the existing ChartDataService with data dependency management,
  * intelligent refresh policies, and data source status tracking.
  */
@@ -67,12 +67,13 @@ class EnhancedChartDataService {
    */
   private checkForDataUpdates(): void {
     const allStatuses = dataDependencyManager.getAllDataStatuses();
-    
+
     allStatuses.forEach((status, chartType) => {
       if (status.lastUpdateSource && status.lastUpdated) {
         // If data was recently updated, notify subscribers
         const timeSinceUpdate = Date.now() - status.lastUpdated;
-        if (timeSinceUpdate < 60000) { // Updated in last minute
+        if (timeSinceUpdate < 60000) {
+          // Updated in last minute
           this.notifyRefreshSubscribers(chartType);
         }
       }
@@ -85,20 +86,23 @@ class EnhancedChartDataService {
   private notifyRefreshSubscribers(chartType: ChartType): void {
     const callbacks = this.refreshCallbacks.get(chartType);
     if (callbacks) {
-      callbacks.forEach(callback => callback());
+      callbacks.forEach((callback) => callback());
     }
   }
 
   /**
    * Subscribe to refresh notifications for a chart type
    */
-  public subscribeToRefresh(chartType: ChartType, callback: () => void): () => void {
+  public subscribeToRefresh(
+    chartType: ChartType,
+    callback: () => void,
+  ): () => void {
     if (!this.refreshCallbacks.has(chartType)) {
       this.refreshCallbacks.set(chartType, new Set());
     }
-    
+
     this.refreshCallbacks.get(chartType)!.add(callback);
-    
+
     // Return unsubscribe function
     return () => {
       this.refreshCallbacks.get(chartType)?.delete(callback);
@@ -110,11 +114,12 @@ class EnhancedChartDataService {
    */
   private createEnhancedResponse<T>(
     chartType: ChartType,
-    baseResponse: DataServiceResponse<T>
+    baseResponse: DataServiceResponse<T>,
   ): EnhancedDataServiceResponse<T> {
     const dataStatus = dataDependencyManager.getDataStatus(chartType);
-    const refreshCapability = dataDependencyManager.getRefreshCapability(chartType);
-    
+    const refreshCapability =
+      dataDependencyManager.getRefreshCapability(chartType);
+
     const refresh = refreshCapability?.canRefresh
       ? async () => {
           const request: DataRefreshRequest = {
@@ -159,15 +164,22 @@ class EnhancedChartDataService {
   /**
    * Enhanced live signals data with dependency management
    */
-  public useLiveSignalsData(): EnhancedDataServiceResponse<LiveSignalsDataRow[]> {
+  public useLiveSignalsData(): EnhancedDataServiceResponse<
+    LiveSignalsDataRow[]
+  > {
     const baseResponse = this.getBaseLiveSignalsData();
-    return this.createEnhancedResponse("live-signals-equity-curve", baseResponse);
+    return this.createEnhancedResponse(
+      "live-signals-equity-curve",
+      baseResponse,
+    );
   }
 
   /**
    * Enhanced trade history data with dependency management
    */
-  public useTradeHistoryData(): EnhancedDataServiceResponse<TradeHistoryDataRow[]> {
+  public useTradeHistoryData(): EnhancedDataServiceResponse<
+    TradeHistoryDataRow[]
+  > {
     const baseResponse = this.getBaseTradeHistoryData();
     return this.createEnhancedResponse("trade-pnl-waterfall", baseResponse);
   }
@@ -175,25 +187,40 @@ class EnhancedChartDataService {
   /**
    * Enhanced open positions PnL data with dependency management
    */
-  public useOpenPositionsPnLData(): EnhancedDataServiceResponse<OpenPositionPnLDataRow[]> {
+  public useOpenPositionsPnLData(): EnhancedDataServiceResponse<
+    OpenPositionPnLDataRow[]
+  > {
     const baseResponse = this.getBaseOpenPositionsPnLData();
-    return this.createEnhancedResponse("open-positions-pnl-timeseries", baseResponse);
+    return this.createEnhancedResponse(
+      "open-positions-pnl-timeseries",
+      baseResponse,
+    );
   }
 
   /**
    * Enhanced closed positions PnL data with dependency management
    */
-  public useClosedPositionsPnLData(): EnhancedDataServiceResponse<ClosedPositionPnLDataRow[]> {
+  public useClosedPositionsPnLData(): EnhancedDataServiceResponse<
+    ClosedPositionPnLDataRow[]
+  > {
     const baseResponse = this.getBaseClosedPositionsPnLData();
-    return this.createEnhancedResponse("closed-positions-pnl-timeseries", baseResponse);
+    return this.createEnhancedResponse(
+      "closed-positions-pnl-timeseries",
+      baseResponse,
+    );
   }
 
   /**
    * Enhanced benchmark data with dependency management
    */
-  public useLiveSignalsBenchmarkData(): EnhancedDataServiceResponse<LiveSignalsBenchmarkDataRow[]> {
+  public useLiveSignalsBenchmarkData(): EnhancedDataServiceResponse<
+    LiveSignalsBenchmarkDataRow[]
+  > {
     const baseResponse = this.getBaseLiveSignalsBenchmarkData();
-    return this.createEnhancedResponse("live-signals-benchmark-comparison", baseResponse);
+    return this.createEnhancedResponse(
+      "live-signals-benchmark-comparison",
+      baseResponse,
+    );
   }
 
   // Base data fetching methods (delegate to original service)
@@ -228,7 +255,9 @@ class EnhancedChartDataService {
     };
   }
 
-  private getBaseTradeHistoryData(): DataServiceResponse<TradeHistoryDataRow[]> {
+  private getBaseTradeHistoryData(): DataServiceResponse<
+    TradeHistoryDataRow[]
+  > {
     return {
       data: [],
       loading: false,
@@ -236,7 +265,9 @@ class EnhancedChartDataService {
     };
   }
 
-  private getBaseOpenPositionsPnLData(): DataServiceResponse<OpenPositionPnLDataRow[]> {
+  private getBaseOpenPositionsPnLData(): DataServiceResponse<
+    OpenPositionPnLDataRow[]
+  > {
     return {
       data: [],
       loading: false,
@@ -244,7 +275,9 @@ class EnhancedChartDataService {
     };
   }
 
-  private getBaseClosedPositionsPnLData(): DataServiceResponse<ClosedPositionPnLDataRow[]> {
+  private getBaseClosedPositionsPnLData(): DataServiceResponse<
+    ClosedPositionPnLDataRow[]
+  > {
     return {
       data: [],
       loading: false,
@@ -252,7 +285,9 @@ class EnhancedChartDataService {
     };
   }
 
-  private getBaseLiveSignalsBenchmarkData(): DataServiceResponse<LiveSignalsBenchmarkDataRow[]> {
+  private getBaseLiveSignalsBenchmarkData(): DataServiceResponse<
+    LiveSignalsBenchmarkDataRow[]
+  > {
     return {
       data: [],
       loading: false,
@@ -269,7 +304,7 @@ class EnhancedChartDataService {
       force?: boolean;
       priority?: "low" | "normal" | "high";
       onProgress?: (progress: any) => void;
-    } = {}
+    } = {},
   ): Promise<DataRefreshResult> {
     const request: DataRefreshRequest = {
       chartType,
@@ -279,11 +314,11 @@ class EnhancedChartDataService {
     };
 
     const result = await dataDependencyManager.requestRefresh(request);
-    
+
     // Notify subscribers if refresh was successful
     if (result.success) {
       this.notifyRefreshSubscribers(chartType);
-      
+
       // Clear cache in original service to force reload
       chartDataService.clearCache();
     }
@@ -315,7 +350,9 @@ class EnhancedChartDataService {
   /**
    * Get refresh capability information for a chart
    */
-  public getRefreshCapability(chartType: ChartType): ChartRefreshCapability | undefined {
+  public getRefreshCapability(
+    chartType: ChartType,
+  ): ChartRefreshCapability | undefined {
     return dataDependencyManager.getRefreshCapability(chartType);
   }
 

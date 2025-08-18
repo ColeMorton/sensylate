@@ -1083,10 +1083,7 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
         font: themeColors.font,
       },
       xaxis: {
-        range:
-          chartType === "trade-pnl-waterfall"
-            ? undefined
-            : undefined,
+        range: chartType === "trade-pnl-waterfall" ? undefined : undefined,
         type:
           chartType === "trade-pnl-waterfall"
             ? "category"

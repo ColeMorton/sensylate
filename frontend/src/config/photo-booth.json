@@ -143,7 +143,7 @@
     "trading_performance": {
       "primary_charts": [
         "portfolio-value-comparison",
-        "returns-comparison", 
+        "returns-comparison",
         "live-signals-equity-curve",
         "trade-pnl-waterfall"
       ],
@@ -154,11 +154,7 @@
       "refresh_priority": "high"
     },
     "portfolio_analysis": {
-      "primary_charts": [
-        "portfolio-drawdowns",
-        "open-positions-pnl-timeseries",
-        "closed-positions-pnl-timeseries"
-      ],
+      "primary_charts": ["portfolio-drawdowns", "open-positions-pnl-timeseries", "closed-positions-pnl-timeseries"],
       "data_freshness_requirements": {
         "warning_threshold_hours": 12,
         "error_threshold_hours": 48
@@ -166,11 +162,7 @@
       "refresh_priority": "medium"
     },
     "portfolio_history_portrait": {
-      "primary_charts": [
-        "trade-pnl-waterfall",
-        "closed-positions-pnl-timeseries",
-        "live-signals-weekly-candlestick"
-      ],
+      "primary_charts": ["trade-pnl-waterfall", "closed-positions-pnl-timeseries", "live-signals-weekly-candlestick"],
       "data_freshness_requirements": {
         "warning_threshold_hours": 24,
         "error_threshold_hours": 72
@@ -178,10 +170,7 @@
       "refresh_priority": "low"
     },
     "market_overview": {
-      "primary_charts": [
-        "live-signals-benchmark-comparison",
-        "apple-stock"
-      ],
+      "primary_charts": ["live-signals-benchmark-comparison", "apple-stock"],
       "data_freshness_requirements": {
         "warning_threshold_hours": 2,
         "error_threshold_hours": 8

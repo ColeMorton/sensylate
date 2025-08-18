@@ -9,7 +9,7 @@
     "discovery_data_inherited": true,
     "cli_services_integrated": [
       "yahoo_finance_cli",
-      "alpha_vantage_cli", 
+      "alpha_vantage_cli",
       "fmp_cli",
       "fred_economic_cli",
       "coingecko_cli",
@@ -222,7 +222,7 @@
       "overall_capital_efficiency_score": 7.3,
       "key_insights": [
         "Asset-light platform model enables high potential returns on incremental investment",
-        "Current negative ROIC temporary due to investment phase and operating losses", 
+        "Current negative ROIC temporary due to investment phase and operating losses",
         "Strong potential for capital efficiency improvement as platform scales"
       ]
     },

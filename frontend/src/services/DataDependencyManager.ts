@@ -1,14 +1,11 @@
 /**
  * Data Dependency Manager
- * 
+ *
  * Coordinates chart data dependencies, refresh policies, and data source management.
  * Works with ChartDataService to provide intelligent data refresh capabilities.
  */
 
-import type {
-  ChartType,
-  DataServiceResponse,
-} from "@/types/ChartTypes";
+import type { ChartType } from "@/types/ChartTypes";
 
 import type {
   DataDependencyRegistry,
@@ -16,7 +13,6 @@ import type {
   DataSourceStatus,
   DataRefreshRequest,
   DataRefreshResult,
-  DataRefreshProgress,
   ChartRefreshCapability,
   ChartDataDependency,
 } from "@/types/DataDependencyTypes";
@@ -37,7 +33,7 @@ export class DataDependencyManager {
   constructor() {
     this.registry = this.initializeRegistry();
     this.startPeriodicStatusChecks();
-    
+
     // Initialize file watching if enabled
     if (this.registry.settings.enableFileWatching) {
       this.initializeFileWatching();
@@ -57,11 +53,13 @@ export class DataDependencyManager {
         id: `${chartType}_${Date.now()}`,
         config: dependency as ChartDataDependency,
         status: this.createInitialStatus(),
-        capabilities: this.assessRefreshCapability(dependency as ChartDataDependency),
+        capabilities: this.assessRefreshCapability(
+          dependency as ChartDataDependency,
+        ),
         configuredAt: Date.now(),
         lastChecked: Date.now(),
       };
-      
+
       entries.set(chartType as ChartType, entry);
     });
 
@@ -93,34 +91,46 @@ export class DataDependencyManager {
   /**
    * Assess refresh capability for a chart data dependency
    */
-  private assessRefreshCapability(dependency: ChartDataDependency): ChartRefreshCapability {
+  private assessRefreshCapability(
+    dependency: ChartDataDependency,
+  ): ChartRefreshCapability {
     const { primarySource, refreshPolicy } = dependency;
-    
+
     let canRefresh = false;
     let reason = "";
     const availableMethods = [primarySource.refreshMethod];
-    
+
     switch (primarySource.type) {
       case "static":
         canRefresh = false;
         reason = "Static data source - no refresh available";
         break;
-        
+
       case "manual":
         canRefresh = refreshPolicy.allowManualRefresh;
-        reason = canRefresh ? "Manual refresh available" : "Manual refresh disabled";
+        reason = canRefresh
+          ? "Manual refresh available"
+          : "Manual refresh disabled";
         break;
-        
+
       case "cli-api":
-        canRefresh = Boolean(primarySource.cliService && refreshPolicy.autoRefresh);
-        reason = canRefresh ? "API refresh available" : "CLI service not configured";
+        canRefresh = Boolean(
+          primarySource.cliService && refreshPolicy.autoRefresh,
+        );
+        reason = canRefresh
+          ? "API refresh available"
+          : "CLI service not configured";
         break;
-        
+
       case "hybrid":
-        canRefresh = Boolean(primarySource.cliService || refreshPolicy.allowManualRefresh);
-        reason = canRefresh ? "Hybrid refresh available" : "No refresh methods available";
+        canRefresh = Boolean(
+          primarySource.cliService || refreshPolicy.allowManualRefresh,
+        );
+        reason = canRefresh
+          ? "Hybrid refresh available"
+          : "No refresh methods available";
         break;
-        
+
       default:
         canRefresh = false;
         reason = "Unknown data source type";
@@ -140,18 +150,25 @@ export class DataDependencyManager {
    */
   private estimateRefreshDuration(sourceType: string): number {
     switch (sourceType) {
-      case "static": return 0;
-      case "manual": return 1000; // File check
-      case "cli-api": return 5000; // API call
-      case "hybrid": return 7000; // API + file operations
-      default: return 3000;
+      case "static":
+        return 0;
+      case "manual":
+        return 1000; // File check
+      case "cli-api":
+        return 5000; // API call
+      case "hybrid":
+        return 7000; // API + file operations
+      default:
+        return 3000;
     }
   }
 
   /**
    * Get data dependency information for a chart type
    */
-  public getDependencyInfo(chartType: ChartType): DataDependencyRegistryEntry | undefined {
+  public getDependencyInfo(
+    chartType: ChartType,
+  ): DataDependencyRegistryEntry | undefined {
     return this.registry.entries.get(chartType);
   }
 
@@ -181,13 +198,21 @@ export class DataDependencyManager {
   /**
    * Check data freshness for a registry entry
    */
-  private checkDataFreshness(entry: DataDependencyRegistryEntry): DataSourceStatus {
+  private checkDataFreshness(
+    entry: DataDependencyRegistryEntry,
+  ): DataSourceStatus {
     const { config } = entry;
     const now = Date.now();
-    
+
     // For manual/file-based sources, check file modification time
-    if (config.primarySource.type === "manual" && typeof config.primarySource.location === "string") {
-      return this.checkFileStatus(config.primarySource.location, config.freshness);
+    if (
+      config.primarySource.type === "manual" &&
+      typeof config.primarySource.location === "string"
+    ) {
+      return this.checkFileStatus(
+        config.primarySource.location,
+        config.freshness,
+      );
     }
 
     // For API sources, check cache age
@@ -208,14 +233,17 @@ export class DataDependencyManager {
   /**
    * Check file-based data source status
    */
-  private checkFileStatus(filePath: string, freshnessConfig: any): DataSourceStatus {
+  private checkFileStatus(
+    filePath: string,
+    freshnessConfig: any,
+  ): DataSourceStatus {
     // In a real implementation, this would check file modification time
     // For now, we'll simulate based on configuration
     const now = Date.now();
     const simulatedAge = Math.random() * 48; // Random age up to 48 hours
-    
+
     let status: DataSourceStatus["status"] = "available";
-    
+
     if (simulatedAge > freshnessConfig.errorThreshold) {
       status = "error";
     } else if (simulatedAge > freshnessConfig.warningThreshold) {
@@ -224,7 +252,7 @@ export class DataDependencyManager {
 
     return {
       status,
-      lastUpdated: now - (simulatedAge * 3600000), // Convert hours to milliseconds
+      lastUpdated: now - simulatedAge * 3600000, // Convert hours to milliseconds
       ageHours: simulatedAge,
       retryCount: 0,
       refreshing: false,
@@ -235,12 +263,15 @@ export class DataDependencyManager {
   /**
    * Check cache-based data source status
    */
-  private checkCacheStatus(entry: DataDependencyRegistryEntry, now: number): DataSourceStatus {
+  private checkCacheStatus(
+    entry: DataDependencyRegistryEntry,
+    now: number,
+  ): DataSourceStatus {
     const ageMs = now - entry.status.lastUpdated!;
     const ageHours = ageMs / (1000 * 60 * 60);
-    
+
     let status: DataSourceStatus["status"] = "available";
-    
+
     if (ageHours > entry.config.freshness.errorThreshold) {
       status = "error";
     } else if (ageHours > entry.config.freshness.warningThreshold) {
@@ -268,7 +299,9 @@ export class DataDependencyManager {
   /**
    * Get refresh capability details for a chart
    */
-  public getRefreshCapability(chartType: ChartType): ChartRefreshCapability | undefined {
+  public getRefreshCapability(
+    chartType: ChartType,
+  ): ChartRefreshCapability | undefined {
     const entry = this.registry.entries.get(chartType);
     return entry?.capabilities;
   }
@@ -276,9 +309,11 @@ export class DataDependencyManager {
   /**
    * Request data refresh for a chart type
    */
-  public async requestRefresh(request: DataRefreshRequest): Promise<DataRefreshResult> {
-    const { chartType, force = false, priority = "normal" } = request;
-    
+  public async requestRefresh(
+    request: DataRefreshRequest,
+  ): Promise<DataRefreshResult> {
+    const { chartType } = request;
+
     // Check if refresh is already in progress
     if (this.activeRefreshes.has(chartType)) {
       return {
@@ -334,12 +369,15 @@ export class DataDependencyManager {
   /**
    * Execute data refresh for a chart type
    */
-  private async executeRefresh(chartType: ChartType, request: DataRefreshRequest): Promise<DataRefreshResult> {
+  private async executeRefresh(
+    chartType: ChartType,
+    request: DataRefreshRequest,
+  ): Promise<DataRefreshResult> {
     const entry = this.registry.entries.get(chartType)!;
     const startTime = Date.now();
-    
+
     this.activeRefreshes.add(chartType);
-    
+
     // Update status to refreshing
     const currentStatus = this.getDataStatus(chartType);
     currentStatus.refreshing = true;
@@ -357,7 +395,7 @@ export class DataDependencyManager {
 
       // Simulate refresh based on data source type
       const result = await this.simulateDataRefresh(entry, request);
-      
+
       // Update status cache
       const updatedStatus: DataSourceStatus = {
         status: "available",
@@ -365,15 +403,16 @@ export class DataDependencyManager {
         ageHours: 0,
         retryCount: 0,
         refreshing: false,
-        lastUpdateSource: entry.config.primarySource.type === "cli-api" ? "api" : "manual",
+        lastUpdateSource:
+          entry.config.primarySource.type === "cli-api" ? "api" : "manual",
       };
-      
+
       this.statusCache.set(chartType, updatedStatus);
       entry.status = updatedStatus;
       entry.lastChecked = Date.now();
 
       const duration = Date.now() - startTime;
-      
+
       // Complete callback
       if (request.onComplete) {
         request.onComplete({
@@ -392,17 +431,17 @@ export class DataDependencyManager {
         duration,
         source: entry.config.primarySource,
       };
-
     } catch (error) {
       // Handle refresh failure
       const duration = Date.now() - startTime;
       const errorStatus = currentStatus;
       errorStatus.refreshing = false;
       errorStatus.retryCount += 1;
-      errorStatus.error = error instanceof Error ? error.message : "Unknown error";
-      
+      errorStatus.error =
+        error instanceof Error ? error.message : "Unknown error";
+
       this.statusCache.set(chartType, errorStatus);
-      
+
       return {
         success: false,
         status: errorStatus,
@@ -410,14 +449,14 @@ export class DataDependencyManager {
         error: {
           message: errorStatus.error,
           code: "REFRESH_FAILED",
-          retryable: errorStatus.retryCount < entry.config.refreshPolicy.maxRetries,
+          retryable:
+            errorStatus.retryCount < entry.config.refreshPolicy.maxRetries,
         },
         source: entry.config.primarySource,
       };
-      
     } finally {
       this.activeRefreshes.delete(chartType);
-      
+
       // Process queue if there are waiting requests
       this.processRefreshQueue();
     }
@@ -426,9 +465,12 @@ export class DataDependencyManager {
   /**
    * Simulate data refresh (replace with actual refresh logic)
    */
-  private async simulateDataRefresh(entry: DataDependencyRegistryEntry, request: DataRefreshRequest) {
+  private async simulateDataRefresh(
+    entry: DataDependencyRegistryEntry,
+    request: DataRefreshRequest,
+  ) {
     const { primarySource } = entry.config;
-    
+
     // Simulate different refresh types
     if (request.onProgress) {
       request.onProgress({
@@ -439,8 +481,10 @@ export class DataDependencyManager {
     }
 
     // Simulate network/file operation delay
-    await new Promise(resolve => setTimeout(resolve, primarySource.type === "cli-api" ? 2000 : 500));
-    
+    await new Promise((resolve) =>
+      setTimeout(resolve, primarySource.type === "cli-api" ? 2000 : 500),
+    );
+
     if (request.onProgress) {
       request.onProgress({
         stage: "parsing",
@@ -449,8 +493,8 @@ export class DataDependencyManager {
       });
     }
 
-    await new Promise(resolve => setTimeout(resolve, 300));
-    
+    await new Promise((resolve) => setTimeout(resolve, 300));
+
     if (request.onProgress) {
       request.onProgress({
         stage: "caching",
@@ -469,18 +513,25 @@ export class DataDependencyManager {
    * Process queued refresh requests
    */
   private processRefreshQueue(): void {
-    if (this.refreshQueue.size === 0) {return;}
-    
+    if (this.refreshQueue.size === 0) {
+      return;
+    }
+
     const activeCount = this.activeRefreshes.size;
     const capacity = this.registry.settings.maxConcurrentRefresh - activeCount;
-    
-    if (capacity <= 0) {return;}
+
+    if (capacity <= 0) {
+      return;
+    }
 
     // Process highest priority requests first
     const sortedQueue = Array.from(this.refreshQueue.entries())
       .sort((a, b) => {
         const priorityOrder = { high: 3, normal: 2, low: 1 };
-        return priorityOrder[b[1].priority || "normal"] - priorityOrder[a[1].priority || "normal"];
+        return (
+          priorityOrder[b[1].priority || "normal"] -
+          priorityOrder[a[1].priority || "normal"]
+        );
       })
       .slice(0, capacity);
 
@@ -518,9 +569,12 @@ export class DataDependencyManager {
    */
   private startPeriodicStatusChecks(): void {
     // Check status every 5 minutes
-    setInterval(() => {
-      this.updateAllDataStatus();
-    }, 5 * 60 * 1000);
+    setInterval(
+      () => {
+        this.updateAllDataStatus();
+      },
+      5 * 60 * 1000,
+    );
   }
 
   /**

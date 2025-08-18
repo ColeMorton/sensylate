@@ -1,6 +1,6 @@
 /**
  * File System Monitor Service
- * 
+ *
  * Monitors file system changes for manual data sources and triggers
  * appropriate notifications when data files are updated.
  */
@@ -46,20 +46,23 @@ export interface FileStatus {
  * File System Monitor class
  */
 export class FileSystemMonitor {
-  private watchers: Map<string, {
-    config: FileWatchConfig;
-    lastStatus: FileStatus | null;
-    timer: number | null;
-    listeners: Set<(event: FileChangeEvent) => void>;
-  }> = new Map();
-  
+  private watchers: Map<
+    string,
+    {
+      config: FileWatchConfig;
+      lastStatus: FileStatus | null;
+      timer: number | null;
+      listeners: Set<(event: FileChangeEvent) => void>;
+    }
+  > = new Map();
+
   private globalListeners: Set<(event: FileChangeEvent) => void> = new Set();
   private isEnabled = true;
   private pollInterval = 5000; // 5 seconds default
 
   constructor(enabled = true) {
     this.isEnabled = enabled;
-    
+
     if (this.isEnabled) {
       this.startGlobalMonitoring();
     }
@@ -79,10 +82,10 @@ export class FileSystemMonitor {
    * Check all active watchers for changes
    */
   private async checkAllWatchers(): Promise<void> {
-    const promises = Array.from(this.watchers.keys()).map(filePath => 
-      this.checkFileStatus(filePath)
+    const promises = Array.from(this.watchers.keys()).map((filePath) =>
+      this.checkFileStatus(filePath),
     );
-    
+
     await Promise.allSettled(promises);
   }
 
@@ -111,7 +114,7 @@ export class FileSystemMonitor {
 
     // Start polling for this file
     this.startPolling(filePath, pollInterval);
-    
+
     // Initial check
     this.checkFileStatus(filePath);
   }
@@ -134,7 +137,9 @@ export class FileSystemMonitor {
    */
   private startPolling(filePath: string, interval: number): void {
     const watcher = this.watchers.get(filePath);
-    if (!watcher) {return;}
+    if (!watcher) {
+      return;
+    }
 
     watcher.timer = window.setInterval(() => {
       this.checkFileStatus(filePath);
@@ -146,7 +151,9 @@ export class FileSystemMonitor {
    */
   private async checkFileStatus(filePath: string): Promise<void> {
     const watcher = this.watchers.get(filePath);
-    if (!watcher) {return;}
+    if (!watcher) {
+      return;
+    }
 
     try {
       const currentStatus = await this.getFileStatus(filePath);
@@ -154,8 +161,11 @@ export class FileSystemMonitor {
 
       // Detect changes
       if (this.hasFileChanged(previousStatus, currentStatus)) {
-        const changeType = this.determineChangeType(previousStatus, currentStatus);
-        
+        const changeType = this.determineChangeType(
+          previousStatus,
+          currentStatus,
+        );
+
         const event: FileChangeEvent = {
           filePath,
           changeType,
@@ -169,10 +179,9 @@ export class FileSystemMonitor {
       }
 
       watcher.lastStatus = currentStatus;
-
     } catch (error) {
       console.error(`Error checking file status for ${filePath}:`, error);
-      
+
       // Emit error event if file was previously accessible
       if (watcher.lastStatus?.exists) {
         const event: FileChangeEvent = {
@@ -180,10 +189,10 @@ export class FileSystemMonitor {
           changeType: "deleted",
           timestamp: Date.now(),
         };
-        
+
         this.debounceAndEmit(filePath, event);
       }
-      
+
       watcher.lastStatus = null;
     }
   }
@@ -195,7 +204,7 @@ export class FileSystemMonitor {
     // In a real browser environment, we can't directly access file system
     // This would need to be implemented via a backend API or Node.js service
     // For now, we'll simulate file status checking
-    
+
     return this.simulateFileStatus(filePath);
   }
 
@@ -205,7 +214,7 @@ export class FileSystemMonitor {
   private simulateFileStatus(filePath: string): FileStatus | null {
     // Simulate different file states based on path patterns
     const now = Date.now();
-    
+
     // Simulate live signals data being updated more frequently
     if (filePath.includes("live_signals")) {
       const randomAge = Math.random() * 3600000; // Random age up to 1 hour
@@ -263,11 +272,20 @@ export class FileSystemMonitor {
   /**
    * Check if file has changed
    */
-  private hasFileChanged(previous: FileStatus | null, current: FileStatus | null): boolean {
-    if (!previous && !current) {return false;}
-    if (!previous && current) {return true;}
-    if (previous && !current) {return true;}
-    
+  private hasFileChanged(
+    previous: FileStatus | null,
+    current: FileStatus | null,
+  ): boolean {
+    if (!previous && !current) {
+      return false;
+    }
+    if (!previous && current) {
+      return true;
+    }
+    if (previous && !current) {
+      return true;
+    }
+
     if (previous && current) {
       return (
         previous.exists !== current.exists ||
@@ -282,10 +300,19 @@ export class FileSystemMonitor {
   /**
    * Determine the type of change
    */
-  private determineChangeType(previous: FileStatus | null, current: FileStatus | null): FileChangeEvent["changeType"] {
-    if (!previous && current?.exists) {return "created";}
-    if (previous?.exists && !current?.exists) {return "deleted";}
-    if (previous && current && current.exists) {return "modified";}
+  private determineChangeType(
+    previous: FileStatus | null,
+    current: FileStatus | null,
+  ): FileChangeEvent["changeType"] {
+    if (!previous && current?.exists) {
+      return "created";
+    }
+    if (previous?.exists && !current?.exists) {
+      return "deleted";
+    }
+    if (previous && current && current.exists) {
+      return "modified";
+    }
     return "modified";
   }
 
@@ -294,7 +321,9 @@ export class FileSystemMonitor {
    */
   private debounceAndEmit(filePath: string, event: FileChangeEvent): void {
     const watcher = this.watchers.get(filePath);
-    if (!watcher) {return;}
+    if (!watcher) {
+      return;
+    }
 
     const debounceMs = watcher.config.debounceMs || 1000;
 
@@ -314,10 +343,12 @@ export class FileSystemMonitor {
    */
   private emitFileChangeEvent(filePath: string, event: FileChangeEvent): void {
     const watcher = this.watchers.get(filePath);
-    if (!watcher) {return;}
+    if (!watcher) {
+      return;
+    }
 
     // Notify file-specific listeners
-    watcher.listeners.forEach(listener => {
+    watcher.listeners.forEach((listener) => {
       try {
         listener(event);
       } catch (error) {
@@ -326,7 +357,7 @@ export class FileSystemMonitor {
     });
 
     // Notify global listeners
-    this.globalListeners.forEach(listener => {
+    this.globalListeners.forEach((listener) => {
       try {
         listener(event);
       } catch (error) {
@@ -338,7 +369,10 @@ export class FileSystemMonitor {
   /**
    * Add listener for specific file changes
    */
-  public addFileListener(filePath: string, listener: (event: FileChangeEvent) => void): () => void {
+  public addFileListener(
+    filePath: string,
+    listener: (event: FileChangeEvent) => void,
+  ): () => void {
     const watcher = this.watchers.get(filePath);
     if (!watcher) {
       console.warn(`No watcher found for file: ${filePath}`);
@@ -356,7 +390,9 @@ export class FileSystemMonitor {
   /**
    * Add global listener for all file changes
    */
-  public addGlobalListener(listener: (event: FileChangeEvent) => void): () => void {
+  public addGlobalListener(
+    listener: (event: FileChangeEvent) => void,
+  ): () => void {
     this.globalListeners.add(listener);
 
     // Return cleanup function
@@ -370,7 +406,7 @@ export class FileSystemMonitor {
    */
   public async getAllFileStatuses(): Promise<Map<string, FileStatus | null>> {
     const statuses = new Map<string, FileStatus | null>();
-    
+
     const promises = Array.from(this.watchers.keys()).map(async (filePath) => {
       const status = await this.getFileStatus(filePath);
       statuses.set(filePath, status);
@@ -405,7 +441,9 @@ export class FileSystemMonitor {
    * Enable/disable monitoring
    */
   public setEnabled(enabled: boolean): void {
-    if (this.isEnabled === enabled) {return;}
+    if (this.isEnabled === enabled) {
+      return;
+    }
 
     this.isEnabled = enabled;
 
@@ -414,7 +452,10 @@ export class FileSystemMonitor {
       // Restart all individual watchers
       this.watchers.forEach((watcher, filePath) => {
         if (watcher.timer === null) {
-          this.startPolling(filePath, watcher.config.pollInterval || this.pollInterval);
+          this.startPolling(
+            filePath,
+            watcher.config.pollInterval || this.pollInterval,
+          );
         }
       });
     } else {
@@ -432,7 +473,9 @@ export class FileSystemMonitor {
    * Force check all watchers immediately
    */
   public async forceCheckAll(): Promise<void> {
-    if (!this.isEnabled) {return;}
+    if (!this.isEnabled) {
+      return;
+    }
     await this.checkAllWatchers();
   }
 
