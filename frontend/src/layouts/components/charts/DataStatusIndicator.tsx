@@ -7,9 +7,7 @@
 
 import React, { useState } from "react";
 import type { ChartType } from "@/types/ChartTypes";
-import type {
-  DataSourceStatus,
-} from "@/types/DataDependencyTypes";
+import type { DataSourceStatus } from "@/types/DataDependencyTypes";
 import { useChartDataManager } from "@/hooks/useEnhancedPortfolioData";
 
 interface DataStatusIndicatorProps {
@@ -95,8 +93,8 @@ export const DataStatusIndicator: React.FC<DataStatusIndicatorProps> = ({
     if (canRefresh && !isRefreshing) {
       try {
         await refresh({ priority: "high" });
-      } catch (error) {
-        console.error("Failed to refresh data:", error);
+      } catch {
+        // Failed to refresh data
       }
     }
   };

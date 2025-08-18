@@ -14,9 +14,7 @@ import type {
   TradeHistoryDataRow,
   ClosedPositionPnLDataRow,
   OpenPositionPnLDataRow,
-  BenchmarkDataRow,
   LiveSignalsBenchmarkDataRow,
-  PortfolioDataCache,
 } from "@/types/ChartTypes";
 
 import type {
@@ -235,7 +233,7 @@ class EnhancedChartDataService {
     };
   }
 
-  private getBasePortfolioData(chartType: ChartType): DataServiceResponse<{
+  private getBasePortfolioData(_chartType: ChartType): DataServiceResponse<{
     multiStrategy?: PortfolioDataRow[];
     buyHold?: PortfolioDataRow[];
     drawdowns?: PortfolioDataRow[];

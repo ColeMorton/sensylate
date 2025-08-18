@@ -23,7 +23,10 @@ import type {
   ChartRefreshCapability,
 } from "@/types/DataDependencyTypes";
 
-import { enhancedChartDataService, type EnhancedDataServiceResponse } from "@/services/EnhancedChartDataService";
+import {
+  enhancedChartDataService,
+  type EnhancedDataServiceResponse,
+} from "@/services/EnhancedChartDataService";
 
 /**
  * Enhanced data service response with refresh capabilities

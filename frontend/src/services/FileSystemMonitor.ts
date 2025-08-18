@@ -6,7 +6,6 @@
  */
 
 import type { ChartType } from "@/types/ChartTypes";
-import type { DataSourceStatus } from "@/types/DataDependencyTypes";
 
 /**
  * File change event
@@ -94,7 +93,7 @@ export class FileSystemMonitor {
    */
   public addWatcher(config: FileWatchConfig): void {
     if (!this.isEnabled) {
-      console.warn("FileSystemMonitor is disabled");
+      // FileSystemMonitor is disabled
       return;
     }
 
@@ -179,8 +178,8 @@ export class FileSystemMonitor {
       }
 
       watcher.lastStatus = currentStatus;
-    } catch (error) {
-      console.error(`Error checking file status for ${filePath}:`, error);
+    } catch {
+      // Error checking file status
 
       // Emit error event if file was previously accessible
       if (watcher.lastStatus?.exists) {
@@ -351,8 +350,8 @@ export class FileSystemMonitor {
     watcher.listeners.forEach((listener) => {
       try {
         listener(event);
-      } catch (error) {
-        console.error("Error in file change listener:", error);
+      } catch {
+        // Error in file change listener
       }
     });
 
@@ -360,8 +359,8 @@ export class FileSystemMonitor {
     this.globalListeners.forEach((listener) => {
       try {
         listener(event);
-      } catch (error) {
-        console.error("Error in global file change listener:", error);
+      } catch {
+        // Error in global file change listener
       }
     });
   }
@@ -375,7 +374,7 @@ export class FileSystemMonitor {
   ): () => void {
     const watcher = this.watchers.get(filePath);
     if (!watcher) {
-      console.warn(`No watcher found for file: ${filePath}`);
+      // No watcher found for file
       return () => {}; // Return no-op cleanup function
     }
 
