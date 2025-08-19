@@ -820,9 +820,9 @@ Generated: {{ timestamp }}"""
             cash_flow = financial_health.get("cash_flow_analysis", {})
             capital_efficiency = financial_health.get("capital_efficiency", {})
 
-            mapped_data["financial_health_grade"] = (
-                f"{profitability.get('grade', 'N/A')}/{balance_sheet.get('grade', 'N/A')}/{cash_flow.get('grade', 'N/A')}/{capital_efficiency.get('grade', 'N/A')}"
-            )
+            mapped_data[
+                "financial_health_grade"
+            ] = f"{profitability.get('grade', 'N/A')}/{balance_sheet.get('grade', 'N/A')}/{cash_flow.get('grade', 'N/A')}/{capital_efficiency.get('grade', 'N/A')}"
 
             # Create investment thesis from analytical insights
             insights = data.get("analytical_insights", {})
@@ -830,9 +830,9 @@ Generated: {{ timestamp }}"""
             if key_findings:
                 mapped_data["investment_thesis"] = ". ".join(key_findings[:3]) + "."
             else:
-                mapped_data["investment_thesis"] = (
-                    "Investment thesis based on comprehensive fundamental analysis."
-                )
+                mapped_data[
+                    "investment_thesis"
+                ] = "Investment thesis based on comprehensive fundamental analysis."
 
             # Generate recommendation based on financial health and competitive position
             # Default to moderate recommendation - would be enhanced by proper valuation analysis
@@ -1210,7 +1210,9 @@ Generated: {{ timestamp }}"""
                     else (
                         "good"
                         if completeness_score >= 0.7
-                        else "fair" if completeness_score >= 0.5 else "poor"
+                        else "fair"
+                        if completeness_score >= 0.5
+                        else "poor"
                     )
                 ),
                 "validation_timestamp": datetime.now().isoformat(),
@@ -1319,7 +1321,9 @@ Generated: {{ timestamp }}"""
                         else (
                             "C"
                             if quality_score >= 0.75
-                            else "D" if quality_score >= 0.60 else "F"
+                            else "D"
+                            if quality_score >= 0.60
+                            else "F"
                         )
                     )
                 ),
@@ -1399,13 +1403,17 @@ Generated: {{ timestamp }}"""
                     else (
                         "B"
                         if compliance_rate >= 0.8
-                        else "C" if compliance_rate >= 0.7 else "F"
+                        else "C"
+                        if compliance_rate >= 0.7
+                        else "F"
                     )
                 ),
                 "status": (
                     "✅ INSTITUTIONAL"
                     if compliance_rate >= 0.9
-                    else "⚠️ PARTIAL" if compliance_rate >= 0.7 else "❌ NON-COMPLIANT"
+                    else "⚠️ PARTIAL"
+                    if compliance_rate >= 0.7
+                    else "❌ NON-COMPLIANT"
                 ),
             }
 
@@ -1426,7 +1434,9 @@ Generated: {{ timestamp }}"""
             "status": (
                 "✅ PASS"
                 if len(confidence_matches) >= 5
-                else "⚠️ LIMITED" if len(confidence_matches) > 0 else "❌ MISSING"
+                else "⚠️ LIMITED"
+                if len(confidence_matches) > 0
+                else "❌ MISSING"
             ),
             "score": min(1.0, len(confidence_matches) / 5),
         }
@@ -1450,7 +1460,9 @@ Generated: {{ timestamp }}"""
             "status": (
                 "✅ COMPREHENSIVE"
                 if economic_mentions >= 8
-                else "⚠️ BASIC" if economic_mentions >= 4 else "❌ LIMITED"
+                else "⚠️ BASIC"
+                if economic_mentions >= 4
+                else "❌ LIMITED"
             ),
             "score": min(1.0, economic_mentions / 8),
         }
@@ -1471,7 +1483,9 @@ Generated: {{ timestamp }}"""
             "status": (
                 "✅ COMPREHENSIVE"
                 if risk_mentions >= 4
-                else "⚠️ BASIC" if risk_mentions >= 2 else "❌ LIMITED"
+                else "⚠️ BASIC"
+                if risk_mentions >= 2
+                else "❌ LIMITED"
             ),
             "score": min(1.0, risk_mentions / 4),
         }
@@ -1491,7 +1505,9 @@ Generated: {{ timestamp }}"""
             "status": (
                 "✅ COMPREHENSIVE"
                 if source_mentions >= 4
-                else "⚠️ BASIC" if source_mentions >= 2 else "❌ LIMITED"
+                else "⚠️ BASIC"
+                if source_mentions >= 2
+                else "❌ LIMITED"
             ),
             "score": min(1.0, source_mentions / 4),
         }
@@ -1507,13 +1523,17 @@ Generated: {{ timestamp }}"""
                 else (
                     "B"
                     if overall_score >= 0.8
-                    else "C" if overall_score >= 0.7 else "F"
+                    else "C"
+                    if overall_score >= 0.7
+                    else "F"
                 )
             ),
             "status": (
                 "✅ INSTITUTIONAL"
                 if overall_score >= 0.9
-                else "⚠️ PARTIAL" if overall_score >= 0.7 else "❌ NON-COMPLIANT"
+                else "⚠️ PARTIAL"
+                if overall_score >= 0.7
+                else "❌ NON-COMPLIANT"
             ),
             "certification": "Achieved" if overall_score >= 0.9 else "Not Achieved",
         }

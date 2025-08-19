@@ -415,9 +415,9 @@ class DASVPhase3SynthesizerFixed:
             closed_trades["Trade_Quality"].str.contains("Failed to Capture", na=False),
             "Trade_Quality",
         ] = "Poor"
-        closed_trades.loc[closed_trades["Trade_Quality"].isna(), "Trade_Quality"] = (
-            "Unknown"
-        )
+        closed_trades.loc[
+            closed_trades["Trade_Quality"].isna(), "Trade_Quality"
+        ] = "Unknown"
 
         quality_sections = ["## 📊 Quality Distribution Analysis", ""]
 
@@ -869,9 +869,7 @@ class DASVPhase3SynthesizerFixed:
             )
 
         if metrics.get("profit_factor", 0) < 1.0:
-            issues.append(
-                "🔴 **P1 CRITICAL**: Negative expectancy - losses exceed wins"
-            )
+            issues.append("🔴 **P1 CRITICAL**: Negative expectancy - losses exceed wins")
 
         if not metrics.get("minimum_sample_met", False):
             issues.append(

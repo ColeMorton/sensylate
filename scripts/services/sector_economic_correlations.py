@@ -777,12 +777,12 @@ class SectorEconomicCorrelations(BaseFinancialService):
             final_overweight = regime_overweight
             final_underweight = regime_underweight
 
-        recommendations["portfolio_allocation"]["overweight_sectors"] = (
-            final_overweight[:3]
-        )
-        recommendations["portfolio_allocation"]["underweight_sectors"] = (
-            final_underweight[:2]
-        )
+        recommendations["portfolio_allocation"][
+            "overweight_sectors"
+        ] = final_overweight[:3]
+        recommendations["portfolio_allocation"][
+            "underweight_sectors"
+        ] = final_underweight[:2]
 
         # All other sectors neutral
         all_sectors = set(self.sector_config["sectors"].keys())

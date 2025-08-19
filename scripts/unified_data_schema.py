@@ -528,7 +528,9 @@ class UnifiedDataSchema:
             ContentType.TRADE_HISTORY: TradeHistoryDataSchema,
         }
 
-    def create_data_schema(self, content_type: ContentType, **kwargs) -> Union[
+    def create_data_schema(
+        self, content_type: ContentType, **kwargs
+    ) -> Union[
         FundamentalDataSchema,
         StrategyDataSchema,
         SectorDataSchema,

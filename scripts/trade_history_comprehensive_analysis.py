@@ -973,9 +973,7 @@ def main():
         print(f"📊 Analysis Confidence: {metadata['confidence_score']:.1%}")
         print(f"📈 Closed Trades Analyzed: {len(analyzer.closed_trades)}")
         print(f"💼 Active Positions: {len(analyzer.active_trades)}")
-        print(
-            f"🎯 Statistical Significance: {metadata['statistical_significance']:.1%}"
-        )
+        print(f"🎯 Statistical Significance: {metadata['statistical_significance']:.1%}")
 
         print("\n📁 Full analysis saved to:")
         print(f"   {output_path}")

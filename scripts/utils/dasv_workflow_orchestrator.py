@@ -331,9 +331,9 @@ class DASVWorkflowOrchestrator:
             template = self.workflow_templates.get(domain)
             if not template:
                 workflow_result.status = WorkflowStatus.FAILED
-                workflow_result.metadata["error"] = (
-                    f"No workflow template for domain: {domain}"
-                )
+                workflow_result.metadata[
+                    "error"
+                ] = f"No workflow template for domain: {domain}"
                 return workflow_result
 
             phases = template["phases"]
@@ -372,7 +372,9 @@ class DASVWorkflowOrchestrator:
                 status_emoji = (
                     "✅"
                     if quality_result == QualityGateResult.PASS
-                    else "⚠️" if quality_result == QualityGateResult.WARNING else "❌"
+                    else "⚠️"
+                    if quality_result == QualityGateResult.WARNING
+                    else "❌"
                 )
                 print(
                     f"   {status_emoji} {phase}: {execution_result.status.value} (Quality: {quality_result.value})"
@@ -397,17 +399,17 @@ class DASVWorkflowOrchestrator:
                 if execution_result.output_files:
                     phase_result.passed_to_next_phase = True
                     if phase == "discover":
-                        current_params["discovery_file"] = (
-                            execution_result.output_files[0]
-                        )
+                        current_params[
+                            "discovery_file"
+                        ] = execution_result.output_files[0]
                     elif phase == "analyze":
                         current_params["analysis_file"] = execution_result.output_files[
                             0
                         ]
                     elif phase == "synthesize":
-                        current_params["synthesis_file"] = (
-                            execution_result.output_files[0]
-                        )
+                        current_params[
+                            "synthesis_file"
+                        ] = execution_result.output_files[0]
 
                 # Add to final outputs
                 if execution_result.output_files:

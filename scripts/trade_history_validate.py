@@ -346,12 +346,16 @@ class TradingPerformanceValidator:
             sma_adequacy = (
                 "✅ ADEQUATE"
                 if sma_count >= 15
-                else "⚠️ MINIMAL" if sma_count >= 10 else "❌ INSUFFICIENT"
+                else "⚠️ MINIMAL"
+                if sma_count >= 10
+                else "❌ INSUFFICIENT"
             )
             ema_adequacy = (
                 "✅ ADEQUATE"
                 if ema_count >= 15
-                else "⚠️ MINIMAL" if ema_count >= 10 else "❌ INSUFFICIENT"
+                else "⚠️ MINIMAL"
+                if ema_count >= 10
+                else "❌ INSUFFICIENT"
             )
 
             sample_validation["validation_results"] = {
@@ -613,9 +617,7 @@ class TradingPerformanceValidator:
 
             print(f"✅ Overall confidence score: {overall_confidence:.3f}")
             print(f"✅ Quality band: {quality_band}")
-            print(
-                f"✅ Threshold met: {overall_confidence >= self.confidence_threshold}"
-            )
+            print(f"✅ Threshold met: {overall_confidence >= self.confidence_threshold}")
 
         except Exception as e:
             print(f"❌ Confidence scoring error: {str(e)}")

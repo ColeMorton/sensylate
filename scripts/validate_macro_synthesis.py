@@ -307,9 +307,7 @@ def validate_institutional_quality(region="US", date="20250804"):
         synthesis_scores["economic_thesis"] = economic_thesis.get(
             "economic_confidence", synthesis_minimum
         )
-        print(
-            f"✅ Economic thesis synthesis: {synthesis_scores['economic_thesis']:.2f}"
-        )
+        print(f"✅ Economic thesis synthesis: {synthesis_scores['economic_thesis']:.2f}")
     except Exception as e:
         print(f"❌ Economic thesis failed: {e}")
         synthesis_scores["economic_thesis"] = 0.0
