@@ -10,17 +10,14 @@ Production-grade CoinGecko cryptocurrency data integration with:
 """
 
 import sys
-from datetime import datetime, timedelta
+from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Dict, List, Union
 
 from .base_financial_service import (
     BaseFinancialService,
     DataNotFoundError,
-    FinancialServiceError,
-    RateLimitError,
     ServiceConfig,
-    ValidationError,
 )
 
 # Add utils to path
@@ -321,7 +318,6 @@ class CoinGeckoService(BaseFinancialService):
         """
         try:
             # Get Bitcoin price data
-            bitcoin_price = self.get_price("bitcoin", "usd")
             bitcoin_details = self.get_coin_data("bitcoin")
 
             # Calculate sentiment indicators
@@ -429,14 +425,16 @@ def create_coingecko_service(env: str = "dev") -> CoinGeckoService:
     try:
         # Add scripts directory to path for load_env import
         import sys
+
         scripts_dir = Path(__file__).parent.parent
         if str(scripts_dir) not in sys.path:
             sys.path.insert(0, str(scripts_dir))
         from load_env import ensure_env_loaded
+
         ensure_env_loaded()
     except ImportError:
         pass  # Continue if load_env not available
-    
+
     # Use absolute path to config directory
     config_dir = Path(__file__).parent.parent.parent / "config"
     config_loader = ConfigLoader(str(config_dir), auto_load_env=True)

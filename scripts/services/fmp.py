@@ -10,15 +10,13 @@ Production-grade Financial Modeling Prep (FMP) integration with:
 """
 
 import sys
-from datetime import datetime, timedelta
+from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Dict, List, Union
 
 from .base_financial_service import (
     BaseFinancialService,
     DataNotFoundError,
-    FinancialServiceError,
-    RateLimitError,
     ServiceConfig,
     ValidationError,
 )
@@ -502,14 +500,16 @@ def create_fmp_service(env: str = "dev") -> FMPService:
     try:
         # Add scripts directory to path for load_env import
         import sys
+
         scripts_dir = Path(__file__).parent.parent
         if str(scripts_dir) not in sys.path:
             sys.path.insert(0, str(scripts_dir))
         from load_env import ensure_env_loaded
+
         ensure_env_loaded()
     except ImportError:
         pass  # Continue if load_env not available
-    
+
     # Use absolute path to config directory
     config_dir = Path(__file__).parent.parent.parent / "config"
     config_loader = ConfigLoader(str(config_dir), auto_load_env=True)

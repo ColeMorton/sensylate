@@ -282,12 +282,12 @@ class FREDEconomicService(BaseFinancialService):
                 trend = "insufficient_data"
 
             statistics = {
-                "latest_value": latest_value,
-                "average_value": round(avg_value, 2) if avg_value else None,
-                "min_value": min_value,
-                "max_value": max_value,
+                "latest_value": str(latest_value),
+                "average_value": str(round(avg_value, 2)) if avg_value else None,
+                "min_value": str(min_value),
+                "max_value": str(max_value),
                 "trend": trend,
-                "observations_count": len(valid_observations),
+                "observations_count": str(len(valid_observations)),
             }
 
         return {
@@ -640,14 +640,16 @@ def create_fred_economic_service(env: str = "dev") -> FREDEconomicService:
     try:
         # Add scripts directory to path for load_env import
         import sys
+
         scripts_dir = Path(__file__).parent.parent
         if str(scripts_dir) not in sys.path:
             sys.path.insert(0, str(scripts_dir))
         from load_env import ensure_env_loaded
+
         ensure_env_loaded()
     except ImportError:
         pass  # Continue if load_env not available
-    
+
     # Use absolute path to config directory
     config_dir = Path(__file__).parent.parent.parent / "config"
     config_loader = ConfigLoader(str(config_dir), auto_load_env=True)

@@ -12,7 +12,7 @@ Production-grade Yahoo Finance data integration with:
 import sys
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict
 
 # Add scripts directory to path for importing existing service
 sys.path.insert(0, str(Path(__file__).parent.parent))
@@ -401,14 +401,16 @@ def create_yahoo_finance_service(env: str = "dev") -> YahooFinanceAPIService:
     try:
         # Add scripts directory to path for load_env import
         import sys
+
         scripts_dir = Path(__file__).parent.parent
         if str(scripts_dir) not in sys.path:
             sys.path.insert(0, str(scripts_dir))
         from load_env import ensure_env_loaded
+
         ensure_env_loaded()
     except ImportError:
         pass  # Continue if load_env not available
-    
+
     # Use absolute path to config directory
     config_dir = Path(__file__).parent.parent.parent / "config"
     config_loader = ConfigLoader(str(config_dir), auto_load_env=True)

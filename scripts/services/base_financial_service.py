@@ -26,8 +26,9 @@ from pydantic import BaseModel, Field
 
 # Add utils directory to path for importing historical data manager
 sys.path.insert(0, str(Path(__file__).parent.parent / "utils"))
-from utils.historical_data_manager import DataType, HistoricalDataManager, Timeframe
 from unified_cache import UnifiedCache
+
+from utils.historical_data_manager import DataType, HistoricalDataManager, Timeframe
 
 
 class FinancialServiceError(Exception):
@@ -943,7 +944,7 @@ class BaseFinancialService(ABC):
                     # With unified cache, storage happens automatically
                     try:
                         self.store_historical_data(validated_data, endpoint, params)
-                    except Exception as e:
+                    except Exception:
                         self.logger.debug(
                             f"Historical storage handled by unified cache for {endpoint}"
                         )
@@ -979,7 +980,7 @@ class BaseFinancialService(ABC):
                         f"HTTP error after {self.config.max_retries + 1} attempts: {e}"
                     )
 
-            except requests.exceptions.Timeout as e:
+            except requests.exceptions.Timeout:
                 if attempt < self.config.max_retries:
                     wait_time = 2**attempt
                     self.logger.warning(
@@ -1040,9 +1041,9 @@ class BaseFinancialService(ABC):
             "api_key_configured": bool(self.config.api_key),
             "base_url": self.config.base_url,
             "cache_enabled": self.config.cache.enabled,
-            "rate_limit_enabled": self.config.rate_limit.enabled
+            "rate_limit_enabled": self.config.rate_limit.enabled,
         }
-        
+
         try:
             # Basic connectivity test
             if self.config.api_key:
@@ -1051,11 +1052,11 @@ class BaseFinancialService(ABC):
             else:
                 health_status["status"] = "configuration_error"
                 health_status["message"] = "Missing API key configuration"
-                
+
         except Exception as e:
             health_status["status"] = "error"
             health_status["message"] = f"Health check failed: {str(e)}"
-            
+
         return health_status
 
     def cleanup_cache(self) -> None:

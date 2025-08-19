@@ -996,7 +996,9 @@ class DataPipelineManager:
             # Step 1: Discover all frontend data contracts
             discovery_start = datetime.now()
             discovery_result = self.discover_contracts()
-            performance_metrics["discovery_time"] = (datetime.now() - discovery_start).total_seconds()
+            performance_metrics["discovery_time"] = (
+                datetime.now() - discovery_start
+            ).total_seconds()
 
             if not discovery_result.contracts:
                 raise ValidationError(
@@ -1015,7 +1017,9 @@ class DataPipelineManager:
                 "Performing comprehensive service dependency validation..."
             )
             dependency_validation = self.validate_service_dependencies()
-            performance_metrics["validation_time"] = (datetime.now() - validation_start).total_seconds()
+            performance_metrics["validation_time"] = (
+                datetime.now() - validation_start
+            ).total_seconds()
 
             if not dependency_validation.success:
                 if not skip_errors:
@@ -1026,8 +1030,10 @@ class DataPipelineManager:
                     self.logger.warning(
                         f"Service dependency validation failed but continuing due to skip_errors: {dependency_validation.error}"
                     )
-                    
-            self.logger.info(f"Service validation completed [Validation: {performance_metrics['validation_time']:.2f}s]")
+
+            self.logger.info(
+                f"Service validation completed [Validation: {performance_metrics['validation_time']:.2f}s]"
+            )
 
             # Step 3: Validate contract fulfillment capabilities
             unfulfillable_contracts = []
@@ -1068,8 +1074,10 @@ class DataPipelineManager:
                         category, contracts
                     )
                     category_time = (datetime.now() - category_start).total_seconds()
-                    performance_metrics["processing_time_by_category"][category] = category_time
-                    
+                    performance_metrics["processing_time_by_category"][
+                        category
+                    ] = category_time
+
                     self.logger.info(
                         f"Category {category} processing completed [Time: {category_time:.2f}s]"
                     )
@@ -1156,12 +1164,12 @@ class DataPipelineManager:
                     "discovery_time": discovery_result.discovery_time,
                 },
             )
-            
+
             # Add detailed performance metrics
             performance_metrics["contracts_processed"] = successful_count
             performance_metrics["total_processing_time"] = processing_time
             result.add_metadata("performance_metrics", performance_metrics)
-            
+
             # Log comprehensive performance summary
             self.logger.info(
                 f"Data refresh completed - Total: {processing_time:.2f}s, "
@@ -1688,51 +1696,72 @@ class DataPipelineManager:
     def _extract_symbols_from_trade_history(self) -> Set[str]:
         """Extract unique stock symbols from trade history data"""
         symbols = set()
-        trade_history_path = Path(self.project_root) / "data" / "raw" / "trade_history" / "live_signals.csv"
-        
+        trade_history_path = (
+            Path(self.project_root)
+            / "data"
+            / "raw"
+            / "trade_history"
+            / "live_signals.csv"
+        )
+
         try:
             if trade_history_path.exists():
                 import pandas as pd
+
                 df = pd.read_csv(trade_history_path)
-                if 'Ticker' in df.columns:
-                    unique_symbols = df['Ticker'].dropna().unique()
+                if "Ticker" in df.columns:
+                    unique_symbols = df["Ticker"].dropna().unique()
                     symbols.update(unique_symbols)
-                    self.logger.info(f"Extracted {len(symbols)} unique symbols from trade history")
+                    self.logger.info(
+                        f"Extracted {len(symbols)} unique symbols from trade history"
+                    )
                 else:
-                    self.logger.warning("No 'Ticker' column found in trade history data")
+                    self.logger.warning(
+                        "No 'Ticker' column found in trade history data"
+                    )
             else:
-                self.logger.warning(f"Trade history file not found: {trade_history_path}")
+                self.logger.warning(
+                    f"Trade history file not found: {trade_history_path}"
+                )
         except Exception as e:
             self.logger.warning(f"Error reading trade history data: {e}")
-        
+
         return symbols
 
     def _extract_symbols_from_contracts(self) -> List[str]:
         """Extract stock symbols from discovered raw stock contracts and trade history"""
         symbols = set()
-        
+
         # Extract symbols from existing raw stock contracts
         raw_contracts = self.get_contracts_by_category("raw")
         for contract in raw_contracts:
             # Extract symbols from contract IDs like "raw_stocks_AAPL_daily"
-            if contract.contract_id.startswith("raw_stocks_") and contract.contract_id.endswith("_daily"):
-                symbol = contract.contract_id.replace("raw_stocks_", "").replace("_daily", "")
+            if contract.contract_id.startswith(
+                "raw_stocks_"
+            ) and contract.contract_id.endswith("_daily"):
+                symbol = contract.contract_id.replace("raw_stocks_", "").replace(
+                    "_daily", ""
+                )
                 symbols.add(symbol)
-        
+
         # Extract symbols from trade history to ensure all referenced stocks are collected
         trade_history_symbols = self._extract_symbols_from_trade_history()
         symbols.update(trade_history_symbols)
-        
+
         # Convert to sorted list for consistent ordering
         symbol_list = sorted(list(symbols))
-        
+
         # Fallback to default symbols if no symbols found
         if not symbol_list:
             symbol_list = ["BTC-USD", "SPY", "QQQ"]
-            self.logger.warning("No symbols found from contracts or trade history, using fallback symbols")
+            self.logger.warning(
+                "No symbols found from contracts or trade history, using fallback symbols"
+            )
         else:
-            self.logger.info(f"Collected {len(symbol_list)} total symbols for data fetch")
-        
+            self.logger.info(
+                f"Collected {len(symbol_list)} total symbols for data fetch"
+            )
+
         return symbol_list
 
     def _fetch_yahoo_finance_data(self) -> ProcessingResult:
@@ -1740,14 +1769,16 @@ class DataPipelineManager:
         try:
             # Extract symbols dynamically from discovered contracts
             symbols = self._extract_symbols_from_contracts()
-            
-            self.logger.info(f"Initiating Yahoo Finance historical data fetch for {len(symbols)} symbols: {', '.join(symbols)}")
-            
+
+            self.logger.info(
+                f"Initiating Yahoo Finance historical data fetch for {len(symbols)} symbols: {', '.join(symbols)}"
+            )
+
             # Call historical command for each symbol to ensure CSV storage
             # This fetches comprehensive historical daily price data and stores to /data/raw/stocks/{SYMBOL}/daily.csv
             successful_symbols = []
             failed_symbols = []
-            
+
             for symbol in symbols:
                 try:
                     self.logger.info(f"Fetching historical data for {symbol}")
@@ -1757,24 +1788,28 @@ class DataPipelineManager:
                         args=[symbol, "max"],  # Get maximum available historical data
                         timeout=60,
                     )
-                    
+
                     if result.success:
                         successful_symbols.append(symbol)
-                        self.logger.info(f"Successfully fetched historical data for {symbol}")
+                        self.logger.info(
+                            f"Successfully fetched historical data for {symbol}"
+                        )
                     else:
                         failed_symbols.append(symbol)
                         error_category = self._categorize_service_error(result.error)
                         self.logger.warning(
                             f"Historical data fetch failed for {symbol}: {error_category} - {result.error}"
                         )
-                
+
                 except Exception as e:
                     failed_symbols.append(symbol)
-                    self.logger.error(f"Error fetching historical data for {symbol}: {str(e)}")
-            
+                    self.logger.error(
+                        f"Error fetching historical data for {symbol}: {str(e)}"
+                    )
+
             # Return overall success if at least some symbols succeeded
             overall_success = len(successful_symbols) > 0
-            
+
             if overall_success:
                 self.logger.info(
                     f"Yahoo Finance historical data fetch completed: "
@@ -1782,7 +1817,7 @@ class DataPipelineManager:
                 )
             else:
                 self.logger.error("All Yahoo Finance historical data fetches failed")
-            
+
             return ProcessingResult(
                 success=overall_success,
                 operation="fetch_yahoo_finance_historical",
@@ -1790,59 +1825,75 @@ class DataPipelineManager:
                 metadata={
                     "successful_symbols": successful_symbols,
                     "failed_symbols": failed_symbols,
-                    "total_symbols": len(symbols)
-                }
+                    "total_symbols": len(symbols),
+                },
             )
         except Exception as e:
             # This is an infrastructure/code error, not a service error
             error_msg = f"Infrastructure error in Yahoo Finance execution: {str(e)}"
             self.logger.error(error_msg)
             return ProcessingResult(
-                success=False, 
-                operation="fetch_yahoo_finance", 
+                success=False,
+                operation="fetch_yahoo_finance",
                 error=error_msg,
-                error_category="infrastructure"
+                error_category="infrastructure",
             )
 
     def _categorize_service_error(self, error_message: str) -> str:
         """Categorize service errors for better debugging and monitoring"""
         if not error_message:
             return "unknown"
-        
+
         error_lower = error_message.lower()
-        
+
         # Infrastructure/logging errors
         if "log_error" in error_lower or "logging" in error_lower:
             return "infrastructure_logging"
-        
-        # Network/connectivity errors  
-        if any(term in error_lower for term in ["connection", "timeout", "network", "dns", "ssl"]):
+
+        # Network/connectivity errors
+        if any(
+            term in error_lower
+            for term in ["connection", "timeout", "network", "dns", "ssl"]
+        ):
             return "network"
-        
+
         # Authentication/API key errors
-        if any(term in error_lower for term in ["auth", "api key", "unauthorized", "forbidden", "401", "403"]):
+        if any(
+            term in error_lower
+            for term in ["auth", "api key", "unauthorized", "forbidden", "401", "403"]
+        ):
             return "authentication"
-        
+
         # Rate limiting errors
-        if any(term in error_lower for term in ["rate limit", "too many requests", "429"]):
+        if any(
+            term in error_lower for term in ["rate limit", "too many requests", "429"]
+        ):
             return "rate_limit"
-        
+
         # Data/validation errors
-        if any(term in error_lower for term in ["invalid", "validation", "schema", "format"]):
+        if any(
+            term in error_lower
+            for term in ["invalid", "validation", "schema", "format"]
+        ):
             return "data_validation"
-        
+
         # Service unavailable errors
-        if any(term in error_lower for term in ["unavailable", "service", "500", "502", "503"]):
+        if any(
+            term in error_lower
+            for term in ["unavailable", "service", "500", "502", "503"]
+        ):
             return "service_unavailable"
-        
+
         # Default category for unclassified errors
         return "service_error"
 
     def _fetch_alpha_vantage_data(self) -> ProcessingResult:
         """Fetch supplementary data from Alpha Vantage"""
         try:
-            self.logger.info("Initiating Alpha Vantage data fetch for technical analysis")
-            
+            self.logger.info(
+                "Initiating Alpha Vantage data fetch for technical analysis"
+            )
+
             # Use existing Alpha Vantage CLI with valid command: analyze
             result = self.cli_service.execute(
                 service_name="alpha_vantage",
@@ -1850,7 +1901,7 @@ class DataPipelineManager:
                 args=["SPY"],
                 timeout=60,
             )
-            
+
             if result.success:
                 self.logger.info("Alpha Vantage data fetch completed successfully")
             else:
@@ -1859,17 +1910,17 @@ class DataPipelineManager:
                 self.logger.warning(
                     f"Alpha Vantage data fetch failed: {error_category} - {result.error}"
                 )
-            
+
             return result
         except Exception as e:
             # This is an infrastructure/code error, not a service error
             error_msg = f"Infrastructure error in Alpha Vantage execution: {str(e)}"
             self.logger.error(error_msg)
             return ProcessingResult(
-                success=False, 
-                operation="fetch_alpha_vantage", 
+                success=False,
+                operation="fetch_alpha_vantage",
                 error=error_msg,
-                error_category="infrastructure"
+                error_category="infrastructure",
             )
 
     def _fetch_live_signals_data(self) -> ProcessingResult:
@@ -1910,7 +1961,7 @@ class DataPipelineManager:
                 args=[today],
                 timeout=180,
             )
-            
+
             if result.success:
                 self.logger.info("Trade history data fetch completed successfully")
             else:
@@ -1919,7 +1970,7 @@ class DataPipelineManager:
                 self.logger.warning(
                     f"Trade history data fetch failed: {error_category} - {result.error}"
                 )
-            
+
             # Generate chart-ready data files regardless of image generation success
             # Chart data only needs the CSV data, not the theme-dependent images
             chart_result = self._generate_chart_ready_data()
@@ -1936,10 +1987,10 @@ class DataPipelineManager:
             error_msg = f"Infrastructure error in trade history execution: {str(e)}"
             self.logger.error(error_msg)
             return ProcessingResult(
-                success=False, 
-                operation="fetch_trade_history", 
+                success=False,
+                operation="fetch_trade_history",
                 error=error_msg,
-                error_category="infrastructure"
+                error_category="infrastructure",
             )
 
     def _generate_chart_ready_data(self) -> ProcessingResult:

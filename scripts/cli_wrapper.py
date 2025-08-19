@@ -91,7 +91,7 @@ class CLIServiceWrapper:
         self.global_available = self._check_global_availability()
         self.local_available = self._check_local_availability()
 
-        self.logger.log_operation(
+        self.logger.log_operation(  # type: ignore[attr-defined]
             f"CLI wrapper initialized for {service_name}",
             {
                 "global_available": self.global_available,
@@ -106,16 +106,16 @@ class CLIServiceWrapper:
 
     def _setup_enhanced_logger_adapter(self):
         """Setup enhanced logger with consistent adapter methods"""
-        
+
         def log_operation(message, context=None, level="INFO"):
             """Enhanced operation logging with context and performance data"""
             if context:
                 context_str = f" | Context: {context}"
             else:
                 context_str = ""
-            
+
             log_message = f"Operation: {message}{context_str}"
-            
+
             if level == "WARNING":
                 self.logger.warning(log_message)
             elif level == "ERROR":
@@ -130,16 +130,18 @@ class CLIServiceWrapper:
                 error_details = f" | Error: {str(error)}"
             if context:
                 error_details += f" | Context: {context}"
-            
+
             self.logger.error(f"Operation failed: {message}{error_details}")
 
-        def log_api_call(service, command, args=None, response_time=None, status=None, details=None):
+        def log_api_call(
+            service, command, args=None, response_time=None, status=None, details=None
+        ):
             """Detailed API call logging"""
             args_str = f"({', '.join(map(str, args))})" if args else ""
             timing_str = f" [{response_time:.2f}s]" if response_time else ""
             status_str = f" -> {status}" if status else ""
             details_str = f" | {details}" if details else ""
-            
+
             message = f"API Call: {service}.{command}{args_str}{timing_str}{status_str}{details_str}"
             self.logger.info(message)
 
@@ -174,7 +176,7 @@ class CLIServiceWrapper:
             global_path = shutil.which(self.global_command_name)
             is_available = global_path is not None
 
-            self.logger.log_operation(
+            self.logger.log_operation(  # type: ignore[attr-defined]
                 f"Global availability check for {self.service_name}",
                 {
                     "global_command": self.global_command_name,
@@ -203,7 +205,7 @@ class CLIServiceWrapper:
                 self.cli_script_path.exists() and self.cli_script_path.is_file()
             )
 
-            self.logger.log_operation(
+            self.logger.log_operation(  # type: ignore[attr-defined]
                 f"Local availability check for {self.service_name}",
                 {
                     "cli_script_path": str(self.cli_script_path),
@@ -235,7 +237,7 @@ class CLIServiceWrapper:
         available = self.global_available or self.local_available
 
         if not available:
-            self.logger.log_operation(
+            self.logger.log_operation(  # type: ignore[attr-defined]
                 f"Service {self.service_name} is not available",
                 {
                     "global_available": self.global_available,
@@ -294,7 +296,7 @@ class CLIServiceWrapper:
                 else:
                     cmd_args.extend([option_name, str(value)])
 
-            self.logger.log_operation(
+            self.logger.log_operation(  # type: ignore[attr-defined]
                 f"Starting command execution: {self.service_name}.{command}",
                 {
                     "service_name": self.service_name,
@@ -319,7 +321,7 @@ class CLIServiceWrapper:
                         success, stdout, stderr, "global", execution_time, cmd_args
                     )
                 except Exception as e:
-                    self.logger.log_operation(
+                    self.logger.log_operation(  # type: ignore[attr-defined]
                         "Global command failed, falling back to local",
                         {
                             "service_name": self.service_name,
@@ -408,7 +410,7 @@ class CLIServiceWrapper:
             result.add_error_context("stdout", stdout)
             result.add_error_context("execution_mode", execution_mode)
 
-        self.logger.log_operation(
+        self.logger.log_operation(  # type: ignore[attr-defined]
             f"CLI command completed: {cmd_args[0] if cmd_args else 'unknown'}",
             {
                 "service_name": self.service_name,
@@ -428,14 +430,14 @@ class CLIServiceWrapper:
         command_name = args[0] if args else "unknown"
         start_time = datetime.now()
 
-        self.logger.log_operation(
+        self.logger.log_operation(  # type: ignore[attr-defined]
             f"Executing global command: {self.service_name}.{command_name}",
             {
                 "service_name": self.service_name,
                 "full_command": " ".join(cmd),
                 "args_count": len(args),
                 "timeout": self.timeout,
-                "execution_mode": "global"
+                "execution_mode": "global",
             },
         )
 
@@ -450,35 +452,41 @@ class CLIServiceWrapper:
 
             execution_time = (datetime.now() - start_time).total_seconds()
             success = result.returncode == 0
-            
+
             # Enhanced API call logging
-            status = f"SUCCESS (rc={result.returncode})" if success else f"FAILED (rc={result.returncode})"
-            details = f"stdout={len(result.stdout)} chars, stderr={len(result.stderr)} chars"
-            
-            self.logger.log_api_call(
+            status = (
+                f"SUCCESS (rc={result.returncode})"
+                if success
+                else f"FAILED (rc={result.returncode})"
+            )
+            details = (
+                f"stdout={len(result.stdout)} chars, stderr={len(result.stderr)} chars"
+            )
+
+            self.logger.log_api_call(  # type: ignore[attr-defined]
                 service=self.service_name,
                 command=command_name,
                 args=args[1:] if len(args) > 1 else None,
                 response_time=execution_time,
                 status=status,
-                details=details
+                details=details,
             )
-            
+
             return success, result.stdout, result.stderr
 
         except subprocess.TimeoutExpired as e:
             execution_time = (datetime.now() - start_time).total_seconds()
-            
+
             # Log timeout as failed API call
-            self.logger.log_api_call(
+            self.logger.log_api_call(  # type: ignore[attr-defined]
                 service=self.service_name,
                 command=command_name,
                 args=args[1:] if len(args) > 1 else None,
                 response_time=execution_time,
                 status="TIMEOUT",
-                details=f"Timed out after {self.timeout}s"
+                details=f"Timed out after {self.timeout}s",
             )
-            
+
             raise ProcessingError(
                 f"Global command timed out: {' '.join(cmd)}",
                 pipeline_stage="global_command_execution",
@@ -514,7 +522,7 @@ class CLIServiceWrapper:
         command_name = args[0] if args else "unknown"
         start_time = datetime.now()
 
-        self.logger.log_operation(
+        self.logger.log_operation(  # type: ignore[attr-defined]
             f"Executing local command: {self.service_name}.{command_name}",
             {
                 "service_name": self.service_name,
@@ -522,7 +530,7 @@ class CLIServiceWrapper:
                 "args_count": len(args),
                 "script_path": str(self.cli_script_path),
                 "timeout": self.timeout,
-                "execution_mode": "local"
+                "execution_mode": "local",
             },
         )
 
@@ -537,35 +545,39 @@ class CLIServiceWrapper:
 
             execution_time = (datetime.now() - start_time).total_seconds()
             success = result.returncode == 0
-            
+
             # Enhanced API call logging
-            status = f"SUCCESS (rc={result.returncode})" if success else f"FAILED (rc={result.returncode})"
+            status = (
+                f"SUCCESS (rc={result.returncode})"
+                if success
+                else f"FAILED (rc={result.returncode})"
+            )
             details = f"stdout={len(result.stdout)} chars, stderr={len(result.stderr)} chars, script={self.cli_script_path.name}"
-            
-            self.logger.log_api_call(
+
+            self.logger.log_api_call(  # type: ignore[attr-defined]
                 service=self.service_name,
                 command=command_name,
                 args=args[1:] if len(args) > 1 else None,
                 response_time=execution_time,
                 status=status,
-                details=details
+                details=details,
             )
-            
+
             return success, result.stdout, result.stderr
 
         except subprocess.TimeoutExpired as e:
             execution_time = (datetime.now() - start_time).total_seconds()
-            
+
             # Log timeout as failed API call
-            self.logger.log_api_call(
+            self.logger.log_api_call(  # type: ignore[attr-defined]
                 service=self.service_name,
                 command=command_name,
                 args=args[1:] if len(args) > 1 else None,
                 response_time=execution_time,
                 status="TIMEOUT",
-                details=f"Timed out after {self.timeout}s, script={self.cli_script_path.name}"
+                details=f"Timed out after {self.timeout}s, script={self.cli_script_path.name}",
             )
-            
+
             raise ProcessingError(
                 f"Local command timed out: {' '.join(cmd)}",
                 pipeline_stage="local_command_execution",
@@ -676,7 +688,7 @@ class CLIServiceManager:
         import logging
 
         self.logger = logging.getLogger("cli_service_manager")
-        
+
         # Apply the same enhanced logging adapter as CLIServiceWrapper
         self._setup_enhanced_logger_adapter()
         self.error_handler = ErrorHandler()
@@ -688,7 +700,7 @@ class CLIServiceManager:
             try:
                 self.script_registry = get_global_registry(config)
             except Exception as e:
-                self.logger.log_operation(
+                self.logger.log_operation(  # type: ignore[attr-defined]
                     "Could not initialize script registry",
                     {"error": str(e)},
                     level="WARNING",
@@ -705,16 +717,16 @@ class CLIServiceManager:
 
     def _setup_enhanced_logger_adapter(self):
         """Setup enhanced logger with consistent adapter methods (shared with CLIServiceWrapper)"""
-        
+
         def log_operation(message, context=None, level="INFO"):
             """Enhanced operation logging with context and performance data"""
             if context:
                 context_str = f" | Context: {context}"
             else:
                 context_str = ""
-            
+
             log_message = f"Operation: {message}{context_str}"
-            
+
             if level == "WARNING":
                 self.logger.warning(log_message)
             elif level == "ERROR":
@@ -729,16 +741,18 @@ class CLIServiceManager:
                 error_details = f" | Error: {str(error)}"
             if context:
                 error_details += f" | Context: {context}"
-            
+
             self.logger.error(f"Operation failed: {message}{error_details}")
 
-        def log_api_call(service, command, args=None, response_time=None, status=None, details=None):
+        def log_api_call(
+            service, command, args=None, response_time=None, status=None, details=None
+        ):
             """Detailed API call logging"""
             args_str = f"({', '.join(map(str, args))})" if args else ""
             timing_str = f" [{response_time:.2f}s]" if response_time else ""
             status_str = f" -> {status}" if status else ""
             details_str = f" | {details}" if details else ""
-            
+
             message = f"API Call: {service}.{command}{args_str}{timing_str}{status_str}{details_str}"
             self.logger.info(message)
 
@@ -763,7 +777,7 @@ class CLIServiceManager:
 
     def _discover_services(self) -> None:
         """Discover available CLI services"""
-        self.logger.log_operation(
+        self.logger.log_operation(  # type: ignore[attr-defined]
             "Starting CLI service discovery", {"scripts_dir": str(self.scripts_dir)}
         )
 
@@ -790,7 +804,7 @@ class CLIServiceManager:
 
                 if wrapper.is_available():
                     available_count += 1
-                    self.logger.log_operation(
+                    self.logger.log_operation(  # type: ignore[attr-defined]
                         f"Service {service_name} available",
                         {
                             "service_name": service_name,
@@ -799,7 +813,7 @@ class CLIServiceManager:
                         },
                     )
                 else:
-                    self.logger.log_operation(
+                    self.logger.log_operation(  # type: ignore[attr-defined]
                         f"Service {service_name} not available",
                         {
                             "service_name": service_name,
@@ -820,7 +834,7 @@ class CLIServiceManager:
                     fail_fast=False,
                 )
 
-        self.logger.log_operation(
+        self.logger.log_operation(  # type: ignore[attr-defined]
             "CLI service discovery completed",
             {
                 "discovered_services": discovered_count,
@@ -842,7 +856,7 @@ class CLIServiceManager:
             if "cli_service" not in self.script_registry.list_available_scripts():
                 self.script_registry.register_script(CLIServiceScript, "cli_service")
 
-                self.logger.log_operation(
+                self.logger.log_operation(  # type: ignore[attr-defined]
                     "Registered CLI service script with registry",
                     {
                         "available_services": self.get_available_services(),

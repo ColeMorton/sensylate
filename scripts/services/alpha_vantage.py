@@ -12,12 +12,11 @@ Production-grade Alpha Vantage data integration with:
 import sys
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict
 
 from .base_financial_service import (
     BaseFinancialService,
     DataNotFoundError,
-    FinancialServiceError,
     RateLimitError,
     ServiceConfig,
     ValidationError,
@@ -45,13 +44,16 @@ class AlphaVantageService(BaseFinancialService):
         # Use ConfigManager for enhanced API key management
         try:
             from utils.config_manager import ConfigManager
+
             config_manager = ConfigManager()
             # Get API key with validation - mark as required
             api_key = config_manager.get_api_key("ALPHA_VANTAGE_API_KEY", required=True)
             if api_key and api_key != "not_required":
                 config.api_key = api_key
             else:
-                raise ValidationError("Alpha Vantage API key is required but not configured")
+                raise ValidationError(
+                    "Alpha Vantage API key is required but not configured"
+                )
         except ImportError:
             # Fallback to original validation if ConfigManager not available
             if not config.api_key:
@@ -501,14 +503,16 @@ def create_alpha_vantage_service(env: str = "dev") -> AlphaVantageService:
     try:
         # Add scripts directory to path for load_env import
         import sys
+
         scripts_dir = Path(__file__).parent.parent
         if str(scripts_dir) not in sys.path:
             sys.path.insert(0, str(scripts_dir))
         from load_env import ensure_env_loaded
+
         ensure_env_loaded()
     except ImportError:
         pass  # Continue if load_env not available
-    
+
     # Use absolute path to config directory and ensure .env file is loaded
     config_dir = Path(__file__).parent.parent.parent / "config"
     config_loader = ConfigLoader(str(config_dir), auto_load_env=True)
