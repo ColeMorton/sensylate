@@ -316,9 +316,7 @@ class MacroEconomicSynthesis:
             )
 
             if healthy_services == 0:
-                print(
-                    "⚠️  All enhanced services failed - using fallback synthesis mode"
-                )
+                print("⚠️  All enhanced services failed - using fallback synthesis mode")
             elif healthy_services < total_services:
                 print(
                     f"⚠️  {total_services - healthy_services} enhanced service(s) degraded - continuing with available data"
@@ -566,12 +564,16 @@ class MacroEconomicSynthesis:
             "economic_forecasts": self._generate_economic_forecasts(),
             "scenario_analysis": self._extract_scenario_analysis(),
             # CLI insights and validation
-            "cli_insights": self.discovery_data.get("cli_insights", {})
-            if self.discovery_data
-            else {},
-            "discovery_insights": self.discovery_data.get("discovery_insights", {})
-            if self.discovery_data
-            else {},
+            "cli_insights": (
+                self.discovery_data.get("cli_insights", {})
+                if self.discovery_data
+                else {}
+            ),
+            "discovery_insights": (
+                self.discovery_data.get("discovery_insights", {})
+                if self.discovery_data
+                else {}
+            ),
         }
 
         # Skip Jinja2 template rendering - template file contains specification document, not Jinja2 template
@@ -1365,9 +1367,7 @@ class MacroEconomicSynthesis:
         cc_signal = (
             "Optimistic"
             if cc_current_safe > 100
-            else "Pessimistic"
-            if cc_current_safe < 90
-            else "Neutral"
+            else "Pessimistic" if cc_current_safe < 90 else "Neutral"
         )
 
         # Extract stock market data as proxy for sentiment
@@ -1968,9 +1968,11 @@ class MacroEconomicSynthesis:
                 return {}
 
             return {
-                "meeting_date": fomc_data.get("meeting_date", "").split("T")[0]
-                if fomc_data.get("meeting_date")
-                else "",
+                "meeting_date": (
+                    fomc_data.get("meeting_date", "").split("T")[0]
+                    if fomc_data.get("meeting_date")
+                    else ""
+                ),
                 "current_rate": fomc_data.get("current_rate", 5.25),
                 "rate_probabilities": fomc_data.get("rate_change_probabilities", {}),
                 "market_implied_rate": fomc_data.get("market_implied_rate", 5.0),

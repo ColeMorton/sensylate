@@ -187,12 +187,14 @@ class TradingCalculationEngine:
                         if pd.notna(row["Exit_Efficiency"])
                         else None
                     ),
-                    x_status=str(row["X_Status"])
-                    if pd.notna(row.get("X_Status"))
-                    else None,
-                    x_link=self._generate_twitter_url(str(row["X_Status"]))
-                    if pd.notna(row.get("X_Status"))
-                    else None,
+                    x_status=(
+                        str(row["X_Status"]) if pd.notna(row.get("X_Status")) else None
+                    ),
+                    x_link=(
+                        self._generate_twitter_url(str(row["X_Status"]))
+                        if pd.notna(row.get("X_Status"))
+                        else None
+                    ),
                 )
 
                 self.trades.append(trade)
@@ -238,9 +240,9 @@ class TradingCalculationEngine:
                     "ticker": trade.ticker,
                     "strategy_type": trade.strategy_type,
                     "entry_date": trade.entry_date.isoformat(),
-                    "exit_date": trade.exit_date.isoformat()
-                    if trade.exit_date
-                    else None,
+                    "exit_date": (
+                        trade.exit_date.isoformat() if trade.exit_date else None
+                    ),
                     "pnl": trade.pnl_csv,
                     "return_pct": trade.return_csv * 100,
                     "duration_days": trade.duration_days,
@@ -634,10 +636,11 @@ class TradingCalculationEngine:
             "x_status_completeness": {
                 "total_closed_trades": len(closed_trades),
                 "trades_with_x_status": len([t for t in closed_trades if t.x_status]),
-                "x_status_coverage": len([t for t in closed_trades if t.x_status])
-                / len(closed_trades)
-                if closed_trades
-                else 0.0,
+                "x_status_coverage": (
+                    len([t for t in closed_trades if t.x_status]) / len(closed_trades)
+                    if closed_trades
+                    else 0.0
+                ),
                 "x_links_generated": len([t for t in closed_trades if t.x_link]),
             },
             "data_quality_assessment": {

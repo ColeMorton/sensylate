@@ -529,9 +529,9 @@ class TwitterValidationOrchestrator:
                     if i.severity == SeverityLevel.CRITICAL
                 ]
             ),
-            "blocking_reason": "Critical validation failures"
-            if real_time_result.is_blocking
-            else None,
+            "blocking_reason": (
+                "Critical validation failures" if real_time_result.is_blocking else None
+            ),
             "recommendations_count": len(content_analysis.get("recommendations", [])),
             "automated_corrections_available": len(
                 [

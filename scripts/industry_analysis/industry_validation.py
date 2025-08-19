@@ -138,7 +138,9 @@ class IndustryValidation:
                 "sec_edgar": create_sec_edgar_service(env),
                 "imf": create_imf_service(env),
             }
-            print(f"✅ Initialized {len(self.cli_services)} CLI services for validation")
+            print(
+                f"✅ Initialized {len(self.cli_services)} CLI services for validation"
+            )
             self._check_cli_service_health()
         except Exception as e:
             print(f"⚠️  Failed to initialize CLI services: {e}")

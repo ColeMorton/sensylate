@@ -840,9 +840,11 @@ class MacroEconomicCLI(BaseFinancialCLI):
                         "Current Status": regime_type.title(),
                         "Confidence": f"{confidence:.0%}",
                         "Duration": f"{duration} days",
-                        "Implication": "Supportive for risk assets"
-                        if regime_type == "consolidation"
-                        else "Monitor volatility",
+                        "Implication": (
+                            "Supportive for risk assets"
+                            if regime_type == "consolidation"
+                            else "Monitor volatility"
+                        ),
                     }
                 )
 
@@ -866,9 +868,11 @@ class MacroEconomicCLI(BaseFinancialCLI):
                         "Current Status": liquidity_env.title(),
                         "Confidence": f"{composite_score:.0%}",
                         "Duration": "N/A",
-                        "Implication": "Supports risk assets"
-                        if trend == "expanding"
-                        else "Monitor tightening",
+                        "Implication": (
+                            "Supports risk assets"
+                            if trend == "expanding"
+                            else "Monitor tightening"
+                        ),
                     }
                 )
 
@@ -888,9 +892,11 @@ class MacroEconomicCLI(BaseFinancialCLI):
                         "Current Status": market_condition.title(),
                         "Confidence": "N/A",
                         "Duration": "N/A",
-                        "Implication": "Inflationary pressure"
-                        if supply_demand == "tight"
-                        else "Stable input costs",
+                        "Implication": (
+                            "Inflationary pressure"
+                            if supply_demand == "tight"
+                            else "Stable input costs"
+                        ),
                     }
                 )
 
@@ -909,9 +915,11 @@ class MacroEconomicCLI(BaseFinancialCLI):
                         ).title(),
                         "Confidence": f"{vix_regime.get('regime_probability', 0.5):.0%}",
                         "Duration": f"{vix_regime.get('regime_duration_days', 0)} days",
-                        "Implication": "Low hedging costs"
-                        if vix_regime.get("regime_type") == "low"
-                        else "Monitor risk management",
+                        "Implication": (
+                            "Low hedging costs"
+                            if vix_regime.get("regime_type") == "low"
+                            else "Monitor risk management"
+                        ),
                     }
                 )
 
@@ -932,9 +940,11 @@ class MacroEconomicCLI(BaseFinancialCLI):
                             "Current Status": liquidity_conditions.liquidity_regime.title(),
                             "Confidence": f"{liquidity_conditions.regime_probability:.0%}",
                             "Duration": f"{liquidity_conditions.regime_duration_months} months",
-                            "Implication": "Supports risk assets"
-                            if liquidity_conditions.composite_score > 0
-                            else "Headwind for risk assets",
+                            "Implication": (
+                                "Supports risk assets"
+                                if liquidity_conditions.composite_score > 0
+                                else "Headwind for risk assets"
+                            ),
                         }
                     )
                 except Exception:

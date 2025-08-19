@@ -534,27 +534,31 @@ class ValidationMonitoringService:
                 "average_time_seconds": sum(validation_times) / len(validation_times),
                 "min_time_seconds": min(validation_times),
                 "max_time_seconds": max(validation_times),
-                "p95_time_seconds": sorted(validation_times)[
-                    int(len(validation_times) * 0.95)
-                ]
-                if validation_times
-                else 0,
+                "p95_time_seconds": (
+                    sorted(validation_times)[int(len(validation_times) * 0.95)]
+                    if validation_times
+                    else 0
+                ),
             },
             "data_freshness": {
                 "average_hours": sum(data_freshness) / len(data_freshness),
                 "min_hours": min(data_freshness),
                 "max_hours": max(data_freshness),
-                "p95_hours": sorted(data_freshness)[int(len(data_freshness) * 0.95)]
-                if data_freshness
-                else 0,
+                "p95_hours": (
+                    sorted(data_freshness)[int(len(data_freshness) * 0.95)]
+                    if data_freshness
+                    else 0
+                ),
             },
             "accuracy_metrics": {
                 "average_score": sum(accuracy_scores) / len(accuracy_scores),
                 "min_score": min(accuracy_scores),
                 "max_score": max(accuracy_scores),
-                "p95_score": sorted(accuracy_scores)[int(len(accuracy_scores) * 0.95)]
-                if accuracy_scores
-                else 0,
+                "p95_score": (
+                    sorted(accuracy_scores)[int(len(accuracy_scores) * 0.95)]
+                    if accuracy_scores
+                    else 0
+                ),
             },
             "event_counts": {
                 "total_events": len(recent_events),

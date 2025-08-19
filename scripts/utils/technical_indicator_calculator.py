@@ -359,9 +359,9 @@ class TechnicalIndicatorCalculator:
             )
 
             # Volatility Indicators
-            indicators["indicators"][
-                "bollinger_bands"
-            ] = self.calculate_bollinger_bands(closes)
+            indicators["indicators"]["bollinger_bands"] = (
+                self.calculate_bollinger_bands(closes)
+            )
             indicators["indicators"]["atr_14"] = self.calculate_atr(price_data, 14)
 
             # Volume Indicators

@@ -562,9 +562,9 @@ jobs:
             "total_validators": len(results),
             "passed_validators": sum(1 for r in results if r.passed),
             "failed_validators": sum(1 for r in results if not r.passed),
-            "overall_score": sum(r.score for r in results) / len(results)
-            if results
-            else 0.0,
+            "overall_score": (
+                sum(r.score for r in results) / len(results) if results else 0.0
+            ),
             "results": [
                 {
                     "suite_name": r.suite_name,

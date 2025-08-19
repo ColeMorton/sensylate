@@ -71,10 +71,11 @@ def validate_fundamental_analysis_structure(file_path):
         "valid": len(issues) == 0,
         "issues": issues,
         "elements_found": required_elements,
-        "template_compliance_score": len(required_elements)
-        / (len(required_elements) + len(issues))
-        if (len(required_elements) + len(issues)) > 0
-        else 0,
+        "template_compliance_score": (
+            len(required_elements) / (len(required_elements) + len(issues))
+            if (len(required_elements) + len(issues)) > 0
+            else 0
+        ),
     }
 
 

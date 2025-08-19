@@ -301,9 +301,9 @@ class SectorCrossReference:
             enhanced_data["sector_positioning"].update(
                 sector_context["sector_positioning"]
             )
-            enhanced_data["sector_positioning"][
-                "sector_analysis_reference"
-            ] = sector_context["sector_reference"]
+            enhanced_data["sector_positioning"]["sector_analysis_reference"] = (
+                sector_context["sector_reference"]
+            )
 
         # Add cross-reference metadata
         enhanced_data["sector_cross_reference"] = {

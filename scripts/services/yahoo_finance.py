@@ -12,7 +12,7 @@ Production-grade Yahoo Finance data integration with:
 import sys
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict
 
 # Add scripts directory to path for importing existing service
 sys.path.insert(0, str(Path(__file__).parent.parent))

@@ -513,9 +513,9 @@ class EconomicForecastingEngine:
         return {
             "average_std_deviation": round(np.mean(quarterly_stds), 3),
             "maximum_std_deviation": round(np.max(quarterly_stds), 3),
-            "dispersion_trend": "increasing"
-            if quarterly_stds[-1] > quarterly_stds[0]
-            else "decreasing",
+            "dispersion_trend": (
+                "increasing" if quarterly_stds[-1] > quarterly_stds[0] else "decreasing"
+            ),
         }
 
     def _generate_forward_indicators(
@@ -553,9 +553,9 @@ class EconomicForecastingEngine:
             "integrated_nowcast": {
                 "nowcast_gdp": round(current_gdp + (leading_composite - 100) * 0.02, 2),
                 "nowcast_confidence": 0.75,
-                "revision_risk": "medium"
-                if abs(leading_composite - 100) > 5
-                else "low",
+                "revision_risk": (
+                    "medium" if abs(leading_composite - 100) > 5 else "low"
+                ),
             },
         }
 
@@ -601,9 +601,11 @@ class EconomicForecastingEngine:
         return {
             "consumer_confidence_projection": round(base_confidence, 1),
             "spending_intentions": "positive" if base_confidence > 90 else "cautious",
-            "employment_expectations": "improving"
-            if indicators["unemployment_rate"] < indicators["natural_unemployment"]
-            else "stable",
+            "employment_expectations": (
+                "improving"
+                if indicators["unemployment_rate"] < indicators["natural_unemployment"]
+                else "stable"
+            ),
             "confidence": 0.78,
         }
 
@@ -624,9 +626,11 @@ class EconomicForecastingEngine:
         return {
             "investment_intentions_index": round(investment_index, 1),
             "capex_outlook": "expanding" if investment_index > 100 else "cautious",
-            "financing_conditions": "favorable"
-            if indicators["policy_rate"] < neutral_rate + 1.0
-            else "restrictive",
+            "financing_conditions": (
+                "favorable"
+                if indicators["policy_rate"] < neutral_rate + 1.0
+                else "restrictive"
+            ),
             "confidence": 0.82,
         }
 
@@ -648,11 +652,9 @@ class EconomicForecastingEngine:
 
         return {
             "financial_conditions_index": round(fci, 1),
-            "conditions_assessment": "loose"
-            if fci > 110
-            else "tight"
-            if fci < 90
-            else "neutral",
+            "conditions_assessment": (
+                "loose" if fci > 110 else "tight" if fci < 90 else "neutral"
+            ),
             "credit_availability": "ample" if fci > 105 else "limited",
             "market_stress": "low" if fci > 95 else "elevated",
             "confidence": 0.80,
@@ -677,16 +679,19 @@ class EconomicForecastingEngine:
             "monetary_policy_scenarios": {
                 "50bp_rate_cut": rate_cut_impact,
                 "50bp_rate_hike": rate_hike_impact,
-                "policy_effectiveness": "high"
-                if indicators["policy_rate"] > 2.0
-                else "limited",
+                "policy_effectiveness": (
+                    "high" if indicators["policy_rate"] > 2.0 else "limited"
+                ),
             },
             "fiscal_policy_scenarios": fiscal_stimulus,
             "trade_policy_scenarios": trade_impact,
             "policy_coordination": {
-                "monetary_fiscal_alignment": "supportive"
-                if indicators["inflation_rate"] < indicators["inflation_target"] + 1.0
-                else "conflicted",
+                "monetary_fiscal_alignment": (
+                    "supportive"
+                    if indicators["inflation_rate"]
+                    < indicators["inflation_target"] + 1.0
+                    else "conflicted"
+                ),
                 "international_coordination": "limited",
                 "policy_uncertainty_index": round(
                     50 + indicators["recession_probability"] * 100, 0
@@ -820,15 +825,19 @@ class EconomicForecastingEngine:
 
         return {
             "growth_trajectory": {
-                "current_quarter_forecast": expected_gdp_path[current_quarter]
-                if expected_gdp_path
-                else 2.0,
-                "one_year_forecast": expected_gdp_path[one_year]
-                if len(expected_gdp_path) > one_year
-                else 2.0,
-                "two_year_forecast": expected_gdp_path[two_year]
-                if len(expected_gdp_path) > two_year
-                else 2.0,
+                "current_quarter_forecast": (
+                    expected_gdp_path[current_quarter] if expected_gdp_path else 2.0
+                ),
+                "one_year_forecast": (
+                    expected_gdp_path[one_year]
+                    if len(expected_gdp_path) > one_year
+                    else 2.0
+                ),
+                "two_year_forecast": (
+                    expected_gdp_path[two_year]
+                    if len(expected_gdp_path) > two_year
+                    else 2.0
+                ),
                 "average_growth_forecast": round(np.mean(expected_gdp_path), 2),
             },
             "key_themes": [

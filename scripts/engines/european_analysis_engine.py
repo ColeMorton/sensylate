@@ -59,11 +59,11 @@ class EuropeanAnalysisEngine:
         return {
             "current_rate": current_rate,
             "neutral_rate_estimate": neutral_rate,
-            "restrictiveness": "restrictive"
-            if rate_gap > 0.5
-            else "neutral"
-            if abs(rate_gap) <= 0.5
-            else "accommodative",
+            "restrictiveness": (
+                "restrictive"
+                if rate_gap > 0.5
+                else "neutral" if abs(rate_gap) <= 0.5 else "accommodative"
+            ),
             "rate_gap": rate_gap,
             "analysis": f"ECB deposit rate at {current_rate}% is {rate_gap:.2f}pp above estimated neutral rate, indicating {'restrictive' if rate_gap > 0.5 else 'neutral'} policy stance",
         }
@@ -174,9 +174,11 @@ class EuropeanAnalysisEngine:
         return {
             "cycle_length": "european_cycles_historically_longer_than_us",
             "current_phase_duration": f"{phase_duration}_months",
-            "phase_maturity": "late_expansion"
-            if current_phase == "expansion" and phase_duration > 18
-            else "mid_expansion",
+            "phase_maturity": (
+                "late_expansion"
+                if current_phase == "expansion" and phase_duration > 18
+                else "mid_expansion"
+            ),
             "structural_factors": {
                 "labor_market_rigidity": "extends_cycle_duration",
                 "fiscal_coordination": "limited_automatic_stabilizers_compared_to_us",

@@ -831,9 +831,9 @@ class TradeHistoryDiscovery:
                 },
                 "closed_trades_analysis": {
                     "count": len(closed_trades),
-                    "percentage_of_total": len(closed_trades) / len(all_trades)
-                    if all_trades
-                    else 0,
+                    "percentage_of_total": (
+                        len(closed_trades) / len(all_trades) if all_trades else 0
+                    ),
                     "strategy_distribution": trades_data["closed_trades"][
                         "strategy_distribution"
                     ],
@@ -845,10 +845,11 @@ class TradeHistoryDiscovery:
                 },
                 "active_trades_analysis": {
                     "count": len(trades_data["active_trades"]["trades"]),
-                    "percentage_of_total": len(trades_data["active_trades"]["trades"])
-                    / len(all_trades)
-                    if all_trades
-                    else 0,
+                    "percentage_of_total": (
+                        len(trades_data["active_trades"]["trades"]) / len(all_trades)
+                        if all_trades
+                        else 0
+                    ),
                     "strategy_distribution": trades_data["active_trades"][
                         "strategy_distribution"
                     ],
@@ -1019,9 +1020,9 @@ class TradeHistoryDiscovery:
                     market_context["volatility_environment"] = {
                         "VIX_current": vix_current,
                         "VIX_average": 19.5,  # Historical average
-                        "market_regime": "low_volatility"
-                        if vix_current < 20
-                        else "high_volatility",
+                        "market_regime": (
+                            "low_volatility" if vix_current < 20 else "high_volatility"
+                        ),
                         "confidence": 0.90,
                     }
             except Exception as e:
@@ -1067,15 +1068,15 @@ class TradeHistoryDiscovery:
 
         # Add CLI service validation
         market_context["cli_service_validation"] = {
-            "service_health": "operational"
-            if SERVICE_DISCOVERY_AVAILABLE
-            else "degraded",
+            "service_health": (
+                "operational" if SERVICE_DISCOVERY_AVAILABLE else "degraded"
+            ),
             "health_score": 0.85 if SERVICE_DISCOVERY_AVAILABLE else 0.5,
             "services_operational": 1 if SERVICE_DISCOVERY_AVAILABLE else 0,
             "services_healthy": SERVICE_DISCOVERY_AVAILABLE,
-            "cli_services_utilized": ["yahoo_finance"]
-            if market_context["benchmark_data"]
-            else [],
+            "cli_services_utilized": (
+                ["yahoo_finance"] if market_context["benchmark_data"] else []
+            ),
         }
 
         logger.info(
@@ -1097,11 +1098,11 @@ class TradeHistoryDiscovery:
                     ticker_coverage.get("fundamental_analysis_coverage", {})
                 ),
                 "total_tickers": ticker_coverage.get("total_tickers", 0),
-                "coverage_percentage": ticker_coverage["coverage_statistics"][
-                    "coverage_percentage"
-                ]
-                if "coverage_statistics" in ticker_coverage
-                else 0,
+                "coverage_percentage": (
+                    ticker_coverage["coverage_statistics"]["coverage_percentage"]
+                    if "coverage_statistics" in ticker_coverage
+                    else 0
+                ),
                 "confidence": 0.85,
             },
             "analysis_files": {},

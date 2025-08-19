@@ -688,12 +688,14 @@ class EnhancedMacroAnalyzer:
             "velocity_implications": velocity_desc,
             "asset_price_inflation": asset_desc,
             "regional_monetary_characteristics": {
-                "dominant_asset_class": "equities"
-                if market_structure.get("banking_system") == "market_based"
-                else "real_estate",
-                "policy_transmission_lag": "2_3_quarters"
-                if self.region == "US"
-                else "3_4_quarters",
+                "dominant_asset_class": (
+                    "equities"
+                    if market_structure.get("banking_system") == "market_based"
+                    else "real_estate"
+                ),
+                "policy_transmission_lag": (
+                    "2_3_quarters" if self.region == "US" else "3_4_quarters"
+                ),
             },
         }
 
@@ -1017,9 +1019,11 @@ class EnhancedMacroAnalyzer:
         return {
             "household_debt_levels": f"{np.mean(household_debt):.0f}pct_gdp_{'sustainable' if np.mean(household_debt) < 80 else 'elevated'}",
             "corporate_debt_levels": f"{np.mean(corporate_debt):.0f}pct_gdp_{'manageable' if np.mean(corporate_debt) < 70 else 'elevated'}",
-            "debt_servicing_capacity": "adequate"
-            if self._get_indicator_value("POLICY_RATE", 4) < 6
-            else "stressed",
+            "debt_servicing_capacity": (
+                "adequate"
+                if self._get_indicator_value("POLICY_RATE", 4) < 6
+                else "stressed"
+            ),
             "external_financing_needs": self._assess_external_financing_requirements(),
         }
 
@@ -1549,13 +1553,13 @@ class EnhancedMacroAnalyzer:
 
         return {
             "primary_sensitivity": self._identify_regional_sensitivity_variables()[0],
-            "sensitivity_level": "high"
-            if self.region in ["AMERICAS", "ASIA"]
-            else "moderate",
+            "sensitivity_level": (
+                "high" if self.region in ["AMERICAS", "ASIA"] else "moderate"
+            ),
             "transmission_speed": "fast" if self.region == "US" else "moderate",
-            "policy_response_capacity": "high"
-            if self.region in ["US", "EUROPE"]
-            else "moderate",
+            "policy_response_capacity": (
+                "high" if self.region in ["US", "EUROPE"] else "moderate"
+            ),
         }
 
     def _get_regional_risk_profile(self) -> Dict[str, Any]:
@@ -1708,14 +1712,14 @@ class EnhancedMacroAnalyzer:
             }
 
         # Add enhanced analysis quality metrics
-        analysis_output[
-            "analysis_quality_metrics"
-        ] = self._calculate_enhanced_quality_metrics(analysis_output)
+        analysis_output["analysis_quality_metrics"] = (
+            self._calculate_enhanced_quality_metrics(analysis_output)
+        )
 
         # Enhanced CLI service attribution
-        analysis_output[
-            "cli_service_attribution"
-        ] = self._get_enhanced_cli_service_attribution()
+        analysis_output["cli_service_attribution"] = (
+            self._get_enhanced_cli_service_attribution()
+        )
 
         return analysis_output
 
@@ -1763,9 +1767,9 @@ class EnhancedMacroAnalyzer:
             "regional_specificity": regional_intelligence_score,
             "data_driven_score": round(indicator_quality, 3),
             "regional_intelligence_integration": 0.95,
-            "currency_analysis_depth": 0.90
-            if self.currency_info.code != "MULTI"
-            else 0.75,
+            "currency_analysis_depth": (
+                0.90 if self.currency_info.code != "MULTI" else 0.75
+            ),
         }
 
     def _get_enhanced_cli_service_attribution(self) -> Dict[str, Any]:

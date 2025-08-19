@@ -22,7 +22,6 @@ Usage:
         pass
 """
 
-import json
 import logging
 import time
 from dataclasses import dataclass
@@ -368,9 +367,11 @@ class RealTimeValidationService:
             is_blocking=is_blocking,
             ready_for_publication=not is_blocking,
             issues=issues,
-            data_freshness_hours=market_data.get("data_age_hours", 0.0)
-            if "market_data" in locals()
-            else 0.0,
+            data_freshness_hours=(
+                market_data.get("data_age_hours", 0.0)
+                if "market_data" in locals()
+                else 0.0
+            ),
             validation_timestamp=datetime.now(),
             sources_validated=sources_validated,
         )
@@ -642,9 +643,7 @@ class RealTimeValidationService:
         price_pattern = r"\$([0-9,]+\.?\d*)"
         prices = re.findall(price_pattern, content)
 
-        # Extract percentages (expected returns)
-        percent_pattern = r"([+-]?\d+\.?\d*)%"
-        percentages = re.findall(percent_pattern, content)
+        # Extract percentages (expected returns) - pattern reserved for future use
 
         # Look for target patterns
         target_match = re.search(
@@ -688,7 +687,7 @@ if __name__ == "__main__":
     print("Testing validation service...")
     result = service.validate_stock_claims(test_claims)
 
-    print(f"\nValidation Result:")
+    print("\nValidation Result:")
     print(f"Status: {result.status.value}")
     print(f"Overall Score: {result.overall_score}/10.0")
     print(f"Ready for Publication: {result.ready_for_publication}")

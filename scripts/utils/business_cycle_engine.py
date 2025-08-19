@@ -848,9 +848,9 @@ class BusinessCycleEngine:
         """Predict most likely next regime"""
 
         regime_transitions = {
-            "strong_expansion": "moderate_expansion"
-            if momentum < 0
-            else "strong_expansion",
+            "strong_expansion": (
+                "moderate_expansion" if momentum < 0 else "strong_expansion"
+            ),
             "moderate_expansion": "slowdown" if momentum < 0 else "strong_expansion",
             "slowdown": "contraction" if momentum < 0 else "moderate_expansion",
             "contraction": "transition" if momentum > 0 else "contraction",

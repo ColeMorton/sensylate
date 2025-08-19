@@ -702,7 +702,9 @@ class ContractComplianceMonitor:
         elif report.overall_compliance_score >= 4.0:
             print("⚠️  System has significant issues that need attention.")
         else:
-            print("🚨 System is in critical condition and requires immediate attention!")
+            print(
+                "🚨 System is in critical condition and requires immediate attention!"
+            )
 
 
 def main():

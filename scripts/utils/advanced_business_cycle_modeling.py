@@ -502,16 +502,16 @@ class AdvancedBusinessCycleEngine:
                 "expected_quarters_to_recession": round(
                     expected_quarters_to_recession, 1
                 ),
-                "phase_maturity_assessment": "early"
-                if phase_duration < 12
-                else "mid"
-                if phase_duration < 36
-                else "late",
-                "transition_urgency": "low"
-                if expected_quarters_to_peak > 8
-                else "moderate"
-                if expected_quarters_to_peak > 4
-                else "high",
+                "phase_maturity_assessment": (
+                    "early"
+                    if phase_duration < 12
+                    else "mid" if phase_duration < 36 else "late"
+                ),
+                "transition_urgency": (
+                    "low"
+                    if expected_quarters_to_peak > 8
+                    else "moderate" if expected_quarters_to_peak > 4 else "high"
+                ),
             }
 
         elif current_phase == "peak":
@@ -528,16 +528,16 @@ class AdvancedBusinessCycleEngine:
                 "current_phase_expected_remaining_quarters": round(
                     expected_quarters_to_resolution, 1
                 ),
-                "soft_landing_probability": round(
-                    expansion_prob / (contraction_prob + expansion_prob), 3
-                )
-                if (contraction_prob + expansion_prob) > 0
-                else 0.5,
-                "recession_probability": round(
-                    contraction_prob / (contraction_prob + expansion_prob), 3
-                )
-                if (contraction_prob + expansion_prob) > 0
-                else 0.5,
+                "soft_landing_probability": (
+                    round(expansion_prob / (contraction_prob + expansion_prob), 3)
+                    if (contraction_prob + expansion_prob) > 0
+                    else 0.5
+                ),
+                "recession_probability": (
+                    round(contraction_prob / (contraction_prob + expansion_prob), 3)
+                    if (contraction_prob + expansion_prob) > 0
+                    else 0.5
+                ),
                 "phase_maturity_assessment": "critical",
                 "transition_urgency": "high",
             }
@@ -561,11 +561,11 @@ class AdvancedBusinessCycleEngine:
                 "expected_quarters_to_recovery": round(
                     expected_quarters_to_recovery, 1
                 ),
-                "v_shaped_recovery_probability": round(
-                    recovery_prob / (trough_prob + recovery_prob), 3
-                )
-                if (trough_prob + recovery_prob) > 0
-                else 0.25,
+                "v_shaped_recovery_probability": (
+                    round(recovery_prob / (trough_prob + recovery_prob), 3)
+                    if (trough_prob + recovery_prob) > 0
+                    else 0.25
+                ),
                 "phase_maturity_assessment": "early" if phase_duration < 6 else "late",
                 "transition_urgency": "moderate",
             }
@@ -586,9 +586,9 @@ class AdvancedBusinessCycleEngine:
                     expected_quarters_to_expansion, 1
                 ),
                 "double_dip_probability": round(double_dip_prob, 3),
-                "recovery_strength_assessment": "strong"
-                if expansion_prob > 0.6
-                else "moderate",
+                "recovery_strength_assessment": (
+                    "strong" if expansion_prob > 0.6 else "moderate"
+                ),
                 "phase_maturity_assessment": "recovery_positioning",
                 "transition_urgency": "moderate",
             }
@@ -644,11 +644,11 @@ class AdvancedBusinessCycleEngine:
             "primary_risk_factors": risk_factors,
             "risk_factor_scores": risk_scores,
             "overall_transition_risk_score": round(overall_risk, 3),
-            "risk_level": "low"
-            if overall_risk < 0.3
-            else "moderate"
-            if overall_risk < 0.6
-            else "high",
+            "risk_level": (
+                "low"
+                if overall_risk < 0.3
+                else "moderate" if overall_risk < 0.6 else "high"
+            ),
             "key_monitoring_indicators": [
                 "yield_curve_slope",
                 "recession_probability",
@@ -1442,9 +1442,11 @@ class AdvancedBusinessCycleEngine:
             "equity_positioning": equity_weight,
             "sector_preferences": preferred_sectors,
             "duration_positioning": duration,
-            "volatility_positioning": "hedge"
-            if regime_analysis["volatility_regime"] == "low_volatility"
-            else "opportunistic",
+            "volatility_positioning": (
+                "hedge"
+                if regime_analysis["volatility_regime"] == "low_volatility"
+                else "opportunistic"
+            ),
             "rebalancing_urgency": markov_analysis["transition_timing_analysis"].get(
                 "transition_urgency", "moderate"
             ),
@@ -1513,9 +1515,11 @@ class AdvancedBusinessCycleEngine:
                 "volatility_regime": regime_analysis.get(
                     "volatility_regime", "moderate_volatility"
                 ),
-                "hedging_recommendations": "moderate"
-                if regime_analysis.get("volatility_regime") == "low_volatility"
-                else "defensive",
+                "hedging_recommendations": (
+                    "moderate"
+                    if regime_analysis.get("volatility_regime") == "low_volatility"
+                    else "defensive"
+                ),
             },
         }
 

@@ -11,7 +11,6 @@ Tests the complete enhanced validation pipeline including:
 This demonstrates the fixes for the TSLA_vs_NIO validation issues identified.
 """
 
-import json
 import logging
 import sys
 from pathlib import Path
@@ -52,7 +51,7 @@ def test_enhanced_validation_system():
     # Test post path (the problematic TSLA_vs_NIO post)
     post_path = "/Users/colemorton/Projects/sensylate/data/outputs/twitter/fundamental_analysis/TSLA_vs_NIO_20250819.md"
 
-    print(f"\n2. Testing Enhanced Validation Pipeline...")
+    print("\n2. Testing Enhanced Validation Pipeline...")
     print(f"   Target: {Path(post_path).name}")
 
     try:
@@ -72,7 +71,7 @@ def test_enhanced_validation_system():
         # Track event for SLA monitoring
         monitor.track_validation_event(result)
 
-        print(f"\n3. Enhanced Validation Results:")
+        print("\n3. Enhanced Validation Results:")
         print(
             f"   Overall Reliability Score: {result.overall_reliability_score:.1f}/10.0"
         )
@@ -84,13 +83,13 @@ def test_enhanced_validation_system():
 
         # Display real-time validation results
         rt_validation = result.real_time_validation
-        print(f"\n4. Real-Time Financial Data Validation:")
+        print("\n4. Real-Time Financial Data Validation:")
         print(f"   Data Freshness: {rt_validation.data_freshness_hours:.1f} hours")
         print(f"   Validation Score: {rt_validation.overall_score:.1f}/10.0")
         print(f"   Issues Detected: {len(rt_validation.issues)}")
 
         if rt_validation.issues:
-            print(f"\n5. Detailed Issue Analysis (Fail-Fast Logic):")
+            print("\n5. Detailed Issue Analysis (Fail-Fast Logic):")
             for i, issue in enumerate(rt_validation.issues, 1):
                 blocking_status = "🚫 BLOCKING" if issue.is_blocking else "⚠️  WARNING"
                 print(f"   {i}. {blocking_status} - {issue.severity.value.upper()}")
@@ -103,7 +102,7 @@ def test_enhanced_validation_system():
 
         # Test automated corrections if issues found
         if rt_validation.issues and not result.ready_for_publication:
-            print(f"6. Automated Correction Engine:")
+            print("6. Automated Correction Engine:")
             corrections = orchestrator.generate_corrections(result)
 
             print(
@@ -117,7 +116,7 @@ def test_enhanced_validation_system():
             )
 
             if corrections["automated_corrections"]:
-                print(f"\n   High-Confidence Automated Corrections:")
+                print("\n   High-Confidence Automated Corrections:")
                 for correction in corrections["automated_corrections"]:
                     print(f"   → {correction['type']}: {correction['description']}")
                     print(f"     Confidence: {correction['confidence']:.1%}")
@@ -134,7 +133,7 @@ def test_enhanced_validation_system():
                     )
 
         # Display SLA monitoring results
-        print(f"\n7. SLA Monitoring & Performance:")
+        print("\n7. SLA Monitoring & Performance:")
         sla_status = monitor.get_sla_status()
         print(f"   Overall SLA Status: {sla_status['overall_sla_status'].upper()}")
 
@@ -158,14 +157,14 @@ def test_enhanced_validation_system():
         performance = monitor.get_performance_metrics()
         if "validation_performance" in performance:
             perf = performance["validation_performance"]
-            print(f"\n8. Performance Metrics:")
+            print("\n8. Performance Metrics:")
             print(f"   Average Validation Time: {perf['average_time_seconds']:.2f}s")
             print(f"   P95 Validation Time: {perf['p95_time_seconds']:.2f}s")
             print(
                 f"   Data Freshness P95: {performance['data_freshness']['p95_hours']:.1f}h"
             )
 
-        print(f"\n9. System Behavior Analysis:")
+        print("\n9. System Behavior Analysis:")
         if result.is_blocking:
             print(
                 "   ✓ FAIL-FAST LOGIC WORKING: Critical issues correctly blocked publication"
@@ -181,8 +180,8 @@ def test_enhanced_validation_system():
                 "   ✓ VALIDATION PASSED: Content meets institutional quality standards"
             )
 
-        print(f"   ✓ REAL-TIME INTEGRATION: Live market data validation completed")
-        print(f"   ✓ SLA MONITORING: Performance and freshness tracking active")
+        print("   ✓ REAL-TIME INTEGRATION: Live market data validation completed")
+        print("   ✓ SLA MONITORING: Performance and freshness tracking active")
 
         return True
 
@@ -205,19 +204,11 @@ def test_enhanced_validation_system():
 def test_mock_validation_scenario(orchestrator, monitor):
     """Test with mock validation data"""
 
-    print(f"\n   MOCK VALIDATION TEST:")
-    print(f"   → Testing fail-fast logic with simulated TSLA price variance...")
+    print("\n   MOCK VALIDATION TEST:")
+    print("   → Testing fail-fast logic with simulated TSLA price variance...")
 
     # Create mock content that will trigger validation issues
-    mock_content = """
-# Tesla Analysis 🔋⚡
-
-$TSLA: Proven profitability (17.9% gross margins), $37B cash pile, BUY @ $385 target (+14.9%)
-
-Current price analysis based on $335.16 market price.
-
-*Not investment advice. DYOER.*
-"""
+    # Using mock data for validation testing
 
     # Test real-time validation directly
     try:
@@ -233,7 +224,7 @@ Current price analysis based on $335.16 market price.
             "expected_return": 14.9,  # This calculation will likely be wrong
         }
 
-        print(f"   → Validating stock claims against real-time data...")
+        print("   → Validating stock claims against real-time data...")
         validation_result = validator.validate_stock_claims(test_claims)
 
         print(f"   Overall Score: {validation_result.overall_score:.1f}/10.0")
@@ -248,11 +239,11 @@ Current price analysis based on $335.16 market price.
 
         if validation_result.is_blocking:
             print(
-                f"   ✓ FAIL-FAST WORKING: Critical financial accuracy issues correctly blocked"
+                "   ✓ FAIL-FAST WORKING: Critical financial accuracy issues correctly blocked"
             )
 
         # Test SLA monitoring
-        print(f"\n   → Testing SLA monitoring with mock event...")
+        print("\n   → Testing SLA monitoring with mock event...")
 
         class MockValidationResult:
             def __init__(self):
@@ -273,7 +264,7 @@ Current price analysis based on $335.16 market price.
         print(f"   SLA Status: {sla_status['overall_sla_status']}")
 
         print(
-            f"\n   ✓ MOCK VALIDATION SUCCESSFUL: All enhanced systems working correctly"
+            "\n   ✓ MOCK VALIDATION SUCCESSFUL: All enhanced systems working correctly"
         )
         return True
 

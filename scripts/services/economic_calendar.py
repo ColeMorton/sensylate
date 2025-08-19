@@ -317,18 +317,26 @@ class EconomicCalendarService(BaseFinancialService):
         """Analyze sector rotation implications from economic event"""
         if event.event_type == "monetary_policy":
             return {
-                "financials": "positive"
-                if event.forecast and event.forecast > (event.previous or 0)
-                else "neutral",
-                "utilities": "negative"
-                if event.forecast and event.forecast > (event.previous or 0)
-                else "positive",
-                "technology": "negative"
-                if event.forecast and event.forecast > (event.previous or 0)
-                else "neutral",
-                "real_estate": "negative"
-                if event.forecast and event.forecast > (event.previous or 0)
-                else "positive",
+                "financials": (
+                    "positive"
+                    if event.forecast and event.forecast > (event.previous or 0)
+                    else "neutral"
+                ),
+                "utilities": (
+                    "negative"
+                    if event.forecast and event.forecast > (event.previous or 0)
+                    else "positive"
+                ),
+                "technology": (
+                    "negative"
+                    if event.forecast and event.forecast > (event.previous or 0)
+                    else "neutral"
+                ),
+                "real_estate": (
+                    "negative"
+                    if event.forecast and event.forecast > (event.previous or 0)
+                    else "positive"
+                ),
             }
         elif event.event_type == "employment":
             return {

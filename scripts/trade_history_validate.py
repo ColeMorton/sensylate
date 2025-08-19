@@ -346,16 +346,12 @@ class TradingPerformanceValidator:
             sma_adequacy = (
                 "✅ ADEQUATE"
                 if sma_count >= 15
-                else "⚠️ MINIMAL"
-                if sma_count >= 10
-                else "❌ INSUFFICIENT"
+                else "⚠️ MINIMAL" if sma_count >= 10 else "❌ INSUFFICIENT"
             )
             ema_adequacy = (
                 "✅ ADEQUATE"
                 if ema_count >= 15
-                else "⚠️ MINIMAL"
-                if ema_count >= 10
-                else "❌ INSUFFICIENT"
+                else "⚠️ MINIMAL" if ema_count >= 10 else "❌ INSUFFICIENT"
             )
 
             sample_validation["validation_results"] = {
@@ -617,7 +613,9 @@ class TradingPerformanceValidator:
 
             print(f"✅ Overall confidence score: {overall_confidence:.3f}")
             print(f"✅ Quality band: {quality_band}")
-            print(f"✅ Threshold met: {overall_confidence >= self.confidence_threshold}")
+            print(
+                f"✅ Threshold met: {overall_confidence >= self.confidence_threshold}"
+            )
 
         except Exception as e:
             print(f"❌ Confidence scoring error: {str(e)}")
@@ -645,11 +643,13 @@ class TradingPerformanceValidator:
                     "phase_4d_confidence_scoring": confidence_scoring,
                 },
                 "validation_summary": {
-                    "overall_validation_status": "PASSED"
-                    if confidence_scoring.get("overall_confidence", {}).get(
-                        "meets_threshold", False
-                    )
-                    else "FAILED",
+                    "overall_validation_status": (
+                        "PASSED"
+                        if confidence_scoring.get("overall_confidence", {}).get(
+                            "meets_threshold", False
+                        )
+                        else "FAILED"
+                    ),
                     "confidence_score": confidence_scoring.get(
                         "overall_confidence", {}
                     ).get("weighted_score", 0.0),

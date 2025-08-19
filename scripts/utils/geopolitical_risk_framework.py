@@ -294,11 +294,11 @@ class GeopoliticalRiskEngine:
             "regional_vulnerabilities": self.regional_vulnerabilities.get(
                 self.region, {}
             ),
-            "current_safe_haven_flows": "high"
-            if market_stress > 0.6
-            else "moderate"
-            if market_stress > 0.3
-            else "low",
+            "current_safe_haven_flows": (
+                "high"
+                if market_stress > 0.6
+                else "moderate" if market_stress > 0.3 else "low"
+            ),
         }
 
     def _assess_trade_tension_level(
@@ -701,14 +701,18 @@ class GeopoliticalRiskEngine:
                                 contagion_map[target_region]["contagion_probability"],
                                 contagion_prob,
                             )
-                            contagion_map[target_region][
-                                "transmission_channels"
-                            ] = list(
-                                set(
-                                    contagion_map[target_region][
-                                        "transmission_channels"
-                                    ]
-                                    + ["trade_links", "financial_flows", "sentiment"]
+                            contagion_map[target_region]["transmission_channels"] = (
+                                list(
+                                    set(
+                                        contagion_map[target_region][
+                                            "transmission_channels"
+                                        ]
+                                        + [
+                                            "trade_links",
+                                            "financial_flows",
+                                            "sentiment",
+                                        ]
+                                    )
                                 )
                             )
 
@@ -721,17 +725,21 @@ class GeopoliticalRiskEngine:
             contagion_assessments[risk_name] = {
                 "primary_affected_regions": affected_regions,
                 "contagion_mapping": contagion_map,
-                "overall_contagion_risk": "high"
-                if any(
-                    region_data["contagion_probability"] > 0.4
-                    for region_data in contagion_map.values()
-                )
-                else "moderate"
-                if any(
-                    region_data["contagion_probability"] > 0.2
-                    for region_data in contagion_map.values()
-                )
-                else "low",
+                "overall_contagion_risk": (
+                    "high"
+                    if any(
+                        region_data["contagion_probability"] > 0.4
+                        for region_data in contagion_map.values()
+                    )
+                    else (
+                        "moderate"
+                        if any(
+                            region_data["contagion_probability"] > 0.2
+                            for region_data in contagion_map.values()
+                        )
+                        else "low"
+                    )
+                ),
             }
 
         return contagion_assessments
@@ -1007,10 +1015,12 @@ class GeopoliticalRiskEngine:
 
         return {
             "regional_allocation_guidance": regional_recommendations,
-            "safe_haven_preferences": ["US", "EU"]
-            if "US" in regional_recommendations
-            and regional_recommendations["US"]["risk_exposure_score"] < 0.4
-            else ["US"],
+            "safe_haven_preferences": (
+                ["US", "EU"]
+                if "US" in regional_recommendations
+                and regional_recommendations["US"]["risk_exposure_score"] < 0.4
+                else ["US"]
+            ),
             "highest_risk_regions": [
                 region
                 for region, data in regional_recommendations.items()
@@ -1121,11 +1131,11 @@ class GeopoliticalRiskEngine:
                 "impact_score": round(sector_impact, 3),
                 "impact_classification": classification,
                 "primary_risk_drivers": contributing_risks,
-                "investment_recommendation": "overweight"
-                if sector_impact > 0.2
-                else "underweight"
-                if sector_impact < -0.3
-                else "neutral",
+                "investment_recommendation": (
+                    "overweight"
+                    if sector_impact > 0.2
+                    else "underweight" if sector_impact < -0.3 else "neutral"
+                ),
             }
 
         return sector_impacts
@@ -1144,9 +1154,11 @@ class GeopoliticalRiskEngine:
                     "strategy_type": "currency_hedging",
                     "instruments": ["currency_forwards", "currency_ETFs"],
                     "rationale": "Hedge against currency volatility from geopolitical instability",
-                    "urgency": "high"
-                    if active_risks["currency_instability"]["probability"] > 0.6
-                    else "moderate",
+                    "urgency": (
+                        "high"
+                        if active_risks["currency_instability"]["probability"] > 0.6
+                        else "moderate"
+                    ),
                 }
             )
 

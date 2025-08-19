@@ -233,9 +233,9 @@ class UnifiedCommandInterface:
             "workflow_id": result.workflow_id,
             "start_time": result.start_time.isoformat(),
             "end_time": result.end_time.isoformat() if result.end_time else None,
-            "duration": str(result.end_time - result.start_time)
-            if result.end_time
-            else None,
+            "duration": (
+                str(result.end_time - result.start_time) if result.end_time else None
+            ),
             "phases_completed": len(result.phase_results),
             "final_outputs": result.final_outputs,
             "overall_confidence": result.overall_confidence,

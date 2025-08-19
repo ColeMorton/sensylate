@@ -942,9 +942,11 @@ class UnifiedMacroAnalyzer:
                 "discrepancy": round(
                     abs(discovery_recession_prob - final_recession_probability), 4
                 ),
-                "reconciliation_status": "unified"
-                if discovery_recession_prob == final_recession_probability
-                else "aligned",
+                "reconciliation_status": (
+                    "unified"
+                    if discovery_recession_prob == final_recession_probability
+                    else "aligned"
+                ),
                 "analysis_factors_transparency": round(system_recession_probability, 4),
                 "validation_approach": "fail_fast_discovery_inheritance",
             }
@@ -1459,9 +1461,11 @@ class UnifiedMacroAnalyzer:
         # Calculate confidence
         confidence_factors = [
             0.88,  # Base confidence for risk assessment
-            1.0
-            if len([k for k in indicators if indicators[k] is not None]) > 5
-            else 0.8,
+            (
+                1.0
+                if len([k for k in indicators if indicators[k] is not None]) > 5
+                else 0.8
+            ),
             self._assess_data_freshness(),
         ]
 
@@ -1580,12 +1584,14 @@ class UnifiedMacroAnalyzer:
 
         # Calculate confidence based on data availability and quality
         confidence_factors = [
-            0.9
-            if all(
-                indicators.get(key) is not None
-                for key in ["gdp_growth", "unemployment_rate", "policy_rate"]
-            )
-            else 0.7,
+            (
+                0.9
+                if all(
+                    indicators.get(key) is not None
+                    for key in ["gdp_growth", "unemployment_rate", "policy_rate"]
+                )
+                else 0.7
+            ),
             self._assess_data_freshness(),
             0.95 if indicators.get("yield_curve_slope") is not None else 0.8,
         ]
@@ -2198,9 +2204,9 @@ class UnifiedMacroAnalyzer:
         )
 
         # Add confidence assessment to the analysis output
-        analysis_output[
-            "dynamic_confidence_and_quality_assessment"
-        ] = confidence_and_quality_assessment
+        analysis_output["dynamic_confidence_and_quality_assessment"] = (
+            confidence_and_quality_assessment
+        )
 
         return analysis_output
 
@@ -2524,9 +2530,11 @@ class UnifiedMacroAnalyzer:
                 artifacts_list.append(
                     {
                         "artifact_type": "repeated_generic_content",
-                        "value_found": string_content[:50] + "..."
-                        if len(string_content) > 50
-                        else string_content,
+                        "value_found": (
+                            string_content[:50] + "..."
+                            if len(string_content) > 50
+                            else string_content
+                        ),
                         "location": "multiple_locations",
                         "content": f"Repeated {count} times",
                         "severity": "medium",

@@ -435,7 +435,9 @@ print(f"Total records: {len(daily_data.get('data', [])) + len(weekly_data.get('d
         print(
             f"   - Weekly Metadata: {'✅' if verification['weekly_meta_exists'] else '❌'}"
         )
-        print(f"   - Data Integrity: {'✅' if verification['data_integrity'] else '❌'}")
+        print(
+            f"   - Data Integrity: {'✅' if verification['data_integrity'] else '❌'}"
+        )
 
         if verification["errors"]:
             print(f"\n⚠️  Data Verification Errors:")
@@ -467,7 +469,9 @@ print(f"Total records: {len(daily_data.get('data', [])) + len(weekly_data.get('d
         print(f"\n🎯 OVERALL ASSESSMENT:")
         print(f"   - Command Success Rate: {command_success_rate:.0%}")
         print(f"   - Files Created: {total_files_created}")
-        print(f"   - Data Integrity: {'✅' if verification['data_integrity'] else '❌'}")
+        print(
+            f"   - Data Integrity: {'✅' if verification['data_integrity'] else '❌'}"
+        )
         print(f"   - Complete File Set: {'✅' if files_exist else '❌'}")
         print(
             f"   - Daily Data Volume: {'✅' if daily_records_sufficient else '❌'} ({verification['daily_records']} records, need ≥1000)"
