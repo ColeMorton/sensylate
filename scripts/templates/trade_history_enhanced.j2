@@ -354,7 +354,7 @@ Portfolio: **{{ data.portfolio_name | default(portfolio) | title }}** | Confiden
 
 #### Real-Time Strategy Calibration
 **Economic Context for Signal Generation**:
-- **Fed Funds Rate**: {{ data.fed_funds_rate | default("5.25") }}% | **Impact on Signals**: {{ data.fed_impact_on_strategies | default("Neutral correlation with technical crossover strategies") }}
+- **Fed Funds Rate**: {{ data.fed_funds_rate }}% | **Impact on Signals**: {{ data.fed_impact_on_strategies | default("Neutral correlation with technical crossover strategies") }}
 - **VIX Environment**: {{ data.avg_vix | default("18.5") }} | **Strategy Performance**: {{ data.vix_environment | default("Favorable for trend strategies in current range") }}
 - **Sector Rotation**: {{ data.sector_rotation_status | default("Technology leadership with emerging defensive rotation") }}
 - **Economic Regime**: {{ data.business_cycle | default("Mid-cycle expansion") }} | **Signal Quality Impact**: {{ data.cycle_alignment | default("Growth-oriented strategies favored") }}

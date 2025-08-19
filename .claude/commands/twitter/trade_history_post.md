@@ -71,7 +71,7 @@ def calculate_trade_post_synthesis_confidence(source_conf, engagement_optimizati
 def load_trade_history_post_synthesis(analysis_file, date):
     """Load and validate source trade history analysis synthesis"""
 
-    source_path = f"data/outputs/trade_history/{analysis_file}_{date}.md"
+    source_path = f"{DATA_OUTPUTS}/trade_history/{analysis_file}_{date}.md"
 
     # DASV Input Validation
     validate_trade_history_post_synthesis(source_path)

@@ -52,6 +52,7 @@ class DateTimeEncoder(json.JSONEncoder):
             return obj.tolist()
         return super().default(obj)
 
+
 # Import configuration manager and schema selector (always required)
 from utils.config_manager import ConfigManager, ConfigurationError
 from utils.schema_selector import create_schema_selector, get_schema_for_region
@@ -309,14 +310,18 @@ class MacroEconomicDiscovery:
             try:
                 # Use enhanced ConfigManager validation with required=True for critical keys
                 api_key = self.config.get_api_key(key_name, required=True)
-                
+
                 # Get detailed status for logging
                 status = self.config.get_api_key_status(key_name)
-                
+
                 if status["found"] and status["valid_format"]:
-                    logger.debug(f"✓ API key validated: {key_name} ({status['source']}, {status['obfuscated_value']})")
+                    logger.debug(
+                        f"✓ API key validated: {key_name} ({status['source']}, {status['obfuscated_value']})"
+                    )
                 elif status["found"] and not status["valid_format"]:
-                    validation_warnings.append(f"{key_name}: Invalid format ({status['length']} chars)")
+                    validation_warnings.append(
+                        f"{key_name}: Invalid format ({status['length']} chars)"
+                    )
                     logger.warning(f"⚠️ API key format issue: {key_name}")
                 else:
                     validation_errors.append(key_name)
@@ -340,7 +345,6 @@ class MacroEconomicDiscovery:
         logger.info(
             f"✓ All {len(required_keys)} required API keys validated for {self.region}"
         )
-
 
     def _validate_service_availability(self) -> None:
         """Validate which CLI services are actually available"""
@@ -3306,7 +3310,13 @@ class MacroEconomicDiscovery:
             output_file = self.output_dir / output_filename
 
             with open(output_file, "w", encoding="utf-8") as f:
-                json.dump(discovery_output, f, indent=2, ensure_ascii=False, cls=DateTimeEncoder)
+                json.dump(
+                    discovery_output,
+                    f,
+                    indent=2,
+                    ensure_ascii=False,
+                    cls=DateTimeEncoder,
+                )
 
             logger.info(f"Macro-economic discovery output saved to: {output_file}")
 

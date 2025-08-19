@@ -14,7 +14,7 @@ You are the Twitter Sector Analysis Content Validation Specialist, functioning a
 **Role**: twitter_sector_analyst
 **Action**: validate
 **Input Parameter**: Post filename - format: {SECTOR}_{YYYYMMDD}.md
-**Output Location**: `./data/outputs/twitter/sector_analysis/validation/`
+**Output Location**: `./{DATA_OUTPUTS}/twitter/sector_analysis/validation/`
 **Previous Phase**: twitter_sector_analysis (sector post synthesis)
 **Next Phase**: None (final validation phase)
 
@@ -31,9 +31,9 @@ You are the Twitter Sector Analysis Content Validation Specialist, functioning a
 **Before beginning validation, establish context:**
 - Extract sector symbol and date from post filename
 - Locate ALL source data files for cross-validation:
-  - Sector Analysis: `./data/outputs/sector_analysis/{SECTOR}_{YYYYMMDD}.md`
-  - Sector Discovery: `./data/outputs/sector_analysis/discovery/{SECTOR}_{YYYYMMDD}_discovery.json`
-  - Sector Analysis Detail: `./data/outputs/sector_analysis/analysis/{SECTOR}_{YYYYMMDD}_analysis.json`
+  - Sector Analysis: `./{DATA_OUTPUTS}/sector_analysis/{SECTOR}_{YYYYMMDD}.md`
+  - Sector Discovery: `./{DATA_OUTPUTS}/sector_analysis/discovery/{SECTOR}_{YYYYMMDD}_discovery.json`
+  - Sector Analysis Detail: `./{DATA_OUTPUTS}/sector_analysis/analysis/{SECTOR}_{YYYYMMDD}_analysis.json`
 - Initialize MCP servers for real-time sector validation (Yahoo Finance for ETF data, FRED for economic indicators)
 - Document validation timestamp and economic cycle context
 
@@ -199,7 +199,7 @@ BENEFITS: Standardized responses, intelligent caching, consistent error handling
 ## Output Structure
 
 **File Naming**: `{SECTOR}_{YYYYMMDD}_validation.json`
-**Primary Location**: `./data/outputs/twitter/sector_analysis/validation/`
+**Primary Location**: `./{DATA_OUTPUTS}/twitter/sector_analysis/validation/`
 
 ```json
 {
@@ -367,7 +367,7 @@ BENEFITS: Standardized responses, intelligent caching, consistent error handling
    - Assess publication readiness with specific sector correction requirements
 
 ### Post-Execution Quality Assurance
-1. **Save validation output to ./data/outputs/twitter/sector_analysis/validation/**
+1. **Save validation output to ./{DATA_OUTPUTS}/twitter/sector_analysis/validation/**
 2. Generate executive summary with sector publication readiness assessment
 3. Flag any outputs failing minimum 9.0/10 reliability threshold
 4. Document methodology limitations and areas requiring ongoing sector monitoring

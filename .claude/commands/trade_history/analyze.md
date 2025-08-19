@@ -8,18 +8,18 @@ Comprehensive statistical analysis and performance measurement for institutional
 
 The Trading Performance Analysis phase represents the systematic analysis and quantitative evaluation of trading data collected from the discovery phase. This command provides the requirements for the "Analyze" phase of the DASV (Discover → Analyze → Synthesize → Validate) framework, focusing on signal effectiveness analysis, statistical measurement, and performance attribution.
 
-**Expected Output Schema**: `/scripts/schemas/trade_history_analysis_schema.json`
-**Researcher Sub Task**: Use the researcher sub-agent to execute trade history analysis. Ensure output conforms to `/scripts/schemas/trade_history_analysis_schema.json`.
+**Expected Output Schema**: `/{SCRIPTS_BASE}/schemas/trade_history_analysis_schema.json`
+**Researcher Sub Task**: Use the researcher sub-agent to execute trade history analysis. Ensure output conforms to `/{SCRIPTS_BASE}/schemas/trade_history_analysis_schema.json`.
 
 ## Microservice Integration
 
 **Framework**: DASV Phase 2
 **Role**: trade_history
 **Action**: analyze
-**Output Location**: `./data/outputs/trade_history/analysis/`
+**Output Location**: `./{DATA_OUTPUTS}/trade_history/analysis/`
 **Previous Phase**: trade_history_discover
 **Next Phase**: trade_history_synthesize
-**Template Reference**: `./templates/analysis/trade_history_template.md` (final output structure awareness)
+**Template Reference**: `./{TEMPLATES_BASE}/analysis/trade_history_template.md` (final output structure awareness)
 
 ## Parameters
 
@@ -52,8 +52,8 @@ The Trading Performance Analysis phase represents the systematic analysis and qu
 ## Output Structure and Schema
 
 **File Naming**: `{PORTFOLIO}_{YYYYMMDD}_analysis.json`
-**Location**: `./data/outputs/trade_history/analysis/`
-**Schema Compliance**: Must validate against `/scripts/schemas/trade_history_analysis_schema.json`
+**Location**: `./{DATA_OUTPUTS}/trade_history/analysis/`
+**Schema Compliance**: Must validate against `/{SCRIPTS_BASE}/schemas/trade_history_analysis_schema.json`
 
 ### Expected Analysis Schema Structure
 ```json
@@ -91,7 +91,7 @@ The Trading Performance Analysis phase represents the systematic analysis and qu
 ## Implementation Framework
 
 ### Execution Requirements
-**Primary Tool**: Use `/scripts/trade_history_analyze.py` as the atomic analysis tool
+**Primary Tool**: Use `/{SCRIPTS_BASE}/trade_history_analyze.py` as the atomic analysis tool
 **Statistical Methods**: Implement proper significance testing and confidence intervals
 **Sample Size Validation**: Enforce minimum trade requirements for statistical claims
 **Quality Gates**: Ensure institutional-grade confidence scoring and error handling

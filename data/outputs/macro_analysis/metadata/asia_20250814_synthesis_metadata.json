@@ -18,7 +18,7 @@
     "policy_stance": "divergent_regional_policies",
     "key_economic_catalysts": [
       "Technology sector leadership (78% probability)",
-      "Infrastructure investment surge (82% probability)", 
+      "Infrastructure investment surge (82% probability)",
       "Energy transition acceleration (74% probability)"
     ],
     "economic_confidence": 0.90
@@ -34,7 +34,7 @@
     },
     "regional_cycle_dynamics": {
       "india": "robust_expansion",
-      "china": "stabilization", 
+      "china": "stabilization",
       "japan": "recovery",
       "south_korea": "moderate_recovery"
     },

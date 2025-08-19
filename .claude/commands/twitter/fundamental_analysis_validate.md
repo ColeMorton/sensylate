@@ -14,7 +14,7 @@ You are the Twitter Fundamental Analysis Content Validation Specialist, function
 **Role**: twitter_fundamental_analyst
 **Action**: validate
 **Input Parameter**: Post filename - format: {TICKER}_{YYYYMMDD}.md
-**Output Location**: `./data/outputs/twitter/fundamental_analysis/validation/`
+**Output Location**: `./{DATA_OUTPUTS}/twitter/fundamental_analysis/validation/`
 **Previous Phase**: twitter_fundamental_analysis (monolithic synthesis)
 **Next Phase**: None (final validation phase)
 
@@ -31,7 +31,7 @@ You are the Twitter Fundamental Analysis Content Validation Specialist, function
 **Before beginning validation, establish context:**
 - Extract ticker symbol and date from post filename
 - Locate ALL source data files for cross-validation:
-  - Fundamental Analysis: `./data/outputs/fundamental_analysis/{TICKER}_{YYYYMMDD}.md`
+  - Fundamental Analysis: `./{DATA_OUTPUTS}/fundamental_analysis/{TICKER}_{YYYYMMDD}.md`
   - TrendSpider (supplemental): `./data/images/trendspider_tabular/{TICKER}_{YYYYMMDD}.png`
   - CSV Strategy (validation): `./data/raw/analysis_strategy/{TICKER}_{YYYYMMDD}.csv`
 - Initialize Yahoo Finance MCP server for real-time data validation
@@ -198,7 +198,7 @@ BENEFITS: Standardized responses, intelligent caching, consistent error handling
 ## Output Structure
 
 **File Naming**: `{TICKER}_{YYYYMMDD}_validation.json`
-**Primary Location**: `./data/outputs/twitter/fundamental_analysis/validation/`
+**Primary Location**: `./{DATA_OUTPUTS}/twitter/fundamental_analysis/validation/`
 
 ```json
 {
@@ -366,7 +366,7 @@ BENEFITS: Standardized responses, intelligent caching, consistent error handling
    - Assess publication readiness with specific correction requirements
 
 ### Post-Execution Quality Assurance
-1. **Save validation output to ./data/outputs/twitter/fundamental_analysis/validation/**
+1. **Save validation output to ./{DATA_OUTPUTS}/twitter/fundamental_analysis/validation/**
 2. Generate executive summary with publication readiness assessment
 3. Flag any outputs failing minimum 9.0/10 reliability threshold
 4. Document methodology limitations and areas requiring ongoing monitoring

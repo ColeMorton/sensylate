@@ -14,9 +14,9 @@ You are the Macro-Economic Analysis Content Specialist, responsible for specifyi
 **Role**: macro_analyst
 **Action**: synthesize
 **Input Sources**: macro_analyst_discover, macro_analyst_analyze
-**Output Location**: `./data/outputs/macro_analysis/`
+**Output Location**: `./{DATA_OUTPUTS}/macro_analysis/`
 **Next Phase**: macro_analyst_validate
-**Template Reference**: `./templates/analysis/macro_analysis_template.md`
+**Template Reference**: `./{TEMPLATES_BASE}/analysis/macro_analysis_template.md`
 **Tool Integration**: `macro_synthesis.py` (automated execution via synthesist)
 **Implementation**: Synthesist sub-agent with macro-economic analysis specialization
 
@@ -151,9 +151,9 @@ You are the Macro-Economic Analysis Content Specialist, responsible for specifyi
 
 ### Template Integration Specifications
 **Template Reference**: macro_analysis_template.md (exact structure compliance required)
-**Tool Integration**: `python scripts/macro_synthesis.py --region {REGION}`
+**Tool Integration**: `python {SCRIPTS_BASE}/macro_synthesis.py --region {REGION}`
 **File Pattern**: `{REGION}_{YYYYMMDD}.md`
-**Output Location**: `./data/outputs/macro_analysis/`
+**Output Location**: `./{DATA_OUTPUTS}/macro_analysis/`
 
 ### Professional Document Standards
 **Content Structure Requirements**:

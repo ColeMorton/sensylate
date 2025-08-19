@@ -568,7 +568,7 @@ registry = get_global_registry(config)
 # Execute content evaluation
 result = registry.execute_script(
     "content_evaluation",
-    filename="/data/outputs/fundamental_analysis/COMPANY_DATE.md",
+    filename="/{DATA_OUTPUTS}/fundamental_analysis/COMPANY_DATE.md",
     evaluation_depth="comprehensive",
     real_time_validation=True
 )
@@ -576,7 +576,7 @@ result = registry.execute_script(
 # Execute with specific validation focus
 result = registry.execute_script(
     "content_evaluation",
-    filename="/data/outputs/market_research/SECTOR_ANALYSIS_20250718.md",
+    filename="/{DATA_OUTPUTS}/market_research/SECTOR_ANALYSIS_20250718.md",
     validation_focus=["financial_data", "regulatory_compliance"],
     evaluation_depth="institutional"
 )
@@ -584,7 +584,7 @@ result = registry.execute_script(
 # Execute compliance-focused evaluation
 result = registry.execute_script(
     "content_evaluation",
-    filename="/data/outputs/strategic_analysis/BUSINESS_PLAN_20250718.md",
+    filename="/{DATA_OUTPUTS}/strategic_analysis/BUSINESS_PLAN_20250718.md",
     validation_focus=["regulatory_compliance", "methodology"],
     evaluation_depth="standard"
 )
@@ -595,24 +595,24 @@ result = registry.execute_script(
 # Via content automation CLI
 python {SCRIPTS_BASE}/content_automation_cli.py \
     --script content_evaluation \
-    --filename "/data/outputs/fundamental_analysis/COMPANY_DATE.md" \
+    --filename "/{DATA_OUTPUTS}/fundamental_analysis/COMPANY_DATE.md" \
     --evaluation-depth comprehensive \
     --real-time-validation true
 
 # Via direct script execution
 python {SCRIPTS_BASE}/base_scripts/content_evaluation_script.py \
-    --filename "/data/outputs/market_research/SECTOR_ANALYSIS_20250718.md" \
+    --filename "/{DATA_OUTPUTS}/market_research/SECTOR_ANALYSIS_20250718.md" \
     --validation-focus financial_data,regulatory_compliance \
     --evaluation-depth institutional
 
 # Compliance-focused evaluation
 python {SCRIPTS_BASE}/base_scripts/content_evaluation_script.py \
-    --filename "/data/outputs/strategic_analysis/BUSINESS_PLAN_20250718.md" \
+    --filename "/{DATA_OUTPUTS}/strategic_analysis/BUSINESS_PLAN_20250718.md" \
     --validation-focus regulatory_compliance,methodology
 
 # Batch evaluation with real-time validation
 python {SCRIPTS_BASE}/content_evaluation/batch_evaluator.py \
-    --directory "/data/outputs/fundamental_analysis/" \
+    --directory "/{DATA_OUTPUTS}/fundamental_analysis/" \
     --pattern "*_20250718.md" \
     --real-time-validation true
 ```
@@ -620,38 +620,38 @@ python {SCRIPTS_BASE}/content_evaluation/batch_evaluator.py \
 ### Claude Command Execution
 ```
 # Standard content evaluation
-/content_evaluator filename="/data/outputs/fundamental_analysis/COMPANY_DATE.md"
+/content_evaluator filename="/{DATA_OUTPUTS}/fundamental_analysis/COMPANY_DATE.md"
 
 # Comprehensive evaluation with real-time validation
-/content_evaluator filename="/data/outputs/market_research/SECTOR_ANALYSIS_20250718.md" evaluation_depth=comprehensive real_time_validation=true
+/content_evaluator filename="/{DATA_OUTPUTS}/market_research/SECTOR_ANALYSIS_20250718.md" evaluation_depth=comprehensive real_time_validation=true
 
 # Compliance-focused evaluation
-/content_evaluator filename="/data/outputs/strategic_analysis/BUSINESS_PLAN_20250718.md" validation_focus=regulatory_compliance,methodology
+/content_evaluator filename="/{DATA_OUTPUTS}/strategic_analysis/BUSINESS_PLAN_20250718.md" validation_focus=regulatory_compliance,methodology
 
 # Financial analysis evaluation
-/content_evaluator filename="/data/outputs/fundamental_analysis/AAPL_20250718.md" validation_focus=financial_data,market_analysis
+/content_evaluator filename="/{DATA_OUTPUTS}/fundamental_analysis/AAPL_20250718.md" validation_focus=financial_data,market_analysis
 
 # Institutional-grade evaluation
-/content_evaluator filename="/data/outputs/investment_research/PORTFOLIO_ANALYSIS_20250718.md" evaluation_depth=institutional
+/content_evaluator filename="/{DATA_OUTPUTS}/investment_research/PORTFOLIO_ANALYSIS_20250718.md" evaluation_depth=institutional
 ```
 
 ### Content Evaluation Workflow Examples
 ```
 # Financial content evaluation workflow
-/content_evaluator filename="/data/outputs/fundamental_analysis/TSLA_20250718.md" evaluation_depth=comprehensive
+/content_evaluator filename="/{DATA_OUTPUTS}/fundamental_analysis/TSLA_20250718.md" evaluation_depth=comprehensive
 
 # Market research validation workflow
-/content_evaluator filename="/data/outputs/sector_analysis/technology_20250718.md" validation_focus=market_analysis,methodology
+/content_evaluator filename="/{DATA_OUTPUTS}/sector_analysis/technology_20250718.md" validation_focus=market_analysis,methodology
 
 # Strategic analysis compliance check
-/content_evaluator filename="/data/outputs/business_intelligence/M_AND_A_ANALYSIS_20250718.md" validation_focus=regulatory_compliance
+/content_evaluator filename="/{DATA_OUTPUTS}/business_intelligence/M_AND_A_ANALYSIS_20250718.md" validation_focus=regulatory_compliance
 
 # Multi-source validation for critical content
-/content_evaluator filename="/data/outputs/investment_recommendations/HIGH_CONVICTION_PICKS_20250718.md" evaluation_depth=institutional real_time_validation=true
+/content_evaluator filename="/{DATA_OUTPUTS}/investment_recommendations/HIGH_CONVICTION_PICKS_20250718.md" evaluation_depth=institutional real_time_validation=true
 
 # Comparative analysis evaluation examples
-/content_evaluator filename="/data/outputs/comparative_analysis/AAPL_vs_GOOGL_20250718.md" comparative_validation=true
-/content_evaluator filename="/data/outputs/comparative_analysis/cross-sector-comparison-20250718.md" evaluation_depth=comprehensive
+/content_evaluator filename="/{DATA_OUTPUTS}/comparative_analysis/AAPL_vs_GOOGL_20250718.md" comparative_validation=true
+/content_evaluator filename="/{DATA_OUTPUTS}/comparative_analysis/cross-sector-comparison-20250718.md" evaluation_depth=comprehensive
 ```
 
 Analyzes the specified file and generates comprehensive accuracy evaluation report with evidence-based scoring and actionable recommendations.
@@ -717,7 +717,7 @@ Analyzes the specified file and generates comprehensive accuracy evaluation repo
 
 # Comparative analysis evaluation workflow
 /comparative_analyst/discover ticker_1=AAPL ticker_2=MSFT
-/comparative_analyst/synthesize analysis_file="data/outputs/comparative_analysis/analysis/AAPL_vs_MSFT_{date}_analysis.json"
+/comparative_analyst/synthesize analysis_file="{DATA_OUTPUTS}/comparative_analysis/analysis/AAPL_vs_MSFT_{date}_analysis.json"
 /content_evaluator filename="{DATA_OUTPUTS}/comparative_analysis/AAPL_vs_MSFT_YYYYMMDD.md" comparative_validation=true
 /content_publisher content_type=comparative_analysis
 
@@ -730,7 +730,7 @@ Analyzes the specified file and generates comprehensive accuracy evaluation repo
 
 ### Required Actions
 1. **Generate Output Metadata**: Include evaluation metadata for quality tracking
-2. **Store Evaluation Results**: Save to `./data/outputs/content_evaluation/` directories
+2. **Store Evaluation Results**: Save to `./{DATA_OUTPUTS}/content_evaluation/` directories
 3. **Evidence Documentation**: Maintain evidence matrix with source verification
 4. **Quality Validation**: Ensure evaluation meets institutional standards
 

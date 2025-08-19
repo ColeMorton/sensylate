@@ -1,0 +1,31 @@
+{% extends 'shared/base_analysis_template.j2' %}
+
+{% import 'shared/macros/confidence_scoring_macro.j2' as confidence %}
+{% import 'shared/macros/data_quality_macro.j2' as quality %}
+
+{% block metadata %}
+## {{ metadata.command_name }} - {{ metadata.framework_phase|title }} Phase
+**Execution**: {{ metadata.execution_timestamp|strftime('%Y-%m-%d %H:%M:%S') }}
+**Domain**: {{ metadata.domain_identifier }}
+**Confidence**: {{ metadata.confidence_level|round(2) if metadata.confidence_level else 'N/A' }}
+{% endblock %}
+
+{% block validation_summary %}
+## Validation Summary
+{{ validation_summary if validation_summary else 'Validation summary not available.' }}
+{% endblock %}
+
+{% block quality_certification %}
+## Quality Certification
+{{ quality.render_certification(quality_certification) }}
+{% endblock %}
+
+{% block audit_trail %}
+## Audit Trail
+{{ audit_trail if audit_trail else 'Audit trail not available.' }}
+{% endblock %}
+
+{% block confidence_assessment %}
+## Confidence Assessment
+{{ confidence.render_assessment(confidence_assessment) }}
+{% endblock %}

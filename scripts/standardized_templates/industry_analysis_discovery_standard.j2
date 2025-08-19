@@ -1,0 +1,33 @@
+{% extends 'shared/base_analysis_template.j2' %}
+
+{% import 'shared/macros/confidence_scoring_macro.j2' as confidence %}
+{% import 'shared/macros/data_quality_macro.j2' as quality %}
+
+{% block metadata %}
+## {{ metadata.command_name }} - {{ metadata.framework_phase|title }} Phase
+**Execution**: {{ metadata.execution_timestamp|strftime('%Y-%m-%d %H:%M:%S') }}
+**Domain**: {{ metadata.domain_identifier }}
+**Confidence**: {{ metadata.confidence_level|round(2) if metadata.confidence_level else 'N/A' }}
+{% endblock %}
+
+{% block data_summary %}
+## Data Summary
+{{ data_summary if data_summary else 'Data summary not available.' }}
+{% endblock %}
+
+{% block key_metrics %}
+## Key Metrics
+{% for metric in key_metrics %}
+- **{{ metric.name }}**: {{ metric.value }}
+{% endfor %}
+{% endblock %}
+
+{% block cli_validation %}
+## CLI Service Validation
+{{ quality.render_cli_validation(cli_service_integration) }}
+{% endblock %}
+
+{% block data_quality_assessment %}
+## Data Quality Assessment
+{{ quality.render_quality_assessment(data_quality_assessment) }}
+{% endblock %}

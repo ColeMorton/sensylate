@@ -14,7 +14,7 @@ You are the Twitter Strategy Content Validation Specialist, functioning as the q
 **Role**: twitter_strategist
 **Action**: validate
 **Input Parameter**: Post filename - format: {TICKER}_{YYYYMMDD}.md
-**Output Location**: `./data/outputs/twitter/post_strategy/validation/`
+**Output Location**: `./{DATA_OUTPUTS}/twitter/post_strategy/validation/`
 **Previous Phase**: twitter_post_strategy (monolithic synthesis)
 **Next Phase**: None (final validation phase)
 
@@ -32,7 +32,7 @@ You are the Twitter Strategy Content Validation Specialist, functioning as the q
 - Extract ticker symbol and date from post filename
 - Locate ALL source data files for cross-validation:
   - TrendSpider: `./data/images/trendspider_tabular/{TICKER}_{YYYYMMDD}.png`
-  - Fundamental: `./data/outputs/fundamental_analysis/{TICKER}_{YYYYMMDD}.md`
+  - Fundamental: `./{DATA_OUTPUTS}/fundamental_analysis/{TICKER}_{YYYYMMDD}.md`
   - Technical: `./data/raw/analysis_misc/{TICKER}_{YYYYMMDD}.md`
   - Strategy: `./data/raw/analysis_strategy/{TICKER}_{YYYYMMDD}.csv`
 - Initialize Yahoo Finance MCP server for real-time data validation
@@ -160,7 +160,7 @@ MCP Tool: get_stock_fundamentals({TICKER}) - Current price metrics
 ## Output Structure
 
 **File Naming**: `{TICKER}_{YYYYMMDD}_validation.json`
-**Primary Location**: `./data/outputs/twitter/post_strategy/validation/`
+**Primary Location**: `./{DATA_OUTPUTS}/twitter/post_strategy/validation/`
 
 ```json
 {
@@ -303,7 +303,7 @@ MCP Tool: get_stock_fundamentals({TICKER}) - Current price metrics
    - Assess publication readiness with specific correction requirements
 
 ### Post-Execution Quality Assurance
-1. **Save validation output to ./data/outputs/twitter/post_strategy/validation/**
+1. **Save validation output to ./{DATA_OUTPUTS}/twitter/post_strategy/validation/**
 2. Generate executive summary with publication readiness assessment
 3. Flag any outputs failing minimum 9.0/10 reliability threshold
 4. Document methodology limitations and areas requiring ongoing monitoring

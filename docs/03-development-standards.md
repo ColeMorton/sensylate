@@ -96,7 +96,7 @@ class TradeData:
     quantity: int
     timestamp: datetime
     fees: Optional[float] = None
-    
+
     def __post_init__(self) -> None:
         """Validate data integrity after initialization."""
         if self.price <= 0:
@@ -111,11 +111,11 @@ from typing import Protocol
 
 class DataProvider(Protocol):
     """Define interface for data providers."""
-    
+
     def get_stock_data(self, symbol: str) -> Dict[str, Any]:
         """Retrieve stock data for given symbol."""
         ...
-    
+
     def validate_data(self, data: Dict[str, Any]) -> bool:
         """Validate data structure and content."""
         ...
@@ -147,14 +147,14 @@ T = TypeVar('T')
 
 class DataCache(Generic[T]):
     """Generic cache implementation with type safety."""
-    
+
     def __init__(self) -> None:
         self._data: Dict[str, T] = {}
-    
+
     def get(self, key: str) -> Optional[T]:
         """Retrieve cached item with correct type."""
         return self._data.get(key)
-    
+
     def set(self, key: str, value: T) -> None:
         """Store item in cache."""
         self._data[key] = value
@@ -194,7 +194,7 @@ strict_equality = True
 ```python
 class SensylateError(Exception):
     """Base exception for Sensylate-specific errors."""
-    
+
     def __init__(self, message: str, context: Optional[Dict[str, Any]] = None):
         super().__init__(message)
         self.context = context or {}
@@ -218,19 +218,19 @@ def validate_stock_symbol(symbol: str) -> str:
     """Validate stock symbol with immediate failure."""
     if not symbol:
         raise ValidationError("Stock symbol cannot be empty")
-    
+
     if not symbol.isalpha():
         raise ValidationError(
             f"Invalid symbol format: {symbol}",
             context={"symbol": symbol, "validation": "alpha_only"}
         )
-    
+
     if len(symbol) > 5:
         raise ValidationError(
             f"Symbol too long: {symbol} (max 5 characters)",
             context={"symbol": symbol, "length": len(symbol)}
         )
-    
+
     return symbol.upper()
 ```
 
@@ -244,11 +244,11 @@ import time
 
 class DataCache:
     """Multi-level caching with TTL management."""
-    
+
     def __init__(self, ttl: int = 3600):
         self._cache: Dict[str, Tuple[Any, float]] = {}
         self._ttl = ttl
-    
+
     def get(self, key: str) -> Optional[Any]:
         """Retrieve with TTL validation."""
         if key in self._cache:
@@ -258,7 +258,7 @@ class DataCache:
             else:
                 del self._cache[key]
         return None
-    
+
     def set(self, key: str, value: Any) -> None:
         """Store with timestamp."""
         self._cache[key] = (value, time.time())
@@ -306,11 +306,11 @@ def process_trade_data(symbol: str) -> Dict[str, Any]:
         operation="trade_processing",
         stage="start"
     )
-    
+
     try:
         # Processing logic here
         result = {"symbol": symbol, "status": "processed"}
-        
+
         logger.info(
             "Trade processing completed",
             symbol=symbol,
@@ -318,9 +318,9 @@ def process_trade_data(symbol: str) -> Dict[str, Any]:
             stage="complete",
             result_count=len(result)
         )
-        
+
         return result
-        
+
     except Exception as e:
         logger.error(
             "Trade processing failed",
@@ -430,7 +430,7 @@ updates:
     open-pull-requests-limit: 5
     reviewers:
       - "development-team"
-    
+
   - package-ecosystem: "npm"
     directory: "/frontend"
     schedule:
@@ -493,7 +493,7 @@ def test_trade_validation(sample_trade_data: TradeData) -> None:
 # .coveragerc
 [run]
 source = scripts/
-omit = 
+omit =
     */tests/*
     */venv/*
     */node_modules/*
@@ -521,24 +521,24 @@ repos:
     hooks:
       - id: black
         args: [--line-length=88]
-        
+
   - repo: https://github.com/pycqa/isort
     rev: 5.12.0
     hooks:
       - id: isort
         args: [--profile=black]
-        
+
   - repo: https://github.com/pycqa/flake8
     rev: 6.0.0
     hooks:
       - id: flake8
         args: [--max-line-length=88]
-        
+
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: v1.0.0
     hooks:
       - id: mypy
-        
+
   - repo: https://github.com/pycqa/bandit
     rev: 1.7.5
     hooks:
@@ -553,7 +553,7 @@ repos:
     hooks:
       - id: prettier
         files: \.(js|jsx|ts|tsx|css|md|json)$
-        
+
   - repo: https://github.com/pre-commit/mirrors-eslint
     rev: v9.0.0
     hooks:

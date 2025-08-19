@@ -313,7 +313,7 @@
       "description": "Economic calendar and event data for Americas region"
     },
     "global_liquidity_data": {
-      "type": "object", 
+      "type": "object",
       "description": "Global liquidity monitoring data relevant to Americas"
     },
     "sector_correlation_data": {

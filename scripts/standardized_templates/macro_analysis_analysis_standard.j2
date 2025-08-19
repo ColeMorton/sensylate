@@ -1,0 +1,35 @@
+{% extends 'shared/base_analysis_template.j2' %}
+
+{% import 'shared/macros/confidence_scoring_macro.j2' as confidence %}
+{% import 'shared/macros/data_quality_macro.j2' as quality %}
+
+{% block metadata %}
+## {{ metadata.command_name }} - {{ metadata.framework_phase|title }} Phase
+**Execution**: {{ metadata.execution_timestamp|strftime('%Y-%m-%d %H:%M:%S') }}
+**Domain**: {{ metadata.domain_identifier }}
+**Confidence**: {{ metadata.confidence_level|round(2) if metadata.confidence_level else 'N/A' }}
+{% endblock %}
+
+{% block executive_summary %}
+## Executive Summary
+{{ executive_summary if executive_summary else 'Executive summary not available.' }}
+{% endblock %}
+
+{% block key_findings %}
+## Key Findings
+{% for finding in key_findings %}
+- {{ finding }}
+{% endfor %}
+{% endblock %}
+
+{% block detailed_analysis %}
+## Detailed Analysis
+{{ detailed_analysis if detailed_analysis else 'Detailed analysis not available.' }}
+{% endblock %}
+
+{% block investment_recommendation %}
+## Investment Recommendation
+{{ investment_recommendation if investment_recommendation else 'Investment recommendation not available.' }}
+
+**Confidence Score**: {{ confidence.render_score(analysis_confidence_score) }}
+{% endblock %}

@@ -97,10 +97,10 @@ class IndustrySynthesis:
         """Placeholder for synthesist sub-agent delegation implementation"""
         # This method represents where the synthesist sub-agent would be called
         # The synthesist would handle template selection, context preparation, and rendering
-        
-        metadata = requirements['metadata']
-        synthesis_components = requirements['synthesis_components']
-        
+
+        metadata = requirements["metadata"]
+        synthesis_components = requirements["synthesis_components"]
+
         # For now, generate a high-quality document using the synthesis components
         # This demonstrates the data structure that would be passed to the synthesist
         return self._generate_institutional_quality_document(requirements)
@@ -111,15 +111,19 @@ class IndustrySynthesis:
         catalysts = []
         if self.analysis_data:
             # Extract growth catalysts from the phase 3 analysis
-            phase_3_data = self.analysis_data.get("phase_3_growth_catalyst_identification", {})
+            phase_3_data = self.analysis_data.get(
+                "phase_3_growth_catalyst_identification", {}
+            )
             for catalyst_type, catalyst_data in phase_3_data.items():
                 if isinstance(catalyst_data, dict):
-                    catalysts.append({
-                        "catalyst": catalyst_type.replace('_', ' ').title(),
-                        "probability": catalyst_data.get("confidence", 0.8),
-                        "timeline": "2025-2027",
-                        "impact": catalyst_data.get("catalyst_strength", "High")
-                    })
+                    catalysts.append(
+                        {
+                            "catalyst": catalyst_type.replace("_", " ").title(),
+                            "probability": catalyst_data.get("confidence", 0.8),
+                            "timeline": "2025-2027",
+                            "impact": catalyst_data.get("catalyst_strength", "High"),
+                        }
+                    )
 
         # Build investment thesis
         thesis = {
@@ -193,7 +197,9 @@ class IndustrySynthesis:
         # Handle trend data structure safely
         technology_trends = trend_data.get("technology_trends", [])
         if isinstance(technology_trends, list) and technology_trends:
-            tech_trend_summary = technology_trends[0].get("trend", "AI acceleration trends")
+            tech_trend_summary = technology_trends[0].get(
+                "trend", "AI acceleration trends"
+            )
         else:
             tech_trend_summary = "AI acceleration trends"
 
@@ -234,7 +240,7 @@ class IndustrySynthesis:
                 "template_reference": "./templates/analysis/industry_analysis_template.md",
                 "output_format": "institutional_quality_markdown",
                 "confidence_threshold": 0.9,
-                "quality_standards": "institutional_grade"
+                "quality_standards": "institutional_grade",
             },
             "metadata": {
                 "industry": self.industry,
@@ -243,23 +249,27 @@ class IndustrySynthesis:
                 "framework_phase": "synthesis",
                 "discovery_reference": self.discovery_file,
                 "analysis_reference": self.analysis_file,
-                "confidence": self._calculate_overall_confidence()
-            }
+                "confidence": self._calculate_overall_confidence(),
+            },
         }
 
         # Delegate to synthesist sub-agent per DASV framework specification
         try:
             # Note: This would normally use the Task tool for sub-agent delegation
             # For now, implementing simplified approach until Task tool is available
-            print("🤖 Delegating to synthesist sub-agent for institutional-quality document generation")
-            
+            print(
+                "🤖 Delegating to synthesist sub-agent for institutional-quality document generation"
+            )
+
             # Synthesist would handle template selection, context preparation, and rendering
             # This represents the architectural pattern - synthesist determines HOW to implement
             document = self._synthesist_delegate_placeholder(synthesist_requirements)
-            
-            print("✅ Generated synthesis document using synthesist sub-agent delegation")
+
+            print(
+                "✅ Generated synthesis document using synthesist sub-agent delegation"
+            )
             return document
-            
+
         except Exception as e:
             print(f"⚠️  Synthesist delegation failed: {e}")
             print("⚠️  Falling back to enhanced document generation")
@@ -637,19 +647,21 @@ class IndustrySynthesis:
         """Assess professional quality"""
         return 0.92
 
-    def _generate_institutional_quality_document(self, requirements: Dict[str, Any]) -> str:
+    def _generate_institutional_quality_document(
+        self, requirements: Dict[str, Any]
+    ) -> str:
         """Generate institutional-quality document using synthesis components"""
-        metadata = requirements['metadata']
-        synthesis_components = requirements['synthesis_components']
-        discovery_data = requirements['discovery_data']
-        analysis_data = requirements['analysis_data']
-        
+        metadata = requirements["metadata"]
+        synthesis_components = requirements["synthesis_components"]
+        discovery_data = requirements["discovery_data"]
+        analysis_data = requirements["analysis_data"]
+
         # Extract key data for document generation
-        investment_thesis = synthesis_components['investment_thesis']
-        positioning_framework = synthesis_components['positioning_framework']
-        risk_analysis = synthesis_components['risk_analysis']
-        current_trends = synthesis_components['current_trends']
-        
+        investment_thesis = synthesis_components["investment_thesis"]
+        positioning_framework = synthesis_components["positioning_framework"]
+        risk_analysis = synthesis_components["risk_analysis"]
+        current_trends = synthesis_components["current_trends"]
+
         # Generate institutional-quality document following template specification
         document = f"""---
 title: {requirements['industry_name']} Industry Analysis
@@ -723,9 +735,14 @@ tags:
 |----------|-------------|----------|------------------|-------------------|------------|"""
 
         # Add growth catalysts from analysis data
-        if analysis_data.get('phase_3_growth_catalyst_identification'):
-            for catalyst_type, catalyst_data in analysis_data['phase_3_growth_catalyst_identification'].items():
-                if isinstance(catalyst_data, dict) and 'catalyst_strength' in catalyst_data:
+        if analysis_data.get("phase_3_growth_catalyst_identification"):
+            for catalyst_type, catalyst_data in analysis_data[
+                "phase_3_growth_catalyst_identification"
+            ].items():
+                if (
+                    isinstance(catalyst_data, dict)
+                    and "catalyst_strength" in catalyst_data
+                ):
                     document += f"""
 | {catalyst_type.replace('_', ' ').title()} | {catalyst_data.get('confidence', 0.85):.0%} | 2025-2027 | {catalyst_data.get('catalyst_strength', 'High')} | Low - technology-driven secular trend | 9.0/10.0 |"""
 
@@ -740,9 +757,11 @@ tags:
 |---------------|-------------|--------|------------|----------|-------------------|------------|"""
 
         # Add risk assessment data
-        if analysis_data.get('phase_4_risk_matrix_development'):
-            for risk_type, risk_data in analysis_data['phase_4_risk_matrix_development'].items():
-                if isinstance(risk_data, dict) and 'weighted_risk_score' in risk_data:
+        if analysis_data.get("phase_4_risk_matrix_development"):
+            for risk_type, risk_data in analysis_data[
+                "phase_4_risk_matrix_development"
+            ].items():
+                if isinstance(risk_data, dict) and "weighted_risk_score" in risk_data:
                     document += f"""
 | {risk_type.replace('_', ' ').title()} | {risk_data.get('probability', 0.7):.0%} | Medium-High | {risk_data.get('weighted_risk_score', 3.1):.1f}/5.0 | Near-term | Proactive management | {risk_data.get('confidence', 0.88):.1f}/1.0 |"""
 
@@ -755,7 +774,7 @@ tags:
 - **Market Dynamics**: Stable competitive landscape with innovation-driven differentiation
 - **Returns Expectation**: {investment_thesis.get('growth_forecast', {}).get('long_term_cagr', '10-15%')} annual returns with moderate volatility
 
-#### Bull Case Scenario (25% probability) 
+#### Bull Case Scenario (25% probability)
 - **Catalyst Acceleration**: Breakthrough AI applications driving exponential demand growth
 - **Market Expansion**: Geographic and vertical market penetration exceeding expectations
 - **Returns Expectation**: 20-30% annual returns with platform ecosystem dominance
@@ -799,7 +818,7 @@ tags:
 
 ### Portfolio Implementation Strategy
 - **Core Holdings**: Focus on industry leaders with strongest competitive moats
-- **Diversification**: Balance across hardware, software, and cloud infrastructure segments  
+- **Diversification**: Balance across hardware, software, and cloud infrastructure segments
 - **Risk Management**: Monitor regulatory developments and competitive disruption threats
 - **Rebalancing**: Quarterly review with annual strategic assessment
 
@@ -812,14 +831,14 @@ tags:
 
 *This document represents institutional-quality industry analysis generated through systematic DASV framework methodology with synthesist sub-agent coordination ensuring professional presentation standards and comprehensive investment intelligence.*
 """
-        
+
         return document
 
     def _generate_enhanced_fallback_document(self, requirements: Dict[str, Any]) -> str:
         """Generate enhanced fallback document with synthesist requirements structure"""
-        metadata = requirements['metadata']
-        synthesis_components = requirements['synthesis_components']
-        
+        metadata = requirements["metadata"]
+        synthesis_components = requirements["synthesis_components"]
+
         return f"""# {requirements['industry_name']} Industry Analysis
 
 *Generated: {metadata['timestamp']} | Confidence: {metadata['confidence']:.1f}/1.0*
@@ -837,7 +856,7 @@ Target allocation: {synthesis_components['investment_thesis']['recommendation'][
 ### Investment Thesis
 {synthesis_components['investment_thesis']['core_thesis'] if synthesis_components['investment_thesis'].get('core_thesis') else 'Core investment thesis data available but requires synthesist integration.'}
 
-### Risk Analysis  
+### Risk Analysis
 Aggregate Risk Score: {synthesis_components['risk_analysis'].get('aggregate_risk_score', 'Available in analysis data')}
 
 ---

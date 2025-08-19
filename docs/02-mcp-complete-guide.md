@@ -254,7 +254,7 @@ class MCPContextProvider:
     yahoo_finance: MCPClientWrapper
     sensylate_trading: MCPClientWrapper
     connection_pool: ConnectionPool
-    
+
     def get_client(self, server_name: str) -> MCPClientWrapper:
         return getattr(self, server_name.replace('-', '_'))
 ```
@@ -271,7 +271,7 @@ Claude Code has a critical blocking bug preventing MCP server connections. Until
 ```json
 {
   "code": "invalid_type",
-  "expected": "string", 
+  "expected": "string",
   "received": "undefined",
   "path": ["protocolVersion"],
   "message": "Required"

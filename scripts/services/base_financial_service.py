@@ -1040,9 +1040,9 @@ class BaseFinancialService(ABC):
             "api_key_configured": bool(self.config.api_key),
             "base_url": self.config.base_url,
             "cache_enabled": self.config.cache.enabled,
-            "rate_limit_enabled": self.config.rate_limit.enabled
+            "rate_limit_enabled": self.config.rate_limit.enabled,
         }
-        
+
         try:
             # Basic connectivity test
             if self.config.api_key:
@@ -1051,11 +1051,11 @@ class BaseFinancialService(ABC):
             else:
                 health_status["status"] = "configuration_error"
                 health_status["message"] = "Missing API key configuration"
-                
+
         except Exception as e:
             health_status["status"] = "error"
             health_status["message"] = f"Health check failed: {str(e)}"
-            
+
         return health_status
 
     def cleanup_cache(self) -> None:

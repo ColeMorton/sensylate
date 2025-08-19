@@ -706,19 +706,26 @@ class EconomicCalendarService(BaseFinancialService):
 def create_economic_calendar_service(env: str = "prod") -> EconomicCalendarService:
     """Factory function to create economic calendar service"""
     from pathlib import Path
+
     from utils.config_loader import ConfigLoader
-    from .base_financial_service import CacheConfig, RateLimitConfig, ServiceConfig, HistoricalStorageConfig
-    
+
+    from .base_financial_service import (
+        CacheConfig,
+        HistoricalStorageConfig,
+        RateLimitConfig,
+        ServiceConfig,
+    )
+
     try:
         # Use absolute path to config directory
         config_dir = Path(__file__).parent.parent.parent / "config"
         config_loader = ConfigLoader(str(config_dir))
         service_config = config_loader.get_service_config("economic_calendar", env)
-        
+
         # Validate API key is configured
         if not service_config.api_key or service_config.api_key.strip() == "":
             raise ValueError("Economic calendar service requires API key configuration")
-            
+
         # Convert to ServiceConfig format with historical_storage
         config = ServiceConfig(
             name=service_config.name,
@@ -736,12 +743,12 @@ def create_economic_calendar_service(env: str = "prod") -> EconomicCalendarServi
                 store_fundamentals=False,
                 store_news_sentiment=False,
                 auto_detect_data_type=False,
-                auto_collection_enabled=False
-            )
+                auto_collection_enabled=False,
+            ),
         )
 
         return EconomicCalendarService(config)
-        
+
     except Exception as e:
         print(f"❌ Failed to create economic calendar service: {e}")
         return None

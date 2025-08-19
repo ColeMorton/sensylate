@@ -37,7 +37,7 @@
     "company_b_profile": {
       "ticker": "QBTS",
       "company_name": "D-Wave Quantum Inc.",
-      "sector": "Technology", 
+      "sector": "Technology",
       "industry": "Computer Hardware",
       "business_model": "Pure-play quantum annealing specialist providing quantum computing systems, cloud services (Leap), professional services, and software development tools (Ocean SDK)",
       "market_position": "Leading quantum annealing specialist with first-mover advantages in optimization applications, but limited share of broader quantum computing market",
@@ -1000,7 +1000,7 @@
     ],
     "next_phase_priorities": [
       "Develop comprehensive investment allocation framework considering risk-return profiles",
-      "Monitor KLAC semiconductor cycle positioning and China policy developments", 
+      "Monitor KLAC semiconductor cycle positioning and China policy developments",
       "Track QBTS quantum commercialization progress and funding requirements"
     ],
     "overall_confidence": 0.94

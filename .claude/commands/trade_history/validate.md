@@ -8,18 +8,18 @@ Comprehensive quality assurance and validation for institutional-quality trading
 
 The Trading Performance Validation phase represents the systematic verification and quality assurance of all trading analysis outputs. This command provides the requirements for the "Validate" phase of the DASV (Discover → Analyze → Synthesize → Validate) framework, focusing on statistical validation, report integrity verification, business logic coherence checking, and comprehensive confidence scoring.
 
-**Expected Output Schema**: `/scripts/schemas/trade_history_validation_schema.json`
-**Researcher Sub Task**: Use the researcher sub-agent to execute trade history validation. Ensure output conforms to `/scripts/schemas/trade_history_validation_schema.json`.
+**Expected Output Schema**: `/{SCRIPTS_BASE}/schemas/trade_history_validation_schema.json`
+**Researcher Sub Task**: Use the researcher sub-agent to execute trade history validation. Ensure output conforms to `/{SCRIPTS_BASE}/schemas/trade_history_validation_schema.json`.
 
 ## Microservice Integration
 
 **Framework**: DASV Phase 4
 **Role**: trade_history
 **Action**: validate
-**Output Location**: `./data/outputs/trade_history/validation/`
+**Output Location**: `./{DATA_OUTPUTS}/trade_history/validation/`
 **Previous Phases**: trade_history_discover, trade_history_analyze, trade_history_synthesize
 **Next Phase**: System completion
-**Template Reference**: `./templates/validation/trade_history_template.json` (validation structure awareness)
+**Template Reference**: `./{TEMPLATES_BASE}/validation/trade_history_template.json` (validation structure awareness)
 
 ## Parameters
 
@@ -73,8 +73,8 @@ The Trading Performance Validation phase represents the systematic verification 
 ## Output Structure and Schema
 
 **File Naming**: `{PORTFOLIO}_VALIDATION_REPORT_{YYYYMMDD}.json`
-**Location**: `./data/outputs/trade_history/validation/`
-**Schema Compliance**: Must validate against `/scripts/schemas/trade_history_validation_schema.json`
+**Location**: `./{DATA_OUTPUTS}/trade_history/validation/`
+**Schema Compliance**: Must validate against `/{SCRIPTS_BASE}/schemas/trade_history_validation_schema.json`
 
 ### Expected Validation Schema Structure
 ```json
@@ -113,7 +113,7 @@ The Trading Performance Validation phase represents the systematic verification 
 ## Implementation Framework
 
 ### Execution Requirements
-**Primary Tool**: Use `/scripts/trade_history_validate.py` as the atomic validation tool
+**Primary Tool**: Use `/{SCRIPTS_BASE}/trade_history_validate.py` as the atomic validation tool
 **Statistical Methods**: Implement cross-validation against industry standard calculations
 **Quality Gates**: Ensure institutional-grade confidence scoring and threshold enforcement
 **Integration Testing**: Cross-validate with unified calculation engine outputs

@@ -132,37 +132,46 @@ class MacroEconomicSynthesis:
         # Initialize service health tracking
         self.service_health = {
             "economic_calendar": {"status": "pending", "error": None},
-            "global_liquidity": {"status": "pending", "error": None}, 
-            "sector_correlations": {"status": "pending", "error": None}
+            "global_liquidity": {"status": "pending", "error": None},
+            "sector_correlations": {"status": "pending", "error": None},
         }
-        
+
         try:
             # Import services with better error handling
             print("🔄 Collecting enhanced service data...")
-            
+
             # Economic Calendar Service
             try:
                 from services.economic_calendar import create_economic_calendar_service
+
                 print("📅 Initializing economic calendar service...")
                 calendar_service = create_economic_calendar_service("dev")
-                
+
                 # Validate service creation was successful
                 if calendar_service is None:
-                    raise Exception("Service factory returned None - check configuration")
-                
+                    raise Exception(
+                        "Service factory returned None - check configuration"
+                    )
+
                 # Test service health first
                 calendar_health = calendar_service.health_check()
                 if calendar_health is None:
                     raise Exception("Health check returned None")
-                
+
                 if calendar_health.get("status") != "healthy":
-                    raise Exception(f"Service health check failed: {calendar_health.get('error', 'Unknown')}")
-                
+                    raise Exception(
+                        f"Service health check failed: {calendar_health.get('error', 'Unknown')}"
+                    )
+
                 self.economic_calendar_data = {
-                    "upcoming_events": calendar_service.get_upcoming_economic_events(30),
+                    "upcoming_events": calendar_service.get_upcoming_economic_events(
+                        30
+                    ),
                     "fomc_probabilities": calendar_service.get_fomc_decision_probabilities(),
-                    "economic_surprises": calendar_service.get_economic_surprise_index(90),
-                    "service_health": calendar_health
+                    "economic_surprises": calendar_service.get_economic_surprise_index(
+                        90
+                    ),
+                    "service_health": calendar_health,
                 }
                 self.service_health["economic_calendar"]["status"] = "healthy"
                 print("✅ Economic calendar service operational")
@@ -181,30 +190,47 @@ class MacroEconomicSynthesis:
 
             # Global Liquidity Monitor
             try:
-                from services.global_liquidity_monitor import create_global_liquidity_monitor
+                from services.global_liquidity_monitor import (
+                    create_global_liquidity_monitor,
+                )
+
                 print("💰 Initializing global liquidity monitor...")
                 liquidity_service = create_global_liquidity_monitor("dev")
-                
+
                 # Validate service creation was successful
                 if liquidity_service is None:
-                    raise Exception("Service factory returned None - check configuration")
-                
+                    raise Exception(
+                        "Service factory returned None - check configuration"
+                    )
+
                 # Test service health first
                 liquidity_health = liquidity_service.health_check()
                 if liquidity_health is None:
                     raise Exception("Health check returned None")
-                
+
                 if liquidity_health.get("status") != "healthy":
-                    raise Exception(f"Service health check failed: {liquidity_health.get('error', 'Unknown')}")
-                
-                liquidity_analysis = liquidity_service.get_comprehensive_liquidity_analysis()
+                    raise Exception(
+                        f"Service health check failed: {liquidity_health.get('error', 'Unknown')}"
+                    )
+
+                liquidity_analysis = (
+                    liquidity_service.get_comprehensive_liquidity_analysis()
+                )
                 self.global_liquidity_data = {
                     "m2_analysis": liquidity_analysis.get("global_m2_analysis", {}),
-                    "central_bank_analysis": liquidity_analysis.get("central_bank_analysis", {}),
-                    "liquidity_conditions": liquidity_analysis.get("global_liquidity_conditions", {}),
-                    "capital_flows": liquidity_analysis.get("cross_border_capital_flows", []),
-                    "trading_implications": liquidity_analysis.get("trading_implications", {}),
-                    "service_health": liquidity_health
+                    "central_bank_analysis": liquidity_analysis.get(
+                        "central_bank_analysis", {}
+                    ),
+                    "liquidity_conditions": liquidity_analysis.get(
+                        "global_liquidity_conditions", {}
+                    ),
+                    "capital_flows": liquidity_analysis.get(
+                        "cross_border_capital_flows", []
+                    ),
+                    "trading_implications": liquidity_analysis.get(
+                        "trading_implications", {}
+                    ),
+                    "service_health": liquidity_health,
                 }
                 self.service_health["global_liquidity"]["status"] = "healthy"
                 print("✅ Global liquidity monitor operational")
@@ -223,30 +249,47 @@ class MacroEconomicSynthesis:
 
             # Sector-Economic Correlations
             try:
-                from services.sector_economic_correlations import create_sector_economic_correlations
+                from services.sector_economic_correlations import (
+                    create_sector_economic_correlations,
+                )
+
                 print("📊 Initializing sector correlation service...")
                 sector_service = create_sector_economic_correlations("dev")
-                
+
                 # Validate service creation was successful
                 if sector_service is None:
-                    raise Exception("Service factory returned None - check configuration")
-                
+                    raise Exception(
+                        "Service factory returned None - check configuration"
+                    )
+
                 # Test service health first
                 sector_health = sector_service.health_check()
                 if sector_health is None:
                     raise Exception("Health check returned None")
-                
+
                 if sector_health.get("status") != "healthy":
-                    raise Exception(f"Service health check failed: {sector_health.get('error', 'Unknown')}")
-                
+                    raise Exception(
+                        f"Service health check failed: {sector_health.get('error', 'Unknown')}"
+                    )
+
                 sector_analysis = sector_service.get_comprehensive_sector_analysis()
                 self.sector_correlation_data = {
-                    "sector_sensitivities": sector_analysis.get("sector_sensitivities", {}),
-                    "regime_analysis": sector_analysis.get("economic_regime_analysis", {}),
-                    "rotation_signals": sector_analysis.get("sector_rotation_signals", []),
-                    "factor_attribution": sector_analysis.get("factor_attribution_summary", {}),
-                    "investment_recommendations": sector_analysis.get("investment_recommendations", {}),
-                    "service_health": sector_health
+                    "sector_sensitivities": sector_analysis.get(
+                        "sector_sensitivities", {}
+                    ),
+                    "regime_analysis": sector_analysis.get(
+                        "economic_regime_analysis", {}
+                    ),
+                    "rotation_signals": sector_analysis.get(
+                        "sector_rotation_signals", []
+                    ),
+                    "factor_attribution": sector_analysis.get(
+                        "factor_attribution_summary", {}
+                    ),
+                    "investment_recommendations": sector_analysis.get(
+                        "investment_recommendations", {}
+                    ),
+                    "service_health": sector_health,
                 }
                 self.service_health["sector_correlations"]["status"] = "healthy"
                 print("✅ Sector correlation service operational")
@@ -264,23 +307,31 @@ class MacroEconomicSynthesis:
                 self.sector_correlation_data = {}
 
             # Report overall service health
-            healthy_services = sum(1 for s in self.service_health.values() if s["status"] == "healthy")
+            healthy_services = sum(
+                1 for s in self.service_health.values() if s["status"] == "healthy"
+            )
             total_services = len(self.service_health)
-            print(f"📊 Enhanced services health: {healthy_services}/{total_services} operational")
-            
+            print(
+                f"📊 Enhanced services health: {healthy_services}/{total_services} operational"
+            )
+
             if healthy_services == 0:
-                print("⚠️  All enhanced services failed - using fallback synthesis mode")
+                print(
+                    "⚠️  All enhanced services failed - using fallback synthesis mode"
+                )
             elif healthy_services < total_services:
-                print(f"⚠️  {total_services - healthy_services} enhanced service(s) degraded - continuing with available data")
-            
+                print(
+                    f"⚠️  {total_services - healthy_services} enhanced service(s) degraded - continuing with available data"
+                )
+
         except Exception as e:
             print(f"❌ Critical failure in enhanced service collection: {e}")
             # Ensure all data structures exist even in critical failure
-            if not hasattr(self, 'economic_calendar_data'):
+            if not hasattr(self, "economic_calendar_data"):
                 self.economic_calendar_data = {}
-            if not hasattr(self, 'global_liquidity_data'):
+            if not hasattr(self, "global_liquidity_data"):
                 self.global_liquidity_data = {}
-            if not hasattr(self, 'sector_correlation_data'):
+            if not hasattr(self, "sector_correlation_data"):
                 self.sector_correlation_data = {}
 
     def synthesize_economic_thesis(self) -> Dict[str, Any]:
@@ -1285,7 +1336,7 @@ class MacroEconomicSynthesis:
         consumer_confidence = leading_indicators.get("consumer_confidence", {})
         cc_current = consumer_confidence.get("current_level", 108.5)
         cc_trend = consumer_confidence.get("trend", "stable above historical average")
-        
+
         # Safe extraction functions for different data types
         def safe_float(value, default):
             try:
@@ -1295,16 +1346,21 @@ class MacroEconomicSynthesis:
                 return float(value) if value is not None else default
             except (ValueError, TypeError):
                 return default
-        
+
         def safe_string(value, default):
             try:
                 if isinstance(value, dict):
                     # If it's a dict, try to extract a string value
-                    return str(value.get("value", value.get("description", value.get("current", default))))
+                    return str(
+                        value.get(
+                            "value",
+                            value.get("description", value.get("current", default)),
+                        )
+                    )
                 return str(value) if value is not None else default
             except (ValueError, TypeError):
                 return default
-        
+
         cc_current_safe = safe_float(cc_current, 108.5)
         cc_signal = (
             "Optimistic"
@@ -1345,10 +1401,12 @@ class MacroEconomicSynthesis:
         ind_capacity_num = safe_float(ind_capacity, 76.8)
         leading_confidence_num = safe_float(leading_confidence, 0.88)
         coincident_confidence_num = safe_float(coincident_confidence, 0.92)
-        
+
         # Convert string values safely
         ind_trends_safe = safe_string(ind_trends, "steady expansion")
-        unemployment_trend_safe = safe_string(unemployment_trend, "slightly rising but stable")
+        unemployment_trend_safe = safe_string(
+            unemployment_trend, "slightly rising but stable"
+        )
 
         # Generate additional signals
         volatility_signal = "Low" if volatility_num < 20 else "Elevated"

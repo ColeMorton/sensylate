@@ -702,9 +702,16 @@ class GlobalLiquidityMonitor(BaseFinancialService):
 def create_global_liquidity_monitor(env: str = "prod") -> GlobalLiquidityMonitor:
     """Factory function to create global liquidity monitor"""
     from pathlib import Path
+
     from utils.config_loader import ConfigLoader
-    from .base_financial_service import CacheConfig, RateLimitConfig, ServiceConfig, HistoricalStorageConfig
-    
+
+    from .base_financial_service import (
+        CacheConfig,
+        HistoricalStorageConfig,
+        RateLimitConfig,
+        ServiceConfig,
+    )
+
     # Use absolute path to config directory
     config_dir = Path(__file__).parent.parent.parent / "config"
     config_loader = ConfigLoader(str(config_dir))
@@ -727,8 +734,8 @@ def create_global_liquidity_monitor(env: str = "prod") -> GlobalLiquidityMonitor
             store_fundamentals=False,
             store_news_sentiment=False,
             auto_detect_data_type=False,
-            auto_collection_enabled=False
-        )
+            auto_collection_enabled=False,
+        ),
     )
 
     return GlobalLiquidityMonitor(config)
