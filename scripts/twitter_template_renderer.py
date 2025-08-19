@@ -329,7 +329,9 @@ class TwitterTemplateRenderer:
                 else (
                     "good"
                     if completeness_score >= 0.7
-                    else "fair" if completeness_score >= 0.5 else "poor"
+                    else "fair"
+                    if completeness_score >= 0.5
+                    else "poor"
                 )
             ),
         }

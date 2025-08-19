@@ -2204,9 +2204,9 @@ class UnifiedMacroAnalyzer:
         )
 
         # Add confidence assessment to the analysis output
-        analysis_output["dynamic_confidence_and_quality_assessment"] = (
-            confidence_and_quality_assessment
-        )
+        analysis_output[
+            "dynamic_confidence_and_quality_assessment"
+        ] = confidence_and_quality_assessment
 
         return analysis_output
 

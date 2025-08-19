@@ -1516,9 +1516,7 @@ def main():
     with open(output_file, "w") as f:
         json.dump(comprehensive_output, f, indent=2)
 
-    print(
-        f"✅ Enhanced comprehensive analysis complete. Output saved to: {output_file}"
-    )
+    print(f"✅ Enhanced comprehensive analysis complete. Output saved to: {output_file}")
     print(
         f"📊 Analysis components: {comprehensive_output['metadata']['components_analyzed']}"
     )
