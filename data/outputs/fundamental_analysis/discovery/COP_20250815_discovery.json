@@ -193,7 +193,7 @@
   "cli_service_validation": {
     "service_health": {
       "yahoo_finance_cli": "operational",
-      "alpha_vantage_cli": "operational", 
+      "alpha_vantage_cli": "operational",
       "fmp_cli": "operational",
       "fred_economic_cli": "operational",
       "coingecko_cli": "operational",
@@ -210,7 +210,7 @@
     "institutional_grade": true,
     "data_sources_via_cli": [
       "yahoo_finance_cli",
-      "alpha_vantage_cli", 
+      "alpha_vantage_cli",
       "fmp_cli",
       "fred_economic_cli",
       "coingecko_cli",
@@ -252,7 +252,7 @@
         "relationship": "Major integrated oil company peer"
       },
       {
-        "ticker": "CVX", 
+        "ticker": "CVX",
         "company_name": "Chevron Corporation",
         "industry": "Oil & Gas Integrated",
         "market_cap": 267057905664,
@@ -269,7 +269,7 @@
       },
       {
         "ticker": "OXY",
-        "company_name": "Occidental Petroleum Corporation", 
+        "company_name": "Occidental Petroleum Corporation",
         "industry": "Oil & Gas E&P",
         "market_cap": 48000000000,
         "pe_ratio": 13.2,
@@ -342,7 +342,7 @@
       ],
       "file_types_evaluated": [
         "json",
-        "md", 
+        "md",
         "csv"
       ],
       "temporal_scope": "Analysis files from 2025 with focus on recent energy sector assessments"

@@ -16,7 +16,7 @@
           },
           {
             "claim": "Risk Matrix Methodology - TSLA: 6.15/25.0 vs NIO: 12.47/25.0",
-            "evidence_type": "primary", 
+            "evidence_type": "primary",
             "source": "Mathematical verification",
             "confidence": 0.98,
             "validation_method": "Quantitative analysis"
@@ -72,7 +72,7 @@
           {
             "claim": "NIO Price Target: $6.85 (+40.7%)",
             "evidence_type": "unverified",
-            "source": "Analysis document", 
+            "source": "Analysis document",
             "confidence": 0.60,
             "validation_method": "Real-time validation attempted",
             "current_validation": {
@@ -148,7 +148,7 @@
           "reason": "CLI service limitations"
         },
         "fred_economic": {
-          "status": "not_accessed", 
+          "status": "not_accessed",
           "reason": "Real-time validation not performed"
         }
       },

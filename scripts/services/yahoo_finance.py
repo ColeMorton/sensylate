@@ -467,19 +467,27 @@ def main():
     """CLI interface for Yahoo Finance service"""
     import argparse
     import json
-    
+
     parser = argparse.ArgumentParser(description="Yahoo Finance CLI")
-    parser.add_argument("command", choices=["quote", "historical", "health"], help="Command to execute")
-    parser.add_argument("symbol", nargs="?", help="Stock symbol (required for quote/historical)")
+    parser.add_argument(
+        "command", choices=["quote", "historical", "health"], help="Command to execute"
+    )
+    parser.add_argument(
+        "symbol", nargs="?", help="Stock symbol (required for quote/historical)"
+    )
     parser.add_argument("--env", default="prod", help="Environment (dev/test/prod)")
-    parser.add_argument("--output-format", default="json", choices=["json"], help="Output format")
-    parser.add_argument("--period", default="1y", help="Time period for historical data")
-    
+    parser.add_argument(
+        "--output-format", default="json", choices=["json"], help="Output format"
+    )
+    parser.add_argument(
+        "--period", default="1y", help="Time period for historical data"
+    )
+
     args = parser.parse_args()
-    
+
     try:
         service = create_yahoo_finance_service(args.env)
-        
+
         if args.command == "quote":
             if not args.symbol:
                 print("Error: symbol required for quote command", file=sys.stderr)
@@ -492,10 +500,10 @@ def main():
             result = service.get_market_data_summary(args.symbol, args.period)
         elif args.command == "health":
             result = service.health_check()
-        
+
         if args.output_format == "json":
             print(json.dumps(result, indent=2, default=str))
-            
+
     except Exception as e:
         print(f"Error: {e}", file=sys.stderr)
         sys.exit(1)

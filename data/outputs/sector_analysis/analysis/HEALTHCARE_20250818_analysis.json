@@ -80,7 +80,7 @@
     "inflation_hedge_capability": {
       "pricing_power_assessment": {
         "pharmaceutical_pricing_power": "Strong but regulated - drug price negotiations under IRA pressure",
-        "medical_device_pricing_power": "Moderate - technology differentiation provides some pricing leverage", 
+        "medical_device_pricing_power": "Moderate - technology differentiation provides some pricing leverage",
         "healthcare_services_pricing_power": "Moderate - managed care contracts limit price increases",
         "insurance_pricing_power": "Strong - annual premium adjustments based on medical cost inflation"
       },
@@ -269,7 +269,7 @@
         "weighted_avg_pe_ratio": 28.95,
         "financial_health_distribution": {
           "strong_companies": "70% (7 companies)",
-          "moderate_companies": "20% (2 companies)", 
+          "moderate_companies": "20% (2 companies)",
           "weak_companies": "10% (1 company)"
         },
         "aggregate_financial_grade": "A-"
@@ -339,7 +339,7 @@
         },
         "cell_and_gene_therapy": {
           "disruption_probability": 0.65,
-          "time_horizon": "3-8 years", 
+          "time_horizon": "3-8 years",
           "impact_assessment": "High - potential cure treatments may eliminate chronic therapy markets",
           "affected_subsectors": ["Chronic Disease Pharmaceuticals", "Rare Disease Treatments"],
           "mitigation_strategies": "Internal development programs and strategic acquisitions"
@@ -663,7 +663,7 @@
         "current_recommendation": "2-3% overweight healthcare allocation",
         "subsector_preferences": [
           "Health Insurance - defensive cash flows and pricing power",
-          "Large-cap Pharmaceuticals - patent protection and pipeline visibility", 
+          "Large-cap Pharmaceuticals - patent protection and pipeline visibility",
           "Medical Devices - recurring revenue and international exposure"
         ],
         "avoid_subsectors": [
@@ -677,7 +677,7 @@
         "defensive_subsectors": "Insurance and established pharmaceuticals outperform"
       },
       "early_cycle_positioning": {
-        "allocation_decrease": "Reduce healthcare weight by 2-4%", 
+        "allocation_decrease": "Reduce healthcare weight by 2-4%",
         "growth_focus": "Biotechnology and medical device innovation",
         "avoid_defensives": "Reduce exposure to low-growth defensive names"
       }
@@ -968,7 +968,7 @@
         "investment_thesis": "Healthcare sector offers compelling defensive positioning with modest valuation discount",
         "key_drivers": [
           "Aging population demographics driving secular growth",
-          "Defensive characteristics provide recession resilience", 
+          "Defensive characteristics provide recession resilience",
           "Innovation pipeline supports long-term value creation",
           "Late-cycle economic positioning favors healthcare allocation"
         ],

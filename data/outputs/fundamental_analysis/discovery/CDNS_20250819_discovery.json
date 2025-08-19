@@ -174,7 +174,7 @@
   "cli_service_validation": {
     "service_health": {
       "yahoo_finance": "operational",
-      "alpha_vantage": "operational", 
+      "alpha_vantage": "operational",
       "fmp": "operational",
       "fred_economic": "operational",
       "coingecko": "operational"
@@ -189,7 +189,7 @@
     "institutional_grade": true,
     "data_sources_via_cli": [
       "yahoo_finance_cli",
-      "alpha_vantage_cli", 
+      "alpha_vantage_cli",
       "fmp_cli",
       "fred_economic_cli",
       "coingecko_cli"
@@ -233,27 +233,27 @@
         "relationship": "Primary EDA competitor"
       },
       {
-        "symbol": "ANSS", 
+        "symbol": "ANSS",
         "name": "ANSYS, Inc.",
         "current_price": 374.3,
         "market_cap": 32906993664,
         "pe_ratio": 55.53,
         "revenue_ttm": 2583095040,
         "profit_margin": 0.2295,
-        "sector": "Technology", 
+        "sector": "Technology",
         "industry": "Software - Application",
         "relationship": "Simulation and design software peer"
       },
       {
         "symbol": "ADSK",
-        "name": "Autodesk, Inc.", 
+        "name": "Autodesk, Inc.",
         "current_price": 289.66,
         "market_cap": 61970235392,
         "pe_ratio": 62.02,
         "revenue_ttm": 6346999808,
         "profit_margin": 0.1595,
         "sector": "Technology",
-        "industry": "Software - Application", 
+        "industry": "Software - Application",
         "relationship": "Design software peer"
       }
     ],
@@ -320,7 +320,7 @@
       }
     ],
     "discovery_coverage": "comprehensive_eda_specific_analysis_with_semiconductor_industry_context",
-    "reference_accessibility": "all_references_verified_and_accessible", 
+    "reference_accessibility": "all_references_verified_and_accessible",
     "integration_confidence": 0.91
   }
 }

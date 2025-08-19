@@ -45,7 +45,7 @@
           },
           "north_america": {
             "hhi_estimate": 1450,
-            "classification": "moderately_concentrated", 
+            "classification": "moderately_concentrated",
             "key_factor": "Detroit Three plus foreign OEM presence"
           },
           "europe": {
@@ -65,7 +65,7 @@
           },
           {
             "company": "BYD Company Limited",
-            "production_volume": "4.2M units", 
+            "production_volume": "4.2M units",
             "global_share": "4.8%",
             "strategic_position": "EV volume leader with vertical integration"
           },
@@ -223,7 +223,7 @@
         },
         "manufacturing_facilities": {
           "greenfield_cost": "$1-2B per assembly plant",
-          "conversion_cost": "$200-500M existing facility conversion", 
+          "conversion_cost": "$200-500M existing facility conversion",
           "utilization_requirements": "200,000+ units for economies of scale",
           "barrier_strength": "High"
         },
@@ -306,7 +306,7 @@
           "Regulatory mandates driving transformation timeline"
         ],
         "evidence": [
-          "Global EV sales growth 35% CAGR 2020-2024", 
+          "Global EV sales growth 35% CAGR 2020-2024",
           "Battery costs declined 85% since 2010",
           "500,000+ public charging points installed globally 2024"
         ]
@@ -320,7 +320,7 @@
         ],
         "transition_timeline": {
           "phase_1_2025_2027": "Hybrid dominance, EV infrastructure scaling",
-          "phase_2_2028_2030": "EV cost parity, autonomous pilot deployments", 
+          "phase_2_2028_2030": "EV cost parity, autonomous pilot deployments",
           "phase_3_2030_2035": "Regulatory ICE phase-outs, mobility transformation"
         }
       },
@@ -337,7 +337,7 @@
       "competitive_intensity": "High and increasing due to technology disruption",
       "strategic_positioning_requirements": [
         "Technology leadership in EV/software capabilities",
-        "Manufacturing scale and efficiency optimization", 
+        "Manufacturing scale and efficiency optimization",
         "Supply chain security and vertical integration",
         "Capital access for sustained investment requirements"
       ],
@@ -370,7 +370,7 @@
           "scalability": "High - technology transferable across price segments"
         },
         "traditional_oem_battery_strategies": {
-          "partnership_model": "GM-LG Energy, Ford-CATL, BMW-Northvolt joint ventures", 
+          "partnership_model": "GM-LG Energy, Ford-CATL, BMW-Northvolt joint ventures",
           "investment_commitments": "$100B+ global battery plant investments by 2030",
           "supply_security": "Diversification from China dependency critical strategy",
           "cost_competitiveness": "Target cost parity by 2027-2028 timeframe"
@@ -447,7 +447,7 @@
           },
           "bmw_toyota_lexus": {
             "performance_differentiation": "Ultimate driving machine, reliability reputation",
-            "pricing_premium": "15-25% premium sustainable vs volume competitors", 
+            "pricing_premium": "15-25% premium sustainable vs volume competitors",
             "regional_strength": "BMW Europe/US strong, Lexus Japan/US dominance",
             "technology_integration": "Advanced features justify premium positioning"
           }
@@ -512,7 +512,7 @@
         },
         "ev_service_disruption": {
           "maintenance_reduction": "50-70% lower maintenance requirements for EVs",
-          "software_services": "Over-the-air updates reducing service center visits", 
+          "software_services": "Over-the-air updates reducing service center visits",
           "new_revenue_models": "Subscription services, charging network partnerships",
           "technician_retraining": "$500M+ industry investment in EV service training"
         }
@@ -557,7 +557,7 @@
           "sustainability": "High - requires years to replicate"
         },
         {
-          "moat_type": "Premium Brand Equity (Luxury OEMs)", 
+          "moat_type": "Premium Brand Equity (Luxury OEMs)",
           "strength_rating": "Strong (4.0/5.0)",
           "sustainability": "High - decades of reputation building"
         },
@@ -657,7 +657,7 @@
         },
         "commercialization_timeline": {
           "2025_2027": "Level 3 highway autonomy expanding across premium segments",
-          "2027_2030": "Level 4 urban deployment in select markets and use cases", 
+          "2027_2030": "Level 4 urban deployment in select markets and use cases",
           "2030_2035": "Broader Level 4/5 deployment subject to regulatory approval",
           "revenue_opportunity": "$400B+ autonomous vehicle market by 2035"
         }
@@ -846,7 +846,7 @@
         },
         "mitigation_strategies": [
           "Manufacturing localization and regional supply chains",
-          "Supplier diversification away from concentrated sources", 
+          "Supplier diversification away from concentrated sources",
           "Government relations and trade policy engagement",
           "Pricing strategy adjustment and market positioning"
         ]
@@ -1350,7 +1350,7 @@
         "composite_sensitivity_score": 3.8,
         "weighting_factors": {
           "interest_rates": 0.35,
-          "consumer_confidence": 0.25, 
+          "consumer_confidence": 0.25,
           "gdp_growth": 0.20,
           "commodity_prices": 0.20
         },
@@ -1439,7 +1439,7 @@
       ],
       "at_risk_characteristics": [
         "Single technology focus without diversification (pure ICE players)",
-        "Limited capital access constraining transformation investment", 
+        "Limited capital access constraining transformation investment",
         "Geographic concentration in mature markets without growth exposure",
         "Weak software capabilities and digital transformation lag",
         "High fixed cost structure without flexible manufacturing"

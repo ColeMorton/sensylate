@@ -45,7 +45,7 @@
         "timeframe": "12-18mo"
       },
       "nio": {
-        "recommendation": "HOLD", 
+        "recommendation": "HOLD",
         "conviction": 0.89,
         "price_target": 6.85,
         "expected_return": "40.7%",
@@ -62,7 +62,7 @@
       },
       "nio": {
         "grade": "C+",
-        "cash_position": "5.2B", 
+        "cash_position": "5.2B",
         "gross_margin": "1.5%",
         "operating_margin": "-43.0%",
         "current_ratio": 1.2
@@ -100,7 +100,7 @@
   },
   "quality_assurance": {
     "price_accuracy": "validated",
-    "metric_consistency": "verified", 
+    "metric_consistency": "verified",
     "source_traceability": "complete",
     "institutional_standards": "achieved"
   },
@@ -122,7 +122,7 @@
   },
   "validation_status": {
     "pre_synthesis_validation": "passed",
-    "post_synthesis_validation": "passed", 
+    "post_synthesis_validation": "passed",
     "compliance_check": "verified",
     "quality_threshold": "exceeded",
     "institutional_certification": "achieved"

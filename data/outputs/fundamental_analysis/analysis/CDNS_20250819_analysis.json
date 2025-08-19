@@ -586,7 +586,7 @@
     "peer_review_equivalent": "senior_analyst_review_standard",
     "completeness_check": {
       "financial_health_analysis": "complete",
-      "competitive_assessment": "complete", 
+      "competitive_assessment": "complete",
       "valuation_analysis": "complete",
       "risk_assessment": "complete",
       "economic_context": "complete",

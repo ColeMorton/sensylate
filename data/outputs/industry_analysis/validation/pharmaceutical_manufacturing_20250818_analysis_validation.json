@@ -585,7 +585,7 @@
       "timeline": "IMMEDIATE"
     },
     {
-      "priority": "CRITICAL", 
+      "priority": "CRITICAL",
       "requirement": "Integration of discovery data findings",
       "details": "Incorporate patent cliff analysis ($236B), aging demographics (58M to 96M), AI/ML drug discovery (80% timeline reduction), biologics expansion, and regulatory harmonization trends",
       "timeline": "IMMEDIATE"

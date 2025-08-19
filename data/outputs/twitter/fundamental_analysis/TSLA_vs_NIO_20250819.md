@@ -15,9 +15,9 @@ Same EV megatrend, opposite financial realities. Which wins long-term? 🤔
 **Thread 2/4: The Numbers That Matter**
 Let's break down the execution gap:
 
-📊 **TSLA Financial Strength**: 
+📊 **TSLA Financial Strength**:
 - Gross margin: 17.9% (sustainable profitability) ✅
-- Cash position: $37B (recession-proof) ✅  
+- Cash position: $37B (recession-proof) ✅
 - Risk score: 6.15/25 (institutional-grade) ✅
 - Target: $385 (+16.5% upside)
 
@@ -44,7 +44,7 @@ Lower risk doesn't always mean lower returns. TSLA's +16.5% target comes with pr
 
 EV transition benefits both, but cash flow generation separates leaders from casualties.
 
-Choose your conviction level wisely. 
+Choose your conviction level wisely.
 
 *Not investment advice. DYOER.*
 
@@ -56,13 +56,13 @@ Choose your conviction level wisely.
 "EV valuation paradox 🤯
 
 $TSLA trades at +1,182% premium to auto manufacturers
-$NIO trades at -87% discount to auto manufacturers  
+$NIO trades at -87% discount to auto manufacturers
 
-Same EV sector, opposite market treatment. The profitable leader gets premium, the loss-making challenger gets discount. Market efficiency or opportunity? 
+Same EV sector, opposite market treatment. The profitable leader gets premium, the loss-making challenger gets discount. Market efficiency or opportunity?
 
 *Not investment advice.*"
 
-### Hook Option B: Risk/Return Profiles  
+### Hook Option B: Risk/Return Profiles
 "Risk vs Reward in EVs ⚖️
 
 **Lower Risk**: $TSLA - Proven model, strong financials, 14.9% upside

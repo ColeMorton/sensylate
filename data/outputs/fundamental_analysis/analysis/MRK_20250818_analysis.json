@@ -81,7 +81,7 @@
       "confidence": 0.93
     },
     "balance_sheet_strength": {
-      "grade": "B+", 
+      "grade": "B+",
       "score": 8.3,
       "debt_analysis": {
         "assessment": "Moderate debt levels typical for large pharma",
@@ -149,7 +149,7 @@
         "industry_comparison": "Above average for large pharma",
         "roic_drivers": [
           "High-margin product portfolio",
-          "Efficient R&D capital allocation", 
+          "Efficient R&D capital allocation",
           "Strong return on manufacturing assets"
         ],
         "confidence": 0.88
@@ -389,7 +389,7 @@
       "peer_multiple_analysis": {
         "peer_group": [
           "Johnson & Johnson (JNJ)",
-          "Pfizer (PFE)", 
+          "Pfizer (PFE)",
           "AbbVie (ABBV)",
           "Bristol Myers Squibb (BMY)",
           "Eli Lilly (LLY)"
@@ -452,7 +452,7 @@
       },
       "relative_strength": {
         "vs_market": "Underperforming broader market recently",
-        "vs_healthcare": "In-line with healthcare sector performance", 
+        "vs_healthcare": "In-line with healthcare sector performance",
         "momentum_indicators": "Neutral momentum signals"
       },
       "technical_targets": {

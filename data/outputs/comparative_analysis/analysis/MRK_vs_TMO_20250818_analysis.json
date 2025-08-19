@@ -18,7 +18,7 @@
   "discovery_data_inheritance": {
     "source_files": [
       "MRK_vs_TMO_20250818_discovery.json",
-      "MRK_20250818_analysis.json", 
+      "MRK_20250818_analysis.json",
       "TMO_20250818_analysis.json"
     ],
     "data_validation_complete": true,
@@ -56,7 +56,7 @@
     "company_grades": {
       "mrk_overall_grade": "A-",
       "mrk_overall_score": 8.7,
-      "tmo_overall_grade": "A-", 
+      "tmo_overall_grade": "A-",
       "tmo_overall_score": 8.5,
       "grade_differential": "MRK marginally superior (+0.2 score advantage)",
       "confidence": 0.93

@@ -3,14 +3,14 @@
   "timestamp": "2025-08-19T21:17:45Z",
   "sector": "Healthcare",
   "content_type": "sector_analysis_post",
-  
+
   "content_metrics": {
     "character_count": 279,
     "engagement_optimized": true,
     "accuracy_verified": true,
     "economic_context_current": true
   },
-  
+
   "quality_assurance": {
     "pre_generation_gates_passed": true,
     "multi_source_sector_validation": {
@@ -39,7 +39,7 @@
       "confidence_appropriate": true
     }
   },
-  
+
   "data_reconciliation": {
     "xlv_price": {
       "analysis_fair_value": "$138.50-$142.75",
@@ -54,7 +54,7 @@
     "gdp_trend": "increasing",
     "employment_trend": "increasing"
   },
-  
+
   "template_data": {
     "type": "allocation_strategy",
     "key_metrics": {

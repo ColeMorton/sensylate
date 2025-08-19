@@ -121,7 +121,7 @@
       },
       "net_margin": {
         "tmo_net_margin": "15.2% profit margin",
-        "dhr_net_margin": "14.2% profit margin", 
+        "dhr_net_margin": "14.2% profit margin",
         "advantage": "TMO shows slightly higher net profitability"
       }
     },
@@ -190,7 +190,7 @@
       "dhr_revenue_streams": {
         "life_sciences": "Mass spectrometers, flow cytometry, genomics, lab automation",
         "diagnostics": "Chemistry, immunoassay, microbiology, automation systems",
-        "environmental_applied": "Water analysis, color management, packaging solutions", 
+        "environmental_applied": "Water analysis, color management, packaging solutions",
         "recurring_percentage": "Estimated 65-75% from recurring revenue streams"
       },
       "revenue_quality_assessment": "Both companies benefit from significant recurring revenue, with DHR slightly higher percentage"

@@ -206,7 +206,7 @@
       {
         "ticker": "MARA",
         "company_name": "MARA Holdings, Inc.",
-        "sector": "Financial Services", 
+        "sector": "Financial Services",
         "industry": "Capital Markets",
         "market_cap": 5960669184,
         "current_price": 16.09,
@@ -218,7 +218,7 @@
         "ticker": "CLSK",
         "company_name": "CleanSpark, Inc.",
         "sector": "Financial Services",
-        "industry": "Capital Markets", 
+        "industry": "Capital Markets",
         "market_cap": 2765856768,
         "current_price": 9.84,
         "revenue_ttm": 631937024,
@@ -260,7 +260,7 @@
     ],
     "research_priorities": [
       "Energy cost sensitivity analysis and hedging strategies evaluation",
-      "Bitcoin production efficiency and hash rate capacity assessment", 
+      "Bitcoin production efficiency and hash rate capacity assessment",
       "Data center utilization rates and cloud services revenue growth analysis",
       "Competitive positioning analysis within Bitcoin mining infrastructure sector",
       "Regulatory risk assessment for digital asset operations"

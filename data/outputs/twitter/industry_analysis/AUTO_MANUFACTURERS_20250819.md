@@ -4,7 +4,7 @@
 
 Top catalysts:
 • EV adoption acceleration: 94% probability | 9.4/10.0 impact
-• Chinese manufacturer global expansion: 90% probability | 9.0/10.0 impact  
+• Chinese manufacturer global expansion: 90% probability | 9.0/10.0 impact
 • Autonomous driving commercialization: 75% probability | 8.5/10.0 impact
 
 Timeline & ROI:

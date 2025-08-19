@@ -4,7 +4,7 @@
   "description": "Comprehensive mapping registry between Claude commands and their implementation scripts, schemas, and templates",
   "path_variables": {
     "SCRIPTS_BASE": "./scripts",
-    "TEMPLATES_BASE": "./scripts/templates", 
+    "TEMPLATES_BASE": "./scripts/templates",
     "DATA_OUTPUTS": "./data/outputs",
     "SCHEMAS_BASE": "./scripts/schemas"
   },
@@ -47,7 +47,7 @@
         "file_pattern": "{TICKER}_{YYYYMMDD}.md"
       },
       "validate": {
-        "sub_agent": "analyst", 
+        "sub_agent": "analyst",
         "primary_script": "{SCRIPTS_BASE}/fundamental_analysis/analysis_validation.py",
         "cli_services": [
           "{SCRIPTS_BASE}/yahoo_finance_cli.py",
@@ -210,7 +210,7 @@
         "file_pattern": "{INDUSTRY}_{YYYYMMDD}_discovery.json"
       },
       "analyze": {
-        "sub_agent": "analyst", 
+        "sub_agent": "analyst",
         "primary_script": "{SCRIPTS_BASE}/industry_analysis/industry_analysis.py",
         "schema": "{SCHEMAS_BASE}/industry_analysis_analysis_schema.json",
         "template": "./templates/analysis/industry_analysis_template.md",
@@ -295,7 +295,7 @@
         "base_dir": "{TEMPLATES_BASE}/twitter/fundamental/",
         "mappings": {
           "valuation": "twitter_fundamental_A_valuation.j2",
-          "catalyst": "twitter_fundamental_B_catalyst.j2", 
+          "catalyst": "twitter_fundamental_B_catalyst.j2",
           "moat": "twitter_fundamental_C_moat.j2",
           "contrarian": "twitter_fundamental_D_contrarian.j2",
           "financial": "twitter_fundamental_E_financial.j2"
@@ -307,7 +307,7 @@
     "twitter_sector_analysis": {
       "sub_agent": "twitter_writer",
       "primary_script": "{SCRIPTS_BASE}/base_scripts/sector_analysis_script.py",
-      "script_class": "SectorAnalysisScript", 
+      "script_class": "SectorAnalysisScript",
       "registry_name": "sector_analysis",
       "content_types": ["sector"],
       "templates": {
@@ -336,7 +336,7 @@
       "file_pattern": "{PORTFOLIO}_{YYYYMMDD}_twitter.md"
     },
     "twitter_post_strategy": {
-      "sub_agent": "twitter_writer", 
+      "sub_agent": "twitter_writer",
       "primary_script": "{SCRIPTS_BASE}/base_scripts/strategy_analysis_script.py",
       "script_class": "StrategyAnalysisScript",
       "registry_name": "strategy_analysis",
@@ -394,7 +394,7 @@
       }
     },
     "fmp": {
-      "script_path": "{SCRIPTS_BASE}/fmp_cli.py", 
+      "script_path": "{SCRIPTS_BASE}/fmp_cli.py",
       "service_class": "FMPCLI",
       "capabilities": ["company_profile", "financial_statements", "insider_trading"],
       "common_commands": {
@@ -404,7 +404,7 @@
     },
     "fred_economic": {
       "script_path": "{SCRIPTS_BASE}/fred_economic_cli.py",
-      "service_class": "FREDEconomicCLI", 
+      "service_class": "FREDEconomicCLI",
       "capabilities": ["economic_indicators", "federal_reserve_data", "macroeconomic_data"],
       "common_commands": {
         "indicators": "python {SCRIPTS_BASE}/fred_economic_cli.py indicators --env prod --output-format json"
@@ -437,7 +437,7 @@
   },
   "validation": {
     "total_dasv_commands": 24,
-    "total_twitter_commands": 4, 
+    "total_twitter_commands": 4,
     "total_content_commands": 1,
     "total_cli_services": 7,
     "schema_validation_required": true,

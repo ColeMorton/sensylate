@@ -28,7 +28,7 @@
       "confidence_impact": "Analysis confidence 9.3/10.0 is completely invalid given fundamental industry mismatch"
     },
     "analysis_data_inheritance_failure": {
-      "severity": "CRITICAL_BLOCKING", 
+      "severity": "CRITICAL_BLOCKING",
       "score_impact": -3.8,
       "description": "Synthesis bypassed corrupted analysis data but lacks proper analytical integration",
       "detailed_findings": [
@@ -70,7 +70,7 @@
       "findings": {
         "strengths": [
           "Competitive Landscape grade (B+) properly reflects pharmaceutical oligopoly structure with 68% top-5 concentration",
-          "Innovation Leadership grade (A-) accurately captures 15-20% R&D intensity and AI integration trends", 
+          "Innovation Leadership grade (A-) accurately captures 15-20% R&D intensity and AI integration trends",
           "Value Chain Analysis grade (B+) appropriately reflects integrated discovery-to-commercialization model",
           "Industry Moat Strength Ratings properly identify patent protection (9/10), regulatory barriers (8/10), manufacturing complexity (7/10)"
         ],
@@ -103,7 +103,7 @@
           "Lack of analytical framework for assessing competitive threats and competitive advantage sustainability"
         ],
         "intelligence_gaps": [
-          "No analytical validation of competitive moat durability assessments", 
+          "No analytical validation of competitive moat durability assessments",
           "Missing competitive scenario analysis due to analysis phase failure",
           "Competitive intelligence lacks institutional analytical rigor expected for investment decisions"
         ]
@@ -121,7 +121,7 @@
         ],
         "areas_for_improvement": [
           "Economic sensitivity analysis lacks analytical validation - analysis shows different correlations and sensitivities",
-          "Policy transmission analysis limited to discovery-level insights without analytical depth", 
+          "Policy transmission analysis limited to discovery-level insights without analytical depth",
           "International economic context (Asia-Pacific 12.55% CAGR) not analytically validated for investment implications"
         ],
         "integration_quality": [
@@ -273,7 +273,7 @@
   },
   "synthesis_validation_scores": {
     "investment_thesis_coherence": 0.72,
-    "industry_structure_grade_integration": 0.65, 
+    "industry_structure_grade_integration": 0.65,
     "competitive_intelligence_quality": 0.58,
     "economic_context_integration": 0.78,
     "professional_presentation": 0.85,
@@ -287,7 +287,7 @@
     "current_status": "FAILED_INSTITUTIONAL_STANDARDS",
     "blocking_issues": [
       "Analysis phase complete pharmaceutical industry framework failure prevents institutional validation",
-      "Investment conviction scores (9.4/10.0) cannot be certified without proper analytical foundation", 
+      "Investment conviction scores (9.4/10.0) cannot be certified without proper analytical foundation",
       "Competitive intelligence lacks institutional analytical depth required for investment decisions",
       "Risk-adjusted return calculations lack analytical validation for institutional risk management"
     ],
@@ -306,7 +306,7 @@
     ],
     "synthesis_enhancement_requirements": [
       "Rebuild synthesis with properly validated analytical foundation from corrected analysis phase",
-      "Integrate analytical depth for competitive positioning, financial performance validation, risk scenario modeling", 
+      "Integrate analytical depth for competitive positioning, financial performance validation, risk scenario modeling",
       "Ensure investment conviction scores backed by institutional analytical rigor rather than discovery-only intelligence",
       "Validate risk-adjusted return calculations with proper industry beta, volatility, and risk premium analysis"
     ],

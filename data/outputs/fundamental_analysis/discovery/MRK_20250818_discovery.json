@@ -380,7 +380,7 @@
     "discovery_timestamp": "2025-08-18T12:08:08.000000Z",
     "coverage_assessment": {
       "fundamental_analysis": "no_existing_files",
-      "sector_analysis": "no_existing_files", 
+      "sector_analysis": "no_existing_files",
       "comparative_analysis": "no_existing_files",
       "validation_files": "no_existing_files"
     }

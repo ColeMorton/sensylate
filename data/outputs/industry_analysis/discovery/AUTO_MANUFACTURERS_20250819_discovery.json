@@ -8,7 +8,7 @@
     "data_collection_methodology": "researcher_sub_agent_orchestration",
     "cli_services_utilized": [
       "yahoo_finance",
-      "alpha_vantage", 
+      "alpha_vantage",
       "fmp",
       "fred_economic",
       "coingecko"
@@ -27,7 +27,7 @@
       },
       "powertrain_technologies": {
         "ice_vehicles": "Traditional internal combustion engine vehicles",
-        "hybrid_electric": "HEV and PHEV with combined ICE and electric powertrains", 
+        "hybrid_electric": "HEV and PHEV with combined ICE and electric powertrains",
         "battery_electric": "Pure battery-electric vehicles (BEV)",
         "fuel_cell": "Hydrogen fuel cell electric vehicles"
       },
@@ -56,13 +56,13 @@
         "market_position": "Global EV leader with $942B market cap, produced 1.79M vehicles in 2024, dominant in premium EV segment with autonomous driving technology focus"
       },
       {
-        "ticker": "TM", 
+        "ticker": "TM",
         "company_name": "Toyota Motor Corporation",
         "market_position": "World's largest automaker by volume with 11.2M units in 2024, hybrid technology leader, multi-pathway electrification strategy"
       },
       {
         "ticker": "1211.HK",
-        "company_name": "BYD Company Limited", 
+        "company_name": "BYD Company Limited",
         "market_position": "World's largest EV manufacturer with 4.2M units in 2024, leading battery technology, 36% market share in China NEV segment"
       },
       {
@@ -102,7 +102,7 @@
         "confidence": 0.95
       },
       {
-        "trend": "Battery Technology Innovation", 
+        "trend": "Battery Technology Innovation",
         "impact": "Lithium-ion battery costs declining, solid-state batteries emerging, vertical integration by manufacturers (BYD model), improving range and charging speeds",
         "confidence": 0.88
       },
@@ -124,7 +124,7 @@
     ],
     "market_trends": [
       {
-        "trend": "Chinese Manufacturer Global Expansion", 
+        "trend": "Chinese Manufacturer Global Expansion",
         "impact": "BYD and other Chinese OEMs expanding internationally, competitive pricing pressure, technology transfer concerns, geopolitical trade tensions",
         "confidence": 0.90
       },
@@ -156,7 +156,7 @@
         "confidence": 0.98
       },
       {
-        "trend": "EV Incentive Policy Evolution", 
+        "trend": "EV Incentive Policy Evolution",
         "impact": "Government subsidies and tax credits supporting EV adoption, but gradual phase-out in mature markets, policy uncertainty affecting investment decisions",
         "confidence": 0.85
       },
@@ -212,7 +212,7 @@
         "historical_pattern": "Auto sales decline 20-30% during recessions, recover strongly in expansion phases",
         "current_risk_factors": [
           "Elevated interest rates reducing affordability",
-          "High vehicle prices from supply chain costs and tariffs", 
+          "High vehicle prices from supply chain costs and tariffs",
           "Consumer shift to vehicle maintenance vs. replacement",
           "Credit tightening for subprime borrowers"
         ],
@@ -250,14 +250,14 @@
       },
       "technology_battlegrounds": [
         "Battery technology and supply chain integration",
-        "Autonomous driving software and AI capabilities", 
+        "Autonomous driving software and AI capabilities",
         "Manufacturing efficiency and scale advantages",
         "Charging infrastructure partnerships and standards",
         "Software-defined vehicle platforms and services"
       ],
       "competitive_moats": [
         "Brand loyalty and premium positioning (luxury manufacturers)",
-        "Manufacturing scale and efficiency (Toyota, Volkswagen)", 
+        "Manufacturing scale and efficiency (Toyota, Volkswagen)",
         "Technology leadership and software ecosystem (Tesla)",
         "Dealer network and service infrastructure (traditional OEMs)",
         "Battery technology and vertical integration (BYD)"
@@ -274,7 +274,7 @@
       },
       "barriers_to_entry": [
         "Capital intensity: $1-5B+ required for vehicle platform development",
-        "Regulatory compliance: Safety, emissions, homologation requirements", 
+        "Regulatory compliance: Safety, emissions, homologation requirements",
         "Manufacturing scale: Economies of scale critical for profitability",
         "Distribution networks: Dealer relationships and service infrastructure",
         "Technology requirements: Software capabilities increasingly critical"
@@ -316,7 +316,7 @@
     ],
     "research_priorities": [
       "Detailed financial analysis of EV transition costs and timeline for traditional OEMs to achieve competitive cost parity with EV specialists",
-      "Assessment of Chinese manufacturer global market penetration strategies and competitive response by Western OEMs", 
+      "Assessment of Chinese manufacturer global market penetration strategies and competitive response by Western OEMs",
       "Evaluation of autonomous driving technology development timelines and potential market disruption scenarios",
       "Analysis of battery supply chain constraints and critical mineral dependencies affecting industry scaling",
       "Investigation of changing consumer preferences and adoption barriers for different powertrain technologies"
@@ -337,7 +337,7 @@
   "local_data_references": {
     "related_analyses": [
       "/Users/colemorton/Projects/sensylate/data/outputs/fundamental_analysis/discovery/TSLA_20250711_discovery.json",
-      "/Users/colemorton/Projects/sensylate/data/outputs/fundamental_analysis/discovery/TSLA_20250819_discovery.json", 
+      "/Users/colemorton/Projects/sensylate/data/outputs/fundamental_analysis/discovery/TSLA_20250819_discovery.json",
       "/Users/colemorton/Projects/sensylate/data/outputs/fundamental_analysis/analysis/TSLA_20250711_analysis.json",
       "/Users/colemorton/Projects/sensylate/data/outputs/fundamental_analysis/analysis/TSLA_20250819_analysis.json",
       "/Users/colemorton/Projects/sensylate/data/outputs/comparative_analysis/discovery/TSLA_vs_NIO_20250819_discovery.json",

@@ -62,7 +62,7 @@
     },
     "claimed_prices": {
       "tsla_claimed": "Referenced as $335.16 in analysis",
-      "nio_claimed": "Referenced as $4.87 in analysis", 
+      "nio_claimed": "Referenced as $4.87 in analysis",
       "price_accuracy": "exact_match",
       "variance_percentage": 0.0
     }
@@ -82,7 +82,7 @@
     "comparison_confidence": 0.93,
     "data_quality": 0.94,
     "primary_recommendation": "BUY",
-    "secondary_recommendation": "HOLD", 
+    "secondary_recommendation": "HOLD",
     "risk_adjusted_winner": "TSLA",
     "portfolio_allocation": "85% TSLA / 15% NIO"
   }

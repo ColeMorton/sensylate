@@ -186,7 +186,7 @@
     "service_health": {
       "yahoo_finance_cli": "operational",
       "alpha_vantage_cli": "limited_access",
-      "fmp_cli": "limited_access", 
+      "fmp_cli": "limited_access",
       "fred_economic_cli": "operational",
       "coingecko_cli": "operational",
       "sec_edgar_cli": "operational"

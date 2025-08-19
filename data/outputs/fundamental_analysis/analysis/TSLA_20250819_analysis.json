@@ -11,7 +11,7 @@
     "economic_context_integration": true,
     "cli_services_utilized": [
       "yahoo_finance_cli",
-      "alpha_vantage_cli", 
+      "alpha_vantage_cli",
       "fmp_cli",
       "fred_economic_cli",
       "coingecko_cli"
@@ -768,7 +768,7 @@
       },
       {
         "ticker": "F",
-        "name": "Ford Motor Company", 
+        "name": "Ford Motor Company",
         "rationale": "Legacy automaker transitioning to electric vehicles",
         "market_cap_relative": "Significantly smaller than TSLA",
         "key_metrics": {
