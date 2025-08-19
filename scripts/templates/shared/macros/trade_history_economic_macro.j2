@@ -9,7 +9,7 @@ Adapts FRED economic intelligence for trading strategy effectiveness assessment
 **Current Analysis Period**: {{ data.analysis_period | default("YTD 2025") }} | **Market Regime**: {{ data.market_regime | default("Transitional") }}
 
 #### Interest Rate Environment Impact
-- **Fed Funds Rate**: {{ data.fed_funds_rate | default("5.25") }}% | **Trading Strategy Impact**: {{ data.fed_impact_on_strategies | default("Neutral correlation with crossover strategies") }}
+- **Fed Funds Rate**: {{ data.fed_funds_rate }}% | **Trading Strategy Impact**: {{ data.fed_impact_on_strategies | default("Neutral correlation with crossover strategies") }}
 - **10Y-2Y Yield Spread**: {{ data.yield_spread | default("150") }}bps | **Strategy Sensitivity**: {{ data.yield_sensitivity | default("Limited direct impact on technical signals") }}
 - **Rate Environment Classification**: {{ data.rate_environment | default("Restrictive") }} | **Performance Correlation**: {{ data.rate_correlation | default("±0.15") }}
 

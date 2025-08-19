@@ -40,7 +40,7 @@ SYNTHESIS ENHANCEMENT PROTOCOL:
 
 3. Systematic Enhancement Implementation
    → **PRIORITY 1**: Fix price data inheritance from analysis file (BLOCKING)
-   → **PRIORITY 2**: Fix valuation inheritance from analysis file (BLOCKING)  
+   → **PRIORITY 2**: Fix valuation inheritance from analysis file (BLOCKING)
    → **PRIORITY 3**: Fix investment recommendation consistency (BLOCKING)
    → Strengthen template compliance and formatting consistency
    → Enhance content customization and placeholder elimination
@@ -93,7 +93,7 @@ INPUT DATA INTEGRATION REQUIREMENTS:
   → Validation: Cross-check current_price field in analysis vs synthesis output
   → Error Handling: Halt synthesis generation if price inheritance fails
 
-□ CRITICAL: Valuation Data Inheritance Validation (BLOCKING) 
+□ CRITICAL: Valuation Data Inheritance Validation (BLOCKING)
   → MANDATORY: All valuation estimates must be inherited from analysis file
   → Required Fields: DCF fair_value, relative_valuation fair_value, technical price_target
   → FAIL-FAST: Valuation deviation >5% from analysis is BLOCKING

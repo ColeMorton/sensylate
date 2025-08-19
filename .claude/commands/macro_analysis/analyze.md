@@ -14,7 +14,7 @@ Define the analytical requirements for transforming macro-economic discovery dat
 **Role**: macro_analyst
 **Action**: analyze
 **Input Source**: cli_enhanced_macro_analyst_discover
-**Output Location**: `./data/outputs/macro_analysis/analysis/`
+**Output Location**: `./{DATA_OUTPUTS}/macro_analysis/analysis/`
 **Next Phase**: macro_analyst_synthesize
 **Tool Integration**: Uses `macro_analyze_unified.py` via analyst sub-agent orchestration
 **Implementation Delegation**: Analyst sub-agent handles execution methodology
@@ -120,7 +120,7 @@ Define the analytical requirements for transforming macro-economic discovery dat
 - **Dynamic Probabilities**: Real indicator-based probability and correlation calculations
 
 **Tool Execution Requirements**:
-- **Command Pattern**: `python scripts/macro_analyze_unified.py {REGION}_{YYYYMMDD}_discovery.json [confidence_threshold]`
+- **Command Pattern**: `python {SCRIPTS_BASE}/macro_analyze_unified.py {REGION}_{YYYYMMDD}_discovery.json [confidence_threshold]`
 - **Regional Intelligence**: Automatic central bank and currency adaptation
 - **Quality Assurance**: Numeric confidence values and JSON structure consistency
 - **CLI Integration**: Service health monitoring and data quality attribution
@@ -142,7 +142,7 @@ Define the analytical requirements for transforming macro-economic discovery dat
 ## Output Structure Requirements
 
 **File Naming**: `{REGION}_{YYYYMMDD}_analysis.json`
-**Primary Location**: `./data/outputs/macro_analysis/analysis/`
+**Primary Location**: `./{DATA_OUTPUTS}/macro_analysis/analysis/`
 
 ### Required Output Sections
 1. **Business Cycle Positioning**

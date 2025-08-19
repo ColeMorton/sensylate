@@ -1,0 +1,56 @@
+---
+title: {{ title }}
+description: {{ description }}
+author: {{ author | default('Cole Morton') }}
+date: {{ date | default(timestamp) }}
+tags:
+  - {{ analysis_type | default('analysis') }}
+{% for tag in tags -%}
+  - {{ tag }}
+{% endfor %}
+---
+
+# {{ title }}
+*Generated: {{ timestamp }} | Confidence: {{ confidence }}/1.0 | Data Quality: {{ data_quality }}/1.0 | Economic Context: {{ economic_context | default('Current') }}*
+<!-- Author: {{ author | default('Cole Morton') }} (MANDATORY - ensure consistency) -->
+
+{% block content %}
+{{ content }}
+{% endblock %}
+
+---
+
+{% block methodology %}
+## Methodology & Data Sources
+
+### {{ analysis_type | title }} Framework
+{{ methodology_content }}
+
+### Data Quality Assessment
+{{ data_quality_content }}
+
+### Analysis Limitations
+{{ limitations_content }}
+{% endblock %}
+
+---
+
+{% block quality_metrics %}
+## Quality Metrics
+
+### {{ analysis_type | title }} Confidence
+{{ confidence_metrics }}
+
+### Validation Results
+{{ validation_results }}
+{% endblock %}
+
+---
+
+**Disclaimer**: {{ disclaimer | default('This analysis is based on available financial data and market conditions as of the analysis date. Investment decisions should consider individual risk tolerance, investment objectives, and portfolio diversification needs. Past performance does not guarantee future results.') }}
+
+**Framework Compliance**: {{ framework_compliance | default('This analysis complies with DASV Framework v2.1 institutional quality standards with comprehensive validation and systematic risk assessment.') }}
+
+---
+
+*{{ analysis_type | title }} generated using institutional-grade DASV framework with multi-source data integration and comprehensive validation protocols.*

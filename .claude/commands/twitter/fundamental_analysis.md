@@ -172,7 +172,7 @@ def calculate_twitter_synthesis_confidence(source_conf, data_quality, template_f
 def load_fundamental_synthesis(ticker, date):
     """Load and validate source fundamental analysis synthesis"""
 
-    source_path = f"data/outputs/fundamental_analysis/{ticker}_{date}.md"
+    source_path = f"{DATA_OUTPUTS}/fundamental_analysis/{ticker}_{date}.md"
 
     # DASV Input Validation
     validate_source_synthesis(source_path)
@@ -408,7 +408,7 @@ def phase_1_input_validation(ticker, date):
     """DASV-compliant input validation"""
 
     # Load source synthesis
-    source_path = f"data/outputs/fundamental_analysis/{ticker}_{date}.md"
+    source_path = f"{DATA_OUTPUTS}/fundamental_analysis/{ticker}_{date}.md"
     synthesis_data = load_fundamental_synthesis(ticker, date)
 
     # Validate DASV compliance

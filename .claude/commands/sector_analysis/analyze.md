@@ -14,9 +14,9 @@ Define the analytical requirements for transforming sector discovery data into c
 **Role**: sector_analyst
 **Action**: analyze
 **Input Source**: cli_enhanced_sector_analyst_discover
-**Output Location**: `./data/outputs/sector_analysis/analysis/`
+**Output Location**: `./{DATA_OUTPUTS}/sector_analysis/analysis/`
 **Next Phase**: sector_analyst_synthesize
-**Template Integration**: `./templates/analysis/sector_analysis_template.md`
+**Template Integration**: `./{TEMPLATES_BASE}/analysis/sector_analysis_template.md`
 **Implementation Delegation**: Analyst sub-agent handles template gap analysis methodology
 
 ## Analysis Parameters
@@ -160,7 +160,7 @@ Define the analytical requirements for transforming sector discovery data into c
 ## Output Structure Requirements
 
 **File Naming**: `{SECTOR}_{YYYYMMDD}_analysis.json`
-**Primary Location**: `./data/outputs/sector_analysis/analysis/`
+**Primary Location**: `./{DATA_OUTPUTS}/sector_analysis/analysis/`
 
 ### Required Output Sections
 

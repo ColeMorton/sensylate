@@ -25,7 +25,7 @@ The Sensylate command system implements a sophisticated orchestration framework 
 ### Command Classifications
 
 **🎯 Assistant Commands**: High-level strategic guidance and orchestration
-**📊 Core Product Commands**: User-facing analysis and content generation  
+**📊 Core Product Commands**: User-facing analysis and content generation
 **🔧 Tool Commands**: Utility and infrastructure operations
 **🌐 Integration Commands**: External service coordination and data processing
 
@@ -307,7 +307,7 @@ from pathlib import Path
 
 class PathResolver:
     """Standardized path resolution for all commands"""
-    
+
     def __init__(self):
         self.base_paths = {
             'SCRIPTS_BASE': self._resolve_path('SENSYLATE_SCRIPTS_BASE', './scripts'),
@@ -317,12 +317,12 @@ class PathResolver:
             'CONFIG_BASE': self._resolve_path('SENSYLATE_CONFIG_BASE', './config'),
             'LOGS_BASE': self._resolve_path('SENSYLATE_LOGS_BASE', './logs')
         }
-    
+
     def _resolve_path(self, env_var: str, default: str) -> Path:
         """Resolve path with environment variable priority"""
         path_str = os.getenv(env_var, default)
         return Path(path_str).resolve()
-    
+
     def get_path(self, path_template: str) -> Path:
         """Resolve path template with base variables"""
         resolved = path_template
@@ -399,22 +399,22 @@ python {SCRIPTS_BASE}/path/to/primary_script.py \
 ```python
 def select_optimal_template(data_context):
     """Dynamic template selection based on data characteristics"""
-    
+
     # High-confidence valuation analysis
     if (data_context.get('pe_ratio', 0) > data_context.get('sector_pe', 0) * 1.2 and
         data_context.get('confidence', 0) > 0.85):
         return '{TEMPLATES_BASE}/fundamental/twitter_fundamental_A_valuation.j2'
-    
+
     # Growth momentum detection
     if (data_context.get('revenue_growth', 0) > 15 and
         data_context.get('margin_expansion', 0) > 0):
         return '{TEMPLATES_BASE}/fundamental/twitter_fundamental_B_growth.j2'
-    
+
     # Quality assessment criteria
     if (data_context.get('roe', 0) > 15 and
         data_context.get('debt_ratio', 1) < 0.5):
         return '{TEMPLATES_BASE}/fundamental/twitter_fundamental_C_quality.j2'
-    
+
     # Default template
     return '{TEMPLATES_BASE}/fundamental/twitter_fundamental_default.j2'
 ```

@@ -308,7 +308,7 @@
       "overall_comparison_result": "INCONCLUSIVE - ASML likely superior but data limitations prevent definitive determination",
       "winner_by_category": {
         "business_quality": "ASML",
-        "competitive_strength": "ASML", 
+        "competitive_strength": "ASML",
         "financial_health": "ASML (likely)",
         "risk_profile": "ASML",
         "investment_actionability": "QBTS"
@@ -344,7 +344,7 @@
     },
     "market_regime_analysis": {
       "current_regime": "Risk-on environment supporting speculative growth investments",
-      "ASML_regime_fit": "Benefits from quality growth preferences in current environment", 
+      "ASML_regime_fit": "Benefits from quality growth preferences in current environment",
       "QBTS_regime_fit": "Current speculative appetite supports quantum sector investments",
       "regime_change_impact": "QBTS significantly more vulnerable to risk-off regime transition"
     }

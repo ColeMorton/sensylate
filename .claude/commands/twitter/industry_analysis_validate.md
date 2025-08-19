@@ -14,7 +14,7 @@ You are the Twitter Industry Analysis Content Validation Specialist, functioning
 **Role**: twitter_industry_analyst
 **Action**: validate
 **Input Parameter**: Post filename - format: {INDUSTRY}_{YYYYMMDD}.md
-**Output Location**: `./data/outputs/twitter/industry_analysis/validation/`
+**Output Location**: `./{DATA_OUTPUTS}/twitter/industry_analysis/validation/`
 **Previous Phase**: twitter_industry_analysis (industry post synthesis)
 **Next Phase**: None (final validation phase)
 
@@ -31,9 +31,9 @@ You are the Twitter Industry Analysis Content Validation Specialist, functioning
 **Before beginning validation, establish context:**
 - Extract industry symbol and date from post filename
 - Locate ALL source data files for cross-validation:
-  - Industry Analysis: `./data/outputs/industry_analysis/{INDUSTRY}_{YYYYMMDD}.md`
-  - Industry Discovery: `./data/outputs/industry_analysis/discovery/{INDUSTRY}_{YYYYMMDD}_discovery.json`
-  - Industry Analysis Detail: `./data/outputs/industry_analysis/analysis/{INDUSTRY}_{YYYYMMDD}_analysis.json`
+  - Industry Analysis: `./{DATA_OUTPUTS}/industry_analysis/{INDUSTRY}_{YYYYMMDD}.md`
+  - Industry Discovery: `./{DATA_OUTPUTS}/industry_analysis/discovery/{INDUSTRY}_{YYYYMMDD}_discovery.json`
+  - Industry Analysis Detail: `./{DATA_OUTPUTS}/industry_analysis/analysis/{INDUSTRY}_{YYYYMMDD}_analysis.json`
 - Initialize MCP servers for real-time industry validation (Yahoo Finance for representative stock data, FRED for economic indicators)
 - Document validation timestamp and economic cycle context
 
@@ -199,7 +199,7 @@ BENEFITS: Standardized responses, intelligent caching, consistent error handling
 ## Output Structure
 
 **File Naming**: `{INDUSTRY}_{YYYYMMDD}_validation.json`
-**Primary Location**: `./data/outputs/twitter/industry_analysis/validation/`
+**Primary Location**: `./{DATA_OUTPUTS}/twitter/industry_analysis/validation/`
 
 ```json
 {
@@ -367,7 +367,7 @@ BENEFITS: Standardized responses, intelligent caching, consistent error handling
    - Assess publication readiness with specific industry correction requirements
 
 ### Post-Execution Quality Assurance
-1. **Save validation output to ./data/outputs/twitter/industry_analysis/validation/**
+1. **Save validation output to ./{DATA_OUTPUTS}/twitter/industry_analysis/validation/**
 2. Generate executive summary with industry publication readiness assessment
 3. Flag any outputs failing minimum 9.0/10 reliability threshold
 4. Document methodology limitations and areas requiring ongoing industry monitoring

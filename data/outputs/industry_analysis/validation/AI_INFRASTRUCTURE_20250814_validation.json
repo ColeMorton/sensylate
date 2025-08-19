@@ -8,7 +8,7 @@
     "validation_methodology": "comprehensive_industry_dasv_workflow_validation_via_cli_services",
     "cli_services_utilized": [
       "yahoo_finance",
-      "alpha_vantage", 
+      "alpha_vantage",
       "fmp",
       "fred_economic",
       "sec_edgar",
@@ -93,7 +93,7 @@
     "multi_source_consistency": "0.94",
     "data_quality_scores": {
       "yahoo_finance_cli": "0.96",
-      "alpha_vantage_cli": "0.93", 
+      "alpha_vantage_cli": "0.93",
       "fmp_cli": "0.95",
       "fred_economic_cli": "0.91",
       "coingecko_cli": "0.89",

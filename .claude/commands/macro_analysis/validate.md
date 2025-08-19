@@ -14,7 +14,7 @@ You are the Macro-Economic Analysis Validation Specialist, functioning as a comp
 **Role**: macro_analyst
 **Action**: validate
 **Input Parameter**: synthesis output filename (containing region and date)
-**Output Location**: `./data/outputs/macro_analysis/validation/`
+**Output Location**: `./{DATA_OUTPUTS}/macro_analysis/validation/`
 **Next Phase**: None (final validation phase)
 **Tool Integration**: Uses `validate_macro_synthesis.py` for comprehensive validation
 
@@ -76,7 +76,7 @@ You are the Macro-Economic Analysis Validation Specialist, functioning as a comp
 
 **Primary Validation Tool**: `validate_macro_synthesis.py`
 **Usage**: Execute the Python validation tool to comprehensively validate macro-economic analysis documents
-**Command**: `python scripts/validate_macro_synthesis.py {REGION}_{YYYYMMDD}.md`
+**Command**: `python {SCRIPTS_BASE}/validate_macro_synthesis.py {REGION}_{YYYYMMDD}.md`
 
 **Production CLI Financial Services Integration:**
 
@@ -127,10 +127,10 @@ Use production CLI financial services for comprehensive multi-source economic va
 - Automatically locate latest 7 files (configurable) in specified phase directory
 - Sort by modification timestamp for most recent analysis outputs
 - Phase-specific directory mapping:
-  - `discovery`: `./data/outputs/macro_analysis/discovery/`
-  - `analysis`: `./data/outputs/macro_analysis/analysis/`
-  - `synthesis`: `./data/outputs/macro_analysis/` (root level)
-  - `validation`: `./data/outputs/macro_analysis/validation/`
+  - `discovery`: `./{DATA_OUTPUTS}/macro_analysis/discovery/`
+  - `analysis`: `./{DATA_OUTPUTS}/macro_analysis/analysis/`
+  - `synthesis`: `./{DATA_OUTPUTS}/macro_analysis/` (root level)
+  - `validation`: `./{DATA_OUTPUTS}/macro_analysis/validation/`
 
 ### Core Validation Dimensions
 
@@ -187,7 +187,7 @@ CLI INTEGRATION VALIDATION:
 ### Cross-Analysis Output Structure
 
 **File Naming**: `{PHASE}_cross_analysis_{YYYYMMDD}_validation.json`
-**Location**: `./data/outputs/macro_analysis/validation/`
+**Location**: `./{DATA_OUTPUTS}/macro_analysis/validation/`
 
 ```json
 {
@@ -271,9 +271,9 @@ CLI INTEGRATION VALIDATION:
 **Before beginning validation, establish macro-economic context:**
 - Extract region identifier and date from synthesis filename
 - Locate ALL macro-economic DASV outputs for validation:
-  - Discovery: `./data/outputs/macro_analysis/discovery/{REGION}_{YYYYMMDD}_discovery.json`
-  - Analysis: `./data/outputs/macro_analysis/analysis/{REGION}_{YYYYMMDD}_analysis.json`
-  - Synthesis: `./data/outputs/macro_analysis/{REGION}_{YYYYMMDD}.md`
+  - Discovery: `./{DATA_OUTPUTS}/macro_analysis/discovery/{REGION}_{YYYYMMDD}_discovery.json`
+  - Analysis: `./{DATA_OUTPUTS}/macro_analysis/analysis/{REGION}_{YYYYMMDD}_analysis.json`
+  - Synthesis: `./{DATA_OUTPUTS}/macro_analysis/{REGION}_{YYYYMMDD}.md`
 - Document validation date and economic data freshness requirements
 - Initialize systematic macro-economic validation framework targeting >9.5/10 reliability
 
@@ -283,7 +283,7 @@ CLI INTEGRATION VALIDATION:
 ```
 MACRO-ECONOMIC VALIDATION TOOL INTEGRATION:
 1. Execute Validation Tool
-   → Run: python scripts/validate_macro_synthesis.py {REGION}_{YYYYMMDD}.md
+   → Run: python {SCRIPTS_BASE}/validate_macro_synthesis.py {REGION}_{YYYYMMDD}.md
    → Tool automatically discovers and validates all DASV phase outputs
    → Performs comprehensive validation against schemas and templates
    → Generates institutional-quality validation report
@@ -508,7 +508,7 @@ ECONOMIC OUTLOOK VALIDATION REQUIREMENTS:
 ## Output Structure
 
 **File Naming**: `{REGION}_{YYYYMMDD}_validation.json`
-**Primary Location**: `./data/outputs/macro_analysis/validation/`
+**Primary Location**: `./{DATA_OUTPUTS}/macro_analysis/validation/`
 
 ```json
 {
@@ -867,7 +867,7 @@ ECONOMIC OUTLOOK VALIDATION REQUIREMENTS:
 - **Error Handling**: Graceful degradation for individual economic indicator validation failures
 - **Quality Monitoring**: Real-time health assessment across economic and policy validation
 
-**Integration with Macro-Economic DASV Framework**: This validation command serves as the final quality assurance checkpoint for the entire macro-economic analysis ecosystem, ensuring institutional-quality reliability for asset allocation strategies through comprehensive multi-source economic validation, business cycle consistency verification, and policy/employment integration validation. Validates compliance with `./templates/analysis/macro_analysis_template.md` specification (authoritative standard implemented via enhanced Jinja2 templates with macro-economic customization).
+**Integration with Macro-Economic DASV Framework**: This validation command serves as the final quality assurance checkpoint for the entire macro-economic analysis ecosystem, ensuring institutional-quality reliability for asset allocation strategies through comprehensive multi-source economic validation, business cycle consistency verification, and policy/employment integration validation. Validates compliance with `./{TEMPLATES_BASE}/analysis/macro_analysis_template.md` specification (authoritative standard implemented via enhanced Jinja2 templates with macro-economic customization).
 
 **Author**: Cole Morton
 **Confidence**: [Validation confidence reflects comprehensive sector framework verification and institutional-quality standards]

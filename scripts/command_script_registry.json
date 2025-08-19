@@ -1,0 +1,446 @@
+{
+  "version": "1.0.0",
+  "last_updated": "2025-08-14",
+  "description": "Comprehensive mapping registry between Claude commands and their implementation scripts, schemas, and templates",
+  "path_variables": {
+    "SCRIPTS_BASE": "./scripts",
+    "TEMPLATES_BASE": "./scripts/templates",
+    "DATA_OUTPUTS": "./data/outputs",
+    "SCHEMAS_BASE": "./scripts/schemas"
+  },
+  "command_mappings": {
+    "fundamental_analysis": {
+      "discover": {
+        "sub_agent": "researcher",
+        "primary_script": "{SCRIPTS_BASE}/fundamental_analysis/fundamental_discovery.py",
+        "cli_services": [
+          "{SCRIPTS_BASE}/yahoo_finance_cli.py",
+          "{SCRIPTS_BASE}/alpha_vantage_cli.py",
+          "{SCRIPTS_BASE}/fmp_cli.py",
+          "{SCRIPTS_BASE}/sec_edgar_cli.py",
+          "{SCRIPTS_BASE}/fred_economic_cli.py"
+        ],
+        "schema": "{SCHEMAS_BASE}/fundamental_analysis_discovery_schema.json",
+        "template": "./templates/analysis/fundamental_analysis_template.md",
+        "output_dir": "{DATA_OUTPUTS}/fundamental_analysis/discovery/",
+        "file_pattern": "{TICKER}_{YYYYMMDD}_discovery.json"
+      },
+      "analyze": {
+        "sub_agent": "analyst",
+        "primary_script": "{SCRIPTS_BASE}/fundamental_analysis/fundamental_analysis.py",
+        "cli_services": [
+          "{SCRIPTS_BASE}/yahoo_finance_cli.py",
+          "{SCRIPTS_BASE}/alpha_vantage_cli.py",
+          "{SCRIPTS_BASE}/fmp_cli.py"
+        ],
+        "schema": "{SCHEMAS_BASE}/fundamental_analysis_analysis_schema.json",
+        "template": "./templates/analysis/fundamental_analysis_template.md",
+        "output_dir": "{DATA_OUTPUTS}/fundamental_analysis/analysis/",
+        "file_pattern": "{TICKER}_{YYYYMMDD}_analysis.json"
+      },
+      "synthesize": {
+        "sub_agent": "synthesist",
+        "primary_script": "{SCRIPTS_BASE}/fundamental_analysis/investment_synthesis.py",
+        "schema": "{SCHEMAS_BASE}/fundamental_analysis_synthesis_schema.json",
+        "template": "./templates/analysis/fundamental_analysis_template.md",
+        "output_dir": "{DATA_OUTPUTS}/fundamental_analysis/",
+        "file_pattern": "{TICKER}_{YYYYMMDD}.md"
+      },
+      "validate": {
+        "sub_agent": "analyst",
+        "primary_script": "{SCRIPTS_BASE}/fundamental_analysis/analysis_validation.py",
+        "cli_services": [
+          "{SCRIPTS_BASE}/yahoo_finance_cli.py",
+          "{SCRIPTS_BASE}/alpha_vantage_cli.py",
+          "{SCRIPTS_BASE}/fmp_cli.py"
+        ],
+        "schema": "{SCHEMAS_BASE}/fundamental_analysis_validation_schema.json",
+        "template": "./templates/analysis/fundamental_analysis_template.md",
+        "output_dir": "{DATA_OUTPUTS}/fundamental_analysis/validation/",
+        "file_pattern": "{TICKER}_{YYYYMMDD}_validation.json"
+      }
+    },
+    "trade_history": {
+      "discover": {
+        "sub_agent": "researcher",
+        "primary_script": "{SCRIPTS_BASE}/trade_history_discover.py",
+        "cli_services": [
+          "{SCRIPTS_BASE}/yahoo_finance_cli.py",
+          "{SCRIPTS_BASE}/fred_economic_cli.py"
+        ],
+        "schema": "{SCHEMAS_BASE}/trade_history_discovery_schema.json",
+        "template": "./templates/analysis/trade_history_template.md",
+        "output_dir": "{DATA_OUTPUTS}/trade_history/discovery/",
+        "file_pattern": "{PORTFOLIO}_{YYYYMMDD}_discovery.json"
+      },
+      "analyze": {
+        "sub_agent": "analyst",
+        "primary_script": "{SCRIPTS_BASE}/trade_history_analysis.py",
+        "supporting_scripts": [
+          "{SCRIPTS_BASE}/trade_history_comprehensive_analysis.py",
+          "{SCRIPTS_BASE}/trade_history/unified_calculation_engine.py"
+        ],
+        "schema": "{SCHEMAS_BASE}/trade_history_analysis_schema.json",
+        "template": "./templates/analysis/trade_history_template.md",
+        "output_dir": "{DATA_OUTPUTS}/trade_history/analysis/",
+        "file_pattern": "{PORTFOLIO}_{YYYYMMDD}_analysis.json"
+      },
+      "synthesize": {
+        "sub_agent": "synthesist",
+        "primary_script": "{SCRIPTS_BASE}/trade_history_synthesize.py",
+        "supporting_scripts": [
+          "{SCRIPTS_BASE}/trade_history_synthesize_enhanced.py"
+        ],
+        "schema": "{SCHEMAS_BASE}/trade_history_synthesis_schema.json",
+        "template": "./templates/analysis/trade_history_template.md",
+        "output_dir": "{DATA_OUTPUTS}/trade_history/",
+        "file_pattern": "{PORTFOLIO}_{YYYYMMDD}.md"
+      },
+      "validate": {
+        "sub_agent": "analyst",
+        "primary_script": "{SCRIPTS_BASE}/trade_history_validate.py",
+        "schema": "{SCHEMAS_BASE}/trade_history_validation_schema.json",
+        "template": "./templates/analysis/trade_history_template.md",
+        "output_dir": "{DATA_OUTPUTS}/trade_history/validation/",
+        "file_pattern": "{PORTFOLIO}_{YYYYMMDD}_validation.json"
+      }
+    },
+    "macro_analysis": {
+      "discover": {
+        "sub_agent": "researcher",
+        "primary_script": "{SCRIPTS_BASE}/macro_discovery.py",
+        "cli_services": [
+          "{SCRIPTS_BASE}/fred_economic_cli.py",
+          "{SCRIPTS_BASE}/imf_cli.py",
+          "{SCRIPTS_BASE}/alpha_vantage_cli.py"
+        ],
+        "schema": "{SCHEMAS_BASE}/macro_analysis_discovery_schema.json",
+        "regional_schemas": {
+          "americas": "{SCHEMAS_BASE}/macro_analysis_discovery_schema_americas.json",
+          "europe": "{SCHEMAS_BASE}/macro_analysis_discovery_schema_europe.json"
+        },
+        "template": "./templates/analysis/macro_analysis_template.md",
+        "output_dir": "{DATA_OUTPUTS}/macro_analysis/discovery/",
+        "file_pattern": "{REGION}_{YYYYMMDD}_discovery.json"
+      },
+      "analyze": {
+        "sub_agent": "analyst",
+        "primary_script": "{SCRIPTS_BASE}/macro_analysis.py",
+        "supporting_scripts": [
+          "{SCRIPTS_BASE}/macro_analyze_enhanced.py",
+          "{SCRIPTS_BASE}/macro_analyze_unified.py"
+        ],
+        "schema": "{SCHEMAS_BASE}/macro_analysis_analysis_schema.json",
+        "template": "./templates/analysis/macro_analysis_template.md",
+        "output_dir": "{DATA_OUTPUTS}/macro_analysis/analysis/",
+        "file_pattern": "{REGION}_{YYYYMMDD}_analysis.json"
+      },
+      "synthesize": {
+        "sub_agent": "synthesist",
+        "primary_script": "{SCRIPTS_BASE}/macro_synthesis.py",
+        "schema": "{SCHEMAS_BASE}/macro_analysis_synthesis_schema.json",
+        "template": "./templates/analysis/macro_analysis_template.md",
+        "output_dir": "{DATA_OUTPUTS}/macro_analysis/",
+        "file_pattern": "{REGION}_{YYYYMMDD}.md"
+      },
+      "validate": {
+        "sub_agent": "analyst",
+        "primary_script": "{SCRIPTS_BASE}/macro_validation.py",
+        "cli_services": [
+          "{SCRIPTS_BASE}/fred_economic_cli.py",
+          "{SCRIPTS_BASE}/imf_cli.py"
+        ],
+        "schema": "{SCHEMAS_BASE}/macro_analysis_validation_schema.json",
+        "template": "./templates/analysis/macro_analysis_template.md",
+        "output_dir": "{DATA_OUTPUTS}/macro_analysis/validation/",
+        "file_pattern": "{REGION}_{YYYYMMDD}_validation.json"
+      }
+    },
+    "sector_analysis": {
+      "discover": {
+        "sub_agent": "researcher",
+        "primary_script": "{SCRIPTS_BASE}/sector_analysis/sector_discovery.py",
+        "cli_services": [
+          "{SCRIPTS_BASE}/yahoo_finance_cli.py",
+          "{SCRIPTS_BASE}/alpha_vantage_cli.py",
+          "{SCRIPTS_BASE}/fmp_cli.py"
+        ],
+        "schema": "{SCHEMAS_BASE}/sector_analysis_discovery_schema.json",
+        "template": "./templates/analysis/sector_analysis_template.md",
+        "output_dir": "{DATA_OUTPUTS}/sector_analysis/discovery/",
+        "file_pattern": "{SECTOR}_{YYYYMMDD}_discovery.json"
+      },
+      "analyze": {
+        "sub_agent": "analyst",
+        "primary_script": "{SCRIPTS_BASE}/sector_analysis/sector_analysis.py",
+        "schema": "{SCHEMAS_BASE}/sector_analysis_analysis_schema.json",
+        "template": "./templates/analysis/sector_analysis_template.md",
+        "output_dir": "{DATA_OUTPUTS}/sector_analysis/analysis/",
+        "file_pattern": "{SECTOR}_{YYYYMMDD}_analysis.json"
+      },
+      "synthesize": {
+        "sub_agent": "synthesist",
+        "primary_script": "{SCRIPTS_BASE}/sector_analysis/sector_synthesis.py",
+        "schema": "{SCHEMAS_BASE}/sector_analysis_synthesis_schema.json",
+        "template": "./templates/analysis/sector_analysis_template.md",
+        "output_dir": "{DATA_OUTPUTS}/sector_analysis/",
+        "file_pattern": "{SECTOR}_{YYYYMMDD}.md"
+      },
+      "validate": {
+        "sub_agent": "analyst",
+        "primary_script": "{SCRIPTS_BASE}/sector_analysis/sector_validation.py",
+        "schema": "{SCHEMAS_BASE}/sector_analysis_validation_schema.json",
+        "template": "./templates/analysis/sector_analysis_template.md",
+        "output_dir": "{DATA_OUTPUTS}/sector_analysis/validation/",
+        "file_pattern": "{SECTOR}_{YYYYMMDD}_validation.json"
+      }
+    },
+    "industry_analysis": {
+      "discover": {
+        "sub_agent": "researcher",
+        "primary_script": "{SCRIPTS_BASE}/industry_analysis/industry_discovery.py",
+        "cli_services": [
+          "{SCRIPTS_BASE}/yahoo_finance_cli.py",
+          "{SCRIPTS_BASE}/alpha_vantage_cli.py",
+          "{SCRIPTS_BASE}/fmp_cli.py"
+        ],
+        "schema": "{SCHEMAS_BASE}/industry_analysis_discovery_schema.json",
+        "template": "./templates/analysis/industry_analysis_template.md",
+        "output_dir": "{DATA_OUTPUTS}/industry_analysis/discovery/",
+        "file_pattern": "{INDUSTRY}_{YYYYMMDD}_discovery.json"
+      },
+      "analyze": {
+        "sub_agent": "analyst",
+        "primary_script": "{SCRIPTS_BASE}/industry_analysis/industry_analysis.py",
+        "schema": "{SCHEMAS_BASE}/industry_analysis_analysis_schema.json",
+        "template": "./templates/analysis/industry_analysis_template.md",
+        "output_dir": "{DATA_OUTPUTS}/industry_analysis/analysis/",
+        "file_pattern": "{INDUSTRY}_{YYYYMMDD}_analysis.json"
+      },
+      "synthesize": {
+        "sub_agent": "synthesist",
+        "primary_script": "{SCRIPTS_BASE}/industry_analysis/industry_synthesis.py",
+        "schema": "{SCHEMAS_BASE}/industry_analysis_synthesis_schema.json",
+        "template": "./templates/analysis/industry_analysis_template.md",
+        "output_dir": "{DATA_OUTPUTS}/industry_analysis/",
+        "file_pattern": "{INDUSTRY}_{YYYYMMDD}.md"
+      },
+      "validate": {
+        "sub_agent": "analyst",
+        "primary_script": "{SCRIPTS_BASE}/industry_analysis/industry_validation.py",
+        "schema": "{SCHEMAS_BASE}/industry_analysis_validation_schema.json",
+        "template": "./templates/analysis/industry_analysis_template.md",
+        "output_dir": "{DATA_OUTPUTS}/industry_analysis/validation/",
+        "file_pattern": "{INDUSTRY}_{YYYYMMDD}_validation.json"
+      }
+    },
+    "comparative_analysis": {
+      "discover": {
+        "sub_agent": "researcher",
+        "primary_script": "{SCRIPTS_BASE}/comparative_analysis/comparative_discovery.py",
+        "cli_services": [
+          "{SCRIPTS_BASE}/yahoo_finance_cli.py",
+          "{SCRIPTS_BASE}/alpha_vantage_cli.py",
+          "{SCRIPTS_BASE}/fmp_cli.py"
+        ],
+        "schema": "{SCHEMAS_BASE}/comparative_analysis_discovery_schema.json",
+        "template": "./templates/analysis/comparative_analysis_template.md",
+        "output_dir": "{DATA_OUTPUTS}/comparative_analysis/discovery/",
+        "file_pattern": "{TICKER1}_vs_{TICKER2}_{YYYYMMDD}_discovery.json"
+      },
+      "analyze": {
+        "sub_agent": "analyst",
+        "primary_script": "{SCRIPTS_BASE}/comparative_analysis/comparative_analysis.py",
+        "schema": "{SCHEMAS_BASE}/comparative_analysis_analysis_schema.json",
+        "template": "./templates/analysis/comparative_analysis_template.md",
+        "output_dir": "{DATA_OUTPUTS}/comparative_analysis/analysis/",
+        "file_pattern": "{TICKER1}_vs_{TICKER2}_{YYYYMMDD}_analysis.json"
+      },
+      "synthesize": {
+        "sub_agent": "synthesist",
+        "primary_script": "{SCRIPTS_BASE}/comparative_analysis/comparative_synthesis.py",
+        "schema": "{SCHEMAS_BASE}/comparative_analysis_synthesis_schema.json",
+        "template": "./templates/analysis/comparative_analysis_template.md",
+        "output_dir": "{DATA_OUTPUTS}/comparative_analysis/",
+        "file_pattern": "{TICKER1}_vs_{TICKER2}_{YYYYMMDD}.md"
+      },
+      "validate": {
+        "sub_agent": "analyst",
+        "primary_script": "{SCRIPTS_BASE}/comparative_analysis/comparative_validation.py",
+        "cli_services": [
+          "{SCRIPTS_BASE}/yahoo_finance_cli.py",
+          "{SCRIPTS_BASE}/alpha_vantage_cli.py",
+          "{SCRIPTS_BASE}/fmp_cli.py"
+        ],
+        "schema": "{SCHEMAS_BASE}/comparative_analysis_validation_schema.json",
+        "template": "./templates/analysis/comparative_analysis_template.md",
+        "output_dir": "{DATA_OUTPUTS}/comparative_analysis/validation/",
+        "file_pattern": "{TICKER1}_vs_{TICKER2}_{YYYYMMDD}_validation.json"
+      }
+    }
+  },
+  "twitter_commands": {
+    "twitter_fundamental_analysis": {
+      "sub_agent": "twitter_writer",
+      "primary_script": "{SCRIPTS_BASE}/base_scripts/fundamental_analysis_script.py",
+      "script_class": "FundamentalAnalysisScript",
+      "registry_name": "fundamental_analysis",
+      "content_types": ["fundamental"],
+      "supporting_components": {
+        "template_selector": "{SCRIPTS_BASE}/twitter_template_selector_refactored.py",
+        "validation_framework": "{SCRIPTS_BASE}/unified_validation_framework.py",
+        "template_renderer": "{SCRIPTS_BASE}/twitter_template_renderer.py"
+      },
+      "templates": {
+        "base_dir": "{TEMPLATES_BASE}/twitter/fundamental/",
+        "mappings": {
+          "valuation": "twitter_fundamental_A_valuation.j2",
+          "catalyst": "twitter_fundamental_B_catalyst.j2",
+          "moat": "twitter_fundamental_C_moat.j2",
+          "contrarian": "twitter_fundamental_D_contrarian.j2",
+          "financial": "twitter_fundamental_E_financial.j2"
+        }
+      },
+      "output_dir": "{DATA_OUTPUTS}/twitter/fundamental_analysis/",
+      "file_pattern": "{TICKER}_{YYYYMMDD}_twitter.md"
+    },
+    "twitter_sector_analysis": {
+      "sub_agent": "twitter_writer",
+      "primary_script": "{SCRIPTS_BASE}/base_scripts/sector_analysis_script.py",
+      "script_class": "SectorAnalysisScript",
+      "registry_name": "sector_analysis",
+      "content_types": ["sector"],
+      "templates": {
+        "base_dir": "{TEMPLATES_BASE}/twitter/sector/",
+        "mappings": {
+          "rotation_analysis": "rotation_analysis.j2",
+          "cross_sector_comparison": "cross_sector_comparison.j2"
+        }
+      },
+      "output_dir": "{DATA_OUTPUTS}/twitter/sector_analysis/",
+      "file_pattern": "{SECTOR}_{YYYYMMDD}_twitter.md"
+    },
+    "twitter_trade_history": {
+      "sub_agent": "twitter_writer",
+      "primary_script": "{SCRIPTS_BASE}/base_scripts/trade_history_twitter_script.py",
+      "script_class": "TradeHistoryTwitterScript",
+      "registry_name": "trade_history",
+      "content_types": ["trade_history"],
+      "templates": {
+        "base_dir": "{TEMPLATES_BASE}/twitter/trade_history/",
+        "mappings": {
+          "performance_update": "performance_update.j2"
+        }
+      },
+      "output_dir": "{DATA_OUTPUTS}/twitter/trade_history/",
+      "file_pattern": "{PORTFOLIO}_{YYYYMMDD}_twitter.md"
+    },
+    "twitter_post_strategy": {
+      "sub_agent": "twitter_writer",
+      "primary_script": "{SCRIPTS_BASE}/base_scripts/strategy_analysis_script.py",
+      "script_class": "StrategyAnalysisScript",
+      "registry_name": "strategy_analysis",
+      "content_types": ["strategy"],
+      "templates": {
+        "base_dir": "{TEMPLATES_BASE}/twitter/strategy/",
+        "mappings": {
+          "strategy_signal": "twitter_post_strategy.j2",
+          "strategy_default": "twitter_strategy_default.j2"
+        }
+      },
+      "output_dir": "{DATA_OUTPUTS}/twitter/post_strategy/",
+      "file_pattern": "{TICKER}_{YYYYMMDD}_strategy_twitter.md"
+    }
+  },
+  "content_commands": {
+    "content_publisher": {
+      "sub_agent": "synthesist",
+      "primary_script": "{SCRIPTS_BASE}/content_publishing/content_publisher_script.py",
+      "script_class": "ContentPublisherScript",
+      "registry_name": "content_publisher",
+      "content_types": ["blog_publication", "asset_coordination", "comparative_analysis"],
+      "multi_phase_scripts": {
+        "discovery": "{SCRIPTS_BASE}/content_publishing/content_discovery.py",
+        "asset_coordination": "{SCRIPTS_BASE}/content_publishing/asset_coordinator.py",
+        "transformation": "{SCRIPTS_BASE}/content_publishing/content_transformer.py",
+        "publication": "{SCRIPTS_BASE}/content_publishing/frontend_publisher.py"
+      },
+      "templates": {
+        "base_dir": "{TEMPLATES_BASE}/content_publishing/",
+        "mappings": {
+          "blog_fundamental": "publishing/industry_analysis_blog.j2"
+        }
+      },
+      "output_dir": "frontend/src/content/blog/",
+      "file_pattern": "{TICKER}-{ANALYSIS_TYPE}-{YYYYMMDD}.md"
+    }
+  },
+  "cli_services": {
+    "yahoo_finance": {
+      "script_path": "{SCRIPTS_BASE}/yahoo_finance_cli.py",
+      "service_class": "YahooFinanceCLI",
+      "capabilities": ["stock_data", "financial_statements", "market_data"],
+      "common_commands": {
+        "analyze": "python {SCRIPTS_BASE}/yahoo_finance_cli.py analyze {ticker} --env prod --output-format json",
+        "financials": "python {SCRIPTS_BASE}/yahoo_finance_cli.py financials {ticker} --env prod --output-format json"
+      }
+    },
+    "alpha_vantage": {
+      "script_path": "{SCRIPTS_BASE}/alpha_vantage_cli.py",
+      "service_class": "AlphaVantageCLI",
+      "capabilities": ["real_time_quotes", "technical_indicators", "news_sentiment"],
+      "common_commands": {
+        "quote": "python {SCRIPTS_BASE}/alpha_vantage_cli.py quote {ticker} --env prod --output-format json"
+      }
+    },
+    "fmp": {
+      "script_path": "{SCRIPTS_BASE}/fmp_cli.py",
+      "service_class": "FMPCLI",
+      "capabilities": ["company_profile", "financial_statements", "insider_trading"],
+      "common_commands": {
+        "profile": "python {SCRIPTS_BASE}/fmp_cli.py profile {ticker} --env prod --output-format json",
+        "financials": "python {SCRIPTS_BASE}/fmp_cli.py financials {ticker} --statement-type cash-flow-statement --env prod --output-format json"
+      }
+    },
+    "fred_economic": {
+      "script_path": "{SCRIPTS_BASE}/fred_economic_cli.py",
+      "service_class": "FREDEconomicCLI",
+      "capabilities": ["economic_indicators", "federal_reserve_data", "macroeconomic_data"],
+      "common_commands": {
+        "indicators": "python {SCRIPTS_BASE}/fred_economic_cli.py indicators --env prod --output-format json"
+      }
+    },
+    "sec_edgar": {
+      "script_path": "{SCRIPTS_BASE}/sec_edgar_cli.py",
+      "service_class": "SECEdgarCLI",
+      "capabilities": ["sec_filings", "regulatory_data", "insider_trading"],
+      "common_commands": {
+        "filings": "python {SCRIPTS_BASE}/sec_edgar_cli.py filings {ticker} --env prod --output-format json"
+      }
+    },
+    "imf": {
+      "script_path": "{SCRIPTS_BASE}/imf_cli.py",
+      "service_class": "IMFCLI",
+      "capabilities": ["global_economic_data", "country_profiles", "economic_indicators"],
+      "common_commands": {
+        "indicators": "python {SCRIPTS_BASE}/imf_cli.py indicators --country {country} --env prod --output-format json"
+      }
+    },
+    "coingecko": {
+      "script_path": "{SCRIPTS_BASE}/coingecko_cli.py",
+      "service_class": "CoinGeckoCLI",
+      "capabilities": ["crypto_data", "market_data", "defi_protocols"],
+      "common_commands": {
+        "price": "python {SCRIPTS_BASE}/coingecko_cli.py price {crypto_id} --env prod --output-format json"
+      }
+    }
+  },
+  "validation": {
+    "total_dasv_commands": 24,
+    "total_twitter_commands": 4,
+    "total_content_commands": 1,
+    "total_cli_services": 7,
+    "schema_validation_required": true,
+    "path_variables_required": true
+  }
+}

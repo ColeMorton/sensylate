@@ -545,14 +545,16 @@ class ConfigManager:
             if financial_services_path.exists():
                 with open(financial_services_path, "r") as f:
                     config_content = f.read()
-                
+
                 # Substitute environment variables
                 import re
-                env_pattern = re.compile(r'\$\{([^}]+)\}')
+
+                env_pattern = re.compile(r"\$\{([^}]+)\}")
+
                 def env_replacer(match):
                     env_var = match.group(1)
                     return os.getenv(env_var, match.group(0))
-                
+
                 config_content = env_pattern.sub(env_replacer, config_content)
                 financial_config = yaml.safe_load(config_content)
 
@@ -568,17 +570,23 @@ class ConfigManager:
                 }
 
                 service_name = service_mapping.get(key_name)
-                if service_name and service_name in financial_config.get("services", {}):
+                if service_name and service_name in financial_config.get(
+                    "services", {}
+                ):
                     api_key = financial_config["services"][service_name].get("api_key")
                     # Handle services that don't require API keys
                     if api_key is None or str(api_key).lower() in ["none", "null"]:
                         if required:
-                            raise ConfigurationError(f"Required API key {key_name} not configured")
+                            raise ConfigurationError(
+                                f"Required API key {key_name} not configured"
+                            )
                         return "not_required"
                     elif api_key and self._validate_api_key_format(key_name, api_key):
                         return str(api_key)
                     elif required:
-                        raise ConfigurationError(f"Invalid API key format for {key_name}")
+                        raise ConfigurationError(
+                            f"Invalid API key format for {key_name}"
+                        )
 
         except yaml.YAMLError as e:
             logger.error(f"Invalid YAML in financial services config: {e}")
@@ -589,7 +597,9 @@ class ConfigManager:
                 f"Could not load financial services config for {key_name}: {e}"
             )
             if required:
-                raise ConfigurationError(f"Failed to access configuration for {key_name}")
+                raise ConfigurationError(
+                    f"Failed to access configuration for {key_name}"
+                )
 
         # Check if key is required but not found
         if required:
@@ -616,13 +626,13 @@ class ConfigManager:
         # Check for placeholder values
         invalid_patterns = [
             "your_key_here",
-            "replace_me", 
+            "replace_me",
             "change_this",
             "api_key_here",
             "test_key",
-            "dummy_key"
+            "dummy_key",
         ]
-        
+
         api_key_lower = api_key.lower()
         if any(pattern in api_key_lower for pattern in invalid_patterns):
             return False
@@ -631,15 +641,19 @@ class ConfigManager:
         if key_name == "ALPHA_VANTAGE_API_KEY":
             # Alpha Vantage keys are typically 16-20 alphanumeric characters
             return len(api_key) >= 10 and api_key.isalnum()
-        
+
         elif key_name == "FRED_API_KEY":
             # FRED keys are typically 32 character hex strings
-            return len(api_key) == 32 and all(c in "0123456789abcdef" for c in api_key.lower())
-        
+            return len(api_key) == 32 and all(
+                c in "0123456789abcdef" for c in api_key.lower()
+            )
+
         elif key_name == "SEC_EDGAR_API_KEY":
             # SEC EDGAR keys are long hex strings (64+ characters)
-            return len(api_key) >= 60 and all(c in "0123456789abcdef" for c in api_key.lower())
-        
+            return len(api_key) >= 60 and all(
+                c in "0123456789abcdef" for c in api_key.lower()
+            )
+
         elif key_name == "FMP_API_KEY":
             # FMP keys are typically 32 alphanumeric characters
             return len(api_key) >= 20 and api_key.replace("-", "").isalnum()
@@ -664,7 +678,8 @@ class ConfigManager:
             "valid_format": False,
             "obfuscated_value": None,
             "length": 0,
-            "required": key_name in ["ALPHA_VANTAGE_API_KEY", "FRED_API_KEY", "FMP_API_KEY"]
+            "required": key_name
+            in ["ALPHA_VANTAGE_API_KEY", "FRED_API_KEY", "FMP_API_KEY"],
         }
 
         try:
@@ -672,18 +687,22 @@ class ConfigManager:
             if api_key and api_key != "not_required":
                 status["found"] = True
                 status["source"] = "environment" if os.getenv(key_name) else "config"
-                status["valid_format"] = self._validate_api_key_format(key_name, api_key)
+                status["valid_format"] = self._validate_api_key_format(
+                    key_name, api_key
+                )
                 status["length"] = len(api_key)
                 # Obfuscate key for security (show first 4 and last 4 characters)
                 if len(api_key) > 8:
                     status["obfuscated_value"] = f"{api_key[:4]}...{api_key[-4:]}"
                 else:
-                    status["obfuscated_value"] = f"{api_key[:2]}{'*' * (len(api_key)-4)}{api_key[-2:]}"
+                    status[
+                        "obfuscated_value"
+                    ] = f"{api_key[:2]}{'*' * (len(api_key)-4)}{api_key[-2:]}"
             elif api_key == "not_required":
                 status["found"] = True
                 status["source"] = "config"
                 status["obfuscated_value"] = "not_required"
-        
+
         except Exception as e:
             status["error"] = str(e)
 
@@ -692,7 +711,7 @@ class ConfigManager:
     def get_regional_volatility_parameters(self, region: str) -> Dict[str, Any]:
         """
         DEPRECATED: Volatility parameters are now calculated dynamically in discovery phase
-        
+
         This method now fails fast to prevent use of hardcoded values.
         Use calculated values from discovery files instead.
 
@@ -713,7 +732,7 @@ class ConfigManager:
     ) -> Union[float, str]:
         """
         DEPRECATED: Volatility parameters are now calculated dynamically in discovery phase
-        
+
         This method now fails fast to prevent use of hardcoded values.
 
         Args:
@@ -733,7 +752,7 @@ class ConfigManager:
     ) -> Dict[str, Any]:
         """
         DEPRECATED: Volatility validation now handled by discovery file validation
-        
+
         This method now fails fast since hardcoded volatility parameters were removed.
         Use validate_template_artifacts() in validate_macro_synthesis.py instead.
 
@@ -745,11 +764,13 @@ class ConfigManager:
         """
         return {
             "template_artifacts_detected": False,
-            "warnings": ["Method deprecated - volatility validation moved to discovery file validation"],
+            "warnings": [
+                "Method deprecated - volatility validation moved to discovery file validation"
+            ],
             "issues": [],
             "parameter_analysis": {},
             "deprecated_notice": "Use calculated values from discovery files for volatility validation",
-            "replacement_method": "validate_template_artifacts() in validate_macro_synthesis.py"
+            "replacement_method": "validate_template_artifacts() in validate_macro_synthesis.py",
         }
 
     def suggest_regional_volatility_adjustments(
@@ -757,7 +778,7 @@ class ConfigManager:
     ) -> Dict[str, Dict[str, float]]:
         """
         DEPRECATED: Volatility adjustments now calculated dynamically in discovery phase
-        
+
         This method contained hardcoded template artifacts and is no longer used.
         Volatility parameters are calculated from real market data in discovery phase.
 

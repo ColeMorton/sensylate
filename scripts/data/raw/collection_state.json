@@ -1,5 +1,5 @@
 {
-  "last_collection": "2025-07-29T09:09:39.321590",
+  "last_collection": "2025-08-19T18:50:35.808421",
   "symbols_completed": [
     "IBM",
     "AAPL",
@@ -21,7 +21,17 @@
     "AAPL",
     "AAPL",
     "AAPL",
-    "AAPL"
+    "AAPL",
+    "TSLA",
+    "TSLA",
+    "TSLA",
+    "TSLA",
+    "TSLA",
+    "TSLA",
+    "TSLA",
+    "TSLA",
+    "TSLA",
+    "TSLA"
   ],
   "symbols_failed": [],
   "collection_sessions": [
@@ -230,6 +240,106 @@
       "started": "2025-07-29T09:09:39.321590",
       "symbols": [
         "AAPL"
+      ],
+      "daily_days": 365,
+      "weekly_years": 5,
+      "service": "yahoo_finance"
+    },
+    {
+      "session_id": "2025-08-19T18:50:23.692995",
+      "started": "2025-08-19T18:50:23.692995",
+      "symbols": [
+        "TSLA"
+      ],
+      "daily_days": 365,
+      "weekly_years": 5,
+      "service": "yahoo_finance"
+    },
+    {
+      "session_id": "2025-08-19T18:50:24.254372",
+      "started": "2025-08-19T18:50:24.254372",
+      "symbols": [
+        "TSLA"
+      ],
+      "daily_days": 365,
+      "weekly_years": 5,
+      "service": "yahoo_finance"
+    },
+    {
+      "session_id": "2025-08-19T18:50:24.800992",
+      "started": "2025-08-19T18:50:24.800992",
+      "symbols": [
+        "TSLA"
+      ],
+      "daily_days": 365,
+      "weekly_years": 5,
+      "service": "yahoo_finance"
+    },
+    {
+      "session_id": "2025-08-19T18:50:25.463590",
+      "started": "2025-08-19T18:50:25.463590",
+      "symbols": [
+        "TSLA"
+      ],
+      "daily_days": 365,
+      "weekly_years": 5,
+      "service": "yahoo_finance"
+    },
+    {
+      "session_id": "2025-08-19T18:50:26.339717",
+      "started": "2025-08-19T18:50:26.339717",
+      "symbols": [
+        "TSLA"
+      ],
+      "daily_days": 365,
+      "weekly_years": 5,
+      "service": "yahoo_finance"
+    },
+    {
+      "session_id": "2025-08-19T18:50:27.593104",
+      "started": "2025-08-19T18:50:27.593104",
+      "symbols": [
+        "TSLA"
+      ],
+      "daily_days": 365,
+      "weekly_years": 5,
+      "service": "yahoo_finance"
+    },
+    {
+      "session_id": "2025-08-19T18:50:29.165869",
+      "started": "2025-08-19T18:50:29.165869",
+      "symbols": [
+        "TSLA"
+      ],
+      "daily_days": 365,
+      "weekly_years": 5,
+      "service": "yahoo_finance"
+    },
+    {
+      "session_id": "2025-08-19T18:50:31.003823",
+      "started": "2025-08-19T18:50:31.003823",
+      "symbols": [
+        "TSLA"
+      ],
+      "daily_days": 365,
+      "weekly_years": 5,
+      "service": "yahoo_finance"
+    },
+    {
+      "session_id": "2025-08-19T18:50:33.248049",
+      "started": "2025-08-19T18:50:33.248049",
+      "symbols": [
+        "TSLA"
+      ],
+      "daily_days": 365,
+      "weekly_years": 5,
+      "service": "yahoo_finance"
+    },
+    {
+      "session_id": "2025-08-19T18:50:35.808421",
+      "started": "2025-08-19T18:50:35.808421",
+      "symbols": [
+        "TSLA"
       ],
       "daily_days": 365,
       "weekly_years": 5,

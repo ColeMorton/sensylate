@@ -645,11 +645,13 @@ class TradingPerformanceValidator:
                     "phase_4d_confidence_scoring": confidence_scoring,
                 },
                 "validation_summary": {
-                    "overall_validation_status": "PASSED"
-                    if confidence_scoring.get("overall_confidence", {}).get(
-                        "meets_threshold", False
-                    )
-                    else "FAILED",
+                    "overall_validation_status": (
+                        "PASSED"
+                        if confidence_scoring.get("overall_confidence", {}).get(
+                            "meets_threshold", False
+                        )
+                        else "FAILED"
+                    ),
                     "confidence_score": confidence_scoring.get(
                         "overall_confidence", {}
                     ).get("weighted_score", 0.0),

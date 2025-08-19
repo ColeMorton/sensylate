@@ -12,7 +12,7 @@ Production-grade Yahoo Finance data integration with:
 import sys
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict
 
 # Add scripts directory to path for importing existing service
 sys.path.insert(0, str(Path(__file__).parent.parent))
@@ -21,7 +21,10 @@ from yahoo_finance_service import DataNotFoundError as YFDataNotFoundError
 from yahoo_finance_service import ValidationError as YFValidationError
 from yahoo_finance_service import YahooFinanceError, YahooFinanceService
 
-from .base_financial_service import (
+# Add services directory to path for base service imports
+sys.path.insert(0, str(Path(__file__).parent))
+
+from base_financial_service import (
     BaseFinancialService,
     DataNotFoundError,
     FinancialServiceError,
@@ -401,21 +404,23 @@ def create_yahoo_finance_service(env: str = "dev") -> YahooFinanceAPIService:
     try:
         # Add scripts directory to path for load_env import
         import sys
+
         scripts_dir = Path(__file__).parent.parent
         if str(scripts_dir) not in sys.path:
             sys.path.insert(0, str(scripts_dir))
         from load_env import ensure_env_loaded
+
         ensure_env_loaded()
     except ImportError:
         pass  # Continue if load_env not available
-    
+
     # Use absolute path to config directory
     config_dir = Path(__file__).parent.parent.parent / "config"
     config_loader = ConfigLoader(str(config_dir))
     service_config = config_loader.get_service_config("yahoo_finance", env)
 
     # Convert to ServiceConfig format
-    from .base_financial_service import (
+    from base_financial_service import (
         CacheConfig,
         HistoricalStorageConfig,
         RateLimitConfig,
@@ -456,3 +461,53 @@ def create_yahoo_finance_service(env: str = "dev") -> YahooFinanceAPIService:
     )
 
     return YahooFinanceAPIService(config)
+
+
+def main():
+    """CLI interface for Yahoo Finance service"""
+    import argparse
+    import json
+
+    parser = argparse.ArgumentParser(description="Yahoo Finance CLI")
+    parser.add_argument(
+        "command", choices=["quote", "historical", "health"], help="Command to execute"
+    )
+    parser.add_argument(
+        "symbol", nargs="?", help="Stock symbol (required for quote/historical)"
+    )
+    parser.add_argument("--env", default="prod", help="Environment (dev/test/prod)")
+    parser.add_argument(
+        "--output-format", default="json", choices=["json"], help="Output format"
+    )
+    parser.add_argument(
+        "--period", default="1y", help="Time period for historical data"
+    )
+
+    args = parser.parse_args()
+
+    try:
+        service = create_yahoo_finance_service(args.env)
+
+        if args.command == "quote":
+            if not args.symbol:
+                print("Error: symbol required for quote command", file=sys.stderr)
+                sys.exit(1)
+            result = service.get_stock_info(args.symbol)
+        elif args.command == "historical":
+            if not args.symbol:
+                print("Error: symbol required for historical command", file=sys.stderr)
+                sys.exit(1)
+            result = service.get_market_data_summary(args.symbol, args.period)
+        elif args.command == "health":
+            result = service.health_check()
+
+        if args.output_format == "json":
+            print(json.dumps(result, indent=2, default=str))
+
+    except Exception as e:
+        print(f"Error: {e}", file=sys.stderr)
+        sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()

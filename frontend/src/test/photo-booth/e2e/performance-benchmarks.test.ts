@@ -143,6 +143,9 @@ describe("Photo Booth Performance Benchmarks", () => {
 
       const renderTime = performance.now() - renderStartTime;
 
+      // Record the render time for performance tracking
+      expect(renderTime).toBeLessThan(45000); // Should render within 45 seconds
+
       // Measure chart-specific rendering
       const chartMetrics = await page.evaluate(() => {
         const charts = document.querySelectorAll(".photo-booth-chart");
@@ -276,9 +279,15 @@ describe("Photo Booth Performance Benchmarks", () => {
 
         // Mock export with timing based on configuration complexity
         let expectedDuration = 2000; // Base 2 seconds
-        if (parseInt(config.dpi) >= 600) {expectedDuration += 3000;}
-        if (parseInt(config.scale) >= 4) {expectedDuration += 2000;}
-        if (config.format === "both") {expectedDuration += 1000;}
+        if (parseInt(config.dpi) >= 600) {
+          expectedDuration += 3000;
+        }
+        if (parseInt(config.scale) >= 4) {
+          expectedDuration += 2000;
+        }
+        if (config.format === "both") {
+          expectedDuration += 1000;
+        }
 
         await page.route("/api/export-dashboard", async (route) => {
           await new Promise((resolve) => setTimeout(resolve, expectedDuration));

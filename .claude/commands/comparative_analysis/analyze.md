@@ -14,9 +14,9 @@ Define the analytical requirements for transforming multi-company discovery data
 **Role**: comparative_analyst
 **Action**: analyze
 **Input Source**: Two complete fundamental analysis outputs (required)
-**Output Location**: `./data/outputs/comparative_analysis/analysis/`
+**Output Location**: `./{DATA_OUTPUTS}/comparative_analysis/analysis/`
 **Next Phase**: comparative_analyst_synthesize
-**Template Integration**: `./templates/analysis/comparative_analysis_template.md`
+**Template Integration**: `./{TEMPLATES_BASE}/analysis/comparative_analysis_template.md`
 **Implementation Delegation**: Analyst sub-agent handles cross-entity comparison methodology
 
 ## Analysis Parameters
@@ -173,7 +173,7 @@ Define the analytical requirements for transforming multi-company discovery data
 ## Output Structure Requirements
 
 **File Naming**: `{TICKER_A}_vs_{TICKER_B}_{YYYYMMDD}_analysis.json`
-**Primary Location**: `./data/outputs/comparative_analysis/analysis/`
+**Primary Location**: `./{DATA_OUTPUTS}/comparative_analysis/analysis/`
 
 ### Required Output Sections
 

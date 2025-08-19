@@ -10,7 +10,7 @@
         "analysis_file": "./data/outputs/fundamental_analysis/analysis/KLAC_20250813_analysis.json"
       },
       "entity_2": {
-        "ticker": "QBTS", 
+        "ticker": "QBTS",
         "company_name": "D-Wave Quantum Inc.",
         "analysis_file": "./data/outputs/fundamental_analysis/analysis/QBTS_20250813_analysis.json"
       }
@@ -58,7 +58,7 @@
     },
     "key_differentiators": [
       "Financial Health: KLAC A-grade profitability vs QBTS D+ pre-commercialization losses",
-      "Market Position: KLAC 85% WLP inspection dominance vs QBTS quantum annealing niche leadership", 
+      "Market Position: KLAC 85% WLP inspection dominance vs QBTS quantum annealing niche leadership",
       "Cash Generation: KLAC $3.5B FCF vs QBTS -$135M cash burn requiring funding",
       "Valuation Premium: KLAC 30.8x P/E premium justified vs QBTS speculative quantum multiple",
       "Investment Timeline: KLAC immediate cash returns vs QBTS 3-5 year commercialization horizon"
@@ -347,7 +347,7 @@
         "valuation_drivers": [
           "Quantum annealing commercialization timeline",
           "Enterprise adoption rate acceleration",
-          "Operating leverage potential realization", 
+          "Operating leverage potential realization",
           "Funding adequacy for development completion"
         ]
       },

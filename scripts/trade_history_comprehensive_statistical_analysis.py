@@ -323,27 +323,29 @@ class LiveSignalsStatisticalAnalyzer:
                 },
             },
             "performance_metrics": {
-                "win_rate": round(win_count / (win_count + loss_count), 4)
-                if (win_count + loss_count) > 0
-                else 0,
+                "win_rate": (
+                    round(win_count / (win_count + loss_count), 4)
+                    if (win_count + loss_count) > 0
+                    else 0
+                ),
                 "total_wins": win_count,
                 "total_losses": loss_count,
                 "total_pnl": round(total_pnl, 2),
-                "profit_factor": round(profit_factor, 4)
-                if profit_factor != float("inf")
-                else 999.99,
+                "profit_factor": (
+                    round(profit_factor, 4) if profit_factor != float("inf") else 999.99
+                ),
                 "expectancy": round(expectancy, 4),
                 "sample_size": len(pnl_values),
                 "confidence": round(overall_confidence, 3),
             },
             "advanced_statistical_metrics": {
                 "pnl_std_dev_overall": round(float(np.std(pnl_values, ddof=1)), 4),
-                "pnl_std_dev_winners": round(float(np.std(winners, ddof=1)), 4)
-                if len(winners) > 1
-                else 0,
-                "pnl_std_dev_losers": round(float(np.std(losers, ddof=1)), 4)
-                if len(losers) > 1
-                else 0,
+                "pnl_std_dev_winners": (
+                    round(float(np.std(winners, ddof=1)), 4) if len(winners) > 1 else 0
+                ),
+                "pnl_std_dev_losers": (
+                    round(float(np.std(losers, ddof=1)), 4) if len(losers) > 1 else 0
+                ),
                 "system_quality_number": round(sqn, 4),
                 "return_distribution_skewness": round(skewness, 4),
                 "return_distribution_kurtosis": round(kurtosis, 4),
@@ -559,15 +561,17 @@ class LiveSignalsStatisticalAnalyzer:
         breakevens = pnl_values[pnl_values == 0]
 
         comprehensive_pnl = {
-            "biggest_profit_dollar": float(np.max(winners_pnl))
-            if len(winners_pnl) > 0
-            else 0,
-            "biggest_loss_dollar": float(np.min(losers_pnl))
-            if len(losers_pnl) > 0
-            else 0,
-            "profit_loss_ratio": float(np.mean(winners_pnl) / abs(np.mean(losers_pnl)))
-            if len(losers_pnl) > 0 and np.mean(losers_pnl) != 0
-            else 0,
+            "biggest_profit_dollar": (
+                float(np.max(winners_pnl)) if len(winners_pnl) > 0 else 0
+            ),
+            "biggest_loss_dollar": (
+                float(np.min(losers_pnl)) if len(losers_pnl) > 0 else 0
+            ),
+            "profit_loss_ratio": (
+                float(np.mean(winners_pnl) / abs(np.mean(losers_pnl)))
+                if len(losers_pnl) > 0 and np.mean(losers_pnl) != 0
+                else 0
+            ),
             "trade_expectancy_dollar": float(np.mean(pnl_values)),
             "accumulated_return_net": float(np.sum(pnl_values)),
             "accumulated_return_gross": float(np.sum(np.abs(pnl_values))),
@@ -618,9 +622,9 @@ class LiveSignalsStatisticalAnalyzer:
         consecutive_performance = {
             "max_consecutive_wins": max_consecutive_wins,
             "max_consecutive_losses": max_consecutive_losses,
-            "consecutive_win_performance": round(float(np.mean(winners_pnl)), 4)
-            if len(winners_pnl) > 0
-            else 0,
+            "consecutive_win_performance": (
+                round(float(np.mean(winners_pnl)), 4) if len(winners_pnl) > 0 else 0
+            ),
             "consecutive_loss_recovery": round(float(max_consecutive_losses + 1), 1),
             "momentum_persistence": round(momentum_persistence, 4),
             "streak_impact_analysis": round(
@@ -644,18 +648,26 @@ class LiveSignalsStatisticalAnalyzer:
         )
 
         hold_time_analysis = {
-            "average_win_hold_time": round(float(np.mean(winners_duration)), 2)
-            if len(winners_duration) > 0
-            else 0,
-            "average_loss_hold_time": round(float(np.mean(losers_duration)), 2)
-            if len(losers_duration) > 0
-            else 0,
-            "average_breakeven_hold_time": round(float(np.mean(breakevens_duration)), 2)
-            if len(breakevens_duration) > 0
-            else 0,
-            "optimal_hold_period": round(float(np.mean(winners_duration)), 2)
-            if len(winners_duration) > 0
-            else float(np.mean(duration_days)),
+            "average_win_hold_time": (
+                round(float(np.mean(winners_duration)), 2)
+                if len(winners_duration) > 0
+                else 0
+            ),
+            "average_loss_hold_time": (
+                round(float(np.mean(losers_duration)), 2)
+                if len(losers_duration) > 0
+                else 0
+            ),
+            "average_breakeven_hold_time": (
+                round(float(np.mean(breakevens_duration)), 2)
+                if len(breakevens_duration) > 0
+                else 0
+            ),
+            "optimal_hold_period": (
+                round(float(np.mean(winners_duration)), 2)
+                if len(winners_duration) > 0
+                else float(np.mean(duration_days))
+            ),
             "hold_time_distribution": {
                 "short_term_percentage": round(short_term / total_duration_trades, 4),
                 "medium_term_percentage": round(medium_term / total_duration_trades, 4),
@@ -809,11 +821,13 @@ class LiveSignalsStatisticalAnalyzer:
                 "protocol_version": "DASV_Phase_2_Statistical_Analysis",
                 "confidence_score": round(overall_confidence, 3),
                 "sample_size_adequacy": 1.0,
-                "statistical_significance": 0.95
-                if statistical_metrics["statistical_analysis"][
-                    "statistical_significance"
-                ]["return_vs_zero"]["significant_at_95"]
-                else 0.05,
+                "statistical_significance": (
+                    0.95
+                    if statistical_metrics["statistical_analysis"][
+                        "statistical_significance"
+                    ]["return_vs_zero"]["significant_at_95"]
+                    else 0.05
+                ),
                 "signal_effectiveness_confidence": round(avg_strategy_confidence, 3),
             },
             "sample_validation": {

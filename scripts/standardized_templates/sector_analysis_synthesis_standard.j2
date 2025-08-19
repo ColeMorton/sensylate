@@ -1,0 +1,33 @@
+{% extends 'shared/base_analysis_template.j2' %}
+
+{% import 'shared/macros/confidence_scoring_macro.j2' as confidence %}
+{% import 'shared/macros/data_quality_macro.j2' as quality %}
+
+{% block metadata %}
+## {{ metadata.command_name }} - {{ metadata.framework_phase|title }} Phase
+**Execution**: {{ metadata.execution_timestamp|strftime('%Y-%m-%d %H:%M:%S') }}
+**Domain**: {{ metadata.domain_identifier }}
+**Confidence**: {{ metadata.confidence_level|round(2) if metadata.confidence_level else 'N/A' }}
+{% endblock %}
+
+{% block investment_thesis %}
+## Investment Thesis
+{{ investment_thesis if investment_thesis else 'Investment thesis not available.' }}
+{% endblock %}
+
+{% block portfolio_allocation %}
+## Portfolio Allocation
+{{ portfolio_allocation if portfolio_allocation else 'Portfolio allocation not available.' }}
+{% endblock %}
+
+{% block risk_profile %}
+## Risk Profile
+{{ risk_profile if risk_profile else 'Risk profile not available.' }}
+{% endblock %}
+
+{% block action_items %}
+## Action Items
+{% for item in action_items %}
+- {{ item }}
+{% endfor %}
+{% endblock %}

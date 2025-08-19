@@ -8,17 +8,17 @@ Comprehensive financial data collection and market intelligence gathering for in
 
 The Fundamental Analysis Discovery phase defines the requirements for systematic collection and initial structuring of all data required for comprehensive fundamental analysis. This specification focuses on **what** data is needed rather than **how** to obtain it, delegating technical implementation to the researcher sub-agent.
 
-**Expected Output Schema**: `/scripts/schemas/fundamental_analysis_discovery_schema.json`
-**Researcher Sub Task**: Use the researcher sub-agent to execute fundamental analysis discovery. Ensure output conforms to `/scripts/schemas/fundamental_analysis_discovery_schema.json`.
+**Expected Output Schema**: `/{SCRIPTS_BASE}/schemas/fundamental_analysis_discovery_schema.json`
+**Researcher Sub Task**: Use the researcher sub-agent to execute fundamental analysis discovery. Ensure output conforms to `/{SCRIPTS_BASE}/schemas/fundamental_analysis_discovery_schema.json`.
 
 ## Microservice Integration
 
 **Framework**: DASV Phase 1
 **Role**: fundamental_analyst
 **Action**: discover
-**Output Location**: `./data/outputs/fundamental_analysis/discovery/`
+**Output Location**: `./{DATA_OUTPUTS}/fundamental_analysis/discovery/`
 **Next Phase**: fundamental_analyst_analyze
-**Template Reference**: `./templates/analysis/fundamental_analysis_template.md` (final output structure awareness)
+**Template Reference**: `./{TEMPLATES_BASE}/analysis/fundamental_analysis_template.md` (final output structure awareness)
 
 ## Parameters
 
@@ -66,8 +66,8 @@ The Fundamental Analysis Discovery phase defines the requirements for systematic
 ## Output Structure and Schema
 
 **File Naming**: `{TICKER}_{YYYYMMDD}_discovery.json`
-**Primary Location**: `./data/outputs/fundamental_analysis/discovery/`
-**Schema Definition**: `/scripts/schemas/fundamental_analysis_discovery_schema.json`
+**Primary Location**: `./{DATA_OUTPUTS}/fundamental_analysis/discovery/`
+**Schema Definition**: `/{SCRIPTS_BASE}/schemas/fundamental_analysis_discovery_schema.json`
 
 ### Required Output Components
 - **Company Profile**: Business description, financial metrics, management information

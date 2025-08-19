@@ -435,7 +435,7 @@ def calculate_trade_synthesis_confidence(source_conf, statistical_significance, 
 def load_trade_history_synthesis(analysis_file, date):
     """Load and validate source trade history analysis synthesis"""
 
-    source_path = f"data/outputs/trade_history/{analysis_file}_{date}.md"
+    source_path = f"{DATA_OUTPUTS}/trade_history/{analysis_file}_{date}.md"
 
     # DASV Input Validation
     validate_trade_history_synthesis(source_path)
@@ -815,7 +815,7 @@ Data doesn't lie 📊
 
 **REQUIRED: Save Twitter-ready content to:**
 ```
-./data/outputs/twitter/trade_history/{ANALYSIS_FILE_NAME}_{YYYYMMDD}.md
+./{DATA_OUTPUTS}/twitter/trade_history/{ANALYSIS_FILE_NAME}_{YYYYMMDD}.md
 ```
 
 **File contains:**
@@ -902,7 +902,7 @@ Validate: current trading environment context
 
 ### Required Actions
 1. **Generate Output Metadata**: Include collaboration metadata for social content
-2. **Store Outputs**: Save to `./data/outputs/twitter/trade_history/` directories
+2. **Store Outputs**: Save to `./{DATA_OUTPUTS}/twitter/trade_history/` directories
 3. **Quality Validation**: Ensure content accuracy and market context relevance
 4. **Content Tracking**: Record content performance metrics
 

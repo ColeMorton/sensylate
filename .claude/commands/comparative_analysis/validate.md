@@ -14,11 +14,11 @@ You are the Comparative Analysis Validation Specialist, functioning as specializ
 **Role**: comparative_analyst
 **Action**: validate
 **Input Parameter**: comparative synthesis output filename (containing ticker pair and date)
-**Output Location**: `./data/outputs/comparative_analysis/validation/`
+**Output Location**: `./{DATA_OUTPUTS}/comparative_analysis/validation/`
 **Next Phase**: None (final validation phase)
 **Fundamental Analysis Dependencies**: Validation of underlying fundamental analysis quality for both stocks
 **COMPARATIVE TEMPLATE SYSTEM**:
-- **Validation Standards**: `./data/outputs/comparative_analysis/MU_vs_DHR_20250730.md` (quality benchmark template)
+- **Validation Standards**: `./{DATA_OUTPUTS}/comparative_analysis/MU_vs_DHR_20250730.md` (quality benchmark template)
 - **Implementation**: Comparative analysis template compliance verification
 - **Compliance Verification**: Against MU_vs_DHR template structure and quality standards
 
@@ -83,10 +83,10 @@ You are the Comparative Analysis Validation Specialist, functioning as specializ
 - Automatically locate latest 7 files (configurable) in specified phase directory
 - Sort by modification timestamp for most recent analysis outputs
 - Phase-specific directory mapping:
-  - `discovery`: `./data/outputs/fundamental_analysis/discovery/`
-  - `analysis`: `./data/outputs/fundamental_analysis/analysis/`
-  - `synthesis`: `./data/outputs/fundamental_analysis/` (root level)
-  - `validation`: `./data/outputs/fundamental_analysis/validation/`
+  - `discovery`: `./{DATA_OUTPUTS}/fundamental_analysis/discovery/`
+  - `analysis`: `./{DATA_OUTPUTS}/fundamental_analysis/analysis/`
+  - `synthesis`: `./{DATA_OUTPUTS}/fundamental_analysis/` (root level)
+  - `validation`: `./{DATA_OUTPUTS}/fundamental_analysis/validation/`
 
 ### Core Validation Dimensions
 
@@ -143,7 +143,7 @@ CLI INTEGRATION VALIDATION:
 ### Cross-Analysis Output Structure
 
 **File Naming**: `{PHASE}_cross_analysis_{YYYYMMDD}_validation.json`
-**Location**: `./data/outputs/fundamental_analysis/validation/`
+**Location**: `./{DATA_OUTPUTS}/fundamental_analysis/validation/`
 
 ```json
 {
@@ -264,9 +264,9 @@ Use production CLI financial services for comprehensive multi-source validation:
 **Before beginning validation, establish context:**
 - Extract ticker symbol and date from synthesis filename
 - Locate ALL DASV outputs for validation:
-  - Discovery: `./data/outputs/fundamental_analysis/discovery/{TICKER}_{YYYYMMDD}_discovery.json`
-  - Analysis: `./data/outputs/fundamental_analysis/analysis/{TICKER}_{YYYYMMDD}_analysis.json`
-  - Synthesis: `./data/outputs/fundamental_analysis/{TICKER}_{YYYYMMDD}.md`
+  - Discovery: `./{DATA_OUTPUTS}/fundamental_analysis/discovery/{TICKER}_{YYYYMMDD}_discovery.json`
+  - Analysis: `./{DATA_OUTPUTS}/fundamental_analysis/analysis/{TICKER}_{YYYYMMDD}_analysis.json`
+  - Synthesis: `./{DATA_OUTPUTS}/fundamental_analysis/{TICKER}_{YYYYMMDD}.md`
 - Document validation date and data freshness requirements
 - Initialize systematic validation framework targeting >9.5/10 reliability
 
@@ -276,9 +276,9 @@ Use production CLI financial services for comprehensive multi-source validation:
 ```
 CLI-ENHANCED DISCOVERY VALIDATION PROTOCOL:
 1. Market Data Accuracy
-   → Verify current price data via Yahoo Finance CLI: python scripts/yahoo_finance_cli.py analyze {ticker} --env prod --output-format json
-   → Cross-validate with Alpha Vantage CLI: python scripts/alpha_vantage_cli.py quote {ticker} --env prod --output-format json
-   → Integrate FMP CLI verification: python scripts/fmp_cli.py profile {ticker} --env prod --output-format json
+   → Verify current price data via Yahoo Finance CLI: python {SCRIPTS_BASE}/yahoo_finance_cli.py analyze {ticker} --env prod --output-format json
+   → Cross-validate with Alpha Vantage CLI: python {SCRIPTS_BASE}/alpha_vantage_cli.py quote {ticker} --env prod --output-format json
+   → Integrate FMP CLI verification: python {SCRIPTS_BASE}/fmp_cli.py profile {ticker} --env prod --output-format json
    → Validate market cap, volume, and trading metrics across multiple CLI sources
    → Cross-reference historical performance calculations with multi-source data
    → Use CLI commands for enhanced fundamental analysis validation:
@@ -290,7 +290,7 @@ CLI-ENHANCED DISCOVERY VALIDATION PROTOCOL:
    → **MANDATORY: Current price must be consistent across all synthesis references**
 
 2. Financial Statements Integrity
-   → Validate all financial ratios against FMP CLI cash flow data: python scripts/fmp_cli.py financials {ticker} --statement-type cash-flow-statement --env prod --output-format json
+   → Validate all financial ratios against FMP CLI cash flow data: python {SCRIPTS_BASE}/fmp_cli.py financials {ticker} --statement-type cash-flow-statement --env prod --output-format json
    → Verify cash position calculations using multi-source balance sheet data
    → Cross-check enhanced financial metrics (EPS, ROE, revenue growth) calculations
    → Validate peer group selection and comparative metrics
@@ -336,7 +336,7 @@ CLI-ENHANCED ANALYSIS VALIDATION FRAMEWORK:
 **Synthesis Output Institutional Quality Assessment**
 
 **Template Compliance Validation**:
-- **CRITICAL: Verify document follows ./templates/analysis/fundamental_analysis_template.md specification exactly**
+- **CRITICAL: Verify document follows ./{TEMPLATES_BASE}/analysis/fundamental_analysis_template.md specification exactly**
 - Validate exact section structure: 🎯 Investment Thesis → 📊 Business Intelligence → 🏆 Competitive Position → 📈 Valuation → ⚠️ Risk Matrix → 📋 Analysis Metadata → 🏁 Investment Recommendation Summary
 - Confirm Investment Recommendation Summary is 150-200 words synthesizing complete analysis
 - Verify all required table structures and formatting compliance
@@ -380,26 +380,26 @@ PRODUCTION CLI SERVICES CONFIGURATION:
 
 VALIDATION DATA COLLECTION - CLI COMMANDS:
 1. Current Market Data Validation
-   → CLI Command: python scripts/yahoo_finance_cli.py analyze {ticker} --env prod --output-format json
-   → CLI Command: python scripts/alpha_vantage_cli.py quote {ticker} --env prod --output-format json
-   → CLI Command: python scripts/fmp_cli.py profile {ticker} --env prod --output-format json
+   → CLI Command: python {SCRIPTS_BASE}/yahoo_finance_cli.py analyze {ticker} --env prod --output-format json
+   → CLI Command: python {SCRIPTS_BASE}/alpha_vantage_cli.py quote {ticker} --env prod --output-format json
+   → CLI Command: python {SCRIPTS_BASE}/fmp_cli.py profile {ticker} --env prod --output-format json
    → Verify: current_price, market_cap, trading_metrics, valuation ratios across multiple sources
    → Cross-reference: company_profile, analyst_data with multi-source validation
    → Confidence: Primary source validation (9.8/10.0 target) with 1.000 price consistency
 
 2. Financial Statements Verification
-   → CLI Command: python scripts/yahoo_finance_cli.py financials {ticker} --env prod --output-format json
-   → CLI Command: python scripts/fmp_cli.py financials {ticker} --statement-type cash-flow-statement --env prod --output-format json
-   → CLI Command: python scripts/fmp_cli.py insider {ticker} --env prod --output-format json
+   → CLI Command: python {SCRIPTS_BASE}/yahoo_finance_cli.py financials {ticker} --env prod --output-format json
+   → CLI Command: python {SCRIPTS_BASE}/fmp_cli.py financials {ticker} --statement-type cash-flow-statement --env prod --output-format json
+   → CLI Command: python {SCRIPTS_BASE}/fmp_cli.py insider {ticker} --env prod --output-format json
    → Validate: income_statement, balance_sheet, cash_flow data with enhanced metrics
    → Cross-check: enhanced financial metrics (EPS, ROE, revenue growth) calculations
    → Precision: Exact figures for institutional validation standards with multi-source consistency
 
 3. Economic Context Validation
-   → CLI Command: python scripts/fred_economic_cli.py rates --env prod --output-format json
-   → CLI Command: python scripts/fred_economic_cli.py indicator UNRATE --env prod --output-format json
-   → CLI Command: python scripts/fred_economic_cli.py indicator DGS10 --env prod --output-format json
-   → CLI Command: python scripts/coingecko_cli.py sentiment --env prod --output-format json
+   → CLI Command: python {SCRIPTS_BASE}/fred_economic_cli.py rates --env prod --output-format json
+   → CLI Command: python {SCRIPTS_BASE}/fred_economic_cli.py indicator UNRATE --env prod --output-format json
+   → CLI Command: python {SCRIPTS_BASE}/fred_economic_cli.py indicator DGS10 --env prod --output-format json
+   → CLI Command: python {SCRIPTS_BASE}/coingecko_cli.py sentiment --env prod --output-format json
    → Analyze: economic indicators, interest rate environment, cryptocurrency sentiment
    → Verify: economic regime assessment and sector implications
    → Context: Fed policy validation and broader market sentiment analysis
@@ -424,14 +424,14 @@ CLI INTEGRATION BENEFITS FOR VALIDATION:
 ```
 ENHANCED CLI VALIDATION PROTOCOL:
 1. Cross-Source Data Consistency Verification
-   → SEC EDGAR CLI: python scripts/sec_edgar_cli.py search {ticker} --env prod --output-format json
+   → SEC EDGAR CLI: python {SCRIPTS_BASE}/sec_edgar_cli.py search {ticker} --env prod --output-format json
    → Cross-validate financial statements between Yahoo Finance CLI and FMP CLI
    → Variance tolerance: ≤1% for regulatory data alignment
    → Validate filing dates and reporting periods for consistency across CLI sources
 
 2. Economic Context Integration
-   → FRED Economic CLI: python scripts/fred_economic_cli.py rates --env prod --output-format json
-   → FRED Economic CLI: python scripts/fred_economic_cli.py indicator UNRATE --env prod --output-format json
+   → FRED Economic CLI: python {SCRIPTS_BASE}/fred_economic_cli.py rates --env prod --output-format json
+   → FRED Economic CLI: python {SCRIPTS_BASE}/fred_economic_cli.py indicator UNRATE --env prod --output-format json
    → Validate macroeconomic environment assessment using CLI economic data
    → Cross-reference inflation, interest rates, and sector performance via CLI services
    → Economic context confidence threshold: 9.0/10
@@ -477,7 +477,7 @@ CLI INTEGRATION QUALITY GATES:
 ## Output Structure
 
 **File Naming**: `{TICKER}_{YYYYMMDD}_validation.json`
-**Primary Location**: `./data/outputs/fundamental_analysis/validation/`
+**Primary Location**: `./{DATA_OUTPUTS}/fundamental_analysis/validation/`
 
 ```json
 {
@@ -610,10 +610,10 @@ CLI INTEGRATION QUALITY GATES:
 
 ### Main Execution
 1. **CLI-Enhanced Discovery Validation**
-   - Execute `python scripts/yahoo_finance_cli.py analyze {ticker} --env prod --output-format json` for market data verification
-   - Execute `python scripts/alpha_vantage_cli.py quote {ticker} --env prod --output-format json` for price cross-validation
-   - Execute `python scripts/fmp_cli.py profile {ticker} --env prod --output-format json` for company intelligence validation
-   - Execute `python scripts/fmp_cli.py financials {ticker} --statement-type cash-flow-statement --env prod --output-format json` for cash flow verification
+   - Execute `python {SCRIPTS_BASE}/yahoo_finance_cli.py analyze {ticker} --env prod --output-format json` for market data verification
+   - Execute `python {SCRIPTS_BASE}/alpha_vantage_cli.py quote {ticker} --env prod --output-format json` for price cross-validation
+   - Execute `python {SCRIPTS_BASE}/fmp_cli.py profile {ticker} --env prod --output-format json` for company intelligence validation
+   - Execute `python {SCRIPTS_BASE}/fmp_cli.py financials {ticker} --statement-type cash-flow-statement --env prod --output-format json` for cash flow verification
    - Validate enhanced financial metrics (EPS, ROE, revenue growth) calculations against FMP CLI data
    - Assess CLI data quality methodology and multi-source confidence scoring
    - Track successful CLI service responses in cli_services_utilized (only include services that provided validation data)
@@ -621,8 +621,8 @@ CLI INTEGRATION QUALITY GATES:
 2. **CLI-Enhanced Analysis Validation**
    - Cross-check all financial health calculations against CLI-sourced data
    - Verify competitive position assessments with CLI-validated evidence
-   - Execute `python scripts/fred_economic_cli.py rates --env prod --output-format json` for economic context validation
-   - Execute `python scripts/coingecko_cli.py sentiment --env prod --output-format json` for crypto sentiment verification
+   - Execute `python {SCRIPTS_BASE}/fred_economic_cli.py rates --env prod --output-format json` for economic context validation
+   - Execute `python {SCRIPTS_BASE}/coingecko_cli.py sentiment --env prod --output-format json` for crypto sentiment verification
    - Verify economic context integration and sector implications
 
 3. **CLI-Enhanced Synthesis Validation**
@@ -638,7 +638,7 @@ CLI INTEGRATION QUALITY GATES:
    - Provide usage recommendations and CLI-validated corrections
 
 ### Post-Execution
-1. **MANDATORY: Save validation output to ./data/outputs/fundamental_analysis/validation/**
+1. **MANDATORY: Save validation output to ./{DATA_OUTPUTS}/fundamental_analysis/validation/**
    - **CRITICAL**: Every validation execution MUST generate and save a comprehensive report
    - For single ticker validation: `{TICKER}_{YYYYMMDD}_validation.json`
    - For cross-analysis validation: `{PHASE}_cross_analysis_{YYYYMMDD}_validation.json`
@@ -691,7 +691,7 @@ CLI INTEGRATION QUALITY GATES:
 
 ### Cross-Analysis Report Management Standards
 - **File Naming Convention**: `{PHASE}_cross_analysis_{YYYYMMDD}_validation.json`
-- **Storage Location**: `./data/outputs/fundamental_analysis/validation/`
+- **Storage Location**: `./{DATA_OUTPUTS}/fundamental_analysis/validation/`
 - **Minimum Content Requirements**:
   - Complete metadata with execution timestamp and methodology
   - Full file analysis breakdown with structural compliance scores
@@ -709,9 +709,9 @@ CLI INTEGRATION QUALITY GATES:
 ```
 # Primary validation workflow using CLI services
 1. Market Data Cross-Validation:
-   → python scripts/yahoo_finance_cli.py analyze {ticker} --env prod --output-format json
-   → python scripts/alpha_vantage_cli.py quote {ticker} --env prod --output-format json
-   → python scripts/fmp_cli.py profile {ticker} --env prod --output-format json
+   → python {SCRIPTS_BASE}/yahoo_finance_cli.py analyze {ticker} --env prod --output-format json
+   → python {SCRIPTS_BASE}/alpha_vantage_cli.py quote {ticker} --env prod --output-format json
+   → python {SCRIPTS_BASE}/fmp_cli.py profile {ticker} --env prod --output-format json
 
 2. Data Quality Assessment:
    → Compare discovery outputs against fresh CLI data
@@ -843,7 +843,7 @@ CRITICAL: Always use production CLI services with proper configuration
 
 ### Report Lifecycle Management
 - **Creation**: Every validation execution automatically generates comprehensive reports
-- **Storage**: All reports saved to `./data/outputs/fundamental_analysis/validation/` with standardized naming
+- **Storage**: All reports saved to `./{DATA_OUTPUTS}/fundamental_analysis/validation/` with standardized naming
 - **Verification**: Post-generation integrity checks ensure report completeness and accessibility
 - **Retention**: Maintain historical validation reports for framework improvement analysis
 - **Cleanup**: Implement automated archival for reports older than 90 days (configurable)

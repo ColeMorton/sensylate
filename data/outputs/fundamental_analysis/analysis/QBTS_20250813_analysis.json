@@ -21,7 +21,7 @@
     "company_overview_preserved": {
       "company_name": "D-Wave Quantum Inc.",
       "symbol": "QBTS",
-      "exchange": "NYSE", 
+      "exchange": "NYSE",
       "sector": "Technology",
       "industry": "Computer Hardware",
       "business_description": "Pure-play quantum annealing specialist developing quantum computing systems, software, and cloud services worldwide",
@@ -93,7 +93,7 @@
       },
       "leverage_analysis": {
         "debt_to_equity": "minimal_debt_equity_financed_structure",
-        "debt_to_assets": "low_leverage_with_equity_heavy_capital_structure", 
+        "debt_to_assets": "low_leverage_with_equity_heavy_capital_structure",
         "interest_coverage": "not_applicable_minimal_debt_service",
         "financial_leverage": "conservative_leverage_profile_appropriate_for_growth_stage",
         "debt_maturity": "limited_near_term_debt_obligations",
@@ -173,7 +173,7 @@
       },
       "moat_sustainability": {
         "durability_factors": "quantum_physics_expertise_patent_protection_customer_relationships",
-        "erosion_risks": "gate_based_quantum_advancement_could_obsolete_annealing_advantages", 
+        "erosion_risks": "gate_based_quantum_advancement_could_obsolete_annealing_advantages",
         "reinforcement_opportunities": "expanding_annealing_applications_and_hybrid_classical_quantum_solutions",
         "time_horizon": "5_7_year_moat_sustainability_dependent_on_quantum_computing_evolution",
         "moat_expansion": "limited_expansion_potential_due_to_specialized_annealing_focus",
@@ -264,7 +264,7 @@
         },
         "revenue_scenarios": {
           "bull_case": "exponential_growth_post_quantum_advantage_demonstration",
-          "base_case": "steady_enterprise_adoption_with_gradual_scaling", 
+          "base_case": "steady_enterprise_adoption_with_gradual_scaling",
           "bear_case": "continued_stagnation_due_to_commercialization_delays"
         }
       },
@@ -351,7 +351,7 @@
         "catalysts": "major_enterprise_partnerships_quantum_advantage_demonstrations_funding_secured"
       },
       "base_case_scenario": {
-        "probability": 0.60, 
+        "probability": 0.60,
         "assumptions": "steady_quantum_annealing_commercialization_gradual_enterprise_adoption",
         "fair_value": 22,
         "catalysts": "continued_rd_progress_modest_revenue_growth_adequate_funding"
@@ -391,7 +391,7 @@
       },
       "rate_scenario_analysis": {
         "rate_cutting_scenario": "significant_valuation_multiple_expansion_potential_with_fed_accommodation",
-        "rate_stability_scenario": "current_valuation_levels_sustainable_with_stable_rate_environment", 
+        "rate_stability_scenario": "current_valuation_levels_sustainable_with_stable_rate_environment",
         "rate_hiking_scenario": "valuation_compression_risk_with_additional_fed_tightening"
       },
       "confidence": 0.88
@@ -630,7 +630,7 @@
     },
     "key_risks_summary": [
       "Extreme funding risk requiring dilutive capital raising within 24 months",
-      "Commercialization timeline delays extending revenue growth stagnation", 
+      "Commercialization timeline delays extending revenue growth stagnation",
       "Competitive technology risk from gate-based quantum advancement",
       "High interest rate sensitivity amplifying valuation volatility",
       "Binary outcome characteristics with potential total loss scenarios"

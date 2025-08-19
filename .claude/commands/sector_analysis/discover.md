@@ -8,17 +8,17 @@ Comprehensive sector-wide financial data collection and market intelligence gath
 
 The Sector Analysis Discovery phase defines the requirements for systematic collection and initial structuring of all data required for comprehensive sector analysis with investment recommendation synthesis. This specification focuses on **what** sector data and multi-company intelligence is needed rather than **how** to obtain it, delegating technical implementation to the researcher sub-agent.
 
-**Expected Output Schema**: `/scripts/schemas/sector_analysis_discovery_schema.json`
-**Researcher Sub Task**: Use the researcher sub-agent to execute sector analysis discovery. Ensure output conforms to `/scripts/schemas/sector_analysis_discovery_schema.json`.
+**Expected Output Schema**: `/{SCRIPTS_BASE}/schemas/sector_analysis_discovery_schema.json`
+**Researcher Sub Task**: Use the researcher sub-agent to execute sector analysis discovery. Ensure output conforms to `/{SCRIPTS_BASE}/schemas/sector_analysis_discovery_schema.json`.
 
 ## Microservice Integration
 
 **Framework**: DASV Phase 1
 **Role**: sector_analyst
 **Action**: discover
-**Output Location**: `./data/outputs/sector_analysis/discovery/`
+**Output Location**: `./{DATA_OUTPUTS}/sector_analysis/discovery/`
 **Next Phase**: sector_analyst_analyze
-**Template Reference**: `./templates/analysis/sector_analysis_template.md` (final output structure awareness)
+**Template Reference**: `./{TEMPLATES_BASE}/analysis/sector_analysis_template.md` (final output structure awareness)
 
 ## Parameters
 
@@ -77,8 +77,8 @@ The Sector Analysis Discovery phase defines the requirements for systematic coll
 ## Output Structure and Schema
 
 **File Naming**: `{SECTOR}_{YYYYMMDD}_discovery.json`
-**Primary Location**: `./data/outputs/sector_analysis/discovery/`
-**Schema Definition**: `/scripts/schemas/sector_analysis_discovery_schema.json`
+**Primary Location**: `./{DATA_OUTPUTS}/sector_analysis/discovery/`
+**Schema Definition**: `/{SCRIPTS_BASE}/schemas/sector_analysis_discovery_schema.json`
 
 ### Required Output Components
 - **Multi-Company Data**: Individual company analysis with sector aggregated metrics

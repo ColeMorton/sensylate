@@ -287,7 +287,7 @@ validation_output:
    ```python
    from jinja2 import Environment, FileSystemLoader
 
-   env = Environment(loader=FileSystemLoader('scripts/templates/twitter'))
+   env = Environment(loader=FileSystemLoader('{SCRIPTS_BASE}/templates/twitter'))
 
    # Render main content
    template = env.get_template('strategy/twitter_post_strategy.j2')
@@ -303,7 +303,7 @@ validation_output:
 
 6. **Export with Metadata**
    ```
-   ./data/outputs/twitter/post_strategy/{TICKER}_{YYYYMMDD}.md
+   ./{DATA_OUTPUTS}/twitter/post_strategy/{TICKER}_{YYYYMMDD}.md
    ```
 
 ## Enhanced Data Validation Protocol

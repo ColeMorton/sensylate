@@ -19,7 +19,7 @@ The API key management system provides secure, centralized configuration of API 
 ### Security Features
 
 - ✅ API keys stored in `.env` file (excluded from version control)
-- ✅ Automatic key format validation 
+- ✅ Automatic key format validation
 - ✅ Key obfuscation in logs and error messages
 - ✅ Environment variable substitution in configuration files
 - ✅ Fail-fast validation for missing or invalid keys
@@ -53,7 +53,7 @@ Create or update your `.env` file with the following format:
 ```bash
 # Financial Data API Keys
 ALPHA_VANTAGE_API_KEY=your_alpha_vantage_key_here
-SEC_EDGAR_API_KEY=your_sec_edgar_key_here  
+SEC_EDGAR_API_KEY=your_sec_edgar_key_here
 FRED_API_KEY=your_fred_key_here
 FMP_API_KEY=your_fmp_key_here
 

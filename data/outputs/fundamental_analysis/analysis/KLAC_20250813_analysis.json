@@ -9,7 +9,7 @@
     "discovery_data_inheritance": "complete_100_percent_preservation",
     "cli_services_utilized": [
       "yahoo_finance_cli",
-      "alpha_vantage_cli", 
+      "alpha_vantage_cli",
       "coingecko_cli",
       "sec_edgar_cli",
       "imf_cli"
@@ -47,7 +47,7 @@
       "business_model": {
         "revenue_streams": [
           "Process Control Systems",
-          "Yield Management Solutions", 
+          "Yield Management Solutions",
           "Inspection Equipment",
           "Metrology Systems",
           "Data Analytics Software",
@@ -446,7 +446,7 @@
         "fair_value": 1185.50
       },
       "base_case_scenario": {
-        "probability": 0.50, 
+        "probability": 0.50,
         "assumptions": "steady_semiconductor_capex_growth_and_market_share_maintenance",
         "revenue_growth": "12_percent_average_growth_rate",
         "margin_stability": "current_margin_levels_maintained",
@@ -704,7 +704,7 @@
       {
         "catalyst": "Memory sector recovery and capex normalization",
         "probability": 0.60,
-        "timeframe": "9_15_months", 
+        "timeframe": "9_15_months",
         "impact": "margin_expansion_and_utilization_improvement"
       },
       {

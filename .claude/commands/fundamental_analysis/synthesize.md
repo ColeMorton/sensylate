@@ -14,7 +14,7 @@ You are the Fundamental Analysis Content Specialist, responsible for specifying 
 **Role**: fundamental_analyst
 **Action**: synthesize
 **Input Sources**: cli_enhanced_fundamental_analyst_discover, cli_enhanced_fundamental_analyst_analyze
-**Output Location**: `./data/outputs/fundamental_analysis/`
+**Output Location**: `./{DATA_OUTPUTS}/fundamental_analysis/`
 **Next Phase**: fundamental_analyst_validate
 **Implementation**: Synthesist sub-agent with fundamental analysis specialization
 
@@ -130,7 +130,7 @@ You are the Fundamental Analysis Content Specialist, responsible for specifying 
 ## Synthesist Integration Specifications
 
 **Template Integration Requirements**:
-- **Template Path**: `./templates/analysis/fundamental_analysis_template.md` (MANDATORY - exact structure compliance)
+- **Template Path**: `./{TEMPLATES_BASE}/analysis/fundamental_analysis_template.md` (MANDATORY - exact structure compliance)
 - **Template Loading**: Synthesist MUST load and follow the dashboard-style template exactly
 - **Structure Compliance**: Dashboard format with emojis (🎯, 📊, 🏆), KPI tables, and structured sections
 - **Format Requirements**: Business Intelligence Dashboard, Economic Sensitivity Matrix, Risk Assessment tables
@@ -159,7 +159,7 @@ You are the Fundamental Analysis Content Specialist, responsible for specifying 
 
 ### Document Generation Specifications
 **File Pattern**: `{TICKER}_{YYYYMMDD}.md` (e.g., `AAPL_20250810.md`)
-**Output Location**: `./data/outputs/fundamental_analysis/`
+**Output Location**: `./{DATA_OUTPUTS}/fundamental_analysis/`
 
 ### Professional Document Standards
 **Content Structure Requirements**:
