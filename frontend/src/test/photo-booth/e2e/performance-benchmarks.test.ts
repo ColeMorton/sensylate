@@ -141,7 +141,7 @@ describe("Photo Booth Performance Benchmarks", () => {
 
       await photoBoothE2EHelper.waitForPhotoBoothReady(page, 45000);
 
-      const _renderTime = performance.now() - renderStartTime;
+      performance.now() - renderStartTime;
 
       // Measure chart-specific rendering
       const chartMetrics = await page.evaluate(() => {

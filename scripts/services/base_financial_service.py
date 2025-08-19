@@ -26,7 +26,7 @@ from pydantic import BaseModel, Field
 
 # Add utils directory to path for importing historical data manager
 sys.path.insert(0, str(Path(__file__).parent.parent / "utils"))
-from historical_data_manager import DataType, HistoricalDataManager, Timeframe
+from utils.historical_data_manager import DataType, HistoricalDataManager, Timeframe
 from unified_cache import UnifiedCache
 
 

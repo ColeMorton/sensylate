@@ -9,6 +9,11 @@ Provides unified interface for CLI service execution with:
 - Local-first data strategy integration
 - Fail-fast error handling with contextual information
 - Structured logging and type-safe results
+
+Standardized Logging Levels:
+- INFO: API calls, primary operations, performance metrics, successful completions
+- WARNING: Retries, fallbacks, degraded performance, missing optional data, recoverable errors
+- ERROR: Service failures, critical issues, infrastructure problems, unrecoverable errors
 """
 
 import shutil
@@ -63,22 +68,8 @@ class CLIServiceWrapper:
 
         self.logger = logging.getLogger(f"cli_wrapper.{service_name}")
 
-        # Add minimal adapter methods for compatibility
-        class LogAdapter:
-            def __init__(self, logger):
-                self._logger = logger
-
-            def log_operation(self, message, context=None):
-                self._logger.info(f"Operation: {message}")
-
-            def log_error(self, message, error=None, context=None):
-                self._logger.error(f"Operation failed: {message}")
-
-        if not hasattr(self.logger, "log_operation"):
-            # Wrap standard logger with adapter for compatibility
-            adapter = LogAdapter(self.logger)
-            self.logger.log_operation = adapter.log_operation
-            self.logger.log_error = adapter.log_error
+        # Enhanced logging adapter with consistent method binding
+        self._setup_enhanced_logger_adapter()
 
         # CLI service configuration
         self.cli_script_name = f"{service_name}_cli.py"
@@ -112,6 +103,50 @@ class CLIServiceWrapper:
                 "has_config": self.config is not None,
             },
         )
+
+    def _setup_enhanced_logger_adapter(self):
+        """Setup enhanced logger with consistent adapter methods"""
+        
+        def log_operation(message, context=None, level="INFO"):
+            """Enhanced operation logging with context and performance data"""
+            if context:
+                context_str = f" | Context: {context}"
+            else:
+                context_str = ""
+            
+            log_message = f"Operation: {message}{context_str}"
+            
+            if level == "WARNING":
+                self.logger.warning(log_message)
+            elif level == "ERROR":
+                self.logger.error(log_message)
+            else:
+                self.logger.info(log_message)
+
+        def log_error(message, error=None, context=None):
+            """Enhanced error logging with structured context"""
+            error_details = ""
+            if error:
+                error_details = f" | Error: {str(error)}"
+            if context:
+                error_details += f" | Context: {context}"
+            
+            self.logger.error(f"Operation failed: {message}{error_details}")
+
+        def log_api_call(service, command, args=None, response_time=None, status=None, details=None):
+            """Detailed API call logging"""
+            args_str = f"({', '.join(map(str, args))})" if args else ""
+            timing_str = f" [{response_time:.2f}s]" if response_time else ""
+            status_str = f" -> {status}" if status else ""
+            details_str = f" | {details}" if details else ""
+            
+            message = f"API Call: {service}.{command}{args_str}{timing_str}{status_str}{details_str}"
+            self.logger.info(message)
+
+        # Bind enhanced methods to logger instance
+        self.logger.log_operation = log_operation
+        self.logger.log_error = log_error
+        self.logger.log_api_call = log_api_call
 
     def _validate_service_name(self, service_name: str) -> None:
         """Validate service name using fail-fast approach"""
@@ -260,7 +295,7 @@ class CLIServiceWrapper:
                     cmd_args.extend([option_name, str(value)])
 
             self.logger.log_operation(
-                f"Executing command: {command}",
+                f"Starting command execution: {self.service_name}.{command}",
                 {
                     "service_name": self.service_name,
                     "command": command,
@@ -268,6 +303,9 @@ class CLIServiceWrapper:
                     "options": {
                         k: v for k, v in kwargs.items() if not k.startswith("_")
                     },
+                    "timeout": self.timeout,
+                    "global_available": self.global_available,
+                    "local_available": self.local_available,
                 },
             )
 
@@ -387,13 +425,17 @@ class CLIServiceWrapper:
     def _execute_global_command(self, args: List[str]) -> Tuple[bool, str, str]:
         """Execute command as global CLI"""
         cmd = [self.global_command_name] + args
+        command_name = args[0] if args else "unknown"
+        start_time = datetime.now()
 
         self.logger.log_operation(
-            "Executing global command",
+            f"Executing global command: {self.service_name}.{command_name}",
             {
                 "service_name": self.service_name,
-                "command": " ".join(cmd),
+                "full_command": " ".join(cmd),
                 "args_count": len(args),
+                "timeout": self.timeout,
+                "execution_mode": "global"
             },
         )
 
@@ -406,10 +448,37 @@ class CLIServiceWrapper:
                 cwd=self.scripts_dir.parent,
             )
 
+            execution_time = (datetime.now() - start_time).total_seconds()
             success = result.returncode == 0
+            
+            # Enhanced API call logging
+            status = f"SUCCESS (rc={result.returncode})" if success else f"FAILED (rc={result.returncode})"
+            details = f"stdout={len(result.stdout)} chars, stderr={len(result.stderr)} chars"
+            
+            self.logger.log_api_call(
+                service=self.service_name,
+                command=command_name,
+                args=args[1:] if len(args) > 1 else None,
+                response_time=execution_time,
+                status=status,
+                details=details
+            )
+            
             return success, result.stdout, result.stderr
 
         except subprocess.TimeoutExpired as e:
+            execution_time = (datetime.now() - start_time).total_seconds()
+            
+            # Log timeout as failed API call
+            self.logger.log_api_call(
+                service=self.service_name,
+                command=command_name,
+                args=args[1:] if len(args) > 1 else None,
+                response_time=execution_time,
+                status="TIMEOUT",
+                details=f"Timed out after {self.timeout}s"
+            )
+            
             raise ProcessingError(
                 f"Global command timed out: {' '.join(cmd)}",
                 pipeline_stage="global_command_execution",
@@ -442,14 +511,18 @@ class CLIServiceWrapper:
     def _execute_local_command(self, args: List[str]) -> Tuple[bool, str, str]:
         """Execute command as local Python script"""
         cmd = [sys.executable, str(self.cli_script_path)] + args
+        command_name = args[0] if args else "unknown"
+        start_time = datetime.now()
 
         self.logger.log_operation(
-            "Executing local command",
+            f"Executing local command: {self.service_name}.{command_name}",
             {
                 "service_name": self.service_name,
-                "command": " ".join(cmd),
+                "full_command": " ".join(cmd),
                 "args_count": len(args),
                 "script_path": str(self.cli_script_path),
+                "timeout": self.timeout,
+                "execution_mode": "local"
             },
         )
 
@@ -462,10 +535,37 @@ class CLIServiceWrapper:
                 cwd=self.scripts_dir.parent,
             )
 
+            execution_time = (datetime.now() - start_time).total_seconds()
             success = result.returncode == 0
+            
+            # Enhanced API call logging
+            status = f"SUCCESS (rc={result.returncode})" if success else f"FAILED (rc={result.returncode})"
+            details = f"stdout={len(result.stdout)} chars, stderr={len(result.stderr)} chars, script={self.cli_script_path.name}"
+            
+            self.logger.log_api_call(
+                service=self.service_name,
+                command=command_name,
+                args=args[1:] if len(args) > 1 else None,
+                response_time=execution_time,
+                status=status,
+                details=details
+            )
+            
             return success, result.stdout, result.stderr
 
         except subprocess.TimeoutExpired as e:
+            execution_time = (datetime.now() - start_time).total_seconds()
+            
+            # Log timeout as failed API call
+            self.logger.log_api_call(
+                service=self.service_name,
+                command=command_name,
+                args=args[1:] if len(args) > 1 else None,
+                response_time=execution_time,
+                status="TIMEOUT",
+                details=f"Timed out after {self.timeout}s, script={self.cli_script_path.name}"
+            )
+            
             raise ProcessingError(
                 f"Local command timed out: {' '.join(cmd)}",
                 pipeline_stage="local_command_execution",
@@ -572,22 +672,13 @@ class CLIServiceManager:
             self.scripts_dir = scripts_dir or Path(__file__).parent
             self.config = None
 
-        # Use standard logging instead of structured JSON logging
+        # Use standard logging with enhanced adapter
         import logging
 
         self.logger = logging.getLogger("cli_service_manager")
-
-        # Add minimal adapter for compatibility
-        if not hasattr(self.logger, "log_operation"):
-
-            def log_operation(message, context=None):
-                self.logger.info(f"Operation: {message}")
-
-            def log_error(message, error=None, context=None):
-                self.logger.error(f"Operation failed: {message}")
-
-            self.logger.log_operation = log_operation
-            self.logger.log_error = log_error
+        
+        # Apply the same enhanced logging adapter as CLIServiceWrapper
+        self._setup_enhanced_logger_adapter()
         self.error_handler = ErrorHandler()
         self.services = {}
 
@@ -611,6 +702,50 @@ class CLIServiceManager:
         # Register CLI services with script registry if available
         if self.script_registry:
             self._register_cli_services()
+
+    def _setup_enhanced_logger_adapter(self):
+        """Setup enhanced logger with consistent adapter methods (shared with CLIServiceWrapper)"""
+        
+        def log_operation(message, context=None, level="INFO"):
+            """Enhanced operation logging with context and performance data"""
+            if context:
+                context_str = f" | Context: {context}"
+            else:
+                context_str = ""
+            
+            log_message = f"Operation: {message}{context_str}"
+            
+            if level == "WARNING":
+                self.logger.warning(log_message)
+            elif level == "ERROR":
+                self.logger.error(log_message)
+            else:
+                self.logger.info(log_message)
+
+        def log_error(message, error=None, context=None):
+            """Enhanced error logging with structured context"""
+            error_details = ""
+            if error:
+                error_details = f" | Error: {str(error)}"
+            if context:
+                error_details += f" | Context: {context}"
+            
+            self.logger.error(f"Operation failed: {message}{error_details}")
+
+        def log_api_call(service, command, args=None, response_time=None, status=None, details=None):
+            """Detailed API call logging"""
+            args_str = f"({', '.join(map(str, args))})" if args else ""
+            timing_str = f" [{response_time:.2f}s]" if response_time else ""
+            status_str = f" -> {status}" if status else ""
+            details_str = f" | {details}" if details else ""
+            
+            message = f"API Call: {service}.{command}{args_str}{timing_str}{status_str}{details_str}"
+            self.logger.info(message)
+
+        # Bind enhanced methods to logger instance
+        self.logger.log_operation = log_operation
+        self.logger.log_error = log_error
+        self.logger.log_api_call = log_api_call
 
     def _validate_scripts_directory(self) -> None:
         """Validate scripts directory using fail-fast approach"""

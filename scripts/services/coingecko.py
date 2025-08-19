@@ -439,7 +439,7 @@ def create_coingecko_service(env: str = "dev") -> CoinGeckoService:
     
     # Use absolute path to config directory
     config_dir = Path(__file__).parent.parent.parent / "config"
-    config_loader = ConfigLoader(str(config_dir))
+    config_loader = ConfigLoader(str(config_dir), auto_load_env=True)
     service_config = config_loader.get_service_config("coingecko", env)
 
     # Convert to ServiceConfig format

@@ -650,7 +650,7 @@ def create_fred_economic_service(env: str = "dev") -> FREDEconomicService:
     
     # Use absolute path to config directory
     config_dir = Path(__file__).parent.parent.parent / "config"
-    config_loader = ConfigLoader(str(config_dir))
+    config_loader = ConfigLoader(str(config_dir), auto_load_env=True)
     service_config = config_loader.get_service_config("fred", env)
 
     # Convert to ServiceConfig format
