@@ -87,7 +87,7 @@
       ],
       "business_segments": {
         "Semiconductor Process Control": "85% of revenue",
-        "Specialty Semiconductor Process": "10% of revenue", 
+        "Specialty Semiconductor Process": "10% of revenue",
         "PCB, Display and Component Inspection": "5% of revenue"
       },
       "operational_model": "Asset-light business model focused on high-margin process control equipment and software solutions for semiconductor manufacturing with strong recurring service revenue",
@@ -153,7 +153,7 @@
   },
   "economic_analysis": {
     "interest_rate_environment": "moderately_restrictive",
-    "yield_curve_signal": "normal_slight_inversion", 
+    "yield_curve_signal": "normal_slight_inversion",
     "policy_implications": [
       "Fed policy transition towards normalization supports capital equipment spending",
       "Lower interest rates reduce cost of capital for semiconductor fab investments",
@@ -174,7 +174,7 @@
   "cli_service_validation": {
     "service_health": {
       "yahoo_finance_cli": "healthy",
-      "alpha_vantage_cli": "healthy", 
+      "alpha_vantage_cli": "healthy",
       "coingecko_cli": "healthy",
       "sec_edgar_cli": "healthy",
       "imf_cli": "healthy"
@@ -189,7 +189,7 @@
     "institutional_grade": true,
     "data_sources_via_cli": [
       "yahoo_finance_cli",
-      "alpha_vantage_cli", 
+      "alpha_vantage_cli",
       "coingecko_cli",
       "sec_edgar_cli",
       "imf_cli"
@@ -222,13 +222,13 @@
     "peer_companies": [
       {
         "ticker": "AMAT",
-        "name": "Applied Materials Inc", 
+        "name": "Applied Materials Inc",
         "market_cap": "Estimated $150B+",
         "focus": "Semiconductor equipment and display manufacturing",
         "competitive_position": "Broader equipment portfolio vs KLAC process control focus"
       },
       {
-        "ticker": "LRCX", 
+        "ticker": "LRCX",
         "name": "Lam Research Corporation",
         "market_cap": "Estimated $90B+",
         "focus": "Etch and deposition equipment",
@@ -237,7 +237,7 @@
       {
         "ticker": "ASML",
         "name": "ASML Holding NV",
-        "market_cap": "Estimated $300B+", 
+        "market_cap": "Estimated $300B+",
         "focus": "Lithography equipment (EUV)",
         "competitive_position": "Premium valuation leader in critical lithography technology"
       }
@@ -296,7 +296,7 @@
         "description": "Semiconductor industry analysis providing sector context for KLAC positioning"
       },
       {
-        "filepath": "/Users/colemorton/Projects/sensylate-command-system-enhancements/data/outputs/industry_analysis/analysis/semiconductors_20250729_analysis.json", 
+        "filepath": "/Users/colemorton/Projects/sensylate-command-system-enhancements/data/outputs/industry_analysis/analysis/semiconductors_20250729_analysis.json",
         "relevance_score": 0.90,
         "description": "Comprehensive semiconductor industry analysis for competitive landscape context"
       },

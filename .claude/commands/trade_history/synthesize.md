@@ -8,8 +8,8 @@ Comprehensive report generation and document creation for institutional-quality 
 
 The Trading Performance Synthesis phase represents the systematic integration and presentation of trading data and analysis into professional reports tailored for different audiences. This command provides the requirements for the "Synthesize" phase of the DASV (Discover → Analyze → Synthesize → Validate) framework, focusing on multi-audience document generation, template compliance, and actionable insight presentation.
 
-**Expected Output Schema**: `/scripts/schemas/trade_history_synthesis_schema.json`
-**Researcher Sub Task**: Use the researcher sub-agent to execute trade history synthesis. Ensure output conforms to `/scripts/schemas/trade_history_synthesis_schema.json`.
+**Expected Output Schema**: `/{SCRIPTS_BASE}/schemas/trade_history_synthesis_schema.json`
+**Researcher Sub Task**: Use the researcher sub-agent to execute trade history synthesis. Ensure output conforms to `/{SCRIPTS_BASE}/schemas/trade_history_synthesis_schema.json`.
 
 ## Microservice Integration
 
@@ -17,9 +17,9 @@ The Trading Performance Synthesis phase represents the systematic integration an
 **Role**: trade_history
 **Action**: synthesize
 **Input Sources**: trade_history_discover, trade_history_analyze
-**Output Location**: `./data/outputs/trade_history/`
+**Output Location**: `./{DATA_OUTPUTS}/trade_history/`
 **Next Phase**: trade_history_validate
-**Template Reference**: `./templates/analysis/trade_history_template.md` (institutional-quality structure matching fundamental analysis standards)
+**Template Reference**: `./{TEMPLATES_BASE}/analysis/trade_history_template.md` (institutional-quality structure matching fundamental analysis standards)
 
 ## Parameters
 
@@ -108,7 +108,7 @@ The Trading Performance Synthesis phase represents the systematic integration an
 ## Implementation Framework
 
 ### Execution Requirements
-**Primary Tool**: Use `/scripts/trade_history_synthesize.py` as the atomic synthesis tool
+**Primary Tool**: Use `/{SCRIPTS_BASE}/trade_history_synthesize.py` as the atomic synthesis tool
 **Template System**: Implement institutional-quality templates matching fundamental analysis standards
 **Quality Gates**: Ensure institutional-grade formatting and content accuracy (90%+ confidence target)
 **Validation Integration**: Cross-check all metrics against analysis phase outputs with fail-fast validation
@@ -172,8 +172,8 @@ The Trading Performance Synthesis phase represents the systematic integration an
 ## Output Structure and Schema
 
 **File Naming**: `{PORTFOLIO}_{YYYYMMDD}_synthesis.json`
-**Location**: `./data/outputs/trade_history/synthesis/`
-**Schema Compliance**: Must validate against `/scripts/schemas/trade_history_synthesis_schema.json`
+**Location**: `./{DATA_OUTPUTS}/trade_history/synthesis/`
+**Schema Compliance**: Must validate against `/{SCRIPTS_BASE}/schemas/trade_history_synthesis_schema.json`
 
 ### Enhanced Synthesis Schema Structure (DASV Framework Integration)
 ```json

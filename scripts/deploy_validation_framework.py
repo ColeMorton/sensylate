@@ -237,9 +237,9 @@ class ValidationFrameworkDeployer:
             hardcoded_check = fed_validator.check_directory("data/outputs/")
             results["hardcoded_detection"] = {
                 "issues_found": len(hardcoded_check),
-                "status": "clean"
-                if len(hardcoded_check) == 0
-                else "violations_detected",
+                "status": (
+                    "clean" if len(hardcoded_check) == 0 else "violations_detected"
+                ),
             }
 
             if len(hardcoded_check) > 0:

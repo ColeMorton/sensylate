@@ -207,9 +207,9 @@ class AtomicSynthesisTool:
                     "risk_indicators": self._assess_portfolio_risk(active_trades),
                 },
                 "real_time_metrics": {
-                    "platform_status": "ACTIVE"
-                    if self.portfolio_name == "live_signals"
-                    else "N/A",
+                    "platform_status": (
+                        "ACTIVE" if self.portfolio_name == "live_signals" else "N/A"
+                    ),
                     "last_signal": self._get_last_signal_info(active_trades),
                     "market_context": self._get_market_context(),
                 },
@@ -305,11 +305,13 @@ class AtomicSynthesisTool:
             if win_rate > 0.4
             else "↘️",
             "pnl_trend": "↗️" if total_pnl > 0 else "↘️",
-            "overall_trend": "↗️"
-            if win_rate > 0.5 and total_pnl > 0
-            else "→"
-            if total_pnl >= 0
-            else "↘️",
+            "overall_trend": (
+                "↗️"
+                if win_rate > 0.5 and total_pnl > 0
+                else "→"
+                if total_pnl >= 0
+                else "↘️"
+            ),
         }
 
     def _get_top_trades(
@@ -332,9 +334,11 @@ class AtomicSynthesisTool:
                     "strategy": trade.get("strategy_type", "N/A"),
                     "pnl": float(trade.get("pnl", 0)),
                     "return_pct": float(trade.get("return_pct", 0)),
-                    "duration_days": float(trade.get("duration_days", 0))
-                    if pd.notna(trade.get("duration_days"))
-                    else 0,
+                    "duration_days": (
+                        float(trade.get("duration_days", 0))
+                        if pd.notna(trade.get("duration_days"))
+                        else 0
+                    ),
                     "quality": trade.get("quality", "N/A"),
                     "x_link": trade.get("x_link", "N/A"),
                     "entry_date": trade.get("entry_date", "N/A"),
@@ -361,9 +365,11 @@ class AtomicSynthesisTool:
                         "total_trades": total,
                         "win_rate": wins / total if total > 0 else 0,
                         "total_pnl": float(strategy_trades["pnl"].sum()),
-                        "avg_return": float(strategy_trades["return_pct"].mean())
-                        if "return_pct" in strategy_trades.columns
-                        else 0,
+                        "avg_return": (
+                            float(strategy_trades["return_pct"].mean())
+                            if "return_pct" in strategy_trades.columns
+                            else 0
+                        ),
                     }
 
         return strategy_performance
@@ -385,12 +391,16 @@ class AtomicSynthesisTool:
                         "ticker": trade.get("Ticker", "N/A"),
                         "strategy": trade.get("Strategy_Type", "N/A"),
                         "entry_date": str(trade.get("Entry_Timestamp", "N/A")),
-                        "days_held": float(trade.get("Days_Since_Entry", 0))
-                        if pd.notna(trade.get("Days_Since_Entry"))
-                        else 0,
-                        "unrealized_pnl": float(trade.get("Current_Unrealized_PnL", 0))
-                        if pd.notna(trade.get("Current_Unrealized_PnL"))
-                        else 0,
+                        "days_held": (
+                            float(trade.get("Days_Since_Entry", 0))
+                            if pd.notna(trade.get("Days_Since_Entry"))
+                            else 0
+                        ),
+                        "unrealized_pnl": (
+                            float(trade.get("Current_Unrealized_PnL", 0))
+                            if pd.notna(trade.get("Current_Unrealized_PnL"))
+                            else 0
+                        ),
                     }
                 )
         return positions
@@ -399,11 +409,13 @@ class AtomicSynthesisTool:
         """Assess current portfolio risk"""
         return {
             "position_count": len(active_trades),
-            "concentration_risk": "LOW"
-            if len(active_trades) > 5
-            else "MEDIUM"
-            if len(active_trades) > 2
-            else "HIGH",
+            "concentration_risk": (
+                "LOW"
+                if len(active_trades) > 5
+                else "MEDIUM"
+                if len(active_trades) > 2
+                else "HIGH"
+            ),
             "status": "ACTIVE" if len(active_trades) > 0 else "NO_POSITIONS",
         }
 

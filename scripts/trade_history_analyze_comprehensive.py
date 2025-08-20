@@ -171,14 +171,14 @@ class TradeHistoryAnalyzer:
         analysis["overall_effectiveness"] = {
             "total_win_rate": len(all_wins) / len(self.closed_trades),
             "average_win_return": all_wins["Return"].mean() if len(all_wins) > 0 else 0,
-            "average_loss_return": all_losses["Return"].mean()
-            if len(all_losses) > 0
-            else 0,
-            "overall_profit_factor": abs(
-                all_wins["PnL"].sum() / all_losses["PnL"].sum()
-            )
-            if all_losses["PnL"].sum() != 0
-            else float("inf"),
+            "average_loss_return": (
+                all_losses["Return"].mean() if len(all_losses) > 0 else 0
+            ),
+            "overall_profit_factor": (
+                abs(all_wins["PnL"].sum() / all_losses["PnL"].sum())
+                if all_losses["PnL"].sum() != 0
+                else float("inf")
+            ),
             "mfe_capture_efficiency": (
                 self.closed_trades["Return"]
                 / self.closed_trades["Max_Favourable_Excursion"]
@@ -403,12 +403,16 @@ class TradeHistoryAnalyzer:
                 "trades_above_threshold": len(
                     self.closed_trades[self.closed_trades["MFE_MAE_Ratio"] > 5.0]
                 ),
-                "average_return_above": self.closed_trades[
-                    self.closed_trades["MFE_MAE_Ratio"] > 5.0
-                ]["Return"].mean()
-                if len(self.closed_trades[self.closed_trades["MFE_MAE_Ratio"] > 5.0])
-                > 0
-                else 0,
+                "average_return_above": (
+                    self.closed_trades[self.closed_trades["MFE_MAE_Ratio"] > 5.0][
+                        "Return"
+                    ].mean()
+                    if len(
+                        self.closed_trades[self.closed_trades["MFE_MAE_Ratio"] > 5.0]
+                    )
+                    > 0
+                    else 0
+                ),
             },
             "exit_efficiency_correlation": {
                 "high_efficiency_threshold": 0.7,
@@ -417,16 +421,18 @@ class TradeHistoryAnalyzer:
                         self.closed_trades["Exit_Efficiency_Fixed"] > 0.7
                     ]
                 ),
-                "average_return_high_efficiency": self.closed_trades[
-                    self.closed_trades["Exit_Efficiency_Fixed"] > 0.7
-                ]["Return"].mean()
-                if len(
+                "average_return_high_efficiency": (
                     self.closed_trades[
                         self.closed_trades["Exit_Efficiency_Fixed"] > 0.7
-                    ]
-                )
-                > 0
-                else 0,
+                    ]["Return"].mean()
+                    if len(
+                        self.closed_trades[
+                            self.closed_trades["Exit_Efficiency_Fixed"] > 0.7
+                        ]
+                    )
+                    > 0
+                    else 0
+                ),
             },
         }
 
@@ -461,9 +467,11 @@ class TradeHistoryAnalyzer:
             "tail_risk": {
                 "worst_case_return": np.min(returns),
                 "worst_case_pnl": self.closed_trades["PnL"].min(),
-                "tail_ratio": abs(var_95 / np.mean(returns[returns > 0]))
-                if np.mean(returns[returns > 0]) != 0
-                else 0,
+                "tail_ratio": (
+                    abs(var_95 / np.mean(returns[returns > 0]))
+                    if np.mean(returns[returns > 0]) != 0
+                    else 0
+                ),
             },
         }
 
@@ -475,9 +483,11 @@ class TradeHistoryAnalyzer:
                 "unique_tickers": len(ticker_exposure),
                 "max_position_count": ticker_exposure.max(),
                 "most_traded_ticker": ticker_exposure.index[0],
-                "concentration_ratio": ticker_exposure.iloc[0] / len(self.closed_trades)
-                if len(self.closed_trades) > 0
-                else 0,
+                "concentration_ratio": (
+                    ticker_exposure.iloc[0] / len(self.closed_trades)
+                    if len(self.closed_trades) > 0
+                    else 0
+                ),
             },
             "strategy_concentration": {
                 "sma_weight": len(
@@ -500,9 +510,11 @@ class TradeHistoryAnalyzer:
             "maximum_drawdown": float(drawdowns.min()),
             "current_drawdown": float(drawdowns.iloc[-1]) if len(drawdowns) > 0 else 0,
             "drawdown_periods": len(drawdowns[drawdowns < 0]),
-            "recovery_factor": float(-pnl_series.iloc[-1] / drawdowns.min())
-            if drawdowns.min() != 0
-            else float("inf"),
+            "recovery_factor": (
+                float(-pnl_series.iloc[-1] / drawdowns.min())
+                if drawdowns.min() != 0
+                else float("inf")
+            ),
         }
 
         # Market context and volatility
@@ -524,9 +536,11 @@ class TradeHistoryAnalyzer:
                         abs(self.closed_trades["Return"]) > 2 * np.std(returns)
                     ]
                 ),
-                "volatility_adjusted_return": float(np.mean(returns) / np.std(returns))
-                if np.std(returns) != 0
-                else 0,
+                "volatility_adjusted_return": (
+                    float(np.mean(returns) / np.std(returns))
+                    if np.std(returns) != 0
+                    else 0
+                ),
             },
         }
 
@@ -651,9 +665,9 @@ class TradeHistoryAnalyzer:
                         self.closed_trades[self.closed_trades["Strategy_Type"] == "EMA"]
                     )
                 ),
-                "statistical_significance": "medium"
-                if len(self.closed_trades) >= 30
-                else "low",
+                "statistical_significance": (
+                    "medium" if len(self.closed_trades) >= 30 else "low"
+                ),
             },
             "phase_2a_signal_effectiveness": phase_2a,
             "phase_2b_statistical_performance": phase_2b,
@@ -685,35 +699,50 @@ class TradeHistoryAnalyzer:
                 "maximum_drawdown": phase_2d["drawdown_analysis"]["maximum_drawdown"],
             },
             "strategy_insights": {
-                "dominant_strategy": "SMA"
-                if len(self.closed_trades[self.closed_trades["Strategy_Type"] == "SMA"])
-                > len(self.closed_trades[self.closed_trades["Strategy_Type"] == "EMA"])
-                else "EMA",
-                "best_performing_strategy": max(
-                    phase_2a["strategy_effectiveness"].keys(),
-                    key=lambda x: phase_2a["strategy_effectiveness"][x].get(
-                        "total_pnl", 0
-                    ),
-                )
-                if phase_2a["strategy_effectiveness"]
-                else None,
+                "dominant_strategy": (
+                    "SMA"
+                    if len(
+                        self.closed_trades[self.closed_trades["Strategy_Type"] == "SMA"]
+                    )
+                    > len(
+                        self.closed_trades[self.closed_trades["Strategy_Type"] == "EMA"]
+                    )
+                    else "EMA"
+                ),
+                "best_performing_strategy": (
+                    max(
+                        phase_2a["strategy_effectiveness"].keys(),
+                        key=lambda x: phase_2a["strategy_effectiveness"][x].get(
+                            "total_pnl", 0
+                        ),
+                    )
+                    if phase_2a["strategy_effectiveness"]
+                    else None
+                ),
                 "strategy_diversification": len(
                     self.closed_trades["Strategy_Type"].unique()
                 ),
             },
             "risk_insights": {
-                "concentration_risk_level": "high"
-                if phase_2d["concentration_risk"]["ticker_concentration"][
-                    "concentration_ratio"
-                ]
-                > 0.2
-                else "moderate",
-                "tail_risk_assessment": "high"
-                if phase_2d["portfolio_risk_metrics"]["value_at_risk"]["var_95"] < -0.1
-                else "moderate",
-                "volatility_environment": "high"
-                if phase_2b["risk_adjusted_metrics"]["volatility"] > 0.15
-                else "moderate",
+                "concentration_risk_level": (
+                    "high"
+                    if phase_2d["concentration_risk"]["ticker_concentration"][
+                        "concentration_ratio"
+                    ]
+                    > 0.2
+                    else "moderate"
+                ),
+                "tail_risk_assessment": (
+                    "high"
+                    if phase_2d["portfolio_risk_metrics"]["value_at_risk"]["var_95"]
+                    < -0.1
+                    else "moderate"
+                ),
+                "volatility_environment": (
+                    "high"
+                    if phase_2b["risk_adjusted_metrics"]["volatility"] > 0.15
+                    else "moderate"
+                ),
             },
             "optimization_priority": {
                 "immediate_actions": len(

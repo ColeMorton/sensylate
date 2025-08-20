@@ -714,10 +714,10 @@ python {SCRIPTS_BASE}/competitor_intelligence_cli.py \
 - **Read**: Business analyst requirements for creator needs
 - **Read**: Product owner priorities for monetization focus
 - **Read**: Twitter post command outputs for content optimization patterns
-- **Output**: Save strategy documents to `data/outputs/social_media_strategy/`
+- **Output**: Save strategy documents to `{DATA_OUTPUTS}/social_media_strategy/`
 
 ### Strategy Management
-- **Documentation**: Maintain strategies in `data/outputs/social_media_strategy/`
+- **Documentation**: Maintain strategies in `{DATA_OUTPUTS}/social_media_strategy/`
 - **Performance**: Track strategy effectiveness and iterate based on metrics
 - **Integration**: Strategy insights are available for other analysis processes
 

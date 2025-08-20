@@ -1,30 +1,41 @@
-# Comparative Investment Analysis - {TICKER_1} vs {TICKER_2}
-
-**Generated**: {GENERATION_TIMESTAMP}
-**Framework Phase**: Synthesis (Phase 3)
-**Quality Certification**: Institutional Grade
-**Confidence Score**: {OVERALL_CONFIDENCE}
-**Analysis Period**: {ANALYSIS_TIMEFRAME}
-
+---
+title: {COMPANY_1_NAME} ({TICKER_1}) vs {COMPANY_2_NAME} ({TICKER_2}) - Comprehensive Investment Analysis
+description: Institutional-quality comparative analysis integrating fundamental, sector, and industry insights for strategic investment decision-making
+author: Cole Morton
+date: {GENERATION_TIMESTAMP}
+tags:
+  - comparative-analysis
+  - {TICKER_1_LOWER}
+  - {TICKER_2_LOWER}
+  - investing
+  - {SECTOR_TAG}
+  - institutional-research
 ---
 
-## Executive Summary
+# {COMPANY_1_NAME} ({TICKER_1}) vs {COMPANY_2_NAME} ({TICKER_2}) - Comprehensive Investment Analysis
+*Generated: {GENERATION_DATE} | Confidence: {OVERALL_CONFIDENCE}/1.0 | Data Quality: {DATA_QUALITY}/1.0 | Economic Context: Current*
+<!-- Author: Cole Morton (MANDATORY - ensure consistency) -->
 
-### Investment Thesis Comparison
+## 🎯 Investment Thesis & Comparative Recommendation
+
+### Core Thesis Comparison
 {COMPARATIVE_INVESTMENT_THESIS}
 
-### Key Comparative Metrics
-- **{TICKER_1} Current Price**: ${TICKER_1_PRICE} (Market Cap: ${TICKER_1_MARKET_CAP})
-- **{TICKER_2} Current Price**: ${TICKER_2_PRICE} (Market Cap: ${TICKER_2_MARKET_CAP})
-- **Relative Valuation**: {RELATIVE_VALUATION_SUMMARY}
-- **Risk-Adjusted Preference**: {RISK_ADJUSTED_PREFERENCE}
+### Comparative Recommendation Framework
+| Stock | Recommendation | Conviction | Price Target | Expected Return | Position Size | Economic Environment |
+|-------|---------------|------------|--------------|-----------------|---------------|---------------------|
+| **{TICKER_1}** | {TICKER_1_RECOMMENDATION} | {TICKER_1_CONVICTION}/1.0 | {TICKER_1_TARGET} | {TICKER_1_RETURN} | {TICKER_1_POSITION} | {TICKER_1_ENVIRONMENT} |
+| **{TICKER_2}** | {TICKER_2_RECOMMENDATION} | {TICKER_2_CONVICTION}/1.0 | {TICKER_2_TARGET} | {TICKER_2_RETURN} | {TICKER_2_POSITION} | {TICKER_2_ENVIRONMENT} |
 
-### Strategic Recommendation
-{STRATEGIC_RECOMMENDATION_SUMMARY}
+### Key Quantified Catalysts Comparison
+{CATALYSTS_COMPARISON}
+
+### Economic Context Impact Analysis
+{ECONOMIC_CONTEXT_ANALYSIS}
 
 ---
 
-## Business Model Comparison
+## 📊 Comprehensive Business Model Analysis
 
 ### {TICKER_1} Business Overview
 **Sector**: {TICKER_1_SECTOR} | **Industry**: {TICKER_1_INDUSTRY}
@@ -42,7 +53,7 @@
 
 ---
 
-## Financial Performance Comparison
+## 💰 Financial Performance & Health Comparison
 
 ### Profitability Analysis
 
@@ -64,7 +75,7 @@
 
 ---
 
-## Valuation Analysis
+## 📈 Valuation & Price Target Analysis
 
 ### Multiple Valuation Comparison
 
@@ -80,7 +91,7 @@
 
 ---
 
-## Risk Assessment
+## ⚠️ Quantified Risk Assessment Framework
 
 ### Comparative Risk Matrix
 
@@ -99,7 +110,7 @@
 
 ---
 
-## Economic Sensitivity Analysis
+## 📊 Economic Sensitivity & Macro Positioning
 
 ### Interest Rate Sensitivity
 {INTEREST_RATE_SENSITIVITY_COMPARISON}
@@ -115,7 +126,7 @@
 
 ---
 
-## Competitive Moat Assessment
+## 🏰 Competitive Moat Assessment
 
 ### {TICKER_1} Competitive Advantages
 **Moat Strength**: {TICKER_1_MOAT_STRENGTH}
@@ -133,7 +144,7 @@
 
 ---
 
-## Management Quality Assessment
+## 👥 Management Quality Assessment
 
 ### {TICKER_1} Management Evaluation
 {TICKER_1_MANAGEMENT_ASSESSMENT}
@@ -149,7 +160,7 @@
 
 ---
 
-## Investment Implications
+## 💡 Investment Implications
 
 ### Relative Investment Merit
 {RELATIVE_INVESTMENT_MERIT_ANALYSIS}
@@ -173,7 +184,7 @@
 
 ---
 
-## Sector and Industry Context
+## 🏭 Sector and Industry Context
 
 ### {TICKER_1} Sector Dynamics
 {TICKER_1_SECTOR_ANALYSIS}
@@ -189,7 +200,7 @@
 
 ---
 
-## Quantitative Analysis
+## 📊 Quantitative Analysis
 
 ### Statistical Performance Comparison
 
@@ -208,7 +219,7 @@
 
 ---
 
-## Investment Recommendation
+## 🎯 Investment Recommendation
 
 ### Primary Investment Choice
 {PRIMARY_INVESTMENT_RECOMMENDATION}
@@ -227,7 +238,7 @@
 
 ---
 
-## Methodology & Data Sources
+## 📋 Analysis Metadata & Validation
 
 ### Comparative Analysis Framework
 - **Framework**: DASV (Discovery → Analyze → Synthesize → Validate)
@@ -243,7 +254,7 @@
 
 ---
 
-## Quality Metrics
+## 🏁 Investment Recommendation Summary
 
 ### Comparative Analysis Confidence
 - **Overall Comparative Confidence**: {COMPARATIVE_CONFIDENCE}

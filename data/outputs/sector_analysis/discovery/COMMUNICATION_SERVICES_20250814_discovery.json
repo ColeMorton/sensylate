@@ -7,7 +7,7 @@
     "companies_analyzed": [
       "META",
       "GOOGL",
-      "GOOG", 
+      "GOOG",
       "NFLX",
       "EA",
       "TMUS",
@@ -56,7 +56,7 @@
         "current_price": 201.96,
         "market_cap": 2448320888832,
         "pe_ratio": 21.553896,
-        "sector": "Communication Services", 
+        "sector": "Communication Services",
         "industry": "Internet Content & Information",
         "confidence": 0.95
       },
@@ -67,7 +67,7 @@
         "market_cap": 2448318529536,
         "pe_ratio": 21.644989,
         "sector": "Communication Services",
-        "industry": "Internet Content & Information", 
+        "industry": "Internet Content & Information",
         "confidence": 0.95
       },
       {
@@ -175,7 +175,7 @@
         "current_price": 644.89
       },
       "XLK": {
-        "ticker": "XLK", 
+        "ticker": "XLK",
         "current_price": 268.31
       },
       "XLF": {
@@ -340,7 +340,7 @@
     "institutional_grade": true,
     "data_sources_via_cli": [
       "yahoo_finance_cli",
-      "alpha_vantage_cli", 
+      "alpha_vantage_cli",
       "fmp_cli",
       "fred_economic_cli",
       "coingecko_cli"
@@ -369,7 +369,7 @@
     ],
     "service_performance_insights": [
       "Production CLI services demonstrated exceptional reliability with 95%+ uptime during data collection",
-      "Unified caching system optimized data retrieval performance while maintaining freshness requirements", 
+      "Unified caching system optimized data retrieval performance while maintaining freshness requirements",
       "Cross-service validation protocols enhanced data quality confidence for institutional requirements",
       "Comprehensive error handling ensured graceful degradation without compromising data integrity"
     ]
@@ -469,7 +469,7 @@
         "file_type": "discovery"
       },
       {
-        "filepath": "/Users/colemorton/Projects/sensylate-command-system-enhancements/data/outputs/fundamental_analysis/discovery/TMUS_20250808_discovery.json", 
+        "filepath": "/Users/colemorton/Projects/sensylate-command-system-enhancements/data/outputs/fundamental_analysis/discovery/TMUS_20250808_discovery.json",
         "relevance_score": 0.95,
         "relationship": "Direct company analysis for T-Mobile within Communication Services sector",
         "file_type": "discovery"

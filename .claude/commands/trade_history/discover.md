@@ -8,17 +8,17 @@ Comprehensive trading data collection and market intelligence gathering for inst
 
 The Trading Performance Discovery phase represents the systematic collection and initial structuring of all data required for comprehensive trading performance analysis. This command provides the requirements for the "Discover" phase of the DASV (Discover → Analyze → Synthesize → Validate) framework, focusing on data acquisition standards, quality assessment criteria, and foundational research requirements.
 
-**Expected Output Schema**: `/scripts/schemas/trade_history_discovery_schema.json`
-**Researcher Sub Task**: Use the researcher sub-agent to execute trade history discovery. Ensure output conforms to `/scripts/schemas/trade_history_discovery_schema.json`.
+**Expected Output Schema**: `/{SCRIPTS_BASE}/schemas/trade_history_discovery_schema.json`
+**Researcher Sub Task**: Use the researcher sub-agent to execute trade history discovery. Ensure output conforms to `/{SCRIPTS_BASE}/schemas/trade_history_discovery_schema.json`.
 
 ## Microservice Integration
 
 **Framework**: DASV Phase 1
 **Role**: trade_history
 **Action**: discover
-**Output Location**: `./data/outputs/trade_history/discovery/`
+**Output Location**: `./{DATA_OUTPUTS}/trade_history/discovery/`
 **Next Phase**: trade_history_analyze
-**Template Reference**: `./templates/analysis/trade_history_template.md` (final output structure awareness)
+**Template Reference**: `./{TEMPLATES_BASE}/analysis/trade_history_template.md` (final output structure awareness)
 
 ## Parameters
 
@@ -51,8 +51,8 @@ The Trading Performance Discovery phase represents the systematic collection and
 - Local inventory check for existing fundamental analysis
 
 ### Output Integration
-**Primary Output**: `./data/outputs/trade_history/discovery/{PORTFOLIO}_{YYYYMMDD}_discovery.json`
-**Schema Compliance**: Must conform to `/scripts/schemas/trade_history_discovery_schema.json`
+**Primary Output**: `./{DATA_OUTPUTS}/trade_history/discovery/{PORTFOLIO}_{YYYYMMDD}_discovery.json`
+**Schema Compliance**: Must conform to `/{SCRIPTS_BASE}/schemas/trade_history_discovery_schema.json`
 **Downstream Dependencies**:
 - trade_history_analyze (next DASV phase)
 - twitter_trade_history (social media content generation)
@@ -96,8 +96,8 @@ The Trading Performance Discovery phase represents the systematic collection and
 ## Output Structure and Schema
 
 **File Naming**: `{PORTFOLIO}_{YYYYMMDD}_discovery.json`
-**Location**: `./data/outputs/trade_history/discovery/`
-**Schema Compliance**: Must validate against `/scripts/schemas/trade_history_discovery_schema.json`
+**Location**: `./{DATA_OUTPUTS}/trade_history/discovery/`
+**Schema Compliance**: Must validate against `/{SCRIPTS_BASE}/schemas/trade_history_discovery_schema.json`
 
 ### Expected Discovery Schema Structure
 ```json
@@ -135,7 +135,7 @@ The Trading Performance Discovery phase represents the systematic collection and
 ## Implementation Framework
 
 ### Execution Requirements
-**Primary Tool**: Use `/scripts/trade_history_discover.py` as the atomic discovery tool
+**Primary Tool**: Use `/{SCRIPTS_BASE}/trade_history_discover.py` as the atomic discovery tool
 **CLI Services**: Integrate Yahoo Finance CLI, FRED Economic CLI for market context
 **Local Data Priority**: Inventory local fundamental analysis files before external calls
 **Quality Gates**: Enforce minimum confidence thresholds and schema compliance

@@ -97,15 +97,15 @@ industry_analysis_template:
   purpose: "Industry analysis specification and structure"
 
 industry_analysis_enhanced:
-  path: "{SCRIPTS_BASE}/templates/industry_analysis_enhanced.j2"
+  path: "{TEMPLATES_BASE}/industry_analysis_enhanced.j2"
   purpose: "Primary industry document generation"
 
 industry_framework_macro:
-  path: "{SCRIPTS_BASE}/templates/shared/macros/industry_framework_macro.j2"
+  path: "{TEMPLATES_BASE}/shared/macros/industry_framework_macro.j2"
   purpose: "Reusable industry analysis components"
 
 validation_template:
-  path: "{SCRIPTS_BASE}/templates/validation_framework.j2"
+  path: "{TEMPLATES_BASE}/validation_framework.j2"
   purpose: "Quality assurance and validation scoring"
 ```
 
@@ -121,7 +121,7 @@ You are the Master Industry Analysis Expert, possessing comprehensive knowledge 
 **Complete 4-Phase Industry Workflow Expertise**:
 - **Phase 1 (Discover)**: Industry-wide data collection via 7 CLI financial services + economic indicator integration
 - **Phase 2 (Analyze)**: Industry structure analysis with competitive dynamics + innovation assessment
-- **Phase 3 (Synthesize)**: Institutional-quality industry investment thesis following `./templates/analysis/industry_analysis_template.md`
+- **Phase 3 (Synthesize)**: Institutional-quality industry investment thesis following `./{TEMPLATES_BASE}/analysis/industry_analysis_template.md`
 - **Phase 4 (Validate)**: Comprehensive industry validation with real-time data verification
 
 ### 2. CLI Financial Services Integration for Industry Analysis
@@ -705,10 +705,10 @@ done
 **Output Consumption Patterns**:
 ```yaml
 industry_analysis_outputs:
-  discovery_files: "./data/outputs/industry_analysis/discovery/{INDUSTRY}_{DATE}_discovery.json"
-  analysis_files: "./data/outputs/industry_analysis/analysis/{INDUSTRY}_{DATE}_analysis.json"
-  synthesis_files: "./data/outputs/industry_analysis/{INDUSTRY}_{DATE}.md"
-  validation_files: "./data/outputs/industry_analysis/validation/{INDUSTRY}_{DATE}_validation.json"
+  discovery_files: "{DATA_OUTPUTS}/industry_analysis/discovery/{INDUSTRY}_{DATE}_discovery.json"
+  analysis_files: "{DATA_OUTPUTS}/industry_analysis/analysis/{INDUSTRY}_{DATE}_analysis.json"
+  synthesis_files: "{DATA_OUTPUTS}/industry_analysis/{INDUSTRY}_{DATE}.md"
+  validation_files: "{DATA_OUTPUTS}/industry_analysis/validation/{INDUSTRY}_{DATE}_validation.json"
 
 consumer_integration:
   twitter_commands: "Auto-discover analysis files by industry/date matching"

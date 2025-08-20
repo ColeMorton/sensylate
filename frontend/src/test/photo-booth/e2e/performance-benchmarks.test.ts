@@ -143,6 +143,9 @@ describe("Photo Booth Performance Benchmarks", () => {
 
       performance.now() - renderStartTime;
 
+      // Record the render time for performance tracking
+      expect(renderTime).toBeLessThan(45000); // Should render within 45 seconds
+
       // Measure chart-specific rendering
       const chartMetrics = await page.evaluate(() => {
         const charts = document.querySelectorAll(".photo-booth-chart");

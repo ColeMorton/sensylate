@@ -155,9 +155,11 @@ class MacroEconomicValidation:
                 if hasattr(service, "health_check"):
                     health = service.health_check()
                     self.cli_service_health[service_name] = {
-                        "status": "healthy"
-                        if health.get("status") == "healthy"
-                        else "degraded",
+                        "status": (
+                            "healthy"
+                            if health.get("status") == "healthy"
+                            else "degraded"
+                        ),
                         "last_check": datetime.now().isoformat(),
                     }
                 else:
@@ -1371,9 +1373,9 @@ class MacroEconomicValidation:
         critical_issues = [f for f in self.critical_findings if f["severity"] == "high"]
 
         return {
-            "economic_thesis_breaking_issues": [f["finding"] for f in critical_issues]
-            if critical_issues
-            else "none",
+            "economic_thesis_breaking_issues": (
+                [f["finding"] for f in critical_issues] if critical_issues else "none"
+            ),
             "material_economic_concerns": [
                 f["finding"]
                 for f in self.critical_findings

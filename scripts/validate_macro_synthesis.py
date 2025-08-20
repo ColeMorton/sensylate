@@ -85,12 +85,14 @@ def validate_template_artifacts():
                         "long_term_mean": float(mean_reversion["long_term_mean"]),
                         "reversion_speed": float(mean_reversion["reversion_speed"]),
                         "file_path": file_path,
-                        "source": "calculated_cli_data"
+                        "source": "calculated_cli_data",
                     }
                     print(f"✓ Extracted calculated volatility parameters for {region}")
                 else:
                     print(f"⚠️ Missing calculated volatility parameters in {filename}")
-                    print(f"    Expected: cli_market_intelligence.volatility_analysis.mean_reversion fields")
+                    print(
+                        f"    Expected: cli_market_intelligence.volatility_analysis.mean_reversion fields"
+                    )
                     print(f"    Check discovery file generation process for {region}")
 
             except json.JSONDecodeError as e:
@@ -98,33 +100,45 @@ def validate_template_artifacts():
                 continue
             except KeyError as e:
                 print(f"❌ Missing required field in {file_path}: {e}")
-                print(f"    Check discovery file structure for cli_market_intelligence section")
+                print(
+                    f"    Check discovery file structure for cli_market_intelligence section"
+                )
                 continue
             except Exception as e:
                 print(f"❌ Unexpected error processing {file_path}: {e}")
                 continue
 
         if len(volatility_data) < 2:
-            print("⚠️ Insufficient calculated volatility data for template artifact detection")
-            print("⚠️ Ensure discovery files contain CLI market intelligence with calculated volatility parameters")
+            print(
+                "⚠️ Insufficient calculated volatility data for template artifact detection"
+            )
+            print(
+                "⚠️ Ensure discovery files contain CLI market intelligence with calculated volatility parameters"
+            )
             return 0.7
-        
+
         # Enhanced completeness validation
-        print(f"✅ Found {len(volatility_data)} regions with calculated volatility parameters")
-        
+        print(
+            f"✅ Found {len(volatility_data)} regions with calculated volatility parameters"
+        )
+
         # Validate data quality
         data_quality_issues = []
         for region, data in volatility_data.items():
             # Check for reasonable parameter ranges
             long_term_mean = data["long_term_mean"]
             reversion_speed = data["reversion_speed"]
-            
+
             if not (10.0 <= long_term_mean <= 50.0):
-                data_quality_issues.append(f"{region}: long_term_mean {long_term_mean:.2f} outside reasonable range [10.0, 50.0]")
-            
+                data_quality_issues.append(
+                    f"{region}: long_term_mean {long_term_mean:.2f} outside reasonable range [10.0, 50.0]"
+                )
+
             if not (0.05 <= reversion_speed <= 0.5):
-                data_quality_issues.append(f"{region}: reversion_speed {reversion_speed:.3f} outside reasonable range [0.05, 0.5]")
-        
+                data_quality_issues.append(
+                    f"{region}: reversion_speed {reversion_speed:.3f} outside reasonable range [0.05, 0.5]"
+                )
+
         if data_quality_issues:
             print("⚠️ Data quality warnings:")
             for issue in data_quality_issues:
@@ -170,7 +184,9 @@ def validate_template_artifacts():
 
         # Note: Removed config validation dependency to focus on calculated discovery data
         # Template artifact validation now exclusively uses calculated CLI market intelligence data
-        print("✅ Validation uses calculated discovery data (config hardcoded values ignored)")
+        print(
+            "✅ Validation uses calculated discovery data (config hardcoded values ignored)"
+        )
 
         # Report results
         template_artifact_score = max(0.0, template_artifact_score)

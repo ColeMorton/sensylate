@@ -52,6 +52,7 @@ class DateTimeEncoder(json.JSONEncoder):
             return obj.tolist()
         return super().default(obj)
 
+
 # Import configuration manager and schema selector (always required)
 from utils.config_manager import ConfigManager, ConfigurationError
 from utils.schema_selector import create_schema_selector, get_schema_for_region
@@ -309,14 +310,18 @@ class MacroEconomicDiscovery:
             try:
                 # Use enhanced ConfigManager validation with required=True for critical keys
                 api_key = self.config.get_api_key(key_name, required=True)
-                
+
                 # Get detailed status for logging
                 status = self.config.get_api_key_status(key_name)
-                
+
                 if status["found"] and status["valid_format"]:
-                    logger.debug(f"✓ API key validated: {key_name} ({status['source']}, {status['obfuscated_value']})")
+                    logger.debug(
+                        f"✓ API key validated: {key_name} ({status['source']}, {status['obfuscated_value']})"
+                    )
                 elif status["found"] and not status["valid_format"]:
-                    validation_warnings.append(f"{key_name}: Invalid format ({status['length']} chars)")
+                    validation_warnings.append(
+                        f"{key_name}: Invalid format ({status['length']} chars)"
+                    )
                     logger.warning(f"⚠️ API key format issue: {key_name}")
                 else:
                     validation_errors.append(key_name)
@@ -340,7 +345,6 @@ class MacroEconomicDiscovery:
         logger.info(
             f"✓ All {len(required_keys)} required API keys validated for {self.region}"
         )
-
 
     def _validate_service_availability(self) -> None:
         """Validate which CLI services are actually available"""
@@ -1081,9 +1085,9 @@ class MacroEconomicDiscovery:
 
                     liquidity_data["central_bank_analysis"]["fed_policy"] = {
                         "current_rate": fed_rate_float,
-                        "stance": "restrictive"
-                        if fed_rate_float > 4.0
-                        else "accommodative",
+                        "stance": (
+                            "restrictive" if fed_rate_float > 4.0 else "accommodative"
+                        ),
                     }
 
             logger.info("Global liquidity data collected from available sources")
@@ -1335,14 +1339,16 @@ class MacroEconomicDiscovery:
 
         monetary_policy = {
             "policy_stance": {
-                "current_stance": "restrictive"
-                if policy_rate and policy_rate > 4.0
-                else "unknown",
+                "current_stance": (
+                    "restrictive" if policy_rate and policy_rate > 4.0 else "unknown"
+                ),
                 "policy_rate": policy_rate,
                 "balance_sheet_size": balance_sheet_size,
-                "stance_assessment": "Fed maintains restrictive policy stance to ensure inflation returns sustainably to 2% target"
-                if policy_rate
-                else "Policy stance assessment unavailable - missing Fed funds rate data",
+                "stance_assessment": (
+                    "Fed maintains restrictive policy stance to ensure inflation returns sustainably to 2% target"
+                    if policy_rate
+                    else "Policy stance assessment unavailable - missing Fed funds rate data"
+                ),
             },
             "transmission_mechanisms": {
                 "credit_channel": {
@@ -1629,22 +1635,30 @@ class MacroEconomicDiscovery:
                 currency_data = {
                     "dxy_analysis": dxy_analysis,
                     "major_pairs": {
-                        "eur_usd": fx_rates.get("eur_usd", {}).value
-                        if "eur_usd" in fx_rates
-                        else self.config.get_market_data_fallback("eur_usd", 1.08),
-                        "usd_jpy": fx_rates.get("usd_jpy", {}).value
-                        if "usd_jpy" in fx_rates
-                        else self.config.get_market_data_fallback("usd_jpy", 148.5),
-                        "gbp_usd": fx_rates.get("gbp_usd", {}).value
-                        if "gbp_usd" in fx_rates
-                        else self.config.get_market_data_fallback("gbp_usd", 1.26),
-                        "data_source": "real_time"
-                        if any(
-                            fx_rates.get(pair, {}).is_real_time
-                            for pair in ["eur_usd", "usd_jpy", "gbp_usd"]
-                            if pair in fx_rates
-                        )
-                        else "config_fallback",
+                        "eur_usd": (
+                            fx_rates.get("eur_usd", {}).value
+                            if "eur_usd" in fx_rates
+                            else self.config.get_market_data_fallback("eur_usd", 1.08)
+                        ),
+                        "usd_jpy": (
+                            fx_rates.get("usd_jpy", {}).value
+                            if "usd_jpy" in fx_rates
+                            else self.config.get_market_data_fallback("usd_jpy", 148.5)
+                        ),
+                        "gbp_usd": (
+                            fx_rates.get("gbp_usd", {}).value
+                            if "gbp_usd" in fx_rates
+                            else self.config.get_market_data_fallback("gbp_usd", 1.26)
+                        ),
+                        "data_source": (
+                            "real_time"
+                            if any(
+                                fx_rates.get(pair, {}).is_real_time
+                                for pair in ["eur_usd", "usd_jpy", "gbp_usd"]
+                                if pair in fx_rates
+                            )
+                            else "config_fallback"
+                        ),
                     },
                     "emerging_market_currencies": {
                         "stress_level": "moderate",
@@ -3258,9 +3272,11 @@ class MacroEconomicDiscovery:
             discovery_output = {
                 "metadata": {
                     "command_name": "cli_enhanced_macro_analyst_discover",
-                    "execution_timestamp": self.execution_date.isoformat() + "Z"
-                    if not self.execution_date.isoformat().endswith("Z")
-                    else self.execution_date.isoformat(),
+                    "execution_timestamp": (
+                        self.execution_date.isoformat() + "Z"
+                        if not self.execution_date.isoformat().endswith("Z")
+                        else self.execution_date.isoformat()
+                    ),
                     "framework_phase": "discover",
                     "region": self.region,
                     "indicators": self.indicators,
@@ -3306,7 +3322,13 @@ class MacroEconomicDiscovery:
             output_file = self.output_dir / output_filename
 
             with open(output_file, "w", encoding="utf-8") as f:
-                json.dump(discovery_output, f, indent=2, ensure_ascii=False, cls=DateTimeEncoder)
+                json.dump(
+                    discovery_output,
+                    f,
+                    indent=2,
+                    ensure_ascii=False,
+                    cls=DateTimeEncoder,
+                )
 
             logger.info(f"Macro-economic discovery output saved to: {output_file}")
 
@@ -3508,12 +3530,12 @@ class MacroEconomicDiscovery:
                     },
                     "historical_context": {
                         "phase_duration": phase_data.duration_months,
-                        "comparison_to_average": "longer"
-                        if phase_data.duration_months > 24
-                        else "average",
-                        "cycle_maturity": "late"
-                        if phase_data.duration_months > 36
-                        else "mid",
+                        "comparison_to_average": (
+                            "longer" if phase_data.duration_months > 24 else "average"
+                        ),
+                        "cycle_maturity": (
+                            "late" if phase_data.duration_months > 36 else "mid"
+                        ),
                     },
                     "confidence": cycle_analysis.get("confidence_score", 0.85),
                 }
@@ -4001,9 +4023,11 @@ class MacroEconomicDiscovery:
                 "validation_score": round(validation_score, 3),
                 "adjusted_probability": round(adjusted_probability, 4),
                 "adjustment_methodology": f"{int(adjustment_weight*100)}% consensus, {int((1-adjustment_weight)*100)}% system",
-                "recommendation": "use_adjusted_probability"
-                if validation_status != "validated"
-                else "use_system_probability",
+                "recommendation": (
+                    "use_adjusted_probability"
+                    if validation_status != "validated"
+                    else "use_system_probability"
+                ),
             }
 
             logger.info(

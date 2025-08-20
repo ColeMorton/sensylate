@@ -373,8 +373,8 @@ You are an expert industry strategist and social media strategist. Your specialt
 ```
 EXISTING POST IMPROVEMENT WORKFLOW:
 1. Check input pattern for validation file path:
-   → Pattern: data/outputs/twitter/industry_analysis/validation/{INDUSTRY}_{YYYYMMDD}_validation.json
-   → Alternative: data/outputs/industry_analysis/validation/{INDUSTRY}_{YYYYMMDD}_validation.json
+   → Pattern: {DATA_OUTPUTS}/twitter/industry_analysis/validation/{INDUSTRY}_{YYYYMMDD}_validation.json
+   → Alternative: {DATA_OUTPUTS}/industry_analysis/validation/{INDUSTRY}_{YYYYMMDD}_validation.json
    → Extract INDUSTRY_YYYYMMDD from validation file path
 
 2. If validation file path provided:
@@ -449,7 +449,7 @@ VALIDATION-DRIVEN SUCCESS CRITERIA:
 
 **Primary Data Sources (in priority order):**
 
-1. **Industry Analysis Reports** (PRIMARY): `@data/outputs/industry_analysis/`
+1. **Industry Analysis Reports** (PRIMARY): `@{DATA_OUTPUTS}/industry_analysis/`
    - **PRIORITY SOURCE**: Comprehensive industry analysis files (INDUSTRY_YYYYMMDD.md)
    - Investment thesis, industry structure assessment, competitive moat analysis
    - Growth catalyst identification, risk matrix development
@@ -470,7 +470,7 @@ VALIDATION-DRIVEN SUCCESS CRITERIA:
    - Ensures Twitter content reflects current economic environment via MCP data_quality.timestamp
    - Production-grade reliability with intelligent caching, retry logic, and health monitoring
 
-4. **Industry Analysis Detail Data** (VALIDATION): `@data/outputs/industry_analysis/analysis/`
+4. **Industry Analysis Detail Data** (VALIDATION): `@{DATA_OUTPUTS}/industry_analysis/analysis/`
    - Quantified industry metrics, competitive moat ratings, growth catalyst probabilities
    - Risk assessment scores, economic sensitivity coefficients
    - Used for cross-validation and consistency checking
@@ -871,7 +871,7 @@ quality_assurance:
 ### File Output Requirements
 **Primary Output File:**
 ```
-./data/outputs/twitter/industry_analysis/{INDUSTRY}_{YYYYMMDD}.md
+./{DATA_OUTPUTS}/twitter/industry_analysis/{INDUSTRY}_{YYYYMMDD}.md
 ```
 
 **File contains:**
@@ -897,7 +897,7 @@ quality_assurance:
 1. **CRITICAL: Get real-time economic context** - Use FRED MCP server for current economic indicators
 2. **Load and validate industry sources** - Check for industry analysis document first, then representative stock data
 3. **Economic context integration** - If economic vs industry discrepancies exist, prioritize current economic data
-4. Load industry analysis from `@data/outputs/industry_analysis/{INDUSTRY}_{YYYYMMDD}.md`
+4. Load industry analysis from `@{DATA_OUTPUTS}/industry_analysis/{INDUSTRY}_{YYYYMMDD}.md`
 5. **Apply template framework** - Use template specifications for URL generation, content structure, and compliance
 6. **Update all economic references** - Use current economic context throughout content
 7. Extract 2-3 most compelling industry insights with competitive positioning attribution
@@ -925,7 +925,7 @@ quality_assurance:
 
 ### Required Actions
 1. **Generate Output Metadata**: Include collaboration metadata for industry content
-2. **Store Outputs**: Save to `./data/outputs/twitter/industry_analysis/` directories
+2. **Store Outputs**: Save to `./{DATA_OUTPUTS}/twitter/industry_analysis/` directories
 3. **Quality Validation**: Content accuracy and industry analysis compliance verification
 4. **Content Tracking**: Performance metrics and institutional quality standards
 

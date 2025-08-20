@@ -86,7 +86,7 @@ class BaseFinancialCLI(ABC):
     ):
         # Load environment variables first (critical for API key access)
         self._ensure_environment_loaded()
-        
+
         self.service_name = service_name
         self.description = description
         self.app = typer.Typer(
@@ -112,19 +112,19 @@ class BaseFinancialCLI(ABC):
         """Validate that critical environment variables are available"""
         # Check for common API keys that might be needed
         critical_env_vars = [
-            'ALPHA_VANTAGE_API_KEY',
-            'FRED_API_KEY', 
-            'FMP_API_KEY',
-            'SEC_EDGAR_API_KEY'
+            "ALPHA_VANTAGE_API_KEY",
+            "FRED_API_KEY",
+            "FMP_API_KEY",
+            "SEC_EDGAR_API_KEY",
         ]
-        
+
         missing_vars = []
         for var in critical_env_vars:
             if not os.getenv(var):
                 missing_vars.append(var)
-        
+
         if missing_vars:
-            # Log but don't fail - some services may not need all keys  
+            # Log but don't fail - some services may not need all keys
             # Use print since logger may not be initialized yet
             pass  # Silent - will be logged later if needed
         else:

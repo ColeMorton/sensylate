@@ -166,7 +166,7 @@
   "cli_service_validation": {
     "service_health": {
       "yahoo_finance_cli": "operational",
-      "alpha_vantage_cli": "operational", 
+      "alpha_vantage_cli": "operational",
       "fmp_cli": "operational",
       "fred_economic_cli": "operational",
       "coingecko_cli": "operational",
@@ -182,7 +182,7 @@
     "institutional_grade": true,
     "data_sources_via_cli": [
       "yahoo_finance_cli",
-      "alpha_vantage_cli", 
+      "alpha_vantage_cli",
       "fmp_cli",
       "fred_economic_cli",
       "coingecko_cli",
@@ -224,7 +224,7 @@
         "segment": "pure_play_quantum_hardware"
       },
       {
-        "ticker": "RGTI", 
+        "ticker": "RGTI",
         "company_name": "Rigetti Computing Inc",
         "market_cap": 5086587392,
         "current_price": 15.76,
@@ -299,7 +299,7 @@
       "relationship": "direct_industry_analysis_context"
     },
     {
-      "file_path": "/Users/colemorton/Projects/sensylate-command-system-enhancements/data/outputs/industry_analysis/analysis/quantum_computing_20250805_analysis.json", 
+      "file_path": "/Users/colemorton/Projects/sensylate-command-system-enhancements/data/outputs/industry_analysis/analysis/quantum_computing_20250805_analysis.json",
       "relevance_score": 0.95,
       "relationship": "sector_investment_thesis_framework"
     },

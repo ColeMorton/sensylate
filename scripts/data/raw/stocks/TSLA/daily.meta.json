@@ -1,0 +1,17 @@
+{
+  "symbol": "TSLA",
+  "data_type": "daily_prices",
+  "timeframe": "daily",
+  "format": "consolidated_csv",
+  "records": 1255,
+  "created_at": "2025-08-19T18:50:23.422698",
+  "last_updated": "2025-08-19T18:50:23.422702",
+  "source": "yahoo_finance",
+  "data_hash": "377d5b9b56daaf05898bcdb2bb3fcf9b",
+  "format_version": "consolidated_v1",
+  "data_quality": {
+    "completeness": 1.0,
+    "accuracy_score": 1.0,
+    "deduplication": true
+  }
+}

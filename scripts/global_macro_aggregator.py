@@ -170,15 +170,17 @@ class GlobalMacroAggregator:
                 "analysis": "Global GDP growth showing regional divergence with developed markets moderating while emerging markets show resilience",
                 "confidence": 0.89,
             },
-            "employment_data": employment_data
-            if employment_data
-            else self._create_default_employment(),
-            "inflation_data": inflation_data
-            if inflation_data
-            else self._create_default_inflation(),
-            "monetary_policy_data": monetary_data
-            if monetary_data
-            else self._create_default_monetary(),
+            "employment_data": (
+                employment_data
+                if employment_data
+                else self._create_default_employment()
+            ),
+            "inflation_data": (
+                inflation_data if inflation_data else self._create_default_inflation()
+            ),
+            "monetary_policy_data": (
+                monetary_data if monetary_data else self._create_default_monetary()
+            ),
         }
 
     def _create_default_employment(self) -> Dict[str, Any]:
@@ -1099,9 +1101,11 @@ class GlobalMacroAggregator:
             "overall_quality_score": round(overall_score, 3),
             "institutional_grade_achieved": institutional_grade,
             "validation_checks": validation_checks,
-            "blocking_issues": []
-            if institutional_grade
-            else ["Aggregate quality below institutional threshold"],
+            "blocking_issues": (
+                []
+                if institutional_grade
+                else ["Aggregate quality below institutional threshold"]
+            ),
             "recommendations": [
                 "Continue monitoring regional data quality",
                 "Enhance emerging market data coverage",

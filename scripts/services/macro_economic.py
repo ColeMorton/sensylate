@@ -263,9 +263,11 @@ class MacroEconomicService(BaseFinancialService):
                 "leading_indicators": {
                     "data": leading_data,
                     "composite_score": self._calculate_composite_score(leading_data),
-                    "trend_analysis": "positive"
-                    if self._calculate_composite_score(leading_data) > 0
-                    else "negative",
+                    "trend_analysis": (
+                        "positive"
+                        if self._calculate_composite_score(leading_data) > 0
+                        else "negative"
+                    ),
                 },
                 "coincident_indicators": {
                     "data": coincident_data,

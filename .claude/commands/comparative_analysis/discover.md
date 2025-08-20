@@ -8,17 +8,17 @@ Comprehensive aggregation and validation of existing fundamental analysis data f
 
 The Comparative Analysis Discovery phase defines the requirements for systematic aggregation and validation of existing fundamental analysis outputs required for comprehensive cross-stock comparative analysis. This specification focuses on **what** comparative intelligence and data validation is needed rather than **how** to obtain it, delegating technical implementation to the researcher sub-agent.
 
-**Expected Output Schema**: `/scripts/schemas/comparative_analysis_discovery_schema.json`
-**Researcher Sub Task**: Use the researcher sub-agent to execute comparative analysis discovery. Ensure output conforms to `/scripts/schemas/comparative_analysis_discovery_schema.json`.
+**Expected Output Schema**: `/{SCRIPTS_BASE}/schemas/comparative_analysis_discovery_schema.json`
+**Researcher Sub Task**: Use the researcher sub-agent to execute comparative analysis discovery. Ensure output conforms to `/{SCRIPTS_BASE}/schemas/comparative_analysis_discovery_schema.json`.
 
 ## Microservice Integration
 
 **Framework**: DASV Phase 1
 **Role**: comparative_analyst
 **Action**: discover
-**Output Location**: `./data/outputs/comparative_analysis/discovery/`
+**Output Location**: `./{DATA_OUTPUTS}/comparative_analysis/discovery/`
 **Next Phase**: comparative_analyst_analyze
-**Template Reference**: `./templates/analysis/comparative_analysis_template.md` (final output structure awareness)
+**Template Reference**: `./{TEMPLATES_BASE}/analysis/comparative_analysis_template.md` (final output structure awareness)
 
 ## Parameters
 
@@ -72,8 +72,8 @@ The Comparative Analysis Discovery phase defines the requirements for systematic
 ## Output Structure and Schema
 
 **File Naming**: `{TICKER_1}_vs_{TICKER_2}_{YYYYMMDD}_discovery.json`
-**Primary Location**: `./data/outputs/comparative_analysis/discovery/`
-**Schema Definition**: `/scripts/schemas/comparative_analysis_discovery_schema.json`
+**Primary Location**: `./{DATA_OUTPUTS}/comparative_analysis/discovery/`
+**Schema Definition**: `/{SCRIPTS_BASE}/schemas/comparative_analysis_discovery_schema.json`
 
 ### Required Output Components
 - **Comparative Company Profiles**: Business model comparison, sector positioning, scale analysis

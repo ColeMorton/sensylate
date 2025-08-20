@@ -8,17 +8,17 @@ Comprehensive industry-wide data collection and market intelligence gathering fo
 
 The Industry Analysis Discovery phase defines the requirements for systematic collection and initial structuring of all data required for comprehensive industry analysis. This specification focuses on **what** industry-wide data and competitive intelligence is needed rather than **how** to obtain it, delegating technical implementation to the researcher sub-agent.
 
-**Expected Output Schema**: `/scripts/schemas/industry_analysis_discovery_schema.json`
-**Researcher Sub Task**: Use the researcher sub-agent to execute industry analysis discovery. Ensure output conforms to `/scripts/schemas/industry_analysis_discovery_schema.json`.
+**Expected Output Schema**: `/{SCRIPTS_BASE}/schemas/industry_analysis_discovery_schema.json`
+**Researcher Sub Task**: Use the researcher sub-agent to execute industry analysis discovery. Ensure output conforms to `/{SCRIPTS_BASE}/schemas/industry_analysis_discovery_schema.json`.
 
 ## Microservice Integration
 
 **Framework**: DASV Phase 1
 **Role**: industry_analyst
 **Action**: discover
-**Output Location**: `./data/outputs/industry_analysis/discovery/`
+**Output Location**: `./{DATA_OUTPUTS}/industry_analysis/discovery/`
 **Next Phase**: industry_analyst_analyze
-**Template Reference**: `./templates/analysis/industry_analysis_template.md` (final output structure awareness)
+**Template Reference**: `./{TEMPLATES_BASE}/analysis/industry_analysis_template.md` (final output structure awareness)
 
 ## Parameters
 
@@ -72,8 +72,8 @@ The Industry Analysis Discovery phase defines the requirements for systematic co
 ## Output Structure and Schema
 
 **File Naming**: `{INDUSTRY}_{YYYYMMDD}_discovery.json`
-**Primary Location**: `./data/outputs/industry_analysis/discovery/`
-**Schema Definition**: `/scripts/schemas/industry_analysis_discovery_schema.json`
+**Primary Location**: `./{DATA_OUTPUTS}/industry_analysis/discovery/`
+**Schema Definition**: `/{SCRIPTS_BASE}/schemas/industry_analysis_discovery_schema.json`
 
 ### Required Output Components
 - **Industry Scope**: Industry definition, classification, and boundary framework

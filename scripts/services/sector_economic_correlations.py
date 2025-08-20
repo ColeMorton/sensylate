@@ -64,7 +64,9 @@ class SectorRotationSignal:
     """Sector rotation trading signal"""
 
     signal_date: datetime
-    rotation_type: str  # 'defensive_to_cyclical', 'cyclical_to_defensive', 'growth_to_value'
+    rotation_type: (
+        str  # 'defensive_to_cyclical', 'cyclical_to_defensive', 'growth_to_value'
+    )
     recommended_overweight: List[str]  # Sectors to overweight
     recommended_underweight: List[str]  # Sectors to underweight
     signal_strength: str  # 'strong', 'moderate', 'weak'
@@ -855,13 +857,22 @@ def create_sector_economic_correlations(
 ) -> SectorEconomicCorrelations:
     """Factory function to create sector-economic correlations service"""
     from pathlib import Path
+
     from utils.config_loader import ConfigLoader
-    from .base_financial_service import CacheConfig, RateLimitConfig, ServiceConfig, HistoricalStorageConfig
-    
+
+    from .base_financial_service import (
+        CacheConfig,
+        HistoricalStorageConfig,
+        RateLimitConfig,
+        ServiceConfig,
+    )
+
     # Use absolute path to config directory
     config_dir = Path(__file__).parent.parent.parent / "config"
     config_loader = ConfigLoader(str(config_dir))
-    service_config = config_loader.get_service_config("sector_economic_correlations", env)
+    service_config = config_loader.get_service_config(
+        "sector_economic_correlations", env
+    )
 
     # Convert to ServiceConfig format with historical_storage
     config = ServiceConfig(
@@ -880,8 +891,8 @@ def create_sector_economic_correlations(
             store_fundamentals=False,
             store_news_sentiment=False,
             auto_detect_data_type=False,
-            auto_collection_enabled=False
-        )
+            auto_collection_enabled=False,
+        ),
     )
 
     return SectorEconomicCorrelations(config)

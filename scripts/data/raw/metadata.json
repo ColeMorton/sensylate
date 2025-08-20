@@ -1,10 +1,11 @@
 {
   "created": "2025-07-28T16:19:12.909910",
-  "last_updated": "2025-07-29T08:47:39.654217",
-  "total_files": 502,
+  "last_updated": "2025-08-19T18:51:04.065772",
+  "total_files": 506,
   "data_types": {
     "daily_prices": 493,
-    "fundamentals": 9
+    "fundamentals": 12,
+    "financials": 1
   },
   "symbols": {
     "AAPL": {
@@ -50,6 +51,14 @@
       "last_date": "2025-07-28T18:03:07.024717",
       "data_types": [
         "daily_prices"
+      ]
+    },
+    "TSLA": {
+      "first_date": "2025-08-19T18:50:23.115961",
+      "last_date": "2025-08-19T18:51:04.065170",
+      "data_types": [
+        "fundamentals",
+        "financials"
       ]
     }
   },

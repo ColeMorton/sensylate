@@ -336,9 +336,9 @@ class VIXVolatilityAnalyzer:
                 },
                 "term_premium": float(term_premium),
                 "curve_steepness": float(curve_steepness),
-                "contango_backwardation": "contango"
-                if vix3m_ratio > 1.0
-                else "backwardation",
+                "contango_backwardation": (
+                    "contango" if vix3m_ratio > 1.0 else "backwardation"
+                ),
                 "trading_implications": self._derive_term_structure_implications(
                     structure_shape, term_premium
                 ),
@@ -416,11 +416,15 @@ class VIXVolatilityAnalyzer:
                 "statistical_significance": float(
                     np.clip(statistical_significance, 0.0, 1.0)
                 ),
-                "mean_reversion_signal": "buy_volatility"
-                if current_vix < long_term_mean * 0.8
-                else "sell_volatility"
-                if current_vix > long_term_mean * 1.3
-                else "neutral",
+                "mean_reversion_signal": (
+                    "buy_volatility"
+                    if current_vix < long_term_mean * 0.8
+                    else (
+                        "sell_volatility"
+                        if current_vix > long_term_mean * 1.3
+                        else "neutral"
+                    )
+                ),
             }
 
         except Exception as e:
@@ -522,9 +526,11 @@ class VIXVolatilityAnalyzer:
                     signals.append(
                         VolatilitySignal(
                             signal_type="mean_reversion",
-                            signal_strength="strong"
-                            if mean_reversion["reversion_strength"] == "very_strong"
-                            else "moderate",
+                            signal_strength=(
+                                "strong"
+                                if mean_reversion["reversion_strength"] == "very_strong"
+                                else "moderate"
+                            ),
                             direction="bearish",  # Expect VIX to fall
                             confidence=mean_reversion["reversion_probability"],
                             time_horizon="medium_term",
@@ -608,9 +614,11 @@ class VIXVolatilityAnalyzer:
                 if abs(recent_momentum) > 0.2:  # Strong momentum
                     signals.append(
                         VolatilitySignal(
-                            signal_type="trend_continuation"
-                            if recent_momentum > 0
-                            else "mean_reversion",
+                            signal_type=(
+                                "trend_continuation"
+                                if recent_momentum > 0
+                                else "mean_reversion"
+                            ),
                             signal_strength="moderate",
                             direction="bullish" if recent_momentum > 0 else "bearish",
                             confidence=0.65,
@@ -1028,9 +1036,11 @@ class VIXVolatilityAnalyzer:
         if positioning_signal != "neutral":
             signals["positioning_contrarian"] = {
                 "signal": positioning_signal,
-                "strength": "moderate"
-                if positioning.get("positioning_extremity", 0) > 0.6
-                else "weak",
+                "strength": (
+                    "moderate"
+                    if positioning.get("positioning_extremity", 0) > 0.6
+                    else "weak"
+                ),
                 "rationale": f"Positioning appears {positioning.get('positioning_assessment', 'unknown')}",
             }
 
@@ -1228,9 +1238,11 @@ class VIXVolatilityAnalyzer:
                 "quality_level": quality,
                 "data_completeness": completeness,
                 "observation_count": data_points,
-                "recommendation": "Analysis reliable"
-                if quality in ["excellent", "good"]
-                else "Use results with caution",
+                "recommendation": (
+                    "Analysis reliable"
+                    if quality in ["excellent", "good"]
+                    else "Use results with caution"
+                ),
             }
 
         except Exception:

@@ -424,8 +424,8 @@ def calculate_sector_synthesis_confidence(source_conf, cross_sector_data, etf_in
 ```
 EXISTING POST IMPROVEMENT WORKFLOW:
 1. Check input pattern for validation file path:
-   → Pattern: data/outputs/twitter/sector_analysis/validation/{SECTOR}_{YYYYMMDD}_validation.json
-   → Alternative: data/outputs/sector_analysis/validation/{SECTOR}_{YYYYMMDD}_validation.json
+   → Pattern: {DATA_OUTPUTS}/twitter/sector_analysis/validation/{SECTOR}_{YYYYMMDD}_validation.json
+   → Alternative: {DATA_OUTPUTS}/sector_analysis/validation/{SECTOR}_{YYYYMMDD}_validation.json
    → Extract SECTOR_YYYYMMDD from validation file path
 
 2. If validation file path provided:
@@ -500,7 +500,7 @@ VALIDATION-DRIVEN SUCCESS CRITERIA:
 
 **Primary Data Sources (in priority order):**
 
-1. **Sector Analysis Reports** (PRIMARY): `@data/outputs/sector_analysis/`
+1. **Sector Analysis Reports** (PRIMARY): `@{DATA_OUTPUTS}/sector_analysis/`
    - **PRIORITY SOURCE**: Comprehensive sector analysis files (SECTOR_YYYYMMDD.md)
    - Investment thesis, sector health assessment, cross-sector positioning
    - Economic sensitivity analysis, GDP/employment correlations
@@ -521,7 +521,7 @@ VALIDATION-DRIVEN SUCCESS CRITERIA:
    - Ensures Twitter content reflects current economic environment via MCP data_quality.timestamp
    - Production-grade reliability with intelligent caching, retry logic, and health monitoring
 
-4. **Cross-Sector Analysis Data** (VALIDATION): `@data/outputs/sector_analysis/`
+4. **Cross-Sector Analysis Data** (VALIDATION): `@{DATA_OUTPUTS}/sector_analysis/`
    - Cross-sector comparison matrices and correlation data
    - 11-sector relative positioning and performance metrics
    - Used for cross-validation and consistency checking
@@ -595,7 +595,7 @@ VALIDATION-DRIVEN SUCCESS CRITERIA:
 def load_sector_synthesis(sector, date):
     """Load and validate source sector analysis synthesis"""
 
-    source_path = f"data/outputs/sector_analysis/{sector}_{date}.md"
+    source_path = f"{DATA_OUTPUTS}/sector_analysis/{sector}_{date}.md"
 
     # DASV Input Validation
     validate_sector_synthesis(source_path)
@@ -1060,7 +1060,7 @@ quality_assurance:
 ### File Output Requirements
 **Primary Output File:**
 ```
-./data/outputs/twitter/sector_analysis/{SECTOR}_{YYYYMMDD}.md
+./{DATA_OUTPUTS}/twitter/sector_analysis/{SECTOR}_{YYYYMMDD}.md
 ```
 
 **File contains:**
@@ -1121,7 +1121,7 @@ quality_assurance:
 
 ### Required Actions
 1. **Generate Output Metadata**: Include collaboration metadata for sector content
-2. **Store Outputs**: Save to `./data/outputs/twitter/sector_analysis/` directories
+2. **Store Outputs**: Save to `./{DATA_OUTPUTS}/twitter/sector_analysis/` directories
 3. **Quality Validation**: Content accuracy and sector analysis compliance verification
 4. **Content Tracking**: Performance metrics and institutional quality standards
 

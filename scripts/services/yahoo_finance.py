@@ -21,7 +21,10 @@ from yahoo_finance_service import DataNotFoundError as YFDataNotFoundError
 from yahoo_finance_service import ValidationError as YFValidationError
 from yahoo_finance_service import YahooFinanceError, YahooFinanceService
 
-from .base_financial_service import (
+# Add services directory to path for base service imports
+sys.path.insert(0, str(Path(__file__).parent))
+
+from base_financial_service import (
     BaseFinancialService,
     DataNotFoundError,
     FinancialServiceError,
@@ -417,7 +420,7 @@ def create_yahoo_finance_service(env: str = "dev") -> YahooFinanceAPIService:
     service_config = config_loader.get_service_config("yahoo_finance", env)
 
     # Convert to ServiceConfig format
-    from .base_financial_service import (
+    from base_financial_service import (
         CacheConfig,
         HistoricalStorageConfig,
         RateLimitConfig,
@@ -458,3 +461,53 @@ def create_yahoo_finance_service(env: str = "dev") -> YahooFinanceAPIService:
     )
 
     return YahooFinanceAPIService(config)
+
+
+def main():
+    """CLI interface for Yahoo Finance service"""
+    import argparse
+    import json
+
+    parser = argparse.ArgumentParser(description="Yahoo Finance CLI")
+    parser.add_argument(
+        "command", choices=["quote", "historical", "health"], help="Command to execute"
+    )
+    parser.add_argument(
+        "symbol", nargs="?", help="Stock symbol (required for quote/historical)"
+    )
+    parser.add_argument("--env", default="prod", help="Environment (dev/test/prod)")
+    parser.add_argument(
+        "--output-format", default="json", choices=["json"], help="Output format"
+    )
+    parser.add_argument(
+        "--period", default="1y", help="Time period for historical data"
+    )
+
+    args = parser.parse_args()
+
+    try:
+        service = create_yahoo_finance_service(args.env)
+
+        if args.command == "quote":
+            if not args.symbol:
+                print("Error: symbol required for quote command", file=sys.stderr)
+                sys.exit(1)
+            result = service.get_stock_info(args.symbol)
+        elif args.command == "historical":
+            if not args.symbol:
+                print("Error: symbol required for historical command", file=sys.stderr)
+                sys.exit(1)
+            result = service.get_market_data_summary(args.symbol, args.period)
+        elif args.command == "health":
+            result = service.health_check()
+
+        if args.output_format == "json":
+            print(json.dumps(result, indent=2, default=str))
+
+    except Exception as e:
+        print(f"Error: {e}", file=sys.stderr)
+        sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()

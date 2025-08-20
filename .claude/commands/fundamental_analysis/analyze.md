@@ -14,9 +14,9 @@ Define the analytical requirements for transforming company discovery data into 
 **Role**: fundamental_analyst
 **Action**: analyze
 **Input Source**: cli_enhanced_fundamental_analyst_discover
-**Output Location**: `./data/outputs/fundamental_analysis/analysis/`
+**Output Location**: `./{DATA_OUTPUTS}/fundamental_analysis/analysis/`
 **Next Phase**: fundamental_analyst_synthesize
-**Template Integration**: `./templates/analysis/fundamental_analysis_template.md`
+**Template Integration**: `./{TEMPLATES_BASE}/analysis/fundamental_analysis_template.md`
 **Implementation Delegation**: Analyst sub-agent handles CLI-enhanced analysis methodology
 
 ## Analysis Parameters
@@ -158,7 +158,7 @@ Define the analytical requirements for transforming company discovery data into 
 ## Output Structure Requirements
 
 **File Naming**: `{TICKER}_{YYYYMMDD}_analysis.json`
-**Primary Location**: `./data/outputs/fundamental_analysis/analysis/`
+**Primary Location**: `./{DATA_OUTPUTS}/fundamental_analysis/analysis/`
 
 ### Required Output Sections
 

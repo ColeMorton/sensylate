@@ -13,61 +13,61 @@ from pathlib import Path
 def load_env_file(env_path: str = ".env") -> dict:
     """
     Load environment variables from a .env file
-    
+
     Args:
         env_path: Path to the .env file
-        
+
     Returns:
         Dictionary of loaded variables
     """
     env_vars = {}
     env_file = Path(env_path)
-    
+
     if not env_file.exists():
         print(f"Warning: .env file not found at {env_file.absolute()}")
         return env_vars
-    
-    with open(env_file, 'r') as f:
+
+    with open(env_file, "r") as f:
         for line_num, line in enumerate(f, 1):
             line = line.strip()
-            
+
             # Skip empty lines and comments
-            if not line or line.startswith('#'):
+            if not line or line.startswith("#"):
                 continue
-                
+
             # Parse key=value pairs
-            if '=' not in line:
+            if "=" not in line:
                 print(f"Warning: Invalid line {line_num} in .env file: {line}")
                 continue
-                
-            key, value = line.split('=', 1)
+
+            key, value = line.split("=", 1)
             key = key.strip()
             value = value.strip().strip('"').strip("'")
-            
+
             # Set in environment
             os.environ[key] = value
             env_vars[key] = value
-    
+
     return env_vars
 
 
 def ensure_env_loaded():
     """Ensure .env file is loaded, call this at the start of scripts"""
-    if not os.getenv('ALPHA_VANTAGE_API_KEY'):
+    if not os.getenv("ALPHA_VANTAGE_API_KEY"):
         # Try to load from .env file
         loaded = load_env_file()
         if loaded:
             print(f"Loaded {len(loaded)} environment variables from .env file")
-    
+
 
 if __name__ == "__main__":
     # Load environment variables when run directly
     loaded_vars = load_env_file()
     print(f"Loaded {len(loaded_vars)} environment variables:")
-    
+
     # Print non-sensitive variables
     for key, value in loaded_vars.items():
-        if 'API_KEY' in key:
+        if "API_KEY" in key:
             print(f"  {key}=****")
         else:
             print(f"  {key}={value}")

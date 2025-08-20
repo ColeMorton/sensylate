@@ -30,21 +30,28 @@ class FedRateValidator:
     def __init__(self):
         self.hardcoded_patterns = [
             # Common hardcoded Fed rate patterns
-            r"5\.25.*?5\.50",  # Range format 5.25-5.50
-            r"5\.25\s*-\s*5\.50",  # Range with spaces
-            r"fed.*?fund.*?5\.[0-9][0-9]",  # Fed funds specific rates (case insensitive)
-            r"fed.*?fund.*?4\.[0-9][0-9]",  # Catch any specific Fed rate
-            r'"fed_funds_rate":\s*"[0-9]\.[0-9][0-9]%"',  # JSON format
-            r"Fed\s+Funds:\s*[0-9]\.[0-9]",  # Markdown format
-            r"Restrictive.*Fed\s+Funds",  # Environment + rate combo
+            r"5\.25-5\.50%?",  # Range format 5.25-5.50 or 5.25-5.50%
+            r"5\.25\s*-\s*5\.50%?",  # Range with spaces
+            r"Fed\s+Funds:\s*5\.25-5\.50%?",  # Specific Fed Funds range format
+            r"fed.*?fund.*?5\.[0-9][0-9]%?",  # Fed funds specific rates (case insensitive)
+            r"fed.*?fund.*?4\.[0-9][0-9]%?",  # Catch any specific Fed rate
+            r'"fed_funds_rate":\s*"[0-9]\.[0-9][0-9]%?"',  # JSON format
+            r"Fed\s+Funds:\s*[0-9]\.[0-9][0-9]%?",  # Markdown format
+            r"Fed\s+Funds[^|]*[0-9]\.[0-9][0-9]%?",  # Fed Funds followed by rate
+            r"\|\s*Fed\s+Funds:\s*[0-9]\.[0-9][0-9]%?",  # Table format
+            r"Restrictive.*Fed\s+Funds.*[0-9]\.[0-9]",  # Environment + rate combo
         ]
 
         self.acceptable_patterns = [
             # These patterns are OK (templates/placeholders)
-            r"\[X\.XX\]%",  # Template placeholders
-            r"\{fed_funds_rate\}",  # Template variables
+            r"\[X\.XX\]%?",  # Template placeholders
+            r"\{\{\s*data\.fed_funds_rate\s*\}\}%?",  # Jinja2 template variables
+            r"\{\{\s*fed_funds_rate\s*\}\}%?",  # Jinja2 template variables
             r"self\.econ_data\.get_fed_funds_rate\(\)",  # Dynamic calls
             r"RealTimeEconomicData",  # Service usage
+            r"fred_economic_cli",  # CLI service usage
+            r"FRED.*CLI.*validation",  # Validation script references
+            r"data\.fed_funds_rate",  # Template data references
         ]
 
         self.file_extensions = [".py", ".json", ".md", ".j2", ".txt"]

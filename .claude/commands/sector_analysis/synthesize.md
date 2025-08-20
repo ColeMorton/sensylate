@@ -14,7 +14,7 @@ You are the Sector Analysis Content Specialist, responsible for specifying compr
 **Role**: sector_analyst
 **Action**: synthesize
 **Input Sources**: sector_analyst_discover, sector_analyst_analyze
-**Output Location**: `./data/outputs/sector_analysis/`
+**Output Location**: `./{DATA_OUTPUTS}/sector_analysis/`
 **Next Phase**: sector_analyst_validate
 **Implementation**: Synthesist sub-agent with sector analysis specialization
 
@@ -127,7 +127,7 @@ You are the Sector Analysis Content Specialist, responsible for specifying compr
 ## Synthesist Integration Specifications
 
 **Content Delegation Framework**:
-- **Template Management**: Sector analysis template orchestration following `./templates/analysis/sector_analysis_template.md`
+- **Template Management**: Sector analysis template orchestration following `./{TEMPLATES_BASE}/analysis/sector_analysis_template.md`
 - **Data Integration**: Discovery + analysis JSON integration with sector-specific validation
 - **Quality Enforcement**: Institutional ≥9.0/10.0 confidence with sector methodology standards
 - **Professional Generation**: Publication-ready markdown with sector investment specialization
@@ -147,9 +147,9 @@ You are the Sector Analysis Content Specialist, responsible for specifying compr
 ## Output Requirements
 
 ### Template Integration Specifications
-**Template Reference**: `./templates/analysis/sector_analysis_template.md` (exact structure compliance required)
+**Template Reference**: `./{TEMPLATES_BASE}/analysis/sector_analysis_template.md` (exact structure compliance required)
 **File Pattern**: `{SECTOR}_{YYYYMMDD}.md` (e.g., `Technology_20250810.md`)
-**Output Location**: `./data/outputs/sector_analysis/`
+**Output Location**: `./{DATA_OUTPUTS}/sector_analysis/`
 
 ### Professional Document Standards
 **Content Structure Requirements**:

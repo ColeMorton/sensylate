@@ -185,9 +185,9 @@ When a user provides content or requests Twitter post generation, systematically
    - Are there compliance concerns? → Suggest appropriate validation command
 
 3. **Data Source Assessment**
-   - Fundamental analysis reports? → `data/outputs/fundamental_analysis/`
+   - Fundamental analysis reports? → `{DATA_OUTPUTS}/fundamental_analysis/`
    - TrendSpider charts? → `data/images/trendspider_tabular/`
-   - Trade history reports? → `data/outputs/trade_history/`
+   - Trade history reports? → `{DATA_OUTPUTS}/trade_history/`
    - General content? → User-provided or existing files
 
 ### Phase 2: Command Recommendation
@@ -396,7 +396,7 @@ When users need Twitter content help:
 **Assistant**: Use `/twitter_post_strategy AAPL_20250708` - This creates an urgent "TODAY'S ENTRY SIGNAL" post with your strategy parameters, seasonality data, and risk management details. Ensure you have TrendSpider tabular data for optimal results.
 
 **User**: "I want to improve my existing Twitter post that scored 8.2/10"
-**Assistant**: Provide the validation file path like `/twitter_post_strategy data/outputs/twitter_post_strategy/validation/AAPL_20250708_validation.json` - This triggers the enhancement workflow to systematically address validation concerns while maintaining engagement value.
+**Assistant**: Provide the validation file path like `/twitter_post_strategy {DATA_OUTPUTS}/twitter_post_strategy/validation/AAPL_20250708_validation.json` - This triggers the enhancement workflow to systematically address validation concerns while maintaining engagement value.
 
 ## Cross-Command Dependencies & Workflow Coordination
 
@@ -547,7 +547,7 @@ DIAGNOSIS:
 4. Validate fundamental analysis file matching
 
 RESOLUTION:
-1. Verify file paths: check ./data/outputs/{analysis_type}/
+1. Verify file paths: check ./{DATA_OUTPUTS}/{analysis_type}/
 2. Test MCP connections: verify Yahoo Finance, SEC EDGAR access
 3. Apply graceful degradation for missing real-time data
 4. Document and flag integration issues in metadata
@@ -855,7 +855,7 @@ python {SCRIPTS_BASE}/twitter_ecosystem/ecosystem_health.py --full-report
 ### File Organization
 **Twitter Content Output Structure**:
 ```
-./data/outputs/twitter/
+./{DATA_OUTPUTS}/twitter/
 ├── fundamental_analysis/{TICKER}_{YYYYMMDD}_twitter.md
 ├── post_strategy/{TICKER}_{YYYYMMDD}_strategy.md
 ├── trade_history/{PORTFOLIO}_{YYYYMMDD}_performance.md
@@ -873,7 +873,7 @@ python {SCRIPTS_BASE}/twitter_ecosystem/ecosystem_health.py --full-report
 
 ### Cross-Command Output Coordination
 **Standardized Output Dependencies**:
-- **Input Sources**: `./data/outputs/fundamental_analysis/`, `./data/outputs/trade_history/`
+- **Input Sources**: `./data/outputs/fundamental_analysis/`, `./{DATA_OUTPUTS}/trade_history/`
 - **Output Dependencies**: Social media content for publication workflows
 - **Metadata Inheritance**: Quality scores and validation status propagation
 - **File Naming**: Consistent {TYPE}_{IDENTIFIER}_{DATE} patterns

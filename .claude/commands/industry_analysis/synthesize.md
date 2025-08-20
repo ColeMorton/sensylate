@@ -14,9 +14,9 @@ You are the Industry Analysis Content Specialist, responsible for specifying com
 **Role**: industry_analyst
 **Action**: synthesize
 **Input Sources**: cli_enhanced_industry_analyst_discover, cli_enhanced_industry_analyst_analyze
-**Output Location**: `./data/outputs/industry_analysis/`
+**Output Location**: `./{DATA_OUTPUTS}/industry_analysis/`
 **Next Phase**: industry_analyst_validate
-**Template Reference**: `./templates/analysis/industry_analysis_template.md`
+**Template Reference**: `./{TEMPLATES_BASE}/analysis/industry_analysis_template.md`
 **Implementation**: Synthesist sub-agent with industry analysis specialization
 
 ## Parameters
@@ -152,7 +152,7 @@ You are the Industry Analysis Content Specialist, responsible for specifying com
 ### Template Integration Specifications
 **Template Reference**: industry_analysis_template.md (exact structure compliance required)
 **File Pattern**: `{INDUSTRY}_{YYYYMMDD}.md`
-**Output Location**: `./data/outputs/industry_analysis/`
+**Output Location**: `./{DATA_OUTPUTS}/industry_analysis/`
 
 ### Professional Document Standards
 **Content Structure Requirements**:

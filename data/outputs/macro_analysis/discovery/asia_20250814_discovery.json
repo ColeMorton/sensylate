@@ -238,7 +238,7 @@
         "trend": "improving",
         "components": [
           "employment_conditions",
-          "income_growth_expectations", 
+          "income_growth_expectations",
           "willingness_to_buy_durables",
           "business_conditions"
         ],
@@ -681,7 +681,7 @@
     "relative_positioning": {
       "growth_ranking": [
         "India",
-        "China", 
+        "China",
         "South_Korea",
         "Japan",
         "Europe",

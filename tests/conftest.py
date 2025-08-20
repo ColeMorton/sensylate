@@ -44,7 +44,7 @@ from environment_test_helpers import (
 
 class ConcreteFinancialService(BaseFinancialService):
     """Concrete implementation of BaseFinancialService for testing purposes"""
-    
+
     def _validate_response(self, data: Dict[str, Any], endpoint: str) -> Dict[str, Any]:
         """Test implementation that simply returns the data unchanged"""
         return data
@@ -71,7 +71,7 @@ def test_financial_service():
 def mock_config_loader():
     """Mock ConfigLoader with predefined service configurations"""
     mock_loader = Mock()
-    
+
     # Mock service configuration
     mock_service_config = Mock()
     mock_service_config.name = "test_service"
@@ -91,7 +91,7 @@ def mock_config_loader():
         "burst_limit": 10
     }
     mock_service_config.headers = {"Accept": "application/json"}
-    
+
     mock_loader.get_service_config.return_value = mock_service_config
     mock_loader.load_financial_services_config.return_value = {
         "services": {
@@ -103,7 +103,7 @@ def mock_config_loader():
             }
         }
     }
-    
+
     return mock_loader
 
 
@@ -111,7 +111,7 @@ def mock_config_loader():
 def mock_config_loader_missing_api_key():
     """Mock ConfigLoader with missing API key"""
     mock_loader = Mock()
-    
+
     mock_service_config = Mock()
     mock_service_config.name = "test_service"
     mock_service_config.base_url = "https://test-api.example.com"
@@ -121,7 +121,7 @@ def mock_config_loader_missing_api_key():
     mock_service_config.cache = {"enabled": True, "ttl_seconds": 900}
     mock_service_config.rate_limit = {"enabled": True, "requests_per_minute": 60}
     mock_service_config.headers = {}
-    
+
     mock_loader.get_service_config.return_value = mock_service_config
     return mock_loader
 
@@ -142,7 +142,7 @@ def sample_economic_calendar_response():
             },
             {
                 "event_name": "CPI Month-over-Month",
-                "event_date": "2025-08-14T12:30:00Z", 
+                "event_date": "2025-08-14T12:30:00Z",
                 "event_type": "inflation",
                 "importance": "high",
                 "actual": 0.2,
@@ -213,14 +213,14 @@ def temporary_config_file():
             "rate_limiting": {"enabled": True, "default_requests_per_minute": 60}
         }
     }
-    
+
     with tempfile.NamedTemporaryFile(mode='w', suffix='.yaml', delete=False) as f:
         import yaml
         yaml.dump(config_data, f)
         temp_file_path = f.name
-    
+
     yield temp_file_path
-    
+
     # Cleanup
     os.unlink(temp_file_path)
 
@@ -234,14 +234,14 @@ def test_environment_variables():
         "FRED_API_KEY": "test_fred_key",
         "FMP_API_KEY": "test_fmp_key"
     }
-    
+
     original_env = {}
     for key, value in test_env.items():
         original_env[key] = os.environ.get(key)
         os.environ[key] = value
-    
+
     yield test_env
-    
+
     # Restore original environment
     for key, original_value in original_env.items():
         if original_value is None:
@@ -262,7 +262,7 @@ def mock_service_factory():
             "message": "Service configured with API key"
         }
         return mock_service
-    
+
     return _create_mock_service
 
 
@@ -271,7 +271,7 @@ def mock_failing_service_factory():
     """Mock service factory that returns None (simulating creation failure)"""
     def _create_failing_service(env="test"):
         return None
-    
+
     return _create_failing_service
 
 
@@ -280,7 +280,7 @@ def sample_volatility_parameters():
     """Sample region-specific volatility parameters"""
     return {
         "US": {"long_term_mean": 19.39, "reversion_speed": 0.150},
-        "EUROPE": {"long_term_mean": 20.50, "reversion_speed": 0.150}, 
+        "EUROPE": {"long_term_mean": 20.50, "reversion_speed": 0.150},
         "EU": {"long_term_mean": 22.30, "reversion_speed": 0.180},
         "ASIA": {"long_term_mean": 21.80, "reversion_speed": 0.120},
         "EMERGING_MARKETS": {"long_term_mean": 24.20, "reversion_speed": 0.200}
@@ -300,7 +300,7 @@ def mock_macro_synthesis():
         "global_liquidity": {"status": "pending", "error": None},
         "sector_correlations": {"status": "pending", "error": None}
     }
-    
+
     return mock_synthesis
 
 
@@ -332,11 +332,11 @@ def validated_environment():
     return validation
 
 
-@pytest.fixture(autouse=True)  
+@pytest.fixture(autouse=True)
 def cleanup_test_files():
     """Automatically cleanup test files after each test"""
     yield
-    
+
     # Cleanup any test files in common locations
     test_dirs = ["/tmp/test_cache", "/tmp/test_config"]
     for test_dir in test_dirs:
@@ -349,10 +349,10 @@ def cleanup_test_files():
 def pytest_configure(config):
     """Configure pytest with custom markers"""
     config.addinivalue_line(
-        "markers", 
+        "markers",
         "requires_api_key: mark test as requiring real API key"
     )
     config.addinivalue_line(
-        "markers", 
+        "markers",
         "network_dependent: mark test as requiring network access"
     )

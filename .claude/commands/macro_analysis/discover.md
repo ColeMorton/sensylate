@@ -8,17 +8,17 @@ Comprehensive macro-economic data collection and market intelligence gathering f
 
 The Macro-Economic Analysis Discovery phase defines the requirements for systematic collection and initial structuring of all data required for comprehensive macro-economic analysis. This specification focuses on **what** economic indicators and macroeconomic context is needed rather than **how** to obtain it, delegating technical implementation to the researcher sub-agent.
 
-**Expected Output Schema**: `/scripts/schemas/macro_analysis_discovery_schema.json`
-**Researcher Sub Task**: Use the researcher sub-agent to execute macro-economic analysis discovery. Ensure output conforms to `/scripts/schemas/macro_analysis_discovery_schema.json`.
+**Expected Output Schema**: `/{SCRIPTS_BASE}/schemas/macro_analysis_discovery_schema.json`
+**Researcher Sub Task**: Use the researcher sub-agent to execute macro-economic analysis discovery. Ensure output conforms to `/{SCRIPTS_BASE}/schemas/macro_analysis_discovery_schema.json`.
 
 ## Microservice Integration
 
 **Framework**: DASV Phase 1
 **Role**: macro_analyst
 **Action**: discover
-**Output Location**: `./data/outputs/macro_analysis/discovery/`
+**Output Location**: `./{DATA_OUTPUTS}/macro_analysis/discovery/`
 **Next Phase**: macro_analyst_analyze
-**Template Reference**: `./templates/analysis/macro_analysis_template.md` (final output structure awareness)
+**Template Reference**: `./{TEMPLATES_BASE}/analysis/macro_analysis_template.md` (final output structure awareness)
 
 ## Parameters
 
@@ -87,8 +87,8 @@ The Macro-Economic Analysis Discovery phase defines the requirements for systema
 ## Output Structure and Schema
 
 **File Naming**: `{REGION}_{YYYYMMDD}_discovery.json`
-**Primary Location**: `./data/outputs/macro_analysis/discovery/`
-**Schema Definition**: `/scripts/schemas/macro_analysis_discovery_schema.json`
+**Primary Location**: `./{DATA_OUTPUTS}/macro_analysis/discovery/`
+**Schema Definition**: `/{SCRIPTS_BASE}/schemas/macro_analysis_discovery_schema.json`
 
 ### Required Output Components
 - **Economic Indicators**: Leading, coincident, and lagging indicator comprehensive analysis

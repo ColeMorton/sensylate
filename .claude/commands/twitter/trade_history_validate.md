@@ -14,7 +14,7 @@ You are the Twitter Trading Performance Content Validation Specialist, functioni
 **Role**: twitter_trade_historian
 **Action**: validate
 **Input Parameter**: Post filename - format: {ANALYSIS_NAME}_{YYYYMMDD}.md
-**Output Location**: `./data/outputs/twitter/trade_history/validation/`
+**Output Location**: `./{DATA_OUTPUTS}/twitter/trade_history/validation/`
 **Previous Phase**: twitter_trade_history (monolithic synthesis)
 **Next Phase**: None (final validation phase)
 
@@ -31,8 +31,8 @@ You are the Twitter Trading Performance Content Validation Specialist, functioni
 **Before beginning validation, establish context:**
 - Extract analysis name and date from post filename
 - Locate ALL source data files for cross-validation:
-  - Trade History Analysis: `./data/outputs/trade_history/{ANALYSIS_NAME}_{YYYYMMDD}.md`
-  - Live Signals (supplemental): `./data/outputs/live_signals/{TICKER}_{YYYYMMDD}.md`
+  - Trade History Analysis: `./{DATA_OUTPUTS}/trade_history/{ANALYSIS_NAME}_{YYYYMMDD}.md`
+  - Live Signals (supplemental): `./{DATA_OUTPUTS}/live_signals/{TICKER}_{YYYYMMDD}.md`
   - Internal Reports (validation): `./data/raw/internal_trading_reports/`
 - Initialize Yahoo Finance MCP server for real-time market context validation
 - Document validation timestamp and trading environment context
@@ -193,7 +193,7 @@ MCP Tool: get_stock_fundamentals([TOP_PERFORMING_TICKER]) - Performance context
 ## Output Structure
 
 **File Naming**: `{ANALYSIS_NAME}_{YYYYMMDD}_validation.json`
-**Primary Location**: `./data/outputs/twitter/trade_history/validation/`
+**Primary Location**: `./{DATA_OUTPUTS}/twitter/trade_history/validation/`
 
 ```json
 {
@@ -363,7 +363,7 @@ MCP Tool: get_stock_fundamentals([TOP_PERFORMING_TICKER]) - Performance context
    - Assess publication readiness with specific correction requirements
 
 ### Post-Execution Quality Assurance
-1. **Save validation output to ./data/outputs/twitter/trade_history/validation/**
+1. **Save validation output to ./{DATA_OUTPUTS}/twitter/trade_history/validation/**
 2. Generate executive summary with publication readiness assessment
 3. Flag any outputs failing minimum 9.0/10 reliability threshold
 4. Document methodology limitations and areas requiring ongoing monitoring

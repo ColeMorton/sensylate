@@ -48,7 +48,9 @@ except ImportError as e:
 class QualityAlert:
     """Data quality alert container"""
 
-    alert_type: str  # 'staleness', 'variance', 'quality_degradation', 'validation_failure'
+    alert_type: (
+        str  # 'staleness', 'variance', 'quality_degradation', 'validation_failure'
+    )
     severity: str  # 'low', 'medium', 'high', 'critical'
     message: str
     details: Dict[str, Any]
@@ -788,9 +790,12 @@ class DataQualityMonitor:
                 "average_overall_score": np.mean(overall_scores),
                 "average_freshness_score": np.mean(freshness_scores),
                 "average_variance_score": np.mean(variance_scores),
-                "quality_trend": "improving"
-                if len(overall_scores) > 1 and overall_scores[-1] > overall_scores[0]
-                else "stable",
+                "quality_trend": (
+                    "improving"
+                    if len(overall_scores) > 1
+                    and overall_scores[-1] > overall_scores[0]
+                    else "stable"
+                ),
                 "total_measurements": len(metrics),
             }
 

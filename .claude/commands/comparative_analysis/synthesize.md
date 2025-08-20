@@ -14,9 +14,9 @@ You are the Comparative Analysis Content Specialist, responsible for specifying 
 **Role**: comparative_analyst
 **Action**: synthesize
 **Input Sources**: comparative_analyst_discover, comparative_analyst_analyze
-**Output Location**: `./data/outputs/comparative_analysis/`
+**Output Location**: `./{DATA_OUTPUTS}/comparative_analysis/`
 **Next Phase**: comparative_analyst_validate
-**Template Reference**: `./data/outputs/comparative_analysis/MU_vs_DHR_20250730.md`
+**Template Reference**: `./templates/analysis/comparative_analysis_template.md`
 **Implementation**: Synthesist sub-agent with comparative analysis specialization
 
 ## Parameters
@@ -100,8 +100,10 @@ You are the Comparative Analysis Content Specialist, responsible for specifying 
 - **Peer Group Consistency**: Industry classification and comparability verification
 
 ### Template Compliance Requirements
-**MU_vs_DHR Structure Adherence**:
+**Generic Template Structure Adherence**:
 - **Exact Section Headers**: Match template structure and organization precisely
+- **YAML Frontmatter**: Include title, description, author, date, and tags
+- **Emoji Section Headers**: Use consistent emoji prefixes for visual structure
 - **Comparative Table Formats**: Side-by-side presentation with differentials
 - **Winner/Loser Highlighting**: Clear visual and textual superiority indicators
 - **Investment Summary Format**: Structured recommendation with allocation guidance
@@ -131,7 +133,7 @@ You are the Comparative Analysis Content Specialist, responsible for specifying 
 ## Synthesist Integration Specifications
 
 **Content Delegation Framework**:
-- **Template Management**: MU_vs_DHR template orchestration with exact structure compliance
+- **Template Management**: Generic template orchestration with exact structure compliance
 - **Data Integration**: Comparative discovery + analysis JSON with dependency validation
 - **Quality Enforcement**: Institutional ≥9.0/10.0 confidence with comparative methodology
 - **Professional Generation**: Publication-ready markdown with cross-stock specialization
@@ -140,7 +142,7 @@ You are the Comparative Analysis Content Specialist, responsible for specifying 
 - **Dual-Stock Validation**: Synchronized price and data verification for both stocks
 - **Winner/Loser Logic**: Automated determination with quantified evidence
 - **Differential Calculations**: Cross-stock metric comparisons with statistical testing
-- **Template Compliance**: Exact MU_vs_DHR structure replication
+- **Template Compliance**: Exact generic template structure replication with YAML frontmatter
 
 **Quality Assurance Protocol**:
 - **Methodology Compliance**: Comparative framework and winner/loser standards
@@ -151,9 +153,9 @@ You are the Comparative Analysis Content Specialist, responsible for specifying 
 ## Output Requirements
 
 ### Template Integration Specifications
-**Template Reference**: MU_vs_DHR_20250730.md (exact structure compliance required)
+**Template Reference**: comparative_analysis_template.md (exact structure compliance required)
 **File Pattern**: `{TICKER_1}_vs_{TICKER_2}_{YYYYMMDD}.md`
-**Output Location**: `./data/outputs/comparative_analysis/`
+**Output Location**: `./{DATA_OUTPUTS}/comparative_analysis/`
 
 ### Professional Document Standards
 **Content Structure Requirements**:
@@ -196,7 +198,7 @@ This comparative_analyst_synthesize command is optimized for synthesist sub-agen
 **Enhanced Maintainability**: Focused content requirements eliminate template management duplication
 **Synthesist Integration**: Complete delegation of dual-stock validation and document generation
 **Comparative Specialization**: Cross-stock quality standards with winner/loser expertise
-**Template Compliance**: MU_vs_DHR structure adherence with exact replication
+**Template Compliance**: Generic template structure adherence with exact replication including YAML frontmatter and emoji headers
 **Professional Standards**: Institutional-grade presentation with differential analysis
 
 ### 🚀 **Ready for Phase 3 Implementation**

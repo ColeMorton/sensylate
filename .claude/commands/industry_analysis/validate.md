@@ -14,11 +14,11 @@ You are the Industry Analysis Validation Specialist, functioning as a comprehens
 **Role**: industry_analyst
 **Action**: validate
 **Input Parameter**: synthesis output filename (containing industry and date)
-**Output Location**: `./data/outputs/industry_analysis/validation/`
+**Output Location**: `./{DATA_OUTPUTS}/industry_analysis/validation/`
 **Next Phase**: None (final validation phase)
 **CLI Services**: Production-grade CLI financial services for multi-source industry validation
 **HYBRID TEMPLATE SYSTEM**:
-- **Validation Standards**: `./templates/analysis/industry_analysis_template.md` (authoritative specification)
+- **Validation Standards**: `./{TEMPLATES_BASE}/analysis/industry_analysis_template.md` (authoritative specification)
 - **CLI Implementation**: Enhanced Jinja2 templates with validation framework
 - **Compliance Verification**: Against authoritative markdown specification standards
 
@@ -103,9 +103,9 @@ Use production CLI financial services for comprehensive industry-wide validation
 **Before beginning validation, establish industry context:**
 - Extract industry identifier and date from synthesis filename
 - Locate ALL industry DASV outputs for validation:
-  - Discovery: `./data/outputs/industry_analysis/discovery/{INDUSTRY}_{YYYYMMDD}_discovery.json`
-  - Analysis: `./data/outputs/industry_analysis/analysis/{INDUSTRY}_{YYYYMMDD}_analysis.json`
-  - Synthesis: `./data/outputs/industry_analysis/{INDUSTRY}_{YYYYMMDD}.md`
+  - Discovery: `./{DATA_OUTPUTS}/industry_analysis/discovery/{INDUSTRY}_{YYYYMMDD}_discovery.json`
+  - Analysis: `./{DATA_OUTPUTS}/industry_analysis/analysis/{INDUSTRY}_{YYYYMMDD}_analysis.json`
+  - Synthesis: `./{DATA_OUTPUTS}/industry_analysis/{INDUSTRY}_{YYYYMMDD}.md`
 - Document validation date and industry data freshness requirements
 - Initialize systematic industry validation framework targeting >9.5/10 reliability
 
@@ -124,8 +124,8 @@ CLI-ENHANCED INDUSTRY DISCOVERY VALIDATION PROTOCOL:
 
 2. Representative Company Validation
    → Verify representative company selection rationale and methodology
-   → Cross-validate company data via Yahoo Finance CLI: python scripts/yahoo_finance_cli.py analyze {company} --env prod --output-format json
-   → Integrate FMP CLI verification: python scripts/fmp_cli.py profile {company} --env prod --output-format json
+   → Cross-validate company data via Yahoo Finance CLI: python {SCRIPTS_BASE}/yahoo_finance_cli.py analyze {company} --env prod --output-format json
+   → Integrate FMP CLI verification: python {SCRIPTS_BASE}/fmp_cli.py profile {company} --env prod --output-format json
    → Validate market position and competitive metrics accuracy
    → Cross-reference industry representation and geographic distribution
    → Confidence threshold: 9.5/10 (allow ≤2% variance for company data)
@@ -185,7 +185,7 @@ CLI-ENHANCED INDUSTRY ANALYSIS VALIDATION FRAMEWORK:
 **Synthesis Output Institutional Quality Assessment**
 
 **Template Compliance Validation**:
-- **CRITICAL: Verify document follows ./templates/analysis/industry_analysis_template.md specification exactly**
+- **CRITICAL: Verify document follows ./{TEMPLATES_BASE}/analysis/industry_analysis_template.md specification exactly**
 - Validate exact section structure and industry-specific content organization
 - Confirm Investment Recommendation Summary integration and quality
 - Verify all required analytical components and formatting compliance
@@ -237,24 +237,24 @@ PRODUCTION CLI SERVICES CONFIGURATION:
 
 VALIDATION DATA COLLECTION - CLI COMMANDS:
 1. Industry Intelligence Validation
-   → CLI Command: python scripts/yahoo_finance_cli.py analyze {industry_companies} --env prod --output-format json
-   → CLI Command: python scripts/alpha_vantage_cli.py sentiment {industry} --env prod --output-format json
-   → CLI Command: python scripts/fmp_cli.py industry {industry} --env prod --output-format json
+   → CLI Command: python {SCRIPTS_BASE}/yahoo_finance_cli.py analyze {industry_companies} --env prod --output-format json
+   → CLI Command: python {SCRIPTS_BASE}/alpha_vantage_cli.py sentiment {industry} --env prod --output-format json
+   → CLI Command: python {SCRIPTS_BASE}/fmp_cli.py industry {industry} --env prod --output-format json
    → Verify: industry_metrics, competitive_landscape, innovation_indicators
    → Cross-reference: representative_companies, market_dynamics with multi-source validation
    → Confidence: Primary source validation (9.8/10.0 target) with industry consistency
 
 2. Economic Context Validation
-   → CLI Command: python scripts/fred_economic_cli.py rates --env prod --output-format json
-   → CLI Command: python scripts/fred_economic_cli.py indicator {industry_sensitive_indicators} --env prod --output-format json
-   → CLI Command: python scripts/coingecko_cli.py sentiment --env prod --output-format json
+   → CLI Command: python {SCRIPTS_BASE}/fred_economic_cli.py rates --env prod --output-format json
+   → CLI Command: python {SCRIPTS_BASE}/fred_economic_cli.py indicator {industry_sensitive_indicators} --env prod --output-format json
+   → CLI Command: python {SCRIPTS_BASE}/coingecko_cli.py sentiment --env prod --output-format json
    → Analyze: economic indicators, interest rate environment, technology adoption sentiment
    → Verify: economic regime assessment and industry implications
    → Context: Fed policy validation and industry-specific economic analysis
 
 3. Regulatory and Innovation Validation
-   → CLI Command: python scripts/sec_edgar_cli.py industry {industry} --env prod --output-format json
-   → CLI Command: python scripts/imf_cli.py global {industry_indicators} --env prod --output-format json
+   → CLI Command: python {SCRIPTS_BASE}/sec_edgar_cli.py industry {industry} --env prod --output-format json
+   → CLI Command: python {SCRIPTS_BASE}/imf_cli.py global {industry_indicators} --env prod --output-format json
    → Validate: regulatory_environment, compliance_trends, global_context
    → Cross-check: policy_implications, international_expansion_potential
    → Precision: Regulatory and innovation trend validation with institutional standards
@@ -271,7 +271,7 @@ CLI INTEGRATION BENEFITS FOR INDUSTRY VALIDATION:
 ## Output Structure
 
 **File Naming**: `{INDUSTRY}_{YYYYMMDD}_validation.json`
-**Primary Location**: `./data/outputs/industry_analysis/validation/`
+**Primary Location**: `./{DATA_OUTPUTS}/industry_analysis/validation/`
 
 ```json
 {
@@ -523,7 +523,7 @@ CLI INTEGRATION BENEFITS FOR INDUSTRY VALIDATION:
    - Provide usage recommendations and CLI-validated corrections
 
 ### Post-Execution
-1. **MANDATORY: Save validation output to ./data/outputs/industry_analysis/validation/**
+1. **MANDATORY: Save validation output to ./{DATA_OUTPUTS}/industry_analysis/validation/**
    - **CRITICAL**: Every validation execution MUST generate and save a comprehensive report
    - For single industry validation: `{INDUSTRY}_{YYYYMMDD}_validation.json`
    - For cross-analysis validation: `{PHASE}_cross_analysis_{YYYYMMDD}_validation.json`
@@ -580,9 +580,9 @@ CLI INTEGRATION BENEFITS FOR INDUSTRY VALIDATION:
 ```
 # Primary validation workflow using CLI services
 1. Industry Intelligence Cross-Validation:
-   → python scripts/yahoo_finance_cli.py analyze {representative_companies} --env prod --output-format json
-   → python scripts/alpha_vantage_cli.py sentiment {industry} --env prod --output-format json
-   → python scripts/fmp_cli.py industry {industry} --env prod --output-format json
+   → python {SCRIPTS_BASE}/yahoo_finance_cli.py analyze {representative_companies} --env prod --output-format json
+   → python {SCRIPTS_BASE}/alpha_vantage_cli.py sentiment {industry} --env prod --output-format json
+   → python {SCRIPTS_BASE}/fmp_cli.py industry {industry} --env prod --output-format json
 
 2. Data Quality Assessment:
    → Compare discovery outputs against fresh CLI data

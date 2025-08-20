@@ -11,7 +11,7 @@
     "company_a_profile": {
       "ticker": "ASML",
       "company_name": "ASML Holding N.V.",
-      "sector": "Technology", 
+      "sector": "Technology",
       "industry": "Semiconductor Equipment & Materials",
       "business_model": "EUV lithography technology monopoly with premium pricing and recurring service revenue",
       "market_position": "Global EUV lithography monopoly leader with 100% market share in advanced node manufacturing",
@@ -26,10 +26,10 @@
       ]
     },
     "company_b_profile": {
-      "ticker": "KLAC", 
+      "ticker": "KLAC",
       "company_name": "KLA Corporation",
       "sector": "Technology",
-      "industry": "Semiconductor Equipment & Materials", 
+      "industry": "Semiconductor Equipment & Materials",
       "business_model": "Asset-light process control and yield management solutions with recurring service revenue",
       "market_position": "Global leader in semiconductor process control with 85% market share in WLP inspection",
       "financial_health_grade": "A+",
@@ -163,7 +163,7 @@
         "Process Control Systems (85% of revenue)",
         "Yield Management Solutions",
         "Inspection Equipment",
-        "Metrology Systems", 
+        "Metrology Systems",
         "Data Analytics Software",
         "Service and Support (25% recurring)"
       ],
@@ -238,7 +238,7 @@
     "economic_cycle_positioning": {
       "current_environment": "Restrictive monetary policy with technology infrastructure investment support",
       "asml_positioning": "Benefits from AI infrastructure buildout driving advanced node demand",
-      "klac_positioning": "Positioned for semiconductor equipment recovery and process control expansion", 
+      "klac_positioning": "Positioned for semiconductor equipment recovery and process control expansion",
       "cycle_resilience": "Both benefit from long-term semiconductor demand trends despite short-term volatility"
     },
     "policy_implications": {
@@ -391,7 +391,7 @@
     "institutional_grade": true,
     "quality_flags": [
       "Perfect price validation achieved across multiple CLI services for KLAC",
-      "Comprehensive financial statement coverage with TTM data for KLAC", 
+      "Comprehensive financial statement coverage with TTM data for KLAC",
       "Cross-validated market positioning through industry analysis integration",
       "ASML data supplemented with historical analysis and market intelligence",
       "Multi-source validation ensuring institutional-grade comparative analysis"
@@ -459,7 +459,7 @@
       "ASML maintains technology monopoly in EUV lithography with 100% market share while KLAC dominates process control with 85% WLP inspection share",
       "KLAC demonstrates superior current financial performance with 33.4% profit margins and 23.9% revenue growth vs ASML's estimated metrics",
       "Both companies occupy complementary positions in semiconductor manufacturing - ASML enables advanced nodes, KLAC ensures quality control",
-      "KLAC offers better risk-adjusted profile through geographic and product diversification vs ASML's technology concentration", 
+      "KLAC offers better risk-adjusted profile through geographic and product diversification vs ASML's technology concentration",
       "Export control regulations create asymmetric impact with ASML facing direct EUV restrictions while KLAC benefits from diversified exposure",
       "Both trade at premium valuations justified by market leadership but KLAC shows higher current multiples reflecting growth momentum",
       "Investment decision framework suggests KLAC for growth/stability combination vs ASML for technology leadership exposure"

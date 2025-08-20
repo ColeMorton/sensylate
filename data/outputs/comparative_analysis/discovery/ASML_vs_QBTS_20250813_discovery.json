@@ -37,7 +37,7 @@
     "company_b_profile": {
       "ticker": "QBTS",
       "company_name": "D-Wave Quantum Inc.",
-      "sector": "Technology", 
+      "sector": "Technology",
       "industry": "Computer Hardware",
       "country": "Canada",
       "business_model": {
@@ -713,7 +713,7 @@
       },
       {
         "file_path": "/Users/colemorton/Projects/sensylate-command-system-enhancements/data/outputs/fundamental_analysis/discovery/QBTS_20250813_discovery.json",
-        "file_type": "discovery", 
+        "file_type": "discovery",
         "relevance_score": 1.0,
         "relationship_description": "Primary QBTS fundamental analysis discovery data with 97% data quality"
       },

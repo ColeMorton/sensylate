@@ -209,20 +209,26 @@ class DataDrivenMacroAnalyzer:
         # Data-driven phase transition probabilities (bounded 0.0-1.0)
         momentum_factor = 1.0 if gdp_trend > 0 and employment_momentum > 0 else 0.5
         phase_transitions = {
-            "expansion_to_peak": max(0.05, min(0.4, 0.15 + (gdp_current - 2.0) * 0.1))
-            if current_phase == "expansion"
-            else 0.05,
-            "peak_to_contraction": max(
-                0.1, min(0.8, 0.25 + (1.0 - momentum_factor) * 0.15)
-            )
-            if current_phase == "peak"
-            else 0.05,
-            "contraction_to_trough": max(0.1, min(0.6, 0.4 if gdp_current < 0 else 0.2))
-            if current_phase == "contraction"
-            else 0.1,
-            "trough_to_expansion": max(0.3, min(0.7, 0.5 + momentum_factor * 0.2))
-            if current_phase == "trough"
-            else 0.1,
+            "expansion_to_peak": (
+                max(0.05, min(0.4, 0.15 + (gdp_current - 2.0) * 0.1))
+                if current_phase == "expansion"
+                else 0.05
+            ),
+            "peak_to_contraction": (
+                max(0.1, min(0.8, 0.25 + (1.0 - momentum_factor) * 0.15))
+                if current_phase == "peak"
+                else 0.05
+            ),
+            "contraction_to_trough": (
+                max(0.1, min(0.6, 0.4 if gdp_current < 0 else 0.2))
+                if current_phase == "contraction"
+                else 0.1
+            ),
+            "trough_to_expansion": (
+                max(0.3, min(0.7, 0.5 + momentum_factor * 0.2))
+                if current_phase == "trough"
+                else 0.1
+            ),
         }
 
         # Monetary policy transmission from discovery data
@@ -365,9 +371,11 @@ class DataDrivenMacroAnalyzer:
         return {
             "months_in_expansion": historical_context.get("phase_duration", 20),
             "historical_average": 18,  # From config or historical data
-            "late_cycle_indicators": 0.6
-            if historical_context.get("cycle_maturity") == "mid_to_late"
-            else 0.3,
+            "late_cycle_indicators": (
+                0.6
+                if historical_context.get("cycle_maturity") == "mid_to_late"
+                else 0.3
+            ),
         }
 
     def analyze_global_liquidity(self) -> Dict[str, Any]:
@@ -406,9 +414,11 @@ class DataDrivenMacroAnalyzer:
             "money_supply_analysis": money_supply,
             "labor_market_assessment": labor_analysis,
             "global_liquidity_score": 0.75,  # Calculated from components
-            "liquidity_trend": "tightening"
-            if policy_coordination.get("policy_stance") == "restrictive"
-            else "neutral",
+            "liquidity_trend": (
+                "tightening"
+                if policy_coordination.get("policy_stance") == "restrictive"
+                else "neutral"
+            ),
             "confidence": confidence,
         }
 
@@ -477,9 +487,9 @@ class DataDrivenMacroAnalyzer:
 
         return {
             "employment_trend": payroll_trend if payroll_trend else "moderating",
-            "participation_rate_change": -0.1
-            if "stable" in unemployment_trend
-            else -0.2,
+            "participation_rate_change": (
+                -0.1 if "stable" in unemployment_trend else -0.2
+            ),
             "wage_growth_rate": 4.2,  # Would extract from wage data if available
             "labor_market_tightness": 0.75,
             "phillips_curve_slope": 0.15,
@@ -1114,11 +1124,13 @@ class DataDrivenMacroAnalyzer:
         return {
             "profitability_score": {
                 "grade": profitability_grade,
-                "trend": "stable"
-                if abs(gdp_growth - 2.0) < 0.5
-                else "improving"
-                if gdp_growth > 2.0
-                else "declining",
+                "trend": (
+                    "stable"
+                    if abs(gdp_growth - 2.0) < 0.5
+                    else "improving"
+                    if gdp_growth > 2.0
+                    else "declining"
+                ),
                 "key_metrics": f"GDP growth at {gdp_growth}% indicates {profitability_grade} profitability environment",
                 "supporting_evidence": f"Economic growth momentum and employment trends support {profitability_grade} assessment",
             },

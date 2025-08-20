@@ -14,7 +14,7 @@ You are the Sector Analysis Validation Specialist, functioning as a comprehensiv
 **Role**: sector_analyst
 **Action**: validate
 **Input Parameter**: synthesis output filename (containing sector and date)
-**Output Location**: `./data/outputs/sector_analysis/validation/`
+**Output Location**: `./{DATA_OUTPUTS}/sector_analysis/validation/`
 **Next Phase**: None (final validation phase)
 **CLI Services**: Production-grade CLI financial services for multi-source sector validation
 
@@ -120,10 +120,10 @@ Use production CLI financial services for comprehensive multi-company sector val
 - Automatically locate latest 7 files (configurable) in specified phase directory
 - Sort by modification timestamp for most recent analysis outputs
 - Phase-specific directory mapping:
-  - `discovery`: `./data/outputs/sector_analysis/discovery/`
-  - `analysis`: `./data/outputs/sector_analysis/analysis/`
-  - `synthesis`: `./data/outputs/sector_analysis/` (root level)
-  - `validation`: `./data/outputs/sector_analysis/validation/`
+  - `discovery`: `./{DATA_OUTPUTS}/sector_analysis/discovery/`
+  - `analysis`: `./{DATA_OUTPUTS}/sector_analysis/analysis/`
+  - `synthesis`: `./{DATA_OUTPUTS}/sector_analysis/` (root level)
+  - `validation`: `./{DATA_OUTPUTS}/sector_analysis/validation/`
 
 ### Core Validation Dimensions
 
@@ -180,7 +180,7 @@ CLI INTEGRATION VALIDATION:
 ### Cross-Analysis Output Structure
 
 **File Naming**: `{PHASE}_cross_analysis_{YYYYMMDD}_validation.json`
-**Location**: `./data/outputs/sector_analysis/validation/`
+**Location**: `./{DATA_OUTPUTS}/sector_analysis/validation/`
 
 ```json
 {
@@ -264,9 +264,9 @@ CLI INTEGRATION VALIDATION:
 **Before beginning validation, establish sector context:**
 - Extract sector symbol and date from synthesis filename
 - Locate ALL sector DASV outputs for validation:
-  - Discovery: `./data/outputs/sector_analysis/discovery/{SECTOR}_{YYYYMMDD}_discovery.json`
-  - Analysis: `./data/outputs/sector_analysis/analysis/{SECTOR}_{YYYYMMDD}_analysis.json`
-  - Synthesis: `./data/outputs/sector_analysis/{SECTOR}_{YYYYMMDD}.md`
+  - Discovery: `./{DATA_OUTPUTS}/sector_analysis/discovery/{SECTOR}_{YYYYMMDD}_discovery.json`
+  - Analysis: `./{DATA_OUTPUTS}/sector_analysis/analysis/{SECTOR}_{YYYYMMDD}_analysis.json`
+  - Synthesis: `./{DATA_OUTPUTS}/sector_analysis/{SECTOR}_{YYYYMMDD}.md`
 - Document validation date and sector data freshness requirements
 - Initialize systematic sector validation framework targeting >9.5/10 reliability
 
@@ -288,7 +288,7 @@ CLI-ENHANCED SECTOR DISCOVERY VALIDATION PROTOCOL:
 2. Sector ETF Validation
    → **MANDATORY ETF Price Validation**: Verify current ETF price is collected and accurate
    → **BLOCKING ETF Price Consistency**: ETF price must be validated across all synthesis references
-   → Verify sector ETF composition via FMP CLI: python scripts/fmp_cli.py etf {SECTOR_ETF} --env prod --output-format json
+   → Verify sector ETF composition via FMP CLI: python {SCRIPTS_BASE}/fmp_cli.py etf {SECTOR_ETF} --env prod --output-format json
    → Validate ETF holdings match stated sector companies and weightings
    → Cross-check ETF performance correlation with individual sector companies
    → Verify sector ETF flows and sentiment consistency
@@ -473,7 +473,7 @@ GATE 6 VALIDATION REQUIREMENTS:
 ## Output Structure
 
 **File Naming**: `{SECTOR}_{YYYYMMDD}_validation.json`
-**Primary Location**: `./data/outputs/sector_analysis/validation/`
+**Primary Location**: `./{DATA_OUTPUTS}/sector_analysis/validation/`
 
 ```json
 {
@@ -833,7 +833,7 @@ GATE 6 VALIDATION REQUIREMENTS:
 - **Error Handling**: Graceful degradation for individual company validation failures
 - **Quality Monitoring**: Real-time health assessment across sector and ETF validation
 
-**Integration with Sector DASV Framework**: This validation command serves as the final quality assurance checkpoint for the entire sector analysis ecosystem, ensuring institutional-quality reliability for sector allocation strategies through comprehensive multi-company validation, ETF consistency verification, and GDP/employment integration validation. Validates compliance with `./templates/analysis/sector_analysis_template.md` specification (authoritative standard implemented via enhanced Jinja2 templates with sector-specific customization).
+**Integration with Sector DASV Framework**: This validation command serves as the final quality assurance checkpoint for the entire sector analysis ecosystem, ensuring institutional-quality reliability for sector allocation strategies through comprehensive multi-company validation, ETF consistency verification, and GDP/employment integration validation. Validates compliance with `./{TEMPLATES_BASE}/analysis/sector_analysis_template.md` specification (authoritative standard implemented via enhanced Jinja2 templates with sector-specific customization).
 
 **Author**: Cole Morton
 **Confidence**: [Validation confidence reflects comprehensive sector framework verification and institutional-quality standards]

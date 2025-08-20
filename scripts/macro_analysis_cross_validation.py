@@ -276,9 +276,9 @@ class MacroAnalysisCrossValidation:
             },
             "cross_analysis_summary": {
                 "overall_cross_analysis_score": cross_analysis_score,
-                "validation_status": "PASS"
-                if cross_analysis_score >= 9.0
-                else "REVIEW_REQUIRED",
+                "validation_status": (
+                    "PASS" if cross_analysis_score >= 9.0 else "REVIEW_REQUIRED"
+                ),
                 "target_score": 9.0,
                 "score_achievement": cross_analysis_score >= 9.0,
                 "critical_issues_count": len(
@@ -979,11 +979,13 @@ class MacroAnalysisCrossValidation:
         quality_level = (
             "EXCELLENT"
             if cross_analysis_score >= 0.95
-            else "GOOD"
-            if cross_analysis_score >= 0.9
-            else "ACCEPTABLE"
-            if cross_analysis_score >= 0.8
-            else "NEEDS_IMPROVEMENT"
+            else (
+                "GOOD"
+                if cross_analysis_score >= 0.9
+                else (
+                    "ACCEPTABLE" if cross_analysis_score >= 0.8 else "NEEDS_IMPROVEMENT"
+                )
+            )
         )
 
         return {
@@ -1312,9 +1314,9 @@ class MacroAnalysisCrossValidation:
             "recession_probability_range": {
                 "min": min(recession_probs) if recession_probs else None,
                 "max": max(recession_probs) if recession_probs else None,
-                "variance": np.var(recession_probs)
-                if len(recession_probs) > 1
-                else None,
+                "variance": (
+                    np.var(recession_probs) if len(recession_probs) > 1 else None
+                ),
             },
             "cross_regional_consistency": len(set(regions)) > 1,
         }

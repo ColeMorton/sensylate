@@ -93,15 +93,15 @@ for phase in phases:
 **Analysis Templates**:
 ```yaml
 fundamental_analysis_template:
-  path: "{SCRIPTS_BASE}/templates/fundamental_analysis_enhanced.j2"
+  path: "{TEMPLATES_BASE}/fundamental_analysis_enhanced.j2"
   purpose: "Primary analysis document generation"
 
 validation_template:
-  path: "{SCRIPTS_BASE}/templates/validation_framework.j2"
+  path: "{TEMPLATES_BASE}/validation_framework.j2"
   purpose: "Quality assurance and validation scoring"
 
 sector_analysis_template:
-  path: "{SCRIPTS_BASE}/templates/analysis/sector_analysis_template.md"
+  path: "{TEMPLATES_BASE}/analysis/sector_analysis_template.md"
   purpose: "Sector-wide analysis specification"
 ```
 
@@ -839,10 +839,10 @@ done
 **Output Consumption Patterns**:
 ```yaml
 fundamental_analysis_outputs:
-  discovery_files: "./data/outputs/fundamental_analysis/discovery/{TICKER}_{DATE}_discovery.json"
-  analysis_files: "./data/outputs/fundamental_analysis/analysis/{TICKER}_{DATE}_analysis.json"
-  synthesis_files: "./data/outputs/fundamental_analysis/{TICKER}_{DATE}.md"
-  validation_files: "./data/outputs/fundamental_analysis/validation/{TICKER}_{DATE}_validation.json"
+  discovery_files: "{DATA_OUTPUTS}/fundamental_analysis/discovery/{TICKER}_{DATE}_discovery.json"
+  analysis_files: "{DATA_OUTPUTS}/fundamental_analysis/analysis/{TICKER}_{DATE}_analysis.json"
+  synthesis_files: "{DATA_OUTPUTS}/fundamental_analysis/{TICKER}_{DATE}.md"
+  validation_files: "{DATA_OUTPUTS}/fundamental_analysis/validation/{TICKER}_{DATE}_validation.json"
 
 consumer_integration:
   twitter_commands: "Auto-discover analysis files by ticker/date matching"

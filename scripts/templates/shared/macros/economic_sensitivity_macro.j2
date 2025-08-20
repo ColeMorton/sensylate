@@ -8,7 +8,7 @@ Reduces template duplication by 70% for economic sensitivity sections
 ### Economic Sensitivity Matrix
 | Indicator | Correlation | Current Level | Impact Score | P-Value | Data Source | Confidence |
 |-----------|-------------|---------------|-------------|---------|-------------|------------|
-| Fed Funds Rate | {{ data.fed_correlation | default("±0.25") }} | {{ data.fed_funds_rate | default("5.25") }}% | {{ data.fed_impact_score | default("3.5") }}/5.0 | {{ data.fed_p_value | default("0.030") }} | FRED | {{ data.fed_confidence | default("0.90") }} |
+| Fed Funds Rate | {{ data.fed_correlation | default("±0.25") }} | {{ data.fed_funds_rate }}% | {{ data.fed_impact_score | default("3.5") }}/5.0 | {{ data.fed_p_value | default("0.030") }} | FRED | {{ data.fed_confidence | default("0.90") }} |
 | GDP Growth Rate | {{ data.gdp_correlation | default("±0.30") }} | {{ data.gdp_growth | default("2.5") }}% | {{ data.gdp_impact_score | default("4.0") }}/5.0 | {{ data.gdp_p_value | default("0.025") }} | FRED | {{ data.gdp_confidence | default("0.95") }} |
 | Employment Growth | {{ data.employment_correlation | default("±0.25") }} | {{ data.employment_growth | default("150") }}k | {{ data.employment_impact_score | default("3.5") }}/5.0 | {{ data.employment_p_value | default("0.040") }} | FRED | {{ data.employment_confidence | default("0.85") }} |
 | DXY (Dollar Strength) | {{ data.dxy_correlation | default("±0.15") }} | {{ data.dxy_level | default("105.0") }} | {{ data.dxy_impact_score | default("2.5") }}/5.0 | {{ data.dxy_p_value | default("0.100") }} | Alpha Vantage | {{ data.dxy_confidence | default("0.80") }} |

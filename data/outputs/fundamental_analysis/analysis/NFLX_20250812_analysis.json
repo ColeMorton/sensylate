@@ -405,7 +405,7 @@
       "sensitivity_analysis": {
         "revenue_growth_sensitivity": {
           "bear_case": "-2% growth assumption: $950 fair value",
-          "base_case": "Base growth assumptions: $1,095 fair value", 
+          "base_case": "Base growth assumptions: $1,095 fair value",
           "bull_case": "+2% growth assumption: $1,240 fair value"
         },
         "margin_sensitivity": {
