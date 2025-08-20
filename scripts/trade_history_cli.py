@@ -11,7 +11,7 @@ Command-line interface for trade history image generation with:
 
 import sys
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any, Dict
 
 import typer
 
@@ -93,7 +93,9 @@ class TradeHistoryCLI(BaseFinancialCLI):
                     }
                 else:
                     # Generate images
-                    generated_files = generator.process_date(date, report_type)
+                    generated_files = generator.generate_images_for_date(
+                        date, report_type
+                    )
 
                     result = {
                         "status": "success",

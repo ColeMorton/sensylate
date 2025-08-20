@@ -25,6 +25,8 @@ import pandas as pd
 # Add scripts directory to path
 sys.path.insert(0, str(Path(__file__).parent))
 
+from chart_status_manager import ChartStatusManager
+from cli_contract_validator import CLIContractValidator
 from cli_service_script import CLIServiceScript
 from data_contract_discovery import (
     ContractDiscoveryResult,
@@ -334,11 +336,17 @@ class DataPipelineManager:
         self.scripts_dir = Path(__file__).parent
         self.project_root = self.scripts_dir.parent
 
-        # Initialize contract discovery system
+        # Initialize frontend paths for chart scanning and data storage
         if frontend_data_path is None:
             self.frontend_data_dir = self.project_root / "frontend/public/data"
         else:
             self.frontend_data_dir = Path(frontend_data_path)
+
+        # Add frontend source path for MDX chart scanning
+        self.frontend_src_path = self.project_root / "frontend/src"
+
+        # Keep consistent naming for backwards compatibility
+        self.frontend_data_path = self.frontend_data_dir
 
         self.contract_discovery = DataContractDiscovery(self.frontend_data_dir)
         self.cli_outputs_dir = self.project_root / "data/outputs"
@@ -353,12 +361,21 @@ class DataPipelineManager:
         )
         self.cli_service = CLIServiceScript(config)
 
+        # Initialize CLI contract validator for pre-execution validation
+        self.cli_validator = CLIContractValidator()
+
+        # Cache for validated CLI contracts
+        self._validated_contracts = set()
+
         # Discover contracts from frontend requirements
         self.discovery_result: Optional[ContractDiscoveryResult] = None
         self.contracts: List[DataContract] = []
 
         # CLI service capability mapping (what each service can provide)
         self.cli_service_capabilities = self._initialize_cli_capabilities()
+
+        # Initialize chart status manager for pipeline filtering
+        self.chart_status_manager = ChartStatusManager(self.frontend_src_path)
 
         self.logger.info(
             f"Initialized contract-driven pipeline for {self.frontend_data_dir}"
@@ -438,7 +455,7 @@ class DataPipelineManager:
             },
             "live_signals_dashboard": {
                 "provides": ["live_signals", "equity_curves", "trading_metrics"],
-                "categories": ["portfolio", "live-signals"],
+                "categories": ["live-signals"],
                 "data_types": ["time_series", "trading"],
                 "refresh_frequency": "hourly",
             },
@@ -451,15 +468,66 @@ class DataPipelineManager:
         }
 
     def discover_contracts(self) -> ContractDiscoveryResult:
-        """Discover all frontend data contracts"""
+        """Discover data requirements from active charts only (runtime demand-driven)"""
         if self.discovery_result is None:
-            self.logger.info("Discovering data contracts from frontend requirements")
-            self.discovery_result = self.contract_discovery.discover_all_contracts()
-            self.contracts = self.discovery_result.contracts
+            self.logger.info("Discovering data requirements from active charts only")
+
+            # Import active chart requirements detector
+            from active_chart_requirements import ActiveChartRequirementsDetector
+
+            # Create detector and get active requirements
+            detector = ActiveChartRequirementsDetector(
+                frontend_src_path=self.frontend_src_path,
+                frontend_data_path=self.frontend_data_path,
+            )
+
+            active_requirements = detector.discover_active_requirements()
+
+            # Convert active requirements to contracts format for compatibility
+            from data_contract_discovery import ContractDiscoveryResult, DataContract
+
+            active_contracts = []
+
+            for req in active_requirements.requirements:
+                # Create virtual contract from active chart requirement
+                contract = DataContract(
+                    contract_id=f"{req.category}_{req.chart_type}_{Path(req.data_source).stem}",
+                    category=req.category,
+                    file_path=Path(req.file_path),
+                    relative_path=req.data_source,
+                    schema=[],  # Schema will be determined during generation
+                    minimum_rows=0,
+                    freshness_threshold_hours=24,
+                )
+                active_contracts.append(contract)
+
+            # Create discovery result with only active chart requirements
+            self.discovery_result = ContractDiscoveryResult(
+                contracts=active_contracts,
+                categories=active_requirements.categories_needed,
+                total_files=active_requirements.total_active_charts,
+                successful_discoveries=len(active_contracts),
+                failed_discoveries=[],
+                discovery_time=active_requirements.discovery_time_seconds,
+            )
+
+            self.contracts = active_contracts
 
             self.logger.info(
-                f"Discovered {len(self.contracts)} contracts across "
-                f"{len(self.discovery_result.categories)} categories"
+                f"Active chart requirements: {len(active_contracts)} data files needed for "
+                f"{active_requirements.total_active_charts} active charts "
+                f"(skipped {active_requirements.total_frozen_charts} frozen charts)"
+            )
+
+            if active_requirements.total_frozen_charts > 0:
+                self.logger.info(
+                    f"Runtime filtering: excluded {active_requirements.total_frozen_charts} frozen charts "
+                    f"from data requirements (demand-driven approach)"
+                )
+
+            self.logger.info(
+                f"Processing {len(self.contracts)} active requirements across "
+                f"{len(active_requirements.categories_needed)} categories"
             )
 
         return self.discovery_result
@@ -470,22 +538,41 @@ class DataPipelineManager:
         return [c for c in self.contracts if c.category == category]
 
     def map_contract_to_services(self, contract: DataContract) -> List[str]:
-        """Map a contract to capable CLI services"""
-        capable_services = []
+        """Map a contract to capable CLI services using active chart requirements"""
+        # Get services from active chart requirements if available
+        try:
+            from active_chart_requirements import ActiveChartRequirementsDetector
 
-        for service_name, capabilities in self.cli_service_capabilities.items():
-            # Check if service can provide data for this category
-            if contract.category in capabilities["categories"]:
-                capable_services.append(service_name)
-                continue
+            detector = ActiveChartRequirementsDetector(
+                frontend_src_path=self.frontend_src_path,
+                frontend_data_path=self.frontend_data_dir,
+            )
 
-            # Check specific data type compatibility
-            for data_source in contract.data_sources:
-                if data_source in capabilities["provides"]:
+            # Find matching requirement for this contract
+            active_requirements = detector.discover_active_requirements()
+            for req in active_requirements.requirements:
+                if str(contract.relative_path) == req.data_source:
+                    return req.required_services
+
+            # Fallback to category-based service mapping if no specific requirement found
+            category_service_map = {
+                "portfolio": ["yahoo_finance", "alpha_vantage"],
+                "trade-history": ["trade_history"],
+                "open-positions": ["trade_history"],
+                "raw": ["yahoo_finance"],
+            }
+
+            return category_service_map.get(contract.category, [])
+
+        except Exception as e:
+            self.logger.warning(f"Error mapping contract to services: {e}")
+
+            # Final fallback to old logic
+            capable_services = []
+            for service_name, capabilities in self.cli_service_capabilities.items():
+                if contract.category in capabilities["categories"]:
                     capable_services.append(service_name)
-                    break
-
-        return capable_services
+            return capable_services
 
     def validate_contract_fulfillment(self, contract: DataContract) -> ProcessingResult:
         """Validate that a contract can be fulfilled by available services"""
@@ -834,8 +921,35 @@ class DataPipelineManager:
                 if not contract.file_path.exists():
                     continue  # Skip non-existent files, will be handled by other validation
 
-                # Enhanced CSV validation
-                df = pd.read_csv(contract.file_path)
+                # Check if file is empty or has only headers
+                file_size = contract.file_path.stat().st_size
+                if file_size == 0:
+                    schema_warnings.append(
+                        f"File {contract.contract_id} is empty - will be populated by data pipeline"
+                    )
+                    continue
+
+                # Enhanced CSV validation with empty file handling
+                try:
+                    df = pd.read_csv(contract.file_path)
+
+                    # Check if DataFrame is empty after parsing
+                    if df.empty:
+                        schema_warnings.append(
+                            f"File {contract.contract_id} contains only headers - will be populated by data pipeline"
+                        )
+                        continue
+
+                except pd.errors.EmptyDataError:
+                    schema_warnings.append(
+                        f"File {contract.contract_id} has no data rows - will be populated by data pipeline"
+                    )
+                    continue
+                except Exception as csv_error:
+                    schema_errors.append(
+                        f"Failed to parse CSV for {contract.contract_id}: {csv_error}"
+                    )
+                    continue
 
                 # Validate data types based on contract category - now returns (errors, warnings)
                 if contract.category == "trade-history":
@@ -1011,7 +1125,23 @@ class DataPipelineManager:
                 f"[Discovery: {performance_metrics['discovery_time']:.2f}s]"
             )
 
-            # Step 2: Comprehensive service dependency validation
+            # Step 2: Service health checks before processing
+            health_check_start = datetime.now()
+            required_services = ["yahoo_finance", "alpha_vantage", "trade_history"]
+            health_results = self._perform_service_health_checks(required_services)
+
+            if not health_results["overall_healthy"] and not skip_errors:
+                raise ValidationError(
+                    f"Service health check failed: {health_results['unhealthy_services']}/{health_results['total_services']} services unhealthy. "
+                    f"Errors: {'; '.join(health_results['errors'])}"
+                )
+            elif not health_results["overall_healthy"]:
+                self.logger.warning(
+                    f"Service health check failed but continuing due to skip_errors: "
+                    f"{health_results['unhealthy_services']}/{health_results['total_services']} services unhealthy"
+                )
+
+            # Step 3: Comprehensive service dependency validation
             validation_start = datetime.now()
             self.logger.info(
                 "Performing comprehensive service dependency validation..."
@@ -1019,6 +1149,9 @@ class DataPipelineManager:
             dependency_validation = self.validate_service_dependencies()
             performance_metrics["validation_time"] = (
                 datetime.now() - validation_start
+            ).total_seconds()
+            performance_metrics["health_check_time"] = (
+                validation_start - health_check_start
             ).total_seconds()
 
             if not dependency_validation.success:
@@ -1032,10 +1165,11 @@ class DataPipelineManager:
                     )
 
             self.logger.info(
-                f"Service validation completed [Validation: {performance_metrics['validation_time']:.2f}s]"
+                f"Service validation completed [Health Check: {performance_metrics['health_check_time']:.2f}s, "
+                f"Validation: {performance_metrics['validation_time']:.2f}s]"
             )
 
-            # Step 3: Validate contract fulfillment capabilities
+            # Step 4: Validate contract fulfillment capabilities
             unfulfillable_contracts = []
 
             for contract in discovery_result.contracts:
@@ -1050,7 +1184,7 @@ class DataPipelineManager:
                             f"Cannot fulfill contract {contract.contract_id}: no capable services"
                         )
 
-            # Step 3: Refresh contracts by category
+            # Step 5: Refresh contracts by category
             results = {}
             failed_contracts = []
             successful_contracts = []
@@ -1194,16 +1328,23 @@ class DataPipelineManager:
                 },
             )
 
-            # Log final pipeline status
+            # Log final pipeline status with accurate service health reporting
+            failed_services = dependency_validation.metadata.get("failed_services", [])
+            service_health_status = (
+                "all services healthy"
+                if not failed_services
+                else f"service failures: {', '.join(failed_services)}"
+            )
+
             if overall_success:
                 self.logger.info(
                     f"Contract-driven refresh SUCCESSFUL: {successful_count}/{total_contracts} "
-                    f"contracts successful, all services healthy in {processing_time:.2f}s"
+                    f"contracts successful, {service_health_status} in {processing_time:.2f}s"
                 )
             else:
                 self.logger.error(
                     f"Contract-driven refresh FAILED: {successful_count}/{total_contracts} "
-                    f"contracts successful in {processing_time:.2f}s. Errors: {result.error}"
+                    f"contracts successful, {service_health_status} in {processing_time:.2f}s. Errors: {result.error}"
                 )
 
             return result
@@ -1444,30 +1585,43 @@ class DataPipelineManager:
     ) -> ProcessingResult:
         """Generate portfolio data that matches the contract schema"""
         try:
-            # Determine the type of portfolio data from contract schema
-            column_names = [col.name for col in contract.schema]
+            # Determine the type of portfolio data from file path
+            file_name = contract.file_path.name
+            relative_path = contract.relative_path.lower()
 
-            if "Portfolio_Value" in column_names:
+            if "portfolio_value" in file_name.lower():
                 df = self._generate_portfolio_value_data()
-            elif "Returns" in column_names or "Returns_Pct" in column_names:
+            elif "returns" in file_name.lower():
                 df = self._generate_portfolio_returns_data()
-            elif "Drawdown" in column_names or "Drawdown_Pct" in column_names:
+            elif "drawdowns" in file_name.lower():
                 df = self._generate_portfolio_drawdowns_data()
-            elif "Cumulative_Returns" in column_names:
+            elif "cumulative_returns" in file_name.lower():
                 df = self._generate_portfolio_cumulative_returns_data()
-            elif "equity" in column_names and "timestamp" in column_names:
+            elif "benchmark_comparison" in file_name.lower():
+                # Generate benchmark comparison data
+                df = self._generate_benchmark_comparison_data()
+            elif "closed_positions_pnl" in file_name.lower():
+                # This should be handled by trade history data
+                df = (
+                    pd.DataFrame()
+                )  # Empty placeholder - will be filled by trade history processing
+            elif "open_positions_pnl" in file_name.lower():
+                # This should be handled by trade history data
+                df = (
+                    pd.DataFrame()
+                )  # Empty placeholder - will be filled by trade history processing
+            elif "equity" in relative_path and "live_signals" in relative_path:
                 # This is live signals equity data
                 df = self._generate_live_signals_equity_data()
             else:
-                # Generate generic portfolio data
+                # Default to portfolio value data
+                self.logger.warning(
+                    f"Unknown portfolio data type for {file_name}, defaulting to portfolio value"
+                )
                 df = self._generate_portfolio_value_data()
 
-            # Ensure only required columns are present
-            if not df.empty:
-                available_columns = [col for col in column_names if col in df.columns]
-                df = df[available_columns]
-
-            # Save to contract file path
+            # Save to contract file path without filtering columns
+            # The generated data should already have the correct columns
             df.to_csv(contract.file_path, index=False)
 
             return ProcessingResult(
@@ -1515,6 +1669,16 @@ class DataPipelineManager:
     ) -> ProcessingResult:
         """Generate open positions data that matches the contract schema"""
         try:
+            # Check if this file should be skipped due to chart freeze status
+            if self.chart_status_manager.should_skip_output_file(contract.file_path):
+                self.logger.info(
+                    f"Skipping open positions contract generation - chart is frozen/static: {contract.contract_id}"
+                )
+                return ProcessingResult(
+                    success=True,
+                    operation=f"skip_open_positions_contract_{contract.contract_id}",
+                )
+
             df = self._generate_open_positions_data()
 
             # Ensure only required columns are present
@@ -1729,40 +1893,110 @@ class DataPipelineManager:
         return symbols
 
     def _extract_symbols_from_contracts(self) -> List[str]:
-        """Extract stock symbols from discovered raw stock contracts and trade history"""
+        """Extract stock symbols only from active chart requirements (demand-driven)"""
         symbols = set()
 
-        # Extract symbols from existing raw stock contracts
-        raw_contracts = self.get_contracts_by_category("raw")
-        for contract in raw_contracts:
-            # Extract symbols from contract IDs like "raw_stocks_AAPL_daily"
-            if contract.contract_id.startswith(
-                "raw_stocks_"
-            ) and contract.contract_id.endswith("_daily"):
-                symbol = contract.contract_id.replace("raw_stocks_", "").replace(
-                    "_daily", ""
+        try:
+            # Get active chart requirements to determine which symbols are actually needed
+            from active_chart_requirements import ActiveChartRequirementsDetector
+
+            detector = ActiveChartRequirementsDetector(
+                frontend_src_path=self.frontend_src_path,
+                frontend_data_path=self.frontend_data_dir,
+            )
+
+            active_requirements = detector.discover_active_requirements()
+
+            # Only extract symbols if portfolio or raw data charts are active
+            portfolio_active = any(
+                req.category == "portfolio" for req in active_requirements.requirements
+            )
+            raw_active = any(
+                req.category == "raw" for req in active_requirements.requirements
+            )
+
+            if not (portfolio_active or raw_active):
+                self.logger.info(
+                    "No portfolio or raw data charts active - skipping symbol extraction"
                 )
-                symbols.add(symbol)
+                return []
 
-        # Extract symbols from trade history to ensure all referenced stocks are collected
-        trade_history_symbols = self._extract_symbols_from_trade_history()
-        symbols.update(trade_history_symbols)
+            # Extract symbols from existing raw stock contracts (only for active charts)
+            raw_contracts = self.get_contracts_by_category("raw")
+            for contract in raw_contracts:
+                # Extract symbols from contract IDs like "raw_stocks_AAPL_daily"
+                if contract.contract_id.startswith(
+                    "raw_stocks_"
+                ) and contract.contract_id.endswith("_daily"):
+                    symbol = contract.contract_id.replace("raw_stocks_", "").replace(
+                        "_daily", ""
+                    )
+                    symbols.add(symbol)
 
-        # Convert to sorted list for consistent ordering
-        symbol_list = sorted(list(symbols))
+            # Extract symbols from trade history only if portfolio charts that require trade_history are active
+            trade_history_portfolio_charts = [
+                req
+                for req in active_requirements.requirements
+                if req.category == "portfolio"
+                and "trade_history" in req.required_services
+            ]
 
-        # Fallback to default symbols if no symbols found
-        if not symbol_list:
-            symbol_list = ["BTC-USD", "SPY", "QQQ"]
-            self.logger.warning(
-                "No symbols found from contracts or trade history, using fallback symbols"
-            )
-        else:
-            self.logger.info(
-                f"Collected {len(symbol_list)} total symbols for data fetch"
-            )
+            if trade_history_portfolio_charts:
+                trade_history_symbols = self._extract_symbols_from_trade_history()
+                symbols.update(trade_history_symbols)
+                self.logger.info(
+                    f"Extracted {len(trade_history_symbols)} symbols from trade history for {len(trade_history_portfolio_charts)} active trade_history portfolio charts"
+                )
+            else:
+                # Add benchmark symbols for yahoo_finance-based portfolio charts
+                yahoo_finance_portfolio_charts = [
+                    req
+                    for req in active_requirements.requirements
+                    if req.category == "portfolio"
+                    and "yahoo_finance" in req.required_services
+                ]
+                if yahoo_finance_portfolio_charts:
+                    benchmark_symbols = ["BTC-USD", "SPY", "QQQ"]
+                    symbols.update(benchmark_symbols)
+                    self.logger.info(
+                        f"Added {len(benchmark_symbols)} benchmark symbols for {len(yahoo_finance_portfolio_charts)} active yahoo_finance portfolio charts: {benchmark_symbols}"
+                    )
 
-        return symbol_list
+            # Convert to sorted list for consistent ordering
+            symbol_list = sorted(list(symbols))
+
+            # Fallback to default symbols if no symbols found but charts are active
+            if not symbol_list and (portfolio_active or raw_active):
+                symbol_list = ["BTC-USD", "SPY", "QQQ"]
+                self.logger.warning(
+                    "No symbols found from active chart requirements, using fallback symbols"
+                )
+            else:
+                self.logger.info(
+                    f"Collected {len(symbol_list)} symbols for {len(active_requirements.requirements)} active chart requirements"
+                )
+
+            return symbol_list
+
+        except Exception as e:
+            self.logger.error(f"Error extracting symbols from active charts: {e}")
+
+            # Fallback to old method if active chart detection fails
+            symbols = set()
+            raw_contracts = self.get_contracts_by_category("raw")
+            for contract in raw_contracts:
+                if contract.contract_id.startswith(
+                    "raw_stocks_"
+                ) and contract.contract_id.endswith("_daily"):
+                    symbol = contract.contract_id.replace("raw_stocks_", "").replace(
+                        "_daily", ""
+                    )
+                    symbols.add(symbol)
+
+            trade_history_symbols = self._extract_symbols_from_trade_history()
+            symbols.update(trade_history_symbols)
+
+            return sorted(list(symbols)) if symbols else ["BTC-USD", "SPY", "QQQ"]
 
     def _fetch_yahoo_finance_data(self) -> ProcessingResult:
         """Fetch historical price data from Yahoo Finance for all discovered symbols"""
@@ -1782,10 +2016,18 @@ class DataPipelineManager:
             for symbol in symbols:
                 try:
                     self.logger.info(f"Fetching historical data for {symbol}")
+
+                    # Validate CLI contract before execution
+                    self._validate_cli_contract("yahoo_finance", "history")
+
                     result = self.cli_service.execute(
                         service_name="yahoo_finance",
-                        command="historical",
-                        args=[symbol, "max"],  # Get maximum available historical data
+                        command="history",
+                        args=[
+                            symbol,
+                            "--period",
+                            "max",
+                        ],  # Get maximum available historical data
                         timeout=60,
                     )
 
@@ -1807,16 +2049,22 @@ class DataPipelineManager:
                         f"Error fetching historical data for {symbol}: {str(e)}"
                     )
 
-            # Return overall success if at least some symbols succeeded
-            overall_success = len(successful_symbols) > 0
+            # Return overall success only if majority of symbols succeeded (60% threshold)
+            success_rate = len(successful_symbols) / len(symbols) if symbols else 0
+            min_success_rate = 0.6  # Require 60% success rate
+            overall_success = success_rate >= min_success_rate
 
             if overall_success:
                 self.logger.info(
-                    f"Yahoo Finance historical data fetch completed: "
-                    f"{len(successful_symbols)} successful, {len(failed_symbols)} failed"
+                    f"Yahoo Finance historical data fetch completed successfully: "
+                    f"{len(successful_symbols)}/{len(symbols)} symbols ({success_rate:.1%} success rate)"
                 )
             else:
-                self.logger.error("All Yahoo Finance historical data fetches failed")
+                self.logger.error(
+                    f"Yahoo Finance historical data fetch failed: "
+                    f"{len(successful_symbols)}/{len(symbols)} symbols ({success_rate:.1%} success rate, "
+                    f"below {min_success_rate:.0%} threshold)"
+                )
 
             return ProcessingResult(
                 success=overall_success,
@@ -1895,6 +2143,9 @@ class DataPipelineManager:
             )
 
             # Use existing Alpha Vantage CLI with valid command: analyze
+            # Validate CLI contract before execution
+            self._validate_cli_contract("alpha_vantage", "analyze")
+
             result = self.cli_service.execute(
                 service_name="alpha_vantage",
                 command="analyze",
@@ -1954,6 +2205,9 @@ class DataPipelineManager:
         try:
             today = datetime.now().strftime("%Y%m%d")
             self.logger.info(f"Initiating trade history data fetch for date: {today}")
+
+            # Validate CLI contract before execution
+            self._validate_cli_contract("trade_history", "generate")
 
             result = self.cli_service.execute(
                 service_name="trade_history",
@@ -2029,33 +2283,72 @@ class DataPipelineManager:
             # Load trade history data
             df = pd.read_csv(trade_history_file)
 
+            # Apply chart status filtering before generating chart data
+            results = []
+
             # Generate trade PnL waterfall data (sorted by PnL magnitude)
-            waterfall_result = self._generate_waterfall_data(df)
+            waterfall_output_path = str(
+                self.frontend_data_dir
+                / "trade-history"
+                / "trade_pnl_waterfall_sorted.csv"
+            )
+            if self.chart_status_manager.should_skip_output_file(waterfall_output_path):
+                self.logger.info(
+                    "Skipping waterfall data generation - chart is frozen/static"
+                )
+                waterfall_result = ProcessingResult(
+                    success=True, operation="skip_waterfall_data"
+                )
+            else:
+                waterfall_result = self._generate_waterfall_data(df)
+            results.append(waterfall_result)
 
             # Generate closed positions PnL progression data
-            closed_positions_result = self._generate_closed_positions_data(df)
+            closed_positions_output_path = str(
+                self.frontend_data_dir
+                / "portfolio"
+                / "closed_positions_pnl_progression.csv"
+            )
+            if self.chart_status_manager.should_skip_output_file(
+                closed_positions_output_path
+            ):
+                self.logger.info(
+                    "Skipping closed positions data generation - chart is frozen/static"
+                )
+                closed_positions_result = ProcessingResult(
+                    success=True, operation="skip_closed_positions_data"
+                )
+            else:
+                closed_positions_result = self._generate_closed_positions_data(df)
+            results.append(closed_positions_result)
 
             # Generate open positions PnL data
-            open_positions_result = self._generate_chart_open_positions_data(df)
+            open_positions_output_path = str(
+                self.frontend_data_dir / "portfolio" / "open_positions_pnl_current.csv"
+            )
+            if self.chart_status_manager.should_skip_output_file(
+                open_positions_output_path
+            ):
+                self.logger.info(
+                    "Skipping open positions data generation - chart is frozen/static"
+                )
+                open_positions_result = ProcessingResult(
+                    success=True, operation="skip_open_positions_data"
+                )
+            else:
+                open_positions_result = self._generate_chart_open_positions_data(df)
+            results.append(open_positions_result)
 
             # Check if all generations were successful
-            if all(
-                [
-                    waterfall_result.success,
-                    closed_positions_result.success,
-                    open_positions_result.success,
-                ]
-            ):
+            if all(result.success for result in results):
                 self.logger.info("Successfully generated all chart-ready data files")
                 return ProcessingResult(success=True, operation="generate_chart_data")
             else:
                 errors: list[str] = []
-                if not waterfall_result.success:
-                    errors.append(f"Waterfall: {waterfall_result.error}")
-                if not closed_positions_result.success:
-                    errors.append(f"Closed positions: {closed_positions_result.error}")
-                if not open_positions_result.success:
-                    errors.append(f"Open positions: {open_positions_result.error}")
+                result_names = ["Waterfall", "Closed positions", "Open positions"]
+                for i, result in enumerate(results):
+                    if not result.success and result.error:
+                        errors.append(f"{result_names[i]}: {result.error}")
 
                 return ProcessingResult(
                     success=False,
@@ -2851,6 +3144,48 @@ class DataPipelineManager:
             }
         )
 
+    def _generate_benchmark_comparison_data(self) -> pd.DataFrame:
+        """Generate benchmark comparison data with Portfolio, SPY, QQQ, and BTC-USD"""
+        # Generate date range from April 2025 to current
+        start_date = datetime(2025, 4, 1)
+        end_date = datetime.now()
+        dates = pd.date_range(start=start_date, end=end_date, freq="D")
+
+        # Generate synthetic performance data
+        # Start all at 0% return
+        portfolio_returns = [0.0]
+        spy_returns = [0.0]
+        qqq_returns = [0.0]
+        btc_returns = [0.0]
+
+        # Generate daily returns with different volatility profiles
+        for i in range(1, len(dates)):
+            # Portfolio: Lower volatility, steady returns
+            portfolio_daily = np.random.normal(0.05, 0.8)
+            portfolio_returns.append(portfolio_returns[-1] + portfolio_daily)
+
+            # SPY: Market-like volatility
+            spy_daily = np.random.normal(0.04, 1.2)
+            spy_returns.append(spy_returns[-1] + spy_daily)
+
+            # QQQ: Tech-focused, slightly higher volatility
+            qqq_daily = np.random.normal(0.05, 1.5)
+            qqq_returns.append(qqq_returns[-1] + qqq_daily)
+
+            # BTC-USD: High volatility crypto
+            btc_daily = np.random.normal(0.1, 3.0)
+            btc_returns.append(btc_returns[-1] + btc_daily)
+
+        return pd.DataFrame(
+            {
+                "Date": dates.strftime("%Y-%m-%d"),
+                "Portfolio": portfolio_returns,
+                "SPY": spy_returns,
+                "QQQ": qqq_returns,
+                "BTC-USD": btc_returns,
+            }
+        )
+
     def _generate_trade_history_data(self) -> pd.DataFrame:
         """Generate trade history data with realistic trading records"""
         tickers = [
@@ -3316,6 +3651,160 @@ class DataPipelineManager:
 
         return issues
 
+    def _validate_cli_contract(self, service_name: str, command: str) -> None:
+        """
+        Validate CLI contract before execution to prevent runtime failures
+
+        Args:
+            service_name: Name of the service (e.g., 'yahoo_finance', 'alpha_vantage')
+            command: Command to validate (e.g., 'history', 'analyze')
+
+        Raises:
+            ValidationError: If the CLI contract is invalid
+        """
+        contract_key = f"{service_name}:{command}"
+
+        # Skip validation if already validated in this session
+        if contract_key in self._validated_contracts:
+            return
+
+        self.logger.debug(f"Validating CLI contract: {service_name}.{command}")
+
+        validation_result = self.cli_validator.validate_service_command(
+            service_name, command
+        )
+
+        if not validation_result["valid"]:
+            error_msg = f"CLI contract validation failed for {service_name}.{command}: "
+            if validation_result["errors"]:
+                error_msg += "; ".join(validation_result["errors"])
+            else:
+                error_msg += "Unknown validation error"
+
+            # Add helpful suggestions
+            if validation_result.get("available_commands"):
+                error_msg += f". Available commands: {', '.join(validation_result['available_commands'])}"
+
+            self.logger.error(error_msg)
+            raise ValidationError(error_msg)
+
+        # Cache successful validation
+        self._validated_contracts.add(contract_key)
+        self.logger.debug(
+            f"CLI contract validated successfully: {service_name}.{command}"
+        )
+
+    def _perform_service_health_checks(self, services: List[str]) -> Dict[str, any]:
+        """
+        Perform health checks on required services before pipeline execution
+
+        Args:
+            services: List of service names to check (e.g., ['yahoo_finance', 'alpha_vantage'])
+
+        Returns:
+            Dictionary with health check results
+        """
+        health_results = {
+            "overall_healthy": True,
+            "total_services": len(services),
+            "healthy_services": 0,
+            "unhealthy_services": 0,
+            "service_details": {},
+            "errors": [],
+        }
+
+        self.logger.info(f"Performing health checks on {len(services)} services...")
+
+        for service_name in services:
+            service_health = {
+                "healthy": False,
+                "cli_exists": False,
+                "basic_commands_available": False,
+                "errors": [],
+            }
+
+            try:
+                # Check if CLI file exists
+                cli_file = self.scripts_dir / f"{service_name}_cli.py"
+                if cli_file.exists():
+                    service_health["cli_exists"] = True
+
+                    # Check if basic commands are available
+                    available_commands = self.cli_validator._get_cli_commands(
+                        cli_file, service_name
+                    )
+                    if available_commands:
+                        service_health["basic_commands_available"] = True
+                        service_health["available_commands"] = available_commands
+                    else:
+                        service_health["errors"].append("No commands found in CLI")
+                else:
+                    service_health["errors"].append(f"CLI file not found: {cli_file}")
+
+                # Try a basic health check command if available
+                if (
+                    service_health["cli_exists"]
+                    and service_health["basic_commands_available"]
+                ):
+                    try:
+                        # For services with health check commands, test them
+                        if "health" in available_commands:
+                            self.logger.debug(
+                                f"Testing health command for {service_name}"
+                            )
+                            # Note: We could add actual health command execution here if needed
+
+                        service_health["healthy"] = True
+
+                    except Exception as e:
+                        service_health["errors"].append(
+                            f"Health check failed: {str(e)}"
+                        )
+
+                # Mark service as healthy if it passes basic checks
+                if (
+                    service_health["cli_exists"]
+                    and service_health["basic_commands_available"]
+                ):
+                    service_health["healthy"] = True
+                    health_results["healthy_services"] += 1
+                else:
+                    health_results["unhealthy_services"] += 1
+                    health_results["overall_healthy"] = False
+                    health_results["errors"].extend(
+                        [
+                            f"{service_name}: {error}"
+                            for error in service_health["errors"]
+                        ]
+                    )
+
+            except Exception as e:
+                service_health["errors"].append(f"Health check exception: {str(e)}")
+                health_results["unhealthy_services"] += 1
+                health_results["overall_healthy"] = False
+                health_results["errors"].append(f"{service_name}: {str(e)}")
+
+            health_results["service_details"][service_name] = service_health
+
+            # Log individual service health
+            status = "✅ HEALTHY" if service_health["healthy"] else "❌ UNHEALTHY"
+            self.logger.debug(f"Service {service_name}: {status}")
+
+        # Log overall health status
+        if health_results["overall_healthy"]:
+            self.logger.info(
+                f"Service health check PASSED: {health_results['healthy_services']}/{health_results['total_services']} services healthy"
+            )
+        else:
+            self.logger.warning(
+                f"Service health check FAILED: {health_results['healthy_services']}/{health_results['total_services']} services healthy. "
+                f"Issues: {len(health_results['errors'])} errors found"
+            )
+            for error in health_results["errors"]:
+                self.logger.warning(f"  - {error}")
+
+        return health_results
+
 
 def main():
     """Main entry point for data pipeline management"""
@@ -3355,6 +3844,20 @@ def main():
 
     # Initialize pipeline manager with quiet mode if requested
     pipeline = DataPipelineManager(quiet_mode=args.quiet)
+
+    # Display chart status information for transparency
+    if not args.quiet:
+        chart_status_summary = pipeline.chart_status_manager.get_status_summary()
+        frozen_count = len(chart_status_summary.get("frozen_data_sources", []))
+        if frozen_count > 0:
+            print(
+                f"🔒 {frozen_count} data sources frozen/static - pipeline will skip these"
+            )
+            for detail in chart_status_summary.get("chart_details", []):
+                if detail["status"] in ["frozen", "static"]:
+                    reason = f" ({detail['reason']})" if detail.get("reason") else ""
+                    print(f"   - {detail['chart_type']}: {detail['status']}{reason}")
+            print()
 
     if args.validate_only:
         # Validate data freshness only

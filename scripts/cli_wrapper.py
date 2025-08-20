@@ -31,6 +31,10 @@ from result_types import ProcessingResult
 from script_config import ScriptConfig
 from script_registry import get_global_registry
 
+# Global service discovery cache to prevent repeated operations
+_GLOBAL_SERVICE_REGISTRY = None
+_GLOBAL_SERVICE_DISCOVERY_DONE = False
+
 
 class CLIServiceWrapper:
     """
@@ -91,17 +95,12 @@ class CLIServiceWrapper:
         self.global_available = self._check_global_availability()
         self.local_available = self._check_local_availability()
 
-        self.logger.log_operation(  # type: ignore[attr-defined]
-            f"CLI wrapper initialized for {service_name}",
-            {
-                "global_available": self.global_available,
-                "local_available": self.local_available,
-                "cli_script_path": str(self.cli_script_path),
-                "timeout": self.timeout,
-                "retry_count": self.retry_count,
-                "use_cache": self.use_cache,
-                "has_config": self.config is not None,
-            },
+        # Log initialization success at INFO level without verbose context
+        self.logger.info(f"CLI wrapper initialized for {service_name}")
+
+        # Log detailed configuration at DEBUG level
+        self.logger.debug(
+            f"CLI wrapper config for {service_name}: global={self.global_available}, local={self.local_available}"
         )
 
     def _setup_enhanced_logger_adapter(self):
@@ -176,13 +175,9 @@ class CLIServiceWrapper:
             global_path = shutil.which(self.global_command_name)
             is_available = global_path is not None
 
-            self.logger.log_operation(  # type: ignore[attr-defined]
-                f"Global availability check for {self.service_name}",
-                {
-                    "global_command": self.global_command_name,
-                    "available": is_available,
-                    "path": global_path,
-                },
+            # Log availability check at DEBUG level to reduce verbosity
+            self.logger.debug(
+                f"Global availability check for {self.service_name}: {is_available}"
             )
 
             return is_available
@@ -205,18 +200,9 @@ class CLIServiceWrapper:
                 self.cli_script_path.exists() and self.cli_script_path.is_file()
             )
 
-            self.logger.log_operation(  # type: ignore[attr-defined]
-                f"Local availability check for {self.service_name}",
-                {
-                    "cli_script_path": str(self.cli_script_path),
-                    "available": is_available,
-                    "exists": self.cli_script_path.exists(),
-                    "is_file": (
-                        self.cli_script_path.is_file()
-                        if self.cli_script_path.exists()
-                        else False
-                    ),
-                },
+            # Log availability check at DEBUG level to reduce verbosity
+            self.logger.debug(
+                f"Local availability check for {self.service_name}: {is_available}"
             )
 
             return is_available
@@ -296,20 +282,8 @@ class CLIServiceWrapper:
                 else:
                     cmd_args.extend([option_name, str(value)])
 
-            self.logger.log_operation(  # type: ignore[attr-defined]
-                f"Starting command execution: {self.service_name}.{command}",
-                {
-                    "service_name": self.service_name,
-                    "command": command,
-                    "args": list(args),
-                    "options": {
-                        k: v for k, v in kwargs.items() if not k.startswith("_")
-                    },
-                    "timeout": self.timeout,
-                    "global_available": self.global_available,
-                    "local_available": self.local_available,
-                },
-            )
+            # Demote verbose command start logging to DEBUG level to reduce noise
+            self.logger.debug(f"Starting CLI command: {self.service_name}.{command}")
 
             # Try global command first
             if self.global_available:
@@ -410,16 +384,10 @@ class CLIServiceWrapper:
             result.add_error_context("stdout", stdout)
             result.add_error_context("execution_mode", execution_mode)
 
-        self.logger.log_operation(  # type: ignore[attr-defined]
-            f"CLI command completed: {cmd_args[0] if cmd_args else 'unknown'}",
-            {
-                "service_name": self.service_name,
-                "success": success,
-                "execution_mode": execution_mode,
-                "execution_time": execution_time,
-                "stdout_length": len(stdout),
-                "stderr_length": len(stderr),
-            },
+        # Demote verbose completion logging to DEBUG level to reduce noise
+        status = "SUCCESS" if success else "FAILED"
+        self.logger.debug(
+            f"CLI command {status}: {self.service_name}.{cmd_args[0] if cmd_args else 'unknown'} [{execution_time:.2f}s]"
         )
 
         return result
@@ -522,17 +490,8 @@ class CLIServiceWrapper:
         command_name = args[0] if args else "unknown"
         start_time = datetime.now()
 
-        self.logger.log_operation(  # type: ignore[attr-defined]
-            f"Executing local command: {self.service_name}.{command_name}",
-            {
-                "service_name": self.service_name,
-                "full_command": " ".join(cmd),
-                "args_count": len(args),
-                "script_path": str(self.cli_script_path),
-                "timeout": self.timeout,
-                "execution_mode": "local",
-            },
-        )
+        # Demote verbose local execution logging to DEBUG level to reduce noise
+        self.logger.debug(f"Executing local CLI: {self.service_name}.{command_name}")
 
         try:
             result = subprocess.run(
@@ -777,9 +736,18 @@ class CLIServiceManager:
 
     def _discover_services(self) -> None:
         """Discover available CLI services"""
-        self.logger.log_operation(  # type: ignore[attr-defined]
-            "Starting CLI service discovery", {"scripts_dir": str(self.scripts_dir)}
-        )
+        # Use global cache to prevent repeated service discovery
+        global _GLOBAL_SERVICE_REGISTRY, _GLOBAL_SERVICE_DISCOVERY_DONE
+
+        if _GLOBAL_SERVICE_DISCOVERY_DONE and _GLOBAL_SERVICE_REGISTRY:
+            # Use cached services instead of rediscovering
+            self.services = _GLOBAL_SERVICE_REGISTRY
+            return
+
+        # Only log service discovery start once globally
+        if not _GLOBAL_SERVICE_DISCOVERY_DONE:
+            self.logger.debug(f"Starting CLI service discovery in {self.scripts_dir}")
+            _GLOBAL_SERVICE_DISCOVERY_DONE = True
 
         # Expected financial CLI services
         expected_services = [
@@ -804,24 +772,11 @@ class CLIServiceManager:
 
                 if wrapper.is_available():
                     available_count += 1
-                    self.logger.log_operation(  # type: ignore[attr-defined]
-                        f"Service {service_name} available",
-                        {
-                            "service_name": service_name,
-                            "global_available": wrapper.global_available,
-                            "local_available": wrapper.local_available,
-                        },
-                    )
+                    # Log service availability at DEBUG level to reduce verbosity
+                    self.logger.debug(f"Service {service_name} available")
                 else:
-                    self.logger.log_operation(  # type: ignore[attr-defined]
-                        f"Service {service_name} not available",
-                        {
-                            "service_name": service_name,
-                            "global_available": wrapper.global_available,
-                            "local_available": wrapper.local_available,
-                        },
-                        level="WARNING",
-                    )
+                    # Log service unavailability at WARNING level without verbose context
+                    self.logger.warning(f"Service {service_name} not available")
 
             except Exception as e:
                 self.error_handler.handle_processing_error(
@@ -834,13 +789,12 @@ class CLIServiceManager:
                     fail_fast=False,
                 )
 
-        self.logger.log_operation(  # type: ignore[attr-defined]
-            "CLI service discovery completed",
-            {
-                "discovered_services": discovered_count,
-                "available_services": available_count,
-                "total_expected": len(expected_services),
-            },
+        # Cache the discovered services globally to prevent repeated discovery
+        _GLOBAL_SERVICE_REGISTRY = self.services
+
+        # Demote service discovery completion to DEBUG to reduce noise
+        self.logger.debug(
+            f"CLI service discovery completed: {available_count}/{len(expected_services)} services available"
         )
 
     def _register_cli_services(self) -> None:

@@ -899,7 +899,11 @@ class BaseFinancialService(ABC):
         if self.config.api_key:
             params = {**params, "apikey": self.config.api_key}
 
-        url = f"{self.config.base_url}/{endpoint.lstrip('/')}"
+        url = (
+            f"{self.config.base_url}/{endpoint.lstrip('/')}"
+            if endpoint
+            else self.config.base_url
+        )
 
         for attempt in range(self.config.max_retries + 1):
             try:

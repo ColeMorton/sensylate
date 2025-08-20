@@ -9,31 +9,29 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: ['./src/test/setup.ts'],
     globals: true,
-    testTimeout: 5000, // Fast timeout for unit tests
-    hookTimeout: 5000, // Fast hook timeout for unit tests
-    // NO globalSetup - this eliminates E2E build overhead
+    testTimeout: 60000, // Longer timeout for E2E tests
+    hookTimeout: 30000, // Longer hook timeout for setup/teardown
+    globalSetup: [
+      // E2E tests need the global setup for application build
+      './src/test/photo-booth/e2e/globalSetup.ts'
+    ],
     include: [
-      // Only include unit tests, exclude E2E tests
-      'src/test/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}',
-      'src/test/components/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}',
-      'src/test/hooks/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}',
-      'src/test/photo-booth/unit/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}',
-      'src/test/photo-booth/integration/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}',
+      // Only include E2E tests
+      'src/test/e2e/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}',
+      'src/test/photo-booth/e2e/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}',
+      'src/test/**/e2e/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'
     ],
     exclude: [
-      // Explicitly exclude E2E tests to prevent accidental execution
       'node_modules/**',
-      'src/test/e2e/**',
-      'src/test/photo-booth/e2e/**',
-      'src/test/**/e2e/**'
+      // Exclude unit tests from E2E runs
+      'src/test/components/**',
+      'src/test/hooks/**',
+      'src/test/photo-booth/unit/**',
+      'src/test/photo-booth/integration/**'
     ],
-    deps: {
-      // Ensure testing libraries are properly resolved
-      inline: ['@testing-library/user-event', '@testing-library/react', '@testing-library/dom']
-    },
     coverage: {
       provider: 'v8',
-      reporter: ['text'],
+      reporter: ['text', 'html', 'lcov'],
       exclude: [
         'node_modules/**',
         'dist/**',

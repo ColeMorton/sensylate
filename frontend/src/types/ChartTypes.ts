@@ -162,6 +162,9 @@ export interface ThemeColors {
   neutralData: string;
 }
 
+// Chart status types
+export type ChartStatus = "active" | "frozen" | "static";
+
 // Chart component props
 export interface ChartDisplayProps {
   title: string;
@@ -171,6 +174,12 @@ export interface ChartDisplayProps {
   timeframe?: "daily" | "weekly";
   indexed?: boolean;
   positionType?: "open" | "closed" | "auto";
+
+  // Chart lifecycle status properties
+  status?: ChartStatus;
+  frozenDate?: string;
+  frozenBy?: string;
+
   className?: string;
   titleOnly?: boolean;
 }

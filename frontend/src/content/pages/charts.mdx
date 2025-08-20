@@ -15,6 +15,7 @@ import ChartDisplay from "@/layouts/shortcodes/ChartDisplay.tsx";
   category="Bitcoin Performance"
   description="Multi-strategy Bitcoin trading vs buy-and-hold approach from 2014-2025. Active strategy: $1,000 → $113,312 (11,231% return)."
   chartType="portfolio-value-comparison"
+  status="frozen"
 />
 
 <ChartDisplay
@@ -23,6 +24,7 @@ import ChartDisplay from "@/layouts/shortcodes/ChartDisplay.tsx";
   category="Bitcoin Performance"
   description="Daily returns comparison: multi-strategy Bitcoin trading vs passive buy-and-hold showing day-to-day percentage changes over 3,960 days of market data."
   chartType="returns-comparison"
+  status="frozen"
 />
 
 <ChartDisplay
@@ -31,6 +33,7 @@ import ChartDisplay from "@/layouts/shortcodes/ChartDisplay.tsx";
   category="Bitcoin Risk Analysis"
   description="Bitcoin portfolio risk analysis showing drawdown periods. Maximum drawdown: 53.23% with 839-day recovery duration."
   chartType="portfolio-drawdowns"
+  status="frozen"
 />
 
 </div>
@@ -45,6 +48,7 @@ import ChartDisplay from "@/layouts/shortcodes/ChartDisplay.tsx";
   category="Live Trading Risk Analysis"
   description="Risk-reward analysis focusing on Maximum Favorable Excursion (MFE) and Maximum Adverse Excursion (MAE) with portfolio equity as context. Shows potential upside vs downside exposure in live trading."
   chartType="live-signals-equity-curve"
+  status="frozen"
 />
 
 <ChartDisplay
@@ -53,6 +57,7 @@ import ChartDisplay from "@/layouts/shortcodes/ChartDisplay.tsx";
   category="Live Trading Performance Comparison"
   description="Comparative performance analysis showing live signals portfolio against major market benchmarks: SPY (S&P 500), QQQ (Nasdaq 100), and Bitcoin. All series normalized to 100% for relative performance comparison."
   chartType="live-signals-benchmark-comparison"
+  status="frozen"
 />
 
 <ChartDisplay
@@ -61,6 +66,7 @@ import ChartDisplay from "@/layouts/shortcodes/ChartDisplay.tsx";
   category="Live Trading Risk"
   description="Live portfolio drawdown periods showing risk management during real trading. Peak drawdown of $69.23 with successful recovery to profitability."
   chartType="live-signals-drawdowns"
+  status="frozen"
 />
 
 </div>
@@ -73,6 +79,7 @@ import ChartDisplay from "@/layouts/shortcodes/ChartDisplay.tsx";
   category="Live Trading Technical Analysis"
   description="Weekly OHLC candlestick view of live signals equity performance. Aggregates daily equity data into weekly candles for technical analysis."
   chartType="live-signals-weekly-candlestick"
+  status="frozen"
 />
 
 <ChartDisplay
@@ -81,6 +88,8 @@ import ChartDisplay from "@/layouts/shortcodes/ChartDisplay.tsx";
   category="Live Trading Individual Trades"
   description="Waterfall chart showing individual trade profits and losses from closed positions, sorted from highest to lowest PnL. Visualizes contribution of each trade to overall portfolio performance."
   chartType="trade-pnl-waterfall"
+  status="frozen"
+  frozenDate="2025-08-20"
 />
 
 <ChartDisplay
@@ -90,6 +99,8 @@ import ChartDisplay from "@/layouts/shortcodes/ChartDisplay.tsx";
   description="Multi-line time series showing cumulative PnL for each position, indexed to $0 at entry date. Shows closed positions data when no open positions are available (38 completed trades)."
   chartType="open-positions-pnl-timeseries"
   positionType="auto"
+  status="frozen"
+  frozenDate="2025-08-20"
 />
 
 <ChartDisplay
@@ -100,6 +111,8 @@ import ChartDisplay from "@/layouts/shortcodes/ChartDisplay.tsx";
   chartType="open-positions-pnl-timeseries"
   timeframe="weekly"
   positionType="auto"
+  status="frozen"
+  frozenDate="2025-08-20"
 />
 
 <ChartDisplay
@@ -111,6 +124,8 @@ import ChartDisplay from "@/layouts/shortcodes/ChartDisplay.tsx";
   timeframe="daily"
   indexed={true}
   positionType="open"
+  status="frozen"
+  frozenDate="2025-08-20"
 />
 
 <ChartDisplay
@@ -122,6 +137,8 @@ import ChartDisplay from "@/layouts/shortcodes/ChartDisplay.tsx";
   timeframe="daily"
   indexed={true}
   positionType="closed"
+  status="frozen"
+  frozenDate="2025-08-20"
 />
 
 </div>
