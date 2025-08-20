@@ -180,15 +180,17 @@ class ActiveChartRequirementsDetector:
                 requirement = ActiveChartRequirement(
                     chart_type=chart_type,
                     data_source=str(mapping["data_source"]),
-                    file_path=str(self.frontend_data_path / str(mapping["data_source"])),
+                    file_path=str(
+                        self.frontend_data_path / str(mapping["data_source"])
+                    ),
                     category=str(mapping["category"]),
                     chart_file=str(chart.file_path),
                     required_services=list(mapping["services"]),
                 )
 
                 requirements.append(requirement)
-                categories_needed.add(mapping["category"])
-                services_needed.update(mapping["services"])
+                categories_needed.add(str(mapping["category"]))
+                services_needed.update(list(mapping["services"]))
 
                 self.logger.debug(
                     f"Active chart '{chart_type}' requires: {mapping['data_source']}"
