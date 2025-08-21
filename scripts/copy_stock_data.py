@@ -14,7 +14,6 @@ from datetime import timedelta
 from pathlib import Path
 
 import pandas as pd
-import yfinance as yf
 
 
 def get_symbol_data_years(symbol: str) -> int:
