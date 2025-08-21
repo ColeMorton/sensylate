@@ -10,10 +10,11 @@ import argparse
 import json
 import subprocess
 import sys
-from datetime import datetime, timedelta
+from datetime import timedelta
 from pathlib import Path
 
 import pandas as pd
+import yfinance as yf
 
 
 def get_symbol_data_years(symbol: str) -> int:
@@ -21,22 +22,26 @@ def get_symbol_data_years(symbol: str) -> int:
     try:
         project_root = Path(__file__).parent.parent
         config_path = project_root / "frontend/src/config/chart-data-dependencies.json"
-        
-        with open(config_path, 'r') as f:
+
+        with open(config_path, "r") as f:
             config = json.load(f)
-        
+
         symbol_config = config.get("symbolMetadata", {}).get(symbol.upper(), {})
         data_years = symbol_config.get("dataYears")
-        
+
         if data_years is not None:
             print(f"Found dataYears configuration for {symbol}: {data_years} years")
             return data_years
         else:
-            print(f"No dataYears configuration found for {symbol}, using default 1 year")
+            print(
+                f"No dataYears configuration found for {symbol}, using default 1 year"
+            )
             return 1
-            
+
     except Exception as e:
-        print(f"Error reading chart data dependencies config: {e}, using default 1 year")
+        print(
+            f"Error reading chart data dependencies config: {e}, using default 1 year"
+        )
         return 1
 
 
@@ -44,20 +49,20 @@ def filter_data_by_years(df: pd.DataFrame, years: int) -> pd.DataFrame:
     """Filter dataframe to include only the last N years of data"""
     if df.empty or years <= 0:
         return df
-    
+
     # Convert date column to datetime
-    df['date'] = pd.to_datetime(df['date'])
-    
+    df["date"] = pd.to_datetime(df["date"])
+
     # Calculate cutoff date (N years ago from the most recent date)
-    latest_date = df['date'].max()
+    latest_date = df["date"].max()
     cutoff_date = latest_date - timedelta(days=years * 365)
-    
+
     # Filter data
-    filtered_df = df[df['date'] >= cutoff_date].copy()
-    
+    filtered_df = df[df["date"] >= cutoff_date].copy()
+
     # Convert date back to string format
-    filtered_df['date'] = filtered_df['date'].dt.strftime('%Y-%m-%d')
-    
+    filtered_df["date"] = filtered_df["date"].dt.strftime("%Y-%m-%d")
+
     print(f"Filtered data from {len(df)} to {len(filtered_df)} rows ({years} years)")
     return filtered_df
 

@@ -43,7 +43,7 @@ vi.mock("@/utils/chartTheme", () => ({
 }));
 
 vi.mock("./ChartRenderer", () => ({
-  default: ({ data, layout, config, loading, error }: any) => (
+  default: ({ data, _layout, _config, loading, error }: any) => (
     <div data-testid="chart-renderer">
       <div data-testid="chart-data">{JSON.stringify(data)}</div>
       <div data-testid="chart-loading">{loading ? "loading" : "ready"}</div>
@@ -66,14 +66,14 @@ describe("Chart Configuration Integration", () => {
 
     it("should contain symbol metadata for AAPL and MSTR", () => {
       const { symbolMetadata } = chartDependencyConfig;
-      
+
       expect(symbolMetadata).toHaveProperty("AAPL");
       expect(symbolMetadata).toHaveProperty("MSTR");
-      
+
       expect(symbolMetadata.AAPL.displayName).toBe("Apple Price");
       expect(symbolMetadata.AAPL.chartType).toBe("apple-price");
       expect(symbolMetadata.AAPL.dataYears).toBe(15);
-      
+
       expect(symbolMetadata.MSTR.displayName).toBe("Strategy Price");
       expect(symbolMetadata.MSTR.chartType).toBe("mstr-price");
       expect(symbolMetadata.MSTR.dataYears).toBe(6);
@@ -81,14 +81,14 @@ describe("Chart Configuration Integration", () => {
 
     it("should have chart type mappings", () => {
       const { chartTypeMapping } = chartDependencyConfig;
-      
+
       expect(chartTypeMapping["apple-price"]).toBe("AAPL");
       expect(chartTypeMapping["mstr-price"]).toBe("MSTR");
     });
 
     it("should have default configuration values", () => {
       const { defaults } = chartDependencyConfig;
-      
+
       expect(defaults.yAxisLabel).toBe("Price ($)");
       expect(defaults.period).toBe("1y");
       expect(defaults.dataFormat).toBe("csv");
@@ -99,7 +99,7 @@ describe("Chart Configuration Integration", () => {
   describe("PortfolioChart Component Integration", () => {
     it("should render apple-price chart correctly", () => {
       const { getByTestId } = render(
-        <PortfolioChart chartType="apple-price" title="Apple Stock Price" />
+        <PortfolioChart chartType="apple-price" title="Apple Stock Price" />,
       );
 
       expect(getByTestId("chart-renderer")).toBeInTheDocument();
@@ -109,7 +109,10 @@ describe("Chart Configuration Integration", () => {
 
     it("should render mstr-price chart correctly", () => {
       const { getByTestId } = render(
-        <PortfolioChart chartType="mstr-price" title="MicroStrategy Stock Price" />
+        <PortfolioChart
+          chartType="mstr-price"
+          title="MicroStrategy Stock Price"
+        />,
       );
 
       expect(getByTestId("chart-renderer")).toBeInTheDocument();
@@ -119,7 +122,10 @@ describe("Chart Configuration Integration", () => {
 
     it("should handle non-stock chart types", () => {
       const { getByTestId } = render(
-        <PortfolioChart chartType="portfolio-value-comparison" title="Portfolio Comparison" />
+        <PortfolioChart
+          chartType="portfolio-value-comparison"
+          title="Portfolio Comparison"
+        />,
       );
 
       expect(getByTestId("chart-renderer")).toBeInTheDocument();
@@ -149,7 +155,9 @@ describe("Chart Configuration Integration", () => {
           return "Chart";
         }
         const metadata =
-          chartDependencyConfig.symbolMetadata[symbol as keyof typeof chartDependencyConfig.symbolMetadata];
+          chartDependencyConfig.symbolMetadata[
+            symbol as keyof typeof chartDependencyConfig.symbolMetadata
+          ];
         return metadata?.displayName || `${symbol} Price`;
       };
 
@@ -167,19 +175,25 @@ describe("Chart Configuration Integration", () => {
     });
 
     it("should maintain consistency between symbol metadata and dependencies", () => {
-      const { symbolMetadata, dependencies, chartTypeMapping } = chartDependencyConfig;
+      const { symbolMetadata, dependencies, chartTypeMapping } =
+        chartDependencyConfig;
 
-      Object.keys(symbolMetadata).forEach(symbol => {
-        const symbolData = symbolMetadata[symbol as keyof typeof symbolMetadata];
+      Object.keys(symbolMetadata).forEach((symbol) => {
+        const symbolData =
+          symbolMetadata[symbol as keyof typeof symbolMetadata];
         const chartType = symbolData.chartType;
 
         // Chart type should be in mapping
         expect(chartTypeMapping).toHaveProperty(chartType);
-        expect(chartTypeMapping[chartType as keyof typeof chartTypeMapping]).toBe(symbol);
+        expect(
+          chartTypeMapping[chartType as keyof typeof chartTypeMapping],
+        ).toBe(symbol);
 
         // Chart type should have a dependency
         expect(dependencies).toHaveProperty(chartType);
-        expect(dependencies[chartType as keyof typeof dependencies].chartType).toBe(chartType);
+        expect(
+          dependencies[chartType as keyof typeof dependencies].chartType,
+        ).toBe(chartType);
       });
     });
   });
@@ -187,13 +201,13 @@ describe("Chart Configuration Integration", () => {
   describe("Backwards Compatibility", () => {
     it("should maintain all existing chart types in dependencies", () => {
       const { dependencies } = chartDependencyConfig;
-      
+
       // Should still have the original chart types
       const expectedChartTypes = [
         "apple-price",
         "mstr-price",
         "portfolio-value-comparison",
-        "returns-comparison", 
+        "returns-comparison",
         "portfolio-drawdowns",
         "live-signals-equity-curve",
         "live-signals-benchmark-comparison",
@@ -201,12 +215,14 @@ describe("Chart Configuration Integration", () => {
         "live-signals-weekly-candlestick",
         "trade-pnl-waterfall",
         "closed-positions-pnl-timeseries",
-        "open-positions-pnl-timeseries"
+        "open-positions-pnl-timeseries",
       ];
 
-      expectedChartTypes.forEach(chartType => {
+      expectedChartTypes.forEach((chartType) => {
         expect(dependencies).toHaveProperty(chartType);
-        expect(dependencies[chartType as keyof typeof dependencies].chartType).toBe(chartType);
+        expect(
+          dependencies[chartType as keyof typeof dependencies].chartType,
+        ).toBe(chartType);
       });
     });
 

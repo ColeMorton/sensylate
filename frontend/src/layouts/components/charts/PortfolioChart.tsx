@@ -52,7 +52,9 @@ const getSymbolDisplayName = (chartType: ChartType): string => {
     return "Chart";
   }
   const metadata =
-    chartDependencyConfig.symbolMetadata[symbol as keyof typeof chartDependencyConfig.symbolMetadata];
+    chartDependencyConfig.symbolMetadata[
+      symbol as keyof typeof chartDependencyConfig.symbolMetadata
+    ];
   return metadata?.displayName || `${symbol} Price`;
 };
 
