@@ -25,9 +25,10 @@ import pandas as pd
 # Add scripts directory to path
 sys.path.insert(0, str(Path(__file__).parent))
 
-from chart_status_manager import ChartStatusManager
+from chart_data_dependency_manager import ChartDataDependencyManager
 from cli_contract_validator import CLIContractValidator
 from cli_service_script import CLIServiceScript
+from copy_stock_data import fetch_and_copy_stock_data
 from data_contract_discovery import (
     ContractDiscoveryResult,
     DataContract,
@@ -375,7 +376,7 @@ class DataPipelineManager:
         self.cli_service_capabilities = self._initialize_cli_capabilities()
 
         # Initialize chart status manager for pipeline filtering
-        self.chart_status_manager = ChartStatusManager(self.frontend_src_path)
+        self.chart_status_manager = ChartDataDependencyManager(self.frontend_src_path)
 
         self.logger.info(
             f"Initialized contract-driven pipeline for {self.frontend_data_dir}"
@@ -1479,6 +1480,15 @@ class DataPipelineManager:
         """Fulfill a specific data contract by ensuring data meets schema requirements"""
 
         try:
+            # Skip raw stock data contracts - these are handled by Yahoo Finance fetch and copy
+            if contract.category == "raw" and ("stocks" in contract.contract_id or "apple-price" in contract.contract_id or "mstr-price" in contract.contract_id):
+                return ProcessingResult(
+                    success=True, 
+                    operation=f"fulfill_contract_{contract.contract_id}",
+                    error=None,
+                    metadata={"skip_reason": "Raw stock data handled by Yahoo Finance fetch"}
+                )
+            
             # Check if contract file exists and has recent data
             if not contract.file_path.exists():
                 # Generate data for this contract
@@ -1933,6 +1943,19 @@ class DataPipelineManager:
                     )
                     symbols.add(symbol)
 
+            # Extract symbols from active raw chart requirements  
+            raw_chart_requirements = [
+                req for req in active_requirements.requirements
+                if req.category == "raw" and "yahoo_finance" in req.required_services
+            ]
+
+            for req in raw_chart_requirements:
+                # Extract symbol from data_source like "raw/stocks/AAPL/daily.csv"
+                if "/stocks/" in req.data_source and req.data_source.endswith("/daily.csv"):
+                    symbol = req.data_source.split("/stocks/")[1].split("/")[0]
+                    symbols.add(symbol)
+                    self.logger.info(f"Extracted symbol '{symbol}' from active raw chart '{req.chart_type}'")
+
             # Extract symbols from trade history only if portfolio charts that require trade_history are active
             trade_history_portfolio_charts = [
                 req
@@ -2059,6 +2082,9 @@ class DataPipelineManager:
                     f"Yahoo Finance historical data fetch completed successfully: "
                     f"{len(successful_symbols)}/{len(symbols)} symbols ({success_rate:.1%} success rate)"
                 )
+                
+                # Auto-copy successful symbols to frontend directory
+                self._copy_symbols_to_frontend(successful_symbols)
             else:
                 self.logger.error(
                     f"Yahoo Finance historical data fetch failed: "
@@ -2086,6 +2112,37 @@ class DataPipelineManager:
                 error=error_msg,
                 error_category="infrastructure",
             )
+
+    def _copy_symbols_to_frontend(self, symbols: List[str]) -> None:
+        """Copy successfully fetched stock data from scripts to frontend directory"""
+        if not symbols:
+            return
+            
+        self.logger.info(f"Copying {len(symbols)} symbols to frontend directory...")
+        successful_copies = []
+        failed_copies = []
+        
+        for symbol in symbols:
+            try:
+                success = fetch_and_copy_stock_data(symbol)
+                if success:
+                    successful_copies.append(symbol)
+                    self.logger.info(f"Successfully copied {symbol} data to frontend")
+                else:
+                    failed_copies.append(symbol)
+                    self.logger.warning(f"Failed to copy {symbol} data to frontend")
+            except Exception as e:
+                failed_copies.append(symbol)
+                self.logger.error(f"Error copying {symbol} data to frontend: {str(e)}")
+        
+        if successful_copies:
+            self.logger.info(
+                f"Frontend copy completed: {len(successful_copies)}/{len(symbols)} symbols "
+                f"successfully copied to frontend directory"
+            )
+        
+        if failed_copies:
+            self.logger.warning(f"Failed to copy symbols to frontend: {failed_copies}")
 
     def _categorize_service_error(self, error_message: str) -> str:
         """Categorize service errors for better debugging and monitoring"""

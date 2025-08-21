@@ -94,46 +94,56 @@ export class DataDependencyManager {
   private assessRefreshCapability(
     dependency: ChartDataDependency,
   ): ChartRefreshCapability {
-    const { primarySource, refreshPolicy } = dependency;
+    const { primarySource, refreshPolicy, chartStatus } = dependency;
 
     let canRefresh = false;
     let reason = "";
     const availableMethods = [primarySource.refreshMethod];
 
-    switch (primarySource.type) {
-      case "static":
-        canRefresh = false;
-        reason = "Static data source - no refresh available";
-        break;
+    // Chart status overrides refresh capability
+    if (chartStatus === "frozen") {
+      canRefresh = false;
+      reason = "Chart is frozen - refresh disabled";
+    } else if (chartStatus === "static") {
+      canRefresh = false;
+      reason = "Static chart - no refresh available";
+    } else {
+      // Default "active" status - check normal refresh logic
+      switch (primarySource.type) {
+        case "static":
+          canRefresh = false;
+          reason = "Static data source - no refresh available";
+          break;
 
-      case "manual":
-        canRefresh = refreshPolicy.allowManualRefresh;
-        reason = canRefresh
-          ? "Manual refresh available"
-          : "Manual refresh disabled";
-        break;
+        case "manual":
+          canRefresh = refreshPolicy.allowManualRefresh;
+          reason = canRefresh
+            ? "Manual refresh available"
+            : "Manual refresh disabled";
+          break;
 
-      case "cli-api":
-        canRefresh = Boolean(
-          primarySource.cliService && refreshPolicy.autoRefresh,
-        );
-        reason = canRefresh
-          ? "API refresh available"
-          : "CLI service not configured";
-        break;
+        case "cli-api":
+          canRefresh = Boolean(
+            primarySource.cliService && refreshPolicy.autoRefresh,
+          );
+          reason = canRefresh
+            ? "API refresh available"
+            : "CLI service not configured";
+          break;
 
-      case "hybrid":
-        canRefresh = Boolean(
-          primarySource.cliService || refreshPolicy.allowManualRefresh,
-        );
-        reason = canRefresh
-          ? "Hybrid refresh available"
-          : "No refresh methods available";
-        break;
+        case "hybrid":
+          canRefresh = Boolean(
+            primarySource.cliService || refreshPolicy.allowManualRefresh,
+          );
+          reason = canRefresh
+            ? "Hybrid refresh available"
+            : "No refresh methods available";
+          break;
 
-      default:
-        canRefresh = false;
-        reason = "Unknown data source type";
+        default:
+          canRefresh = false;
+          reason = "Unknown data source type";
+      }
     }
 
     return {
@@ -192,7 +202,15 @@ export class DataDependencyManager {
       };
     }
 
-    return this.checkDataFreshness(entry);
+    const baseStatus = this.checkDataFreshness(entry);
+    
+    // Include chart status from configuration
+    return {
+      ...baseStatus,
+      chartStatus: entry.config.chartStatus || "active",
+      frozenDate: entry.config.chartStatus === "frozen" ? entry.config.primarySource.metadata?.lastUpdatedBy : undefined,
+      frozenBy: entry.config.chartStatus === "frozen" ? entry.config.primarySource.metadata?.lastUpdatedBy : undefined,
+    };
   }
 
   /**

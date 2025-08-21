@@ -132,34 +132,194 @@ interface PhotoBoothState {
       "description": "Comprehensive trading strategy performance overview",
       "layout": "2x2_grid",
       "enabled": true
+    },
+    {
+      "id": "portfolio_analysis",
+      "name": "Portfolio Analysis Dashboard",
+      "file": "portfolio-analysis.mdx",
+      "description": "Portfolio composition and risk analysis",
+      "layout": "1x3_stack",
+      "enabled": true
+    },
+    {
+      "id": "portfolio_history_portrait",
+      "name": "Portfolio History Portrait",
+      "file": "portfolio-history-portrait.mdx",
+      "description": "Portfolio trading history with waterfall and time series analysis",
+      "layout": "2x1_stack",
+      "enabled": true
+    },
+    {
+      "id": "market_overview",
+      "name": "Market Overview Dashboard",
+      "file": "market-overview.mdx",
+      "description": "Market trends and sector analysis",
+      "layout": "2x2_grid",
+      "enabled": false
     }
   ],
   "screenshot_settings": {
     "viewport": { "width": 1920, "height": 1080 },
     "device_scale_factor": 2,
+    "format": "png",
+    "quality": 95,
+    "full_page": false,
     "timeout": 30000,
     "wait_for_selector": ".photo-booth-ready"
   },
   "export_options": {
     "formats": {
       "available": ["png", "svg", "both"],
-      "default": "png"
+      "default": "png",
+      "descriptions": {
+        "png": "High-resolution raster image, perfect for presentations and print",
+        "svg": "Vector-based image with infinite scalability and small file size",
+        "both": "Generate both PNG and SVG formats simultaneously"
+      }
     },
     "aspect_ratios": {
       "available": [
         {
           "id": "16:9",
-          "dimensions": { "width": 1920, "height": 1080 }
+          "name": "Widescreen (16:9)",
+          "dimensions": { "width": 1920, "height": 1080 },
+          "description": "Standard widescreen format, ideal for monitors and web"
+        },
+        {
+          "id": "4:3",
+          "name": "Traditional (4:3)",
+          "dimensions": { "width": 1440, "height": 1080 },
+          "description": "Classic presentation format, ideal for projectors"
+        },
+        {
+          "id": "3:4",
+          "name": "Portrait (3:4)",
+          "dimensions": { "width": 1080, "height": 1440 },
+          "description": "Portrait orientation, ideal for social media and mobile"
         }
-      ]
+      ],
+      "default": "16:9"
     },
     "dpi_settings": {
       "available": [150, 300, 600],
-      "default": 300
+      "default": 300,
+      "descriptions": {
+        "150": "Web/Digital - Standard screen resolution",
+        "300": "Print/Professional - High-quality printing standard",
+        "600": "Ultra-High - Professional publishing and large format"
+      }
+    },
+    "scale_factors": {
+      "available": [2, 3, 4],
+      "default": 3,
+      "descriptions": {
+        "2": "Standard high-DPI (2x resolution)",
+        "3": "Enhanced high-DPI (3x resolution)",
+        "4": "Ultra high-DPI (4x resolution)"
+      }
+    }
+  },
+  "output": {
+    "directory": "data/outputs/photo-booth",
+    "filename_template": "{dashboard_id}_{mode}_{aspect_ratio}_{format}_{dpi}dpi_{timestamp}.{extension}",
+    "legacy_filename_template": "{dashboard_id}_{mode}_{timestamp}.png",
+    "modes": ["light", "dark"],
+    "auto_cleanup": {
+      "enabled": true,
+      "keep_latest": 10,
+      "older_than_days": 30
+    }
+  },
+  "performance": {
+    "preload_charts": true,
+    "render_timeout": 15000,
+    "retry_attempts": 3,
+    "cache_bust": false
+  },
+  "data_dependencies": {
+    "enabled": true,
+    "config_path": "./chart-data-dependencies.json",
+    "show_status_indicators": true,
+    "allow_manual_refresh": true,
+    "refresh_policies": {
+      "auto_refresh_on_stale": false,
+      "refresh_on_dashboard_load": true,
+      "background_monitoring": true,
+      "file_watching": true
+    },
+    "status_display": {
+      "show_compact_indicators": true,
+      "show_detailed_dashboard": false,
+      "alert_on_stale_data": true,
+      "alert_threshold_hours": 12
+    },
+    "integration": {
+      "cli_services_enabled": true,
+      "cli_rate_limiting": true,
+      "file_monitoring": true,
+      "cache_coordination": true
+    }
+  },
+  "dashboard_data_mapping": {
+    "trading_performance": {
+      "primary_charts": [
+        "portfolio-value-comparison",
+        "returns-comparison",
+        "live-signals-equity-curve",
+        "trade-pnl-waterfall"
+      ],
+      "data_freshness_requirements": {
+        "warning_threshold_hours": 6,
+        "error_threshold_hours": 24
+      },
+      "refresh_priority": "high"
+    },
+    "portfolio_analysis": {
+      "primary_charts": ["portfolio-drawdowns", "open-positions-pnl-timeseries", "closed-positions-pnl-timeseries"],
+      "data_freshness_requirements": {
+        "warning_threshold_hours": 12,
+        "error_threshold_hours": 48
+      },
+      "refresh_priority": "medium"
+    },
+    "portfolio_history_portrait": {
+      "primary_charts": ["trade-pnl-waterfall", "closed-positions-pnl-timeseries", "live-signals-weekly-candlestick"],
+      "data_freshness_requirements": {
+        "warning_threshold_hours": 24,
+        "error_threshold_hours": 72
+      },
+      "refresh_priority": "low"
+    },
+    "market_overview": {
+      "primary_charts": ["live-signals-benchmark-comparison", "apple-stock"],
+      "data_freshness_requirements": {
+        "warning_threshold_hours": 2,
+        "error_threshold_hours": 8
+      },
+      "refresh_priority": "high"
     }
   }
 }
 ```
+
+#### Configuration Sections Explained
+
+**Data Dependencies Configuration**:
+- **File Watching**: Monitors data file changes for automatic invalidation
+- **Refresh Policies**: Controls when and how data refreshes occur
+- **Status Display**: Configures visual indicators for data freshness
+- **CLI Integration**: Enables coordination with backend data pipeline
+
+**Dashboard Data Mapping**:
+- **Primary Charts**: Lists core chart types for each dashboard
+- **Freshness Requirements**: Time-based thresholds for data staleness warnings
+- **Refresh Priority**: Determines update priority during bulk operations
+
+**Performance Configuration**:
+- **Chart Preloading**: Enables background chart rendering for faster display
+- **Render Timeout**: Maximum wait time for chart initialization (15 seconds)
+- **Retry Logic**: Automatic retry attempts for failed operations
+- **Cache Busting**: Controls cache invalidation strategies
 
 ### 2.3 URL Parameter System
 
@@ -237,7 +397,7 @@ const layoutMappings: Record<string, string> = {
 
 ### 3.2 Dashboard Renderer Component
 
-**Location**: PhotoBoothDisplay.tsx (lines 574-632)
+**Location**: PhotoBoothDisplay.tsx (lines 575-634)
 **Purpose**: Renders actual dashboard content with theme and layout support
 
 **Key Features**:
@@ -342,13 +502,91 @@ interface TradeHistoryDataRow {
 }
 ```
 
-### 4.4 Data Flow Pipeline
+### 4.4 Data Quality & Validation
+
+#### Enhanced Data Validation
+**ChartDataService** now includes comprehensive data quality monitoring:
+
+```typescript
+// Data validation with quality assessment
+validateCSVData(data: any[], dataType: string): {
+  isValid: boolean;
+  issues: string[];
+  recordCount: number;
+}
+
+// Data freshness monitoring
+checkDataFreshness(endpoint: string): Promise<{
+  isFresh: boolean;
+  ageHours: number;
+  lastModified?: string;
+}>
+
+// Comprehensive quality reporting
+getDataQualityReport(): Promise<{
+  overall: "healthy" | "warning" | "error";
+  categories: {
+    [key: string]: {
+      status: "healthy" | "warning" | "error";
+      recordCount: number;
+      issues: string[];
+      freshness: { isFresh: boolean; ageHours: number; };
+    };
+  };
+  generatedAt: string;
+}>
+```
+
+#### Data Validation Methods
+**Enhanced validation features**:
+- **Schema Validation**: Required field presence and type checking
+- **Freshness Monitoring**: HTTP header-based age detection with 24-hour thresholds
+- **Data Completeness**: Row count validation and missing data detection
+- **Cross-Category Validation**: Live signals, trade history, and portfolio data consistency
+
+#### Cache Management Enhancements
+**Advanced caching system**:
+- **Multi-level Caching**: Portfolio, live signals, trade history, benchmark, and open positions
+- **Cache Status Reporting**: Validity, freshness, and data quality indicators
+- **Intelligent Invalidation**: Time-based and event-driven cache clearing
+- **Memory Optimization**: Automatic cleanup and resource management
+
+#### Enhanced Data Methods
+**Validation-enabled data fetching**:
+```typescript
+// Enhanced data fetching with validation
+fetchLiveSignalsDataWithValidation(): Promise<{
+  data: LiveSignalsDataRow[];
+  validation: { isValid: boolean; issues: string[]; recordCount: number; };
+  freshness: { isFresh: boolean; ageHours: number; lastModified?: string; };
+}>
+
+fetchTradeHistoryDataWithValidation(): Promise<{
+  data: TradeHistoryDataRow[];
+  validation: { isValid: boolean; issues: string[]; recordCount: number; };
+  freshness: { isFresh: boolean; ageHours: number; lastModified?: string; };
+}>
+
+// Cache status monitoring
+getCacheStatus(): {
+  isValid: boolean;
+  lastFetched?: number;
+  hasData: boolean;
+  dataQuality?: "unknown" | "healthy" | "warning" | "error";
+}
+
+// Manual cache management
+clearCache(): void
+```
+
+### 4.5 Data Flow Pipeline
 
 1. **Backend Generation**: Python scripts generate CSV files in `data/outputs/`
 2. **Frontend Request**: React hooks trigger data fetching via ChartDataService
 3. **CSV Processing**: Service parses CSV text into typed interfaces
-4. **Cache Management**: Data stored with timestamp-based invalidation
-5. **Component Consumption**: Chart components receive typed, validated data
+4. **Data Validation**: Quality assessment and freshness checking
+5. **Cache Management**: Data stored with timestamp-based invalidation and quality metrics
+6. **Component Consumption**: Chart components receive typed, validated data with quality indicators
 
 ---
 
@@ -482,7 +720,7 @@ Export Controls  /api/export-    photo_booth_   Screenshot   Image Processing  F
 
 ### 6.2 Frontend Export Controls
 
-**Location**: PhotoBoothDisplay component (lines 367-495)
+**Location**: PhotoBoothDisplay component (lines 208-571)
 
 **Export Options**:
 - **Format Selection**: PNG, SVG, or both formats simultaneously
@@ -571,6 +809,62 @@ Example: `trading_performance_dark_16x9_png_300dpi_20250810_143052.png`
 - **Viewport Accuracy**: Exact pixel dimensions per aspect ratio
 - **Element Hiding**: Clean removal of UI controls and dev tools
 - **Rendering Timeout**: 30-second maximum wait for chart completion
+
+### 6.6 Enhanced Export Features
+
+#### Auto-Cleanup and File Management
+**Configuration**: `output.auto_cleanup` in photo-booth.json
+- **Automatic Cleanup**: Removes old export files based on retention policies
+- **Keep Latest**: Maintains 10 most recent exports per dashboard
+- **Age-based Removal**: Deletes files older than 30 days
+- **Smart Organization**: Organized file structure with descriptive filenames
+
+#### Advanced Error Handling
+**Export Pipeline Resilience**:
+- **Parameter Validation**: Comprehensive input validation with detailed error messages
+- **Process Monitoring**: Real-time Python script execution monitoring
+- **Timeout Management**: Configurable timeout limits with graceful degradation
+- **Error Context**: Detailed error reporting with troubleshooting guidance
+- **Retry Logic**: Automatic retry attempts for transient failures
+
+```typescript
+// Enhanced error response structure
+interface ExportErrorResponse {
+  success: false;
+  error: string;
+  error_code: "VALIDATION_ERROR" | "PROCESS_TIMEOUT" | "SCRIPT_ERROR" | "NETWORK_ERROR";
+  details: {
+    dashboard_id?: string;
+    parameters?: ExportRequest;
+    python_output?: string;
+    execution_time?: number;
+  };
+  retry_suggested: boolean;
+  troubleshooting_steps: string[];
+}
+```
+
+#### Export Status Tracking
+**Real-time Progress Monitoring**:
+- **Status Updates**: Live progress indication during export operations
+- **Processing Time**: Accurate execution time reporting
+- **File Generation**: Real-time file path reporting as files are created
+- **Success Confirmation**: Detailed success reporting with generated file list
+
+#### Enhanced Filename Templates
+**Flexible Naming System**:
+- **Standard Template**: `{dashboard_id}_{mode}_{aspect_ratio}_{format}_{dpi}dpi_{timestamp}.{extension}`
+- **Legacy Support**: Backward compatibility with simple naming convention
+- **Timestamp Precision**: Accurate timestamp formatting for unique file identification
+- **Format Indicators**: Clear format and quality indicators in filenames
+
+Example Filenames:
+```
+trading_performance_dark_16x9_png_300dpi_20250820_143052.png
+portfolio_analysis_light_4x3_svg_600dpi_20250820_143127.svg
+portfolio_history_portrait_dark_3x4_both_150dpi_20250820_143201.png
+portfolio_history_portrait_dark_3x4_both_150dpi_20250820_143201.svg
+```
 
 ---
 

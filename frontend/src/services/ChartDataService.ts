@@ -219,6 +219,31 @@ class ChartDataService {
     }
   }
 
+  async fetchStockData(symbol: string, signal?: AbortSignal): Promise<StockDataRow[]> {
+    try {
+      const response = await fetch(`/data/raw/stocks/${symbol}/daily.csv`, {
+        signal,
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const csvText = await response.text();
+      return this.parseCSV(csvText);
+    } catch (error) {
+      // Re-throw AbortError without wrapping to preserve abort handling
+      if (error instanceof Error && error.name === "AbortError") {
+        throw error;
+      }
+      throw new Error(
+        error instanceof Error
+          ? error.message
+          : `Failed to fetch stock data for ${symbol}`,
+      );
+    }
+  }
+
   async fetchPortfolioData(signal?: AbortSignal): Promise<PortfolioDataCache> {
     // Return cached data if valid
     if (this.isCacheValid() && this.isPortfolioCacheComplete()) {

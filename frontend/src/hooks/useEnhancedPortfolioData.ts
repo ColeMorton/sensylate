@@ -203,7 +203,7 @@ export function useEnhancedAppleStockData(): UseEnhancedDataResponse<
   StockDataRow[]
 > {
   return useEnhancedData(
-    "apple-stock",
+    "apple-price",
     () => enhancedChartDataService.useAppleStockData(),
     [],
   );

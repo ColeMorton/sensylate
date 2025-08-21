@@ -13,7 +13,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import List, Optional, Set
 
-from chart_status_manager import ChartStatus, ChartStatusManager
+from chart_data_dependency_manager import ChartStatus, ChartDataDependencyManager
 
 # Global module-level cache to prevent repeated discovery operations
 _GLOBAL_DISCOVERY_CACHE = None
@@ -58,8 +58,8 @@ class ActiveChartRequirementsDetector:
         )
         self.logger = logging.getLogger(__name__)
 
-        # Initialize chart status manager
-        self.chart_status_manager = ChartStatusManager(self.frontend_src_path)
+        # Initialize chart data dependency manager
+        self.chart_status_manager = ChartDataDependencyManager(self.frontend_src_path)
 
         # Chart type to data source mapping
         self.chart_data_mapping = {
@@ -112,8 +112,13 @@ class ActiveChartRequirementsDetector:
                 "services": ["trade_history"],
             },
             # Raw data charts
-            "apple-stock": {
+            "apple-price": {
                 "data_source": "raw/stocks/AAPL/daily.csv",
+                "category": "raw",
+                "services": ["yahoo_finance"],
+            },
+            "mstr-price": {
+                "data_source": "raw/stocks/MSTR/daily.csv",
                 "category": "raw",
                 "services": ["yahoo_finance"],
             },
@@ -142,7 +147,7 @@ class ActiveChartRequirementsDetector:
         # All subsequent discovery calls are silent to eliminate noise
 
         # Get all chart statuses
-        chart_statuses = self.chart_status_manager.scan_mdx_files()
+        chart_statuses = self.chart_status_manager.get_chart_statuses()
 
         # Separate active and frozen charts
         active_charts = [

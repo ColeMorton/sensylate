@@ -1,0 +1,32 @@
+{
+  "version": "1.0.0",
+  "description": "Symbol metadata for dynamic chart naming and configuration",
+  "symbols": {
+    "AAPL": {
+      "name": "Apple Inc.",
+      "displayName": "Apple Price",
+      "chartType": "apple-price",
+      "sector": "Technology",
+      "description": "Apple Inc. stock price data from Yahoo Finance"
+    },
+    "MSTR": {
+      "name": "MicroStrategy Inc.",
+      "displayName": "Strategy Price", 
+      "chartType": "mstr-price",
+      "sector": "Technology",
+      "description": "MicroStrategy Inc. stock price data from Yahoo Finance"
+    }
+  },
+  "chartTypeMapping": {
+    "apple-price": "AAPL",
+    "mstr-price": "MSTR"
+  },
+  "defaults": {
+    "yAxisLabel": "Price ($)",
+    "period": "1y",
+    "dataFormat": "csv",
+    "refreshInterval": 86400000,
+    "warningThreshold": 24,
+    "errorThreshold": 48
+  }
+}

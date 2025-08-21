@@ -1,16 +1,16 @@
 {
   "created": "2025-07-28T16:19:12.909910",
-  "last_updated": "2025-08-19T18:51:04.065772",
-  "total_files": 506,
+  "last_updated": "2025-08-21T15:05:24.353756",
+  "total_files": 509,
   "data_types": {
-    "daily_prices": 493,
+    "daily_prices": 496,
     "fundamentals": 12,
     "financials": 1
   },
   "symbols": {
     "AAPL": {
       "first_date": "2024-07-30T00:00:00-04:00",
-      "last_date": "2025-07-29T08:47:39.654211",
+      "last_date": "2025-08-21T14:34:59.140443",
       "data_types": [
         "daily_prices",
         "fundamentals"
@@ -59,6 +59,13 @@
       "data_types": [
         "fundamentals",
         "financials"
+      ]
+    },
+    "MSTR": {
+      "first_date": "2025-08-21T15:05:24.353750",
+      "last_date": "2025-08-21T15:05:24.353750",
+      "data_types": [
+        "daily_prices"
       ]
     }
   },

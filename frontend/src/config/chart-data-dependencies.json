@@ -8,35 +8,69 @@
     "maxConcurrentRefresh": 3
   },
   "dependencies": {
-    "apple-stock": {
-      "chartType": "apple-stock",
+    "apple-price": {
+      "chartType": "apple-price",
+      "chartStatus": "active",
       "primarySource": {
-        "type": "static",
-        "location": "https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv",
-        "refreshMethod": "never",
-        "frequency": "never",
+        "type": "cli-api",
+        "location": "/data/raw/stocks/AAPL/daily.csv",
+        "refreshMethod": "api-poll",
+        "frequency": "daily",
+        "cliService": "yahoo-finance",
         "metadata": {
-          "description": "Historical Apple stock data for demo purposes",
+          "description": "Real-time Apple stock price data from Yahoo Finance API",
           "format": "csv",
-          "lastUpdatedBy": "static-dataset"
+          "lastUpdatedBy": "yahoo-finance-api"
         }
       },
       "freshness": {
-        "warningThreshold": 8760,
-        "errorThreshold": 17520,
+        "warningThreshold": 24,
+        "errorThreshold": 48,
         "blockOnStale": false,
-        "manualGracePeriod": 8760
+        "manualGracePeriod": 12
       },
       "refreshPolicy": {
-        "autoRefresh": false,
-        "allowManualRefresh": false,
-        "refreshOnVisible": false,
-        "maxRetries": 0,
-        "retryBackoff": "linear"
+        "autoRefresh": true,
+        "refreshInterval": 86400000,
+        "allowManualRefresh": true,
+        "refreshOnVisible": true,
+        "maxRetries": 3,
+        "retryBackoff": "exponential"
+      }
+    },
+    "mstr-price": {
+      "chartType": "mstr-price",
+      "chartStatus": "active",
+      "primarySource": {
+        "type": "cli-api",
+        "location": "/data/raw/stocks/MSTR/daily.csv",
+        "refreshMethod": "api-poll",
+        "frequency": "daily",
+        "cliService": "yahoo-finance",
+        "metadata": {
+          "description": "Real-time MicroStrategy stock price data from Yahoo Finance API",
+          "format": "csv",
+          "lastUpdatedBy": "yahoo-finance-api"
+        }
+      },
+      "freshness": {
+        "warningThreshold": 24,
+        "errorThreshold": 48,
+        "blockOnStale": false,
+        "manualGracePeriod": 12
+      },
+      "refreshPolicy": {
+        "autoRefresh": true,
+        "refreshInterval": 86400000,
+        "allowManualRefresh": true,
+        "refreshOnVisible": true,
+        "maxRetries": 3,
+        "retryBackoff": "exponential"
       }
     },
     "portfolio-value-comparison": {
       "chartType": "portfolio-value-comparison",
+      "chartStatus": "frozen",
       "primarySource": {
         "type": "manual",
         "location": [
@@ -67,6 +101,7 @@
     },
     "returns-comparison": {
       "chartType": "returns-comparison",
+      "chartStatus": "frozen",
       "primarySource": {
         "type": "manual",
         "location": [
@@ -96,6 +131,7 @@
     },
     "portfolio-drawdowns": {
       "chartType": "portfolio-drawdowns",
+      "chartStatus": "frozen",
       "primarySource": {
         "type": "manual",
         "location": "/data/portfolio/multi_strategy_portfolio_drawdowns.csv",
@@ -122,6 +158,7 @@
     },
     "live-signals-equity-curve": {
       "chartType": "live-signals-equity-curve",
+      "chartStatus": "frozen",
       "primarySource": {
         "type": "manual",
         "location": "/data/portfolio/live-signals/live_signals_equity.csv",
@@ -149,6 +186,7 @@
     },
     "live-signals-benchmark-comparison": {
       "chartType": "live-signals-benchmark-comparison",
+      "chartStatus": "frozen",
       "primarySource": {
         "type": "hybrid",
         "location": "/data/portfolio/live_signals_benchmark_comparison.csv",
@@ -190,6 +228,7 @@
     },
     "live-signals-drawdowns": {
       "chartType": "live-signals-drawdowns",
+      "chartStatus": "frozen",
       "primarySource": {
         "type": "manual",
         "location": "/data/portfolio/live-signals/live_signals_equity.csv",
@@ -216,6 +255,7 @@
     },
     "live-signals-weekly-candlestick": {
       "chartType": "live-signals-weekly-candlestick",
+      "chartStatus": "frozen",
       "primarySource": {
         "type": "manual",
         "location": "/data/portfolio/live-signals/live_signals_equity.csv",
@@ -242,6 +282,7 @@
     },
     "trade-pnl-waterfall": {
       "chartType": "trade-pnl-waterfall",
+      "chartStatus": "frozen",
       "primarySource": {
         "type": "manual",
         "location": "/data/trade-history/trade_pnl_waterfall_sorted.csv",
@@ -281,6 +322,7 @@
     },
     "open-positions-pnl-timeseries": {
       "chartType": "open-positions-pnl-timeseries",
+      "chartStatus": "frozen",
       "primarySource": {
         "type": "hybrid",
         "location": "/data/portfolio/open_positions_pnl_current.csv",
@@ -322,6 +364,7 @@
     },
     "closed-positions-pnl-timeseries": {
       "chartType": "closed-positions-pnl-timeseries",
+      "chartStatus": "frozen",
       "primarySource": {
         "type": "manual",
         "location": "/data/portfolio/closed_positions_pnl_progression.csv",

@@ -8,6 +8,11 @@
 import type { ChartType } from "./ChartTypes";
 
 /**
+ * Chart status types for data pipeline management
+ */
+export type ChartStatus = "active" | "frozen" | "static";
+
+/**
  * Core data source classification
  */
 export type DataSourceType =
@@ -113,6 +118,9 @@ export interface ChartDataDependency {
   /** Chart type this configuration applies to */
   chartType: ChartType;
 
+  /** Chart status for data pipeline behavior control */
+  chartStatus?: ChartStatus;
+
   /** Primary data source configuration */
   primarySource: DataSourceConfig;
 
@@ -146,6 +154,9 @@ export interface DataSourceStatus {
   /** Current availability state */
   status: "available" | "stale" | "missing" | "error";
 
+  /** Chart status from data pipeline configuration */
+  chartStatus?: ChartStatus;
+
   /** Last successful update timestamp */
   lastUpdated?: number;
 
@@ -163,6 +174,12 @@ export interface DataSourceStatus {
 
   /** Source of the last update */
   lastUpdateSource?: "manual" | "api" | "scheduled";
+
+  /** Frozen date if chart is frozen */
+  frozenDate?: string;
+
+  /** Who froze the chart */
+  frozenBy?: string;
 }
 
 /**

@@ -125,7 +125,7 @@ export interface LiveSignalsBenchmarkDataRow {
 }
 // Chart configuration types
 export type ChartType =
-  | "apple-stock"
+  | "apple-price"
   | "portfolio-value-comparison"
   | "returns-comparison"
   | "portfolio-drawdowns"
@@ -174,11 +174,6 @@ export interface ChartDisplayProps {
   timeframe?: "daily" | "weekly";
   indexed?: boolean;
   positionType?: "open" | "closed" | "auto";
-
-  // Chart lifecycle status properties
-  status?: ChartStatus;
-  frozenDate?: string;
-  frozenBy?: string;
 
   className?: string;
   titleOnly?: boolean;
