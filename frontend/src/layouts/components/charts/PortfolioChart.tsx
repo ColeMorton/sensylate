@@ -13,7 +13,6 @@ import type {
 } from "@/types/ChartTypes";
 import {
   usePortfolioData,
-  useAppleStockData,
   useStockData,
   useLiveSignalsData,
   // useTradeHistoryData,
@@ -36,19 +35,24 @@ interface PortfolioChartProps {
 
 // Helper functions for dynamic symbol resolution
 const isDailyPriceChart = (chartType: ChartType): boolean => {
-  return chartType.endsWith('-price');
+  return chartType.endsWith("-price");
 };
 
 const getSymbolFromChartType = (chartType: ChartType): string | null => {
-  if (!isDailyPriceChart(chartType)) return null;
+  if (!isDailyPriceChart(chartType)) {
+    return null;
+  }
   const mapping = symbolMetadata.chartTypeMapping;
   return mapping[chartType as keyof typeof mapping] || null;
 };
 
 const getSymbolDisplayName = (chartType: ChartType): string => {
   const symbol = getSymbolFromChartType(chartType);
-  if (!symbol) return "Chart";
-  const metadata = symbolMetadata.symbols[symbol as keyof typeof symbolMetadata.symbols];
+  if (!symbol) {
+    return "Chart";
+  }
+  const metadata =
+    symbolMetadata.symbols[symbol as keyof typeof symbolMetadata.symbols];
   return metadata?.displayName || `${symbol} Price`;
 };
 
@@ -63,7 +67,7 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
 
   // Data hooks
   const portfolioData = usePortfolioData(chartType);
-  const appleData = useAppleStockData();
+  // const appleData = useAppleStockData(); // Replaced with dynamic stock data
   const liveSignalsData = useLiveSignalsData();
   // const tradeHistoryData = useTradeHistoryData(); // Not currently used
   // Removed import for now
@@ -71,7 +75,7 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
   const closedPositionsPnLData = useClosedPositionsPnLData();
   const openPositionsPnLData = useOpenPositionsPnLData();
   const liveSignalsBenchmarkData = useLiveSignalsBenchmarkData();
-  
+
   // Dynamic stock data for daily price charts
   const stockSymbol = getSymbolFromChartType(chartType);
   const dynamicStockData = useStockData(stockSymbol || "");
@@ -91,33 +95,35 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
     : null;
 
   // Use appropriate data source based on chart type
-  const { data, loading, error } =
-    isDailyPriceChart(chartType)
-      ? dynamicStockData
-      : chartType === "live-signals-benchmark-comparison"
-        ? liveSignalsBenchmarkData
-        : chartType.startsWith("live-signals-")
-          ? liveSignalsData
-          : chartType === "trade-pnl-waterfall"
-            ? waterfallTradeData
-            : chartType === "closed-positions-pnl-timeseries"
-              ? closedPositionsPnLData
-              : chartType === "open-positions-pnl-timeseries"
-                ? shouldUseClosedData
-                  ? closedPositionsPnLData
-                  : openPositionsPnLData
-                : portfolioData;
+  const { data, loading, error } = isDailyPriceChart(chartType)
+    ? dynamicStockData
+    : chartType === "live-signals-benchmark-comparison"
+      ? liveSignalsBenchmarkData
+      : chartType.startsWith("live-signals-")
+        ? liveSignalsData
+        : chartType === "trade-pnl-waterfall"
+          ? waterfallTradeData
+          : chartType === "closed-positions-pnl-timeseries"
+            ? closedPositionsPnLData
+            : chartType === "open-positions-pnl-timeseries"
+              ? shouldUseClosedData
+                ? closedPositionsPnLData
+                : openPositionsPnLData
+              : portfolioData;
 
   // Dynamic legend visibility based on data volume
   const shouldShowLegend = useMemo(() => {
     // Hide legend for specific chart types
     const hideLegendChartTypes = [
       "live-signals-drawdowns",
-      "live-signals-weekly-candlestick", 
+      "live-signals-weekly-candlestick",
       "trade-pnl-waterfall",
     ];
 
-    if (hideLegendChartTypes.includes(chartType) || isDailyPriceChart(chartType)) {
+    if (
+      hideLegendChartTypes.includes(chartType) ||
+      isDailyPriceChart(chartType)
+    ) {
       return false;
     }
 
@@ -517,7 +523,6 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
     }
 
     switch (chartType) {
-
       case "portfolio-value-comparison": {
         const portfolioRows = data as {
           multiStrategy?: PortfolioDataRow[];

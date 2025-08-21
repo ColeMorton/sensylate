@@ -203,13 +203,19 @@ export class DataDependencyManager {
     }
 
     const baseStatus = this.checkDataFreshness(entry);
-    
+
     // Include chart status from configuration
     return {
       ...baseStatus,
       chartStatus: entry.config.chartStatus || "active",
-      frozenDate: entry.config.chartStatus === "frozen" ? entry.config.primarySource.metadata?.lastUpdatedBy : undefined,
-      frozenBy: entry.config.chartStatus === "frozen" ? entry.config.primarySource.metadata?.lastUpdatedBy : undefined,
+      frozenDate:
+        entry.config.chartStatus === "frozen"
+          ? entry.config.primarySource.metadata?.lastUpdatedBy
+          : undefined,
+      frozenBy:
+        entry.config.chartStatus === "frozen"
+          ? entry.config.primarySource.metadata?.lastUpdatedBy
+          : undefined,
     };
   }
 

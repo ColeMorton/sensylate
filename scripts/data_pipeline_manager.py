@@ -366,7 +366,7 @@ class DataPipelineManager:
         self.cli_validator = CLIContractValidator()
 
         # Cache for validated CLI contracts
-        self._validated_contracts = set()
+        self._validated_contracts: set[str] = set()
 
         # Discover contracts from frontend requirements
         self.discovery_result: Optional[ContractDiscoveryResult] = None
@@ -1096,7 +1096,7 @@ class DataPipelineManager:
             ProcessingResult with success status and contract fulfillment details
         """
         start_time = datetime.now()
-        performance_metrics = {
+        performance_metrics: Dict[str, Any] = {
             "discovery_time": 0.0,
             "validation_time": 0.0,
             "processing_time_by_category": {},
@@ -1209,9 +1209,7 @@ class DataPipelineManager:
                         category, contracts
                     )
                     category_time = (datetime.now() - category_start).total_seconds()
-                    performance_metrics["processing_time_by_category"][
-                        category
-                    ] = category_time
+                    performance_metrics["processing_time_by_category"][category] = category_time
 
                     self.logger.info(
                         f"Category {category} processing completed [Time: {category_time:.2f}s]"
@@ -1481,14 +1479,20 @@ class DataPipelineManager:
 
         try:
             # Skip raw stock data contracts - these are handled by Yahoo Finance fetch and copy
-            if contract.category == "raw" and ("stocks" in contract.contract_id or "apple-price" in contract.contract_id or "mstr-price" in contract.contract_id):
+            if contract.category == "raw" and (
+                "stocks" in contract.contract_id
+                or "apple-price" in contract.contract_id
+                or "mstr-price" in contract.contract_id
+            ):
                 return ProcessingResult(
-                    success=True, 
+                    success=True,
                     operation=f"fulfill_contract_{contract.contract_id}",
                     error=None,
-                    metadata={"skip_reason": "Raw stock data handled by Yahoo Finance fetch"}
+                    metadata={
+                        "skip_reason": "Raw stock data handled by Yahoo Finance fetch"
+                    },
                 )
-            
+
             # Check if contract file exists and has recent data
             if not contract.file_path.exists():
                 # Generate data for this contract
@@ -1869,7 +1873,7 @@ class DataPipelineManager:
 
     def _extract_symbols_from_trade_history(self) -> Set[str]:
         """Extract unique stock symbols from trade history data"""
-        symbols = set()
+        symbols: set[str] = set()
         trade_history_path = (
             Path(self.project_root)
             / "data"
@@ -1943,18 +1947,23 @@ class DataPipelineManager:
                     )
                     symbols.add(symbol)
 
-            # Extract symbols from active raw chart requirements  
+            # Extract symbols from active raw chart requirements
             raw_chart_requirements = [
-                req for req in active_requirements.requirements
+                req
+                for req in active_requirements.requirements
                 if req.category == "raw" and "yahoo_finance" in req.required_services
             ]
 
             for req in raw_chart_requirements:
                 # Extract symbol from data_source like "raw/stocks/AAPL/daily.csv"
-                if "/stocks/" in req.data_source and req.data_source.endswith("/daily.csv"):
+                if "/stocks/" in req.data_source and req.data_source.endswith(
+                    "/daily.csv"
+                ):
                     symbol = req.data_source.split("/stocks/")[1].split("/")[0]
                     symbols.add(symbol)
-                    self.logger.info(f"Extracted symbol '{symbol}' from active raw chart '{req.chart_type}'")
+                    self.logger.info(
+                        f"Extracted symbol '{symbol}' from active raw chart '{req.chart_type}'"
+                    )
 
             # Extract symbols from trade history only if portfolio charts that require trade_history are active
             trade_history_portfolio_charts = [
@@ -2082,7 +2091,7 @@ class DataPipelineManager:
                     f"Yahoo Finance historical data fetch completed successfully: "
                     f"{len(successful_symbols)}/{len(symbols)} symbols ({success_rate:.1%} success rate)"
                 )
-                
+
                 # Auto-copy successful symbols to frontend directory
                 self._copy_symbols_to_frontend(successful_symbols)
             else:
@@ -2117,11 +2126,11 @@ class DataPipelineManager:
         """Copy successfully fetched stock data from scripts to frontend directory"""
         if not symbols:
             return
-            
+
         self.logger.info(f"Copying {len(symbols)} symbols to frontend directory...")
         successful_copies = []
         failed_copies = []
-        
+
         for symbol in symbols:
             try:
                 success = fetch_and_copy_stock_data(symbol)
@@ -2134,13 +2143,13 @@ class DataPipelineManager:
             except Exception as e:
                 failed_copies.append(symbol)
                 self.logger.error(f"Error copying {symbol} data to frontend: {str(e)}")
-        
+
         if successful_copies:
             self.logger.info(
                 f"Frontend copy completed: {len(successful_copies)}/{len(symbols)} symbols "
                 f"successfully copied to frontend directory"
             )
-        
+
         if failed_copies:
             self.logger.warning(f"Failed to copy symbols to frontend: {failed_copies}")
 
@@ -3751,7 +3760,7 @@ class DataPipelineManager:
             f"CLI contract validated successfully: {service_name}.{command}"
         )
 
-    def _perform_service_health_checks(self, services: List[str]) -> Dict[str, any]:
+    def _perform_service_health_checks(self, services: List[str]) -> Dict[str, Any]:
         """
         Perform health checks on required services before pipeline execution
 
@@ -3761,7 +3770,7 @@ class DataPipelineManager:
         Returns:
             Dictionary with health check results
         """
-        health_results = {
+        health_results: Dict[str, Any] = {
             "overall_healthy": True,
             "total_services": len(services),
             "healthy_services": 0,
@@ -3773,7 +3782,7 @@ class DataPipelineManager:
         self.logger.info(f"Performing health checks on {len(services)} services...")
 
         for service_name in services:
-            service_health = {
+            service_health: Dict[str, Any] = {
                 "healthy": False,
                 "cli_exists": False,
                 "basic_commands_available": False,

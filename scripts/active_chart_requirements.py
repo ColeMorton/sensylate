@@ -13,7 +13,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import List, Optional, Set
 
-from chart_data_dependency_manager import ChartStatus, ChartDataDependencyManager
+from chart_data_dependency_manager import ChartDataDependencyManager, ChartStatus
 
 # Global module-level cache to prevent repeated discovery operations
 _GLOBAL_DISCOVERY_CACHE = None

@@ -60,7 +60,9 @@ class ChartDataDependencyManager:
             self.frontend_src_path = Path(frontend_src_path).resolve()
 
         # Path to chart data dependencies configuration
-        self.config_path = self.frontend_src_path / "config" / "chart-data-dependencies.json"
+        self.config_path = (
+            self.frontend_src_path / "config" / "chart-data-dependencies.json"
+        )
 
         # Validate that the config file exists
         if not self.config_path.exists():
@@ -105,7 +107,7 @@ class ChartDataDependencyManager:
             return _GLOBAL_CONFIG_CACHE
 
         try:
-            with open(self.config_path, 'r', encoding='utf-8') as f:
+            with open(self.config_path, "r", encoding="utf-8") as f:
                 config = json.load(f)
 
             # Cache the results globally
@@ -138,12 +140,14 @@ class ChartDataDependencyManager:
 
         for chart_type, chart_config in dependencies.items():
             chart_status = chart_config.get("chartStatus", "active")
-            
+
             # Convert string status to enum
             try:
                 status_enum = ChartStatus(chart_status)
             except ValueError:
-                self.logger.warning(f"Unknown chart status '{chart_status}' for {chart_type}, defaulting to active")
+                self.logger.warning(
+                    f"Unknown chart status '{chart_status}' for {chart_type}, defaulting to active"
+                )
                 status_enum = ChartStatus.ACTIVE
 
             # Extract frozen metadata if available
@@ -163,12 +167,14 @@ class ChartDataDependencyManager:
                 frozen_by=frozen_by,
                 file_path="chart-data-dependencies.json",
                 line_number=None,
-                config_source="chart-data-dependencies.json"
+                config_source="chart-data-dependencies.json",
             )
-            
+
             chart_statuses.append(chart_info)
 
-        self.logger.debug(f"Extracted {len(chart_statuses)} chart configurations from JSON")
+        self.logger.debug(
+            f"Extracted {len(chart_statuses)} chart configurations from JSON"
+        )
         return chart_statuses
 
     def get_data_source_status_mapping(self) -> Dict[str, ChartStatus]:
@@ -307,11 +313,13 @@ class ChartDataDependencyManager:
     def scan_mdx_files(self) -> List[ChartStatusInfo]:
         """
         Legacy compatibility method - redirects to JSON-based status extraction
-        
+
         Returns:
             List of chart status information from JSON configuration
         """
-        self.logger.debug("Legacy scan_mdx_files() called - redirecting to JSON configuration")
+        self.logger.debug(
+            "Legacy scan_mdx_files() called - redirecting to JSON configuration"
+        )
         return self.get_chart_statuses()
 
 
@@ -319,13 +327,13 @@ def create_chart_data_dependency_manager(
     frontend_src_path: Optional[str] = None,
 ) -> ChartDataDependencyManager:
     """Factory function to create chart data dependency manager"""
-    return ChartDataDependencyManager(Path(frontend_src_path) if frontend_src_path else None)
+    return ChartDataDependencyManager(
+        Path(frontend_src_path) if frontend_src_path else None
+    )
 
 
 if __name__ == "__main__":
     # Example usage
-    import json
-
     logging.basicConfig(level=logging.INFO)
 
     manager = create_chart_data_dependency_manager()

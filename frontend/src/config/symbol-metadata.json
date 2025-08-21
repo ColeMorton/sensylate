@@ -11,7 +11,7 @@
     },
     "MSTR": {
       "name": "MicroStrategy Inc.",
-      "displayName": "Strategy Price", 
+      "displayName": "Strategy Price",
       "chartType": "mstr-price",
       "sector": "Technology",
       "description": "MicroStrategy Inc. stock price data from Yahoo Finance"

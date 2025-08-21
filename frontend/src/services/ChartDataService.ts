@@ -219,7 +219,10 @@ class ChartDataService {
     }
   }
 
-  async fetchStockData(symbol: string, signal?: AbortSignal): Promise<StockDataRow[]> {
+  async fetchStockData(
+    symbol: string,
+    signal?: AbortSignal,
+  ): Promise<StockDataRow[]> {
     try {
       const response = await fetch(`/data/raw/stocks/${symbol}/daily.csv`, {
         signal,

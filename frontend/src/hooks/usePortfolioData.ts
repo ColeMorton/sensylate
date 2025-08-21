@@ -59,7 +59,9 @@ export function useAppleStockData(): DataServiceResponse<StockDataRow[]> {
 }
 
 // Hook for generic stock data based on symbol
-export function useStockData(symbol: string): DataServiceResponse<StockDataRow[]> {
+export function useStockData(
+  symbol: string,
+): DataServiceResponse<StockDataRow[]> {
   const [data, setData] = useState<StockDataRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
