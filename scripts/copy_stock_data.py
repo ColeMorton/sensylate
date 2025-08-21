@@ -7,15 +7,66 @@ Example: python copy_stock_data.py AAPL
 """
 
 import argparse
+import json
 import subprocess
 import sys
+from datetime import datetime, timedelta
 from pathlib import Path
 
 import pandas as pd
 
 
+def get_symbol_data_years(symbol: str) -> int:
+    """Get the configured data years for a symbol from consolidated config"""
+    try:
+        project_root = Path(__file__).parent.parent
+        config_path = project_root / "frontend/src/config/chart-data-dependencies.json"
+        
+        with open(config_path, 'r') as f:
+            config = json.load(f)
+        
+        symbol_config = config.get("symbolMetadata", {}).get(symbol.upper(), {})
+        data_years = symbol_config.get("dataYears")
+        
+        if data_years is not None:
+            print(f"Found dataYears configuration for {symbol}: {data_years} years")
+            return data_years
+        else:
+            print(f"No dataYears configuration found for {symbol}, using default 1 year")
+            return 1
+            
+    except Exception as e:
+        print(f"Error reading chart data dependencies config: {e}, using default 1 year")
+        return 1
+
+
+def filter_data_by_years(df: pd.DataFrame, years: int) -> pd.DataFrame:
+    """Filter dataframe to include only the last N years of data"""
+    if df.empty or years <= 0:
+        return df
+    
+    # Convert date column to datetime
+    df['date'] = pd.to_datetime(df['date'])
+    
+    # Calculate cutoff date (N years ago from the most recent date)
+    latest_date = df['date'].max()
+    cutoff_date = latest_date - timedelta(days=years * 365)
+    
+    # Filter data
+    filtered_df = df[df['date'] >= cutoff_date].copy()
+    
+    # Convert date back to string format
+    filtered_df['date'] = filtered_df['date'].dt.strftime('%Y-%m-%d')
+    
+    print(f"Filtered data from {len(df)} to {len(filtered_df)} rows ({years} years)")
+    return filtered_df
+
+
 def fetch_and_copy_stock_data(symbol: str) -> bool:
-    """Fetch 1 year of stock data for any symbol and copy to frontend directory"""
+    """Fetch stock data for any symbol and copy to frontend directory with period filtering"""
+
+    # Get the configured data years for this symbol
+    data_years = get_symbol_data_years(symbol)
 
     # Define paths dynamically based on symbol
     project_root = Path(__file__).parent.parent
@@ -71,6 +122,9 @@ def fetch_and_copy_stock_data(symbol: str) -> bool:
 
         # Sort by date to ensure chronological order
         df = df.sort_values("date")
+
+        # Apply period filtering based on symbol configuration
+        df = filter_data_by_years(df, data_years)
 
         # Ensure frontend directory exists
         frontend_csv_path.parent.mkdir(parents=True, exist_ok=True)

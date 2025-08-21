@@ -1,6 +1,36 @@
 {
   "version": "1.0.0",
   "description": "Chart Data Dependency Configuration - defines data sources, refresh policies, and staleness tolerances for each chart type",
+  "symbolMetadata": {
+    "AAPL": {
+      "name": "Apple Inc.",
+      "displayName": "Apple Price",
+      "chartType": "apple-price",
+      "sector": "Technology",
+      "description": "Apple Inc. stock price data from Yahoo Finance",
+      "dataYears": 15
+    },
+    "MSTR": {
+      "name": "MicroStrategy Inc.",
+      "displayName": "Strategy Price",
+      "chartType": "mstr-price",
+      "sector": "Technology",
+      "description": "MicroStrategy Inc. stock price data from Yahoo Finance",
+      "dataYears": 6
+    }
+  },
+  "chartTypeMapping": {
+    "apple-price": "AAPL",
+    "mstr-price": "MSTR"
+  },
+  "defaults": {
+    "yAxisLabel": "Price ($)",
+    "period": "1y",
+    "dataFormat": "csv",
+    "refreshInterval": 86400000,
+    "warningThreshold": 24,
+    "errorThreshold": 48
+  },
   "settings": {
     "defaultCacheDuration": 300000,
     "enableFileWatching": true,

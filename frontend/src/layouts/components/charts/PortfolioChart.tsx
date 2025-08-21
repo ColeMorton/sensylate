@@ -23,7 +23,7 @@ import {
 } from "@/hooks/usePortfolioData";
 import { getChartColors, getPlotlyThemeColors } from "@/utils/chartTheme";
 import ChartRenderer from "./ChartRenderer";
-import symbolMetadata from "@/config/symbol-metadata.json";
+import chartDependencyConfig from "@/config/chart-data-dependencies.json";
 
 interface PortfolioChartProps {
   chartType: ChartType;
@@ -42,7 +42,7 @@ const getSymbolFromChartType = (chartType: ChartType): string | null => {
   if (!isDailyPriceChart(chartType)) {
     return null;
   }
-  const mapping = symbolMetadata.chartTypeMapping;
+  const mapping = chartDependencyConfig.chartTypeMapping;
   return mapping[chartType as keyof typeof mapping] || null;
 };
 
@@ -52,7 +52,7 @@ const getSymbolDisplayName = (chartType: ChartType): string => {
     return "Chart";
   }
   const metadata =
-    symbolMetadata.symbols[symbol as keyof typeof symbolMetadata.symbols];
+    chartDependencyConfig.symbolMetadata[symbol as keyof typeof chartDependencyConfig.symbolMetadata];
   return metadata?.displayName || `${symbol} Price`;
 };
 
