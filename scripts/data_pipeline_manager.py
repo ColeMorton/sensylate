@@ -1209,7 +1209,9 @@ class DataPipelineManager:
                         category, contracts
                     )
                     category_time = (datetime.now() - category_start).total_seconds()
-                    performance_metrics["processing_time_by_category"][category] = category_time
+                    performance_metrics["processing_time_by_category"][
+                        category
+                    ] = category_time
 
                     self.logger.info(
                         f"Category {category} processing completed [Time: {category_time:.2f}s]"
