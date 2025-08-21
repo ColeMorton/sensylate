@@ -23,8 +23,8 @@ def fetch_and_copy_stock_data(symbol: str) -> bool:
         project_root / f"frontend/public/data/raw/stocks/{symbol}/daily.csv"
     )
 
-    # Check if data already exists in scripts directory (from pipeline)
-    scripts_csv_path = project_root / f"scripts/data/raw/stocks/{symbol}/daily.csv"
+    # Check if data already exists in data directory (from pipeline)
+    scripts_csv_path = project_root / f"data/raw/stocks/{symbol}/daily.csv"
 
     try:
         if scripts_csv_path.exists():
