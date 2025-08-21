@@ -21,7 +21,7 @@ Technical reference for photo booth, dashboard, chart and export systems.
 
 **Technology Stack**:
 - Frontend: Astro 5.7+ with React islands, TailwindCSS 4+
-- Charts: Plotly.js for interactive visualizations  
+- Charts: Plotly.js for interactive visualizations
 - Export: Puppeteer + Sharp.js for image generation
 - Backend: Python scripts with pandas, matplotlib, plotly
 - Data: CSV files with dedicated service layer
@@ -298,14 +298,14 @@ interface PhotoBoothState {
 ## 3. Dashboard Architecture
 
 ### Configuration
-**Files**: 
+**Files**:
 - `frontend/src/config/photo-booth.json` - Primary configuration
-- `frontend/src/pages/api/dashboards.json.ts` - API endpoint  
+- `frontend/src/pages/api/dashboards.json.ts` - API endpoint
 - `frontend/src/content/dashboards/*.mdx` - Dashboard content
 
 ### Available Dashboards
 1. **trading_performance** - File: `trading-performance.mdx`, Layout: 2x2_grid
-2. **portfolio_analysis** - File: `portfolio-analysis.mdx`, Layout: 1x3_stack  
+2. **portfolio_analysis** - File: `portfolio-analysis.mdx`, Layout: 1x3_stack
 3. **portfolio_history_portrait** - File: `portfolio-history-portrait.mdx`, Layout: 2x1_stack
 4. **market_overview** - Disabled (enabled: false)
 
@@ -781,7 +781,7 @@ portfolio_history_portrait_dark_3x4_both_150dpi_20250820_143201.svg
 
 ## 7. APIs
 
-### `/api/dashboards.json` 
+### `/api/dashboards.json`
 GET endpoint returning dashboard configurations.
 
 **Response Structure**:
@@ -926,7 +926,7 @@ scripts/
 # Frontend tests
 cd frontend && yarn test
 
-# Python script test  
+# Python script test
 python scripts/photo_booth_generator.py --help
 ```
 
