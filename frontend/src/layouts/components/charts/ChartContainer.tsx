@@ -9,6 +9,12 @@ const ChartContainer: React.FC<ChartContainerProps> = ({
   className = "",
   titleOnly = false,
 }) => {
+  // Detect if we're in dashboard context by checking for photo-booth-chart class
+  const isDashboardContext = className.includes("photo-booth-chart");
+
+  // Use min-h-0 for dashboards, min-h-[500px] for regular pages
+  const heightClass = isDashboardContext ? "min-h-0" : "min-h-[400px]";
+
   return (
     <div
       className={`bg-body dark:bg-darkmode-body flex min-h-0 flex-1 flex-col rounded-lg p-6 shadow-sm transition-all duration-300 hover:shadow-lg ${className}`}
@@ -31,7 +37,9 @@ const ChartContainer: React.FC<ChartContainerProps> = ({
         <p className="text-text mb-6 dark:text-gray-300">{description}</p>
       )}
 
-      <div className="chart-container flex h-full min-h-0 w-full flex-col">
+      <div
+        className={`chart-container flex h-full ${heightClass} w-full flex-col`}
+      >
         {children}
       </div>
     </div>
