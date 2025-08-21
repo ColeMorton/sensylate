@@ -66,7 +66,11 @@ class CacheConfig(BaseModel):
 
     enabled: bool = True
     ttl_seconds: int = 900  # 15 minutes default
-    cache_dir: str = Field(default_factory=lambda: str(Path(__file__).parent.parent.parent / "data" / "cache"))
+    cache_dir: str = Field(
+        default_factory=lambda: str(
+            Path(__file__).parent.parent.parent / "data" / "cache"
+        )
+    )
     max_size_mb: int = 100
 
 

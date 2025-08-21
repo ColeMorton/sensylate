@@ -74,7 +74,9 @@ class HistoricalDataManager:
             base_path: Base directory for raw data storage (defaults to ./data/raw/)
             config_path: Path to historical data configuration file
         """
-        self.base_path = base_path or Path(__file__).parent.parent.parent / "data" / "raw"
+        self.base_path = (
+            base_path or Path(__file__).parent.parent.parent / "data" / "raw"
+        )
         self.base_path.mkdir(parents=True, exist_ok=True)
 
         self.config = self._load_config(config_path)
