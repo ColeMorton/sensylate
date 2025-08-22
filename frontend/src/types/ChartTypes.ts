@@ -135,7 +135,9 @@ export type ChartType =
   | "live-signals-weekly-candlestick"
   | "trade-pnl-waterfall"
   | "open-positions-pnl-timeseries"
-  | "closed-positions-pnl-timeseries";
+  | "closed-positions-pnl-timeseries"
+  | "multi-stock-price"
+  | "xpev-nio-stock-price";
 
 export interface ChartConfig {
   title: string;

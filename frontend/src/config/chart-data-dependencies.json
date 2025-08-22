@@ -17,11 +17,38 @@
       "sector": "Technology",
       "description": "MicroStrategy Inc. stock price data from Yahoo Finance",
       "dataYears": 6
+    },
+    "XPEV": {
+      "name": "XPeng Inc.",
+      "displayName": "XPeng Price",
+      "chartType": "xpev-price",
+      "sector": "Electric Vehicles",
+      "description": "XPeng Inc. stock price data from Yahoo Finance",
+      "dataYears": 4
+    },
+    "NIO": {
+      "name": "NIO Inc.",
+      "displayName": "NIO Price",
+      "chartType": "nio-price",
+      "sector": "Electric Vehicles",
+      "description": "NIO Inc. stock price data from Yahoo Finance",
+      "dataYears": 6
     }
   },
   "chartTypeMapping": {
     "apple-price": "AAPL",
     "mstr-price": "MSTR"
+  },
+  "multiStockMapping": {
+    "xpev-nio-stock-price": ["XPEV", "NIO"]
+  },
+  "multiStockMetadata": {
+    "xpev-nio-stock-price": {
+      "displayName": "XPEV vs NIO Comparison",
+      "description": "Chinese EV stocks price comparison over 1 year",
+      "sector": "Electric Vehicles",
+      "comparisonType": "peer_analysis"
+    }
   },
   "defaults": {
     "yAxisLabel": "Price ($)",
@@ -418,6 +445,38 @@
         "refreshOnVisible": true,
         "maxRetries": 1,
         "retryBackoff": "linear"
+      }
+    },
+    "multi-stock-price": {
+      "chartType": "multi-stock-price",
+      "chartStatus": "active",
+      "primarySource": {
+        "type": "cli-api",
+        "location": "dynamic",
+        "refreshMethod": "api-poll",
+        "frequency": "daily",
+        "cliService": "yahoo-finance",
+        "symbols": "dynamic",
+        "metadata": {
+          "description": "Multi-stock comparison data from Yahoo Finance API",
+          "format": "csv",
+          "lastUpdatedBy": "yahoo-finance-api",
+          "chartType": "multi-stock-comparison"
+        }
+      },
+      "freshness": {
+        "warningThreshold": 24,
+        "errorThreshold": 48,
+        "blockOnStale": false,
+        "manualGracePeriod": 12
+      },
+      "refreshPolicy": {
+        "autoRefresh": true,
+        "refreshInterval": 86400000,
+        "allowManualRefresh": true,
+        "refreshOnVisible": true,
+        "maxRetries": 3,
+        "retryBackoff": "exponential"
       }
     }
   },

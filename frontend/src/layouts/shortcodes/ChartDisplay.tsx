@@ -28,6 +28,8 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({
     "trade-pnl-waterfall",
     "open-positions-pnl-timeseries",
     "closed-positions-pnl-timeseries",
+    "multi-stock-price",
+    "xpev-nio-stock-price",
   ];
 
   if (!supportedChartTypes.includes(chartType)) {

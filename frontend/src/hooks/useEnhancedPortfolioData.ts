@@ -62,8 +62,8 @@ function useEnhancedData<T>(
 
   const refreshFunctionRef = useRef<
     (() => Promise<DataRefreshResult>) | undefined
-  >();
-  const unsubscribeRef = useRef<(() => void) | undefined>();
+  >(undefined);
+  const unsubscribeRef = useRef<(() => void) | undefined>(undefined);
 
   // Enhanced refresh function with loading state management
   const refresh = useCallback(async (): Promise<DataRefreshResult> => {
@@ -181,7 +181,7 @@ function useEnhancedData<T>(
       setError(err instanceof Error ? err.message : "Failed to load data");
       setLoading(false);
     }
-  }, [...dependencies]);
+  }, [dataFetcher, ...dependencies]);
 
   return {
     data,

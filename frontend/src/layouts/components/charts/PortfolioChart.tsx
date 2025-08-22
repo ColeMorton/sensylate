@@ -14,6 +14,7 @@ import type {
 import {
   usePortfolioData,
   useStockData,
+  useMultiStockData,
   useLiveSignalsData,
   // useTradeHistoryData,
   useWaterfallTradeData,
@@ -35,7 +36,13 @@ interface PortfolioChartProps {
 
 // Helper functions for dynamic symbol resolution
 const isDailyPriceChart = (chartType: ChartType): boolean => {
-  return chartType.endsWith("-price");
+  return chartType.endsWith("-price") && !isMultiStockChart(chartType);
+};
+
+const isMultiStockChart = (chartType: ChartType): boolean => {
+  return (
+    chartType.includes("multi-stock") || chartType.endsWith("-stock-price")
+  );
 };
 
 const getSymbolFromChartType = (chartType: ChartType): string | null => {
@@ -44,6 +51,14 @@ const getSymbolFromChartType = (chartType: ChartType): string | null => {
   }
   const mapping = chartDependencyConfig.chartTypeMapping;
   return mapping[chartType as keyof typeof mapping] || null;
+};
+
+const getSymbolsFromMultiStockChart = (chartType: ChartType): string[] => {
+  if (!isMultiStockChart(chartType)) {
+    return [];
+  }
+  const multiStockMapping = chartDependencyConfig.multiStockMapping;
+  return multiStockMapping[chartType as keyof typeof multiStockMapping] || [];
 };
 
 const getSymbolDisplayName = (chartType: ChartType): string => {
@@ -56,6 +71,16 @@ const getSymbolDisplayName = (chartType: ChartType): string => {
       symbol as keyof typeof chartDependencyConfig.symbolMetadata
     ];
   return metadata?.displayName || `${symbol} Price`;
+};
+
+const getMultiStockDisplayName = (chartType: ChartType): string => {
+  if (!isMultiStockChart(chartType)) {
+    return "Chart";
+  }
+  const multiStockMetadata = chartDependencyConfig.multiStockMetadata;
+  const metadata =
+    multiStockMetadata[chartType as keyof typeof multiStockMetadata];
+  return metadata?.displayName || "Multi-Stock Comparison";
 };
 
 const PortfolioChart: React.FC<PortfolioChartProps> = ({
@@ -82,6 +107,10 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
   const stockSymbol = getSymbolFromChartType(chartType);
   const dynamicStockData = useStockData(stockSymbol || "");
 
+  // Multi-stock data for multi-stock price charts
+  const multiStockSymbols = getSymbolsFromMultiStockChart(chartType);
+  const multiStockData = useMultiStockData(multiStockSymbols);
+
   // Smart position data selection logic
   const isPositionChart = chartType === "open-positions-pnl-timeseries";
   const shouldUseClosedData =
@@ -97,21 +126,23 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
     : null;
 
   // Use appropriate data source based on chart type
-  const { data, loading, error } = isDailyPriceChart(chartType)
-    ? dynamicStockData
-    : chartType === "live-signals-benchmark-comparison"
-      ? liveSignalsBenchmarkData
-      : chartType.startsWith("live-signals-")
-        ? liveSignalsData
-        : chartType === "trade-pnl-waterfall"
-          ? waterfallTradeData
-          : chartType === "closed-positions-pnl-timeseries"
-            ? closedPositionsPnLData
-            : chartType === "open-positions-pnl-timeseries"
-              ? shouldUseClosedData
-                ? closedPositionsPnLData
-                : openPositionsPnLData
-              : portfolioData;
+  const { data, loading, error } = isMultiStockChart(chartType)
+    ? multiStockData
+    : isDailyPriceChart(chartType)
+      ? dynamicStockData
+      : chartType === "live-signals-benchmark-comparison"
+        ? liveSignalsBenchmarkData
+        : chartType.startsWith("live-signals-")
+          ? liveSignalsData
+          : chartType === "trade-pnl-waterfall"
+            ? waterfallTradeData
+            : chartType === "closed-positions-pnl-timeseries"
+              ? closedPositionsPnLData
+              : chartType === "open-positions-pnl-timeseries"
+                ? shouldUseClosedData
+                  ? closedPositionsPnLData
+                  : openPositionsPnLData
+                : portfolioData;
 
   // Dynamic legend visibility based on data volume
   const shouldShowLegend = useMemo(() => {
@@ -127,6 +158,11 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
       isDailyPriceChart(chartType)
     ) {
       return false;
+    }
+
+    // Show legend for multi-stock charts
+    if (isMultiStockChart(chartType)) {
+      return true;
     }
 
     const isAnyPositionChart =
@@ -979,6 +1015,64 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
       }
 
       default:
+        // Handle multi-stock charts generically
+        if (isMultiStockChart(chartType)) {
+          const multiStockDataMap = data as {
+            [symbol: string]: StockDataRow[];
+          };
+          if (
+            !multiStockDataMap ||
+            Object.keys(multiStockDataMap).length === 0
+          ) {
+            return [];
+          }
+
+          const chartData: Data[] = [];
+          const symbols = getSymbolsFromMultiStockChart(chartType);
+
+          // Use predefined colors cycling through available colors
+          const availableColors = [
+            colors.multiStrategy,
+            colors.buyHold,
+            colors.tertiary,
+            colors.drawdown,
+            colors.neutral,
+          ];
+
+          symbols.forEach((symbol, index) => {
+            const stockRows = multiStockDataMap[symbol];
+            if (stockRows && stockRows.length > 0) {
+              // Get display name from symbol metadata
+              const symbolMetadata =
+                chartDependencyConfig.symbolMetadata[
+                  symbol as keyof typeof chartDependencyConfig.symbolMetadata
+                ];
+              const displayName = symbolMetadata?.name
+                ? `${symbolMetadata.name} (${symbol})`
+                : `${symbol} Price`;
+
+              chartData.push({
+                type: "scatter",
+                mode: "lines",
+                x: stockRows.map((row) => row.date),
+                y: stockRows.map((row) => parseFloat(row.close)),
+                line: {
+                  color: availableColors[index % availableColors.length],
+                  width: 2,
+                },
+                name: displayName,
+                hovertemplate:
+                  "<b>%{fullData.name}</b><br>" +
+                  "Date: %{x}<br>" +
+                  "Price: $%{y:.2f}<br>" +
+                  "<extra></extra>",
+              });
+            }
+          });
+
+          return chartData;
+        }
+
         // Handle all daily price charts generically
         if (isDailyPriceChart(chartType)) {
           const stockRows = data as StockDataRow[];
@@ -1054,6 +1148,10 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
             : `${positionTypeText} Positions Cumulative PnL Time Series`;
         }
         default:
+          // Handle multi-stock charts generically
+          if (isMultiStockChart(chartType)) {
+            return getMultiStockDisplayName(chartType);
+          }
           // Handle daily price charts generically
           if (isDailyPriceChart(chartType)) {
             return getSymbolDisplayName(chartType);
@@ -1085,6 +1183,10 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
         case "open-positions-pnl-timeseries":
           return "Cumulative PnL ($)";
         default:
+          // Handle multi-stock charts generically
+          if (isMultiStockChart(chartType)) {
+            return "Price ($)";
+          }
           // Handle daily price charts generically
           if (isDailyPriceChart(chartType)) {
             return "Price ($)";
