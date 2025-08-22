@@ -32,6 +32,7 @@ interface PortfolioChartProps {
   timeframe?: "daily" | "weekly";
   indexed?: boolean;
   positionType?: "open" | "closed" | "auto";
+  samePercentageScale?: boolean;
 }
 
 // Helper functions for dynamic symbol resolution
@@ -89,6 +90,7 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
   timeframe = "daily",
   indexed = false,
   positionType = "auto",
+  samePercentageScale = true,
 }) => {
   const [isDarkMode, setIsDarkMode] = useState(false);
 
@@ -1051,21 +1053,43 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
                 ? `${symbolMetadata.name} (${symbol})`
                 : `${symbol} Price`;
 
+              // Calculate y-values based on samePercentageScale setting
+              let yValues: number[];
+              let hoverTemplate: string;
+
+              if (samePercentageScale) {
+                // Calculate percentage change from first price
+                const firstPrice = parseFloat(stockRows[0].close);
+                yValues = stockRows.map((row) => {
+                  const currentPrice = parseFloat(row.close);
+                  return ((currentPrice - firstPrice) / firstPrice) * 100;
+                });
+                hoverTemplate =
+                  "<b>%{fullData.name}</b><br>" +
+                  "Date: %{x}<br>" +
+                  "Change: %{y:.2f}%<br>" +
+                  "<extra></extra>";
+              } else {
+                // Use absolute price values
+                yValues = stockRows.map((row) => parseFloat(row.close));
+                hoverTemplate =
+                  "<b>%{fullData.name}</b><br>" +
+                  "Date: %{x}<br>" +
+                  "Price: $%{y:.2f}<br>" +
+                  "<extra></extra>";
+              }
+
               chartData.push({
                 type: "scatter",
                 mode: "lines",
                 x: stockRows.map((row) => row.date),
-                y: stockRows.map((row) => parseFloat(row.close)),
+                y: yValues,
                 line: {
                   color: availableColors[index % availableColors.length],
                   width: 2,
                 },
                 name: displayName,
-                hovertemplate:
-                  "<b>%{fullData.name}</b><br>" +
-                  "Date: %{x}<br>" +
-                  "Price: $%{y:.2f}<br>" +
-                  "<extra></extra>",
+                hovertemplate: hoverTemplate,
               });
             }
           });
@@ -1102,6 +1126,7 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
     timeframe,
     indexed,
     shouldUseClosedData,
+    samePercentageScale,
     convertToWeeklyOHLC,
     convertOpenPositionsPnLToWeekly,
     createIndexedDataWithEntry,
@@ -1185,7 +1210,7 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
         default:
           // Handle multi-stock charts generically
           if (isMultiStockChart(chartType)) {
-            return "Price ($)";
+            return samePercentageScale ? "Percentage Change (%)" : "Price ($)";
           }
           // Handle daily price charts generically
           if (isDailyPriceChart(chartType)) {
@@ -1271,6 +1296,7 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
     indexed,
     shouldShowLegend,
     actualDataType,
+    samePercentageScale,
   ]);
 
   // Chart config

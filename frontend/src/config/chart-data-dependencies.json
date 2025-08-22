@@ -450,6 +450,7 @@
     "multi-stock-price": {
       "chartType": "multi-stock-price",
       "chartStatus": "active",
+      "samePercentageScale": true,
       "primarySource": {
         "type": "cli-api",
         "location": "dynamic",

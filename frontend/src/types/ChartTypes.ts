@@ -176,6 +176,7 @@ export interface ChartDisplayProps {
   timeframe?: "daily" | "weekly";
   indexed?: boolean;
   positionType?: "open" | "closed" | "auto";
+  samePercentageScale?: boolean;
 
   className?: string;
   titleOnly?: boolean;

@@ -11,6 +11,7 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({
   timeframe = "daily",
   indexed = false,
   positionType = "auto",
+  samePercentageScale = true,
   className = "",
   titleOnly = false,
 }) => {
@@ -70,6 +71,7 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({
         timeframe={timeframe}
         indexed={indexed}
         positionType={positionType}
+        samePercentageScale={samePercentageScale}
       />
     </ChartContainer>
   );
