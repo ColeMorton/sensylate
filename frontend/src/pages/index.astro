@@ -1,21 +1,17 @@
 ---
 import Base from "@/layouts/Base.astro";
-import GalaxyAnimation from "@/helpers/GalaxyAnimation";
 import DynamicHomepageHook from "@/helpers/DynamicHomepageHook";
 import HomepageScrollManager from "@/helpers/HomepageScrollManager";
 import PinnedCards from "@/components/PinnedCards.astro";
 ---
 
 <Base>
-  <!-- Galaxy Animation Background -->
+  <!-- Main Homepage Section -->
   <section
     id="main-galaxy-section"
     class="bg-body dark:bg-darkmode-body relative h-screen overflow-hidden"
   >
-    <div id="galaxy-animation">
-      <GalaxyAnimation client:only="react" className="absolute inset-0" />
-    </div>
-    <!-- Optional overlay content can be added here -->
+    <!-- Text content overlay -->
     <div
       id="text-content"
       class="absolute inset-0 z-10 flex items-center justify-center"

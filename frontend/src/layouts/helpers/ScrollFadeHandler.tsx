@@ -1,4 +1,5 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { type GalaxyAnimationRef } from "./GalaxyAnimation";
 
 type AnimationState =
   | "initial"
@@ -8,18 +9,20 @@ type AnimationState =
   | "reverse-fading";
 
 interface ScrollFadeHandlerProps {
-  galaxyId: string;
   textId: string;
   fadeDistance?: number;
+  galaxyRef: React.RefObject<GalaxyAnimationRef>;
+  galaxyReady: boolean;
   onCardsAnimationStart?: () => void;
   onCardsComplete?: () => void;
   onCardsHiding?: () => void;
 }
 
 const ScrollFadeHandler: React.FC<ScrollFadeHandlerProps> = ({
-  galaxyId,
   textId,
   fadeDistance = 800,
+  galaxyRef,
+  galaxyReady,
   onCardsAnimationStart,
   onCardsComplete,
   onCardsHiding,
@@ -33,71 +36,129 @@ const ScrollFadeHandler: React.FC<ScrollFadeHandlerProps> = ({
 
   // Galaxy animation state
   const galaxyAnimationRef = useRef<number>();
-  const [galaxyAnimating, setGalaxyAnimating] = useState(false);
   const galaxyAnimationStartRef = useRef<number>(0);
   const galaxyStartOpacityRef = useRef<number>(0.5);
+  const animationStartupTimeRef = useRef<number>(0);
 
-  // Galaxy time-based animation function
-  const animateGalaxy = useCallback(
-    (
+  // Create refs to hold fresh values for animation and event handlers
+  const galaxyReadyRef = useRef(galaxyReady);
+  galaxyReadyRef.current = galaxyReady;
+
+  const animationStateRef = useRef(animationState);
+  animationStateRef.current = animationState;
+
+  // Create refs for callbacks to avoid dependency issues
+  const onCardsAnimationStartRef = useRef(onCardsAnimationStart);
+  onCardsAnimationStartRef.current = onCardsAnimationStart;
+
+  const onCardsCompleteRef = useRef(onCardsComplete);
+  onCardsCompleteRef.current = onCardsComplete;
+
+  const onCardsHidingRef = useRef(onCardsHiding);
+  onCardsHidingRef.current = onCardsHiding;
+
+  // Track animation completion states
+  const forwardAnimationCompletedRef = useRef(false);
+  const reverseAnimationCompletedRef = useRef(false);
+
+  const animateGalaxyRef =
+    useRef<
+      (
+        targetOpacity: number,
+        duration?: number,
+        onComplete?: () => void,
+      ) => void
+    >();
+
+  // Initialize animation function once
+  if (!animateGalaxyRef.current) {
+    animateGalaxyRef.current = (
       targetOpacity: number,
       duration: number = 800,
       onComplete?: () => void,
     ) => {
-      const galaxyElement = document.getElementById(galaxyId);
-      if (!galaxyElement) {
+      const currentGalaxyReady = galaxyReadyRef.current;
+
+      if (!currentGalaxyReady || !galaxyRef.current) {
         return;
       }
 
       // Cancel any existing galaxy animation
       if (galaxyAnimationRef.current) {
-        cancelAnimationFrame(galaxyAnimationRef.current);
+        clearInterval(galaxyAnimationRef.current);
       }
 
-      setGalaxyAnimating(true);
       galaxyAnimationStartRef.current = performance.now();
+      animationStartupTimeRef.current = performance.now();
 
-      // Get actual computed opacity, not just style property
-      const computedStyle = window.getComputedStyle(galaxyElement);
-      galaxyStartOpacityRef.current = parseFloat(
-        computedStyle.opacity || "0.5",
-      );
+      // Get current opacity from the galaxy component
+      try {
+        galaxyStartOpacityRef.current = galaxyRef.current.getOpacity();
+      } catch {
+        galaxyStartOpacityRef.current = 0.5;
+      }
 
-      const animate = (currentTime: number) => {
-        const elapsed = currentTime - galaxyAnimationStartRef.current;
+      const startTime = performance.now();
+
+      const intervalAnimation = () => {
+        const currentTime = performance.now();
+        const elapsed = currentTime - startTime;
         const progress = Math.min(elapsed / duration, 1);
 
         // Easing function for smooth animation
-        const easeProgress = progress * (2 - progress); // ease-out quadratic
+        const easeProgress = progress * (2 - progress);
 
         const currentOpacity =
           galaxyStartOpacityRef.current +
           (targetOpacity - galaxyStartOpacityRef.current) * easeProgress;
 
-        galaxyElement.style.opacity = currentOpacity.toString();
+        // Validate ref before each frame
+        if (!galaxyRef.current) {
+          if (galaxyAnimationRef.current) {
+            clearInterval(galaxyAnimationRef.current);
+            galaxyAnimationRef.current = undefined;
+          }
+          return;
+        }
 
-        if (progress < 1) {
-          galaxyAnimationRef.current = requestAnimationFrame(animate);
-        } else {
-          setGalaxyAnimating(false);
-          onComplete?.(); // Trigger callback when animation completes
+        // Use the galaxy component's setOpacity method with error handling
+        try {
+          galaxyRef.current.setOpacity(currentOpacity);
+        } catch {
+          if (galaxyAnimationRef.current) {
+            clearInterval(galaxyAnimationRef.current);
+            galaxyAnimationRef.current = undefined;
+          }
+          return;
+        }
+
+        if (progress >= 1) {
+          if (galaxyAnimationRef.current) {
+            clearInterval(galaxyAnimationRef.current);
+            galaxyAnimationRef.current = undefined;
+          }
+          onComplete?.();
         }
       };
 
-      galaxyAnimationRef.current = requestAnimationFrame(animate);
-    },
-    [galaxyId],
-  );
+      // Execute first frame synchronously
+      intervalAnimation();
+
+      // Check if animation completed in first frame
+      const elapsed = performance.now() - galaxyAnimationStartRef.current;
+      const currentProgress = Math.min(elapsed / duration, 1);
+
+      // Continue with setInterval if not complete
+      if (currentProgress < 1) {
+        const intervalId = setInterval(intervalAnimation, 16);
+        galaxyAnimationRef.current = intervalId as unknown as number;
+      }
+    };
+  }
 
   useEffect(() => {
-    const galaxyElement = document.getElementById(galaxyId);
     const textElement = document.getElementById(textId);
 
-    if (!galaxyElement) {
-      throw new Error(
-        `ScrollFadeHandler: Element with ID "${galaxyId}" not found`,
-      );
-    }
     if (!textElement) {
       throw new Error(
         `ScrollFadeHandler: Element with ID "${textId}" not found`,
@@ -109,6 +170,11 @@ const ScrollFadeHandler: React.FC<ScrollFadeHandlerProps> = ({
 
       // Prevent default scrolling behavior
       event.preventDefault();
+
+      // Block scroll handling until galaxy is ready
+      if (!galaxyReady) {
+        return;
+      }
 
       if (isThrottledRef.current) {
         return;
@@ -126,42 +192,69 @@ const ScrollFadeHandler: React.FC<ScrollFadeHandlerProps> = ({
         );
 
         // Define stage thresholds
-        const textFadeThreshold = fadeDistance / 2; // Text completes at 50%
-        const cardsAnimationThreshold = fadeDistance; // Galaxy completes at 100%
+        const textFadeThreshold = fadeDistance / 2;
+        const cardsAnimationThreshold = fadeDistance;
 
         // Calculate opacities
-        // Text: Fades 1.0→0.0 in first half (0 to fadeDistance/2)
         const newTextOpacity =
           scrollProgressRef.current <= textFadeThreshold
             ? Math.max(0, 1 - (scrollProgressRef.current * 2) / fadeDistance)
             : 0;
 
-        // Galaxy: Fades 1.0→0.5 during scroll, stays 0.5 during card phase
-        const galaxyOpacity =
-          scrollProgressRef.current <= textFadeThreshold
-            ? Math.max(0.5, 1 - scrollProgressRef.current / (fadeDistance / 2)) // Fades 1.0 → 0.5 in first half
-            : 0.5; // Fixed at 0.5 during card phase
+        // Galaxy opacity calculation
+        let galaxyOpacity;
+        if (scrollProgressRef.current <= textFadeThreshold) {
+          galaxyOpacity = Math.max(
+            0.5,
+            1 - scrollProgressRef.current / (fadeDistance / 2),
+          );
+        } else {
+          if (forwardAnimationCompletedRef.current) {
+            galaxyOpacity = 0.0;
+          } else if (reverseAnimationCompletedRef.current) {
+            galaxyOpacity = 0.5;
+          } else {
+            galaxyOpacity = 0.5;
+          }
+        }
 
         textElement.style.opacity = newTextOpacity.toString();
 
-        // Galaxy opacity: only set if not currently animating with cards AND not in cards-animating state
-        if (!galaxyAnimating && animationState !== "cards-animating") {
-          galaxyElement.style.opacity = galaxyOpacity.toString();
+        // Galaxy opacity: only set if not currently animating
+        const animationActive = !!galaxyAnimationRef.current;
+        if (
+          !animationActive &&
+          animationStateRef.current !== "cards-animating"
+        ) {
+          try {
+            if (galaxyRef.current && galaxyReady) {
+              galaxyRef.current.setOpacity(galaxyOpacity);
+            }
+          } catch {
+            // Handle error silently
+          }
         }
 
         // Handle state transitions based on scroll progress and direction
-        const previousState = animationState;
-        let newState = animationState;
+        const previousState = animationStateRef.current;
+        let newState = animationStateRef.current;
 
         if (scrollProgressRef.current === 0) {
           newState = "initial";
 
-          // If we were animating and scrolled all the way back, cancel animation
-          if (galaxyAnimating) {
-            if (galaxyAnimationRef.current) {
-              cancelAnimationFrame(galaxyAnimationRef.current);
-            }
-            setGalaxyAnimating(false);
+          // Reset animation completion flags
+          if (
+            forwardAnimationCompletedRef.current ||
+            reverseAnimationCompletedRef.current
+          ) {
+            forwardAnimationCompletedRef.current = false;
+            reverseAnimationCompletedRef.current = false;
+          }
+
+          // Cancel animation if scrolled back to initial
+          if (galaxyAnimationRef.current) {
+            clearInterval(galaxyAnimationRef.current);
+            galaxyAnimationRef.current = undefined;
           }
         } else if (
           scrollProgressRef.current > 0 &&
@@ -169,20 +262,39 @@ const ScrollFadeHandler: React.FC<ScrollFadeHandlerProps> = ({
         ) {
           newState = isScrollingDown ? "fading" : "reverse-fading";
 
-          // If we were in cards-animating and scrolled back to text phase, cancel animation
-          if (previousState === "cards-animating" && galaxyAnimating) {
-            if (galaxyAnimationRef.current) {
-              cancelAnimationFrame(galaxyAnimationRef.current);
-            }
-            setGalaxyAnimating(false);
+          // Reset animation completion flags
+          if (
+            forwardAnimationCompletedRef.current ||
+            reverseAnimationCompletedRef.current
+          ) {
+            forwardAnimationCompletedRef.current = false;
+            reverseAnimationCompletedRef.current = false;
+          }
+
+          // Cancel animation if scrolled back to text phase
+          if (
+            previousState === "cards-animating" &&
+            galaxyAnimationRef.current
+          ) {
+            clearInterval(galaxyAnimationRef.current);
+            galaxyAnimationRef.current = undefined;
           }
         } else if (
           scrollProgressRef.current >= textFadeThreshold &&
           scrollProgressRef.current < cardsAnimationThreshold
         ) {
-          newState = isScrollingDown ? "cards-animating" : "cards-animating";
+          newState = "cards-animating";
         } else if (scrollProgressRef.current >= cardsAnimationThreshold) {
-          newState = "cards-complete";
+          const timeSinceAnimationStart =
+            performance.now() - animationStartupTimeRef.current;
+          const inStartupPeriod = timeSinceAnimationStart < 800;
+          const animationActive = !!galaxyAnimationRef.current;
+
+          if (!animationActive && !inStartupPeriod) {
+            newState = "cards-complete";
+          } else {
+            newState = previousState;
+          }
         }
 
         // Trigger callbacks on state changes
@@ -190,25 +302,37 @@ const ScrollFadeHandler: React.FC<ScrollFadeHandlerProps> = ({
           setAnimationState(newState);
 
           if (newState === "cards-animating" && previousState === "fading") {
-            // Forward: cards slide UP, galaxy fades 0.5 → 0.0
-            animateGalaxy(0.0);
-            onCardsAnimationStart?.();
-          } else if (
-            newState === "cards-complete" &&
-            previousState === "cards-animating"
-          ) {
-            // Cards animation complete, galaxy should be at 0.0
-            onCardsComplete?.();
+            if (galaxyReady && galaxyRef.current) {
+              // Forward: cards slide UP, galaxy fades 0.5 → 0.0
+              animateGalaxyRef.current?.(0.0, 800, () => {
+                // Mark forward animation as completed
+                forwardAnimationCompletedRef.current = true;
+                reverseAnimationCompletedRef.current = false;
+
+                // Check if we should transition to cards-complete
+                if (scrollProgressRef.current >= cardsAnimationThreshold) {
+                  setAnimationState("cards-complete");
+                  onCardsCompleteRef.current?.();
+                }
+              });
+              onCardsAnimationStartRef.current?.();
+            }
           } else if (
             newState === "cards-animating" &&
             previousState === "cards-complete"
           ) {
-            // Reverse: cards slide DOWN, galaxy fades 0.0 → 0.5
-            animateGalaxy(0.5, 800, () => {
-              // After reverse animation completes, transition to reverse-fading for scroll control
-              setAnimationState("reverse-fading");
-            });
-            onCardsHiding?.();
+            if (galaxyReady && galaxyRef.current) {
+              // Reverse: cards slide DOWN, galaxy fades 0.0 → 0.5
+              animateGalaxyRef.current?.(0.5, 800, () => {
+                // Mark reverse animation as completed
+                reverseAnimationCompletedRef.current = true;
+                forwardAnimationCompletedRef.current = false;
+
+                // Transition to reverse-fading
+                setAnimationState("reverse-fading");
+              });
+              onCardsHidingRef.current?.();
+            }
           }
         }
 
@@ -219,8 +343,22 @@ const ScrollFadeHandler: React.FC<ScrollFadeHandlerProps> = ({
     // Set initial opacities only once
     if (!initializedRef.current) {
       textElement.style.opacity = "1";
-      galaxyElement.style.opacity = "1";
-      initializedRef.current = true;
+
+      // Set galaxy initial opacity with retry
+      const setInitialGalaxyOpacity = (retryCount = 0) => {
+        try {
+          if (galaxyRef.current) {
+            galaxyRef.current.setOpacity(1);
+            initializedRef.current = true;
+          } else if (retryCount < 5) {
+            setTimeout(() => setInitialGalaxyOpacity(retryCount + 1), 100);
+          }
+        } catch {
+          // Handle error silently
+        }
+      };
+
+      setInitialGalaxyOpacity();
     }
 
     // Add wheel listener
@@ -233,20 +371,11 @@ const ScrollFadeHandler: React.FC<ScrollFadeHandlerProps> = ({
         cancelAnimationFrame(animationFrameRef.current);
       }
       if (galaxyAnimationRef.current) {
-        cancelAnimationFrame(galaxyAnimationRef.current);
+        clearInterval(galaxyAnimationRef.current);
+        galaxyAnimationRef.current = undefined;
       }
     };
-  }, [
-    galaxyId,
-    textId,
-    fadeDistance,
-    onCardsAnimationStart,
-    onCardsComplete,
-    onCardsHiding,
-    animationState,
-    galaxyAnimating,
-    animateGalaxy,
-  ]);
+  }, [galaxyRef, galaxyReady, textId, fadeDistance]);
 
   return null;
 };
