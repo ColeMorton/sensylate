@@ -1,9 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useImperativeHandle, forwardRef } from "react";
 
 interface DynamicHomepageHookProps {
   className?: string;
   phrases?: string[];
   style?: string;
+}
+
+interface DynamicHomepageHookRef {
+  randomize: () => void;
 }
 
 const DEFAULT_PHRASES = [
@@ -20,18 +24,31 @@ const DEFAULT_PHRASES = [
   "Beyond gut feelings: systematic analysis that scales with the markets.",
 ];
 
-const DynamicHomepageHook: React.FC<DynamicHomepageHookProps> = ({
+const DynamicHomepageHook = forwardRef<DynamicHomepageHookRef, DynamicHomepageHookProps>(({
   className = "",
   phrases = DEFAULT_PHRASES,
   style = "",
-}) => {
+}, ref) => {
   const [selectedPhrase, setSelectedPhrase] = useState<string>("");
+
+  const randomizePhrase = () => {
+    const randomIndex = Math.floor(Math.random() * phrases.length);
+    setSelectedPhrase(phrases[randomIndex]);
+  };
 
   useEffect(() => {
     // Client-side random selection to avoid hydration mismatch
-    const randomIndex = Math.floor(Math.random() * phrases.length);
-    setSelectedPhrase(phrases[randomIndex]);
+    randomizePhrase();
   }, [phrases]);
+
+  // Expose randomize method to parent components
+  useImperativeHandle(
+    ref,
+    () => ({
+      randomize: randomizePhrase,
+    }),
+    [phrases],
+  );
 
   return (
     <h2
@@ -45,6 +62,9 @@ const DynamicHomepageHook: React.FC<DynamicHomepageHookProps> = ({
       {selectedPhrase}
     </h2>
   );
-};
+});
+
+DynamicHomepageHook.displayName = "DynamicHomepageHook";
 
 export default DynamicHomepageHook;
+export type { DynamicHomepageHookRef };

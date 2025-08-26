@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { type GalaxyAnimationRef } from "./GalaxyAnimation";
+import { type DynamicHomepageHookRef } from "./DynamicHomepageHook";
 
 type AnimationState =
   | "initial"
@@ -11,8 +12,9 @@ type AnimationState =
 interface ScrollFadeHandlerProps {
   textId: string;
   fadeDistance?: number;
-  galaxyRef: React.RefObject<GalaxyAnimationRef>;
+  galaxyRef: React.RefObject<GalaxyAnimationRef | null>;
   galaxyReady: boolean;
+  textRef: React.RefObject<DynamicHomepageHookRef | null>;
   onCardsAnimationStart?: () => void;
   onCardsComplete?: () => void;
   onCardsHiding?: () => void;
@@ -23,6 +25,7 @@ const ScrollFadeHandler: React.FC<ScrollFadeHandlerProps> = ({
   fadeDistance = 800,
   galaxyRef,
   galaxyReady,
+  textRef,
   onCardsAnimationStart,
   onCardsComplete,
   onCardsHiding,
@@ -39,6 +42,13 @@ const ScrollFadeHandler: React.FC<ScrollFadeHandlerProps> = ({
   const galaxyAnimationStartRef = useRef<number>(0);
   const galaxyStartOpacityRef = useRef<number>(0.5);
   const animationStartupTimeRef = useRef<number>(0);
+
+  // Animation cancellation flags to prevent race conditions
+  const animationCancelledRef = useRef<boolean>(false);
+  const animationIdRef = useRef<number>(0);
+
+  // Animation locking to prevent overlapping animations during state transitions
+  const animationLockRef = useRef<boolean>(false);
 
   // Create refs to hold fresh values for animation and event handlers
   const galaxyReadyRef = useRef(galaxyReady);
@@ -83,10 +93,23 @@ const ScrollFadeHandler: React.FC<ScrollFadeHandlerProps> = ({
         return;
       }
 
+      // Check if animations are locked (during state transitions)
+      if (animationLockRef.current) {
+        return;
+      }
+
+      // Set animation lock to prevent overlapping animations
+      animationLockRef.current = true;
+
       // Cancel any existing galaxy animation
       if (galaxyAnimationRef.current) {
         clearInterval(galaxyAnimationRef.current);
       }
+
+      // Reset cancellation flag and create new animation ID
+      animationCancelledRef.current = false;
+      animationIdRef.current += 1;
+      const currentAnimationId = animationIdRef.current;
 
       galaxyAnimationStartRef.current = performance.now();
       animationStartupTimeRef.current = performance.now();
@@ -118,6 +141,7 @@ const ScrollFadeHandler: React.FC<ScrollFadeHandlerProps> = ({
             clearInterval(galaxyAnimationRef.current);
             galaxyAnimationRef.current = undefined;
           }
+          animationLockRef.current = false;
           return;
         }
 
@@ -129,6 +153,7 @@ const ScrollFadeHandler: React.FC<ScrollFadeHandlerProps> = ({
             clearInterval(galaxyAnimationRef.current);
             galaxyAnimationRef.current = undefined;
           }
+          animationLockRef.current = false;
           return;
         }
 
@@ -137,7 +162,18 @@ const ScrollFadeHandler: React.FC<ScrollFadeHandlerProps> = ({
             clearInterval(galaxyAnimationRef.current);
             galaxyAnimationRef.current = undefined;
           }
-          onComplete?.();
+
+          // Release animation lock
+          animationLockRef.current = false;
+
+          // Only execute completion callback if animation wasn't cancelled and is still current
+          if (
+            !animationCancelledRef.current &&
+            currentAnimationId === animationIdRef.current &&
+            onComplete
+          ) {
+            onComplete();
+          }
         }
       };
 
@@ -253,8 +289,13 @@ const ScrollFadeHandler: React.FC<ScrollFadeHandlerProps> = ({
 
           // Cancel animation if scrolled back to initial
           if (galaxyAnimationRef.current) {
+            animationCancelledRef.current = true;
+            animationLockRef.current = false;
             clearInterval(galaxyAnimationRef.current);
             galaxyAnimationRef.current = undefined;
+
+            // Reset card state when returning to initial
+            onCardsHidingRef.current?.();
           }
         } else if (
           scrollProgressRef.current > 0 &&
@@ -276,8 +317,13 @@ const ScrollFadeHandler: React.FC<ScrollFadeHandlerProps> = ({
             previousState === "cards-animating" &&
             galaxyAnimationRef.current
           ) {
+            animationCancelledRef.current = true;
+            animationLockRef.current = false;
             clearInterval(galaxyAnimationRef.current);
             galaxyAnimationRef.current = undefined;
+
+            // Reset card state when animation is cancelled
+            onCardsHidingRef.current?.();
           }
         } else if (
           scrollProgressRef.current >= textFadeThreshold &&
@@ -305,12 +351,32 @@ const ScrollFadeHandler: React.FC<ScrollFadeHandlerProps> = ({
             if (galaxyReady && galaxyRef.current) {
               // Forward: cards slide UP, galaxy fades 0.5 → 0.0
               animateGalaxyRef.current?.(0.0, 800, () => {
+                // Validate animation is still relevant to current state
+                const currentState = animationStateRef.current;
+                const currentScrollProgress = scrollProgressRef.current;
+
+                // Only proceed if we're still in forward animation context
+                if (
+                  currentState !== "cards-animating" &&
+                  currentState !== "cards-complete"
+                ) {
+                  return;
+                }
+
+                // Additional check: ensure we're still in the cards animation range
+                if (currentScrollProgress < textFadeThreshold) {
+                  return;
+                }
+
                 // Mark forward animation as completed
                 forwardAnimationCompletedRef.current = true;
                 reverseAnimationCompletedRef.current = false;
 
+                // Randomize text when galaxy completely disappears
+                textRef.current?.randomize();
+
                 // Check if we should transition to cards-complete
-                if (scrollProgressRef.current >= cardsAnimationThreshold) {
+                if (currentScrollProgress >= cardsAnimationThreshold) {
                   setAnimationState("cards-complete");
                   onCardsCompleteRef.current?.();
                 }
@@ -324,6 +390,23 @@ const ScrollFadeHandler: React.FC<ScrollFadeHandlerProps> = ({
             if (galaxyReady && galaxyRef.current) {
               // Reverse: cards slide DOWN, galaxy fades 0.0 → 0.5
               animateGalaxyRef.current?.(0.5, 800, () => {
+                // Validate animation is still relevant to current state
+                const currentState = animationStateRef.current;
+                const currentScrollProgress = scrollProgressRef.current;
+
+                // Only proceed if we're still in reverse animation context
+                if (
+                  currentState !== "cards-animating" &&
+                  currentState !== "reverse-fading"
+                ) {
+                  return;
+                }
+
+                // Additional check: ensure we're in reverse scroll context
+                if (currentScrollProgress >= cardsAnimationThreshold) {
+                  return;
+                }
+
                 // Mark reverse animation as completed
                 reverseAnimationCompletedRef.current = true;
                 forwardAnimationCompletedRef.current = false;
@@ -371,11 +454,13 @@ const ScrollFadeHandler: React.FC<ScrollFadeHandlerProps> = ({
         cancelAnimationFrame(animationFrameRef.current);
       }
       if (galaxyAnimationRef.current) {
+        animationCancelledRef.current = true;
+        animationLockRef.current = false;
         clearInterval(galaxyAnimationRef.current);
         galaxyAnimationRef.current = undefined;
       }
     };
-  }, [galaxyRef, galaxyReady, textId, fadeDistance]);
+  }, [galaxyRef, galaxyReady, textRef, textId, fadeDistance]);
 
   return null;
 };

@@ -2,21 +2,27 @@ import React, { useState, useRef, useEffect, useCallback } from "react";
 import ScrollFadeHandler from "./ScrollFadeHandler";
 import PinnedCardsHandler from "./PinnedCardsHandler";
 import GalaxyAnimation, { type GalaxyAnimationRef } from "./GalaxyAnimation";
+import DynamicHomepageHook, { type DynamicHomepageHookRef } from "./DynamicHomepageHook";
 
 type CardDirection = "hidden" | "showing" | "visible" | "hiding";
 
 interface HomepageScrollManagerProps {
   textId: string;
   fadeDistance?: number;
+  textClassName?: string;
+  textStyle?: string;
 }
 
 const HomepageScrollManager: React.FC<HomepageScrollManagerProps> = ({
   textId,
   fadeDistance = 800,
+  textClassName = "",
+  textStyle = "",
 }) => {
   const [cardDirection, setCardDirection] = useState<CardDirection>("hidden");
   const [galaxyReady, setGalaxyReady] = useState(false);
   const galaxyRef = useRef<GalaxyAnimationRef>(null);
+  const textRef = useRef<DynamicHomepageHookRef>(null);
 
   const handleCardsAnimationStart = () => {
     setCardDirection("showing");
@@ -55,22 +61,24 @@ const HomepageScrollManager: React.FC<HomepageScrollManagerProps> = ({
 
   return (
     <>
-      {/* Render GalaxyAnimation directly with fixed positioning to target container */}
-      <div
-        style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          width: "100vw",
-          height: "100vh",
-          pointerEvents: "none",
-          zIndex: 0,
-        }}
-      >
+      {/* Render GalaxyAnimation with absolute positioning within the section */}
+      <div className="absolute inset-0 pointer-events-none z-0">
         <GalaxyAnimation
           ref={galaxyRef}
-          className="absolute inset-0"
+          className="h-full w-full"
           onReady={handleGalaxyReady}
+        />
+      </div>
+
+      {/* Text content overlay positioned within the section */}
+      <div
+        id={textId}
+        className="absolute inset-0 z-10 flex items-center justify-center"
+      >
+        <DynamicHomepageHook
+          ref={textRef}
+          className={textClassName}
+          style={textStyle}
         />
       </div>
 
@@ -79,6 +87,7 @@ const HomepageScrollManager: React.FC<HomepageScrollManagerProps> = ({
         fadeDistance={fadeDistance}
         galaxyRef={galaxyRef}
         galaxyReady={galaxyReady}
+        textRef={textRef}
         onCardsAnimationStart={handleCardsAnimationStart}
         onCardsComplete={handleCardsComplete}
         onCardsHiding={handleCardsHiding}
