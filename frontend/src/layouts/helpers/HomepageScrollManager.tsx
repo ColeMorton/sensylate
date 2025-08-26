@@ -2,7 +2,9 @@ import React, { useState, useRef, useEffect, useCallback } from "react";
 import ScrollFadeHandler from "./ScrollFadeHandler";
 import PinnedCardsHandler from "./PinnedCardsHandler";
 import GalaxyAnimation, { type GalaxyAnimationRef } from "./GalaxyAnimation";
-import DynamicHomepageHook, { type DynamicHomepageHookRef } from "./DynamicHomepageHook";
+import DynamicHomepageHook, {
+  type DynamicHomepageHookRef,
+} from "./DynamicHomepageHook";
 
 type CardDirection = "hidden" | "showing" | "visible" | "hiding";
 
@@ -62,7 +64,7 @@ const HomepageScrollManager: React.FC<HomepageScrollManagerProps> = ({
   return (
     <>
       {/* Render GalaxyAnimation with absolute positioning within the section */}
-      <div className="absolute inset-0 pointer-events-none z-0">
+      <div className="pointer-events-none absolute inset-0 z-0">
         <GalaxyAnimation
           ref={galaxyRef}
           className="h-full w-full"

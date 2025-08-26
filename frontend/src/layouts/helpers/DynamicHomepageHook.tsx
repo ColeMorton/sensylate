@@ -1,4 +1,10 @@
-import React, { useEffect, useState, useImperativeHandle, forwardRef } from "react";
+import React, {
+  useEffect,
+  useState,
+  useImperativeHandle,
+  forwardRef,
+  useCallback,
+} from "react";
 
 interface DynamicHomepageHookProps {
   className?: string;
@@ -24,22 +30,21 @@ const DEFAULT_PHRASES = [
   "Beyond gut feelings: systematic analysis that scales with the markets.",
 ];
 
-const DynamicHomepageHook = forwardRef<DynamicHomepageHookRef, DynamicHomepageHookProps>(({
-  className = "",
-  phrases = DEFAULT_PHRASES,
-  style = "",
-}, ref) => {
+const DynamicHomepageHook = forwardRef<
+  DynamicHomepageHookRef,
+  DynamicHomepageHookProps
+>(({ className = "", phrases = DEFAULT_PHRASES, style = "" }, ref) => {
   const [selectedPhrase, setSelectedPhrase] = useState<string>("");
 
-  const randomizePhrase = () => {
+  const randomizePhrase = useCallback(() => {
     const randomIndex = Math.floor(Math.random() * phrases.length);
     setSelectedPhrase(phrases[randomIndex]);
-  };
+  }, [phrases]);
 
   useEffect(() => {
     // Client-side random selection to avoid hydration mismatch
     randomizePhrase();
-  }, [phrases]);
+  }, [randomizePhrase]);
 
   // Expose randomize method to parent components
   useImperativeHandle(
@@ -47,7 +52,7 @@ const DynamicHomepageHook = forwardRef<DynamicHomepageHookRef, DynamicHomepageHo
     () => ({
       randomize: randomizePhrase,
     }),
-    [phrases],
+    [randomizePhrase],
   );
 
   return (
