@@ -17,7 +17,7 @@ interface GalaxyAnimationRef {
   getOpacity: () => number;
 }
 
-const GalaxyAnimation = forwardRef<GalaxyAnimationRef, GalaxyAnimationProps>(
+const GalaxyAnimation = React.memo(forwardRef<GalaxyAnimationRef, GalaxyAnimationProps>(
   ({ className = "", onReady }, ref) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -308,7 +308,7 @@ const GalaxyAnimation = forwardRef<GalaxyAnimationRef, GalaxyAnimationProps>(
         // Clear canvas reference
         canvasRef.current = null;
       };
-    }, [onReady]);
+    }, []); // Removed onReady dependency to prevent THREE.Clock reset
 
     // Expose opacity control methods to parent components
     useImperativeHandle(
@@ -340,7 +340,7 @@ const GalaxyAnimation = forwardRef<GalaxyAnimationRef, GalaxyAnimationProps>(
       />
     );
   },
-);
+)); // React.memo wrapper closed
 
 GalaxyAnimation.displayName = "GalaxyAnimation";
 

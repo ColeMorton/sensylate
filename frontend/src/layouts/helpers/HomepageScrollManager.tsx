@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import ScrollFadeHandler from "./ScrollFadeHandler";
 import PinnedCardsHandler from "./PinnedCardsHandler";
 import GalaxyAnimation, { type GalaxyAnimationRef } from "./GalaxyAnimation";
@@ -48,10 +48,10 @@ const HomepageScrollManager: React.FC<HomepageScrollManagerProps> = ({
     checkGalaxyReady();
   }, []);
 
-  // Callback for when galaxy component is initialized
-  const handleGalaxyReady = () => {
+  // Callback for when galaxy component is initialized - memoized to prevent GalaxyAnimation re-initialization
+  const handleGalaxyReady = useCallback(() => {
     setGalaxyReady(true);
-  };
+  }, []);
 
   return (
     <>
