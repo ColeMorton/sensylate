@@ -24,10 +24,12 @@ DISABLE_MISE = "true"
     to = "${CONTACT_EMAIL}"
     subject = "${CONTACT_NOTIFICATION_SUBJECT}"
     body = """
-    You have received a new contact form submission:
+    You have received a new professional contact form submission:
 
     Name: {{name}}
     Email: {{email}}
+    Organization: {{organization}}
+    Inquiry Type: {{inquiry-type}}
     Message: {{message}}
 
     Submitted at: {{created_at}}
@@ -49,6 +51,8 @@ DISABLE_MISE = "true"
   PUBLIC_FEATURE_AUTHORS_PAGE = "false"
   PUBLIC_FEATURE_CHARTS_PAGE = "false"
   PUBLIC_FEATURE_PHOTO_BOOTH = "false"
+  CONTACT_EMAIL = "cole.morton@hotmail.com"
+  CONTACT_NOTIFICATION_SUBJECT = "Professional Inquiry Received - Sensylate Platform"
 
 # Branch deploy context (staging and other branches)
 [context.branch-deploy.environment]
@@ -63,6 +67,8 @@ DISABLE_MISE = "true"
   PUBLIC_FEATURE_AUTHORS_PAGE = "true"
   PUBLIC_FEATURE_CHARTS_PAGE = "true"
   PUBLIC_FEATURE_PHOTO_BOOTH = "true"
+  CONTACT_EMAIL = "cole.morton@hotmail.com"
+  CONTACT_NOTIFICATION_SUBJECT = "Professional Inquiry Received - Staging Test"
 
 # Deploy preview context (pull requests)
 [context.deploy-preview.environment]
@@ -77,3 +83,5 @@ DISABLE_MISE = "true"
   PUBLIC_FEATURE_AUTHORS_PAGE = "true"
   PUBLIC_FEATURE_CHARTS_PAGE = "true"
   PUBLIC_FEATURE_PHOTO_BOOTH = "true"
+  CONTACT_EMAIL = "cole.morton@hotmail.com"
+  CONTACT_NOTIFICATION_SUBJECT = "Professional Inquiry Received - Preview Test"

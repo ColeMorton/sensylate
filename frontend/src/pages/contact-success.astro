@@ -4,21 +4,23 @@ import PageHeader from "@/partials/PageHeader.astro";
 ---
 
 <Base
-  title="Message Sent Successfully"
-  meta_title="Contact Form Success"
-  description="Your message has been sent successfully."
+  title="Professional Inquiry Submitted Successfully"
+  meta_title="Contact Form Success - Professional Inquiry Received"
+  description="Your professional inquiry has been received and will be reviewed within 48 hours."
 >
-  <PageHeader title="Message Sent!" />
+  <PageHeader title="Inquiry Received!" />
   <section class="section-sm">
     <div class="container">
-      <div class="row">
-        <div class="mx-auto text-center md:col-10 lg:col-6">
-          <div class="rounded-lg bg-green-50 p-8 shadow-sm">
+      <div class="row justify-center">
+        <div class="mx-auto text-center sm:col-10 md:col-8 lg:col-6">
+          <div
+            class="rounded-lg border border-green-200 bg-green-50 p-6 shadow-sm sm:p-8 dark:border-green-800/30 dark:bg-green-950/20"
+          >
             <div
-              class="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-green-100"
+              class="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-green-100 dark:bg-green-900/30"
             >
               <svg
-                class="h-6 w-6 text-green-600"
+                class="h-8 w-8 text-green-600 dark:text-green-400"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -30,12 +32,30 @@ import PageHeader from "@/partials/PageHeader.astro";
                   d="M5 13l4 4L19 7"></path>
               </svg>
             </div>
-            <h2 class="mb-4 text-2xl font-bold text-green-800">Thank You!</h2>
-            <p class="mb-6 text-green-700">
-              Your message has been sent successfully. I'll get back to you as
-              soon as possible.
+            <h2
+              class="mb-4 text-2xl font-bold text-green-800 dark:text-green-200"
+            >
+              Professional Inquiry Received
+            </h2>
+            <p class="mb-6 text-lg text-green-700 dark:text-green-300">
+              Thank you for your professional inquiry. Your message has been
+              received and will be reviewed personally within 48 hours.
             </p>
-            <a href="/" class="btn btn-primary"> Return to Home </a>
+            <div
+              class="mb-6 rounded-lg border border-green-200 bg-green-100 p-4 dark:border-green-800/40 dark:bg-green-900/20"
+            >
+              <p class="text-sm text-green-800 dark:text-green-300">
+                <strong>Next Steps:</strong> You'll receive a detailed response addressing
+                your inquiry with relevant technical documentation and collaboration
+                opportunities as applicable.
+              </p>
+            </div>
+            <div class="flex flex-col justify-center gap-3 sm:flex-row">
+              <a href="/" class="btn btn-primary"> Return to Home </a>
+              <a href="/about" class="btn btn-outline-primary">
+                Learn More About Sensylate
+              </a>
+            </div>
           </div>
         </div>
       </div>
