@@ -2,13 +2,14 @@
 import config from "@/config/config.json";
 import Base from "@/layouts/Base.astro";
 import PageHeader from "@/partials/PageHeader.astro";
-import { getEntry } from "astro:content";
+import { getEntry, render } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 
 const contact = (await getEntry(
   "contact",
   "-index",
 )) as CollectionEntry<"contact">;
+const { Content } = await render(contact);
 const { contact_form_action }: { contact_form_action: string } = config.params;
 const { title, description, meta_title, image } = contact.data;
 ---
@@ -20,65 +21,134 @@ const { title, description, meta_title, image } = contact.data;
   image={image}
 >
   <PageHeader title={title} />
-  <section class="section-sm">
+  <section class="section-sm py-8">
     <div class="container">
-      <div class="row">
-        <div class="mx-auto md:col-10 lg:col-6">
-          <form
-            name="contact"
-            method="POST"
-            action="/contact-success"
-            data-netlify="true"
-            netlify-honeypot="bot-field"
+      <div class="row justify-center">
+        <div class="lg:col-10 2xl:col-11">
+          <div class="content">
+            <Content />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="section-sm pb-16">
+    <div class="container">
+      <div class="row justify-center">
+        <div class="mx-auto sm:col-10 md:col-8 lg:col-6">
+          <div
+            class="bg-light dark:bg-darkmode-light border-border dark:border-darkmode-border rounded-lg border p-6 shadow-sm sm:p-8"
           >
-            <input type="hidden" name="form-name" value="contact" />
-            <p style="display: none;">
-              <label
-                >Don't fill this out if you're human: <input
-                  name="bot-field"
-                /></label
-              >
+            <h3
+              class="text-text-dark dark:text-darkmode-text-dark mb-6 text-center text-xl font-semibold sm:text-2xl"
+            >
+              Professional Contact Form
+            </h3>
+            <form
+              name="contact"
+              method="POST"
+              action="/contact-success"
+              data-netlify="true"
+              netlify-honeypot="bot-field"
+            >
+              <input type="hidden" name="form-name" value="contact" />
+              <p style="display: none;">
+                <label
+                  >Don't fill this out if you're human: <input
+                    name="bot-field"
+                  /></label
+                >
+              </p>
+              <div class="mb-6">
+                <label for="name" class="form-label">
+                  Full Name <span class="text-red-500">*</span>
+                </label>
+                <input
+                  id="name"
+                  name="name"
+                  class="form-input"
+                  placeholder="Your professional name"
+                  type="text"
+                  required
+                />
+              </div>
+              <div class="mb-6">
+                <label for="email" class="form-label">
+                  Professional Email <span class="text-red-500">*</span>
+                </label>
+                <input
+                  id="email"
+                  name="email"
+                  class="form-input"
+                  placeholder="your.email@company.com"
+                  type="email"
+                  required
+                />
+              </div>
+              <div class="mb-6">
+                <label for="organization" class="form-label">
+                  Organization/Company
+                </label>
+                <input
+                  id="organization"
+                  name="organization"
+                  class="form-input"
+                  placeholder="Company name or professional affiliation"
+                  type="text"
+                />
+              </div>
+              <div class="mb-6">
+                <label for="inquiry-type" class="form-label">
+                  Inquiry Type <span class="text-red-500">*</span>
+                </label>
+                <select
+                  id="inquiry-type"
+                  name="inquiry-type"
+                  class="form-input"
+                  required
+                >
+                  <option value="">Select inquiry type</option>
+                  <option value="technical-collaboration"
+                    >Technical Collaboration</option
+                  >
+                  <option value="professional-opportunity"
+                    >Professional Opportunity</option
+                  >
+                  <option value="platform-inquiry">Platform Inquiry</option>
+                  <option value="consulting">Consulting/Advisory</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div class="mb-8">
+                <label for="message" class="form-label">
+                  Professional Inquiry <span class="text-red-500">*</span>
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  class="form-input"
+                  placeholder="Please describe your professional context, objectives, and how we might collaborate. Include relevant technical requirements or constraints."
+                  rows="8"
+                  required></textarea>
+              </div>
+              <div class="text-center">
+                <button
+                  type="submit"
+                  class="btn btn-primary w-full px-6 py-3 sm:w-auto sm:px-8"
+                >
+                  Send Professional Inquiry
+                </button>
+              </div>
+            </form>
+          </div>
+          <div
+            class="text-text-light dark:text-darkmode-text-light mt-6 text-center text-sm"
+          >
+            <p>
+              All inquiries are reviewed personally and responded to within 48
+              hours.
             </p>
-            <div class="mb-6">
-              <label for="name" class="form-label">
-                Full Name <span class="text-red-500">*</span>
-              </label>
-              <input
-                id="name"
-                name="name"
-                class="form-input"
-                placeholder="John Doe"
-                type="text"
-                required
-              />
-            </div>
-            <div class="mb-6">
-              <label for="email" class="form-label">
-                Working Mail <span class="text-red-500">*</span>
-              </label>
-              <input
-                id="email"
-                name="email"
-                class="form-input"
-                placeholder="john.doe@email.com"
-                type="email"
-                required
-              />
-            </div>
-            <div class="mb-6">
-              <label for="message" class="form-label">
-                Anything else? <span class="text-red-500">*</span>
-              </label>
-              <textarea
-                id="message"
-                name="message"
-                class="form-input"
-                placeholder="Message goes here..."
-                rows="8"
-                required></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-          </form>
+          </div>
         </div>
       </div>
     </div>
