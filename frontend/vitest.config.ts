@@ -9,11 +9,18 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: ['./src/test/setup.ts'],
     globals: true,
-    testTimeout: 60000, // Increased timeout for E2E tests
-    hookTimeout: 30000, // Increased hook timeout for setup/teardown
+    testTimeout: 10000, // Reduced from 60000 - excessive timeouts mask real issues
+    hookTimeout: 5000, // Reduced from 30000 - excessive timeouts mask real issues
     globalSetup: [
       './src/test/photo-booth/e2e/globalSetup.ts'
     ],
+    deps: {
+      optimizer: {
+        web: {
+          include: ['react', 'react-dom', '@testing-library/react']
+        }
+      }
+    },
     coverage: {
       provider: 'v8',
       reporter: ['text', 'html', 'lcov'],

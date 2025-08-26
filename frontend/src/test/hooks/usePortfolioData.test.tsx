@@ -47,7 +47,9 @@ const mockChartConfig = {
   },
 };
 
-vi.mock("@/config/chart-data-dependencies.json", () => mockChartConfig);
+vi.mock("@/config/chart-data-dependencies.json", () => ({
+  default: mockChartConfig,
+}));
 
 describe("usePortfolioData Multi-Stock Hook Tests", () => {
   beforeEach(() => {

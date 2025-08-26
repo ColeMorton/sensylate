@@ -40,7 +40,9 @@ const mockChartConfig = {
   },
 };
 
-vi.mock("@/config/chart-data-dependencies.json", () => mockChartConfig);
+vi.mock("@/config/chart-data-dependencies.json", () => ({
+  default: mockChartConfig,
+}));
 
 // Mock chart theme
 vi.mock("@/utils/chartTheme", () => ({

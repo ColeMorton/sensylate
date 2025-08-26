@@ -175,7 +175,7 @@ export function useMultiStockData(
     return () => {
       abortController.abort();
     };
-  }, [symbols]); // Dependencies on symbols array
+  }, [symbols.join(",")]); // Stable dependency to prevent infinite re-renders
 
   return { data, loading, error };
 }
@@ -305,7 +305,7 @@ export function usePortfolioData(chartType: ChartType): DataServiceResponse<{
     return () => {
       abortController.abort();
     };
-  }, [chartType, fetchDataForChartType]);
+  }, [chartType]); // fetchDataForChartType only depends on chartType, so no need to include it
 
   return { data, loading, error };
 }

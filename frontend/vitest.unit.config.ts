@@ -28,8 +28,11 @@ export default defineConfig({
       'src/test/**/e2e/**'
     ],
     deps: {
-      // Ensure testing libraries are properly resolved
-      inline: ['@testing-library/user-event', '@testing-library/react', '@testing-library/dom']
+      optimizer: {
+        web: {
+          include: ['@testing-library/user-event', '@testing-library/react', '@testing-library/dom']
+        }
+      }
     },
     coverage: {
       provider: 'v8',
