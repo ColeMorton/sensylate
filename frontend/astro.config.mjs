@@ -70,13 +70,18 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
     optimizeDeps: {
-      include: ["three"],
+      include: [
+        "three",
+        "react-plotly.js"
+      ],
       exclude: [
         "vitest",
         "@testing-library/user-event",
         "@testing-library/dom",
         "@testing-library/jest-dom",
-        "@testing-library/react"
+        "@testing-library/react",
+        "plotly.js-dist", // Let Vite handle this as external dependency
+        "plotly.js-basic-dist"
       ]
     },
     ssr: {
@@ -97,8 +102,19 @@ export default defineConfig({
           ];
 
           return testPatterns.some(pattern => id.includes(pattern));
+        },
+        output: {
+          // Manual chunking to handle large packages like Plotly.js
+          manualChunks: {
+            'plotly': ['plotly.js-dist', 'react-plotly.js'],
+            'vendor': ['react', 'react-dom']
+          }
         }
-      }
+      },
+      // Increase chunk size warnings for large packages
+      chunkSizeWarningLimit: 2000, // 2MB instead of default 500KB
+      // Longer timeout for processing large packages
+      target: 'esnext'
     },
     define: {
       // Build-time feature flags for dead code elimination
