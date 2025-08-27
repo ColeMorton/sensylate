@@ -10,14 +10,13 @@ Production-grade SEC EDGAR filing data integration with:
 """
 
 import sys
-from datetime import datetime, timedelta
+from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, Optional
 
 from .base_financial_service import (
     BaseFinancialService,
     DataNotFoundError,
-    FinancialServiceError,
     ServiceConfig,
     ValidationError,
 )
@@ -586,7 +585,7 @@ def create_sec_edgar_service(env: str = "dev") -> SECEDGARService:
 
     # Use absolute path to config directory
     config_dir = Path(__file__).parent.parent.parent / "config"
-    config_loader = ConfigLoader(str(config_dir))
+    config_loader = ConfigLoader(str(config_dir), auto_load_env=True)
     service_config = config_loader.get_service_config("sec_edgar", env)
 
     # Convert to ServiceConfig format

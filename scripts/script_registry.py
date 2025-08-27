@@ -263,12 +263,12 @@ class ScriptRegistry:
             self._scripts[script_name] = instance.metadata
             self._script_instances[script_name] = instance
 
-            self.logger.log_operation(
-                f"Registered script: {script_name}",
-                {
-                    "script_class": script_class.__name__,
-                    "metadata": instance.metadata.to_dict(),
-                },
+            # Log registration success at INFO level without metadata bloat
+            self.logger.info(f"Registered script: {script_name}")
+
+            # Log detailed metadata at DEBUG level only
+            self.logger.debug(
+                f"Script {script_name} metadata: {instance.metadata.to_dict()}"
             )
 
         except Exception as e:

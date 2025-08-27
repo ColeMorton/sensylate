@@ -13,7 +13,8 @@ import type {
 } from "@/types/ChartTypes";
 import {
   usePortfolioData,
-  useAppleStockData,
+  useStockData,
+  useMultiStockData,
   useLiveSignalsData,
   // useTradeHistoryData,
   useWaterfallTradeData,
@@ -23,6 +24,7 @@ import {
 } from "@/hooks/usePortfolioData";
 import { getChartColors, getPlotlyThemeColors } from "@/utils/chartTheme";
 import ChartRenderer from "./ChartRenderer";
+import chartDependencyConfig from "@/config/chart-data-dependencies.json";
 
 interface PortfolioChartProps {
   chartType: ChartType;
@@ -30,7 +32,57 @@ interface PortfolioChartProps {
   timeframe?: "daily" | "weekly";
   indexed?: boolean;
   positionType?: "open" | "closed" | "auto";
+  samePercentageScale?: boolean;
 }
+
+// Helper functions for dynamic symbol resolution
+const isDailyPriceChart = (chartType: ChartType): boolean => {
+  return chartType.endsWith("-price") && !isMultiStockChart(chartType);
+};
+
+const isMultiStockChart = (chartType: ChartType): boolean => {
+  return (
+    chartType.includes("multi-stock") || chartType.endsWith("-stock-price")
+  );
+};
+
+const getSymbolFromChartType = (chartType: ChartType): string | null => {
+  if (!isDailyPriceChart(chartType)) {
+    return null;
+  }
+  const mapping = chartDependencyConfig.chartTypeMapping;
+  return mapping[chartType as keyof typeof mapping] || null;
+};
+
+const getSymbolsFromMultiStockChart = (chartType: ChartType): string[] => {
+  if (!isMultiStockChart(chartType)) {
+    return [];
+  }
+  const multiStockMapping = chartDependencyConfig.multiStockMapping;
+  return multiStockMapping[chartType as keyof typeof multiStockMapping] || [];
+};
+
+const getSymbolDisplayName = (chartType: ChartType): string => {
+  const symbol = getSymbolFromChartType(chartType);
+  if (!symbol) {
+    return "Chart";
+  }
+  const metadata =
+    chartDependencyConfig.symbolMetadata[
+      symbol as keyof typeof chartDependencyConfig.symbolMetadata
+    ];
+  return metadata?.displayName || `${symbol} Price`;
+};
+
+const getMultiStockDisplayName = (chartType: ChartType): string => {
+  if (!isMultiStockChart(chartType)) {
+    return "Chart";
+  }
+  const multiStockMetadata = chartDependencyConfig.multiStockMetadata;
+  const metadata =
+    multiStockMetadata[chartType as keyof typeof multiStockMetadata];
+  return metadata?.displayName || "Multi-Stock Comparison";
+};
 
 const PortfolioChart: React.FC<PortfolioChartProps> = ({
   chartType,
@@ -38,12 +90,13 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
   timeframe = "daily",
   indexed = false,
   positionType = "auto",
+  samePercentageScale = true,
 }) => {
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   // Data hooks
   const portfolioData = usePortfolioData(chartType);
-  const appleData = useAppleStockData();
+  // const appleData = useAppleStockData(); // Replaced with dynamic stock data
   const liveSignalsData = useLiveSignalsData();
   // const tradeHistoryData = useTradeHistoryData(); // Not currently used
   // Removed import for now
@@ -51,6 +104,14 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
   const closedPositionsPnLData = useClosedPositionsPnLData();
   const openPositionsPnLData = useOpenPositionsPnLData();
   const liveSignalsBenchmarkData = useLiveSignalsBenchmarkData();
+
+  // Dynamic stock data for daily price charts
+  const stockSymbol = getSymbolFromChartType(chartType);
+  const dynamicStockData = useStockData(stockSymbol || "");
+
+  // Multi-stock data for multi-stock price charts
+  const multiStockSymbols = getSymbolsFromMultiStockChart(chartType);
+  const multiStockData = useMultiStockData(multiStockSymbols);
 
   // Smart position data selection logic
   const isPositionChart = chartType === "open-positions-pnl-timeseries";
@@ -67,9 +128,10 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
     : null;
 
   // Use appropriate data source based on chart type
-  const { data, loading, error } =
-    chartType === "apple-stock"
-      ? appleData
+  const { data, loading, error } = isMultiStockChart(chartType)
+    ? multiStockData
+    : isDailyPriceChart(chartType)
+      ? dynamicStockData
       : chartType === "live-signals-benchmark-comparison"
         ? liveSignalsBenchmarkData
         : chartType.startsWith("live-signals-")
@@ -93,8 +155,16 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
       "trade-pnl-waterfall",
     ];
 
-    if (hideLegendChartTypes.includes(chartType)) {
+    if (
+      hideLegendChartTypes.includes(chartType) ||
+      isDailyPriceChart(chartType)
+    ) {
       return false;
+    }
+
+    // Show legend for multi-stock charts
+    if (isMultiStockChart(chartType)) {
+      return true;
     }
 
     const isAnyPositionChart =
@@ -493,32 +563,6 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
     }
 
     switch (chartType) {
-      case "apple-stock": {
-        const stockRows = data as StockDataRow[];
-        if (!stockRows || stockRows.length === 0) {
-          return [];
-        }
-
-        return [
-          {
-            type: "scatter",
-            mode: "lines",
-            x: unpack(stockRows, "Date"),
-            y: unpack(stockRows, "AAPL.High"),
-            line: { color: colors.tertiary, width: 2 },
-            name: "AAPL High",
-          },
-          {
-            type: "scatter",
-            mode: "lines",
-            x: unpack(stockRows, "Date"),
-            y: unpack(stockRows, "AAPL.Low"),
-            line: { color: colors.neutral, width: 2 },
-            name: "AAPL Low",
-          },
-        ];
-      }
-
       case "portfolio-value-comparison": {
         const portfolioRows = data as {
           multiStrategy?: PortfolioDataRow[];
@@ -973,6 +1017,104 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
       }
 
       default:
+        // Handle multi-stock charts generically
+        if (isMultiStockChart(chartType)) {
+          const multiStockDataMap = data as {
+            [symbol: string]: StockDataRow[];
+          };
+          if (
+            !multiStockDataMap ||
+            Object.keys(multiStockDataMap).length === 0
+          ) {
+            return [];
+          }
+
+          const chartData: Data[] = [];
+          const symbols = getSymbolsFromMultiStockChart(chartType);
+
+          // Use predefined colors cycling through available colors
+          const availableColors = [
+            colors.multiStrategy,
+            colors.buyHold,
+            colors.tertiary,
+            colors.drawdown,
+            colors.neutral,
+          ];
+
+          symbols.forEach((symbol, index) => {
+            const stockRows = multiStockDataMap[symbol];
+            if (stockRows && stockRows.length > 0) {
+              // Get display name from symbol metadata
+              const symbolMetadata =
+                chartDependencyConfig.symbolMetadata[
+                  symbol as keyof typeof chartDependencyConfig.symbolMetadata
+                ];
+              const displayName = symbolMetadata?.name
+                ? `${symbolMetadata.name} (${symbol})`
+                : `${symbol} Price`;
+
+              // Calculate y-values based on samePercentageScale setting
+              let yValues: number[];
+              let hoverTemplate: string;
+
+              if (samePercentageScale) {
+                // Calculate percentage change from first price
+                const firstPrice = parseFloat(stockRows[0].close);
+                yValues = stockRows.map((row) => {
+                  const currentPrice = parseFloat(row.close);
+                  return ((currentPrice - firstPrice) / firstPrice) * 100;
+                });
+                hoverTemplate =
+                  "<b>%{fullData.name}</b><br>" +
+                  "Date: %{x}<br>" +
+                  "Change: %{y:.2f}%<br>" +
+                  "<extra></extra>";
+              } else {
+                // Use absolute price values
+                yValues = stockRows.map((row) => parseFloat(row.close));
+                hoverTemplate =
+                  "<b>%{fullData.name}</b><br>" +
+                  "Date: %{x}<br>" +
+                  "Price: $%{y:.2f}<br>" +
+                  "<extra></extra>";
+              }
+
+              chartData.push({
+                type: "scatter",
+                mode: "lines",
+                x: stockRows.map((row) => row.date),
+                y: yValues,
+                line: {
+                  color: availableColors[index % availableColors.length],
+                  width: 2,
+                },
+                name: displayName,
+                hovertemplate: hoverTemplate,
+              });
+            }
+          });
+
+          return chartData;
+        }
+
+        // Handle all daily price charts generically
+        if (isDailyPriceChart(chartType)) {
+          const stockRows = data as StockDataRow[];
+          if (!stockRows || stockRows.length === 0) {
+            return [];
+          }
+
+          return [
+            {
+              type: "scatter",
+              mode: "lines",
+              x: unpack(stockRows, "date"),
+              y: unpack(stockRows, "close"),
+              line: { color: colors.tertiary, width: 2 },
+              name: getSymbolDisplayName(chartType),
+            },
+          ];
+        }
         return [];
     }
   }, [
@@ -984,6 +1126,7 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
     timeframe,
     indexed,
     shouldUseClosedData,
+    samePercentageScale,
     convertToWeeklyOHLC,
     convertOpenPositionsPnLToWeekly,
     createIndexedDataWithEntry,
@@ -1001,8 +1144,6 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
       }
 
       switch (chartType) {
-        case "apple-stock":
-          return "Apple Stock Price Range (Custom Range)";
         case "portfolio-value-comparison":
           return "Portfolio Value Comparison";
         case "returns-comparison":
@@ -1032,14 +1173,20 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
             : `${positionTypeText} Positions Cumulative PnL Time Series`;
         }
         default:
+          // Handle multi-stock charts generically
+          if (isMultiStockChart(chartType)) {
+            return getMultiStockDisplayName(chartType);
+          }
+          // Handle daily price charts generically
+          if (isDailyPriceChart(chartType)) {
+            return getSymbolDisplayName(chartType);
+          }
           return "Chart";
       }
     };
 
     const getYAxisTitle = () => {
       switch (chartType) {
-        case "apple-stock":
-          return "Price ($)";
         case "portfolio-value-comparison":
           return "Portfolio Value ($)";
         case "returns-comparison":
@@ -1061,6 +1208,14 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
         case "open-positions-pnl-timeseries":
           return "Cumulative PnL ($)";
         default:
+          // Handle multi-stock charts generically
+          if (isMultiStockChart(chartType)) {
+            return samePercentageScale ? "Percentage Change (%)" : "Price ($)";
+          }
+          // Handle daily price charts generically
+          if (isDailyPriceChart(chartType)) {
+            return "Price ($)";
+          }
           return "Value";
       }
     };
@@ -1091,12 +1246,7 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
         font: themeColors.font,
       },
       xaxis: {
-        range:
-          chartType === "apple-stock"
-            ? ["2016-07-01", "2016-12-31"]
-            : chartType === "trade-pnl-waterfall"
-              ? undefined
-              : undefined,
+        range: chartType === "trade-pnl-waterfall" ? undefined : undefined,
         type:
           chartType === "trade-pnl-waterfall"
             ? "category"
@@ -1127,10 +1277,6 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
       },
       yaxis: {
         autorange: true,
-        range:
-          chartType === "apple-stock"
-            ? [86.8700008333, 138.870004167]
-            : undefined,
         type: "linear",
         title: {
           text: getYAxisTitle(),
@@ -1150,6 +1296,7 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
     indexed,
     shouldShowLegend,
     actualDataType,
+    samePercentageScale,
   ]);
 
   // Chart config

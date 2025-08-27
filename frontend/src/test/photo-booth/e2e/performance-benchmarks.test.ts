@@ -141,7 +141,7 @@ describe("Photo Booth Performance Benchmarks", () => {
 
       await photoBoothE2EHelper.waitForPhotoBoothReady(page, 45000);
 
-      const renderTime = performance.now() - renderStartTime;
+      performance.now() - renderStartTime;
 
       // Record the render time for performance tracking
       expect(renderTime).toBeLessThan(45000); // Should render within 45 seconds

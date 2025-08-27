@@ -7,16 +7,18 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({
   title,
   category,
   description,
-  chartType = "apple-stock",
+  chartType = "apple-price",
   timeframe = "daily",
   indexed = false,
   positionType = "auto",
+  samePercentageScale = true,
   className = "",
   titleOnly = false,
 }) => {
   // Handle unsupported chart types
   const supportedChartTypes = [
-    "apple-stock",
+    "apple-price",
+    "mstr-price",
     "portfolio-value-comparison",
     "returns-comparison",
     "portfolio-drawdowns",
@@ -27,6 +29,8 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({
     "trade-pnl-waterfall",
     "open-positions-pnl-timeseries",
     "closed-positions-pnl-timeseries",
+    "multi-stock-price",
+    "xpev-nio-stock-price",
   ];
 
   if (!supportedChartTypes.includes(chartType)) {
@@ -52,6 +56,7 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({
     );
   }
 
+  // Render all charts normally
   return (
     <ChartContainer
       title={title}
@@ -66,6 +71,7 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({
         timeframe={timeframe}
         indexed={indexed}
         positionType={positionType}
+        samePercentageScale={samePercentageScale}
       />
     </ChartContainer>
   );

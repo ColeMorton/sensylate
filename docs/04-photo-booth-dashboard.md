@@ -1,95 +1,46 @@
-# Front-End Photo Booth & Dashboard System - Complete Specification
+# Photo Booth & Dashboard System
 
-**Version**: 1.1.0
-**Date**: 2025-08-11
-**Status**: Active
-**Authority**: Ultimate Reference for Photo Booth, Dashboard, Chart & Export Systems
+Technical reference for photo booth, dashboard, chart and export systems.
 
 ---
 
 ## Table of Contents
 
-1. [System Overview & Architecture](#1-system-overview--architecture)
-2. [Photo Booth System Specification](#2-photo-booth-system-specification)
+1. [System Overview](#1-system-overview)
+2. [Photo Booth System](#2-photo-booth-system)
 3. [Dashboard Architecture](#3-dashboard-architecture)
 4. [Chart Data Solutions](#4-chart-data-solutions)
-5. [Chart Component Ecosystem](#5-chart-component-ecosystem)
+5. [Chart Components](#5-chart-components)
 6. [Image Export System](#6-image-export-system)
-7. [Integration Points & APIs](#7-integration-points--apis)
-8. [Development & Maintenance](#8-development--maintenance)
-   - [8.1 File Structure](#81-file-structure)
-   - [8.2 Testing Architecture](#82-testing-architecture)
-   - [8.3 Testing Infrastructure & Tooling](#83-testing-infrastructure--tooling)
-   - [8.4 Test Execution & Quality Gates](#84-test-execution--quality-gates)
-   - [8.5 Python Integration Testing (Phase 4 Detail)](#85-python-integration-testing-phase-4-detail)
-   - [8.6 Quality Standards](#86-quality-standards)
-   - [8.7 Extension Points](#87-extension-points)
+7. [APIs](#7-apis)
+8. [File Structure](#8-file-structure)
 
 ---
 
-## 1. System Overview & Architecture
+## 1. System Overview
 
-### 1.1 Technology Stack
+**Technology Stack**:
+- Frontend: Astro 5.7+ with React islands, TailwindCSS 4+
+- Charts: Plotly.js for interactive visualizations
+- Export: Puppeteer + Sharp.js for image generation
+- Backend: Python scripts with pandas, matplotlib, plotly
+- Data: CSV files with dedicated service layer
 
-**Frontend Framework**: Astro 5.7+ with React islands
-**UI Library**: TailwindCSS 4+ for styling
-**Chart Engine**: Plotly.js for interactive visualizations
-**Export Engine**: Puppeteer + Sharp.js for high-resolution image generation
-**Backend**: Python scripts with pandas, matplotlib, plotly
-**Data Format**: CSV files processed through dedicated service layer
-
-### 1.2 System Architecture
-
+**Architecture**:
 ```
-┌─────────────────────┐    ┌─────────────────────┐    ┌─────────────────────┐
-│   Python Scripts   │───▶│   Data Pipeline     │───▶│   Frontend Layer    │
-│   • Data Generation │    │   • CSV Files       │    │   • Photo Booth     │
-│   • Dashboard Gen   │    │   • API Endpoints   │    │   • Dashboard View  │
-│   • Photo Export    │    │   • Data Validation │    │   • Chart Display   │
-└─────────────────────┘    └─────────────────────┘    └─────────────────────┘
-           │                          │                          │
-           ▼                          ▼                          ▼
-┌─────────────────────┐    ┌─────────────────────┐    ┌─────────────────────┐
-│   Export Pipeline   │    │   Configuration     │    │   User Interface    │
-│   • Puppeteer       │    │   • photo-booth.json│    │   • Controls        │
-│   • Sharp Processor │    │   • Dashboard Configs│    │   • Export Options  │
-│   • File Management │    │   • Theme Settings  │    │   • Real-time View  │
-└─────────────────────┘    └─────────────────────┘    └─────────────────────┘
+Python Scripts → CSV Data → Frontend → Photo Booth Export
+     ↓              ↓          ↓           ↓
+Dashboard Gen  → API Layer → Chart Display → PNG/SVG Output
 ```
-
-### 1.3 Data Flow
-
-1. **Data Generation**: Python scripts generate trading/portfolio data as CSV files
-2. **Data Processing**: ChartDataService loads and caches CSV data with intelligent parsing
-3. **Dashboard Loading**: DashboardLoader retrieves static dashboard configurations
-4. **Chart Rendering**: PortfolioChart components process data through Plotly.js
-5. **Export Processing**: Photo booth captures rendered dashboards via Puppeteer/Sharp
-
-### 1.4 Key Design Principles
-
-- **Fail-Fast Architecture**: Immediate error reporting vs. fallback functionality
-- **Institutional Quality**: 9.0+ quality standards for all documentation and code
-- **Performance First**: Caching, lazy loading, and optimized rendering
-- **Type Safety**: Complete TypeScript coverage across all components
-- **Mobile Responsive**: Tailwind-based responsive design system
 
 ---
 
-## 2. Photo Booth System Specification
+## 2. Photo Booth System
 
-### 2.1 Core Components
+### PhotoBoothDisplay Component
+**File**: `frontend/src/layouts/shortcodes/PhotoBoothDisplay.tsx`
 
-#### PhotoBoothDisplay Component
-**Location**: `frontend/src/layouts/shortcodes/PhotoBoothDisplay.tsx`
-**Type**: React functional component with hooks
-**Purpose**: Main photo booth interface with export functionality
-
-**Key Features**:
-- Dashboard selection and preview
-- Export format/quality controls
-- Real-time rendering with ready state indicators
-- URL parameter synchronization
-- Theme mode switching (light/dark)
+React component providing dashboard preview and export functionality.
 
 **State Management**:
 ```typescript
@@ -132,34 +83,194 @@ interface PhotoBoothState {
       "description": "Comprehensive trading strategy performance overview",
       "layout": "2x2_grid",
       "enabled": true
+    },
+    {
+      "id": "portfolio_analysis",
+      "name": "Portfolio Analysis Dashboard",
+      "file": "portfolio-analysis.mdx",
+      "description": "Portfolio composition and risk analysis",
+      "layout": "1x3_stack",
+      "enabled": true
+    },
+    {
+      "id": "portfolio_history_portrait",
+      "name": "Portfolio History Portrait",
+      "file": "portfolio-history-portrait.mdx",
+      "description": "Portfolio trading history with waterfall and time series analysis",
+      "layout": "2x1_stack",
+      "enabled": true
+    },
+    {
+      "id": "market_overview",
+      "name": "Market Overview Dashboard",
+      "file": "market-overview.mdx",
+      "description": "Market trends and sector analysis",
+      "layout": "2x2_grid",
+      "enabled": false
     }
   ],
   "screenshot_settings": {
     "viewport": { "width": 1920, "height": 1080 },
     "device_scale_factor": 2,
+    "format": "png",
+    "quality": 95,
+    "full_page": false,
     "timeout": 30000,
     "wait_for_selector": ".photo-booth-ready"
   },
   "export_options": {
     "formats": {
       "available": ["png", "svg", "both"],
-      "default": "png"
+      "default": "png",
+      "descriptions": {
+        "png": "High-resolution raster image, perfect for presentations and print",
+        "svg": "Vector-based image with infinite scalability and small file size",
+        "both": "Generate both PNG and SVG formats simultaneously"
+      }
     },
     "aspect_ratios": {
       "available": [
         {
           "id": "16:9",
-          "dimensions": { "width": 1920, "height": 1080 }
+          "name": "Widescreen (16:9)",
+          "dimensions": { "width": 1920, "height": 1080 },
+          "description": "Standard widescreen format, ideal for monitors and web"
+        },
+        {
+          "id": "4:3",
+          "name": "Traditional (4:3)",
+          "dimensions": { "width": 1440, "height": 1080 },
+          "description": "Classic presentation format, ideal for projectors"
+        },
+        {
+          "id": "3:4",
+          "name": "Portrait (3:4)",
+          "dimensions": { "width": 1080, "height": 1440 },
+          "description": "Portrait orientation, ideal for social media and mobile"
         }
-      ]
+      ],
+      "default": "16:9"
     },
     "dpi_settings": {
       "available": [150, 300, 600],
-      "default": 300
+      "default": 300,
+      "descriptions": {
+        "150": "Web/Digital - Standard screen resolution",
+        "300": "Print/Professional - High-quality printing standard",
+        "600": "Ultra-High - Professional publishing and large format"
+      }
+    },
+    "scale_factors": {
+      "available": [2, 3, 4],
+      "default": 3,
+      "descriptions": {
+        "2": "Standard high-DPI (2x resolution)",
+        "3": "Enhanced high-DPI (3x resolution)",
+        "4": "Ultra high-DPI (4x resolution)"
+      }
+    }
+  },
+  "output": {
+    "directory": "data/outputs/photo-booth",
+    "filename_template": "{dashboard_id}_{mode}_{aspect_ratio}_{format}_{dpi}dpi_{timestamp}.{extension}",
+    "legacy_filename_template": "{dashboard_id}_{mode}_{timestamp}.png",
+    "modes": ["light", "dark"],
+    "auto_cleanup": {
+      "enabled": true,
+      "keep_latest": 10,
+      "older_than_days": 30
+    }
+  },
+  "performance": {
+    "preload_charts": true,
+    "render_timeout": 15000,
+    "retry_attempts": 3,
+    "cache_bust": false
+  },
+  "data_dependencies": {
+    "enabled": true,
+    "config_path": "./chart-data-dependencies.json",
+    "show_status_indicators": true,
+    "allow_manual_refresh": true,
+    "refresh_policies": {
+      "auto_refresh_on_stale": false,
+      "refresh_on_dashboard_load": true,
+      "background_monitoring": true,
+      "file_watching": true
+    },
+    "status_display": {
+      "show_compact_indicators": true,
+      "show_detailed_dashboard": false,
+      "alert_on_stale_data": true,
+      "alert_threshold_hours": 12
+    },
+    "integration": {
+      "cli_services_enabled": true,
+      "cli_rate_limiting": true,
+      "file_monitoring": true,
+      "cache_coordination": true
+    }
+  },
+  "dashboard_data_mapping": {
+    "trading_performance": {
+      "primary_charts": [
+        "portfolio-value-comparison",
+        "returns-comparison",
+        "live-signals-equity-curve",
+        "trade-pnl-waterfall"
+      ],
+      "data_freshness_requirements": {
+        "warning_threshold_hours": 6,
+        "error_threshold_hours": 24
+      },
+      "refresh_priority": "high"
+    },
+    "portfolio_analysis": {
+      "primary_charts": ["portfolio-drawdowns", "open-positions-pnl-timeseries", "closed-positions-pnl-timeseries"],
+      "data_freshness_requirements": {
+        "warning_threshold_hours": 12,
+        "error_threshold_hours": 48
+      },
+      "refresh_priority": "medium"
+    },
+    "portfolio_history_portrait": {
+      "primary_charts": ["trade-pnl-waterfall", "closed-positions-pnl-timeseries", "live-signals-weekly-candlestick"],
+      "data_freshness_requirements": {
+        "warning_threshold_hours": 24,
+        "error_threshold_hours": 72
+      },
+      "refresh_priority": "low"
+    },
+    "market_overview": {
+      "primary_charts": ["live-signals-benchmark-comparison", "apple-stock"],
+      "data_freshness_requirements": {
+        "warning_threshold_hours": 2,
+        "error_threshold_hours": 8
+      },
+      "refresh_priority": "high"
     }
   }
 }
 ```
+
+#### Configuration Sections Explained
+
+**Data Dependencies Configuration**:
+- **File Watching**: Monitors data file changes for automatic invalidation
+- **Refresh Policies**: Controls when and how data refreshes occur
+- **Status Display**: Configures visual indicators for data freshness
+- **CLI Integration**: Enables coordination with backend data pipeline
+
+**Dashboard Data Mapping**:
+- **Primary Charts**: Lists core chart types for each dashboard
+- **Freshness Requirements**: Time-based thresholds for data staleness warnings
+- **Refresh Priority**: Determines update priority during bulk operations
+
+**Performance Configuration**:
+- **Chart Preloading**: Enables background chart rendering for faster display
+- **Render Timeout**: Maximum wait time for chart initialization (15 seconds)
+- **Retry Logic**: Automatic retry attempts for failed operations
+- **Cache Busting**: Controls cache invalidation strategies
 
 ### 2.3 URL Parameter System
 
@@ -186,39 +297,20 @@ interface PhotoBoothState {
 
 ## 3. Dashboard Architecture
 
-### 3.1 Dashboard Configuration System
+### Configuration
+**Files**:
+- `frontend/src/config/photo-booth.json` - Primary configuration
+- `frontend/src/pages/api/dashboards.json.ts` - API endpoint
+- `frontend/src/content/dashboards/*.mdx` - Dashboard content
 
-#### Static Dashboard Configurations
-**Location**: `frontend/src/pages/api/dashboards.json.ts`
-**Purpose**: Centralized dashboard metadata and chart specifications
+### Available Dashboards
+1. **trading_performance** - File: `trading-performance.mdx`, Layout: 2x2_grid
+2. **portfolio_analysis** - File: `portfolio-analysis.mdx`, Layout: 1x3_stack
+3. **portfolio_history_portrait** - File: `portfolio-history-portrait.mdx`, Layout: 2x1_stack
+4. **market_overview** - Disabled (enabled: false)
 
-**Available Dashboards**:
-
-1. **Trading Performance Dashboard** (`trading_performance`)
-   - **Layout**: 2x2_grid
-   - **Charts**: 4 charts (portfolio comparison, returns, drawdowns, live signals)
-   - **Status**: Active
-
-2. **Portfolio Analysis Dashboard** (`portfolio_analysis`)
-   - **Layout**: 1x3_stack
-   - **Charts**: 4 charts (equity curve, drawdowns, waterfall, timeseries)
-   - **Status**: Active
-
-3. **Portfolio History Portrait** (`portfolio_history_portrait`)
-   - **Layout**: 2x1_stack
-   - **Charts**: 2 charts (waterfall, closed positions)
-   - **Status**: Active
-   - **Special Features**: Title-only mode, custom header/footer
-
-4. **Market Overview Dashboard** (`market_overview`)
-   - **Layout**: 2x2_grid
-   - **Charts**: 4 mixed charts
-   - **Status**: Disabled
-
-### 3.2 Dashboard Layout System
-
-#### Layout Mappings
-**Location**: `frontend/src/services/dashboardLoader.ts`
+### Layout System
+**File**: `frontend/src/services/dashboardLoader.ts`
 
 ```typescript
 const layoutMappings: Record<string, string> = {
@@ -237,7 +329,7 @@ const layoutMappings: Record<string, string> = {
 
 ### 3.2 Dashboard Renderer Component
 
-**Location**: PhotoBoothDisplay.tsx (lines 574-632)
+**Location**: PhotoBoothDisplay.tsx (lines 575-634)
 **Purpose**: Renders actual dashboard content with theme and layout support
 
 **Key Features**:
@@ -342,41 +434,98 @@ interface TradeHistoryDataRow {
 }
 ```
 
-### 4.4 Data Flow Pipeline
+### 4.4 Data Quality & Validation
+
+#### Enhanced Data Validation
+**ChartDataService** now includes comprehensive data quality monitoring:
+
+```typescript
+// Data validation with quality assessment
+validateCSVData(data: any[], dataType: string): {
+  isValid: boolean;
+  issues: string[];
+  recordCount: number;
+}
+
+// Data freshness monitoring
+checkDataFreshness(endpoint: string): Promise<{
+  isFresh: boolean;
+  ageHours: number;
+  lastModified?: string;
+}>
+
+// Comprehensive quality reporting
+getDataQualityReport(): Promise<{
+  overall: "healthy" | "warning" | "error";
+  categories: {
+    [key: string]: {
+      status: "healthy" | "warning" | "error";
+      recordCount: number;
+      issues: string[];
+      freshness: { isFresh: boolean; ageHours: number; };
+    };
+  };
+  generatedAt: string;
+}>
+```
+
+#### Data Validation Methods
+**Enhanced validation features**:
+- **Schema Validation**: Required field presence and type checking
+- **Freshness Monitoring**: HTTP header-based age detection with 24-hour thresholds
+- **Data Completeness**: Row count validation and missing data detection
+- **Cross-Category Validation**: Live signals, trade history, and portfolio data consistency
+
+#### Cache Management Enhancements
+**Advanced caching system**:
+- **Multi-level Caching**: Portfolio, live signals, trade history, benchmark, and open positions
+- **Cache Status Reporting**: Validity, freshness, and data quality indicators
+- **Intelligent Invalidation**: Time-based and event-driven cache clearing
+- **Memory Optimization**: Automatic cleanup and resource management
+
+#### Enhanced Data Methods
+**Validation-enabled data fetching**:
+```typescript
+// Enhanced data fetching with validation
+fetchLiveSignalsDataWithValidation(): Promise<{
+  data: LiveSignalsDataRow[];
+  validation: { isValid: boolean; issues: string[]; recordCount: number; };
+  freshness: { isFresh: boolean; ageHours: number; lastModified?: string; };
+}>
+
+fetchTradeHistoryDataWithValidation(): Promise<{
+  data: TradeHistoryDataRow[];
+  validation: { isValid: boolean; issues: string[]; recordCount: number; };
+  freshness: { isFresh: boolean; ageHours: number; lastModified?: string; };
+}>
+
+// Cache status monitoring
+getCacheStatus(): {
+  isValid: boolean;
+  lastFetched?: number;
+  hasData: boolean;
+  dataQuality?: "unknown" | "healthy" | "warning" | "error";
+}
+
+// Manual cache management
+clearCache(): void
+```
+
+### 4.5 Data Flow Pipeline
 
 1. **Backend Generation**: Python scripts generate CSV files in `data/outputs/`
 2. **Frontend Request**: React hooks trigger data fetching via ChartDataService
 3. **CSV Processing**: Service parses CSV text into typed interfaces
-4. **Cache Management**: Data stored with timestamp-based invalidation
-5. **Component Consumption**: Chart components receive typed, validated data
+4. **Data Validation**: Quality assessment and freshness checking
+5. **Cache Management**: Data stored with timestamp-based invalidation and quality metrics
+6. **Component Consumption**: Chart components receive typed, validated data with quality indicators
 
 ---
 
-## 5. Chart Component Ecosystem
+## 5. Chart Components
 
-### 5.1 Component Hierarchy
-
-```
-ChartDisplay (Entry Point)
-├── ChartContainer (Layout & Styling)
-│   ├── Category Label
-│   ├── Chart Title
-│   ├── Description Text
-│   └── Chart Content Area
-│       └── PortfolioChart (Data Processing)
-│           ├── Data Hooks Integration
-│           ├── Theme Detection
-│           ├── Data Transformation
-│           └── ChartRenderer (Plotly Integration)
-│               ├── Plotly.js Rendering
-│               ├── Loading States
-│               └── Error Handling
-```
-
-### 5.2 Chart Display Component
-
-**Location**: `frontend/src/layouts/shortcodes/ChartDisplay.tsx`
-**Purpose**: Entry point for all chart rendering with type validation
+### ChartDisplay Component
+**File**: `frontend/src/layouts/shortcodes/ChartDisplay.tsx`
 
 **Supported Chart Types**:
 ```typescript
@@ -482,7 +631,7 @@ Export Controls  /api/export-    photo_booth_   Screenshot   Image Processing  F
 
 ### 6.2 Frontend Export Controls
 
-**Location**: PhotoBoothDisplay component (lines 367-495)
+**Location**: PhotoBoothDisplay component (lines 208-571)
 
 **Export Options**:
 - **Format Selection**: PNG, SVG, or both formats simultaneously
@@ -572,17 +721,68 @@ Example: `trading_performance_dark_16x9_png_300dpi_20250810_143052.png`
 - **Element Hiding**: Clean removal of UI controls and dev tools
 - **Rendering Timeout**: 30-second maximum wait for chart completion
 
+### 6.6 Enhanced Export Features
+
+#### Auto-Cleanup and File Management
+**Configuration**: `output.auto_cleanup` in photo-booth.json
+- **Automatic Cleanup**: Removes old export files based on retention policies
+- **Keep Latest**: Maintains 10 most recent exports per dashboard
+- **Age-based Removal**: Deletes files older than 30 days
+- **Smart Organization**: Organized file structure with descriptive filenames
+
+#### Advanced Error Handling
+**Export Pipeline Resilience**:
+- **Parameter Validation**: Comprehensive input validation with detailed error messages
+- **Process Monitoring**: Real-time Python script execution monitoring
+- **Timeout Management**: Configurable timeout limits with graceful degradation
+- **Error Context**: Detailed error reporting with troubleshooting guidance
+- **Retry Logic**: Automatic retry attempts for transient failures
+
+```typescript
+// Enhanced error response structure
+interface ExportErrorResponse {
+  success: false;
+  error: string;
+  error_code: "VALIDATION_ERROR" | "PROCESS_TIMEOUT" | "SCRIPT_ERROR" | "NETWORK_ERROR";
+  details: {
+    dashboard_id?: string;
+    parameters?: ExportRequest;
+    python_output?: string;
+    execution_time?: number;
+  };
+  retry_suggested: boolean;
+  troubleshooting_steps: string[];
+}
+```
+
+#### Export Status Tracking
+**Real-time Progress Monitoring**:
+- **Status Updates**: Live progress indication during export operations
+- **Processing Time**: Accurate execution time reporting
+- **File Generation**: Real-time file path reporting as files are created
+- **Success Confirmation**: Detailed success reporting with generated file list
+
+#### Enhanced Filename Templates
+**Flexible Naming System**:
+- **Standard Template**: `{dashboard_id}_{mode}_{aspect_ratio}_{format}_{dpi}dpi_{timestamp}.{extension}`
+- **Legacy Support**: Backward compatibility with simple naming convention
+- **Timestamp Precision**: Accurate timestamp formatting for unique file identification
+- **Format Indicators**: Clear format and quality indicators in filenames
+
+Example Filenames:
+```
+trading_performance_dark_16x9_png_300dpi_20250820_143052.png
+portfolio_analysis_light_4x3_svg_600dpi_20250820_143127.svg
+portfolio_history_portrait_dark_3x4_both_150dpi_20250820_143201.png
+portfolio_history_portrait_dark_3x4_both_150dpi_20250820_143201.svg
+```
+
 ---
 
-## 7. Integration Points & APIs
+## 7. APIs
 
-### 7.1 API Endpoints
-
-#### Dashboard Configuration API
-**Endpoint**: `/api/dashboards.json`
-**Method**: GET
-**Purpose**: Retrieve available dashboard configurations
-**Caching**: 1-hour public cache with ETag support
+### `/api/dashboards.json`
+GET endpoint returning dashboard configurations.
 
 **Response Structure**:
 ```typescript
@@ -645,9 +845,7 @@ const pythonProcess = spawn("python3", args, {
 
 ---
 
-## 8. Development & Maintenance
-
-### 8.1 File Structure
+## 8. File Structure
 
 ```
 frontend/
@@ -721,545 +919,18 @@ scripts/
     └── sharp_processor.js                      # PNG processing utility
 ```
 
-### 8.2 Testing Architecture
+### Testing
 
-The photo booth system implements a comprehensive **7-phase testing architecture** providing institutional-grade quality assurance with 90%+ test coverage across all critical user journeys and system integrations.
-
-#### 7-Phase Testing Framework
-
-**Phase 1: End-to-End Export Integration Tests**
-**File**: `photo-booth-e2e-export.test.ts`
-**Coverage**: Complete export pipeline validation
-**Tests**: 7 comprehensive export workflow tests
-**Key Scenarios**:
-- Full PNG export pipeline with file validation
-- SVG format export with vector accuracy verification
-- Concurrent export request handling and queuing
-- Export parameter validation and error handling
-- File system integration and cleanup verification
-
-**Phase 2: Image Quality & Metadata Validation Tests**
-**File**: `image-validation.test.ts`
-**Coverage**: Export quality standards and metadata verification
-**Tests**: 9 quality validation tests
-**Key Scenarios**:
-- PNG export dimension validation (16:9, 4:3, 3:4 aspect ratios)
-- SVG export scalability and vector accuracy testing
-- High-DPI export configuration validation (150, 300, 600 DPI)
-- Color accuracy and theme consistency verification
-- Metadata embedding and file format compliance
-
-**Phase 3: Real Data Integration Tests**
-**File**: `real-data-integration.test.ts`
-**Coverage**: Live data integration and chart rendering accuracy
-**Tests**: 11 data integration tests
-**Key Scenarios**:
-- Real CSV data loading and parsing validation
-- Chart data accuracy with live portfolio data
-- Live signals equity curve rendering with MFE/MAE analysis
-- Portfolio comparison charts with benchmark data
-- Error handling for missing or malformed data files
-
-**Phase 4: Python Process Management Tests** *(Detailed in Section 8.5)*
-**File**: `python-integration.test.ts`
-**Coverage**: Python script execution and process lifecycle management
-**Tests**: 11 comprehensive integration tests
-**Key Scenarios**:
-- Python script structure and dependency validation
-- Process lifecycle management during exports
-- Timeout and error scenario handling
-- Puppeteer + Sharp.js integration validation
-- Process memory management and resource cleanup
-
-**Phase 5: File System & Resource Management Tests**
-**File**: `filesystem-integration.test.ts`
-**Coverage**: File operations, permissions, and resource management
-**Tests**: 12 file system tests
-**Key Scenarios**:
-- Export file creation with proper permissions
-- Directory structure validation and nested path handling
-- Disk space availability checks and insufficient space handling
-- File cleanup and retention policy enforcement
-- Concurrent file access management and locking
-
-**Phase 6: Configuration & Performance Tests**
-**Files**: `config-hotreload.test.ts`, `performance-benchmarks.test.ts`
-**Coverage**: Configuration management and performance validation
-**Tests**: 17 configuration and performance tests (9 config + 8 performance)
-**Key Scenarios**:
-- Hot-reload configuration detection and updates
-- Dashboard configuration validation and error handling
-- Load time benchmarks across dashboard complexities
-- Memory usage monitoring and resource optimization
-- Export performance benchmarks across quality settings
-
-**Phase 7: Advanced Error Scenario Coverage**
-**File**: `advanced-error-scenarios.test.ts`
-**Coverage**: Edge cases, failure scenarios, and recovery testing
-**Tests**: 16 advanced error scenario tests
-**Key Scenarios**:
-- Complete Python environment failure recovery
-- Network connectivity failures and retry mechanisms
-- Memory exhaustion scenarios during large exports
-- Cascading chart rendering failures and graceful degradation
-- Browser compatibility edge cases and fallback handling
-
-#### Specialized Testing Components
-
-**Visual Regression Testing**
-**File**: `visual-regression.test.ts`
-**Coverage**: Screenshot-based consistency validation
-**Tests**: 8 visual consistency tests
-**Features**:
-- Automated screenshot comparison with pixel-perfect validation
-- Theme consistency verification (light/dark mode)
-- Responsive design validation across viewport sizes
-- Clean export mode validation without UI controls
-
-**Browser Compatibility Testing**
-**File**: `browser-specific.test.ts`
-**Coverage**: Cross-browser functionality and performance
-**Tests**: 6 browser-specific tests
-**Features**:
-- Performance validation across different browser engines
-- Security validation (XSS prevention, content sanitization)
-- Memory pressure scenario handling
-- Responsive behavior validation across viewport sizes
-
-#### Unit & Integration Test Structure
-
-**Unit Tests** (`unit/`)
-**Coverage**: Component-level logic and state management
-**Files**: 2 comprehensive test suites
-- `PhotoBoothDisplay.test.tsx`: Main component behavior and state management
-- `DashboardRenderer.test.tsx`: Dashboard rendering logic and layout systems
-
-**Integration Tests** (`integration/`)
-**Coverage**: Multi-component workflow validation
-**Files**: 1 comprehensive workflow test
-- `workflow.test.tsx`: Complete user workflows and component interactions
-
-#### Test Coverage & Quality Metrics
-
-**Coverage Targets**:
-- **Unit Tests**: >90% line coverage with component logic focus
-- **Integration Tests**: >80% workflow coverage with user journey validation
-- **E2E Tests**: 100% critical user journey coverage with institutional quality standards
-
-**Test Execution Performance**:
-- **Unit Tests**: <5 seconds total execution time
-- **Integration Tests**: <15 seconds total execution time
-- **E2E Tests**: <2 minutes total including server startup and teardown
-
-**Quality Assurance Standards**:
-- **Puppeteer API Compatibility**: Complete conversion from Playwright selectors
-- **Error Recovery**: Comprehensive timeout and retry mechanisms
-- **Resource Management**: Automatic cleanup and memory leak prevention
-- **CI/CD Integration**: Full GitHub Actions workflow support with parallel execution
-
-### 8.3 Testing Infrastructure & Tooling
-
-The photo booth testing system provides enterprise-grade infrastructure with unified test runners, comprehensive mocking, and automated browser management for reliable, scalable test execution.
-
-#### Unified Test Suite Runner
-
-**File**: `photo-booth-test-suite.ts`
-**Purpose**: Command-line interface for organized test execution across all test types
-**Features**:
-- **Selective Test Execution**: Run unit, integration, E2E, or all tests with single commands
-- **Development vs. Production Modes**: Environment-specific test configurations
-- **Coverage Integration**: Built-in test coverage reporting and analysis
-- **Watch Mode Support**: Real-time test re-execution during development
-
-**CLI Commands**:
+**Commands**:
 ```bash
-npm run test:photo-booth                    # Run all photo-booth tests
-npm run test:photo-booth:unit              # Unit tests only
-npm run test:photo-booth:integration       # Integration tests only
-npm run test:photo-booth:e2e               # E2E tests (production mode)
-npm run test:photo-booth:e2e:dev           # E2E tests (development mode)
-npm run test:photo-booth:watch             # Watch mode for development
-npm run test:photo-booth:coverage          # Full coverage analysis
+# Frontend tests
+cd frontend && yarn test
+
+# Python script test
+python scripts/photo_booth_generator.py --help
 ```
-
-#### E2E Browser Management Framework
-
-**File**: `utils/e2e-setup.ts`
-**Purpose**: Automated browser lifecycle and page management for E2E tests
-**Key Components**:
-
-**Browser Automation**:
-- **Development Server Integration**: Automatic Astro dev server startup and monitoring
-- **Browser Launch Management**: Headless Chrome with optimized configuration
-- **Page State Management**: Robust navigation and ready-state detection
-- **Resource Cleanup**: Automatic browser and server teardown
-
-**PhotoBoothE2EHelper Class**:
-```typescript
-class PhotoBoothE2EHelper {
-  static async navigateToPhotoBoothRobust(page, options)    # Smart navigation with retry logic
-  static async waitForPhotoBoothReady(page, timeout)        # Component ready-state detection
-  static async validatePhotoBoothState(page)                # Component state validation
-  static async sleep(ms)                                    # Controlled timing utilities
-}
-```
-
-**Environment Detection**:
-- **Development Mode**: `PHOTOBOOTH_E2E_DEV=true` for live development testing
-- **Production Mode**: Static asset testing with optimized configurations
-- **CI/CD Integration**: GitHub Actions compatibility with parallel execution
-
-#### Mock System Architecture
-
-**File**: `__mocks__/setup.tsx`
-**Purpose**: Centralized mock configuration for consistent test isolation
-**Components**:
-
-**Configuration Mocks**:
-- **Photo-booth Config**: Static configuration with predictable test data
-- **Dashboard Loader**: Controlled dashboard data with success/error scenarios
-- **Chart Data Service**: Deterministic data responses for consistent test results
-
-**Shared Mock Data** (`__mocks__/test-data.mock.ts`):
-```typescript
-export const testURLParams = {
-  defaultMode: { dashboard: "portfolio_history_portrait", mode: "light" },
-  portraitMode: { dashboard: "portfolio_history_portrait", aspect_ratio: "3:4" },
-  darkMode: { dashboard: "trading_performance", mode: "dark" },
-}
-
-export const testViewports = {
-  desktop: { width: 1920, height: 1080 },
-  laptop: { width: 1440, height: 900 },
-  tablet: { width: 768, height: 1024 },
-}
-
-export const testExportConfigs = {
-  highQuality: { format: "png", dpi: 600, scale: 4 },
-  standard: { format: "both", dpi: 300, scale: 3 },
-  web: { format: "svg", dpi: 150, scale: 2 },
-}
-```
-
-#### Visual Regression Testing System
-
-**Screenshot Management**:
-- **Automated Capture**: Pixel-perfect screenshot generation with consistent timing
-- **Comparison Engine**: Automated visual diff detection with configurable thresholds
-- **Artifact Storage**: Organized screenshot storage in `e2e/screenshots/` directory
-- **CI/CD Integration**: Automated artifact upload and comparison in GitHub Actions
-
-**Screenshot Categories**:
-- **Visual Consistency**: Theme-specific screenshots (light/dark modes)
-- **Responsive Design**: Viewport-specific screenshots across device sizes
-- **Export Mode**: Clean screenshots without UI controls for export validation
-- **Error States**: Screenshot capture during error scenarios for debugging
-
-**Quality Thresholds**:
-- **Pixel Accuracy**: <0.1% pixel difference tolerance for visual consistency
-- **Performance**: Screenshot capture within 2-second timeout limits
-- **Coverage**: 100% visual validation of all dashboard configurations
-
-#### Test Data Management
-
-**Fixture System** (`fixtures/`):
-- **CSV Test Data**: Sample portfolio, trading, and benchmark data for integration tests
-- **Configuration Files**: Test-specific dashboard and photo-booth configurations
-- **Error Scenarios**: Malformed data files for negative testing validation
-
-**Dynamic Data Generation**:
-- **Synthetic Portfolio Data**: Algorithmically generated data for performance testing
-- **Date-based Test Scenarios**: Time-sensitive data for temporal validation
-- **Edge Case Data**: Boundary conditions and extreme values for robustness testing
-
-### 8.4 Test Execution & Quality Gates
-
-The testing system integrates comprehensive quality gates with automated CI/CD pipelines, ensuring institutional-grade reliability before any code deployment.
-
-#### Package.json Script Architecture
-
-**Primary Test Commands**:
-```json
-{
-  "test:photo-booth": "tsx src/test/photo-booth/photo-booth-test-suite.ts",
-  "test:photo-booth:unit": "vitest run src/test/photo-booth/unit",
-  "test:photo-booth:integration": "vitest run src/test/photo-booth/integration",
-  "test:photo-booth:e2e": "vitest run src/test/photo-booth/e2e --testTimeout=60000",
-  "test:photo-booth:e2e:dev": "PHOTOBOOTH_E2E_DEV=true NODE_ENV=development vitest run src/test/photo-booth/e2e --testTimeout=60000",
-  "test:photo-booth:e2e:prod": "PHOTOBOOTH_E2E_DEV=false NODE_ENV=production vitest run src/test/photo-booth/e2e --testTimeout=60000",
-  "test:photo-booth:watch": "vitest watch src/test/photo-booth",
-  "test:photo-booth:coverage": "vitest run src/test/photo-booth --coverage"
-}
-```
-
-**Photo Booth Generation Commands**:
-```json
-{
-  "photo-booth:generate": "python3 ../scripts/photo_booth_generator.py",
-  "photo-booth:generate:single": "python3 ../scripts/photo_booth_generator.py --dashboard",
-  "photo-booth:generate:light": "python3 ../scripts/photo_booth_generator.py --mode light",
-  "photo-booth:generate:dark": "python3 ../scripts/photo_booth_generator.py --mode dark",
-  "photo-booth:export": "../scripts/export_with_server.sh",
-  "photo-booth:export:portfolio": "../scripts/export_with_server.sh --dashboard portfolio_history_portrait --aspect-ratio 3:4",
-  "photo-booth:cleanup": "python3 ../scripts/photo_booth_generator.py --cleanup"
-}
-```
-
-#### Environment-Specific Test Configurations
-
-**Development Testing Mode** (`PHOTOBOOTH_E2E_DEV=true`):
-- **Live Development Server**: Tests run against actively running Astro dev server
-- **Hot Reload Integration**: Tests automatically detect configuration changes
-- **Debug Mode**: Enhanced logging and browser visibility for troubleshooting
-- **Fast Iteration**: Optimized for rapid development cycle testing
-
-**Production Testing Mode** (`PHOTOBOOTH_E2E_DEV=false`):
-- **Static Asset Testing**: Tests run against built production assets
-- **Performance Validation**: Full optimization pipeline testing
-- **CI/CD Compliance**: GitHub Actions compatible execution environment
-- **Deployment Readiness**: Final validation before production deployment
-
-#### Quality Gate Implementation
-
-**Pre-Commit Quality Gates**:
-1. **Lint Validation**: ESLint compliance across all test files
-2. **Type Safety**: Complete TypeScript validation with strict mode
-3. **Unit Test Coverage**: Minimum 90% coverage for critical components
-4. **Integration Test Success**: 100% integration workflow validation
-
-**Pre-Deployment Quality Gates**:
-1. **Full Test Suite Execution**: All 98+ tests must pass successfully
-2. **Visual Regression Validation**: Screenshot comparison within tolerance thresholds
-3. **Performance Benchmarks**: Load time and memory usage within acceptable limits
-4. **Cross-Browser Compatibility**: Validation across Chrome, Firefox, and Safari engines
-
-#### CI/CD Integration Standards
-
-**GitHub Actions Workflow Integration**:
-- **Parallel Test Execution**: Unit, integration, and E2E tests run concurrently
-- **Artifact Management**: Screenshot and coverage report collection
-- **Matrix Testing**: Multi-environment validation (Node.js versions, OS platforms)
-- **Performance Monitoring**: Test execution time tracking and optimization alerts
-
-**Quality Metrics Tracking**:
-- **Test Success Rates**: Historical test reliability and flakiness detection
-- **Coverage Trends**: Code coverage evolution and regression prevention
-- **Performance Baselines**: Test execution time benchmarks and optimization tracking
-- **Error Pattern Analysis**: Failure categorization and resolution tracking
-
-#### Failure Recovery Mechanisms
-
-**Test Retry Logic**:
-- **E2E Test Resilience**: Automatic retry for transient browser failures
-- **Network Failure Handling**: Robust handling of development server connectivity issues
-- **Resource Cleanup**: Guaranteed cleanup even during test failures
-- **Debugging Support**: Enhanced error reporting with screenshot capture during failures
-
-**Error Classification System**:
-- **Environmental Failures**: Development server, browser launch, network issues
-- **Logic Failures**: Test assertions, component behavior, integration problems
-- **Performance Failures**: Timeout violations, memory leaks, resource exhaustion
-- **Infrastructure Failures**: CI/CD pipeline issues, dependency problems
-
-### 8.5 Python Integration Testing (Phase 4 Detail)
-
-Phase 4 testing provides comprehensive validation of the Python export pipeline with 11 specialized tests covering script execution, process management, and resource handling.
-
-#### Test Architecture Overview
-
-**File**: `python-integration.test.ts`
-**Total Tests**: 11 comprehensive integration tests
-**Execution Environment**: Development mode only (`PHOTOBOOTH_E2E_DEV=true`)
-**Prerequisites**: Python 3+ environment with photo_booth_generator.py script
-
-#### Script Execution Integration (3 Tests)
-
-**Test 1: Script Structure and Dependencies Validation**
-**Purpose**: Validates Python script integrity and required dependency imports
-**Validation Points**:
-- **Shebang Line**: `#!/usr/bin/env python3` presence for executable scripts
-- **Core Imports**: Validation of asyncio, pyppeteer, argparse, json, sys, os imports
-- **Script Readability**: File permissions and UTF-8 encoding verification
-- **Minimum Dependencies**: At least 3 of 6 expected imports present for functionality
-
-**Test 2: Script Execution with Help Flag**
-**Purpose**: Validates command-line interface and argument parsing functionality
-**Validation Process**:
-- **Help Flag Execution**: `python3 photo_booth_generator.py --help` execution
-- **Output Validation**: Help text contains usage, help, arguments, or options keywords
-- **Error Analysis**: No critical Python errors (syntax, import, module not found)
-- **Exit Code Verification**: Proper command execution without 127 "command not found" errors
-
-**Test 3: Parameter Handling Validation**
-**Purpose**: Validates argument parsing and error handling for invalid parameters
-**Test Strategy**:
-- **Invalid Parameter Testing**: `--invalid-parameter` flag testing
-- **Error Message Validation**: Proper "argument", "unrecognized", or "invalid" error responses
-- **Error Type Classification**: Argument errors vs. import/syntax errors for proper debugging
-
-#### Process Lifecycle Management (3 Tests)
-
-**Test 4: Python Process Lifecycle During Export**
-**Purpose**: Validates complete export process execution and timing
-**Process Simulation**:
-- **Request Interception**: Mock `/api/export-dashboard` endpoint with 2-second simulated delay
-- **Process Timing**: Validation of execution time >1000ms for realistic processing
-- **Status Updates**: "Exporting..." immediate feedback and "Successfully exported" completion
-- **API Response**: Proper JSON response with success status, message, files array, and processing time
-
-**Test 5: Python Process Timeout Scenarios**
-**Purpose**: Validates timeout handling and error recovery for long-running processes
-**Timeout Simulation**:
-- **Extended Delay**: 5-second processing delay to trigger timeout conditions
-- **Error Response**: HTTP 500 status with timeout error message and process ID
-- **UI Recovery**: "timeout" error message display and button re-enablement for retry
-- **Graceful Degradation**: System remains responsive after timeout scenarios
-
-**Test 6: Concurrent Python Process Management**
-**Purpose**: Validates prevention of multiple simultaneous export processes
-**Concurrency Testing**:
-- **First Process**: 3-second processing delay with successful completion
-- **Second Process**: HTTP 429 status with "Another export process is already running" error
-- **Button State Management**: Export button disabled during processing to prevent concurrent requests
-- **Process Counting**: Validation that only one process executes despite multiple click attempts
-
-#### Puppeteer + Sharp.js Integration (3 Tests)
-
-**Test 7: Puppeteer Browser Management During Export**
-**Purpose**: Validates headless browser lifecycle and screenshot capture process
-**Browser Validation**:
-- **Process Lifecycle**: Mock browser launch, screenshot capture, and browser closure
-- **Success Response**: Export completion with browser lifecycle details (launched, screenshot taken, browser closed)
-- **Processing Time**: Realistic 2.5-second processing time for browser operations
-- **Resource Management**: Proper browser process cleanup and resource release
-
-**Test 8: Browser Launch Failures Gracefully**
-**Purpose**: Validates error handling for Puppeteer browser launch failures
-**Failure Simulation**:
-- **Launch Failure**: Mock "Unable to launch browser process" error condition
-- **Error Details**: "Browser executable not found or insufficient system resources" messaging
-- **User Communication**: Clear error display with actionable error information
-- **Recovery Option**: Button remains enabled for retry attempts after failure
-
-**Test 9: Sharp.js Image Processing Integration**
-**Purpose**: Validates image processing pipeline with both PNG and SVG formats
-**Processing Validation**:
-- **Multi-format Export**: Both PNG and SVG format generation simultaneously
-- **High-Quality Processing**: 600 DPI processing with quality parameter validation
-- **Sharp Processing**: Confirmation of Sharp.js processing with format arrays ["PNG", "SVG"]
-- **Parameter Accuracy**: Export format and DPI settings correctly transmitted to processing pipeline
-
-#### Python Process Error Recovery (3 Tests)
-
-**Test 10: Python Dependency Error Recovery**
-**Purpose**: Validates error handling and recovery for missing Python dependencies
-**Dependency Simulation**:
-- **First Attempt**: "ModuleNotFoundError: No module named 'pyppeteer'" with pip install suggestion
-- **Second Attempt**: Successful export after dependency resolution simulation
-- **User Workflow**: Error dismissal, retry capability, and successful completion after resolution
-- **Error Communication**: Clear dependency installation guidance for users
-
-**Test 11: Python Script Execution Permissions**
-**Purpose**: Validates handling of file permission errors and resolution guidance
-**Permission Testing**:
-- **Permission Error**: "PermissionError: [Errno 13] Permission denied" simulation
-- **Resolution Guidance**: "Check file permissions: chmod +x scripts/photo_booth_generator.py" suggestion
-- **Error Classification**: Permission-specific error handling vs. other system errors
-- **User Education**: Actionable guidance for resolving common permission issues
-
-**Test 12: Python Process Memory and Resource Cleanup**
-**Purpose**: Validates resource management during high-memory export operations
-**Resource Testing**:
-- **Memory Usage Tracking**: 156MB memory usage simulation with processing time validation
-- **Cleanup Verification**: Temporary file creation and cleanup (3 created, 3 cleaned up)
-- **Browser Process Management**: 1 launched, 1 closed, 0 leaked browser processes
-- **Page Responsiveness**: System remains responsive after resource-intensive operations
-
-#### API Compatibility & Technical Implementation
-
-**Puppeteer API Compatibility**:
-- **Request Interception**: Complete conversion from `page.route()` to `page.setRequestInterception()` pattern
-- **Button Selection**: Custom element finding logic replacing Playwright's `:has-text()` selectors
-- **Error Recovery**: Robust timeout and retry mechanisms for transient browser issues
-
-**Test Environment Requirements**:
-- **Development Server**: Astro dev server running on localhost:4321
-- **Python Environment**: Python 3+ with access to photo_booth_generator.py script
-- **Browser Resources**: Headless Chrome for Puppeteer automation
-- **File System Access**: Read/write permissions for export output directories
-
-### 8.6 Quality Standards
-
-#### TypeScript Coverage
-- **Complete type safety** across all components
-- **Strict mode enabled** with no implicit any
-- **Interface documentation** for all data structures
-- **Generic type constraints** for data service responses
-
-#### Error Handling
-- **Fail-fast approach** with meaningful error messages
-- **Loading states** for all async operations
-- **Retry mechanisms** for transient failures
-- **User feedback** for export progress and completion
-
-#### Performance Standards
-- **5-minute data caching** with intelligent invalidation
-- **Lazy loading** for non-critical chart data
-- **Debounced user inputs** for export parameter changes
-- **Memory cleanup** for component unmounting
-
-### 8.7 Extension Points
-
-#### Adding New Chart Types
-1. **Define TypeScript interface** in ChartTypes.ts
-2. **Implement data hook** in usePortfolioData.ts
-3. **Add chart processing logic** in PortfolioChart.tsx
-4. **Update ChartDisplay component** with new type support
-5. **Add dashboard configuration** in dashboards.json.ts
-
-#### Dashboard Layout Extensions
-1. **Define layout mapping** in dashboardLoader.ts
-2. **Add CSS grid classes** following Tailwind conventions
-3. **Update configuration schema** in photo-booth.json
-4. **Test responsive behavior** across breakpoints
-
-#### Export Format Extensions
-1. **Add format option** to photo-booth.json configuration
-2. **Extend API endpoint** validation and processing
-3. **Update Python script** with new format support
-4. **Add UI controls** in PhotoBoothDisplay component
 
 ---
-
 ## Summary
 
-This specification document serves as the **single authoritative reference** for the Sensylate front-end photo booth, dashboard, chart, and image export systems. It consolidates architectural decisions, implementation details, and integration patterns into one comprehensive guide.
-
-**Key System Capabilities**:
-- **11 Chart Types**: From basic stock data to complex position tracking
-- **4 Dashboard Layouts**: Responsive grid and stack arrangements
-- **Multi-format Export**: PNG, SVG with configurable quality settings
-- **Real-time Preview**: Live dashboard rendering with theme switching
-- **Production Quality**: High-DPI export with professional-grade optimization
-
-**Institutional Quality Standards**:
-- **Documentation Quality**: 9.0+ institutional-grade completeness
-- **Type Safety**: 100% TypeScript coverage with strict mode
-- **Error Handling**: Fail-fast approach with meaningful error reporting
-- **Performance**: Sub-2-second load times with intelligent caching
-- **Accessibility**: WCAG 2.1 compliance with keyboard navigation
-
-This document will be updated as the system evolves, maintaining its status as the definitive technical authority for the photo booth and dashboard ecosystem.
-
----
-
-**Document Metadata**:
-- **Lines of Code Analyzed**: ~8,000+ across 40+ files (including comprehensive test suite)
-- **Components Documented**: 15 core components + 10 supporting utilities + 15 testing components
-- **API Endpoints**: 2 comprehensive endpoints with full request/response specs
-- **Configuration Files**: 3 JSON configs + testing configurations with complete schema documentation
-- **Data Interfaces**: 12+ TypeScript interfaces + testing interfaces with field-level documentation
-- **Test Coverage**: 98+ tests across 7 testing phases with institutional-grade quality assurance
-- **Testing Infrastructure**: 3-tier testing architecture (Unit, Integration, E2E) with 11 specialized Python integration tests
-
-**Quality Assurance**: This specification achieves institutional-grade documentation standards with technical accuracy, completeness, and cross-reference integrity verified through comprehensive codebase analysis.
+Photo booth system providing dashboard export in PNG/SVG formats using Python integration with Puppeteer and Sharp.js processing.

@@ -21,7 +21,7 @@ export interface DashboardConfig {
 
 // Static dashboard configurations that match the MDX files
 const DASHBOARD_CONFIGS: Record<string, DashboardConfig> = {
-  "trading-performance": {
+  trading_performance: {
     id: "trading_performance",
     title: "Trading Performance Dashboard",
     description: "Comprehensive trading strategy performance overview",
@@ -59,7 +59,7 @@ const DASHBOARD_CONFIGS: Record<string, DashboardConfig> = {
       },
     ],
   },
-  "portfolio-analysis": {
+  portfolio_analysis: {
     id: "portfolio_analysis",
     title: "Portfolio Analysis Dashboard",
     description: "Portfolio composition and risk analysis",
@@ -97,7 +97,7 @@ const DASHBOARD_CONFIGS: Record<string, DashboardConfig> = {
       },
     ],
   },
-  "portfolio-history-portrait": {
+  portfolio_history_portrait: {
     id: "portfolio_history_portrait",
     title: "Portfolio History Portrait",
     description:
@@ -122,7 +122,7 @@ const DASHBOARD_CONFIGS: Record<string, DashboardConfig> = {
       },
     ],
   },
-  "market-overview": {
+  market_overview: {
     id: "market_overview",
     title: "Market Overview Dashboard",
     description: "Market trends and sector analysis",
@@ -164,25 +164,47 @@ const DASHBOARD_CONFIGS: Record<string, DashboardConfig> = {
 
 export const GET: APIRoute = async () => {
   try {
-    // Loading dashboards from content collection
+    // Try to load from Astro content collection first
+    let dashboards = Object.values(DASHBOARD_CONFIGS);
 
-    // Try to load from Astro content collection for validation
     try {
-      await getCollection("dashboards");
-      // Loaded dashboards from collection
-    } catch {
-      // Could not load from content collection, using static configs
-    }
+      const dashboardCollection = await getCollection("dashboards");
 
-    // Use static configurations (since we can't easily parse MDX content)
-    const dashboards = Object.values(DASHBOARD_CONFIGS);
+      // If we have dashboard files, create configs from them
+      if (dashboardCollection && dashboardCollection.length > 0) {
+        const collectionDashboards = dashboardCollection
+          .filter((entry) => entry.data.enabled !== false)
+          .map((entry) => {
+            // Get corresponding static config for chart data
+            const staticConfig = DASHBOARD_CONFIGS[entry.data.id || entry.id];
+
+            return {
+              id: entry.data.id || entry.id,
+              title: entry.data.title,
+              description: entry.data.description,
+              layout: entry.data.layout || "2x2_grid",
+              mode: entry.data.mode || "both",
+              enabled: entry.data.enabled !== false,
+              charts: staticConfig?.charts || [], // Use static chart configs
+            } as DashboardConfig;
+          });
+
+        if (collectionDashboards.length > 0) {
+          dashboards = collectionDashboards;
+        }
+      }
+    } catch (error) {
+      // Content collection failed, fall back to static configs
+      console.warn(
+        "Dashboard content collection failed, using static configs:",
+        error,
+      );
+    }
 
     // Filter enabled dashboards
     const enabledDashboards = dashboards.filter(
       (dashboard) => dashboard.enabled,
     );
-
-    // Returning enabled dashboards
 
     // Return JSON response
     return new Response(
@@ -190,7 +212,10 @@ export const GET: APIRoute = async () => {
         success: true,
         dashboards: enabledDashboards,
         timestamp: new Date().toISOString(),
-        source: "static_config",
+        source:
+          enabledDashboards.length > 0 && enabledDashboards[0].id
+            ? "content_collection"
+            : "static_config",
       }),
       {
         status: 200,

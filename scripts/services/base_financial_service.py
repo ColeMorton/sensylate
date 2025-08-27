@@ -26,8 +26,9 @@ from pydantic import BaseModel, Field
 
 # Add utils directory to path for importing historical data manager
 sys.path.insert(0, str(Path(__file__).parent.parent / "utils"))
-from historical_data_manager import DataType, HistoricalDataManager, Timeframe
 from unified_cache import UnifiedCache
+
+from utils.historical_data_manager import DataType, HistoricalDataManager, Timeframe
 
 
 class FinancialServiceError(Exception):
@@ -65,7 +66,11 @@ class CacheConfig(BaseModel):
 
     enabled: bool = True
     ttl_seconds: int = 900  # 15 minutes default
-    cache_dir: str = Field(default_factory=lambda: str(Path.cwd() / "data" / "cache"))
+    cache_dir: str = Field(
+        default_factory=lambda: str(
+            Path(__file__).parent.parent.parent / "data" / "cache"
+        )
+    )
     max_size_mb: int = 100
 
 
@@ -898,7 +903,11 @@ class BaseFinancialService(ABC):
         if self.config.api_key:
             params = {**params, "apikey": self.config.api_key}
 
-        url = f"{self.config.base_url}/{endpoint.lstrip('/')}"
+        url = (
+            f"{self.config.base_url}/{endpoint.lstrip('/')}"
+            if endpoint
+            else self.config.base_url
+        )
 
         for attempt in range(self.config.max_retries + 1):
             try:
@@ -943,7 +952,7 @@ class BaseFinancialService(ABC):
                     # With unified cache, storage happens automatically
                     try:
                         self.store_historical_data(validated_data, endpoint, params)
-                    except Exception as e:
+                    except Exception:
                         self.logger.debug(
                             f"Historical storage handled by unified cache for {endpoint}"
                         )
@@ -979,7 +988,7 @@ class BaseFinancialService(ABC):
                         f"HTTP error after {self.config.max_retries + 1} attempts: {e}"
                     )
 
-            except requests.exceptions.Timeout as e:
+            except requests.exceptions.Timeout:
                 if attempt < self.config.max_retries:
                     wait_time = 2**attempt
                     self.logger.warning(

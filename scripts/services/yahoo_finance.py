@@ -416,7 +416,7 @@ def create_yahoo_finance_service(env: str = "dev") -> YahooFinanceAPIService:
 
     # Use absolute path to config directory
     config_dir = Path(__file__).parent.parent.parent / "config"
-    config_loader = ConfigLoader(str(config_dir))
+    config_loader = ConfigLoader(str(config_dir), auto_load_env=True)
     service_config = config_loader.get_service_config("yahoo_finance", env)
 
     # Convert to ServiceConfig format

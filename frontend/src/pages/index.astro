@@ -1,24 +1,27 @@
 ---
 import Base from "@/layouts/Base.astro";
-import GalaxyAnimation from "@/helpers/GalaxyAnimation";
-import DynamicHomepageHook from "@/helpers/DynamicHomepageHook";
+import HomepageScrollManager from "@/helpers/HomepageScrollManager";
+import PinnedCards from "@/components/PinnedCards.astro";
 ---
 
 <Base>
-  <!-- Galaxy Animation Background -->
+  <!-- Main Homepage Section -->
   <section
+    id="main-galaxy-section"
     class="bg-body dark:bg-darkmode-body relative h-screen overflow-hidden"
   >
-    <GalaxyAnimation client:only="react" className="absolute inset-0" />
-    <!-- Optional overlay content can be added here -->
-    <div class="absolute inset-0 z-10 flex items-center justify-center">
-      <DynamicHomepageHook
-        client:only="react"
-        className="text-text text-h1-sm md:text-h1 text-center font-bold dark:text-white"
-        style="-220px"
-      />
-    </div>
+    <!-- Scroll manager handles fade and card reveal -->
+    <HomepageScrollManager
+      client:only="react"
+      textId="text-content"
+      fadeDistance={800}
+      textClassName="text-text text-h1-sm md:text-h1 text-center font-bold dark:text-white"
+      textStyle="-220px"
+    />
   </section>
+
+  <!-- Pinned cards (hidden initially, shown after fade) -->
+  <PinnedCards />
 </Base>
 
 <style>

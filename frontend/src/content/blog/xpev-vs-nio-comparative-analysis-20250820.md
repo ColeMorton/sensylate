@@ -15,6 +15,7 @@ categories:
   ]
 tags: ["xpev", "nio", "comparative-analysis", "buy", "hold", "electric-vehicles"]
 draft: false
+pinned: false
 comparative_data:
   comparison_confidence: 0.94
   data_quality: 0.92

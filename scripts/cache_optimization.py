@@ -25,7 +25,6 @@ class CacheOptimizer:
     def __init__(self):
         self.cache_dirs = [
             Path("data/cache"),
-            Path("scripts/data/cache"),
         ]
         self.stats = {
             "total_files": 0,

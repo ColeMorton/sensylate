@@ -1,0 +1,88 @@
+---
+import BlogCard from "@/components/BlogCard.astro";
+import { getSinglePage } from "@/lib/contentParser.astro";
+import { sortByDate } from "@/lib/utils/sortFunctions";
+
+interface Props {
+  id?: string;
+}
+
+const { id = "pinned-cards-container" } = Astro.props;
+
+const BLOG_FOLDER = "blog";
+const posts = await getSinglePage(BLOG_FOLDER);
+const sortedPosts = sortByDate(posts);
+
+// Get pinned posts first, then fill with latest posts if needed
+const pinnedPosts = sortedPosts.filter((post) => post.data.pinned === true);
+const latestPosts = sortedPosts.filter((post) => !post.data.pinned);
+
+// Combine pinned and latest to get exactly 3 posts
+const displayPosts = [...pinnedPosts, ...latestPosts].slice(0, 3);
+---
+
+<div id={id} class="pinned-cards-container pointer-events-none opacity-0">
+  <div class="container mx-auto px-4">
+    <div class="mx-auto grid max-w-6xl grid-cols-1 gap-6 md:grid-cols-3">
+      {
+        displayPosts.map((post) => (
+          <div class="pinned-card-item">
+            <BlogCard data={post} />
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</div>
+
+<style>
+  .pinned-cards-container {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%) translateY(100vh);
+    z-index: 20;
+    transition:
+      transform 0.5s ease-out,
+      opacity 0.1s ease-out;
+  }
+
+  .pinned-cards-container.visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(-50%) translateY(0);
+  }
+
+  .pinned-card-item {
+    animation-duration: 0.5s;
+    animation-timing-function: cubic-bezier(0.05, 1, 0.5, 1);
+    animation-fill-mode: both;
+  }
+
+  .pinned-cards-container.visible .pinned-card-item:nth-child(1) {
+    animation-name: slideInUp;
+    animation-delay: 0.5s;
+  }
+
+  .pinned-cards-container.visible .pinned-card-item:nth-child(2) {
+    animation-name: slideInUp;
+    animation-delay: 1s;
+  }
+
+  .pinned-cards-container.visible .pinned-card-item:nth-child(3) {
+    animation-name: slideInUp;
+    animation-delay: 1.5s;
+  }
+
+  @keyframes slideInUp {
+    from {
+      opacity: 0;
+      transform: translate3d(0, 80vh, 0);
+    }
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+</style>

@@ -58,6 +58,128 @@ export function useAppleStockData(): DataServiceResponse<StockDataRow[]> {
   return { data, loading, error };
 }
 
+// Hook for generic stock data based on symbol
+export function useStockData(
+  symbol: string,
+): DataServiceResponse<StockDataRow[]> {
+  const [data, setData] = useState<StockDataRow[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const abortController = new AbortController();
+
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        const stockData = await chartDataService.fetchStockData(
+          symbol,
+          abortController.signal,
+        );
+        setData(stockData);
+      } catch (err) {
+        // Don't set error if request was aborted (component unmounting)
+        if (err instanceof Error && err.name !== "AbortError") {
+          // Generic stock data loading error
+          setError(
+            err instanceof Error
+              ? err.message
+              : `Failed to load ${symbol} stock data`,
+          );
+        }
+      } finally {
+        if (!abortController.signal.aborted) {
+          setLoading(false);
+        }
+      }
+    };
+
+    // Only fetch if symbol is provided
+    if (symbol) {
+      fetchData();
+    } else {
+      setLoading(false);
+      setError("No symbol provided");
+    }
+
+    // Cleanup function to abort fetch requests
+    return () => {
+      abortController.abort();
+    };
+  }, [symbol]);
+
+  return { data, loading, error };
+}
+
+// Hook for multi-stock data based on symbol array
+export function useMultiStockData(
+  symbols: string[],
+): DataServiceResponse<{ [symbol: string]: StockDataRow[] }> {
+  const [data, setData] = useState<{ [symbol: string]: StockDataRow[] }>({});
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const abortController = new AbortController();
+
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+
+        // Fetch data for all symbols concurrently
+        const stockDataPromises = symbols.map(async (symbol) => {
+          const stockData = await chartDataService.fetchStockData(
+            symbol,
+            abortController.signal,
+          );
+          return { symbol, data: stockData };
+        });
+
+        const results = await Promise.all(stockDataPromises);
+
+        // Convert array to object keyed by symbol
+        const stockDataMap = results.reduce(
+          (acc, { symbol, data }) => {
+            acc[symbol] = data;
+            return acc;
+          },
+          {} as { [symbol: string]: StockDataRow[] },
+        );
+
+        setData(stockDataMap);
+      } catch (err) {
+        // Don't set error if request was aborted (component unmounting)
+        if (err instanceof Error && err.name !== "AbortError") {
+          setError(
+            err instanceof Error
+              ? err.message
+              : `Failed to load multi-stock data for ${symbols.join(", ")}`,
+          );
+        }
+      } finally {
+        if (!abortController.signal.aborted) {
+          setLoading(false);
+        }
+      }
+    };
+
+    if (symbols.length > 0) {
+      fetchData();
+    } else {
+      setLoading(false);
+    }
+
+    // Cleanup function to abort fetch requests
+    return () => {
+      abortController.abort();
+    };
+  }, [symbols.join(",")]); // Stable dependency to prevent infinite re-renders
+
+  return { data, loading, error };
+}
+
 // Hook for portfolio data based on chart type
 export function usePortfolioData(chartType: ChartType): DataServiceResponse<{
   multiStrategy?: PortfolioDataRow[];
@@ -166,7 +288,9 @@ export function usePortfolioData(chartType: ChartType): DataServiceResponse<{
     const abortController = new AbortController();
 
     if (
-      chartType !== "apple-stock" &&
+      !chartType.endsWith("-price") &&
+      !chartType.includes("multi-stock") &&
+      !chartType.endsWith("-stock-price") &&
       !chartType.startsWith("live-signals-") &&
       chartType !== "trade-pnl-waterfall" &&
       chartType !== "closed-positions-pnl-timeseries" &&
@@ -181,7 +305,7 @@ export function usePortfolioData(chartType: ChartType): DataServiceResponse<{
     return () => {
       abortController.abort();
     };
-  }, [chartType, fetchDataForChartType]);
+  }, [chartType]); // fetchDataForChartType only depends on chartType, so no need to include it
 
   return { data, loading, error };
 }

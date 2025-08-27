@@ -5,9 +5,8 @@ import ChartErrorBoundary from "./shared/ChartErrorBoundary";
 
 // Simple lazy loading for client-only rendering
 const Plot = lazy(() => {
-  return import("react-plotly.js/factory").then(async (factory) => {
-    const Plotly = await import("plotly.js-dist");
-    return { default: factory.default(Plotly) };
+  return import("react-plotly.js").then((module) => {
+    return { default: module.default };
   });
 });
 

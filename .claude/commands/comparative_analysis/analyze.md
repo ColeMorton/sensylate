@@ -22,8 +22,7 @@ Define the analytical requirements for transforming multi-company discovery data
 ## Analysis Parameters
 
 ### Core Requirements
-- `stock_a_analysis`: Path to first stock's fundamental analysis JSON (required) - format: {TICKER_A}_{YYYYMMDD}_analysis.json
-- `stock_b_analysis`: Path to second stock's fundamental analysis JSON (required) - format: {TICKER_B}_{YYYYMMDD}_analysis.json
+- `discovery_data`: Path to comparative discovery JSON (required) - format: {TICKER_A}_vs_{TICKER_B}_{YYYYMMDD}_discovery.json
 - `confidence_threshold`: Minimum confidence for comparative conclusions - `0.8` | `0.9` | `0.95` (optional, default: 0.9)
 
 ### Comparative Analysis Features
@@ -254,7 +253,7 @@ Define the analytical requirements for transforming multi-company discovery data
 - **Investment Thesis**: Clear winner determination with scenario-based recommendations
 - **Portfolio Context**: Strategic and tactical allocation guidance with monitoring framework
 
-**Prerequisite Dependencies**: Requires two complete fundamental analysis outputs as inputs with consistent methodologies and institutional-grade confidence scores for valid comparative analysis.
+**Prerequisite Dependencies**: Requires comparative discovery data from DASV Phase 1 containing comprehensive cross-entity intelligence and comparative framework foundation for enhanced analytical development.
 
 ---
 

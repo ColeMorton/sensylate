@@ -95,6 +95,37 @@ design_system:
     fallback: "sans-serif"
     css_file: "heebo.css"  # CSS font declarations for frontend consistency
 
+# Theme Configuration Bridge (for CLI compatibility)
+# This section bridges the design_system structure to expected theme format
+theme:
+  colors:
+    primary_data: "#26c6da"      # Cyan - primary data visualization
+    secondary_data: "#7e57c2"    # Purple - secondary data visualization
+    tertiary_data: "#3179f5"     # Blue - tertiary data visualization
+    extended_palette:
+      quaternary: "#ff7043"      # Orange
+      quinary: "#66bb6a"         # Green
+      senary: "#ec407a"          # Pink
+  light_mode:
+    background: "#fff"
+    card_backgrounds: "#f6f6f6"
+    primary_text: "#121212"
+    body_text: "#444444"
+    muted_text: "#717171"
+    borders: "#eaeaea"
+  dark_mode:
+    background: "#202124"
+    card_backgrounds: "#222222"
+    primary_text: "#fff"
+    body_text: "#B4AFB6"
+    muted_text: "#B4AFB6"
+    borders: "#3E3E3E"
+  fonts:
+    primary_family: "Heebo"
+    source: "local"
+    base_path: "fonts/heebo"
+    fallback: "sans-serif"
+
 # Output Configuration (merged with above output section)
 
 # Layout Configuration

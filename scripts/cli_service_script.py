@@ -47,9 +47,58 @@ class CLIServiceScript(BaseScript):
         # Available services
         self.available_services = self.cli_manager.get_available_services()
 
+        # Setup enhanced logging adapter for consistency
+        self._setup_enhanced_logger_adapter()
+
         self.logger.info(
             f"CLI service script initialized with {len(self.cli_manager.services)} services"
         )
+
+    def _setup_enhanced_logger_adapter(self):
+        """Setup enhanced logger with consistent adapter methods"""
+
+        def log_operation(message, context=None, level="INFO"):
+            """Enhanced operation logging with context and performance data"""
+            if context:
+                context_str = f" | Context: {context}"
+            else:
+                context_str = ""
+
+            log_message = f"Operation: {message}{context_str}"
+
+            if level == "WARNING":
+                self.logger.warning(log_message)
+            elif level == "ERROR":
+                self.logger.error(log_message)
+            else:
+                self.logger.info(log_message)
+
+        def log_error(message, error=None, context=None):
+            """Enhanced error logging with structured context"""
+            error_details = ""
+            if error:
+                error_details = f" | Error: {str(error)}"
+            if context:
+                error_details += f" | Context: {context}"
+
+            self.logger.error(f"Operation failed: {message}{error_details}")
+
+        def log_api_call(
+            service, command, args=None, response_time=None, status=None, details=None
+        ):
+            """Detailed API call logging"""
+            args_str = f"({', '.join(map(str, args))})" if args else ""
+            timing_str = f" [{response_time:.2f}s]" if response_time else ""
+            status_str = f" -> {status}" if status else ""
+            details_str = f" | {details}" if details else ""
+
+            message = f"API Call: {service}.{command}{args_str}{timing_str}{status_str}{details_str}"
+            self.logger.info(message)
+
+        # Bind enhanced methods to logger instance
+        self.logger.log_operation = log_operation
+        self.logger.log_error = log_error
+        self.logger.log_api_call = log_api_call
 
     def execute(
         self,

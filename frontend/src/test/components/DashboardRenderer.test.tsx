@@ -351,9 +351,11 @@ describe("DashboardRenderer Component", () => {
         />,
       );
 
-      const charts = screen.getAllByTestId(/^chart-/);
-      charts.forEach((chart) => {
-        expect(chart).toHaveClass("photo-booth-chart");
+      const chartContainers = document.querySelectorAll(".photo-booth-chart");
+      expect(chartContainers).toHaveLength(2); // mockPortfolioHistoryPortraitDashboard has 2 charts
+
+      chartContainers.forEach((container) => {
+        expect(container).toHaveClass("photo-booth-chart");
       });
     });
 

@@ -500,7 +500,7 @@ def create_imf_service(env: str = "dev") -> IMFService:
     """
     # Use absolute path to config directory
     config_dir = Path(__file__).parent.parent.parent / "config"
-    config_loader = ConfigLoader(str(config_dir))
+    config_loader = ConfigLoader(str(config_dir), auto_load_env=True)
     service_config = config_loader.get_service_config("imf", env)
 
     # Convert to ServiceConfig format

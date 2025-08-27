@@ -282,12 +282,12 @@ class FREDEconomicService(BaseFinancialService):
                 trend = "insufficient_data"
 
             statistics = {
-                "latest_value": latest_value,
-                "average_value": round(avg_value, 2) if avg_value else None,
-                "min_value": min_value,
-                "max_value": max_value,
+                "latest_value": str(latest_value),
+                "average_value": str(round(avg_value, 2)) if avg_value else None,
+                "min_value": str(min_value),
+                "max_value": str(max_value),
                 "trend": trend,
-                "observations_count": len(valid_observations),
+                "observations_count": str(len(valid_observations)),
             }
 
         return {
@@ -652,7 +652,7 @@ def create_fred_economic_service(env: str = "dev") -> FREDEconomicService:
 
     # Use absolute path to config directory
     config_dir = Path(__file__).parent.parent.parent / "config"
-    config_loader = ConfigLoader(str(config_dir))
+    config_loader = ConfigLoader(str(config_dir), auto_load_env=True)
     service_config = config_loader.get_service_config("fred", env)
 
     # Convert to ServiceConfig format

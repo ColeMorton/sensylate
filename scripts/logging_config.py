@@ -15,7 +15,7 @@ import logging.config
 import time
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Dict, Optional, Union
 
 
 class TwitterSystemLogger:
@@ -232,6 +232,23 @@ class TwitterSystemLogger:
     def create_context_logger(self, context: Dict[str, Any]) -> "ContextLogger":
         """Create logger with persistent context"""
         return ContextLogger(self, context)
+
+    # Standard logging interface compatibility methods (use simple logging to avoid JSON bloat)
+    def info(self, message: str) -> None:
+        """Log info message using simple format (no JSON)"""
+        self.logger.info(message)
+
+    def debug(self, message: str) -> None:
+        """Log debug message using simple format (no JSON)"""
+        self.logger.debug(message)
+
+    def warning(self, message: str) -> None:
+        """Log warning message using simple format (no JSON)"""
+        self.logger.warning(message)
+
+    def error(self, message: str) -> None:
+        """Log error message using simple format (no JSON)"""
+        self.logger.error(message)
 
 
 class ContextLogger:

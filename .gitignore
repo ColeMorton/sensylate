@@ -137,9 +137,7 @@ out/
 dist/
 
 # cache
-scripts/data/cache/
 data/cache/
-scripts/data/cache/*
 data/cache/*
 
 # Image files for analysis

@@ -81,6 +81,7 @@ import ChartDisplay from "@/layouts/shortcodes/ChartDisplay.tsx";
   category="Live Trading Individual Trades"
   description="Waterfall chart showing individual trade profits and losses from closed positions, sorted from highest to lowest PnL. Visualizes contribution of each trade to overall portfolio performance."
   chartType="trade-pnl-waterfall"
+  frozenDate="2025-08-20"
 />
 
 <ChartDisplay
@@ -90,6 +91,7 @@ import ChartDisplay from "@/layouts/shortcodes/ChartDisplay.tsx";
   description="Multi-line time series showing cumulative PnL for each position, indexed to $0 at entry date. Shows closed positions data when no open positions are available (38 completed trades)."
   chartType="open-positions-pnl-timeseries"
   positionType="auto"
+  frozenDate="2025-08-20"
 />
 
 <ChartDisplay
@@ -100,6 +102,7 @@ import ChartDisplay from "@/layouts/shortcodes/ChartDisplay.tsx";
   chartType="open-positions-pnl-timeseries"
   timeframe="weekly"
   positionType="auto"
+  frozenDate="2025-08-20"
 />
 
 <ChartDisplay
@@ -111,6 +114,7 @@ import ChartDisplay from "@/layouts/shortcodes/ChartDisplay.tsx";
   timeframe="daily"
   indexed={true}
   positionType="open"
+  frozenDate="2025-08-20"
 />
 
 <ChartDisplay
@@ -122,6 +126,7 @@ import ChartDisplay from "@/layouts/shortcodes/ChartDisplay.tsx";
   timeframe="daily"
   indexed={true}
   positionType="closed"
+  frozenDate="2025-08-20"
 />
 
 </div>
@@ -132,10 +137,27 @@ import ChartDisplay from "@/layouts/shortcodes/ChartDisplay.tsx";
 
 <ChartDisplay
   client:only="react"
-  title="Apple Stock Reference"
+  title="Apple Price"
   category="Reference Data"
-  description="Interactive chart showing Apple stock high and low prices from July to December 2016. Data sourced from Plotly's public dataset."
-  chartType="apple-stock"
+  description="Interactive chart showing Apple stock closing prices with current market data. Updated regularly from financial data sources."
+  chartType="apple-price"
+/>
+
+<ChartDisplay
+  client:only="react"
+  title="Strategy Price"
+  category="Reference Data"
+  description="Interactive chart showing MicroStrategy stock closing prices with current market data. Updated regularly from financial data sources."
+  chartType="mstr-price"
+/>
+
+<ChartDisplay
+  client:only="react"
+  title="XPEV vs NIO Stock Comparison"
+  category="Electric Vehicle Stocks"
+  description="Percentage-based comparison of Chinese EV leaders XPeng (XPEV) and NIO over the past year. Both series normalized to show relative performance from the starting price."
+  chartType="xpev-nio-stock-price"
+  samePercentageScale={true}
 />
 
 </div>

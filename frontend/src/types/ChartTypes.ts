@@ -97,11 +97,14 @@ export interface OpenPositionPnLDataRow {
   Position_UUID: string;
 }
 
-// Legacy stock data structure (for Apple stock chart)
+// Stock data structure (standard format)
 export interface StockDataRow {
-  Date: string;
-  "AAPL.High": string;
-  "AAPL.Low": string;
+  date: string;
+  open: string;
+  high: string;
+  low: string;
+  close: string;
+  volume: string;
   [key: string]: string;
 }
 
@@ -122,7 +125,7 @@ export interface LiveSignalsBenchmarkDataRow {
 }
 // Chart configuration types
 export type ChartType =
-  | "apple-stock"
+  | "apple-price"
   | "portfolio-value-comparison"
   | "returns-comparison"
   | "portfolio-drawdowns"
@@ -132,7 +135,9 @@ export type ChartType =
   | "live-signals-weekly-candlestick"
   | "trade-pnl-waterfall"
   | "open-positions-pnl-timeseries"
-  | "closed-positions-pnl-timeseries";
+  | "closed-positions-pnl-timeseries"
+  | "multi-stock-price"
+  | "xpev-nio-stock-price";
 
 export interface ChartConfig {
   title: string;
@@ -159,6 +164,9 @@ export interface ThemeColors {
   neutralData: string;
 }
 
+// Chart status types
+export type ChartStatus = "active" | "frozen" | "static";
+
 // Chart component props
 export interface ChartDisplayProps {
   title: string;
@@ -168,6 +176,8 @@ export interface ChartDisplayProps {
   timeframe?: "daily" | "weekly";
   indexed?: boolean;
   positionType?: "open" | "closed" | "auto";
+  samePercentageScale?: boolean;
+
   className?: string;
   titleOnly?: boolean;
 }

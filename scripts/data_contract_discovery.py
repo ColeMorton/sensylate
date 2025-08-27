@@ -425,6 +425,7 @@ class DataContractDiscovery:
             "trade-history": ["trade_history_cli"],
             "open-positions": ["trade_history_cli"],
             "live-signals": ["live_signals_dashboard"],
+            "raw": ["yahoo_finance", "alpha_vantage"],  # Add mapping for raw stock data
         }
 
         # Handle nested categories (e.g., portfolio/live-signals)
