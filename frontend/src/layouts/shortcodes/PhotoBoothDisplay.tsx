@@ -1,10 +1,13 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import photoBoothConfig from "@/config/photo-booth.json";
-import {
-  DashboardLoader,
-  type DashboardConfig,
-} from "@/services/dashboardLoader";
+import { DashboardLoader, type DashboardConfig } from "@/lib/dashboardLoader";
 import ChartDisplay from "@/shortcodes/ChartDisplay";
+import FundamentalAnalysisDashboard from "@/layouts/components/fundamentals/FundamentalAnalysisDashboard";
+import {
+  getFundamentalMockData,
+  getAvailableTickers,
+} from "@/test/mocks/fundamentalAnalysis.mock";
+import ErrorBoundary from "@/layouts/components/ErrorBoundary";
 
 interface PhotoBoothDisplayProps {
   className?: string;
@@ -39,6 +42,21 @@ const PhotoBoothDisplay: React.FC<PhotoBoothDisplayProps> = ({
   const [exportMessage, setExportMessage] = useState<string | null>(null);
   const [exportError, setExportError] = useState<string | null>(null);
 
+  // Fundamental analysis specific state
+  const [selectedTicker, setSelectedTicker] = useState<string>("GOOGL");
+  const availableTickers = getAvailableTickers();
+
+  // Get available aspect ratios based on selected dashboard
+  const getAvailableAspectRatios = () => {
+    if (selectedDashboard === "fundamental_analysis") {
+      // Lock fundamental analysis to 3:4 portrait only
+      return photoBoothConfig.export_options.aspect_ratios.available.filter(
+        (ratio) => ratio.id === "3:4",
+      );
+    }
+    return photoBoothConfig.export_options.aspect_ratios.available;
+  };
+
   // Load dashboards on component mount
   useEffect(() => {
     const loadDashboards = async () => {
@@ -62,9 +80,37 @@ const PhotoBoothDisplay: React.FC<PhotoBoothDisplayProps> = ({
           | null;
         const dpiParam = urlParams.get("dpi");
         const scaleParam = urlParams.get("scale");
+        const tickerParam = urlParams.get("ticker");
 
         if (dashboardParam) {
           setSelectedDashboard(dashboardParam);
+
+          // Force 3:4 aspect ratio for fundamental analysis dashboard
+          if (dashboardParam === "fundamental_analysis") {
+            setSelectedAspectRatio("3:4");
+          }
+        }
+
+        // Handle ticker parameter for fundamental analysis
+        console.log("PhotoBooth URL params debug:", {
+          tickerParam,
+          availableTickers,
+          dashboardParam,
+          currentTicker: selectedTicker,
+        });
+
+        if (
+          tickerParam &&
+          availableTickers.includes(tickerParam.toUpperCase())
+        ) {
+          console.log(
+            `Setting ticker from URL parameter: ${tickerParam} -> ${tickerParam.toUpperCase()}`,
+          );
+          setSelectedTicker(tickerParam.toUpperCase());
+        } else if (tickerParam) {
+          console.warn(
+            `Invalid ticker parameter: ${tickerParam}. Available: ${availableTickers.join(", ")}`,
+          );
         }
 
         if (modeParam && ["light", "dark"].includes(modeParam)) {
@@ -79,7 +125,11 @@ const PhotoBoothDisplay: React.FC<PhotoBoothDisplayProps> = ({
           aspectRatioParam &&
           ["16:9", "4:3", "3:4"].includes(aspectRatioParam)
         ) {
-          setSelectedAspectRatio(aspectRatioParam);
+          // Only set aspect ratio from URL if not fundamental analysis dashboard
+          // (fundamental analysis is locked to 3:4)
+          if (dashboardParam !== "fundamental_analysis") {
+            setSelectedAspectRatio(aspectRatioParam);
+          }
         }
 
         if (dpiParam && [150, 300, 600].includes(parseInt(dpiParam))) {
@@ -131,26 +181,50 @@ const PhotoBoothDisplay: React.FC<PhotoBoothDisplayProps> = ({
       );
 
     if (aspectRatioConfig && dashboardRef.current) {
+      // Use fundamental-specific dimensions for fundamental analysis dashboard
+      const dimensions =
+        selectedDashboard === "fundamental_analysis" &&
+        aspectRatioConfig.fundamental_dimensions
+          ? aspectRatioConfig.fundamental_dimensions
+          : aspectRatioConfig.dimensions;
+
       dashboardRef.current.style.setProperty(
         "--photo-booth-width",
-        `${aspectRatioConfig.dimensions.width}px`,
+        `${dimensions.width}px`,
       );
       dashboardRef.current.style.setProperty(
         "--photo-booth-height",
-        `${aspectRatioConfig.dimensions.height}px`,
+        `${dimensions.height}px`,
       );
     }
-  }, [selectedAspectRatio]);
+  }, [selectedAspectRatio, selectedDashboard]);
 
-  const handleDashboardChange = useCallback((dashboardId: string) => {
-    setIsReady(false);
-    setSelectedDashboard(dashboardId);
+  const handleDashboardChange = useCallback(
+    (dashboardId: string) => {
+      setIsReady(false);
+      setSelectedDashboard(dashboardId);
 
-    // Update URL without page reload
-    const url = new URL(window.location.href);
-    url.searchParams.set("dashboard", dashboardId);
-    window.history.replaceState({}, "", url.toString());
-  }, []);
+      // Force 3:4 aspect ratio for fundamental analysis dashboard
+      if (
+        dashboardId === "fundamental_analysis" &&
+        selectedAspectRatio !== "3:4"
+      ) {
+        setSelectedAspectRatio("3:4");
+      }
+
+      // Update URL without page reload
+      const url = new URL(window.location.href);
+      url.searchParams.set("dashboard", dashboardId);
+
+      // Update aspect ratio in URL if forcing 3:4
+      if (dashboardId === "fundamental_analysis") {
+        url.searchParams.set("aspect_ratio", "3:4");
+      }
+
+      window.history.replaceState({}, "", url.toString());
+    },
+    [selectedAspectRatio],
+  );
 
   const handleModeChange = useCallback((mode: "light" | "dark") => {
     setIsReady(false);
@@ -266,6 +340,23 @@ const PhotoBoothDisplay: React.FC<PhotoBoothDisplayProps> = ({
     (d) => d.id === selectedDashboard,
   );
 
+  // Debug logging for dashboard selection
+  console.log("PhotoBoothDisplay debug:", {
+    selectedDashboard,
+    activeDashboards: activeDashboards?.map((d) => ({
+      id: d.id,
+      title: d.title,
+    })),
+    currentDashboard: currentDashboard
+      ? {
+          id: currentDashboard.id,
+          title: currentDashboard.title,
+          layout: currentDashboard.layout,
+        }
+      : null,
+    loading,
+  });
+
   if (loading) {
     return (
       <div className="flex min-h-[400px] items-center justify-center">
@@ -338,6 +429,27 @@ const PhotoBoothDisplay: React.FC<PhotoBoothDisplayProps> = ({
             </select>
           </div>
 
+          {/* Ticker Selector - Only show for fundamental analysis */}
+          {selectedDashboard === "fundamental_analysis" && (
+            <div className="flex items-center gap-2">
+              <label htmlFor="ticker-select" className="text-sm font-medium">
+                Ticker:
+              </label>
+              <select
+                id="ticker-select"
+                value={selectedTicker}
+                onChange={(e) => setSelectedTicker(e.target.value)}
+                className="rounded-md border border-gray-300 bg-white px-3 py-1 text-sm dark:border-gray-600 dark:bg-gray-700"
+              >
+                {availableTickers.map((ticker) => (
+                  <option key={ticker} value={ticker}>
+                    {ticker}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
+
           {/* Mode Selector */}
           <div className="flex items-center gap-2">
             <label className="text-sm font-medium">Mode:</label>
@@ -401,11 +513,19 @@ const PhotoBoothDisplay: React.FC<PhotoBoothDisplayProps> = ({
                 )
               }
               className="rounded-md border border-gray-300 bg-white px-3 py-1 text-sm dark:border-gray-600 dark:bg-gray-700"
+              disabled={selectedDashboard === "fundamental_analysis"}
             >
-              <option value="16:9">16:9 Wide</option>
-              <option value="4:3">4:3 Standard</option>
-              <option value="3:4">3:4 Portrait</option>
+              {getAvailableAspectRatios().map((ratio) => (
+                <option key={ratio.id} value={ratio.id}>
+                  {ratio.name}
+                </option>
+              ))}
             </select>
+            {selectedDashboard === "fundamental_analysis" && (
+              <span className="text-xs text-gray-500">
+                (Locked to Portrait)
+              </span>
+            )}
           </div>
 
           {/* Status Indicator */}
@@ -560,11 +680,13 @@ const PhotoBoothDisplay: React.FC<PhotoBoothDisplayProps> = ({
         data-aspect-ratio={selectedAspectRatio}
         data-dpi={selectedDPI}
         data-scale-factor={selectedScaleFactor}
+        style={{ colorScheme: currentMode === "dark" ? "dark" : "light" }}
       >
         <DashboardRenderer
           dashboard={currentDashboard}
           mode={currentMode}
           aspectRatio={selectedAspectRatio}
+          selectedTicker={selectedTicker}
         />
       </div>
     </div>
@@ -576,11 +698,75 @@ const DashboardRenderer: React.FC<{
   dashboard: DashboardConfig;
   mode: "light" | "dark";
   aspectRatio: "16:9" | "4:3" | "3:4";
-}> = ({ dashboard, mode, aspectRatio: _aspectRatio }) => {
+  selectedTicker?: string;
+}> = ({ dashboard, mode, aspectRatio: _aspectRatio, selectedTicker }) => {
   const layoutClasses = DashboardLoader.getLayoutClasses(dashboard.layout);
 
-  // Get dimensions for selected aspect ratio
-  // const dimensions = getAspectRatioDimensions(aspectRatio);
+  // Handle fundamental analysis dashboard specially
+  if (dashboard.layout === "fundamental_3x3") {
+    const ticker = selectedTicker || "GOOGL";
+    const fundamentalData = getFundamentalMockData(ticker);
+
+    console.log("FundamentalAnalysisDashboard rendering debug:", {
+      selectedTicker,
+      ticker,
+      companyName: fundamentalData?.company?.name,
+      hasRevenueData: !!fundamentalData?.financialData?.revenue?.values?.length,
+      hasFcfData: !!fundamentalData?.financialData?.fcf?.values?.length,
+      hasRevenueSource:
+        !!fundamentalData?.financialData?.revenueSource?.values?.length,
+      hasGeography: !!fundamentalData?.financialData?.geography?.values?.length,
+      revenueYears: fundamentalData?.financialData?.revenue?.years,
+      revenueValues: fundamentalData?.financialData?.revenue?.values,
+      fcfYears: fundamentalData?.financialData?.fcf?.years,
+      fcfValues: fundamentalData?.financialData?.fcf?.values,
+    });
+
+    return (
+      <div
+        className={`${mode}-mode ${mode}`}
+        style={{
+          width: "100%",
+          height: "100%",
+          colorScheme: mode === "dark" ? "dark" : "light",
+        }}
+      >
+        <ErrorBoundary
+          onError={(error, errorInfo) => {
+            console.error("FundamentalAnalysisDashboard error:", error);
+            console.error("Error info:", errorInfo);
+            console.error("Error stack:", error.stack);
+            console.error("Component stack:", errorInfo.componentStack);
+          }}
+          fallback={
+            <div className="flex min-h-[400px] items-center justify-center">
+              <div className="text-center">
+                <h3 className="text-lg font-semibold text-red-600">
+                  Fundamental Analysis Error
+                </h3>
+                <p className="text-gray-600">
+                  Unable to load fundamental analysis dashboard for {ticker}
+                </p>
+                <button
+                  onClick={() => window.location.reload()}
+                  className="mt-4 rounded-md bg-blue-500 px-4 py-2 text-white transition-colors hover:bg-blue-600"
+                >
+                  Reload Page
+                </button>
+              </div>
+            </div>
+          }
+        >
+          <FundamentalAnalysisDashboard
+            data={fundamentalData}
+            ticker={ticker}
+            exportMode={true}
+            className="photo-booth-chart"
+          />
+        </ErrorBoundary>
+      </div>
+    );
+  }
 
   // Enable title-only mode for Portfolio History Portrait dashboard
   const isPortfolioHistoryPortrait =

@@ -19,6 +19,7 @@ ASPECT_RATIO="3:4"
 FORMAT="png"
 DPI="300"
 SCALE_FACTOR="3"
+TICKER=""
 
 # Function to print colored output
 print_status() {
@@ -91,15 +92,26 @@ run_export() {
     print_status "Format: $FORMAT"
     print_status "DPI: $DPI"
     print_status "Scale Factor: ${SCALE_FACTOR}x"
+    if [ -n "$TICKER" ]; then
+        print_status "Ticker: $TICKER"
+    fi
 
     cd "$(dirname "$0")"
-    python3 photo_booth_generator.py \
-        --dashboard "$DASHBOARD_ID" \
-        --mode "$MODE" \
-        --aspect-ratio "$ASPECT_RATIO" \
-        --format "$FORMAT" \
-        --dpi "$DPI" \
-        --scale-factor "$SCALE_FACTOR"
+
+    # Build command with optional ticker parameter
+    cmd="python3 photo_booth_generator.py \
+        --dashboard \"$DASHBOARD_ID\" \
+        --mode \"$MODE\" \
+        --aspect-ratio \"$ASPECT_RATIO\" \
+        --format \"$FORMAT\" \
+        --dpi \"$DPI\" \
+        --scale-factor \"$SCALE_FACTOR\""
+
+    if [ -n "$TICKER" ]; then
+        cmd="$cmd --ticker \"$TICKER\""
+    fi
+
+    eval $cmd
 }
 
 # Function to show usage
@@ -113,10 +125,12 @@ show_usage() {
     echo "  --format FORMAT      Export format: png, svg, both (default: png)"
     echo "  --dpi DPI            DPI setting: 150, 300, 600 (default: 300)"
     echo "  --scale-factor SCALE  Scale factor: 2, 3, 4 (default: 3)"
+    echo "  --ticker TICKER      Ticker symbol for fundamental analysis (e.g., GOOGL, NVDA)"
     echo "  --help               Show this help message"
     echo ""
     echo "Examples:"
     echo "  $0 --dashboard portfolio_history_portrait --mode dark"
+    echo "  $0 --dashboard fundamental_analysis --ticker NVDA --mode light"
     echo "  $0 --aspect-ratio 16:9 --format both --dpi 600"
 }
 
@@ -145,6 +159,10 @@ while [[ $# -gt 0 ]]; do
             ;;
         --scale-factor)
             SCALE_FACTOR="$2"
+            shift 2
+            ;;
+        --ticker)
+            TICKER="$2"
             shift 2
             ;;
         --help)

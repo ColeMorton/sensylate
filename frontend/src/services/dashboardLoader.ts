@@ -44,6 +44,7 @@ export class DashboardLoader {
       "2x1_stack": "flex flex-col h-full",
       "3x1_row": "grid grid-cols-1 gap-6 lg:grid-cols-3 h-full",
       "1x2_column": "grid grid-cols-1 gap-6 lg:grid-cols-2 h-full",
+      fundamental_3x3: "fundamental-dashboard-grid",
     };
 
     return layoutMappings[layout] || "flex flex-col gap-6 h-full";

@@ -9,7 +9,7 @@ import React, {
 } from "react";
 import type { Data, Layout, Config } from "plotly.js";
 
-// Lazy load the plot component to avoid SSR issues
+// Direct dynamic import approach to avoid complex lazy loading issues
 const Plot = lazy(() => {
   if (typeof window === "undefined") {
     // Return a mock component for SSR
@@ -17,15 +17,35 @@ const Plot = lazy(() => {
       default: () =>
         React.createElement("div", {
           className: "plotly-loading",
-          children: "Loading chart...",
+          children: "Chart loading (SSR)...",
         }),
     });
   }
 
-  return import("react-plotly.js/factory").then((factory) => {
-    const Plotly = require("plotly.js-basic-dist");
-    return { default: factory.default(Plotly) };
-  });
+  // Simplified import chain - try to avoid the complex factory pattern
+  try {
+    return import("react-plotly.js").then((module) => {
+      console.log("✅ Successfully imported react-plotly.js:", !!module.default);
+      return { default: module.default };
+    }).catch((error) => {
+      console.error("❌ Failed to import react-plotly.js:", error);
+      // Fallback to factory approach
+      return import("react-plotly.js/factory").then(async (factory) => {
+        const Plotly = await import("plotly.js-basic-dist");
+        console.log("✅ Factory fallback loaded:", !!factory.default, !!Plotly.default);
+        return { default: factory.default(Plotly.default || Plotly) };
+      });
+    });
+  } catch (error) {
+    console.error("❌ Critical Plotly import error:", error);
+    return Promise.resolve({
+      default: () =>
+        React.createElement("div", {
+          className: "plotly-error bg-red-100 p-4",
+          children: "Chart import failed: " + String(error),
+        }),
+    });
+  }
 });
 
 export interface PlotlyChartProps {
@@ -45,6 +65,8 @@ const PlotlyChart: React.FC<PlotlyChartProps> = ({
 }) => {
   const [chartData, setChartData] = useState<Data[]>(data);
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isChartLoaded, setIsChartLoaded] = useState(false);
+  const [isChartRendered, setIsChartRendered] = useState(false);
   const plotRef = useRef<HTMLDivElement | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -71,12 +93,17 @@ const PlotlyChart: React.FC<PlotlyChartProps> = ({
     }
 
     // Listen for system theme changes
-    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-    mediaQuery.addEventListener("change", checkDarkMode);
+    if (typeof window !== "undefined") {
+      const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+      mediaQuery.addEventListener("change", checkDarkMode);
+    }
 
     return () => {
       observer.disconnect();
-      mediaQuery.removeEventListener("change", checkDarkMode);
+      if (typeof window !== "undefined") {
+        const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+        mediaQuery.removeEventListener("change", checkDarkMode);
+      }
     };
   }, []);
 
@@ -198,6 +225,7 @@ const PlotlyChart: React.FC<PlotlyChartProps> = ({
       graphDiv: HTMLDivElement,
     ) => {
       plotRef.current = graphDiv;
+      setIsChartLoaded(true);
 
       if (figure.data) {
         setChartData(figure.data);
@@ -243,8 +271,11 @@ const PlotlyChart: React.FC<PlotlyChartProps> = ({
       setTimeout(fixLegendPosition, 10);
       // Delayed fix for navigation scenarios
       setTimeout(fixLegendPosition, 100);
-      // Final fix attempt
-      setTimeout(fixLegendPosition, 500);
+      // Final fix attempt and mark as rendered
+      setTimeout(() => {
+        fixLegendPosition();
+        setIsChartRendered(true);
+      }, 500);
     },
     [],
   );
@@ -352,6 +383,16 @@ const PlotlyChart: React.FC<PlotlyChartProps> = ({
     };
   }, []);
 
+  // Add comprehensive error boundary logging
+  console.log("PlotlyChart render:", {
+    title,
+    dataLength: chartData?.length,
+    hasLayout: !!defaultLayout,
+    hasConfig: !!defaultConfig,
+    isChartLoaded,
+    isChartRendered
+  });
+
   return (
     <div
       ref={containerRef}
@@ -361,36 +402,82 @@ const PlotlyChart: React.FC<PlotlyChartProps> = ({
         overflow: "hidden",
         minHeight: "400px",
       }}
+      data-testid="plotly-chart-container"
+      data-chart-loaded={isChartLoaded}
+      data-chart-rendered={isChartRendered}
+      data-chart-ready={isChartLoaded && isChartRendered}
     >
       <Suspense
         fallback={
-          <div className="flex h-full min-h-[400px] items-center justify-center">
+          <div
+            className="flex h-full min-h-[400px] items-center justify-center bg-yellow-100"
+            data-testid="plotly-chart-loading"
+          >
             <div className="text-center">
               <div className="border-primary mx-auto mb-2 h-8 w-8 animate-spin rounded-full border-b-2"></div>
               <p className="text-text/60 dark:text-gray-500">
-                Loading chart...
+                Loading chart... ({chartData?.length || 0} data series)
               </p>
             </div>
           </div>
         }
       >
-        <Plot
-          data={chartData}
-          layout={defaultLayout}
-          config={defaultConfig}
-          onInitialized={handleInitialized}
-          onUpdate={handleUpdate}
-          useResizeHandler={false}
-          style={{
-            width: "100%",
-            height: "100%",
-            position: "relative",
-          }}
-          className="plotly-chart"
-        />
+        <ErrorBoundary
+          fallback={
+            <div className="bg-red-100 p-4 text-red-800">
+              <h3 className="font-bold">Chart Error</h3>
+              <p className="text-sm">Failed to render Plotly chart. Check console for details.</p>
+              <p className="text-xs">Data: {chartData?.length || 0} series</p>
+            </div>
+          }
+        >
+          <Plot
+            data={chartData}
+            layout={defaultLayout}
+            config={defaultConfig}
+            onInitialized={handleInitialized}
+            onUpdate={handleUpdate}
+            onError={(error) => console.error("Plotly chart error:", error)}
+            useResizeHandler={false}
+            style={{
+              width: "100%",
+              height: "100%",
+              position: "relative",
+            }}
+            className="plotly-chart"
+            data-testid="plotly-chart"
+          />
+        </ErrorBoundary>
       </Suspense>
     </div>
   );
-};
+
+// Simple Error Boundary component
+class ErrorBoundary extends React.Component<
+  { fallback: React.ReactElement; children: React.ReactNode },
+  { hasError: boolean; error?: Error }
+> {
+  constructor(props: any) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError(error: Error) {
+    console.error("PlotlyChart ErrorBoundary caught error:", error);
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error: Error, errorInfo: any) {
+    console.error("PlotlyChart ErrorBoundary details:", error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return this.props.fallback;
+    }
+
+    return this.props.children;
+  }
+}
 
 export default PlotlyChart;

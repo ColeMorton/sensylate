@@ -9,7 +9,7 @@ categories:
   ["Investing", "Analysis", "Comparative Analysis", "Consumer Cyclical", "Auto Manufacturers"]
 tags: ["tsla", "nio", "comparative-analysis", "buy", "cross-sector", "ev-analysis"]
 draft: false
-pinned: true
+pinned: false
 comparative_data:
   comparison_confidence: 0.93
   data_quality: 0.94

@@ -135,6 +135,18 @@ export type ChartType =
   | "live-signals-weekly-candlestick"
   | "trade-pnl-waterfall"
   | "open-positions-pnl-timeseries"
+  | "fundamental-revenue-fcf"
+  | "fundamental-revenue-source"
+  | "fundamental-geography"
+  | "fundamental-key-metrics"
+  | "fundamental-key-metrics-expanded"
+  | "fundamental-quality-rating"
+  | "fundamental-financial-health"
+  | "fundamental-pros-cons"
+  | "fundamental-valuation"
+  | "fundamental-valuation-a"
+  | "fundamental-valuation-b"
+  | "fundamental-balance-sheet"
   | "closed-positions-pnl-timeseries"
   | "multi-stock-price"
   | "xpev-nio-stock-price";
@@ -214,4 +226,63 @@ export interface DataServiceResponse<T> {
   data: T;
   loading: boolean;
   error: string | null;
+}
+
+// Fundamental Analysis Data Types
+export interface FundamentalAnalysisData {
+  company: {
+    name: string;
+    ticker: string;
+    logo?: string;
+    brandColor?: string;
+  };
+  keyMetrics: {
+    stockReturn: { value: number; period: string };
+    grossMargin: number;
+    fcfMargin: number;
+    fairPrice: number;
+    currentPrice: number;
+  };
+  financialData: {
+    revenue: { years: number[]; values: number[] };
+    fcf: { years: number[]; values: number[] };
+    revenueSource: {
+      categories: string[];
+      values: number[];
+      colors?: string[];
+    };
+    geography: {
+      regions: string[];
+      values: number[];
+      coordinates?: { lat: number; lng: number }[];
+    };
+  };
+  qualityMetrics: {
+    management: number;
+    productReviews: number;
+    employees: number;
+    moat: number;
+  };
+  financialHealth: {
+    revenueGrowth: number;
+    fcfGrowth: number;
+    cashPosition: number;
+    debtToEquity: number;
+  };
+  prosCons: {
+    pros: string[];
+    cons: string[];
+  };
+  valuation: {
+    peRatio: number;
+    pegRatio: number;
+    evToRevenue: number;
+    dcfValue: number;
+    analystTarget: number;
+  };
+  balanceSheet: {
+    assets: { years: number[]; values: number[] };
+    liabilities: { years: number[]; values: number[] };
+    equity: { years: number[]; values: number[] };
+  };
 }

@@ -96,6 +96,7 @@ class PhotoBoothGenerator:
         dpi: int = 300,
         scale_factor: int = 3,
         custom_config: Optional[Dict[str, Any]] = None,
+        ticker: Optional[str] = None,
     ) -> Union[Path, List[Path]]:
         """
         Generate a single dashboard screenshot.
@@ -125,8 +126,14 @@ class PhotoBoothGenerator:
         # Build URL with parameters
         url = f"{self.base_url}/photo-booth?dashboard={dashboard_id}&mode={mode}&aspect_ratio={aspect_ratio}"
 
-        # Get aspect ratio dimensions from config
-        aspect_dimensions = self._get_aspect_ratio_dimensions(aspect_ratio)
+        # Add ticker parameter for fundamental analysis dashboard
+        if ticker and dashboard_id == "fundamental_analysis":
+            url += f"&ticker={ticker}"
+
+        # Get aspect ratio dimensions from config (use fundamental-specific dimensions if applicable)
+        aspect_dimensions = self._get_aspect_ratio_dimensions(
+            aspect_ratio, dashboard_id
+        )
 
         # Generate output filename(s)
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -227,6 +234,7 @@ class PhotoBoothGenerator:
         export_format: str = "png",
         dpi: int = 300,
         scale_factor: int = 3,
+        ticker: Optional[str] = None,
     ) -> List[Path]:
         """
         Generate screenshots for multiple dashboards.
@@ -277,6 +285,7 @@ class PhotoBoothGenerator:
                         export_format=export_format,
                         dpi=dpi,
                         scale_factor=scale_factor,
+                        ticker=ticker,
                     )
                     # Handle both single file and multiple file results
                     if isinstance(result, list):
@@ -328,8 +337,48 @@ const puppeteer = require('puppeteer');
     console.log('Waiting for dashboard to be ready...');
     await page.waitForSelector('{wait_for_selector}', {{ timeout: {timeout} }});
 
-    // Additional wait for charts to render
-    await new Promise(resolve => setTimeout(resolve, 3000));
+    /* Wait for all charts to be fully loaded and rendered */
+    console.log('Waiting for charts to load and render...');
+    try {{
+      /* Wait for all PlotlyChart containers to be present */
+      await page.waitForFunction(() => {{
+        const chartContainers = document.querySelectorAll('[data-testid="plotly-chart-container"]');
+        if (chartContainers.length === 0) {{
+          console.log('No chart containers found, continuing...');
+          return true; /* No charts present, continue */
+        }}
+
+        let allChartsReady = true;
+        let readyCount = 0;
+
+        chartContainers.forEach((container, index) => {{
+          const isLoaded = container.getAttribute('data-chart-loaded') === 'true';
+          const isRendered = container.getAttribute('data-chart-rendered') === 'true';
+          const isReady = isLoaded && isRendered;
+
+          console.log(`Chart ${{index}}: loaded=${{isLoaded}}, rendered=${{isRendered}}, ready=${{isReady}}`);
+
+          if (isReady) {{
+            readyCount++;
+          }} else {{
+            allChartsReady = false;
+          }}
+        }});
+
+        console.log(`Charts ready: ${{readyCount}}/${{chartContainers.length}}`);
+        return allChartsReady;
+      }}, {{ timeout: 15000 }});
+
+      console.log('All charts are loaded and rendered!');
+
+      /* Additional short wait to ensure visual stability */
+      await new Promise(resolve => setTimeout(resolve, 1000));
+
+    }} catch (error) {{
+      console.warn('Chart loading timeout, continuing with screenshot:', error.message);
+      /* Fallback: short wait if chart detection fails */
+      await new Promise(resolve => setTimeout(resolve, 2000));
+    }}
 
     // Hide UI elements for clean screenshot
     console.log('Hiding UI elements for clean screenshot...');
@@ -416,7 +465,9 @@ const puppeteer = require('puppeteer');
             if script_path.exists():
                 script_path.unlink()
 
-    def _get_aspect_ratio_dimensions(self, aspect_ratio: str) -> Dict[str, int]:
+    def _get_aspect_ratio_dimensions(
+        self, aspect_ratio: str, dashboard_id: str = None
+    ) -> Dict[str, int]:
         """Get viewport dimensions for the specified aspect ratio."""
         # Load export options from config
         export_options = self.config.get("export_options", {})
@@ -425,6 +476,15 @@ const puppeteer = require('puppeteer');
         # Find matching aspect ratio
         for ar in aspect_ratios:
             if ar["id"] == aspect_ratio:
+                # Use fundamental-specific dimensions for fundamental analysis dashboard
+                if (
+                    dashboard_id == "fundamental_analysis"
+                    and "fundamental_dimensions" in ar
+                ):
+                    self.logger.info(
+                        f"Using fundamental-specific dimensions for {dashboard_id}: {ar['fundamental_dimensions']}"
+                    )
+                    return ar["fundamental_dimensions"]
                 return ar["dimensions"]
 
         # Default fallback to 16:9
@@ -585,6 +645,10 @@ def main():
         help="Clean up old screenshots after generation",
     )
     parser.add_argument(
+        "--ticker",
+        help="Ticker symbol for fundamental analysis dashboard (e.g., GOOGL, NVDA, ASML)",
+    )
+    parser.add_argument(
         "--log-level",
         choices=["DEBUG", "INFO", "WARNING", "ERROR"],
         default="INFO",
@@ -624,6 +688,7 @@ def main():
                     export_format=args.format,
                     dpi=args.dpi,
                     scale_factor=args.scale_factor,
+                    ticker=args.ticker,
                 )
                 # Handle both single file and multiple file results
                 if isinstance(result, list):
@@ -637,6 +702,7 @@ def main():
                 export_format=args.format,
                 dpi=args.dpi,
                 scale_factor=args.scale_factor,
+                ticker=args.ticker,
             )
 
         # Cleanup if requested

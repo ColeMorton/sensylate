@@ -16,6 +16,7 @@ tags:
     "win-rate",
   ]
 draft: false
+pinned: true
 ---
 
 ### 📡 Trading Signal Platform

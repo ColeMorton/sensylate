@@ -1,7 +1,9 @@
 import React from "react";
 import type { ChartDisplayProps } from "@/types/ChartTypes";
-import ChartContainer from "@/components/charts/ChartContainer";
-import PortfolioChart from "@/components/charts/PortfolioChart";
+import ChartContainer from "@/layouts/components/charts/ChartContainer";
+import PortfolioChart from "@/layouts/components/charts/PortfolioChart";
+import FundamentalChart from "@/layouts/components/charts/FundamentalCharts";
+import { getFundamentalMockData } from "@/test/mocks/fundamentalAnalysis.mock";
 
 const ChartDisplay: React.FC<ChartDisplayProps> = ({
   title,
@@ -31,6 +33,15 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({
     "closed-positions-pnl-timeseries",
     "multi-stock-price",
     "xpev-nio-stock-price",
+    "fundamental-revenue-fcf",
+    "fundamental-revenue-source",
+    "fundamental-geography",
+    "fundamental-key-metrics",
+    "fundamental-quality-rating",
+    "fundamental-financial-health",
+    "fundamental-pros-cons",
+    "fundamental-valuation",
+    "fundamental-balance-sheet",
   ];
 
   if (!supportedChartTypes.includes(chartType)) {
@@ -56,7 +67,24 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({
     );
   }
 
-  // Render all charts normally
+  // Check if this is a fundamental chart type
+  const isFundamentalChart = chartType.startsWith("fundamental-");
+
+  if (isFundamentalChart) {
+    // Get mock data for fundamental analysis (defaulting to GOOGL for photo-booth)
+    const fundamentalData = getFundamentalMockData("GOOGL");
+
+    return (
+      <FundamentalChart
+        chartType={chartType as any}
+        data={fundamentalData}
+        title={title}
+        className={className}
+      />
+    );
+  }
+
+  // Render portfolio charts normally
   return (
     <ChartContainer
       title={title}
