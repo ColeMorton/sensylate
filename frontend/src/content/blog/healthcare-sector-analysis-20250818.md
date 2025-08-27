@@ -8,7 +8,7 @@ authors: ["Cole Morton", "Claude"]
 categories: ["Investing", "Analysis", "Sector Analysis", "Healthcare", "Market Analysis"]
 tags: ["healthcare", "sector-analysis", "buy", "mid-cycle", "defensive", "aging-demographics"]
 draft: false
-pinned: true
+pinned: false
 sector_data:
   confidence: 0.90
   data_quality: 0.96
