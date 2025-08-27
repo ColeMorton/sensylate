@@ -10,7 +10,6 @@ const contact = (await getEntry(
   "-index",
 )) as CollectionEntry<"contact">;
 const { Content } = await render(contact);
-const { contact_form_action }: { contact_form_action: string } = config.params;
 const { title, description, meta_title, image } = contact.data;
 ---
 
@@ -48,8 +47,9 @@ const { title, description, meta_title, image } = contact.data;
               name="contact"
               method="POST"
               action="/contact-success"
+              enctype="application/x-www-form-urlencoded"
               data-netlify="true"
-              netlify-honeypot="bot-field"
+              data-netlify-honeypot="bot-field"
             >
               <input type="hidden" name="form-name" value="contact" />
               <p style="display: none;">
