@@ -111,7 +111,7 @@ const getTagUrl = (tag: string) => {
                 {categories.map((category: string, index: number) => (
                   <span key={category} class="inline">
                     <a
-                      class="text-text dark:text-darkmode-text hover:text-primary dark:hover:text-darkmode-primary transition-colors duration-200"
+                      class="text-text dark:text-darkmode-text inline-block origin-center transform-gpu transition-transform duration-200 hover:[transform:scale(1.05)]"
                       href={getCategoryUrl(category)}
                     >
                       {humanize(category)}
@@ -144,7 +144,7 @@ const getTagUrl = (tag: string) => {
                   tags.map((tag: string, index: number) => (
                     <span key={tag} class="inline">
                       <a
-                        class="text-text dark:text-darkmode-text hover:text-primary dark:hover:text-darkmode-primary transition-colors duration-200"
+                        class="text-text dark:text-darkmode-text inline-block origin-center transform-gpu transition-transform duration-200 hover:[transform:scale(1.05)]"
                         href={getTagUrl(tag)}
                       >
                         {humanize(tag)}

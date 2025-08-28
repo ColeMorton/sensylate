@@ -12,7 +12,7 @@ export interface ISocial {
 <ul class={className}>
   {
     source.map((social: ISocial) => (
-      <li>
+      <li class="transform-gpu transition-transform duration-200 hover:[transform:scale(1.08)]">
         <a
           aria-label={social.name}
           href={social.link}

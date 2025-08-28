@@ -95,7 +95,7 @@ const { pathname } = Astro.url;
             {menu.hasChildren ? (
               <li class="nav-item nav-dropdown group relative">
                 <span
-                  class={`nav-link hover:text-text-light dark:hover:text-text inline-flex cursor-pointer items-center transition-colors duration-200 ${
+                  class={`nav-link inline-flex cursor-pointer items-center ${
                     menu.children?.map(({ url }) => url).includes(pathname) ||
                     menu.children
                       ?.map(({ url }) => `${url}/`)
@@ -115,7 +115,7 @@ const { pathname } = Astro.url;
                       <a
                         href={child.url}
                         aria-label={child.name}
-                        class={`nav-dropdown-link hover:text-text-light dark:hover:text-text block cursor-pointer transition-colors duration-200 ${
+                        class={`nav-dropdown-link block cursor-pointer ${
                           (pathname === `${child.url}/` ||
                             pathname === child.url) &&
                           "active"
@@ -132,7 +132,7 @@ const { pathname } = Astro.url;
                 <a
                   href={menu.url}
                   data-astro-reload={menu.url === "/charts" ? true : undefined}
-                  class={`nav-link hover:text-text-light dark:hover:text-text block cursor-pointer transition-colors duration-200 ${
+                  class={`nav-link block cursor-pointer ${
                     (pathname === `${menu.url}/` || pathname === menu.url) &&
                     "active"
                   }`}
@@ -148,7 +148,7 @@ const { pathname } = Astro.url;
         navigation_button.enable && (
           <li class="mt-4 inline-block lg:hidden">
             <a
-              class="btn btn-outline-primary btn-sm hover:text-text-light dark:hover:text-text cursor-pointer transition-colors duration-200"
+              class="btn btn-outline-primary btn-sm origin-center transform-gpu cursor-pointer transition-transform duration-200"
               href={navigation_button.link}
             >
               {navigation_button.label}
@@ -161,7 +161,7 @@ const { pathname } = Astro.url;
       {
         features.search && (
           <button
-            class="border-border text-text-dark hover:text-text-light dark:border-darkmode-border dark:hover:text-text mr-5 inline-block cursor-pointer border-r pr-5 text-xl transition-colors duration-200 dark:text-white"
+            class="border-border text-text-dark dark:border-darkmode-border mr-5 inline-block origin-center transform-gpu cursor-pointer border-r pr-5 text-xl transition-transform duration-200 hover:[transform:scale(1.08)] dark:text-white"
             aria-label="search"
             data-search-trigger
           >
@@ -173,7 +173,7 @@ const { pathname } = Astro.url;
       {
         navigation_button.enable && (
           <a
-            class="btn btn-outline-primary btn-sm hover:text-text-light dark:hover:text-text hidden cursor-pointer transition-colors duration-200 lg:inline-block"
+            class="btn btn-outline-primary btn-sm hidden origin-center transform-gpu cursor-pointer transition-transform duration-200 lg:inline-block"
             href={navigation_button.link}
           >
             {navigation_button.label}
