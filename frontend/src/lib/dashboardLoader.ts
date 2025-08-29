@@ -15,15 +15,6 @@ export interface DashboardConfig {
   charts: DashboardChart[];
 }
 
-interface DashboardAPIResponse {
-  success: boolean;
-  dashboards?: DashboardConfig[];
-  error?: string;
-  message?: string;
-  timestamp: string;
-  source?: string;
-}
-
 // Dashboard chart configurations - mapped from the actual dashboard MDX files
 const DASHBOARD_CONFIGS: Record<string, DashboardConfig> = {
   trading_performance: {
@@ -145,7 +136,7 @@ const DASHBOARD_CONFIGS: Record<string, DashboardConfig> = {
     title: "Portfolio History Portrait",
     description:
       "Portfolio trading history with waterfall and time series analysis",
-    layout: "2x1_stack",
+    layout: "1x3_stack",
     mode: "both",
     enabled: true,
     charts: [
