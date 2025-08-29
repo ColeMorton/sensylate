@@ -160,15 +160,90 @@ const DASHBOARD_CONFIGS: Record<string, DashboardConfig> = {
       },
     ],
   },
+  fundamental_analysis: {
+    id: "fundamental_analysis",
+    title: "Fundamental Analysis Dashboard",
+    description:
+      "Comprehensive stock fundamental analysis with financial metrics and valuation",
+    layout: "fundamental_3x3",
+    mode: "both",
+    enabled: true,
+    charts: [
+      {
+        title: "Revenue & FCF",
+        category: "Financial Performance",
+        description: "Revenue and free cash flow trends over time",
+        chartType: "fundamental-revenue-fcf",
+      },
+      {
+        title: "Revenue Source",
+        category: "Revenue Breakdown",
+        description: "Revenue distribution by business segment",
+        chartType: "fundamental-revenue-source",
+      },
+      {
+        title: "Geography",
+        category: "Geographic Distribution",
+        description: "Revenue distribution by geographic region",
+        chartType: "fundamental-geography",
+      },
+      {
+        title: "Key Metrics",
+        category: "Growth Analysis",
+        description: "Key growth metrics and performance indicators",
+        chartType: "fundamental-key-metrics",
+      },
+      {
+        title: "Quality",
+        category: "Quality Assessment",
+        description: "Quality ratings across multiple dimensions",
+        chartType: "fundamental-quality-rating",
+      },
+      {
+        title: "Financials",
+        category: "Financial Health",
+        description: "Revenue growth, FCF growth, and cash position",
+        chartType: "fundamental-financial-health",
+      },
+      {
+        title: "Pros & Cons",
+        category: "Investment Analysis",
+        description: "Key investment advantages and risks",
+        chartType: "fundamental-pros-cons",
+      },
+      {
+        title: "Valuation",
+        category: "Valuation Analysis",
+        description:
+          "Multiple valuation methodologies and fair value estimates",
+        chartType: "fundamental-valuation",
+      },
+      {
+        title: "Balance Sheet",
+        category: "Financial Position",
+        description: "Balance sheet metrics and financial stability",
+        chartType: "fundamental-balance-sheet",
+      },
+    ],
+  },
 };
 
 export const GET: APIRoute = async () => {
   try {
     // Try to load from Astro content collection first
     let dashboards = Object.values(DASHBOARD_CONFIGS);
+    console.log(
+      "Static dashboard IDs:",
+      dashboards.map((d) => d.id),
+    );
 
     try {
       const dashboardCollection = await getCollection("dashboards");
+      console.log(
+        "Dashboard collection loaded:",
+        dashboardCollection?.length,
+        "entries",
+      );
 
       // If we have dashboard files, create configs from them
       if (dashboardCollection && dashboardCollection.length > 0) {
@@ -176,10 +251,13 @@ export const GET: APIRoute = async () => {
           .filter((entry) => entry.data.enabled !== false)
           .map((entry) => {
             // Get corresponding static config for chart data
-            const staticConfig = DASHBOARD_CONFIGS[entry.data.id || entry.id];
+            // Map hyphenated IDs from file names to underscore IDs in config
+            const entryId = entry.data.id || entry.id;
+            const configKey = entryId.replace(/-/g, "_");
+            const staticConfig = DASHBOARD_CONFIGS[configKey];
 
             return {
-              id: entry.data.id || entry.id,
+              id: configKey, // Use consistent underscore format
               title: entry.data.title,
               description: entry.data.description,
               layout: entry.data.layout || "2x2_grid",

@@ -41,6 +41,10 @@ const DynamicHomepageHook = forwardRef<
     setSelectedPhrase(phrases[randomIndex]);
   }, [phrases]);
 
+  const handleClick = useCallback(() => {
+    window.location.href = "/categories/analysis";
+  }, []);
+
   useEffect(() => {
     // Client-side random selection to avoid hydration mismatch
     randomizePhrase();
@@ -57,14 +61,30 @@ const DynamicHomepageHook = forwardRef<
 
   return (
     <h2
-      className={className}
+      className={`${className} flex cursor-pointer flex-wrap justify-center gap-3`}
       style={
         style
           ? { marginTop: style.replace("margin-top: ", "").replace(";", "") }
           : undefined
       }
+      onClick={handleClick}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          handleClick();
+        }
+      }}
     >
-      {selectedPhrase}
+      {selectedPhrase.split(" ").map((word, index) => (
+        <span
+          key={`${word}-${index}`}
+          className="origin-center transform-gpu transition-transform duration-200 hover:[transform:scale(1.08)]"
+        >
+          {word}
+        </span>
+      ))}
     </h2>
   );
 });

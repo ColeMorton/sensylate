@@ -1,7 +1,8 @@
 import React from "react";
 import type { ChartDisplayProps } from "@/types/ChartTypes";
-import ChartContainer from "@/components/charts/ChartContainer";
-import PortfolioChart from "@/components/charts/PortfolioChart";
+import ChartContainer from "@/layouts/components/charts/ChartContainer";
+import PortfolioChart from "@/layouts/components/charts/PortfolioChart";
+import FundamentalChart from "@/layouts/components/charts/FundamentalCharts";
 
 const ChartDisplay: React.FC<ChartDisplayProps> = ({
   title,
@@ -31,6 +32,15 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({
     "closed-positions-pnl-timeseries",
     "multi-stock-price",
     "xpev-nio-stock-price",
+    "fundamental-revenue-fcf",
+    "fundamental-revenue-source",
+    "fundamental-geography",
+    "fundamental-key-metrics",
+    "fundamental-quality-rating",
+    "fundamental-financial-health",
+    "fundamental-pros-cons",
+    "fundamental-valuation",
+    "fundamental-balance-sheet",
   ];
 
   if (!supportedChartTypes.includes(chartType)) {
@@ -56,7 +66,79 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({
     );
   }
 
-  // Render all charts normally
+  // Check if this is a fundamental chart type
+  const isFundamentalChart = chartType.startsWith("fundamental-");
+
+  if (isFundamentalChart) {
+    // In production, show a message that fundamental charts are not available
+    if (!import.meta.env.DEV) {
+      return (
+        <ChartContainer
+          title={title}
+          category={category}
+          description={description}
+          className={className}
+        >
+          <div className="flex items-center justify-center p-8">
+            <div className="text-center">
+              <p className="text-gray-600 dark:text-gray-400">
+                Fundamental analysis charts are only available in development
+                mode
+              </p>
+            </div>
+          </div>
+        </ChartContainer>
+      );
+    }
+
+    // Development: Use a separate component to handle hooks properly
+    const DevelopmentFundamentalChart = () => {
+      const [fundamentalData, setFundamentalData] = React.useState(null);
+
+      React.useEffect(() => {
+        import("@/test/mocks/fundamentalAnalysis.mock")
+          .then((module) => {
+            const data = module.getFundamentalMockData("GOOGL");
+            setFundamentalData(data);
+          })
+          .catch(() => {
+            // Silently fail - mock data not available
+          });
+      }, []);
+
+      if (!fundamentalData) {
+        return (
+          <ChartContainer
+            title={title}
+            category={category}
+            description={description}
+            className={className}
+          >
+            <div className="flex items-center justify-center p-8">
+              <div className="text-center">
+                <p className="text-gray-600 dark:text-gray-400">
+                  Loading fundamental data...
+                </p>
+              </div>
+            </div>
+          </ChartContainer>
+        );
+      }
+
+      return (
+        <FundamentalChart
+          chartType={chartType}
+          data={fundamentalData}
+          title={title}
+          className={className}
+        />
+      );
+    };
+
+    return <DevelopmentFundamentalChart />;
+  }
+
+  // Render portfolio charts normally
   return (
     <ChartContainer
       title={title}

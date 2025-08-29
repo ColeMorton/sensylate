@@ -32,6 +32,14 @@
       "description": "Market trends and sector analysis",
       "layout": "2x2_grid",
       "enabled": false
+    },
+    {
+      "id": "fundamental_analysis",
+      "name": "Fundamental Analysis Dashboard",
+      "file": "fundamental-analysis.mdx",
+      "description": "Comprehensive fundamental analysis dashboard with 3x3 layout",
+      "layout": "fundamental_3x3",
+      "enabled": true
     }
   ],
   "screenshot_settings": {
@@ -74,6 +82,7 @@
           "id": "3:4",
           "name": "Portrait (3:4)",
           "dimensions": { "width": 1080, "height": 1440 },
+          "fundamental_dimensions": { "width": 1350, "height": 1800 },
           "description": "Portrait orientation, ideal for social media and mobile"
         }
       ],
@@ -186,6 +195,24 @@
         "error_threshold_hours": 8
       },
       "refresh_priority": "high"
+    },
+    "fundamental_analysis": {
+      "primary_charts": [
+        "fundamental-revenue-fcf",
+        "fundamental-revenue-source",
+        "fundamental-geography",
+        "fundamental-key-metrics-expanded",
+        "fundamental-quality-rating",
+        "fundamental-financial-health",
+        "fundamental-pros-cons",
+        "fundamental-valuation-a",
+        "fundamental-valuation-b"
+      ],
+      "data_freshness_requirements": {
+        "warning_threshold_hours": 24,
+        "error_threshold_hours": 72
+      },
+      "refresh_priority": "low"
     }
   }
 }

@@ -397,3 +397,236 @@ body:not(:has(.photo-booth-controls:not([style*="display: none"])))
   flex: 1 !important;
   min-height: 0 !important;
 }
+
+/* Fundamental Analysis Dashboard Styles */
+.fundamental-dashboard {
+  @apply bg-white dark:bg-gray-900;
+  width: 1200px;
+  height: 1800px;
+  position: relative;
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  font-family:
+    "Inter",
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    sans-serif;
+  border: 1px solid #e5e7eb;
+}
+
+.fundamental-header {
+  @apply border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900;
+  height: 160px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 16px 24px;
+}
+
+.company-info {
+  @apply text-center;
+}
+
+.company-name {
+  @apply mb-2 text-4xl font-bold text-gray-900 dark:text-white;
+}
+
+.key-metrics-row {
+  @apply flex flex-1 items-center justify-center;
+}
+
+.fundamental-dashboard-grid {
+  @apply flex-1 bg-white dark:bg-gray-900;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, minmax(300px, 1fr));
+  gap: 1px;
+  background: #e5e7eb;
+  height: calc(100% - 220px);
+  padding: 1px;
+}
+
+.fundamental-chart-cell {
+  @apply bg-white dark:bg-gray-800;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+}
+
+.section-title {
+  @apply mb-4 flex items-center gap-2 text-lg font-semibold text-gray-900 dark:text-gray-100;
+}
+
+.metrics-section {
+  @apply flex h-full flex-col;
+}
+
+.metrics-content {
+  @apply flex-1 space-y-3;
+}
+
+.metrics-content p {
+  @apply flex justify-between text-sm text-gray-700 dark:text-gray-300;
+}
+
+.metric-value {
+  @apply font-bold;
+}
+
+.metric-value.positive {
+  @apply text-green-600 dark:text-green-400;
+}
+
+.metric-value.negative {
+  @apply text-red-600 dark:text-red-400;
+}
+
+.fundamental-footer {
+  @apply border-t border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+}
+
+.footer-content {
+  @apply flex w-full items-center justify-between text-sm;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+}
+
+.footer-section {
+  @apply flex items-center;
+}
+
+.footer-section:nth-child(1) {
+  justify-content: flex-start;
+}
+
+.footer-section:nth-child(2) {
+  justify-content: center;
+}
+
+.footer-section:nth-child(3) {
+  justify-content: flex-end;
+}
+
+.footer-logo {
+  @apply font-bold text-gray-900 dark:text-white;
+}
+
+.footer-center {
+  @apply font-medium text-gray-700 dark:text-gray-300;
+}
+
+.footer-disclaimer {
+  @apply text-gray-600 dark:text-gray-400;
+}
+
+/* Responsive scaling for frontend display */
+@media (max-width: 1400px) {
+  .fundamental-dashboard-container .fundamental-dashboard {
+    transform: scale(0.8);
+    transform-origin: top center;
+    margin-bottom: -320px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .fundamental-dashboard-container .fundamental-dashboard {
+    transform: scale(0.6);
+    transform-origin: top center;
+    margin-bottom: -640px;
+  }
+}
+
+@media (max-width: 768px) {
+  .fundamental-dashboard-container .fundamental-dashboard {
+    transform: scale(0.4);
+    transform-origin: top center;
+    margin-bottom: -960px;
+  }
+}
+
+/* Photo booth export mode specific styles for fundamental dashboard */
+.photo-booth-container.exporting .fundamental-dashboard,
+body:not(:has(.photo-booth-controls:not([style*="display: none"])))
+  .fundamental-dashboard {
+  width: 100vw !important;
+  height: 100vh !important;
+  overflow: visible !important;
+  transform: none !important;
+  margin: 0 !important;
+  border: none !important;
+}
+
+.photo-booth-container.exporting .fundamental-header,
+body:not(:has(.photo-booth-controls:not([style*="display: none"])))
+  .fundamental-header {
+  height: 140px !important;
+  padding: 16px 24px !important;
+}
+
+.photo-booth-container.exporting .fundamental-dashboard-grid,
+body:not(:has(.photo-booth-controls:not([style*="display: none"])))
+  .fundamental-dashboard-grid {
+  height: calc(100vh - 200px) !important;
+  padding: 16px !important;
+  gap: 1px !important;
+}
+
+.photo-booth-container.exporting .fundamental-chart-cell,
+body:not(:has(.photo-booth-controls:not([style*="display: none"])))
+  .fundamental-chart-cell {
+  min-height: calc((100vh - 200px - 32px - 2px) / 3) !important;
+  padding: 12px !important;
+}
+
+.photo-booth-container.exporting .fundamental-footer,
+body:not(:has(.photo-booth-controls:not([style*="display: none"])))
+  .fundamental-footer {
+  height: 60px !important;
+  padding: 0 24px !important;
+}
+
+/* Force light mode styles for photo booth export */
+.photo-booth-container.exporting .fundamental-dashboard:not(.dark),
+body:not(:has(.photo-booth-controls:not([style*="display: none"])))
+  .fundamental-dashboard:not(.dark) {
+  background: white !important;
+  color: #1f2937 !important;
+}
+
+.photo-booth-container.exporting .fundamental-chart-cell:not(.dark),
+body:not(:has(.photo-booth-controls:not([style*="display: none"])))
+  .fundamental-chart-cell:not(.dark) {
+  background: white !important;
+  color: #1f2937 !important;
+}
+
+.photo-booth-container.exporting .fundamental-header:not(.dark),
+body:not(:has(.photo-booth-controls:not([style*="display: none"])))
+  .fundamental-header:not(.dark) {
+  background: white !important;
+  border-color: #e5e7eb !important;
+}
+
+.photo-booth-container.exporting .fundamental-footer:not(.dark),
+body:not(:has(.photo-booth-controls:not([style*="display: none"])))
+  .fundamental-footer:not(.dark) {
+  background: white !important;
+  border-color: #e5e7eb !important;
+}
+
+/* Ensure charts have proper sizing in photo booth mode */
+.photo-booth-container.exporting .plotly-chart-container,
+body:not(:has(.photo-booth-controls:not([style*="display: none"])))
+  .plotly-chart-container {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 200px !important;
+}
