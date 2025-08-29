@@ -22,7 +22,7 @@ const displayPosts = [...pinnedPosts, ...latestPosts].slice(0, 3);
 ---
 
 <div id={id} class="pinned-cards-container pointer-events-none opacity-0">
-  <div class="container mx-auto px-4">
+  <div class="scroll-content container mx-auto px-4">
     <div class="mx-auto grid max-w-6xl grid-cols-1 gap-6 md:grid-cols-3">
       {
         displayPosts.map((post) => (
@@ -40,18 +40,25 @@ const displayPosts = [...pinnedPosts, ...latestPosts].slice(0, 3);
     position: fixed;
     left: 0;
     right: 0;
-    top: 50%;
-    transform: translateY(-50%) translateY(100vh);
-    z-index: 20;
+    top: 110px; /* Start below header */
+    height: calc(100vh - 110px); /* Use remaining viewport height */
+    transform: translateY(100vh);
+    z-index: 30;
     transition:
       transform 0.5s ease-out,
       opacity 0.1s ease-out;
   }
 
+  .scroll-content {
+    height: 100%;
+    overflow-y: auto;
+    padding-bottom: 8rem; /* Account for footer height to prevent overlap */
+  }
+
   .pinned-cards-container.visible {
     opacity: 1;
     pointer-events: auto;
-    transform: translateY(-50%) translateY(0);
+    transform: translateY(0);
   }
 
   .pinned-card-item {

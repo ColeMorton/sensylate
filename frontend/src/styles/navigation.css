@@ -30,7 +30,7 @@
 }
 
 .nav-link {
-  @apply text-text-dark hover:text-primary dark:text-darkmode-text-dark dark:hover:text-darkmode-primary block cursor-pointer p-3 font-semibold transition lg:px-2 lg:py-3;
+  @apply text-text-dark dark:text-darkmode-text-dark block origin-center transform-gpu cursor-pointer p-3 font-semibold transition-transform duration-200 hover:[transform:scale(1.08)] lg:px-2 lg:py-3;
 }
 
 .nav-dropdown {
@@ -54,7 +54,7 @@
 }
 
 .nav-dropdown-link {
-  @apply text-text-dark hover:text-primary dark:text-darkmode-text dark:hover:text-darkmode-primary block py-1 font-semibold transition;
+  @apply text-text-dark dark:text-darkmode-text block origin-center transform-gpu py-1 font-semibold transition-transform duration-200 hover:[transform:scale(1.08)];
 }
 
 /* theme-switcher */
