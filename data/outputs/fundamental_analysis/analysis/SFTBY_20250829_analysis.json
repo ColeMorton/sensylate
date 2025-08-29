@@ -26,7 +26,7 @@
     },
     "market_cap": {
       "value": 155954266112,
-      "validation_status": "confirmed", 
+      "validation_status": "confirmed",
       "confidence": 0.95
     },
     "financial_data_completeness": 0.94,
@@ -108,7 +108,7 @@
       },
       "key_insights": [
         "High leverage ratio typical of investment holding companies",
-        "Significant liquid assets provide operational flexibility", 
+        "Significant liquid assets provide operational flexibility",
         "Asset base heavily weighted toward investments vs operating assets",
         "Complex balance sheet structure requires sophisticated valuation"
       ],
@@ -205,7 +205,7 @@
       ],
       "key_weaknesses": [
         "High leverage creates financial risk",
-        "Below-average capital efficiency metrics", 
+        "Below-average capital efficiency metrics",
         "Earnings volatility from mark-to-market accounting",
         "Liquidity concerns with current ratio below 1.0"
       ],
@@ -235,7 +235,7 @@
           "confidence": 0.92
         },
         {
-          "advantage": "arm_holdings_exposure", 
+          "advantage": "arm_holdings_exposure",
           "strength_score": 9.1,
           "durability_score": 8.8,
           "evidence": "Significant stake in ARM with semiconductor IP licensing dominance",
@@ -347,7 +347,7 @@
     },
     "overall_competitive_assessment": {
       "competitive_position_score": 7.1,
-      "trend": "stable_to_improving", 
+      "trend": "stable_to_improving",
       "key_advantages": "Vision Fund scale, ARM exposure, diversified technology portfolio",
       "key_vulnerabilities": "Execution complexity, regulatory risks, market timing sensitivity",
       "confidence": 0.84
@@ -380,7 +380,7 @@
         },
         "base_case": {
           "fair_value": 62.50,
-          "probability": 0.50, 
+          "probability": 0.50,
           "key_assumptions": "Stable Vision Fund performance, ARM IPO success, steady telecom operations"
         },
         "bull_case": {
@@ -437,7 +437,7 @@
       "upside_potential": 0.062,
       "methodology_weights": {
         "dcf": 0.40,
-        "relative": 0.35, 
+        "relative": 0.35,
         "asset_based": 0.25
       },
       "valuation_confidence": 0.78
@@ -469,7 +469,7 @@
           "probability": 0.25,
           "fair_value": 84.30,
           "key_drivers": [
-            "Vision Fund strong outperformance", 
+            "Vision Fund strong outperformance",
             "ARM premium IPO valuation",
             "5G monetization success",
             "AI boom benefiting portfolio"
@@ -510,7 +510,7 @@
       "economic_sensitivity": "moderate_to_high",
       "cycle_performance": {
         "expansion": "above_average",
-        "recession": "below_average", 
+        "recession": "below_average",
         "recovery": "above_average"
       },
       "confidence": 0.82
@@ -577,7 +577,7 @@
         "confidence": 0.87
       },
       {
-        "risk_factor": "interest_rate_shock", 
+        "risk_factor": "interest_rate_shock",
         "probability": 0.35,
         "impact": 4,
         "risk_score": 1.40,
@@ -591,7 +591,7 @@
         "probability": 0.25,
         "impact": 3,
         "risk_score": 0.75,
-        "evidence": "IPO timing uncertainty, semiconductor cycle volatility", 
+        "evidence": "IPO timing uncertainty, semiconductor cycle volatility",
         "mitigation": "Staged exit strategy, operating performance focus",
         "monitoring_kpi": "ARM financial performance, IPO market conditions",
         "confidence": 0.83
@@ -806,7 +806,7 @@
     ],
     "enhancement_opportunities": [
       "Detailed Vision Fund portfolio analysis",
-      "Enhanced ARM Holdings valuation methodology", 
+      "Enhanced ARM Holdings valuation methodology",
       "Improved economic sensitivity quantification"
     ]
   },

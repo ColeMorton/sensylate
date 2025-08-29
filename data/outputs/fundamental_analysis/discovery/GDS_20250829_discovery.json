@@ -75,7 +75,7 @@
     "business_model": {
       "revenue_streams": [
         "Data center hosting services",
-        "Cloud connectivity services", 
+        "Cloud connectivity services",
         "Value-added services",
         "Managed services"
       ],
@@ -110,7 +110,7 @@
     "key_metrics": {
       "business_specific_kpis": [
         "Data center utilization rates",
-        "Revenue per cabinet/rack", 
+        "Revenue per cabinet/rack",
         "Net effective rents",
         "Power usage effectiveness (PUE)",
         "Geographic diversification metrics"
@@ -150,7 +150,7 @@
     "sector_implications": "Data center sector benefits from AI/cloud growth but faces higher financing costs in current rate environment"
   },
   "economic_analysis": {
-    "interest_rate_environment": "moderately_restrictive", 
+    "interest_rate_environment": "moderately_restrictive",
     "yield_curve_signal": "normal_slight_inversion",
     "policy_implications": [
       "Higher financing costs impact capital-intensive data center investments",
@@ -163,7 +163,7 @@
     "insider_trading_data": "Limited insider trading data available for GDS analysis",
     "sec_edgar_integration": {
       "cik": "1226",
-      "filing_status": "Active SEC registrant", 
+      "filing_status": "Active SEC registrant",
       "data_availability": "Basic company identification confirmed"
     },
     "regulatory_analysis": "Chinese-domiciled company with US ADR listing maintains SEC reporting requirements"
@@ -171,7 +171,7 @@
   "cli_service_validation": {
     "service_health": {
       "yahoo_finance_cli": "operational",
-      "alpha_vantage_cli": "operational", 
+      "alpha_vantage_cli": "operational",
       "fred_economic_cli": "operational",
       "coingecko_cli": "operational",
       "sec_edgar_cli": "operational",
@@ -187,7 +187,7 @@
     "institutional_grade": true,
     "data_sources_via_cli": [
       "yahoo_finance_cli",
-      "alpha_vantage_cli", 
+      "alpha_vantage_cli",
       "fred_economic_cli",
       "coingecko_cli",
       "sec_edgar_cli"
@@ -197,7 +197,7 @@
   "cli_insights": {
     "cli_integration_observations": [
       "Perfect price consistency achieved between Yahoo Finance and Alpha Vantage sources",
-      "FMP service encountered 403 errors but other services provided comprehensive coverage", 
+      "FMP service encountered 403 errors but other services provided comprehensive coverage",
       "SEC EDGAR provided basic company identification but limited detailed filing data"
     ],
     "data_quality_insights": [
@@ -206,7 +206,7 @@
       "Market data validation confirms reliable pricing and volume information"
     ],
     "market_context_insights": [
-      "Moderately restrictive interest rate environment poses financing challenges", 
+      "Moderately restrictive interest rate environment poses financing challenges",
       "Neutral cryptocurrency sentiment suggests balanced risk appetite",
       "Economic indicators support continued digital infrastructure demand"
     ],
@@ -229,7 +229,7 @@
         "business_focus": "Global data center platform"
       },
       {
-        "ticker": "EQIX", 
+        "ticker": "EQIX",
         "name": "Equinix Inc",
         "current_price": 786.35,
         "market_cap": 77367328768,
@@ -240,7 +240,7 @@
       },
       {
         "ticker": "AMT",
-        "name": "American Tower Corporation", 
+        "name": "American Tower Corporation",
         "current_price": 202.56,
         "market_cap": 95181520896,
         "pe_ratio": 37.86,
@@ -252,7 +252,7 @@
         "ticker": "SBAC",
         "name": "SBA Communications",
         "current_price": 206.04,
-        "market_cap": 22124367872, 
+        "market_cap": 22124367872,
         "pe_ratio": 25.25,
         "sector": "Real Estate Investment Trust",
         "geography": "Americas",
@@ -278,7 +278,7 @@
       "FMP service unavailability reduced depth of financial analysis capabilities"
     ],
     "research_priorities": [
-      "China regulatory environment and data sovereignty implications for data center operations", 
+      "China regulatory environment and data sovereignty implications for data center operations",
       "Capital allocation efficiency and debt management in rising rate environment",
       "Competitive positioning versus domestic Chinese players and global expansion potential"
     ],
@@ -308,7 +308,7 @@
     "discovered_files": [],
     "search_coverage": {
       "fundamental_analysis_directory": "searched",
-      "sector_analysis_directory": "searched", 
+      "sector_analysis_directory": "searched",
       "validation_directory": "searched"
     },
     "relevance_threshold": 0.7,

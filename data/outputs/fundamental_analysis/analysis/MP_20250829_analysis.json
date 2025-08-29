@@ -410,7 +410,7 @@
     ],
     "valuation_risks": [
       "Operational execution challenges extending losses",
-      "Commodity price volatility impacting margins", 
+      "Commodity price volatility impacting margins",
       "Capital allocation efficiency during expansion phase",
       "Competition from alternative supply chain solutions"
     ]
@@ -427,7 +427,7 @@
         "catalyst_description": "$400M Pentagon investment making DoD largest shareholder, driving defense supply chain integration",
         "evidence_backing": [
           "DoD July 2025 partnership announcement with $400M committed investment",
-          "Pentagon strategic positioning as largest institutional shareholder", 
+          "Pentagon strategic positioning as largest institutional shareholder",
           "National defense authorization prioritizing domestic rare earth supply",
           "Existing defense contractor relationships and security clearances"
         ],
@@ -468,7 +468,7 @@
       {
         "catalyst": "texas_magnetics_facility_commercialization",
         "probability": 0.90,
-        "timeline": "2025-2026", 
+        "timeline": "2025-2026",
         "revenue_impact": 300000000,
         "margin_impact": 0.35,
         "catalyst_description": "Texas Independence facility achieving commercial magnet production with vertical integration benefits",
@@ -568,7 +568,7 @@
       "net_catalyst_value": 825000000,
       "annual_revenue_impact_by_year": {
         "2025": 180000000,
-        "2026": 420000000, 
+        "2026": 420000000,
         "2027": 680000000,
         "2028": 825000000
       }
@@ -576,7 +576,7 @@
     "catalyst_interdependencies": {
       "positive_synergies": [
         "Pentagon partnership enhances Apple supply chain credibility",
-        "Texas magnet facility success supports all downstream partnerships", 
+        "Texas magnet facility success supports all downstream partnerships",
         "Operational optimization enables capacity for strategic contracts"
       ],
       "execution_sequence": "Operational optimization → Magnet facility → Partnership scaling → Market expansion",
@@ -817,7 +817,7 @@
       "investment_horizon": "12-24 months",
       "catalyst_timeline": [
         "Q4 2025: Operational improvement demonstration",
-        "2026: Return to positive free cash flow generation", 
+        "2026: Return to positive free cash flow generation",
         "2027: Downstream integration milestones and margin expansion"
       ]
     },
@@ -857,7 +857,7 @@
     "enhancement_quality_factors": [
       "Validation-driven enhancement targeting 9.5+ confidence standards",
       "Comprehensive growth catalyst analysis with probability weighting and evidence backing",
-      "Enhanced risk quantification using systematic probability × impact methodology", 
+      "Enhanced risk quantification using systematic probability × impact methodology",
       "Deepened competitive positioning analysis with strategic asset quantification",
       "Strengthened economic context integration with policy analysis",
       "Multi-method valuation with scenario analysis and sensitivity testing"
@@ -983,7 +983,7 @@
       "Economic context support: Strong tailwinds from government policy, clean energy transition, and supply chain security prioritization"
     ],
     "investment_recommendation": {
-      "rating": "BUY", 
+      "rating": "BUY",
       "price_target": 82.50,
       "conviction_level": "HIGH",
       "risk_rating": "MODERATE_HIGH",

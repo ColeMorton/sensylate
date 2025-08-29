@@ -185,7 +185,7 @@
         "primary_use": "Market data validation and financial statement verification"
       },
       "alpha_vantage_cli": {
-        "usage_rate": "7/7 files", 
+        "usage_rate": "7/7 files",
         "consistency_score": "9.4/10.0",
         "primary_use": "Real-time quote validation and price consistency checks"
       },
@@ -254,7 +254,7 @@
   "confidence_scoring_analysis": {
     "confidence_range_distribution": {
       "discovery_data_inheritance": "0.94 - 1.0",
-      "financial_health_assessment": "0.88 - 0.97", 
+      "financial_health_assessment": "0.88 - 0.97",
       "competitive_intelligence": "0.84 - 0.92",
       "valuation_analysis": "0.78 - 0.91",
       "economic_context_integration": "0.82 - 0.91",

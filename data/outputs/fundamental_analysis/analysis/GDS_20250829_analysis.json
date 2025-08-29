@@ -16,7 +16,7 @@
     "company_overview": {
       "name": "GDS Holdings Limited",
       "description": "GDS Holdings Limited develops and operates data centers in the People's Republic of China. Headquartered in Shanghai, China.",
-      "sector": "Technology", 
+      "sector": "Technology",
       "industry": "Information Technology Services / Data Processing",
       "headquarters": "Shanghai, China",
       "fiscal_year_end": "December",
@@ -394,7 +394,7 @@
         "mitigation_strategies": ["Geographic diversification", "Compliance investment", "Government relations"]
       },
       {
-        "risk_category": "Refinancing Risk", 
+        "risk_category": "Refinancing Risk",
         "probability": 0.45,
         "impact": 3,
         "description": "High debt load faces refinancing challenges in rising rate environment",
@@ -425,7 +425,7 @@
         "probability": 0.40,
         "impact": 3,
         "description": "Edge computing reduces centralized data center demand",
-        "quantified_impact": "10-20% demand reduction over 5-10 year horizon", 
+        "quantified_impact": "10-20% demand reduction over 5-10 year horizon",
         "evidence": "Growing edge compute adoption, sustainability pressures",
         "mitigation_strategies": ["Technology investment", "Edge facility development", "Efficiency improvements"]
       }
@@ -529,7 +529,7 @@
   "synthesis_preparation": {
     "template_requirements": {
       "financial_health_grades": "Complete A-F scorecard provided",
-      "competitive_scores": "1-10 scoring completed across all dimensions", 
+      "competitive_scores": "1-10 scoring completed across all dimensions",
       "valuation_analysis": "Multi-method valuation with scenario weighting",
       "risk_quantification": "Probability × impact matrix with mitigation strategies",
       "investment_recommendation": "Clear rating with price target and rationale"

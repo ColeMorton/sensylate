@@ -94,7 +94,7 @@
         "value": "institutional_grade",
         "files_affected": ["MP_20250829_analysis.json", "AAPL_20250828_analysis.json", "ROKU_20250815_analysis.json"],
         "occurrences": 8,
-        "suspected_template_artifact": "false", 
+        "suspected_template_artifact": "false",
         "recommendation": "Consistent quality standard terminology is appropriate"
       }
     ],
@@ -137,7 +137,7 @@
       "assessment": "Outstanding ticker specificity with all content appropriately customized to individual companies. No generic template language detected."
     },
     "cli_integration_analysis": {
-      "service_utilization_consistency": "85%", 
+      "service_utilization_consistency": "85%",
       "data_source_attribution": "90%",
       "multi_source_validation_evidence": "95%",
       "service_health_documentation": "80%",

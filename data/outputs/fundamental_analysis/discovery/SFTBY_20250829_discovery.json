@@ -8,7 +8,7 @@
     "cli_services_utilized": [
       "yahoo_finance_cli",
       "alpha_vantage_cli",
-      "fred_economic_cli", 
+      "fred_economic_cli",
       "coingecko_cli",
       "sec_edgar_cli",
       "imf_cli"
@@ -60,14 +60,14 @@
     "business_model": {
       "revenue_streams": [
         "Telecommunications services and infrastructure",
-        "Technology investment portfolio returns", 
+        "Technology investment portfolio returns",
         "Vision Fund investment management",
         "ARM Holdings technology licensing",
         "Financial services and fintech investments"
       ],
       "business_segments": {
         "telecommunications": "Core Japanese telecom operations",
-        "vision_fund": "Major technology investment vehicle", 
+        "vision_fund": "Major technology investment vehicle",
         "arm_holdings": "Semiconductor IP licensing",
         "financial_services": "Digital banking and payment services",
         "energy": "Renewable energy investments"
@@ -149,7 +149,7 @@
     "yield_curve_signal": "normal",
     "policy_implications": [
       "Higher rates pressure technology valuations and startup funding",
-      "Debt servicing costs increased for leveraged positions", 
+      "Debt servicing costs increased for leveraged positions",
       "Japanese economic growth remains modest at 0.1% (2024) vs global trends",
       "Currency impacts on international investment portfolio"
     ],
@@ -180,7 +180,7 @@
     "institutional_grade": true,
     "data_sources_via_cli": [
       "yahoo_finance_cli",
-      "alpha_vantage_cli", 
+      "alpha_vantage_cli",
       "fred_economic_cli",
       "coingecko_cli",
       "sec_edgar_cli",
@@ -195,7 +195,7 @@
       "SEC EDGAR integration confirmed ADR structure limitations as expected for Japanese parent company"
     ],
     "data_quality_insights": [
-      "Historical price data shows exceptional completeness back to 2011 with daily granularity", 
+      "Historical price data shows exceptional completeness back to 2011 with daily granularity",
       "Financial statements demonstrate institutional-quality depth through 2025 projections",
       "Economic indicators provide robust macro context for investment portfolio sensitivity analysis"
     ],
@@ -222,7 +222,7 @@
         "ticker": "BABA",
         "name": "Alibaba Group",
         "rationale": "Asian technology conglomerate",
-        "market_cap": 210000000000  
+        "market_cap": 210000000000
       },
       {
         "ticker": "TCEHY",
@@ -231,7 +231,7 @@
         "market_cap": 380000000000
       },
       {
-        "ticker": "TSM", 
+        "ticker": "TSM",
         "name": "Taiwan Semiconductor",
         "rationale": "Technology hardware and semiconductor exposure",
         "market_cap": 520000000000
@@ -248,7 +248,7 @@
   "discovery_insights": {
     "initial_observations": [
       "SoftBank presents unique valuation challenge as technology conglomerate with both operating businesses and investment portfolio",
-      "Strong financial position with $45T total assets but significant leverage at 1.64 debt-to-equity ratio", 
+      "Strong financial position with $45T total assets but significant leverage at 1.64 debt-to-equity ratio",
       "Vision Fund performance and technology sector trends will be primary value drivers going forward"
     ],
     "data_gaps_identified": [
@@ -265,7 +265,7 @@
   "data_quality_assessment": {
     "source_reliability_scores": {
       "yahoo_finance_cli": 0.98,
-      "alpha_vantage_cli": 0.92, 
+      "alpha_vantage_cli": 0.92,
       "fred_economic_cli": 0.97,
       "coingecko_cli": 0.94,
       "sec_edgar_cli": 0.90,
@@ -274,7 +274,7 @@
     "data_completeness": 0.94,
     "data_freshness": {
       "market_data": "Real-time current through 2025-08-29",
-      "financial_statements": "Latest available through 2025-03-31", 
+      "financial_statements": "Latest available through 2025-03-31",
       "economic_indicators": "Current through 2025-07-01"
     },
     "quality_flags": [
