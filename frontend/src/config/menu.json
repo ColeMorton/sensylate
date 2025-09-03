@@ -9,6 +9,14 @@
       "url": "/about"
     },
     {
+      "name": "Resume",
+      "url": "/resume"
+    },
+    {
+      "name": "Contact",
+      "url": "/contact"
+    },
+    {
       "name": "Blog",
       "url": "/blog"
     },
@@ -32,10 +40,6 @@
         {
           "name": "Calculators",
           "url": "/calculators"
-        },
-        {
-          "name": "Contact",
-          "url": "/contact"
         },
         {
           "name": "Categories",

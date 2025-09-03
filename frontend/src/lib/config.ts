@@ -111,6 +111,11 @@ function getFeatureFlags(): FeatureFlags {
           "PUBLIC_FEATURE_CHARTS_PAGE",
         ) ??
         (isDevelopment() || isStaging()), // Enable in both development and staging branches
+      resumePage:
+        envToBoolean(
+          import.meta.env.PUBLIC_FEATURE_RESUME_PAGE,
+          "PUBLIC_FEATURE_RESUME_PAGE",
+        ) ?? isDevelopment(), // Enable only in development
       photoBooth:
         envToBoolean(
           import.meta.env.PUBLIC_FEATURE_PHOTO_BOOTH,
@@ -145,6 +150,7 @@ function validateFeatureFlags(flags: FeatureFlags): void {
     "elementsPage",
     "authorsPage",
     "chartsPage",
+    "resumePage",
     "photoBooth",
   ];
 

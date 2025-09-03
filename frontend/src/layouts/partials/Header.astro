@@ -18,9 +18,24 @@ export interface NavigationLink {
   children?: ChildNavigationLink[];
 }
 
-// Filter menu items based on feature flags
-const filteredMain = menu.main
+// Define menu item priority order (higher priority stays in main nav longer)
+const menuPriority = {
+  "/": 7, // Home - always visible
+  "/about": 6, // About - always visible
+  "/resume": 5, // Resume - always visible
+  "/contact": 4.5, // Contact - positioned after Resume
+  "/blog": 4, // Blog - always visible
+  "/categories/analysis": 3, // Analysis - moves to dropdown on xl
+  "/charts": 2, // Charts - moves to dropdown on lg
+  "/elements": 1, // Elements - moves to dropdown on 2xl
+};
+
+// Filter menu items based on feature flags (exclude Pages dropdown for now)
+const filteredItems = menu.main
   .filter((item) => {
+    // Skip Pages dropdown - we'll handle it separately
+    if (item.hasChildren && item.name === "Pages") return false;
+
     if (item.url === "/elements" && !features.elementsPage) {
       return false;
     }
@@ -30,32 +45,48 @@ const filteredMain = menu.main
     if (item.url === "/charts" && !features.chartsPage) {
       return false;
     }
+    if (item.url === "/resume" && !features.resumePage) {
+      return false;
+    }
     return true;
   })
-  .map((item) => {
-    // Filter children menu items based on feature flags
-    if (item.hasChildren && item.children) {
-      const filteredChildren = item.children.filter((child) => {
-        if (child.url === "/authors" && !features.authorsPage) {
-          return false;
-        }
-        if (child.url === "/calculators" && !features.calculators) {
-          return false;
-        }
-        // Always hide 404 page from menu navigation (it should only be accessible via direct URL for actual 404 errors)
-        if (child.url === "/404") {
-          return false;
-        }
-        return true;
-      });
+  .sort((a, b) => (menuPriority[b.url] || 0) - (menuPriority[a.url] || 0));
 
-      return {
-        ...item,
-        children: filteredChildren,
-      };
+// Get original Pages dropdown children and filter them
+const originalPagesItem = menu.main.find(
+  (item) => item.hasChildren && item.name === "Pages",
+);
+const pagesChildren =
+  originalPagesItem?.children?.filter((child) => {
+    if (child.url === "/authors" && !features.authorsPage) {
+      return false;
     }
-    return item;
-  });
+    if (child.url === "/calculators" && !features.calculators) {
+      return false;
+    }
+    // Always hide 404 page from menu navigation (it should only be accessible via direct URL for actual 404 errors)
+    if (child.url === "/404") {
+      return false;
+    }
+    return true;
+  }) || [];
+
+// Create responsive menu structure
+// lg: 4 main + Pages, xl: 5 main + Pages, 2xl: 6 main + Pages
+const responsiveMenus = {
+  lg: {
+    mainItems: filteredItems.slice(0, 4),
+    overflowItems: filteredItems.slice(4),
+  },
+  xl: {
+    mainItems: filteredItems.slice(0, 5),
+    overflowItems: filteredItems.slice(5),
+  },
+  "2xl": {
+    mainItems: filteredItems.slice(0, 6),
+    overflowItems: filteredItems.slice(6),
+  },
+};
 
 const { navigation_button, settings } = enhancedConfig;
 const { pathname } = Astro.url;
@@ -87,63 +118,162 @@ const { pathname } = Astro.url;
     <!-- /navbar toggler -->
     <ul
       id="nav-menu"
-      class="navbar-nav order-3 hidden w-full pb-6 lg:order-1 lg:flex lg:w-auto lg:space-x-2 lg:pb-0 xl:space-x-8 2xl:space-x-12"
+      class="navbar-nav order-3 hidden w-full pb-6 lg:order-1 lg:flex lg:w-auto lg:flex-nowrap lg:space-x-1 lg:pb-0 xl:space-x-2 2xl:space-x-4"
     >
+      <!-- Responsive Main Navigation Items -->
       {
-        filteredMain.map((menu) => (
-          <>
-            {menu.hasChildren ? (
-              <li class="nav-item nav-dropdown group relative">
-                <span
-                  class={`nav-link inline-flex cursor-pointer items-center ${
-                    menu.children?.map(({ url }) => url).includes(pathname) ||
-                    menu.children
-                      ?.map(({ url }) => `${url}/`)
-                      .includes(pathname)
-                      ? "active"
-                      : ""
-                  }`}
-                >
-                  {menu.name}
-                  <svg class="h-4 w-4 fill-current" viewBox="0 0 20 20">
-                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                  </svg>
-                </span>
-                <ul class="nav-dropdown-list hidden group-hover:block lg:invisible lg:absolute lg:block lg:opacity-0 lg:group-hover:visible lg:group-hover:opacity-100">
-                  {menu.children?.map((child) => (
-                    <li class="nav-dropdown-item">
-                      <a
-                        href={child.url}
-                        aria-label={child.name}
-                        class={`nav-dropdown-link block cursor-pointer ${
-                          (pathname === `${child.url}/` ||
-                            pathname === child.url) &&
-                          "active"
-                        }`}
-                      >
-                        {child.name}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </li>
-            ) : (
-              <li class="nav-item">
+        filteredItems.map((item, index) => (
+          <li
+            class={`nav-item ${
+              index === 4
+                ? "hidden xl:block"
+                : index >= 5
+                  ? "hidden 2xl:block"
+                  : ""
+            }`}
+          >
+            <a
+              href={item.url}
+              data-astro-reload={item.url === "/charts" ? true : undefined}
+              class={`nav-link block cursor-pointer whitespace-nowrap ${
+                (pathname === `${item.url}/` || pathname === item.url) &&
+                "active"
+              }`}
+            >
+              {item.name}
+            </a>
+          </li>
+        ))
+      }
+
+      <!-- Responsive Pages Dropdown (Desktop only) -->
+      <li class="nav-item nav-dropdown group relative hidden lg:block">
+        <span
+          class={`nav-link inline-flex cursor-pointer items-center whitespace-nowrap ${
+            // Check if any overflow item or pages child is active
+            [
+              ...(responsiveMenus.lg.overflowItems || []),
+              ...(pagesChildren || []),
+            ].some(
+              (item) => pathname === item.url || pathname === `${item.url}/`,
+            )
+              ? "active"
+              : ""
+          }`}
+        >
+          Pages
+          <svg class="ml-1 h-4 w-4 fill-current" viewBox="0 0 20 20">
+            <path
+              d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
+            ></path>
+          </svg>
+        </span>
+        <ul
+          class="nav-dropdown-list hidden group-hover:block lg:invisible lg:absolute lg:block lg:opacity-0 lg:group-hover:visible lg:group-hover:opacity-100"
+        >
+          <!-- Overflow items for lg screens (show items 5+) -->
+          {
+            responsiveMenus.lg.overflowItems.map((item) => (
+              <li class="nav-dropdown-item lg:block xl:hidden">
                 <a
-                  href={menu.url}
-                  data-astro-reload={menu.url === "/charts" ? true : undefined}
-                  class={`nav-link block cursor-pointer ${
-                    (pathname === `${menu.url}/` || pathname === menu.url) &&
+                  href={item.url}
+                  data-astro-reload={item.url === "/charts" ? true : undefined}
+                  class={`nav-dropdown-link block cursor-pointer ${
+                    (pathname === `${item.url}/` || pathname === item.url) &&
                     "active"
                   }`}
                 >
-                  {menu.name}
+                  {item.name}
                 </a>
               </li>
-            )}
-          </>
+            ))
+          }
+
+          <!-- Overflow items for xl screens (show items 6+) -->
+          {
+            responsiveMenus.xl.overflowItems.map((item) => (
+              <li class="nav-dropdown-item xl:block 2xl:hidden">
+                <a
+                  href={item.url}
+                  data-astro-reload={item.url === "/charts" ? true : undefined}
+                  class={`nav-dropdown-link block cursor-pointer ${
+                    (pathname === `${item.url}/` || pathname === item.url) &&
+                    "active"
+                  }`}
+                >
+                  {item.name}
+                </a>
+              </li>
+            ))
+          }
+
+          <!-- Divider if there are overflow items -->
+          {
+            (responsiveMenus.lg.overflowItems.length > 0 ||
+              responsiveMenus.xl.overflowItems.length > 0) &&
+              pagesChildren.length > 0 && (
+                <li class="nav-dropdown-item">
+                  <hr class="border-border dark:border-darkmode-border my-2" />
+                </li>
+              )
+          }
+
+          <!-- Original Pages dropdown children -->
+          {
+            pagesChildren.map((child) => (
+              <li class="nav-dropdown-item">
+                <a
+                  href={child.url}
+                  aria-label={child.name}
+                  class={`nav-dropdown-link block cursor-pointer ${
+                    (pathname === `${child.url}/` || pathname === child.url) &&
+                    "active"
+                  }`}
+                >
+                  {child.name}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </li>
+
+      <!-- Mobile-only flat menu items (Pages children + overflow items) -->
+      <!-- Show overflow items from each breakpoint on mobile -->
+      {
+        filteredItems.slice(4).map((item) => (
+          <li class="nav-item lg:hidden">
+            <a
+              href={item.url}
+              data-astro-reload={item.url === "/charts" ? true : undefined}
+              class={`nav-link block cursor-pointer ${
+                (pathname === `${item.url}/` || pathname === item.url) &&
+                "active"
+              }`}
+            >
+              {item.name}
+            </a>
+          </li>
         ))
       }
+
+      <!-- Show Pages children as flat items on mobile -->
+      {
+        pagesChildren.map((child) => (
+          <li class="nav-item lg:hidden">
+            <a
+              href={child.url}
+              class={`nav-link block cursor-pointer ${
+                (pathname === `${child.url}/` || pathname === child.url) &&
+                "active"
+              }`}
+            >
+              {child.name}
+            </a>
+          </li>
+        ))
+      }
+
       {
         navigation_button.enable && (
           <li class="mt-4 inline-block lg:hidden">

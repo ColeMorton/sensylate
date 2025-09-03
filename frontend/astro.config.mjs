@@ -114,7 +114,9 @@ export default defineConfig({
       // Increase chunk size warnings for large packages
       chunkSizeWarningLimit: 2000, // 2MB instead of default 500KB
       // Longer timeout for processing large packages
-      target: 'esnext'
+      target: 'esnext',
+      // Enable source maps for production debugging
+      sourcemap: true
     },
     define: {
       // Build-time feature flags for dead code elimination

@@ -27,10 +27,49 @@
 
 .navbar-nav {
   @apply text-center lg:text-left;
+
+  /* Prevent wrapping on large screens */
+  @screen lg {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+
+    /* Hide scrollbar for Chrome/Safari */
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
 }
 
 .nav-link {
   @apply text-text-dark dark:text-darkmode-text-dark block origin-center transform-gpu cursor-pointer p-3 font-semibold transition-transform duration-200 hover:[transform:scale(1.08)] lg:px-2 lg:py-3;
+
+  /* Prevent text wrapping in nav links */
+  white-space: nowrap;
+
+  /* Responsive font sizes to prevent overflow */
+  @screen lg {
+    font-size: 0.875rem; /* text-sm */
+  }
+
+  @screen xl {
+    font-size: 0.9375rem; /* between text-sm and text-base */
+  }
+
+  @screen 2xl {
+    font-size: 1rem; /* text-base */
+  }
+}
+
+.nav-item {
+  /* Prevent flex items from shrinking */
+  flex-shrink: 0;
+
+  /* Ensure proper spacing in responsive layout */
+  @screen lg {
+    min-width: fit-content;
+  }
 }
 
 .nav-dropdown {
