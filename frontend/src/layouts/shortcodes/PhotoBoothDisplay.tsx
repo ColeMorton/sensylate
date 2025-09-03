@@ -3,10 +3,6 @@ import photoBoothConfig from "@/config/photo-booth.json";
 import { DashboardLoader, type DashboardConfig } from "@/lib/dashboardLoader";
 import ChartDisplay from "@/shortcodes/ChartDisplay";
 import FundamentalAnalysisDashboard from "@/layouts/components/fundamentals/FundamentalAnalysisDashboard";
-import {
-  getFundamentalMockData,
-  getAvailableTickers,
-} from "@/test/mocks/fundamentalAnalysis.mock";
 import ErrorBoundary from "@/layouts/components/ErrorBoundary";
 
 interface PhotoBoothDisplayProps {
@@ -44,7 +40,24 @@ const PhotoBoothDisplay: React.FC<PhotoBoothDisplayProps> = ({
 
   // Fundamental analysis specific state
   const [selectedTicker, setSelectedTicker] = useState<string>("GOOGL");
-  const availableTickers = getAvailableTickers();
+  const [availableTickers, setAvailableTickers] = useState<string[]>(["GOOGL"]);
+  const [fundamentalMockDataFn, setFundamentalMockDataFn] = useState<
+    ((ticker: string) => any) | null
+  >(null);
+
+  // Load mock data functions in development only
+  useEffect(() => {
+    if (import.meta.env.DEV) {
+      import("@/test/mocks/fundamentalAnalysis.mock")
+        .then((module) => {
+          setFundamentalMockDataFn(() => module.getFundamentalMockData);
+          setAvailableTickers(module.getAvailableTickers());
+        })
+        .catch(() => {
+          // Silently fail - mock data not available
+        });
+    }
+  }, []);
 
   // Get available aspect ratios based on selected dashboard
   const getAvailableAspectRatios = () => {
@@ -687,6 +700,7 @@ const PhotoBoothDisplay: React.FC<PhotoBoothDisplayProps> = ({
           mode={currentMode}
           aspectRatio={selectedAspectRatio}
           selectedTicker={selectedTicker}
+          fundamentalMockDataFn={fundamentalMockDataFn}
         />
       </div>
     </div>
@@ -699,13 +713,35 @@ const DashboardRenderer: React.FC<{
   mode: "light" | "dark";
   aspectRatio: "16:9" | "4:3" | "3:4";
   selectedTicker?: string;
-}> = ({ dashboard, mode, aspectRatio: _aspectRatio, selectedTicker }) => {
+  fundamentalMockDataFn?: ((ticker: string) => any) | null;
+}> = ({
+  dashboard,
+  mode,
+  aspectRatio: _aspectRatio,
+  selectedTicker,
+  fundamentalMockDataFn,
+}) => {
   const layoutClasses = DashboardLoader.getLayoutClasses(dashboard.layout);
 
   // Handle fundamental analysis dashboard specially
   if (dashboard.layout === "fundamental_3x3") {
     const ticker = selectedTicker || "GOOGL";
-    const fundamentalData = getFundamentalMockData(ticker);
+
+    // Only available in development mode
+    if (!import.meta.env.DEV || !fundamentalMockDataFn) {
+      return (
+        <div className="flex items-center justify-center rounded-lg border p-8">
+          <div className="text-center">
+            <p className="text-gray-600 dark:text-gray-400">
+              Fundamental analysis dashboard is only available in development
+              mode
+            </p>
+          </div>
+        </div>
+      );
+    }
+
+    const fundamentalData = fundamentalMockDataFn(ticker);
 
     console.log("FundamentalAnalysisDashboard rendering debug:", {
       selectedTicker,
