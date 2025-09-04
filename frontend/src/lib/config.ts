@@ -115,7 +115,8 @@ function getFeatureFlags(): FeatureFlags {
         envToBoolean(
           import.meta.env.PUBLIC_FEATURE_RESUME_PAGE,
           "PUBLIC_FEATURE_RESUME_PAGE",
-        ) ?? isDevelopment(), // Enable only in development
+        ) ??
+        (isDevelopment() || isStaging()), // Enable in both development and staging
       photoBooth:
         envToBoolean(
           import.meta.env.PUBLIC_FEATURE_PHOTO_BOOTH,
