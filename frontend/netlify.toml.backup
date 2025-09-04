@@ -1,0 +1,123 @@
+[build]
+  publish = "dist"
+  command = "yarn build"
+
+[build.environment]
+DISABLE_PYTHON = "true"
+DISABLE_MISE = "true"
+NODE_OPTIONS = "--max-old-space-size=4096"
+
+[functions]
+  directory = "netlify/functions"
+
+# Form notifications
+[[form]]
+  name = "contact"
+  action = "/contact-success"
+
+  [form.settings]
+    send_confirmation = true
+    confirmation_template = "contact-confirmation"
+
+  [[form.notification]]
+    type = "email"
+    event = "submission"
+    to = "${CONTACT_EMAIL}"
+    subject = "${CONTACT_NOTIFICATION_SUBJECT}"
+    body = """
+    You have received a new professional contact form submission:
+
+    Name: {{name}}
+    Email: {{email}}
+    Organization: {{organization}}
+    Inquiry Type: {{inquiry-type}}
+    Message: {{message}}
+
+    Submitted at: {{created_at}}
+    """
+
+# Environment Variables by Deploy Context
+# NOTE: Generated automatically from feature-flags.config.ts - do not edit manually
+
+# Production context (main branch)
+[context.production.environment]
+  PUBLIC_ENV = "production"
+  PUBLIC_FEATURE_SEARCH = "true"
+  PUBLIC_FEATURE_THEME_SWITCHER = "true"
+  PUBLIC_FEATURE_COMMENTS = "false"
+  PUBLIC_FEATURE_GTM = "true"
+  PUBLIC_FEATURE_CALCULATORS = "false"
+  PUBLIC_FEATURE_CALCULATOR_ADVANCED = "false"
+  PUBLIC_FEATURE_ELEMENTS_PAGE = "false"
+  PUBLIC_FEATURE_AUTHORS_PAGE = "false"
+  PUBLIC_FEATURE_CHARTS_PAGE = "false"
+  PUBLIC_FEATURE_PHOTO_BOOTH = "false"
+  CONTACT_EMAIL = "cole.morton@hotmail.com"
+  CONTACT_NOTIFICATION_SUBJECT = "Professional Inquiry Received - Sensylate Platform"
+
+# Branch deploy context (staging and other branches)
+[context.branch-deploy.environment]
+  PUBLIC_ENV = "staging"
+  PUBLIC_FEATURE_SEARCH = "true"
+  PUBLIC_FEATURE_THEME_SWITCHER = "true"
+  PUBLIC_FEATURE_COMMENTS = "false"
+  PUBLIC_FEATURE_GTM = "false"
+  PUBLIC_FEATURE_CALCULATORS = "false"
+  PUBLIC_FEATURE_CALCULATOR_ADVANCED = "true"
+  PUBLIC_FEATURE_ELEMENTS_PAGE = "true"
+  PUBLIC_FEATURE_AUTHORS_PAGE = "true"
+  PUBLIC_FEATURE_CHARTS_PAGE = "true"
+  PUBLIC_FEATURE_RESUME_PAGE = "true"
+  PUBLIC_FEATURE_PHOTO_BOOTH = "true"
+  CONTACT_EMAIL = "cole.morton@hotmail.com"
+  CONTACT_NOTIFICATION_SUBJECT = "Professional Inquiry Received - Staging Test"
+
+# Deploy preview context (pull requests)
+[context.deploy-preview.environment]
+  PUBLIC_ENV = "staging"
+  PUBLIC_FEATURE_SEARCH = "true"
+  PUBLIC_FEATURE_THEME_SWITCHER = "true"
+  PUBLIC_FEATURE_COMMENTS = "false"
+  PUBLIC_FEATURE_GTM = "false"
+  PUBLIC_FEATURE_CALCULATORS = "false"
+  PUBLIC_FEATURE_CALCULATOR_ADVANCED = "true"
+  PUBLIC_FEATURE_ELEMENTS_PAGE = "true"
+  PUBLIC_FEATURE_AUTHORS_PAGE = "true"
+  PUBLIC_FEATURE_CHARTS_PAGE = "true"
+  PUBLIC_FEATURE_RESUME_PAGE = "true"
+  PUBLIC_FEATURE_PHOTO_BOOTH = "true"
+  CONTACT_EMAIL = "cole.morton@hotmail.com"
+  CONTACT_NOTIFICATION_SUBJECT = "Professional Inquiry Received - Preview Test"
+
+# Security Headers
+[[headers]]
+  for = "/*"
+  [headers.values]
+    # Content Security Policy - Protect against XSS
+    Content-Security-Policy = """
+      default-src 'self';
+      script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com;
+      style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+      img-src 'self' data: https: blob:;
+      font-src 'self' https://fonts.gstatic.com;
+      connect-src 'self' https://www.google-analytics.com https://analytics.google.com;
+      frame-ancestors 'none';
+      base-uri 'self';
+      form-action 'self';
+      upgrade-insecure-requests;
+    """
+
+    # Strict Transport Security - Force HTTPS
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
+
+    # Cross-Origin-Opener-Policy - Isolate browsing context
+    Cross-Origin-Opener-Policy = "same-origin"
+
+    # Prevent clickjacking
+    X-Frame-Options = "DENY"
+
+    # Additional security headers
+    X-Content-Type-Options = "nosniff"
+    X-XSS-Protection = "0"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), interest-cohort=()"

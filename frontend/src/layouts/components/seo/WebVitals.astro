@@ -176,8 +176,8 @@ const isDev = import.meta.env.DEV;
         try {
           lcpObserver.observe({ entryTypes: ["largest-contentful-paint"] });
 
-          // Report LCP when page is backgrounded or unloaded
-          ["visibilitychange", "unload"].forEach((type) => {
+          // Report LCP when page is backgrounded or hidden
+          ["visibilitychange", "pagehide"].forEach((type) => {
             addEventListener(
               type,
               () => {
@@ -223,8 +223,8 @@ const isDev = import.meta.env.DEV;
         try {
           clsObserver.observe({ entryTypes: ["layout-shift"] });
 
-          // Report CLS when page is backgrounded or unloaded
-          ["visibilitychange", "unload"].forEach((type) => {
+          // Report CLS when page is backgrounded or hidden
+          ["visibilitychange", "pagehide"].forEach((type) => {
             addEventListener(
               type,
               () => {

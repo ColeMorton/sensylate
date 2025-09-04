@@ -151,6 +151,18 @@ export const FEATURE_FLAGS: FeatureFlagDefinition[] = [
     buildTimeOptimization: true,
   },
   {
+    name: "resumePage",
+    description: "Enable professional resume page",
+    category: "ui",
+    defaultValue: false,
+    environments: {
+      development: true,
+      staging: true,
+      production: false,
+    },
+    buildTimeOptimization: true,
+  },
+  {
     name: "photoBooth",
     description: "Enable photo booth feature",
     category: "experimental",

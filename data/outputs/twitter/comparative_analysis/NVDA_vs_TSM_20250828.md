@@ -21,6 +21,8 @@ While everyone chases $NVDA's AI story, the numbers reveal $TSM as the superior 
 
 The market is paying 116% premium for similar risk-adjusted returns.
 
+https://www.colemorton.com/blog/nvda-vs-tsm-comparative-analysis-20250828/
+
 ---
 
 **Tweet 2/6** 🏰

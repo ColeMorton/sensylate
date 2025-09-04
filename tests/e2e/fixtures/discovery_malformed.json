@@ -1,0 +1,83 @@
+{
+  "metadata": {
+    "command_name": "fundamental_discovery",
+    "execution_timestamp": "2025-09-01T12:00:00.000000Z",
+    "framework_phase": "discovery",
+    "ticker": "TICKER_PLACEHOLDER",
+    "analysis_date": "DATE_PLACEHOLDER",
+    "methodology": "multi_source_cli_integration"
+  },
+  "market_data": {
+    "current_price": 150.75,
+    "previous_close": 149.50,
+    "market_cap": 2400000000000,
+    "volume": 45678900,
+    "pe_ratio": 24.5,
+    "price_change_percent": 0.84
+  },
+  "financial_metrics": {
+    "revenue_ttm": 365248000000,
+    "revenue_growth_yoy": 0.082,
+    "eps_ttm": 6.15,
+    "eps_growth_yoy": 0.095,
+    "roe": 0.245,
+    "roa": 0.175,
+    "gross_margin": 0.425,
+    "operating_margin": 0.275,
+    "net_margin": 0.215
+  },
+  "balance_sheet_highlights": {
+    "total_assets": 352755000000,
+    "total_liabilities": 258549000000,
+    "shareholders_equity": 94206000000,
+    "cash_and_equivalents": 48844000000,
+    "total_debt": 122797000000,
+    "debt_to_equity": 1.30
+  },
+  "cash_flow_metrics": {
+    "operating_cash_flow": 99584000000,
+    "free_cash_flow": 80434000000,
+    "capex": 19150000000,
+    "dividend_payments": 14841000000
+  },
+  "sector_information": {
+    "sector": "Technology",
+    "industry": "Consumer Electronics",
+    "competitors": ["MSFT", "GOOGL", "AMZN", "META"]
+  },
+  "cli_services_data": {
+    "yahoo_finance": {
+      "status": "success",
+      "data_quality": 0.95,
+      "last_updated": "2025-09-01T11:58:45Z"
+    },
+    "alpha_vantage": {
+      "status": "success",
+      "data_quality": 0.93,
+      "last_updated": "2025-09-01T11:58:50Z"
+    },
+    "fmp": {
+      "status": "success",
+      "data_quality": 0.97,
+      "last_updated": "2025-09-01T11:59:02Z"
+    },
+    "fred_economic": {
+      "status": "success",
+      "data_quality": 0.91,
+      "last_updated": "2025-09-01T11:59:15Z"
+    }
+  },
+  "economic_context": {
+    "fed_funds_rate": 4.35,
+    "gdp_growth": 0.024,
+    "inflation_rate": 0.032,
+    "unemployment_rate": 0.037,
+    "market_sentiment": "positive"
+  },
+  "quality_assessment": {
+    "data_completeness": 0.96,
+    "source_consistency": 0.94,
+    "confidence_score": "high_confidence_malformed_format",
+    "institutional_ready": true
+  }
+}

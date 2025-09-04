@@ -1,0 +1,161 @@
+{
+  "metadata": {
+    "command_name": "fundamental_analysis",
+    "execution_timestamp": "2025-09-01T12:05:00.000000Z",
+    "framework_phase": "analysis",
+    "ticker": "TICKER_PLACEHOLDER",
+    "analysis_date": "DATE_PLACEHOLDER",
+    "methodology": "comprehensive_analytical_intelligence",
+    "discovery_data_reference": "./discovery/TICKER_PLACEHOLDER_DATE_PLACEHOLDER_discovery.json"
+  },
+  "financial_health_analysis": {
+    "profitability_assessment": {
+      "revenue_growth_trend": "moderate_positive",
+      "margin_analysis": "stable",
+      "earnings_quality": "medium",
+      "profitability_grade": "B+",
+      "confidence": 8.1
+    },
+    "balance_sheet_strength": {
+      "asset_quality": "good",
+      "debt_management": "acceptable",
+      "liquidity_position": "adequate",
+      "capital_structure": "acceptable",
+      "balance_sheet_grade": "B",
+      "confidence": 7.9
+    },
+    "cash_flow_analysis": {
+      "operating_cash_generation": "adequate",
+      "capital_allocation": "mixed",
+      "free_cash_flow_yield": "reasonable",
+      "cash_conversion": "acceptable",
+      "cash_flow_grade": "B+",
+      "confidence": 8.2
+    },
+    "capital_efficiency": {
+      "roe_analysis": "good",
+      "roic_performance": "acceptable",
+      "asset_utilization": "adequate",
+      "capital_turnover": "moderate",
+      "efficiency_grade": "B+",
+      "confidence": 8.0
+    },
+    "overall_financial_health": {
+      "composite_grade": "B+",
+      "health_score": 8.05,
+      "institutional_quality": false
+    }
+  },
+  "competitive_position_analysis": {
+    "market_position": {
+      "market_share": "strong",
+      "brand_strength": "good",
+      "customer_loyalty": "moderate",
+      "pricing_power": "limited",
+      "position_strength": 7.5
+    },
+    "competitive_moat_assessment": {
+      "moat_type": "narrow_economic_moat",
+      "moat_sources": [
+        "brand_recognition",
+        "economies_of_scale"
+      ],
+      "moat_sustainability": "medium",
+      "moat_strength": 7.2,
+      "competitive_advantage_period": "5_to_10_years"
+    },
+    "industry_dynamics": {
+      "growth_prospects": "moderate",
+      "competitive_intensity": "very_high",
+      "barrier_to_entry": "moderate",
+      "supplier_power": "high",
+      "buyer_power": "moderate",
+      "industry_attractiveness": 6.8
+    }
+  },
+  "risk_assessment_matrix": {
+    "operational_risks": [
+      {
+        "risk_type": "product_cycle_risk",
+        "probability": 0.45,
+        "impact": 4,
+        "risk_score": 1.80,
+        "mitigation": "limited_product_diversification"
+      },
+      {
+        "risk_type": "supply_chain_disruption",
+        "probability": 0.55,
+        "impact": 4,
+        "risk_score": 2.20,
+        "mitigation": "moderate_supplier_diversification"
+      }
+    ],
+    "financial_risks": [
+      {
+        "risk_type": "interest_rate_sensitivity",
+        "probability": 0.60,
+        "impact": 3,
+        "risk_score": 1.80,
+        "mitigation": "moderate_balance_sheet"
+      }
+    ],
+    "market_risks": [
+      {
+        "risk_type": "market_saturation",
+        "probability": 0.65,
+        "impact": 4,
+        "risk_score": 2.60,
+        "mitigation": "limited_expansion_opportunities"
+      }
+    ],
+    "regulatory_risks": [
+      {
+        "risk_type": "antitrust_scrutiny",
+        "probability": 0.70,
+        "impact": 5,
+        "risk_score": 3.50,
+        "mitigation": "basic_compliance_program"
+      }
+    ],
+    "aggregate_risk_score": 11.90,
+    "risk_grade": "C+",
+    "risk_adjusted_outlook": "neutral_with_concerns"
+  },
+  "growth_analysis": {
+    "revenue_growth_catalysts": [
+      {
+        "catalyst": "services_expansion",
+        "probability": 0.45,
+        "impact": 2,
+        "timeline": "3_to_5_years"
+      }
+    ],
+    "growth_sustainability": "moderate",
+    "growth_quality": "mixed_organic_and_acquisition",
+    "growth_outlook": "neutral"
+  },
+  "valuation_inputs": {
+    "peer_multiples": {
+      "average_pe": 22.8,
+      "average_ev_ebitda": 18.5,
+      "average_peg": 1.4
+    },
+    "dcf_assumptions": {
+      "terminal_growth_rate": 0.020,
+      "wacc_estimate": 0.095,
+      "fcf_growth_5yr": 0.08
+    },
+    "scenario_probabilities": {
+      "bull_case": 0.15,
+      "base_case": 0.60,
+      "bear_case": 0.25
+    }
+  },
+  "quality_assessment": {
+    "analysis_completeness": 0.82,
+    "methodology_rigor": 0.78,
+    "confidence_score": 8.1,
+    "institutional_ready": false,
+    "evidence_quality": "medium"
+  }
+}

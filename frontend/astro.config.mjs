@@ -90,15 +90,22 @@ export default defineConfig({
     build: {
       rollupOptions: {
         external: (id) => {
-          // Exclude test files and directories from builds
+          // Comprehensive test file and directory exclusion from builds
           const testPatterns = [
             'src/test/',
+            '/test/',
             '.test.',
             '.spec.',
             '@testing-library/',
             'vitest',
             'user-event',
-            'jsdom'
+            'jsdom',
+            'screenshots/',
+            'test-results/',
+            'playwright-report/',
+            'e2e-test-results/',
+            'test-artifacts/',
+            'test-screenshots/'
           ];
 
           return testPatterns.some(pattern => id.includes(pattern));
@@ -114,7 +121,11 @@ export default defineConfig({
       // Increase chunk size warnings for large packages
       chunkSizeWarningLimit: 2000, // 2MB instead of default 500KB
       // Longer timeout for processing large packages
-      target: 'esnext'
+      target: 'esnext',
+      // Enable source maps for production debugging but optimize memory usage
+      sourcemap: process.env.NODE_ENV === 'development',
+      // Memory optimization settings - use esbuild for faster builds and better memory usage
+      minify: 'esbuild'
     },
     define: {
       // Build-time feature flags for dead code elimination
