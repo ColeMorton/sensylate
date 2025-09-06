@@ -533,13 +533,13 @@ if __name__ == "__main__":
     else:
         directory = "./data/outputs/industry_analysis"
 
-    print(f"Validating template customization in {directory}")
+    print("Validating template customization in {directory}")
     results = validate_industry_analysis_customization(directory)
 
     print("\nCustomization Validation Results:")
     print(json.dumps(results["summary"], indent=2))
 
     if results["critical_issues"]:
-        print(f"\nCritical Issues Found ({len(results['critical_issues'])}):")
+        print("\nCritical Issues Found ({len(results['critical_issues'])}):")
         for issue in results["critical_issues"]:
-            print(f"  - {issue['file_path']}: Score {issue['customization_score']:.2f}")
+            print("  - {issue['file_path']}: Score {issue['customization_score']:.2f}")

@@ -41,7 +41,7 @@ try:
     from scripts.utils.dasv_cross_validator import DASVCrossValidator
     from scripts.utils.fed_rate_validation import FedRateValidator
 except ImportError as e:
-    print(f"Warning: Could not import validation components: {e}")
+    print("Warning: Could not import validation components: {e}")
 
 
 @dataclass
@@ -145,7 +145,7 @@ class DataQualityMonitor:
                     user_config = json.load(f)
                 default_config.update(user_config)
             except Exception as e:
-                print(f"Warning: Could not load config file {config_file}: {e}")
+                print("Warning: Could not load config file {config_file}: {e}")
 
         return default_config
 
@@ -872,10 +872,10 @@ def main():
         elif args.check_quality:
             if args.region:
                 metrics, alerts = monitor._check_region_quality(args.region)
-                print(f"Quality check for {args.region}:")
+                print("Quality check for {args.region}:")
                 if metrics:
-                    print(f"  Overall Score: {metrics.overall_score:.3f}")
-                    print(f"  Alerts: {len(alerts)}")
+                    print("  Overall Score: {metrics.overall_score:.3f}")
+                    print("  Alerts: {len(alerts)}")
                 else:
                     print("  No data found")
             else:
@@ -888,7 +888,7 @@ def main():
             if args.output:
                 with open(args.output, "w") as f:
                     json.dump(report, f, indent=2)
-                print(f"Report saved to {args.output}")
+                print("Report saved to {args.output}")
             else:
                 print(json.dumps(report, indent=2))
 

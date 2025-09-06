@@ -86,7 +86,7 @@ class YahooFinanceCLI(BaseFinancialCLI):
                     title = f"Market Summary: {ticker} ({period})"
                 elif period == "comprehensive":
                     # Trigger comprehensive collection: daily (max) only - weekly disabled by default
-                    print(f"🔄 Initiating comprehensive data collection for {ticker}")
+                    print("🔄 Initiating comprehensive data collection for {ticker}")
                     print("   - Daily data: Maximum available history")
                     print(
                         "   - Weekly data: Disabled by default (use explicit weekly command if needed)"
@@ -194,7 +194,6 @@ class YahooFinanceCLI(BaseFinancialCLI):
                 service_info = service.get_service_info()
 
                 # Check if files exist for this ticker
-                import os
                 from pathlib import Path
 
                 base_path = Path("data/raw/stocks") / ticker.upper()
@@ -231,7 +230,7 @@ class YahooFinanceCLI(BaseFinancialCLI):
                                             date_part = parts[1]
                                             if "-" in date_part:
                                                 dates.append(date_part)
-                                    except:
+                                    except (ValueError, IndexError):
                                         continue
 
                                 if dates:

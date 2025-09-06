@@ -75,10 +75,10 @@ class IndustrySynthesis:
             try:
                 with open(self.discovery_file, "r") as f:
                     data = json.load(f)
-                print(f"✅ Loaded discovery data from: {self.discovery_file}")
+                print("✅ Loaded discovery data from: {self.discovery_file}")
                 return data
             except Exception as e:
-                print(f"⚠️  Failed to load discovery data: {e}")
+                print("⚠️  Failed to load discovery data: {e}")
         return None
 
     def _load_analysis_data(self) -> Optional[Dict[str, Any]]:
@@ -87,10 +87,10 @@ class IndustrySynthesis:
             try:
                 with open(self.analysis_file, "r") as f:
                     data = json.load(f)
-                print(f"✅ Loaded analysis data from: {self.analysis_file}")
+                print("✅ Loaded analysis data from: {self.analysis_file}")
                 return data
             except Exception as e:
-                print(f"⚠️  Failed to load analysis data: {e}")
+                print("⚠️  Failed to load analysis data: {e}")
         return None
 
     def _synthesist_delegate_placeholder(self, requirements: Dict[str, Any]) -> str:
@@ -271,7 +271,7 @@ class IndustrySynthesis:
             return document
 
         except Exception as e:
-            print(f"⚠️  Synthesist delegation failed: {e}")
+            print("⚠️  Synthesist delegation failed: {e}")
             print("⚠️  Falling back to enhanced document generation")
             return self._generate_enhanced_fallback_document(synthesist_requirements)
 
@@ -285,7 +285,7 @@ class IndustrySynthesis:
         with open(filepath, "w", encoding="utf-8") as f:
             f.write(document)
 
-        print(f"✅ Saved synthesis document to: {filepath}")
+        print("✅ Saved synthesis document to: {filepath}")
         return filepath
 
     def generate_synthesis_output(self) -> Dict[str, Any]:
@@ -326,7 +326,7 @@ class IndustrySynthesis:
         with open(filepath, "w") as f:
             json.dump(data, f, indent=2)
 
-        print(f"✅ Saved synthesis metadata to: {filepath}")
+        print("✅ Saved synthesis metadata to: {filepath}")
         return filepath
 
     # Helper methods for thesis synthesis
@@ -1006,7 +1006,7 @@ def main():
     )
 
     # Generate synthesis
-    print(f"\n📝 Starting industry synthesis for: {args.industry}")
+    print("\n📝 Starting industry synthesis for: {args.industry}")
 
     # Generate document
     document = synthesis.generate_synthesis_document()
@@ -1016,10 +1016,10 @@ def main():
     synthesis_data = synthesis.generate_synthesis_output()
     metadata_path = synthesis.save_synthesis_metadata(synthesis_data)
 
-    print(f"\n✅ Industry synthesis complete!")
-    print(f"📊 Confidence Score: {synthesis_data['synthesis_confidence']:.1f}/1.0")
-    print(f"📄 Document saved to: {document_path}")
-    print(f"📋 Metadata saved to: {metadata_path}")
+    print("\n✅ Industry synthesis complete!")
+    print("📊 Confidence Score: {synthesis_data['synthesis_confidence']:.1f}/1.0")
+    print("📄 Document saved to: {document_path}")
+    print("📋 Metadata saved to: {metadata_path}")
 
 
 if __name__ == "__main__":

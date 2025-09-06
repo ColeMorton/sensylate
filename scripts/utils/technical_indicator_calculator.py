@@ -475,31 +475,31 @@ if __name__ == "__main__":
     # Test with sample symbols
     test_symbols = ["AAPL", "MSFT", "GOOGL"]
 
-    print(f"Calculating indicators for: {', '.join(test_symbols)}")
+    print("Calculating indicators for: {', '.join(test_symbols)}")
     results = calculator.calculate_and_store_indicators(test_symbols)
 
-    print(f"\n📈 Results:")
-    print(f"Total symbols: {results['total_symbols']}")
-    print(f"Successful: {len(results['successful'])}")
-    print(f"Failed: {len(results['failed'])}")
-    print(f"Total indicators calculated: {results['total_indicators_calculated']}")
+    print("\n📈 Results:")
+    print("Total symbols: {results['total_symbols']}")
+    print("Successful: {len(results['successful'])}")
+    print("Failed: {len(results['failed'])}")
+    print("Total indicators calculated: {results['total_indicators_calculated']}")
 
     if results["successful"]:
-        print(f"✅ Successful: {', '.join(results['successful'])}")
+        print("✅ Successful: {', '.join(results['successful'])}")
 
     if results["failed"]:
-        print(f"❌ Failed: {results['failed']}")
+        print("❌ Failed: {results['failed']}")
 
     # Show sample calculation for one symbol
     if results["successful"]:
         sample_symbol = results["successful"][0]
         indicators = calculator.calculate_all_indicators(sample_symbol, days=100)
         if indicators:
-            print(f"\n📊 Sample indicators for {sample_symbol}:")
+            print("\n📊 Sample indicators for {sample_symbol}:")
             for name, value in indicators["indicators"].items():
                 if isinstance(value, dict):
-                    print(f"  {name}: {value}")
+                    print("  {name}: {value}")
                 elif isinstance(value, float):
-                    print(f"  {name}: {value:.2f}")
+                    print("  {name}: {value:.2f}")
                 else:
-                    print(f"  {name}: {value}")
+                    print("  {name}: {value}")

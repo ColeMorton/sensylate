@@ -31,12 +31,12 @@ def test_yahoo_finance_storage():
         # Get stock data - this should trigger historical storage
         print("📈 Getting AAPL stock data...")
         aapl_data = service.get_stock_info("AAPL")
-        print(f"✅ AAPL data retrieved: {aapl_data['symbol']}")
+        print("✅ AAPL data retrieved: {aapl_data['symbol']}")
 
         # Get another stock
         print("📈 Getting GOOGL stock data...")
         googl_data = service.get_stock_info("GOOGL")
-        print(f"✅ GOOGL data retrieved: {googl_data['symbol']}")
+        print("✅ GOOGL data retrieved: {googl_data['symbol']}")
 
         # Get historical data
         print("📈 Getting MSFT historical data...")
@@ -48,7 +48,7 @@ def test_yahoo_finance_storage():
         return True
 
     except Exception as e:
-        print(f"❌ Yahoo Finance test failed: {e}")
+        print("❌ Yahoo Finance test failed: {e}")
         return False
 
 
@@ -69,17 +69,17 @@ def test_fmp_storage():
         # Get stock quote - this should trigger historical storage
         print("📈 Getting TSLA quote...")
         tsla_data = service.get_stock_quote("TSLA")
-        print(f"✅ TSLA quote retrieved: {len(tsla_data)} records")
+        print("✅ TSLA quote retrieved: {len(tsla_data)} records")
 
         # Get company profile
         print("📈 Getting NVDA profile...")
         nvda_profile = service.get_company_profile("NVDA")
-        print(f"✅ NVDA profile retrieved: {len(nvda_profile)} records")
+        print("✅ NVDA profile retrieved: {len(nvda_profile)} records")
 
         return True
 
     except Exception as e:
-        print(f"❌ FMP test failed: {e}")
+        print("❌ FMP test failed: {e}")
         return False
 
 
@@ -100,12 +100,12 @@ def test_alpha_vantage_storage():
         # Get stock quote - this should trigger historical storage
         print("📈 Getting META quote...")
         meta_data = service.get_stock_quote("META")
-        print(f"✅ META quote retrieved: {meta_data.get('symbol', 'unknown')}")
+        print("✅ META quote retrieved: {meta_data.get('symbol', 'unknown')}")
 
         return True
 
     except Exception as e:
-        print(f"❌ Alpha Vantage test failed: {e}")
+        print("❌ Alpha Vantage test failed: {e}")
         return False
 
 
@@ -126,11 +126,11 @@ def check_created_files():
         print("📝 No JSON files found in data/raw")
         return []
 
-    print(f"📝 Found {len(json_files)} files:")
+    print("📝 Found {len(json_files)} files:")
     for file_path in sorted(json_files):
         relative_path = file_path.relative_to(raw_path)
         file_size = file_path.stat().st_size
-        print(f"  📄 {relative_path} ({file_size} bytes)")
+        print("  📄 {relative_path} ({file_size} bytes)")
 
         # Show a snippet of the file content
         try:
@@ -140,9 +140,9 @@ def check_created_files():
                 data = json.load(f)
                 symbol = data.get("symbol", "unknown")
                 data_type = data.get("data_type", "unknown")
-                print(f"      Symbol: {symbol}, Type: {data_type}")
+                print("      Symbol: {symbol}, Type: {data_type}")
         except Exception as e:
-            print(f"      (Could not read file: {e})")
+            print("      (Could not read file: {e})")
 
     return json_files
 
@@ -161,17 +161,17 @@ def test_metadata_file():
                 metadata = json.load(f)
 
             print("✅ Metadata file found:")
-            print(f"  📈 Total files: {metadata.get('total_files', 0)}")
-            print(f"  📊 Data types: {list(metadata.get('data_types', {}).keys())}")
-            print(f"  🏢 Symbols: {len(metadata.get('symbols', {}))}")
+            print("  📈 Total files: {metadata.get('total_files', 0)}")
+            print("  📊 Data types: {list(metadata.get('data_types', {}).keys())}")
+            print("  🏢 Symbols: {len(metadata.get('symbols', {}))}")
 
             # Show symbols
             symbols = list(metadata.get("symbols", {}).keys())
             if symbols:
-                print(f"  📋 Symbol list: {', '.join(symbols[:10])}")
+                print("  📋 Symbol list: {', '.join(symbols[:10])}")
 
         except Exception as e:
-            print(f"❌ Could not read metadata: {e}")
+            print("❌ Could not read metadata: {e}")
     else:
         print("📝 No metadata file found")
 
@@ -200,9 +200,9 @@ def main():
 
     for service_name, success in results:
         status = "✅ PASSED" if success else "❌ FAILED"
-        print(f"{status} {service_name}")
+        print("{status} {service_name}")
 
-    print(f"\n📁 Files created: {len(created_files)}")
+    print("\n📁 Files created: {len(created_files)}")
 
     # Overall result
     successful_tests = sum(result[1] for result in results)
@@ -210,8 +210,8 @@ def main():
 
     if successful_tests > 0 and len(created_files) > 0:
         print("🎉 SUCCESS: Historical data storage is working!")
-        print(f"📈 {successful_tests}/{total_tests} services succeeded")
-        print(f"📁 {len(created_files)} files created in ./data/raw/")
+        print("📈 {successful_tests}/{total_tests} services succeeded")
+        print("📁 {len(created_files)} files created in ./data/raw/")
     else:
         print("❌ FAILED: No files were created")
         return 1

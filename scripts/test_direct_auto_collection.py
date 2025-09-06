@@ -31,7 +31,7 @@ def test_single_api_call_triggers_collection():
 
     # Count files before
     files_before = count_data_files()
-    print(f"📁 Files before: {files_before}")
+    print("📁 Files before: {files_before}")
 
     try:
         from services.yahoo_finance import create_yahoo_finance_service
@@ -42,7 +42,7 @@ def test_single_api_call_triggers_collection():
         result = service.get_stock_info("TSLA")
 
         if result:
-            print(f"   ✅ API successful: {result.get('symbol', 'N/A')}")
+            print("   ✅ API successful: {result.get('symbol', 'N/A')}")
 
             # Wait for background collection (longer wait)
             print("   ⏳ Waiting 15 seconds for background collection...")
@@ -50,10 +50,10 @@ def test_single_api_call_triggers_collection():
 
             # Count files after
             files_after = count_data_files()
-            print(f"📁 Files after: {files_after}")
+            print("📁 Files after: {files_after}")
 
             new_files = files_after - files_before
-            print(f"📈 New files created: {new_files}")
+            print("📈 New files created: {new_files}")
 
             if new_files > 0:
                 print("🎉 SUCCESS: Auto-collection created new files!")
@@ -72,10 +72,10 @@ def test_single_api_call_triggers_collection():
                     for file_path in recent_files[:5]:  # Show first 5
                         rel_path = file_path.relative_to(data_path)
                         size = file_path.stat().st_size
-                        print(f"   • {rel_path} ({size} bytes)")
+                        print("   • {rel_path} ({size} bytes)")
 
                     if len(recent_files) > 5:
-                        print(f"   • ... and {len(recent_files) - 5} more")
+                        print("   • ... and {len(recent_files) - 5} more")
 
                 return True
             else:
@@ -86,7 +86,7 @@ def test_single_api_call_triggers_collection():
             return False
 
     except Exception as e:
-        print(f"❌ Test failed: {e}")
+        print("❌ Test failed: {e}")
         import traceback
 
         traceback.print_exc()

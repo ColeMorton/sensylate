@@ -390,10 +390,10 @@ def main():
     report_file = collector.save_metrics_report(metrics)
 
     print("✅ Type safety metrics collected successfully!")
-    print(f"📊 Report saved to: {report_file}")
+    print("📊 Report saved to: {report_file}")
     overall_coverage = metrics["annotation_coverage"]["overall_coverage_percent"]
-    print(f"📈 Overall annotation coverage: {overall_coverage}%")
-    print(f"🔍 MyPy compliance: {metrics['mypy_compliance']['compliance_status']}")
+    print("📈 Overall annotation coverage: {overall_coverage}%")
+    print("🔍 MyPy compliance: {metrics['mypy_compliance']['compliance_status']}")
 
 
 if __name__ == "__main__":

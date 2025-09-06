@@ -63,7 +63,7 @@ def test_consolidated_storage():
         timeframe=Timeframe.DAILY,
         source="test",
     )
-    print(f"   Storage result: {'✅ SUCCESS' if success else '❌ FAILED'}")
+    print("   Storage result: {'✅ SUCCESS' if success else '❌ FAILED'}")
 
     if not success:
         return False
@@ -76,14 +76,14 @@ def test_consolidated_storage():
     csv_exists = expected_csv.exists()
     meta_exists = expected_meta.exists()
 
-    print(f"   CSV file: {'✅ EXISTS' if csv_exists else '❌ MISSING'} ({expected_csv})")
+    print("   CSV file: {'✅ EXISTS' if csv_exists else '❌ MISSING'} ({expected_csv})")
     print(
         f"   Metadata file: {'✅ EXISTS' if meta_exists else '❌ MISSING'} ({expected_meta})"
     )
 
     if csv_exists:
         csv_size = expected_csv.stat().st_size
-        print(f"   CSV file size: {csv_size} bytes")
+        print("   CSV file size: {csv_size} bytes")
 
     # Test 3: Retrieve data
     print("\n📤 Test 3: Retrieving consolidated data...")
@@ -95,7 +95,7 @@ def test_consolidated_storage():
         timeframe=Timeframe.DAILY,
     )
 
-    print(f"   Retrieved: {len(retrieved)} records")
+    print("   Retrieved: {len(retrieved)} records")
 
     if retrieved:
         print("   Record details:")
@@ -138,7 +138,7 @@ def test_consolidated_storage():
         source="test_append",
     )
 
-    print(f"   Append result: {'✅ SUCCESS' if success_append else '❌ FAILED'}")
+    print("   Append result: {'✅ SUCCESS' if success_append else '❌ FAILED'}")
 
     # Retrieve again to verify deduplication
     final_retrieved = hdm.retrieve_data(
@@ -149,7 +149,7 @@ def test_consolidated_storage():
         timeframe=Timeframe.DAILY,
     )
 
-    print(f"   Final count: {len(final_retrieved)} records (should be 4, not 5)")
+    print("   Final count: {len(final_retrieved)} records (should be 4, not 5)")
 
     # Test 5: Performance comparison
     print("\n⚡ Test 5: File system efficiency...")
@@ -158,12 +158,12 @@ def test_consolidated_storage():
     new_structure_files = 2  # 1 CSV + 1 meta
 
     reduction = (old_structure_files - new_structure_files) / old_structure_files * 100
-    print(f"   Old fragmented approach: {old_structure_files} files")
-    print(f"   New consolidated approach: {new_structure_files} files")
-    print(f"   File reduction: {reduction:.1f}%")
+    print("   Old fragmented approach: {old_structure_files} files")
+    print("   New consolidated approach: {new_structure_files} files")
+    print("   File reduction: {reduction:.1f}%")
 
     # Summary
-    print(f"\n📊 SUMMARY")
+    print("\n📊 SUMMARY")
     print("=" * 50)
     success_rate = (
         sum(
@@ -179,8 +179,8 @@ def test_consolidated_storage():
         * 100
     )
 
-    print(f"✅ Test Success Rate: {success_rate:.0f}%")
-    print(f"🎯 System Status: {'OPERATIONAL' if success_rate >= 80 else 'NEEDS FIXES'}")
+    print("✅ Test Success Rate: {success_rate:.0f}%")
+    print("🎯 System Status: {'OPERATIONAL' if success_rate >= 80 else 'NEEDS FIXES'}")
 
     return success_rate >= 80
 

@@ -43,10 +43,10 @@ class ComprehensivePerformanceAnalyzer:
                 self.df["Duration_Days"], errors="coerce"
             )
 
-            print(f"Loaded {len(self.df)} trades from {self.csv_file_path}")
+            print("Loaded {len(self.df)} trades from {self.csv_file_path}")
 
         except Exception as e:
-            print(f"Error loading data: {e}")
+            print("Error loading data: {e}")
             sys.exit(1)
 
     def calculate_trade_counts(self) -> Dict[str, int]:
@@ -397,7 +397,7 @@ def main():
     with open(args.output_file, "w") as f:
         json.dump(results, f, indent=2, default=str)
 
-    print(f"\nAnalysis complete! Results saved to: {args.output_file}")
+    print("\nAnalysis complete! Results saved to: {args.output_file}")
 
     # Print summary to console
     print("\n" + "=" * 80)
@@ -408,15 +408,15 @@ def main():
     win_loss = results["win_loss_rates"]
     returns = results["average_returns"]
 
-    print(f"Total Trades: {trade_counts['total_trades']}")
-    print(f"Closed Trades: {trade_counts['closed_trades']}")
-    print(f"Open Trades: {trade_counts['open_trades']}")
-    print(f"Win Rate: {win_loss['win_rate']:.2%}")
-    print(f"Loss Rate: {win_loss['loss_rate']:.2%}")
-    print(f"Breakeven Rate: {win_loss['breakeven_rate']:.2%}")
-    print(f"Average Return: {returns['avg_return_overall']:.2%}")
-    print(f"Profit Factor: {results['profit_factor']:.2f}")
-    print(f"System Quality Number: {results['system_quality_number']:.2f}")
+    print("Total Trades: {trade_counts['total_trades']}")
+    print("Closed Trades: {trade_counts['closed_trades']}")
+    print("Open Trades: {trade_counts['open_trades']}")
+    print("Win Rate: {win_loss['win_rate']:.2%}")
+    print("Loss Rate: {win_loss['loss_rate']:.2%}")
+    print("Breakeven Rate: {win_loss['breakeven_rate']:.2%}")
+    print("Average Return: {returns['avg_return_overall']:.2%}")
+    print("Profit Factor: {results['profit_factor']:.2f}")
+    print("System Quality Number: {results['system_quality_number']:.2f}")
 
     biggest = results["biggest_winner_loser"]
     print(
@@ -435,10 +435,10 @@ def main():
     print(
         f"\nData Range: {results['date_range']['earliest_entry_date']} to {results['date_range']['latest_exit_date']}"
     )
-    print(f"Most Recent Trade: {results['date_range']['most_recent_trade_date']}")
+    print("Most Recent Trade: {results['date_range']['most_recent_trade_date']}")
 
     if results["open_trades"]:
-        print(f"\nOpen Trades: {len(results['open_trades'])}")
+        print("\nOpen Trades: {len(results['open_trades'])}")
         for trade in results["open_trades"]:
             print(
                 f"  {trade['ticker']} ({trade['strategy']}): Entry {trade['entry_date']}, {trade['days_since_entry']} days ago"

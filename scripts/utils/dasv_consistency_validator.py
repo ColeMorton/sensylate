@@ -549,9 +549,9 @@ class DASVConsistencyValidator:
 
                 if result.issues:
                     for issue in result.issues[:2]:  # Show first 2 issues
-                        print(f"    • {issue}")
+                        print("    • {issue}")
                     if len(result.issues) > 2:
-                        print(f"    • ... and {len(result.issues) - 2} more")
+                        print("    • ... and {len(result.issues) - 2} more")
 
             except Exception as e:
                 error_result = ValidationResult(
@@ -564,7 +564,7 @@ class DASVConsistencyValidator:
                     recommendations=["Fix validation check implementation"],
                 )
                 validation_results[error_result.check_name] = error_result
-                print(f"❌ {error_result.check_name}: failed ({e})")
+                print("❌ {error_result.check_name}: failed ({e})")
 
         # Calculate overall score
         scores = [result.score for result in validation_results.values()]
@@ -631,20 +631,20 @@ class DASVConsistencyValidator:
         print("\n" + "=" * 70)
         print("DASV SYSTEM CONSISTENCY VALIDATION REPORT")
         print("=" * 70)
-        print(f"📅 Generated: {report.timestamp.strftime('%Y-%m-%d %H:%M:%S')}")
+        print("📅 Generated: {report.timestamp.strftime('%Y-%m-%d %H:%M:%S')}")
         print(
             f"🎯 Overall Score: {report.overall_score:.2f}/1.0 ({report.summary['system_health'].upper()})"
         )
 
         # Summary
-        print(f"\n📊 Summary:")
-        print(f"  Total Checks: {report.summary['total_checks']}")
-        print(f"  ✅ Passed: {report.summary['passed_checks']}")
-        print(f"  ⚠️  Warnings: {report.summary['warning_checks']}")
-        print(f"  ❌ Failed: {report.summary['failed_checks']}")
+        print("\n📊 Summary:")
+        print("  Total Checks: {report.summary['total_checks']}")
+        print("  ✅ Passed: {report.summary['passed_checks']}")
+        print("  ⚠️  Warnings: {report.summary['warning_checks']}")
+        print("  ❌ Failed: {report.summary['failed_checks']}")
 
         # Detailed results
-        print(f"\n🔍 Detailed Results:")
+        print("\n🔍 Detailed Results:")
         for check_name, result in report.validation_results.items():
             status_emoji = (
                 "✅"
@@ -660,22 +660,22 @@ class DASVConsistencyValidator:
             if result.metadata:
                 key_metrics = list(result.metadata.items())[:2]  # Show top 2 metrics
                 for key, value in key_metrics:
-                    print(f"    📈 {key}: {value}")
+                    print("    📈 {key}: {value}")
 
         # Action items
         if report.action_items:
-            print(f"\n🔧 Priority Action Items:")
+            print("\n🔧 Priority Action Items:")
             for i, item in enumerate(report.action_items[:5], 1):  # Top 5 actions
-                print(f"  {i}. {item}")
+                print("  {i}. {item}")
 
         # Drift indicators
         if report.drift_indicators:
-            print(f"\n⚠️  System Drift Indicators:")
+            print("\n⚠️  System Drift Indicators:")
             for indicator in report.drift_indicators:
-                print(f"  • {indicator}")
+                print("  • {indicator}")
 
         # Recommendations
-        print(f"\n💡 Next Steps:")
+        print("\n💡 Next Steps:")
         if report.overall_score >= 0.9:
             print("  🎉 System is performing excellently - maintain current standards")
         elif report.overall_score >= 0.8:
@@ -727,7 +727,7 @@ class DASVConsistencyValidator:
         with open(output_file, "w") as f:
             json.dump(report_data, f, indent=2)
 
-        print(f"\n📄 Validation report exported to: {output_file}")
+        print("\n📄 Validation report exported to: {output_file}")
         return str(output_file)
 
 
@@ -762,7 +762,7 @@ def main():
         if not args.quiet:
             validator.print_comprehensive_report(report)
         else:
-            print(f"Overall Score: {report.overall_score:.2f}/1.0")
+            print("Overall Score: {report.overall_score:.2f}/1.0")
 
         if args.export:
             validator.export_validation_report(report, args.output)
@@ -780,17 +780,17 @@ def main():
         result = check_methods[args.check]()
 
         if not args.quiet:
-            print(f"{result.check_name}: {result.status} ({result.score:.2f})")
+            print("{result.check_name}: {result.status} ({result.score:.2f})")
             if result.issues:
                 print("Issues:")
                 for issue in result.issues:
-                    print(f"  • {issue}")
+                    print("  • {issue}")
             if result.recommendations:
                 print("Recommendations:")
                 for rec in result.recommendations:
-                    print(f"  • {rec}")
+                    print("  • {rec}")
         else:
-            print(f"{result.score:.2f}")
+            print("{result.score:.2f}")
 
 
 if __name__ == "__main__":

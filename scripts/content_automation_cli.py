@@ -638,17 +638,17 @@ class ContentAutomationCLI(BaseFinancialCLI):
                 if not data_validation.get("compliant", False):
                     print("Warning: Data validation issues detected")
                     for issue in data_validation.get("issues", []):
-                        print(f"  - {issue}")
+                        print("  - {issue}")
 
             # Generate analysis document
             try:
                 content = template_obj.render(**context)
             except Exception as template_error:
                 self.logger.error(f"Template rendering failed: {template_error}")
-                self.console.print(f"[red]Template Error: {template_error}[/red]")
+                self.console.print("[red]Template Error: {template_error}[/red]")
 
                 # Provide helpful debugging information
-                self.console.print(f"[yellow]Template: {template_name}[/yellow]")
+                self.console.print("[yellow]Template: {template_name}[/yellow]")
                 self.console.print(
                     f"[yellow]Context keys: {list(context.keys())}[/yellow]"
                 )
@@ -974,7 +974,7 @@ Generated: {{ timestamp }}"""
                     f"[yellow]Warning: Template {template_name} failed institutional validation[/yellow]"
                 )
                 for issue in validation_result.get("issues", []):
-                    self.console.print(f"  - {issue}")
+                    self.console.print("  - {issue}")
 
             return template_obj
 

@@ -431,4 +431,4 @@ if __name__ == "__main__":
     output_file = Path(sys.argv[2]) if len(sys.argv) > 2 else None
 
     result_file = convert_markdown_to_json(markdown_file, output_file)
-    print(f"Converted to: {result_file}")
+    print("Converted to: {result_file}")

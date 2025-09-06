@@ -325,7 +325,7 @@ class SchemaConsistencyOptimizer:
                 inconsistencies={"system": ["Schemas directory not found"]},
             )
 
-        print(f"🔍 Analyzing schemas in {self.schemas_dir}")
+        print("🔍 Analyzing schemas in {self.schemas_dir}")
 
         # Analyze each schema file
         self.schema_analyses = []
@@ -635,7 +635,7 @@ class SchemaConsistencyOptimizer:
                 json.dump(template, f, indent=2)
 
             exported_files.append(str(output_file))
-            print(f"  📄 Exported: {output_file.name}")
+            print("  📄 Exported: {output_file.name}")
 
         return exported_files
 
@@ -645,39 +645,39 @@ class SchemaConsistencyOptimizer:
         print("SCHEMA CONSISTENCY ANALYSIS REPORT")
         print("=" * 60)
 
-        print(f"📊 Analysis Summary:")
-        print(f"  Total schemas analyzed: {report.total_schemas}")
-        print(f"  Domains covered: {', '.join(report.domains_analyzed)}")
-        print(f"  Overall quality score: {report.quality_score:.2f}/1.0")
+        print("📊 Analysis Summary:")
+        print("  Total schemas analyzed: {report.total_schemas}")
+        print("  Domains covered: {', '.join(report.domains_analyzed)}")
+        print("  Overall quality score: {report.quality_score:.2f}/1.0")
 
         if report.common_patterns:
-            print(f"\n🔧 Most Common Field Patterns:")
+            print("\n🔧 Most Common Field Patterns:")
             sorted_patterns = sorted(
                 report.common_patterns.items(), key=lambda x: x[1], reverse=True
             )
             for pattern, count in sorted_patterns[:10]:
-                print(f"  {pattern}: {count} schemas")
+                print("  {pattern}: {count} schemas")
 
         if report.inconsistencies:
             print(
                 f"\n⚠️  Inconsistencies Found ({len(report.inconsistencies)} schemas):"
             )
             for schema, issues in report.inconsistencies.items():
-                print(f"  {schema}:")
+                print("  {schema}:")
                 for issue in issues[:3]:  # Show first 3 issues
-                    print(f"    • {issue}")
+                    print("    • {issue}")
                 if len(issues) > 3:
-                    print(f"    • ... and {len(issues) - 3} more")
+                    print("    • ... and {len(issues) - 3} more")
 
         if report.standardization_opportunities:
-            print(f"\n🎯 Standardization Opportunities:")
+            print("\n🎯 Standardization Opportunities:")
             for i, opportunity in enumerate(report.standardization_opportunities, 1):
-                print(f"  {i}. {opportunity}")
+                print("  {i}. {opportunity}")
 
         if report.recommendations:
-            print(f"\n📋 Recommendations:")
+            print("\n📋 Recommendations:")
             for rec in report.recommendations:
-                print(f"  {rec}")
+                print("  {rec}")
 
 
 def main():
@@ -708,9 +708,9 @@ def main():
 
     if args.export_templates:
         # Export standardized templates
-        print(f"\n📤 Exporting standardized schema templates...")
+        print("\n📤 Exporting standardized schema templates...")
         exported_files = optimizer.export_standardized_schemas(args.output_dir)
-        print(f"✅ Exported {len(exported_files)} standardized schema templates")
+        print("✅ Exported {len(exported_files)} standardized schema templates")
 
 
 if __name__ == "__main__":

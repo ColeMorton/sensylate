@@ -37,7 +37,7 @@ def test_extended_dom_manipulation():
 
     for element in required_elements:
         if element not in content:
-            print(f"❌ Missing DOM manipulation element: {element}")
+            print("❌ Missing DOM manipulation element: {element}")
             return False
 
     print("✅ Puppeteer script includes extended DOM manipulation for all UI elements")
@@ -73,7 +73,7 @@ def test_dev_toolbar_selectors():
 
     for selector in required_selectors:
         if selector not in selectors_section:
-            print(f"❌ Missing dev toolbar selector: {selector}")
+            print("❌ Missing dev toolbar selector: {selector}")
             return False
 
     print("✅ All dev toolbar selectors are properly included")
@@ -117,7 +117,7 @@ def test_css_cleanup():
 
     for css in problematic_css:
         if css in content:
-            print(f"❌ Ineffective CSS still present: {css}")
+            print("❌ Ineffective CSS still present: {css}")
             return False
 
     print("✅ All ineffective CSS has been removed from PhotoBoothBase.astro")
@@ -182,7 +182,7 @@ def test_comprehensive_ui_hiding():
             missing_targets.append(f"{name} ({selector})")
 
     if missing_targets:
-        print(f"❌ Missing UI element targets: {missing_targets}")
+        print("❌ Missing UI element targets: {missing_targets}")
         return False
 
     print("✅ All unwanted UI elements are properly targeted for hiding")
@@ -213,12 +213,12 @@ def main():
             else:
                 failed += 1
         except Exception as e:
-            print(f"❌ Test {test.__name__} failed with exception: {e}")
+            print("❌ Test {test.__name__} failed with exception: {e}")
             failed += 1
         print()
 
     print("=" * 50)
-    print(f"📊 Test Results: {passed} passed, {failed} failed")
+    print("📊 Test Results: {passed} passed, {failed} failed")
 
     if failed == 0:
         print("🎉 Complete UI hiding is properly implemented!")

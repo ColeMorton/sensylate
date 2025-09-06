@@ -24,14 +24,14 @@ def load_schema():
     )
 
     if not schema_path.exists():
-        print(f"Error: Schema file not found at {schema_path}")
+        print("Error: Schema file not found at {schema_path}")
         return None
 
     try:
         with open(schema_path, "r") as f:
             return json.load(f)
     except json.JSONDecodeError as e:
-        print(f"Error: Invalid JSON in schema file: {e}")
+        print("Error: Invalid JSON in schema file: {e}")
         return None
 
 
@@ -41,10 +41,10 @@ def load_discovery_file(file_path):
         with open(file_path, "r") as f:
             return json.load(f)
     except json.JSONDecodeError as e:
-        print(f"Error: Invalid JSON in {file_path}: {e}")
+        print("Error: Invalid JSON in {file_path}: {e}")
         return None
     except FileNotFoundError:
-        print(f"Error: File not found: {file_path}")
+        print("Error: File not found: {file_path}")
         return None
 
 
@@ -105,25 +105,25 @@ def print_quality_assessment(metrics, file_name):
     confidence = metrics["overall_confidence"]
     if confidence:
         status = "✅" if confidence >= 0.75 else "⚠️" if confidence >= 0.7 else "❌"
-        print(f"     Confidence Score: {status} {confidence:.3f} (threshold: >0.75)")
+        print("     Confidence Score: {status} {confidence:.3f} (threshold: >0.75)")
 
     # Data Completeness
     completeness = metrics["data_completeness"]
     if completeness:
         status = "✅" if completeness >= 0.7 else "⚠️" if completeness >= 0.6 else "❌"
-        print(f"     Data Completeness: {status} {completeness:.3f} (threshold: >0.70)")
+        print("     Data Completeness: {status} {completeness:.3f} (threshold: >0.70)")
 
     # Win Rate
     win_rate = metrics["win_rate"]
     if win_rate is not None:
         status = "✅" if win_rate >= 0.45 else "⚠️" if win_rate >= 0.40 else "❌"
-        print(f"     Win Rate: {status} {win_rate:.3f} (benchmark: >0.45)")
+        print("     Win Rate: {status} {win_rate:.3f} (benchmark: >0.45)")
 
     # Profit Factor
     profit_factor = metrics["profit_factor"]
     if profit_factor:
         status = "✅" if profit_factor >= 1.0 else "❌"
-        print(f"     Profit Factor: {status} {profit_factor:.2f} (threshold: >1.0)")
+        print("     Profit Factor: {status} {profit_factor:.2f} (threshold: >1.0)")
 
     # Statistical Adequacy
     closed_trades = metrics["closed_trades"]
@@ -163,7 +163,7 @@ def main():
 
     validation_results = []
 
-    print(f"\n📁 Testing {len(test_files)} trade history discovery files:")
+    print("\n📁 Testing {len(test_files)} trade history discovery files:")
     print("-" * 60)
 
     for file_name in test_files:
@@ -183,14 +183,14 @@ def main():
 
         # Print immediate result
         status_icon = "✅" if is_valid else "❌"
-        print(f"{status_icon} {file_name}: {'VALID' if is_valid else 'INVALID'}")
+        print("{status_icon} {file_name}: {'VALID' if is_valid else 'INVALID'}")
 
         if is_valid:
             # Analyze institutional quality metrics
             quality_metrics = analyze_institutional_quality(discovery_data, file_name)
             print_quality_assessment(quality_metrics, file_name)
         else:
-            print(f"   Error: {error_message}")
+            print("   Error: {error_message}")
 
         print()  # Add spacing between files
 
@@ -202,8 +202,8 @@ def main():
     valid_count = sum(1 for _, is_valid, _ in validation_results if is_valid)
     total_count = len(validation_results)
 
-    print(f"✅ Valid files: {valid_count}/{total_count}")
-    print(f"❌ Invalid files: {total_count - valid_count}/{total_count}")
+    print("✅ Valid files: {valid_count}/{total_count}")
+    print("❌ Invalid files: {total_count - valid_count}/{total_count}")
 
     if valid_count == total_count:
         print("\n🎉 ALL TRADE HISTORY DISCOVERY FILES PASS SCHEMA VALIDATION!")
@@ -211,7 +211,7 @@ def main():
         print("Ready for production algorithmic trading validation.")
         return 0
     else:
-        print(f"\n⚠️  {total_count - valid_count} files failed validation.")
+        print("\n⚠️  {total_count - valid_count} files failed validation.")
         print("Schema may need adjustments for framework evolution.")
 
         # Print detailed errors for failed validations
@@ -219,8 +219,8 @@ def main():
         print("-" * 60)
         for file_name, is_valid, error_message in validation_results:
             if not is_valid:
-                print(f"\n❌ {file_name}:")
-                print(f"   {error_message}")
+                print("\n❌ {file_name}:")
+                print("   {error_message}")
 
         return 1
 

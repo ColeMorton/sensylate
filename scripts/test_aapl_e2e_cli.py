@@ -34,8 +34,8 @@ class AAPLEndToEndTest:
 
         print("🍎 AAPL End-to-End CLI Test Suite")
         print("=" * 60)
-        print(f"Test started: {self.test_start_time}")
-        print(f"Working directory: {self.script_dir}")
+        print("Test started: {self.test_start_time}")
+        print("Working directory: {self.script_dir}")
 
     def get_file_counts(self) -> Tuple[int, int]:
         """Get current count of AAPL CSV and metadata files"""
@@ -63,8 +63,8 @@ class AAPLEndToEndTest:
             "files_created": 0,
         }
 
-        print(f"\n🔄 {description}")
-        print(f"   Command: {result['command']}")
+        print("\n🔄 {description}")
+        print("   Command: {result['command']}")
 
         start_time = time.time()
 
@@ -100,16 +100,16 @@ class AAPLEndToEndTest:
                     f"   ❌ Failed (code: {process.returncode}, {result['execution_time']:.2f}s)"
                 )
                 if result["stderr"]:
-                    print(f"   Error: {result['stderr'][:200]}...")
+                    print("   Error: {result['stderr'][:200]}...")
 
         except subprocess.TimeoutExpired:
             result["execution_time"] = timeout
             result["stderr"] = f"Command timed out after {timeout} seconds"
-            print(f"   ⏰ Timeout ({timeout}s)")
+            print("   ⏰ Timeout ({timeout}s)")
         except Exception as e:
             result["execution_time"] = time.time() - start_time
             result["stderr"] = str(e)
-            print(f"   ❌ Exception: {e}")
+            print("   ❌ Exception: {e}")
 
         self.results.append(result)
         return result
@@ -127,7 +127,7 @@ class AAPLEndToEndTest:
             "errors": [],
         }
 
-        print(f"\n🔍 Verifying AAPL consolidated files...")
+        print("\n🔍 Verifying AAPL consolidated files...")
 
         # Check file existence
         daily_csv = self.aapl_dir / "daily.csv"
@@ -227,7 +227,7 @@ class AAPLEndToEndTest:
                     reader = csv.DictReader(f)
                     weekly_records = list(reader)
                     verification["weekly_records"] = len(weekly_records)
-                    print(f"   📄 Weekly CSV: {verification['weekly_records']} records")
+                    print("   📄 Weekly CSV: {verification['weekly_records']} records")
 
             except Exception as e:
                 verification["errors"].append(f"Failed to read weekly CSV: {e}")
@@ -250,14 +250,14 @@ class AAPLEndToEndTest:
 
     def analyze_file_structure(self):
         """Analyze the AAPL directory structure"""
-        print(f"\n📁 AAPL File Structure Analysis")
+        print("\n📁 AAPL File Structure Analysis")
         print("-" * 40)
 
         if not self.aapl_dir.exists():
             print("❌ AAPL directory does not exist")
             return
 
-        print(f"📂 AAPL Directory: {self.aapl_dir}")
+        print("📂 AAPL Directory: {self.aapl_dir}")
 
         # List all files in AAPL directory
         all_files = list(self.aapl_dir.rglob("*"))
@@ -274,10 +274,10 @@ class AAPLEndToEndTest:
             f for f in files_only if f not in csv_files and f not in meta_files
         ]
 
-        print(f"   📊 File Summary:")
-        print(f"      - CSV files: {len(csv_files)}")
-        print(f"      - Metadata files: {len(meta_files)}")
-        print(f"      - Other files: {len(other_files)}")
+        print("   📊 File Summary:")
+        print("      - CSV files: {len(csv_files)}")
+        print("      - Metadata files: {len(meta_files)}")
+        print("      - Other files: {len(other_files)}")
 
         # Show file details
         for file_path in sorted(
@@ -290,7 +290,7 @@ class AAPLEndToEndTest:
                 if file_path.suffix == ".csv"
                 else ("META" if file_path.name.endswith(".meta.json") else "OTHER")
             )
-            print(f"      📄 {relative_path} ({size}b) [{file_type}]")
+            print("      📄 {relative_path} ({size}b) [{file_type}]")
 
     def test_yahoo_finance_comprehensive(self) -> Dict:
         """Test Yahoo Finance CLI for AAPL comprehensive data (daily + weekly)"""
@@ -324,13 +324,13 @@ service = create_yahoo_finance_service(env="dev")
 print("Fetching AAPL comprehensive data (daily max + weekly max)...")
 # Get daily data (max) - this should trigger comprehensive collection
 daily_data = service.get_historical_data("AAPL", "max")
-print(f"Daily data retrieved: {len(daily_data.get('data', []))} records")
+print("Daily data retrieved: {len(daily_data.get('data', []))} records")
 
 # Get weekly data (max) explicitly
 weekly_data = service.get_historical_data_weekly("AAPL", "max")
-print(f"Weekly data retrieved: {len(weekly_data.get('data', []))} records")
+print("Weekly data retrieved: {len(weekly_data.get('data', []))} records")
 
-print(f"Total records: {len(daily_data.get('data', [])) + len(weekly_data.get('data', []))}")
+print("Total records: {len(daily_data.get('data', [])) + len(weekly_data.get('data', []))}")
 """
 
         comprehensive_result = self.run_cli_command(
@@ -344,7 +344,7 @@ print(f"Total records: {len(daily_data.get('data', [])) + len(weekly_data.get('d
 
     def run_complete_test(self):
         """Execute the complete AAPL E2E test suite"""
-        print(f"\n🚀 Starting Complete AAPL E2E Test...")
+        print("\n🚀 Starting Complete AAPL E2E Test...")
 
         # Initial state
         self.analyze_file_structure()
@@ -354,21 +354,21 @@ print(f"Total records: {len(daily_data.get('data', [])) + len(weekly_data.get('d
         )
 
         # Test 1: Direct service calls (most reliable for file creation)
-        print(f"\n📡 Phase 1: Direct Service Integration")
+        print("\n📡 Phase 1: Direct Service Integration")
         service_results = self.test_direct_service_calls()
 
         # Brief pause
         time.sleep(3)
 
         # Test 2: CLI commands
-        print(f"\n🖥️  Phase 2: CLI Commands")
+        print("\n🖥️  Phase 2: CLI Commands")
         cli_results = [
             self.test_yahoo_finance_comprehensive(),
             self.test_yahoo_finance_quote(),
         ]
 
         # Test 3: File verification
-        print(f"\n✅ Phase 3: File Verification")
+        print("\n✅ Phase 3: File Verification")
         verification = self.verify_consolidated_files()
 
         # Final analysis
@@ -389,16 +389,16 @@ print(f"Total records: {len(daily_data.get('data', [])) + len(weekly_data.get('d
         """Generate comprehensive test report"""
         test_duration = datetime.now() - self.test_start_time
 
-        print(f"\n📊 AAPL E2E CLI TEST REPORT")
+        print("\n📊 AAPL E2E CLI TEST REPORT")
         print("=" * 60)
-        print(f"Test Duration: {test_duration}")
-        print(f"Total Files Created: {total_files_created}")
+        print("Test Duration: {test_duration}")
+        print("Total Files Created: {total_files_created}")
 
         # Command results
         successful_commands = [r for r in all_results if r["success"]]
         failed_commands = [r for r in all_results if not r["success"]]
 
-        print(f"\n🖥️  Command Execution Results:")
+        print("\n🖥️  Command Execution Results:")
         print(
             f"   - Successful Commands: {len(successful_commands)}/{len(all_results)}"
         )
@@ -412,10 +412,10 @@ print(f"Total records: {len(daily_data.get('data', [])) + len(weekly_data.get('d
                 f"   {status} {result['description']} ({result['execution_time']:.2f}s)"
             )
             if not result["success"] and result["stderr"]:
-                print(f"      Error: {result['stderr'][:100]}...")
+                print("      Error: {result['stderr'][:100]}...")
 
         # File verification results
-        print(f"\n📄 File Verification Results:")
+        print("\n📄 File Verification Results:")
         files_exist = (
             verification["daily_csv_exists"]
             and verification["daily_meta_exists"]
@@ -435,12 +435,12 @@ print(f"Total records: {len(daily_data.get('data', [])) + len(weekly_data.get('d
         print(
             f"   - Weekly Metadata: {'✅' if verification['weekly_meta_exists'] else '❌'}"
         )
-        print(f"   - Data Integrity: {'✅' if verification['data_integrity'] else '❌'}")
+        print("   - Data Integrity: {'✅' if verification['data_integrity'] else '❌'}")
 
         if verification["errors"]:
-            print(f"\n⚠️  Data Verification Errors:")
+            print("\n⚠️  Data Verification Errors:")
             for error in verification["errors"]:
-                print(f"   - {error}")
+                print("   - {error}")
 
         # Overall assessment
         command_success_rate = (
@@ -464,11 +464,11 @@ print(f"Total records: {len(daily_data.get('data', [])) + len(weekly_data.get('d
             and weekly_records_sufficient
         )
 
-        print(f"\n🎯 OVERALL ASSESSMENT:")
-        print(f"   - Command Success Rate: {command_success_rate:.0%}")
-        print(f"   - Files Created: {total_files_created}")
-        print(f"   - Data Integrity: {'✅' if verification['data_integrity'] else '❌'}")
-        print(f"   - Complete File Set: {'✅' if files_exist else '❌'}")
+        print("\n🎯 OVERALL ASSESSMENT:")
+        print("   - Command Success Rate: {command_success_rate:.0%}")
+        print("   - Files Created: {total_files_created}")
+        print("   - Data Integrity: {'✅' if verification['data_integrity'] else '❌'}")
+        print("   - Complete File Set: {'✅' if files_exist else '❌'}")
         print(
             f"   - Daily Data Volume: {'✅' if daily_records_sufficient else '❌'} ({verification['daily_records']} records, need ≥1000)"
         )
@@ -477,13 +477,13 @@ print(f"Total records: {len(daily_data.get('data', [])) + len(weekly_data.get('d
         )
 
         if overall_success:
-            print(f"\n🎉 AAPL E2E CLI TEST: SUCCESS!")
+            print("\n🎉 AAPL E2E CLI TEST: SUCCESS!")
             print("   - CLI commands executed successfully")
             print("   - Consolidated CSV + metadata files created")
             print("   - Data integrity verified")
             print("   - Complete AAPL daily and weekly data pipeline working")
         else:
-            print(f"\n⚠️  AAPL E2E CLI TEST: ISSUES DETECTED")
+            print("\n⚠️  AAPL E2E CLI TEST: ISSUES DETECTED")
             print("   - Some commands failed or files missing")
             print("   - Check individual command results above")
             print("   - May need API keys or network connectivity")
@@ -496,7 +496,7 @@ def main():
     tester = AAPLEndToEndTest()
     success = tester.run_complete_test()
 
-    print(f"\n{'='*60}")
+    print("\n{'='*60}")
     if success:
         print("🏆 AAPL End-to-End CLI Test Suite: PASSED")
     else:

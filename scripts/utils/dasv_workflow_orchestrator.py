@@ -339,11 +339,11 @@ class DASVWorkflowOrchestrator:
             phases = template["phases"]
             current_params = parameters.copy()
 
-            print(f"🚀 Starting workflow {workflow_id} for {domain}")
+            print("🚀 Starting workflow {workflow_id} for {domain}")
 
             # Execute each phase
             for i, phase in enumerate(phases):
-                print(f"📋 Phase {i+1}/{len(phases)}: {phase}")
+                print("📋 Phase {i+1}/{len(phases)}: {phase}")
 
                 # Execute phase
                 start_time = time.time()
@@ -382,10 +382,10 @@ class DASVWorkflowOrchestrator:
 
                 if quality_issues:
                     for issue in quality_issues[:3]:  # Show first 3 issues
-                        print(f"      ⚠️  {issue}")
+                        print("      ⚠️  {issue}")
 
                 if execution_result.output_files:
-                    print(f"      📄 Output: {execution_result.output_files[0]}")
+                    print("      📄 Output: {execution_result.output_files[0]}")
 
                 # Check if should continue
                 if not self._should_continue_workflow(quality_result, phase):
@@ -452,7 +452,7 @@ class DASVWorkflowOrchestrator:
         except Exception as e:
             workflow_result.status = WorkflowStatus.FAILED
             workflow_result.metadata["exception"] = str(e)
-            print(f"💥 Workflow failed with exception: {e}")
+            print("💥 Workflow failed with exception: {e}")
 
         finally:
             workflow_result.end_time = datetime.now()
@@ -471,9 +471,9 @@ class DASVWorkflowOrchestrator:
             print(
                 f"\n{status_emoji} Workflow {workflow_id} completed: {workflow_result.status.value}"
             )
-            print(f"   ⏱️  Duration: {duration}")
-            print(f"   📊 Phases completed: {len(workflow_result.phase_results)}")
-            print(f"   📁 Output files: {len(workflow_result.final_outputs)}")
+            print("   ⏱️  Duration: {duration}")
+            print("   📊 Phases completed: {len(workflow_result.phase_results)}")
+            print("   📁 Output files: {len(workflow_result.final_outputs)}")
 
             if workflow_result.overall_confidence:
                 print(
@@ -569,19 +569,19 @@ def main():
         workflows = orchestrator.list_available_workflows()
         print("Available workflows:")
         for workflow in workflows:
-            print(f"  {workflow}")
+            print("  {workflow}")
         return
 
     if args.template_info:
         info = orchestrator.get_workflow_template_info(args.domain)
         if info:
-            print(f"Workflow Template: {args.domain}")
-            print(f"  Phases: {info['phases']}")
-            print(f"  Quality Gates: {info['quality_gates']}")
-            print(f"  Dependencies: {info['dependencies']}")
-            print(f"  Timeouts: {info['timeout_minutes']}")
+            print("Workflow Template: {args.domain}")
+            print("  Phases: {info['phases']}")
+            print("  Quality Gates: {info['quality_gates']}")
+            print("  Dependencies: {info['dependencies']}")
+            print("  Timeouts: {info['timeout_minutes']}")
         else:
-            print(f"No template found for domain: {args.domain}")
+            print("No template found for domain: {args.domain}")
         return
 
     # Build parameters
@@ -612,13 +612,13 @@ def main():
     print("\n" + "=" * 60)
     print("WORKFLOW EXECUTION SUMMARY")
     print("=" * 60)
-    print(f"Workflow ID: {result.workflow_id}")
-    print(f"Domain: {result.domain}")
-    print(f"Status: {result.status.value}")
-    print(f"Duration: {result.end_time - result.start_time}")
-    print(f"Overall Confidence: {result.overall_confidence or 'N/A'}")
+    print("Workflow ID: {result.workflow_id}")
+    print("Domain: {result.domain}")
+    print("Status: {result.status.value}")
+    print("Duration: {result.end_time - result.start_time}")
+    print("Overall Confidence: {result.overall_confidence or 'N/A'}")
 
-    print(f"\nPhase Results:")
+    print("\nPhase Results:")
     for phase, phase_result in result.phase_results.items():
         status_emoji = (
             "✅"
@@ -641,19 +641,19 @@ def main():
 
         if phase_result.quality_issues:
             for issue in phase_result.quality_issues:
-                print(f"     ⚠️  {issue}")
+                print("     ⚠️  {issue}")
 
         if phase_result.execution_result.output_files:
             for output_file in phase_result.execution_result.output_files:
-                print(f"     📄 {output_file}")
+                print("     📄 {output_file}")
 
-    print(f"\nFinal Output Files ({len(result.final_outputs)}):")
+    print("\nFinal Output Files ({len(result.final_outputs)}):")
     for output_file in result.final_outputs:
-        print(f"  📄 {output_file}")
+        print("  📄 {output_file}")
 
-    print(f"\nQuality Summary:")
+    print("\nQuality Summary:")
     for key, value in result.quality_summary.items():
-        print(f"  {key}: {value}")
+        print("  {key}: {value}")
 
 
 if __name__ == "__main__":

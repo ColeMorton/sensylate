@@ -459,7 +459,7 @@ class CommandExecutionService:
         current_params = parameters.copy()
 
         for phase in phases:
-            print(f"Executing {domain}:{phase}...")
+            print("Executing {domain}:{phase}...")
 
             result = self.execute_command(domain, phase, current_params, mode)
             results[phase] = result
@@ -565,17 +565,17 @@ def main():
         commands = service.get_available_commands()
         print("Available commands:")
         for domain, phases in commands.items():
-            print(f"  {domain}: {', '.join(phases)}")
+            print("  {domain}: {', '.join(phases)}")
         return
 
     if args.info:
         info = service.get_command_info(args.domain, args.phase)
         if info:
-            print(f"Command Information for {args.domain}:{args.phase}")
+            print("Command Information for {args.domain}:{args.phase}")
             for key, value in info.items():
-                print(f"  {key}: {value}")
+                print("  {key}: {value}")
         else:
-            print(f"Command not found: {args.domain}:{args.phase}")
+            print("Command not found: {args.domain}:{args.phase}")
         return
 
     # Build parameters
@@ -601,31 +601,31 @@ def main():
     mode = ExecutionMode.DIRECT if args.mode == "direct" else ExecutionMode.SUB_AGENT
 
     if args.full_workflow:
-        print(f"Executing full DASV workflow for {args.domain}...")
+        print("Executing full DASV workflow for {args.domain}...")
         results = service.execute_full_dasv_workflow(args.domain, parameters, mode)
 
         print("\nWorkflow Results:")
         for phase, result in results.items():
-            print(f"  {phase}: {result.status.value}")
+            print("  {phase}: {result.status.value}")
             if result.output_files:
-                print(f"    Output files: {result.output_files}")
+                print("    Output files: {result.output_files}")
             if result.error_message:
-                print(f"    Error: {result.error_message}")
+                print("    Error: {result.error_message}")
     else:
-        print(f"Executing {args.domain}:{args.phase}...")
+        print("Executing {args.domain}:{args.phase}...")
         result = service.execute_command(args.domain, args.phase, parameters, mode)
 
-        print(f"Status: {result.status.value}")
-        print(f"Execution time: {result.execution_time:.2f}s")
+        print("Status: {result.status.value}")
+        print("Execution time: {result.execution_time:.2f}s")
 
         if result.output_files:
-            print(f"Output files: {result.output_files}")
+            print("Output files: {result.output_files}")
 
         if result.error_message:
-            print(f"Error: {result.error_message}")
+            print("Error: {result.error_message}")
 
         if result.warnings:
-            print(f"Warnings: {result.warnings}")
+            print("Warnings: {result.warnings}")
 
 
 if __name__ == "__main__":

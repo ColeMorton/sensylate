@@ -13,7 +13,7 @@ import argparse
 import json
 import sys
 from pathlib import Path
-from typing import List, Optional
+from typing import List
 
 # Add utils to path
 sys.path.insert(0, str(Path(__file__).parent / "utils"))
@@ -151,7 +151,7 @@ Examples:
     try:
         collector = create_historical_data_collector(rate_limit_delay=args.rate_limit)
     except Exception as e:
-        print(f"❌ Failed to initialize collector: {e}")
+        print("❌ Failed to initialize collector: {e}")
         return 1
 
     # Handle status request
@@ -162,24 +162,24 @@ Examples:
             print("-" * 40)
 
             available = status.get("available_data", {})
-            print(f"Total files stored: {available.get('total_files', 0)}")
-            print(f"Symbols tracked: {available.get('symbol_count', 0)}")
-            print(f"Data types: {list(available.get('data_types', {}).keys())}")
-            print(f"Storage location: {status.get('storage_location')}")
+            print("Total files stored: {available.get('total_files', 0)}")
+            print("Symbols tracked: {available.get('symbol_count', 0)}")
+            print("Data types: {list(available.get('data_types', {}).keys())}")
+            print("Storage location: {status.get('storage_location')}")
 
             if available.get("symbols"):
-                print(f"\nTracked symbols: {', '.join(available['symbols'][:10])}")
+                print("\nTracked symbols: {', '.join(available['symbols'][:10])}")
                 if len(available["symbols"]) > 10:
-                    print(f"... and {len(available['symbols']) - 10} more")
+                    print("... and {len(available['symbols']) - 10} more")
 
             collection_state = status.get("collection_state", {})
             if collection_state.get("last_collection"):
-                print(f"\nLast collection: {collection_state['last_collection']}")
+                print("\nLast collection: {collection_state['last_collection']}")
 
             return 0
 
         except Exception as e:
-            print(f"❌ Failed to get status: {e}")
+            print("❌ Failed to get status: {e}")
             return 1
 
     # Handle list available request
@@ -194,12 +194,12 @@ Examples:
             for symbol in sorted(all_data.get("symbols", [])):
                 symbol_data = hdm.get_available_data(symbol)
                 data_types = symbol_data.get("data_types", [])
-                print(f"  {symbol}: {', '.join(data_types)}")
+                print("  {symbol}: {', '.join(data_types)}")
 
             return 0
 
         except Exception as e:
-            print(f"❌ Failed to list available data: {e}")
+            print("❌ Failed to list available data: {e}")
             return 1
 
     # Parse symbols
@@ -218,16 +218,16 @@ Examples:
 
     if not args.quiet:
         if symbols:
-            print(f"🎯 Target symbols: {', '.join(symbols)}")
+            print("🎯 Target symbols: {', '.join(symbols)}")
         else:
             print("🎯 Using default high-value symbols")
 
         if not args.weekly_only:
-            print(f"📈 Daily data: {args.daily_days} days")
+            print("📈 Daily data: {args.daily_days} days")
         if not args.daily_only:
-            print(f"📊 Weekly data: {args.weekly_years} years")
-        print(f"🔧 Service: {args.service}")
-        print(f"⏱️  Rate limit: {args.rate_limit}s between calls")
+            print("📊 Weekly data: {args.weekly_years} years")
+        print("🔧 Service: {args.service}")
+        print("⏱️  Rate limit: {args.rate_limit}s between calls")
         print()
 
     # Start collection
@@ -296,25 +296,25 @@ Examples:
             # Daily results
             if "daily_collection" in collection_results:
                 daily = collection_results["daily_collection"]
-                print(f"\n📈 Daily Collection:")
-                print(f"   ✅ Successful: {len(daily.get('symbols_successful', []))}")
-                print(f"   ❌ Failed: {len(daily.get('symbols_failed', []))}")
+                print("\n📈 Daily Collection:")
+                print("   ✅ Successful: {len(daily.get('symbols_successful', []))}")
+                print("   ❌ Failed: {len(daily.get('symbols_failed', []))}")
                 if daily.get("errors") and not args.quiet:
-                    print(f"   Errors: {len(daily['errors'])}")
+                    print("   Errors: {len(daily['errors'])}")
 
             # Weekly results
             if "weekly_collection" in collection_results:
                 weekly = collection_results["weekly_collection"]
-                print(f"\n📊 Weekly Collection:")
-                print(f"   ✅ Successful: {len(weekly.get('symbols_successful', []))}")
-                print(f"   ❌ Failed: {len(weekly.get('symbols_failed', []))}")
+                print("\n📊 Weekly Collection:")
+                print("   ✅ Successful: {len(weekly.get('symbols_successful', []))}")
+                print("   ❌ Failed: {len(weekly.get('symbols_failed', []))}")
                 if weekly.get("errors") and not args.quiet:
-                    print(f"   Errors: {len(weekly['errors'])}")
+                    print("   Errors: {len(weekly['errors'])}")
 
             # Storage location
-            print(f"\n📂 Data stored in: ./data/raw/")
-            print(f"🔍 Use --status to view collection status")
-            print(f"📋 Use --list-available to see all available data")
+            print("\n📂 Data stored in: ./data/raw/")
+            print("🔍 Use --status to view collection status")
+            print("📋 Use --list-available to see all available data")
 
         # Save JSON output if requested
         if args.output_json:
@@ -322,9 +322,9 @@ Examples:
                 with open(args.output_json, "w") as f:
                     json.dump(collection_results, f, indent=2, default=str)
                 if not args.quiet:
-                    print(f"\n💾 Results saved to: {args.output_json}")
+                    print("\n💾 Results saved to: {args.output_json}")
             except Exception as e:
-                print(f"⚠️  Failed to save JSON output: {e}")
+                print("⚠️  Failed to save JSON output: {e}")
 
         # Return appropriate exit code
         return 0 if collection_results.get("overall_success") else 1
@@ -333,7 +333,7 @@ Examples:
         print("\n🛑 Collection interrupted by user")
         return 1
     except Exception as e:
-        print(f"❌ Collection failed: {e}")
+        print("❌ Collection failed: {e}")
         return 1
 
 

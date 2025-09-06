@@ -20,7 +20,7 @@ def test_photobooth_base_layout():
 
     layout_path = project_root / "frontend/src/layouts/PhotoBoothBase.astro"
     if not layout_path.exists():
-        print(f"❌ PhotoBoothBase layout not found: {layout_path}")
+        print("❌ PhotoBoothBase layout not found: {layout_path}")
         return False
 
     with open(layout_path) as f:
@@ -37,7 +37,7 @@ def test_photobooth_base_layout():
 
     for element in unwanted_elements:
         if f"import {element}" in content or f"<{element}" in content:
-            print(f"❌ Unwanted UI element found: {element}")
+            print("❌ Unwanted UI element found: {element}")
             return False
 
     print("✅ PhotoBoothBase layout is clean (no unwanted UI elements)")
@@ -61,7 +61,7 @@ def test_dev_toolbar_hiding():
 
     for css_rule in required_css:
         if css_rule not in content:
-            print(f"❌ Missing CSS rule for dev toolbar hiding: {css_rule}")
+            print("❌ Missing CSS rule for dev toolbar hiding: {css_rule}")
             return False
 
     print("✅ Dev toolbar hiding CSS is properly implemented")
@@ -74,7 +74,7 @@ def test_direct_astro_page():
 
     page_path = project_root / "frontend/src/pages/photo-booth.astro"
     if not page_path.exists():
-        print(f"❌ Direct photo-booth.astro page not found: {page_path}")
+        print("❌ Direct photo-booth.astro page not found: {page_path}")
         return False
 
     with open(page_path) as f:
@@ -100,7 +100,7 @@ def test_old_mdx_removed():
 
     old_mdx_path = project_root / "frontend/src/content/pages/photo-booth.mdx"
     if old_mdx_path.exists():
-        print(f"❌ Old MDX file still exists: {old_mdx_path}")
+        print("❌ Old MDX file still exists: {old_mdx_path}")
         return False
 
     print("✅ Old MDX file has been removed")
@@ -125,7 +125,7 @@ def test_screenshot_optimization():
 
     for css_rule in optimization_css:
         if css_rule not in content:
-            print(f"❌ Missing screenshot optimization CSS: {css_rule}")
+            print("❌ Missing screenshot optimization CSS: {css_rule}")
             return False
 
     print("✅ Screenshot optimization CSS is properly implemented")
@@ -164,7 +164,7 @@ def test_minimal_html_structure():
     ]
     for unwanted in unwanted_in_body:
         if unwanted in body_content:
-            print(f"❌ Unwanted element found in body: {unwanted}")
+            print("❌ Unwanted element found in body: {unwanted}")
             return False
 
     # Check that main element is present
@@ -223,12 +223,12 @@ def main():
             else:
                 failed += 1
         except Exception as e:
-            print(f"❌ Test {test.__name__} failed with exception: {e}")
+            print("❌ Test {test.__name__} failed with exception: {e}")
             failed += 1
         print()
 
     print("=" * 50)
-    print(f"📊 Test Results: {passed} passed, {failed} failed")
+    print("📊 Test Results: {passed} passed, {failed} failed")
 
     if failed == 0:
         print("🎉 Clean screenshot layout is properly implemented!")

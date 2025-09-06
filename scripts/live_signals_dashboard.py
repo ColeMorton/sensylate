@@ -503,7 +503,7 @@ def main():
         return
 
     latest_file = max(md_files, key=lambda x: x.stat().st_mtime)
-    print(f"📊 Processing: {latest_file.name}")
+    print("📊 Processing: {latest_file.name}")
 
     # Initialize dashboard generator
     dashboard = LiveSignalsDashboard()
@@ -511,7 +511,7 @@ def main():
     try:
         # Parse the report
         data = dashboard.parse_live_signals_report(latest_file)
-        print(f"✅ Parsed {len(data.get('positions', []))} positions")
+        print("✅ Parsed {len(data.get('positions', []))} positions")
 
         # Generate dashboard
         light_fig, dark_fig = dashboard.generate_dashboard(data, mode="both")
@@ -528,11 +528,11 @@ def main():
         config_path = dashboard.generate_frontend_config(data, output_dir)
 
         print("🎉 Dashboard generation complete!")
-        print(f"📸 Exported images: {[f.name for f in exported_files]}")
-        print(f"⚙️  Frontend config: {config_path.name}")
+        print("📸 Exported images: {[f.name for f in exported_files]}")
+        print("⚙️  Frontend config: {config_path.name}")
 
     except Exception as e:
-        print(f"❌ Dashboard generation failed: {e}")
+        print("❌ Dashboard generation failed: {e}")
         raise
 
 

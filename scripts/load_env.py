@@ -24,7 +24,7 @@ def load_env_file(env_path: str = ".env") -> dict:
     env_file = Path(env_path)
 
     if not env_file.exists():
-        print(f"Warning: .env file not found at {env_file.absolute()}")
+        print("Warning: .env file not found at {env_file.absolute()}")
         return env_vars
 
     with open(env_file, "r") as f:
@@ -37,7 +37,7 @@ def load_env_file(env_path: str = ".env") -> dict:
 
             # Parse key=value pairs
             if "=" not in line:
-                print(f"Warning: Invalid line {line_num} in .env file: {line}")
+                print("Warning: Invalid line {line_num} in .env file: {line}")
                 continue
 
             key, value = line.split("=", 1)
@@ -57,17 +57,17 @@ def ensure_env_loaded():
         # Try to load from .env file
         loaded = load_env_file()
         if loaded:
-            print(f"Loaded {len(loaded)} environment variables from .env file")
+            print("Loaded {len(loaded)} environment variables from .env file")
 
 
 if __name__ == "__main__":
     # Load environment variables when run directly
     loaded_vars = load_env_file()
-    print(f"Loaded {len(loaded_vars)} environment variables:")
+    print("Loaded {len(loaded_vars)} environment variables:")
 
     # Print non-sensitive variables
     for key, value in loaded_vars.items():
         if "API_KEY" in key:
-            print(f"  {key}=****")
+            print("  {key}=****")
         else:
-            print(f"  {key}={value}")
+            print("  {key}={value}")

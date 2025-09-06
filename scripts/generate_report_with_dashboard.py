@@ -133,13 +133,13 @@ def main(
 
     # Print Make-compatible output
     total_files = len(generated_files["reports"]) + len(generated_files["dashboards"])
-    print(f"TOTAL_FILES_GENERATED={total_files}")
+    print("TOTAL_FILES_GENERATED={total_files}")
 
     for i, report_file in enumerate(generated_files["reports"]):
-        print(f"REPORT_FILE_{i+1}={report_file}")
+        print("REPORT_FILE_{i+1}={report_file}")
 
     for i, dashboard_file in enumerate(generated_files["dashboards"]):
-        print(f"DASHBOARD_FILE_{i+1}={dashboard_file}")
+        print("DASHBOARD_FILE_{i+1}={dashboard_file}")
 
     return generated_files
 

@@ -11,7 +11,7 @@ import json
 import sys
 from datetime import datetime, timedelta
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict
 
 # Add scripts directory to path
 sys.path.insert(0, str(Path(__file__).parent))
@@ -59,13 +59,13 @@ class BitcoinDiscoveryGenerator:
                 try:
                     self.cli_services[service_name] = service_factory(env)
                     self.cli_service_health[service_name] = True
-                    print(f"✅ Initialized {service_name}")
+                    print("✅ Initialized {service_name}")
                 except Exception as e:
-                    print(f"⚠️  Failed to initialize {service_name}: {e}")
+                    print("⚠️  Failed to initialize {service_name}: {e}")
                     self.cli_service_health[service_name] = False
 
         except Exception as e:
-            print(f"❌ Error initializing CLI services: {e}")
+            print("❌ Error initializing CLI services: {e}")
 
     def search_local_data_domain(self) -> Dict[str, Any]:
         """Execute systematic search of ./data/ domain for related files"""
@@ -150,7 +150,7 @@ class BitcoinDiscoveryGenerator:
                                                 }
                                             )
                         except Exception as e:
-                            print(f"⚠️  Search error for pattern {pattern}: {e}")
+                            print("⚠️  Search error for pattern {pattern}: {e}")
 
             return {
                 "search_methodology": {
@@ -245,7 +245,6 @@ class BitcoinDiscoveryGenerator:
     def _generate_file_description(self, file_path: str) -> str:
         """Generate description of file content and relevance"""
         filename = Path(file_path).name
-        path_parts = file_path.split("/")
 
         if "bitcoin" in filename.lower():
             return f"Direct Bitcoin analysis file: {filename}"
@@ -313,7 +312,7 @@ class BitcoinDiscoveryGenerator:
             }
 
         except Exception as e:
-            print(f"⚠️  Bitcoin data collection error: {e}")
+            print("⚠️  Bitcoin data collection error: {e}")
             return {
                 "bitcoin_core_data": {},
                 "price_data": {},
@@ -406,7 +405,7 @@ class BitcoinDiscoveryGenerator:
             }
 
         except Exception as e:
-            print(f"⚠️  Economic indicators collection error: {e}")
+            print("⚠️  Economic indicators collection error: {e}")
             return {
                 "fred_indicators": {},
                 "collection_timestamp": datetime.now().isoformat(),
@@ -424,7 +423,6 @@ class BitcoinDiscoveryGenerator:
         local_data_refs = self.search_local_data_domain()
 
         bitcoin_data = bitcoin_data_result.get("bitcoin_core_data", {})
-        price_data = bitcoin_data_result.get("price_data", {})
         sentiment_data = bitcoin_data_result.get("sentiment_analysis", {})
 
         # Current price for cross-validation
@@ -710,10 +708,10 @@ def main():
     # Save output
     filepath = generator.save_discovery_output(discovery_data)
 
-    print(f"\n✅ Bitcoin discovery analysis completed successfully!")
-    print(f"📁 Output saved to: {filepath}")
-    print(f"📈 Market Cap: ${discovery_data['market_data']['market_cap']:,.0f}")
-    print(f"💰 Current Price: ${discovery_data['market_data']['current_price']:,.2f}")
+    print("\n✅ Bitcoin discovery analysis completed successfully!")
+    print("📁 Output saved to: {filepath}")
+    print("📈 Market Cap: ${discovery_data['market_data']['market_cap']:,.0f}")
+    print("💰 Current Price: ${discovery_data['market_data']['current_price']:,.2f}")
     print(
         f"🏥 CLI Services Health: {discovery_data['cli_service_validation']['health_score']:.1%}"
     )

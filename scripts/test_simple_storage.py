@@ -22,7 +22,7 @@ def test_direct_storage():
 
         # Create manager
         hdm = HistoricalDataManager()
-        print(f"📁 Base path: {hdm.base_path}")
+        print("📁 Base path: {hdm.base_path}")
 
         # Test stock data
         stock_data = {
@@ -42,7 +42,7 @@ def test_direct_storage():
             data_type=DataType.STOCK_DAILY_PRICES,
             source="test",
         )
-        print(f"Storage result: {success}")
+        print("Storage result: {success}")
 
         # Test different symbol
         stock_data2 = {
@@ -62,7 +62,7 @@ def test_direct_storage():
             data_type=DataType.STOCK_DAILY_PRICES,
             source="test",
         )
-        print(f"Storage result: {success2}")
+        print("Storage result: {success2}")
 
         # Test fundamentals
         fundamental_data = {
@@ -79,12 +79,12 @@ def test_direct_storage():
             data_type=DataType.STOCK_FUNDAMENTALS,
             source="test",
         )
-        print(f"Storage result: {success3}")
+        print("Storage result: {success3}")
 
         return success and success2 and success3
 
     except Exception as e:
-        print(f"❌ Direct storage test failed: {e}")
+        print("❌ Direct storage test failed: {e}")
         import traceback
 
         traceback.print_exc()
@@ -105,18 +105,18 @@ def check_files():
     all_files = list(raw_path.rglob("*"))
     json_files = [f for f in all_files if f.suffix == ".json"]
 
-    print(f"📂 Total items in data/raw: {len(all_files)}")
-    print(f"📄 JSON files: {len(json_files)}")
+    print("📂 Total items in data/raw: {len(all_files)}")
+    print("📄 JSON files: {len(json_files)}")
 
     # Show directory structure
     for item in sorted(all_files):
         if item.is_file():
             relative_path = item.relative_to(raw_path)
             size = item.stat().st_size
-            print(f"  📄 {relative_path} ({size} bytes)")
+            print("  📄 {relative_path} ({size} bytes)")
         elif item.is_dir() and item != raw_path:
             relative_path = item.relative_to(raw_path)
-            print(f"  📁 {relative_path}/")
+            print("  📁 {relative_path}/")
 
     return json_files
 
@@ -141,7 +141,7 @@ def main():
     else:
         print("❌ Direct storage test FAILED")
 
-    print(f"📁 Files created: {len(files)}")
+    print("📁 Files created: {len(files)}")
 
     if success and len(files) > 0:
         print("🎉 SUCCESS: Files are being created!")

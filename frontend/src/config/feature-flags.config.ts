@@ -157,7 +157,7 @@ export const FEATURE_FLAGS: FeatureFlagDefinition[] = [
     defaultValue: false,
     environments: {
       development: true,
-      staging: false,
+      staging: true,
       production: false,
     },
     buildTimeOptimization: true,

@@ -43,10 +43,10 @@ def register_industry_analysis_scripts():
     for script_name, script_class in scripts_to_register:
         try:
             register_script(script_class, script_name)
-            print(f"  ✅ Registered: {script_name}")
+            print("  ✅ Registered: {script_name}")
             registered_count += 1
         except Exception as e:
-            print(f"  ❌ Failed to register {script_name}: {e}")
+            print("  ❌ Failed to register {script_name}: {e}")
 
     print(
         f"📊 Industry Analysis Registration Complete: {registered_count}/{len(scripts_to_register)} scripts registered"
@@ -58,9 +58,9 @@ def register_industry_analysis_scripts():
 
     for script_name, _ in scripts_to_register:
         if script_name in available_scripts:
-            print(f"  ✅ {script_name} - Available")
+            print("  ✅ {script_name} - Available")
         else:
-            print(f"  ❌ {script_name} - Missing")
+            print("  ❌ {script_name} - Missing")
 
     return registry
 
@@ -71,15 +71,15 @@ def list_industry_scripts():
     registry = get_global_registry()
     industry_scripts = [s for s in registry.list_available_scripts() if "industry" in s]
 
-    print(f"\n📋 Industry Analysis Scripts ({len(industry_scripts)}):")
+    print("\n📋 Industry Analysis Scripts ({len(industry_scripts)}):")
     for script_name in sorted(industry_scripts):
         metadata = registry.get_script_metadata(script_name)
         if metadata:
-            print(f"  • {script_name}: {metadata.description}")
-            print(f"    Content Types: {metadata.supported_content_types}")
-            print(f"    Requires Validation: {metadata.requires_validation}")
+            print("  • {script_name}: {metadata.description}")
+            print("    Content Types: {metadata.supported_content_types}")
+            print("    Requires Validation: {metadata.requires_validation}")
         else:
-            print(f"  • {script_name}: No metadata available")
+            print("  • {script_name}: No metadata available")
 
 
 def test_industry_script_execution():
@@ -102,9 +102,9 @@ def test_industry_script_execution():
         if result.success:
             print("  ✅ industry_discovery - Test passed")
         else:
-            print(f"  ❌ industry_discovery - Test failed: {result.error}")
+            print("  ❌ industry_discovery - Test failed: {result.error}")
     except Exception as e:
-        print(f"  ❌ industry_discovery - Exception: {e}")
+        print("  ❌ industry_discovery - Exception: {e}")
 
     # Test analysis script (requires discovery output)
     test_params_analysis = test_params.copy()
@@ -117,9 +117,9 @@ def test_industry_script_execution():
         if result.success:
             print("  ✅ industry_analysis - Test passed")
         else:
-            print(f"  ❌ industry_analysis - Test failed: {result.error}")
+            print("  ❌ industry_analysis - Test failed: {result.error}")
     except Exception as e:
-        print(f"  ❌ industry_analysis - Exception: {e}")
+        print("  ❌ industry_analysis - Exception: {e}")
 
 
 if __name__ == "__main__":

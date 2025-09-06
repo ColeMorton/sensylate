@@ -76,9 +76,9 @@ class RegionalIntelligenceLoader:
                 with open(config_file, "r", encoding="utf-8") as f:
                     config = yaml.safe_load(f)
                     self.loaded_configs[region] = config
-                    print(f"Loaded regional intelligence for {region}")
+                    print("Loaded regional intelligence for {region}")
             except Exception as e:
-                print(f"Error loading config for {region}: {e}")
+                print("Error loading config for {region}: {e}")
 
     def get_region_config(self, region: str) -> Dict[str, Any]:
         """Get complete configuration for a region"""
@@ -93,7 +93,7 @@ class RegionalIntelligenceLoader:
                 pass
             else:
                 # Fallback to US as default
-                print(f"Region {region} not found, using US as fallback")
+                print("Region {region} not found, using US as fallback")
                 region = "US"
 
         return self.loaded_configs.get(region, self.loaded_configs.get("US", {}))
@@ -312,27 +312,27 @@ def main():
     print("Available regions:", loader.list_available_regions())
 
     for region in ["US", "EUROPE", "ASIA"]:
-        print(f"\n=== {region} ===")
+        print("\n=== {region} ===")
 
         # Test central bank info
         cb_info = loader.get_central_bank_info(region)
-        print(f"Central Bank: {cb_info.name} ({cb_info.short_name})")
-        print(f"Policy Rate: {cb_info.policy_rate_name}")
+        print("Central Bank: {cb_info.name} ({cb_info.short_name})")
+        print("Policy Rate: {cb_info.policy_rate_name}")
 
         # Test currency info
         currency_info = loader.get_currency_info(region)
-        print(f"Currency: {currency_info.code} - {currency_info.name}")
-        print(f"Regime: {currency_info.regime}")
+        print("Currency: {currency_info.code} - {currency_info.name}")
+        print("Regime: {currency_info.regime}")
 
         # Test key indicators
         indicators = loader.get_key_economic_indicators(region)
-        print(f"Key Indicators: {len(indicators)} found")
+        print("Key Indicators: {len(indicators)} found")
         if indicators:
-            print(f"  - {indicators[0].name} ({indicators[0].importance})")
+            print("  - {indicators[0].name} ({indicators[0].importance})")
 
         # Test validation
         validation = loader.validate_region_config(region)
-        print(f"Completeness: {validation['completeness_score']:.2f}")
+        print("Completeness: {validation['completeness_score']:.2f}")
 
 
 if __name__ == "__main__":

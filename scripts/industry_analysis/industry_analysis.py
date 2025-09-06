@@ -67,10 +67,10 @@ class IndustryAnalysis:
             try:
                 with open(self.discovery_file, "r") as f:
                     data = json.load(f)
-                print(f"✅ Loaded discovery data from: {self.discovery_file}")
+                print("✅ Loaded discovery data from: {self.discovery_file}")
                 return data
             except Exception as e:
-                print(f"⚠️  Failed to load discovery data: {e}")
+                print("⚠️  Failed to load discovery data: {e}")
         return None
 
     def analyze_industry_structure(self) -> Dict[str, Any]:
@@ -593,7 +593,7 @@ class IndustryAnalysis:
         with open(filepath, "w") as f:
             json.dump(data, f, indent=2)
 
-        print(f"✅ Saved analysis output to: {filepath}")
+        print("✅ Saved analysis output to: {filepath}")
         return filepath
 
     # Helper methods for competitive landscape
@@ -1101,15 +1101,15 @@ def main():
     )
 
     # Generate analysis data
-    print(f"\n📊 Starting industry analysis for: {args.industry}")
+    print("\n📊 Starting industry analysis for: {args.industry}")
     analysis_data = analysis.generate_analysis_output()
 
     # Save output
     if args.save_output:
         output_path = analysis.save_analysis_output(analysis_data)
-        print(f"\n✅ Industry analysis complete!")
-        print(f"📊 Confidence Score: {analysis_data['analysis_confidence']}/10.0")
-        print(f"📁 Output saved to: {output_path}")
+        print("\n✅ Industry analysis complete!")
+        print("📊 Confidence Score: {analysis_data['analysis_confidence']}/10.0")
+        print("📁 Output saved to: {output_path}")
     else:
         print(json.dumps(analysis_data, indent=2))
 

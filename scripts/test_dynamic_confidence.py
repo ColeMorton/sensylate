@@ -31,7 +31,7 @@ try:
 
     IMPORTS_AVAILABLE = True
 except ImportError as e:
-    print(f"Import error: {e}")
+    print("Import error: {e}")
     IMPORTS_AVAILABLE = False
 
 
@@ -272,7 +272,7 @@ def run_confidence_tests():
         results = {}
 
         for scenario_name, scenario_data in scenarios.items():
-            print(f"\n📊 Testing Scenario: {scenario_data['description']}")
+            print("\n📊 Testing Scenario: {scenario_data['description']}")
             print("-" * 50)
 
             # Calculate confidence for this scenario
@@ -284,12 +284,12 @@ def run_confidence_tests():
 
             # Check if calculation succeeded or failed
             if "error" in result:
-                print(f"❌ Calculation failed: {result['error']}")
+                print("❌ Calculation failed: {result['error']}")
                 continue
 
             # Display results
-            print(f"Composite Confidence: {result['composite_confidence']:.3f}")
-            print(f"Confidence Level: {result['confidence_level']}")
+            print("Composite Confidence: {result['composite_confidence']:.3f}")
+            print("Confidence Level: {result['confidence_level']}")
             print(
                 f"Meets Institutional Grade: {result.get('meets_institutional_grade', 'Unknown')}"
             )
@@ -297,26 +297,26 @@ def run_confidence_tests():
             # Quality metrics breakdown
             if "quality_metrics" in result:
                 quality = result["quality_metrics"]
-                print(f"\nQuality Breakdown:")
-                print(f"  Completeness: {quality.completeness_score:.3f}")
-                print(f"  Freshness: {quality.freshness_score:.3f}")
-                print(f"  Reliability: {quality.reliability_score:.3f}")
-                print(f"  Consistency: {quality.consistency_score:.3f}")
-                print(f"  Overall Quality: {quality.overall_quality:.3f}")
+                print("\nQuality Breakdown:")
+                print("  Completeness: {quality.completeness_score:.3f}")
+                print("  Freshness: {quality.freshness_score:.3f}")
+                print("  Reliability: {quality.reliability_score:.3f}")
+                print("  Consistency: {quality.consistency_score:.3f}")
+                print("  Overall Quality: {quality.overall_quality:.3f}")
 
             # Validation results
             if "validation_results" in result:
                 validation = result["validation_results"]
-                print(f"\nCross-Source Validation:")
-                print(f"  Sources Available: {validation['source_count']}")
-                print(f"  Source Agreement: {validation['source_agreement']:.3f}")
-                print(f"  Validation Quality: {validation['validation_quality']}")
+                print("\nCross-Source Validation:")
+                print("  Sources Available: {validation['source_count']}")
+                print("  Source Agreement: {validation['source_agreement']:.3f}")
+                print("  Validation Quality: {validation['validation_quality']}")
 
             # Recommendations
             if "recommendations" in result and result["recommendations"]:
-                print(f"\nRecommendations:")
+                print("\nRecommendations:")
                 for rec in result["recommendations"]:
-                    print(f"  • {rec}")
+                    print("  • {rec}")
 
         # Comparative analysis
         print("\n" + "=" * 60)
@@ -328,15 +328,15 @@ def run_confidence_tests():
             results.items(), key=lambda x: x[1]["composite_confidence"], reverse=True
         )
 
-        print(f"\n🏆 Confidence Ranking:")
+        print("\n🏆 Confidence Ranking:")
         for i, (scenario_name, result) in enumerate(sorted_results, 1):
             confidence = result["composite_confidence"]
             level = result["confidence_level"]
             institutional = "✅" if result["meets_institutional_grade"] else "❌"
-            print(f"{i}. {scenario_name}: {confidence:.3f} ({level}) {institutional}")
+            print("{i}. {scenario_name}: {confidence:.3f} ({level}) {institutional}")
 
         # Analyze confidence decay patterns
-        print(f"\n⏰ Data Age Impact Analysis:")
+        print("\n⏰ Data Age Impact Analysis:")
         age_analysis = []
 
         for scenario_name, scenario_data in scenarios.items():
@@ -364,7 +364,7 @@ def run_confidence_tests():
             )
 
         # Source reliability impact
-        print(f"\n🔍 Source Reliability Impact:")
+        print("\n🔍 Source Reliability Impact:")
         reliability_analysis = []
 
         for scenario_name, result in results.items():
@@ -379,11 +379,11 @@ def run_confidence_tests():
                 f"  {scenario_name}: Reliability {reliability:.3f} → Confidence {confidence:.3f}"
             )
 
-        print(f"\n✅ All Dynamic Confidence Engine tests completed successfully!")
+        print("\n✅ All Dynamic Confidence Engine tests completed successfully!")
         return True
 
     except Exception as e:
-        print(f"❌ Confidence engine tests failed: {e}")
+        print("❌ Confidence engine tests failed: {e}")
         import traceback
 
         traceback.print_exc()
@@ -418,8 +418,8 @@ def demonstrate_decay_functions():
         # Test decay over various time periods
         test_ages = [0, 1, 6, 12, 24, 48, 72, 168, 336, 720]  # Hours
 
-        print(f"\n⏰ Fed Funds Rate Confidence Decay (Half-life: 24h):")
-        print(f"{'Age':<10} {'Freshness':<10} {'Confidence':<10} {'Status'}")
+        print("\n⏰ Fed Funds Rate Confidence Decay (Half-life: 24h):")
+        print("{'Age':<10} {'Freshness':<10} {'Confidence':<10} {'Status'}")
         print("-" * 45)
 
         for age_hours in test_ages:
@@ -457,10 +457,10 @@ def demonstrate_decay_functions():
                 status = "❌ Insufficient"
 
             age_str = f"{age_hours}h" if age_hours < 48 else f"{age_hours//24}d"
-            print(f"{age_str:<10} {freshness:<10.3f} {confidence:<10.3f} {status}")
+            print("{age_str:<10} {freshness:<10.3f} {confidence:<10.3f} {status}")
 
         # Test different data types
-        print(f"\n📊 Decay Comparison Across Data Types:")
+        print("\n📊 Decay Comparison Across Data Types:")
         print(
             f"{'Data Type':<20} {'Half-Life':<12} {'1d Decay':<10} {'1w Decay':<10} {'1m Decay'}"
         )
@@ -487,10 +487,10 @@ def demonstrate_decay_functions():
                     f"{data_type:<20} {half_life:<12} {decay_1d:<10.3f} {decay_1w:<10.3f} {decay_1m:<10.3f}"
                 )
 
-        print(f"\n✅ Confidence decay demonstration completed!")
+        print("\n✅ Confidence decay demonstration completed!")
 
     except Exception as e:
-        print(f"❌ Decay demonstration failed: {e}")
+        print("❌ Decay demonstration failed: {e}")
 
 
 if __name__ == "__main__":
@@ -507,16 +507,16 @@ if __name__ == "__main__":
     demonstrate_decay_functions()
 
     if success:
-        print(f"\n🎉 ALL TESTS PASSED!")
-        print(f"Phase 5 implementation is working correctly.")
-        print(f"Dynamic confidence engine successfully demonstrates:")
-        print(f"  ✅ Data aging and confidence decay")
-        print(f"  ✅ Multi-source validation")
-        print(f"  ✅ Quality factor assessment")
-        print(f"  ✅ Cross-source consistency analysis")
-        print(f"  ✅ Institutional-grade confidence calibration")
+        print("\n🎉 ALL TESTS PASSED!")
+        print("Phase 5 implementation is working correctly.")
+        print("Dynamic confidence engine successfully demonstrates:")
+        print("  ✅ Data aging and confidence decay")
+        print("  ✅ Multi-source validation")
+        print("  ✅ Quality factor assessment")
+        print("  ✅ Cross-source consistency analysis")
+        print("  ✅ Institutional-grade confidence calibration")
     else:
-        print(f"\n❌ SOME TESTS FAILED!")
-        print(f"Please review the error messages above.")
+        print("\n❌ SOME TESTS FAILED!")
+        print("Please review the error messages above.")
 
-    print(f"\nTest completed at: {datetime.now().isoformat()}")
+    print("\nTest completed at: {datetime.now().isoformat()}")

@@ -631,20 +631,20 @@ if __name__ == "__main__":
     try:
         result = orchestrator.validate_twitter_post(test_post_path)
 
-        print(f"\nOrchestration Result:")
-        print(f"Overall Reliability Score: {result.overall_reliability_score:.1f}/10.0")
-        print(f"Ready for Publication: {result.ready_for_publication}")
-        print(f"Blocking Issues: {result.is_blocking}")
+        print("\nOrchestration Result:")
+        print("Overall Reliability Score: {result.overall_reliability_score:.1f}/10.0")
+        print("Ready for Publication: {result.ready_for_publication}")
+        print("Blocking Issues: {result.is_blocking}")
 
         if result.real_time_validation.issues:
-            print(f"\nReal-time Validation Issues:")
+            print("\nReal-time Validation Issues:")
             for issue in result.real_time_validation.issues:
-                print(f"  {issue.severity.value.upper()}: {issue.description}")
+                print("  {issue.severity.value.upper()}: {issue.description}")
 
         if not result.ready_for_publication:
-            print(f"\nGenerating corrections...")
+            print("\nGenerating corrections...")
             corrections = orchestrator.generate_corrections(result)
-            print(f"Automated corrections: {len(corrections['automated_corrections'])}")
+            print("Automated corrections: {len(corrections['automated_corrections'])}")
             print(
                 f"Manual review required: {len(corrections['manual_review_required'])}"
             )

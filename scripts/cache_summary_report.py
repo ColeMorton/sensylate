@@ -54,7 +54,7 @@ class CacheImplementationReport:
 
         print("✅ Service Layer Caching: STANDARDIZED")
         for service in self.services:
-            print(f"   • {service}: ✅ Implemented")
+            print("   • {service}: ✅ Implemented")
         print()
 
         print("✅ MCP Server Caching: STANDARDIZED")
@@ -85,7 +85,7 @@ class CacheImplementationReport:
         }
 
         for category, services in ttl_categories.items():
-            print(f"📈 {category}:")
+            print("📈 {category}:")
             for service in services:
                 if service == "fred_economic":
                     ttl = "7200s (2 hours)"
@@ -93,7 +93,7 @@ class CacheImplementationReport:
                     ttl = "3600s (1 hour)"
                 else:
                     ttl = "900s (15 minutes)"
-                print(f"   • {service}: {ttl}")
+                print("   • {service}: {ttl}")
             print()
 
     def _print_infrastructure_components(self) -> None:
@@ -124,8 +124,8 @@ class CacheImplementationReport:
         ]
 
         for component, description in components:
-            print(f"✅ {component}")
-            print(f"   {description}")
+            print("✅ {component}")
+            print("   {description}")
             print()
 
     def _print_performance_benefits(self) -> None:
@@ -148,7 +148,7 @@ class CacheImplementationReport:
         ]
 
         for benefit, description in benefits:
-            print(f"📈 {benefit}: {description}")
+            print("📈 {benefit}: {description}")
 
         print()
 
@@ -193,8 +193,8 @@ class CacheImplementationReport:
         ]
 
         for requirement, status, description in requirements:
-            print(f"{status} {requirement}")
-            print(f"   {description}")
+            print("{status} {requirement}")
+            print("   {description}")
             print()
 
         print("🎯 FINAL ASSESSMENT: EXCELLENT")

@@ -77,8 +77,8 @@ def test_signal_effectiveness_calculations():
     sma_win_rate, sma_winners, sma_total = calculate_win_rate(sample_trades, "SMA")
     ema_win_rate, ema_winners, ema_total = calculate_win_rate(sample_trades, "EMA")
 
-    print(f"SMA Strategy: {sma_win_rate:.1%} win rate ({sma_winners}/{sma_total})")
-    print(f"EMA Strategy: {ema_win_rate:.1%} win rate ({ema_winners}/{ema_total})")
+    print("SMA Strategy: {sma_win_rate:.1%} win rate ({sma_winners}/{sma_total})")
+    print("EMA Strategy: {ema_win_rate:.1%} win rate ({ema_winners}/{ema_total})")
 
     # Test exit efficiency calculation
     def calculate_exit_efficiency(trades):
@@ -92,7 +92,7 @@ def test_signal_effectiveness_calculations():
         return avg_efficiency, efficiencies
 
     avg_exit_efficiency, _ = calculate_exit_efficiency(sample_trades)
-    print(f"Average Exit Efficiency: {avg_exit_efficiency:.3f}")
+    print("Average Exit Efficiency: {avg_exit_efficiency:.3f}")
 
     # Test MFE/MAE ratio calculation
     def calculate_mfe_mae_ratio(trades):
@@ -106,7 +106,7 @@ def test_signal_effectiveness_calculations():
         return avg_ratio, ratios
 
     avg_mfe_mae_ratio, _ = calculate_mfe_mae_ratio(sample_trades)
-    print(f"Average MFE/MAE Ratio: {avg_mfe_mae_ratio:.2f}")
+    print("Average MFE/MAE Ratio: {avg_mfe_mae_ratio:.2f}")
 
     print("✅ Signal effectiveness calculations validated\n")
 
@@ -126,9 +126,9 @@ def test_statistical_performance_metrics():
     median_return = statistics.median(returns)
     std_dev = statistics.stdev(returns) if len(returns) > 1 else 0
 
-    print(f"Mean Return: {mean_return:.3f}")
-    print(f"Median Return: {median_return:.3f}")
-    print(f"Standard Deviation: {std_dev:.3f}")
+    print("Mean Return: {mean_return:.3f}")
+    print("Median Return: {median_return:.3f}")
+    print("Standard Deviation: {std_dev:.3f}")
 
     # Test Sharpe ratio calculation (assuming risk-free rate of 2%)
     risk_free_rate = 0.02 / 12  # Monthly risk-free rate
@@ -136,7 +136,7 @@ def test_statistical_performance_metrics():
 
     if std_dev > 0:
         sharpe_ratio = statistics.mean(excess_returns) / std_dev
-        print(f"Sharpe Ratio: {sharpe_ratio:.3f}")
+        print("Sharpe Ratio: {sharpe_ratio:.3f}")
     else:
         print("Sharpe Ratio: Unable to calculate (zero variance)")
 
@@ -160,7 +160,7 @@ def test_statistical_performance_metrics():
         return -max_dd  # Return as negative value
 
     max_drawdown = calculate_max_drawdown(returns)
-    print(f"Maximum Drawdown: {max_drawdown:.1%}")
+    print("Maximum Drawdown: {max_drawdown:.1%}")
 
     # Test confidence interval calculation
     def calculate_confidence_interval(data, confidence_level=0.95):
@@ -178,7 +178,7 @@ def test_statistical_performance_metrics():
 
     ci_lower, ci_upper = calculate_confidence_interval(returns)
     if ci_lower is not None:
-        print(f"95% Confidence Interval: [{ci_lower:.3f}, {ci_upper:.3f}]")
+        print("95% Confidence Interval: [{ci_lower:.3f}, {ci_upper:.3f}]")
 
     print("✅ Statistical performance metrics validated\n")
 
@@ -275,7 +275,7 @@ def test_trade_quality_classification():
     total_trades = len(trades)
     for quality, count in quality_distribution.items():
         percentage = count / total_trades * 100
-        print(f"  {quality.capitalize()}: {count} trades ({percentage:.1f}%)")
+        print("  {quality.capitalize()}: {count} trades ({percentage:.1f}%)")
 
     print("✅ Trade quality classification validated\n")
 
@@ -351,14 +351,14 @@ def test_optimization_opportunity_identification():
             }
         )
 
-    print(f"Identified {len(opportunities)} optimization opportunities:")
+    print("Identified {len(opportunities)} optimization opportunities:")
     for i, opp in enumerate(opportunities, 1):
-        print(f"\n{i}. {opp['opportunity']}")
-        print(f"   Area: {opp['area']}")
-        print(f"   Current: {opp['current_metric']}")
-        print(f"   Target: {opp['target_metric']}")
-        print(f"   Potential: {opp['improvement_potential']}")
-        print(f"   Confidence: {opp['confidence']:.2f}")
+        print("\n{i}. {opp['opportunity']}")
+        print("   Area: {opp['area']}")
+        print("   Current: {opp['current_metric']}")
+        print("   Target: {opp['target_metric']}")
+        print("   Potential: {opp['improvement_potential']}")
+        print("   Confidence: {opp['confidence']:.2f}")
 
     print("\n✅ Optimization opportunity identification validated\n")
 
@@ -393,7 +393,7 @@ def validate_analysis_schema():
         missing_props = [prop for prop in required_props if prop not in schema_props]
 
         if missing_props:
-            print(f"❌ Missing required properties: {missing_props}")
+            print("❌ Missing required properties: {missing_props}")
         else:
             print("✅ All required properties present")
 
@@ -421,15 +421,15 @@ def validate_analysis_schema():
         else:
             print("❌ Performance measurement structure incomplete")
 
-        print(f"Total top-level properties: {len(schema_props)}")
+        print("Total top-level properties: {len(schema_props)}")
         print("✅ Schema validation complete")
 
     except FileNotFoundError:
         print("❌ Schema file not found")
     except json.JSONDecodeError as e:
-        print(f"❌ Invalid JSON in schema: {e}")
+        print("❌ Invalid JSON in schema: {e}")
     except Exception as e:
-        print(f"❌ Schema validation error: {e}")
+        print("❌ Schema validation error: {e}")
 
 
 def main():

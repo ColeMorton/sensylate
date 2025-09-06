@@ -3924,7 +3924,7 @@ def main():
             for detail in chart_status_summary.get("chart_details", []):
                 if detail["status"] in ["frozen", "static"]:
                     reason = f" ({detail['reason']})" if detail.get("reason") else ""
-                    print(f"   - {detail['chart_type']}: {detail['status']}{reason}")
+                    print("   - {detail['chart_type']}: {detail['status']}{reason}")
             print()
 
     if args.validate_only:
@@ -3937,12 +3937,12 @@ def main():
         overall_healthy = True
         for category, results in validation_results.items():
             status_emoji = "✅" if results["status"] == "healthy" else "⚠️"
-            print(f"{status_emoji} {category.title()}: {results['status']}")
+            print("{status_emoji} {category.title()}: {results['status']}")
 
             if results["issues"]:
                 overall_healthy = False
                 for issue in results["issues"]:
-                    print(f"   - {issue}")
+                    print("   - {issue}")
 
         exit_code = 0 if overall_healthy else 1
         print(
@@ -3980,7 +3980,7 @@ def main():
             print(
                 f"   Categories: {len(result.metadata.get('categories_processed', []))}"
             )
-            print(f"   Duration: {result.processing_time:.2f}s")
+            print("   Duration: {result.processing_time:.2f}s")
 
             # Show discovery statistics
             discovery_stats = result.metadata.get("discovery_stats", {})
@@ -3991,11 +3991,11 @@ def main():
             sys.exit(0)
         else:
             print("❌ Contract-driven refresh failed")
-            print(f"   Error: {result.error}")
+            print("   Error: {result.error}")
 
             contract_results = result.metadata.get("contract_results", {})
             if contract_results.get("failed"):
-                print(f"   Failed contracts: {contract_results['failed']}")
+                print("   Failed contracts: {contract_results['failed']}")
             if contract_results.get("unfulfillable"):
                 print(
                     f"   Unfulfillable contracts: {contract_results['unfulfillable']}"

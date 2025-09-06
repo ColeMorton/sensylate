@@ -80,7 +80,7 @@ class LiveSignalsStatisticalAnalyzer:
         try:
             # Load the CSV data
             self.df = pd.read_csv(self.csv_path)
-            print(f"✅ Loaded {len(self.df)} trades from {self.csv_path}")
+            print("✅ Loaded {len(self.df)} trades from {self.csv_path}")
 
             # Critical validation: All trades must be closed
             if "Status" not in self.df.columns:
@@ -143,7 +143,7 @@ class LiveSignalsStatisticalAnalyzer:
             return True
 
         except Exception as e:
-            print(f"❌ CRITICAL DATA VALIDATION FAILURE: {e}")
+            print("❌ CRITICAL DATA VALIDATION FAILURE: {e}")
             raise
 
     def analyze_strategy_performance(self) -> Dict[str, Any]:
@@ -157,7 +157,7 @@ class LiveSignalsStatisticalAnalyzer:
 
         # Get unique strategies and their trade counts
         strategy_counts = self.df["Strategy_Type"].value_counts()
-        print(f"\n📊 Strategy Distribution: {dict(strategy_counts)}")
+        print("\n📊 Strategy Distribution: {dict(strategy_counts)}")
 
         for strategy in strategy_counts.index:
             strategy_data = self.df[self.df["Strategy_Type"] == strategy].copy()
@@ -895,11 +895,11 @@ class LiveSignalsStatisticalAnalyzer:
         # Add additional comprehensive metrics
         analysis_result.update(additional_metrics)
 
-        print(f"\n✅ Analysis completed successfully!")
-        print(f"📊 Overall Confidence Score: {overall_confidence:.3f}")
-        print(f"📈 Total P&L Analyzed: ${total_pnl:,.2f}")
-        print(f"🎯 Strategies Analyzed: {len(strategy_analysis)}")
-        print(f"📋 Critical Findings: {len(critical_findings)}")
+        print("\n✅ Analysis completed successfully!")
+        print("📊 Overall Confidence Score: {overall_confidence:.3f}")
+        print("📈 Total P&L Analyzed: ${total_pnl:,.2f}")
+        print("🎯 Strategies Analyzed: {len(strategy_analysis)}")
+        print("📋 Critical Findings: {len(critical_findings)}")
 
         return analysis_result
 
@@ -921,7 +921,7 @@ class LiveSignalsStatisticalAnalyzer:
                 analysis_result, f, indent=2, ensure_ascii=False, cls=NumpyEncoder
             )
 
-        print(f"\n💾 Analysis saved to: {output_file}")
+        print("\n💾 Analysis saved to: {output_file}")
         return str(output_file)
 
 
@@ -943,8 +943,8 @@ def main():
         print("\n" + "=" * 70)
         print("🎉 COMPREHENSIVE STATISTICAL ANALYSIS COMPLETED SUCCESSFULLY")
         print("=" * 70)
-        print(f"📄 Analysis Report: {output_path}")
-        print(f"🔢 Trades Analyzed: {results['sample_validation']['total_trades']}")
+        print("📄 Analysis Report: {output_path}")
+        print("🔢 Trades Analyzed: {results['sample_validation']['total_trades']}")
         print(
             f"📈 Overall Confidence: {results['analysis_metadata']['confidence_score']:.1%}"
         )
@@ -955,7 +955,7 @@ def main():
         return output_path
 
     except Exception as e:
-        print(f"\n❌ CRITICAL ANALYSIS FAILURE: {e}")
+        print("\n❌ CRITICAL ANALYSIS FAILURE: {e}")
         import traceback
 
         traceback.print_exc()

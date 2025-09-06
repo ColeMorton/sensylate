@@ -23,10 +23,10 @@ def load_config():
         with open(config_path, "r") as f:
             return yaml.safe_load(f)
     except FileNotFoundError:
-        print(f"⚠️  Config file not found: {config_path}")
+        print("⚠️  Config file not found: {config_path}")
         return {}
     except yaml.YAMLError as e:
-        print(f"⚠️  Error parsing config file: {e}")
+        print("⚠️  Error parsing config file: {e}")
         return {}
 
 
@@ -43,7 +43,7 @@ def validate_template_artifacts():
         discovery_dir = "./data/outputs/macro_analysis/discovery/"
 
         if not os.path.exists(discovery_dir):
-            print(f"⚠️ Discovery directory not found: {discovery_dir}")
+            print("⚠️ Discovery directory not found: {discovery_dir}")
             return 0.8  # Neutral score if no files to validate
 
         # Find all discovery files
@@ -58,7 +58,7 @@ def validate_template_artifacts():
             )
             return 0.8
 
-        print(f"📊 Found {len(discovery_files)} discovery files for validation")
+        print("📊 Found {len(discovery_files)} discovery files for validation")
 
         # Extract volatility parameters from discovery files
         volatility_data = {}
@@ -87,25 +87,25 @@ def validate_template_artifacts():
                         "file_path": file_path,
                         "source": "calculated_cli_data",
                     }
-                    print(f"✓ Extracted calculated volatility parameters for {region}")
+                    print("✓ Extracted calculated volatility parameters for {region}")
                 else:
-                    print(f"⚠️ Missing calculated volatility parameters in {filename}")
+                    print("⚠️ Missing calculated volatility parameters in {filename}")
                     print(
                         f"    Expected: cli_market_intelligence.volatility_analysis.mean_reversion fields"
                     )
-                    print(f"    Check discovery file generation process for {region}")
+                    print("    Check discovery file generation process for {region}")
 
             except json.JSONDecodeError as e:
-                print(f"❌ Invalid JSON in {file_path}: {e}")
+                print("❌ Invalid JSON in {file_path}: {e}")
                 continue
             except KeyError as e:
-                print(f"❌ Missing required field in {file_path}: {e}")
+                print("❌ Missing required field in {file_path}: {e}")
                 print(
                     f"    Check discovery file structure for cli_market_intelligence section"
                 )
                 continue
             except Exception as e:
-                print(f"❌ Unexpected error processing {file_path}: {e}")
+                print("❌ Unexpected error processing {file_path}: {e}")
                 continue
 
         if len(volatility_data) < 2:
@@ -142,7 +142,7 @@ def validate_template_artifacts():
         if data_quality_issues:
             print("⚠️ Data quality warnings:")
             for issue in data_quality_issues:
-                print(f"    - {issue}")
+                print("    - {issue}")
         else:
             print("✅ All calculated volatility parameters within reasonable ranges")
 
@@ -191,12 +191,12 @@ def validate_template_artifacts():
         # Report results
         template_artifact_score = max(0.0, template_artifact_score)
 
-        print(f"📊 Template artifact validation score: {template_artifact_score:.2f}")
+        print("📊 Template artifact validation score: {template_artifact_score:.2f}")
 
         if artifact_issues:
             print("⚠️ Template artifact issues detected:")
             for issue in artifact_issues:
-                print(f"  - {issue}")
+                print("  - {issue}")
         else:
             print("✅ No template artifacts detected")
 
@@ -210,7 +210,7 @@ def validate_template_artifacts():
         return template_artifact_score
 
     except Exception as e:
-        print(f"❌ Template artifact validation failed: {e}")
+        print("❌ Template artifact validation failed: {e}")
         return 0.5
 
 
@@ -245,15 +245,15 @@ def validate_institutional_quality(region="US", date="20250804"):
         analysis_dir, analysis_template.format(region=region.lower(), date=date)
     )
 
-    print(f"📂 Discovery file: {discovery_file}")
-    print(f"📂 Analysis file: {analysis_file}")
+    print("📂 Discovery file: {discovery_file}")
+    print("📂 Analysis file: {analysis_file}")
 
     # Check if files exist
     discovery_exists = os.path.exists(discovery_file)
     analysis_exists = os.path.exists(analysis_file)
 
-    print(f"✓ Discovery file exists: {discovery_exists}")
-    print(f"✓ Analysis file exists: {analysis_exists}")
+    print("✓ Discovery file exists: {discovery_exists}")
+    print("✓ Analysis file exists: {analysis_exists}")
 
     # Initialize synthesis
     try:
@@ -264,7 +264,7 @@ def validate_institutional_quality(region="US", date="20250804"):
         )
         print("✅ MacroEconomicSynthesis initialized successfully")
     except Exception as e:
-        print(f"❌ Failed to initialize synthesis: {e}")
+        print("❌ Failed to initialize synthesis: {e}")
         return False
 
     # Validate enhanced service data collection
@@ -279,17 +279,17 @@ def validate_institutional_quality(region="US", date="20250804"):
         has_liquidity_data = bool(synthesis.global_liquidity_data)
         has_sector_data = bool(synthesis.sector_correlation_data)
 
-        print(f"✓ Economic calendar data collected: {has_calendar_data}")
-        print(f"✓ Global liquidity data collected: {has_liquidity_data}")
-        print(f"✓ Sector correlation data collected: {has_sector_data}")
+        print("✓ Economic calendar data collected: {has_calendar_data}")
+        print("✓ Global liquidity data collected: {has_liquidity_data}")
+        print("✓ Sector correlation data collected: {has_sector_data}")
 
         enhanced_services_score = (
             sum([has_calendar_data, has_liquidity_data, has_sector_data]) / 3
         )
-        print(f"📊 Enhanced services integration score: {enhanced_services_score:.1%}")
+        print("📊 Enhanced services integration score: {enhanced_services_score:.1%}")
 
     except Exception as e:
-        print(f"⚠️  Enhanced service collection warning: {e}")
+        print("⚠️  Enhanced service collection warning: {e}")
         enhanced_services_score = 0.0
 
     # Validate synthesis components
@@ -307,9 +307,9 @@ def validate_institutional_quality(region="US", date="20250804"):
         synthesis_scores["economic_thesis"] = economic_thesis.get(
             "economic_confidence", synthesis_minimum
         )
-        print(f"✅ Economic thesis synthesis: {synthesis_scores['economic_thesis']:.2f}")
+        print("✅ Economic thesis synthesis: {synthesis_scores['economic_thesis']:.2f}")
     except Exception as e:
-        print(f"❌ Economic thesis failed: {e}")
+        print("❌ Economic thesis failed: {e}")
         synthesis_scores["economic_thesis"] = 0.0
 
     try:
@@ -317,9 +317,9 @@ def validate_institutional_quality(region="US", date="20250804"):
         synthesis_scores["business_cycle"] = business_cycle.get(
             "cycle_confidence", synthesis_minimum
         )
-        print(f"✅ Business cycle assessment: {synthesis_scores['business_cycle']:.2f}")
+        print("✅ Business cycle assessment: {synthesis_scores['business_cycle']:.2f}")
     except Exception as e:
-        print(f"❌ Business cycle failed: {e}")
+        print("❌ Business cycle failed: {e}")
         synthesis_scores["business_cycle"] = 0.0
 
     try:
@@ -327,9 +327,9 @@ def validate_institutional_quality(region="US", date="20250804"):
         synthesis_scores["policy_analysis"] = policy_analysis.get(
             "policy_confidence", synthesis_minimum * 0.95
         )
-        print(f"✅ Policy analysis: {synthesis_scores['policy_analysis']:.2f}")
+        print("✅ Policy analysis: {synthesis_scores['policy_analysis']:.2f}")
     except Exception as e:
-        print(f"❌ Policy analysis failed: {e}")
+        print("❌ Policy analysis failed: {e}")
         synthesis_scores["policy_analysis"] = 0.0
 
     try:
@@ -337,9 +337,9 @@ def validate_institutional_quality(region="US", date="20250804"):
         synthesis_scores["risk_assessment"] = risk_assessment.get(
             "risk_confidence", synthesis_minimum * 0.97
         )
-        print(f"✅ Risk assessment: {synthesis_scores['risk_assessment']:.2f}")
+        print("✅ Risk assessment: {synthesis_scores['risk_assessment']:.2f}")
     except Exception as e:
-        print(f"❌ Risk assessment failed: {e}")
+        print("❌ Risk assessment failed: {e}")
         synthesis_scores["risk_assessment"] = 0.0
 
     try:
@@ -351,7 +351,7 @@ def validate_institutional_quality(region="US", date="20250804"):
             f"✅ Investment implications: {synthesis_scores['investment_implications']:.2f}"
         )
     except Exception as e:
-        print(f"❌ Investment implications failed: {e}")
+        print("❌ Investment implications failed: {e}")
         synthesis_scores["investment_implications"] = 0.0
 
     # Calculate overall synthesis quality
@@ -360,7 +360,7 @@ def validate_institutional_quality(region="US", date="20250804"):
         if synthesis_scores
         else 0.0
     )
-    print(f"📊 Average synthesis component score: {avg_synthesis_score:.2f}")
+    print("📊 Average synthesis component score: {avg_synthesis_score:.2f}")
 
     # Test document generation
     print("\n📄 TESTING DOCUMENT GENERATION")
@@ -387,16 +387,16 @@ def validate_institutional_quality(region="US", date="20250804"):
         for section in required_sections:
             if section in document:
                 sections_found += 1
-                print(f"✅ Found: {section}")
+                print("✅ Found: {section}")
             else:
-                print(f"❌ Missing: {section}")
+                print("❌ Missing: {section}")
 
         template_compliance = sections_found / len(required_sections)
-        print(f"📊 Template compliance score: {template_compliance:.1%}")
+        print("📊 Template compliance score: {template_compliance:.1%}")
 
         # Check document length (institutional quality indicator)
         document_length = len(document)
-        print(f"📏 Document length: {document_length:,} characters")
+        print("📏 Document length: {document_length:,} characters")
 
         # Get minimum document length from config
         quality_assurance = config.get("quality_assurance", {})
@@ -408,12 +408,12 @@ def validate_institutional_quality(region="US", date="20250804"):
             if document_length > min_doc_length
             else document_length / min_doc_length
         )
-        print(f"📊 Document length quality: {length_quality:.1%}")
+        print("📊 Document length quality: {length_quality:.1%}")
 
         document_generated = True
 
     except Exception as e:
-        print(f"❌ Document generation failed: {e}")
+        print("❌ Document generation failed: {e}")
         template_compliance = 0.0
         length_quality = 0.0
         document_generated = False
@@ -427,30 +427,30 @@ def validate_institutional_quality(region="US", date="20250804"):
 
     try:
         enhanced_thesis = synthesis._generate_enhanced_core_economic_thesis()
-        print(f"✅ Enhanced core economic thesis: {len(enhanced_thesis)} chars")
+        print("✅ Enhanced core economic thesis: {len(enhanced_thesis)} chars")
         enhanced_methods_score += 1
     except Exception as e:
-        print(f"❌ Enhanced thesis failed: {e}")
+        print("❌ Enhanced thesis failed: {e}")
     enhanced_methods_count += 1
 
     try:
         enhanced_confidence = synthesis._calculate_enhanced_economic_confidence()
-        print(f"✅ Enhanced confidence calculation: {enhanced_confidence:.2f}")
+        print("✅ Enhanced confidence calculation: {enhanced_confidence:.2f}")
         enhanced_methods_score += 1
     except Exception as e:
-        print(f"❌ Enhanced confidence failed: {e}")
+        print("❌ Enhanced confidence failed: {e}")
     enhanced_methods_count += 1
 
     try:
         enhanced_catalysts = synthesis._identify_enhanced_economic_catalysts()
-        print(f"✅ Enhanced economic catalysts: {len(enhanced_catalysts)} items")
+        print("✅ Enhanced economic catalysts: {len(enhanced_catalysts)} items")
         enhanced_methods_score += 1
     except Exception as e:
-        print(f"❌ Enhanced catalysts failed: {e}")
+        print("❌ Enhanced catalysts failed: {e}")
     enhanced_methods_count += 1
 
     enhanced_methods_score /= enhanced_methods_count
-    print(f"📊 Enhanced methods score: {enhanced_methods_score:.1%}")
+    print("📊 Enhanced methods score: {enhanced_methods_score:.1%}")
 
     # Validate template artifacts
     template_artifact_score = validate_template_artifacts()
@@ -469,10 +469,10 @@ def validate_institutional_quality(region="US", date="20250804"):
     }
 
     for component, score in quality_components.items():
-        print(f"📊 {component}: {score:.3f}")
+        print("📊 {component}: {score:.3f}")
 
     overall_quality = sum(quality_components.values())
-    print(f"\n🎯 OVERALL INSTITUTIONAL QUALITY SCORE: {overall_quality:.3f}/1.000")
+    print("\n🎯 OVERALL INSTITUTIONAL QUALITY SCORE: {overall_quality:.3f}/1.000")
 
     # Get quality thresholds from config
     institutional_threshold = confidence_thresholds.get("institutional_grade", 0.95)
@@ -493,8 +493,8 @@ def validate_institutional_quality(region="US", date="20250804"):
         certification = "⚠️  NEEDS IMPROVEMENT"
         status = "NEEDS WORK"
 
-    print(f"\n{certification}")
-    print(f"📋 Validation Status: {status}")
+    print("\n{certification}")
+    print("📋 Validation Status: {status}")
 
     # Use dynamic threshold for pass/fail decision
     pass_threshold = validation_threshold * 0.85  # 85% of validation minimum

@@ -85,12 +85,12 @@ def audit_service_config(
             cache_type = type(service.cache).__name__
             results["cache_type"] = cache_type
 
-        print(f"✅ {service_name}: Configuration audit completed successfully")
+        print("✅ {service_name}: Configuration audit completed successfully")
 
     except Exception as e:
         error_msg = f"Error auditing {service_name}: {str(e)}"
         results["errors"].append(error_msg)
-        print(f"❌ {service_name}: {error_msg}")
+        print("❌ {service_name}: {error_msg}")
 
     return results
 
@@ -138,13 +138,13 @@ def test_historical_data_manager_directly():
             csv_files = list(data_path.rglob("*.csv"))
             meta_files = list(data_path.rglob("*.meta.json"))
 
-            print(f"📄 CSV files found: {len(csv_files)}")
-            print(f"📄 Metadata files found: {len(meta_files)}")
+            print("📄 CSV files found: {len(csv_files)}")
+            print("📄 Metadata files found: {len(meta_files)}")
 
             if csv_files:
-                print(f"   Latest CSV: {csv_files[-1]}")
+                print("   Latest CSV: {csv_files[-1]}")
             if meta_files:
-                print(f"   Latest Meta: {meta_files[-1]}")
+                print("   Latest Meta: {meta_files[-1]}")
 
         else:
             print("❌ Test data storage failed")
@@ -152,7 +152,7 @@ def test_historical_data_manager_directly():
         return success
 
     except Exception as e:
-        print(f"❌ HistoricalDataManager test failed: {e}")
+        print("❌ HistoricalDataManager test failed: {e}")
         return False
 
 
@@ -196,7 +196,7 @@ def test_unified_cache_integration():
         return retrieved_data is not None
 
     except Exception as e:
-        print(f"❌ UnifiedCache test failed: {e}")
+        print("❌ UnifiedCache test failed: {e}")
         return False
 
 
@@ -216,7 +216,7 @@ def main():
 
     # Audit each service
     for service_name, create_function in services_to_test:
-        print(f"\n🔄 Auditing {service_name}...")
+        print("\n🔄 Auditing {service_name}...")
         result = audit_service_config(service_name, create_function)
         audit_results.append(result)
 
@@ -240,25 +240,25 @@ def main():
             and result["historical_manager_initialized"]
         ):
             successful_services.append(service_name)
-            print(f"✅ {service_name}: PASS")
-            print(f"   - Historical Storage: {result['historical_storage_enabled']}")
+            print("✅ {service_name}: PASS")
+            print("   - Historical Storage: {result['historical_storage_enabled']}")
             print(
                 f"   - Historical Manager: {result['historical_manager_initialized']}"
             )
-            print(f"   - Cache Type: {result['cache_type']}")
+            print("   - Cache Type: {result['cache_type']}")
         else:
             failed_services.append(service_name)
-            print(f"❌ {service_name}: FAIL")
+            print("❌ {service_name}: FAIL")
             if result["errors"]:
                 for error in result["errors"]:
-                    print(f"     Error: {error}")
+                    print("     Error: {error}")
 
-    print(f"\n📈 Core Components:")
-    print(f"   - HistoricalDataManager: {'✅ PASS' if hdm_success else '❌ FAIL'}")
-    print(f"   - UnifiedCache: {'✅ PASS' if cache_success else '❌ FAIL'}")
+    print("\n📈 Core Components:")
+    print("   - HistoricalDataManager: {'✅ PASS' if hdm_success else '❌ FAIL'}")
+    print("   - UnifiedCache: {'✅ PASS' if cache_success else '❌ FAIL'}")
 
-    print(f"\n📈 Overall Results:")
-    print(f"   - Services Passing: {len(successful_services)}/{len(audit_results)}")
+    print("\n📈 Overall Results:")
+    print("   - Services Passing: {len(successful_services)}/{len(audit_results)}")
     print(
         f"   - Successful Services: {', '.join(successful_services) if successful_services else 'None'}"
     )

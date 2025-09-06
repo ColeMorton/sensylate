@@ -571,9 +571,9 @@ def main():
         else:
             # Print summary
             print("\n=== DASV Phase 2 Analysis Summary ===")
-            print(f"Portfolio: {args.portfolio}")
-            print(f"Discovery File: {discovery_file}")
-            print(f"Total Trades: {output['data_summary']['total_trades']}")
+            print("Portfolio: {args.portfolio}")
+            print("Discovery File: {discovery_file}")
+            print("Total Trades: {output['data_summary']['total_trades']}")
             print(
                 f"Closed Trades (for metrics): {output['data_summary']['closed_trades']}"
             )
@@ -582,13 +582,13 @@ def main():
             )
             print("\nOverall Performance:")
             perf = output["overall_performance"]["closed_trades_metrics"]
-            print(f"  Win Rate: {perf.get('win_rate', 0):.1%}")
-            print(f"  Profit Factor: {perf.get('profit_factor', 0):.2f}")
-            print(f"  Avg Win: {perf.get('average_win_return', 0):.1%}")
-            print(f"  Avg Loss: {perf.get('average_loss_return', 0):.1%}")
-            print(f"\nRisk Assessment: {output['risk_analysis']['risk_assessment']}")
-            print(f"Recommendations: {len(output['optimization_recommendations'])}")
-            print(f"\nOutput saved to: {output_file}")
+            print("  Win Rate: {perf.get('win_rate', 0):.1%}")
+            print("  Profit Factor: {perf.get('profit_factor', 0):.2f}")
+            print("  Avg Win: {perf.get('average_win_return', 0):.1%}")
+            print("  Avg Loss: {perf.get('average_loss_return', 0):.1%}")
+            print("\nRisk Assessment: {output['risk_analysis']['risk_assessment']}")
+            print("Recommendations: {len(output['optimization_recommendations'])}")
+            print("\nOutput saved to: {output_file}")
 
     except Exception as e:
         logger.error(f"Analysis failed: {str(e)}", exc_info=True)

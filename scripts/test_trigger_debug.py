@@ -35,7 +35,7 @@ def test_trigger_call():
         result = service.get_stock_info("NVDA")
 
         if result:
-            print(f"   ✅ API call successful: {result.get('symbol', 'N/A')}")
+            print("   ✅ API call successful: {result.get('symbol', 'N/A')}")
             print("   🔍 Check the logs above for collection trigger messages")
         else:
             print("   ❌ API call failed")
@@ -43,7 +43,7 @@ def test_trigger_call():
         return True
 
     except Exception as e:
-        print(f"❌ Test failed: {e}")
+        print("❌ Test failed: {e}")
         import traceback
 
         traceback.print_exc()

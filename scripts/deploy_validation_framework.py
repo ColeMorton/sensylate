@@ -34,7 +34,7 @@ try:
     from scripts.utils.dasv_cross_validator import DASVCrossValidator
     from scripts.utils.fed_rate_validation import FedRateValidator
 except ImportError as e:
-    print(f"Error importing validation components: {e}")
+    print("Error importing validation components: {e}")
     print("Please ensure all validation utilities are properly installed")
     sys.exit(1)
 
@@ -480,7 +480,7 @@ def main():
         if args.output:
             with open(args.output, "w") as f:
                 f.write(output_text)
-            print(f"Results written to {args.output}")
+            print("Results written to {args.output}")
         else:
             print(output_text)
 

@@ -269,45 +269,45 @@ class ArchitectureValidator:
         if imports_clean:
             print("   ✅ No direct import violations found")
         else:
-            print(f"   ❌ Found {len(violations)} direct import violations:")
+            print("   ❌ Found {len(violations)} direct import violations:")
             for violation in violations:
-                print(f"      - {violation}")
+                print("      - {violation}")
 
         # 2. CLI usage count
         print("\n2. Counting CLI usage patterns...")
         cli_count = self.count_cli_usage()
-        print(f"   📊 Found {cli_count} CLI usage patterns in command files")
+        print("   📊 Found {cli_count} CLI usage patterns in command files")
 
         # 3. BaseFinancialCLI compliance
         print("\n3. Validating BaseFinancialCLI compliance...")
         compliant, non_compliant = self.validate_base_cli_compliance()
-        print(f"   ✅ {len(compliant)} CLI scripts are compliant")
+        print("   ✅ {len(compliant)} CLI scripts are compliant")
         if non_compliant:
-            print(f"   ⚠️  {len(non_compliant)} CLI scripts need BaseFinancialCLI:")
+            print("   ⚠️  {len(non_compliant)} CLI scripts need BaseFinancialCLI:")
             for script in non_compliant:
-                print(f"      - {script}")
+                print("      - {script}")
 
         # 4. Service factories
         print("\n4. Finding service factory patterns...")
         factories = self.find_service_factories()
-        print(f"   🏭 Found {len(factories)} service factory patterns")
+        print("   🏭 Found {len(factories)} service factory patterns")
 
         # 5. Test coverage
         print("\n5. Analyzing test coverage...")
         cli_tests, service_tests = self.count_test_coverage()
-        print(f"   🧪 CLI tests: {cli_tests}, Service tests: {service_tests}")
+        print("   🧪 CLI tests: {cli_tests}, Service tests: {service_tests}")
 
         # 6. Health checks
         print("\n6. Running CLI health checks...")
         health_results = self.run_cli_health_checks()
         for script, healthy in health_results.items():
             status = "✅" if healthy else "❌"
-            print(f"   {status} {script}: {'healthy' if healthy else 'failed'}")
+            print("   {status} {script}: {'healthy' if healthy else 'failed'}")
 
         # 7. Calculate overall score
         print("\n7. Calculating architecture score...")
         score = self.calculate_architecture_score()
-        print(f"   🎯 Overall Architecture Score: {score}/10")
+        print("   🎯 Overall Architecture Score: {score}/10")
 
         # Print summary
         print("\n" + "=" * 60)
@@ -324,15 +324,15 @@ class ArchitectureValidator:
             print("❌ NEEDS WORK: Architecture requires significant improvements")
 
         # Detailed breakdown
-        print(f"\nDetailed Breakdown:")
-        print(f"- Direct Import Compliance: {'✅' if imports_clean else '❌'}")
-        print(f"- CLI Usage Patterns: {cli_count} instances")
+        print("\nDetailed Breakdown:")
+        print("- Direct Import Compliance: {'✅' if imports_clean else '❌'}")
+        print("- CLI Usage Patterns: {cli_count} instances")
         print(
             f"- BaseFinancialCLI Compliance: {len(compliant)}/{len(compliant) + len(non_compliant)} scripts"
         )
-        print(f"- Service Factory Patterns: {len(factories)} found")
-        print(f"- Test Coverage: {cli_tests + service_tests} tests")
-        print(f"- Overall Score: {score}/10")
+        print("- Service Factory Patterns: {len(factories)} found")
+        print("- Test Coverage: {cli_tests + service_tests} tests")
+        print("- Overall Score: {score}/10")
 
         return self.validation_results
 

@@ -102,7 +102,7 @@ class RealTimeEconomicData:
             return 4.33
 
         except Exception as e:
-            print(f"Warning: Could not fetch Fed funds rate: {e}")
+            print("Warning: Could not fetch Fed funds rate: {e}")
             return 4.33
 
     def get_treasury_yields(self, force_refresh: bool = False) -> Dict[str, float]:
@@ -157,7 +157,7 @@ class RealTimeEconomicData:
             return yields
 
         except Exception as e:
-            print(f"Warning: Could not fetch Treasury yields: {e}")
+            print("Warning: Could not fetch Treasury yields: {e}")
             # Return fallback values based on current market data
             return {"three_month": 4.41, "ten_year": 4.39, "spread": -0.02}
 
@@ -257,7 +257,7 @@ class RealTimeEconomicData:
             fred_service.clear_cache()
             print("FRED Economic service cache cleared")
         except Exception as e:
-            print(f"Warning: Could not clear cache: {e}")
+            print("Warning: Could not clear cache: {e}")
 
     def get_cache_status(self) -> Dict[str, Any]:
         """Get cache status from underlying FREDEconomicService"""
@@ -293,15 +293,15 @@ if __name__ == "__main__":
 
     econ_data = RealTimeEconomicData(env="prod")
 
-    print(f"Current Fed Funds Rate: {econ_data.format_fed_funds_rate()}")
-    print(f"Economic Environment: {econ_data.get_economic_environment_assessment()}")
-    print(f"Impact Assessment: {econ_data.get_economic_impact_assessment()}")
+    print("Current Fed Funds Rate: {econ_data.format_fed_funds_rate()}")
+    print("Economic Environment: {econ_data.get_economic_environment_assessment()}")
+    print("Impact Assessment: {econ_data.get_economic_impact_assessment()}")
 
     yields = econ_data.get_treasury_yields()
-    print(f"Treasury Yields: {yields}")
+    print("Treasury Yields: {yields}")
 
     context = econ_data.get_economic_context()
-    print(f"Full Context: {json.dumps(context, indent=2)}")
+    print("Full Context: {json.dumps(context, indent=2)}")
 
     cache_status = econ_data.get_cache_status()
-    print(f"Cache Status: {json.dumps(cache_status, indent=2)}")
+    print("Cache Status: {json.dumps(cache_status, indent=2)}")

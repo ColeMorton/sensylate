@@ -21,7 +21,7 @@ def test_configuration():
     config_path = project_root / "frontend/src/config/photo-booth.json"
 
     if not config_path.exists():
-        print(f"❌ Configuration file not found: {config_path}")
+        print("❌ Configuration file not found: {config_path}")
         return False
 
     try:
@@ -37,7 +37,7 @@ def test_configuration():
         ]
         for key in required_keys:
             if key not in config:
-                print(f"❌ Missing required configuration key: {key}")
+                print("❌ Missing required configuration key: {key}")
                 return False
 
         # Validate active dashboards
@@ -52,11 +52,11 @@ def test_configuration():
             print("❌ No enabled dashboards found")
             return False
 
-        print(f"✅ Configuration valid - {len(enabled_dashboards)} enabled dashboards")
+        print("✅ Configuration valid - {len(enabled_dashboards)} enabled dashboards")
         return True
 
     except json.JSONDecodeError as e:
-        print(f"❌ Invalid JSON in configuration: {e}")
+        print("❌ Invalid JSON in configuration: {e}")
         return False
 
 
@@ -67,7 +67,7 @@ def test_page_files():
     # Check photo booth page (now direct Astro page)
     page_path = project_root / "frontend/src/pages/photo-booth.astro"
     if not page_path.exists():
-        print(f"❌ Photo booth page not found: {page_path}")
+        print("❌ Photo booth page not found: {page_path}")
         return False
 
     # Check component
@@ -75,7 +75,7 @@ def test_page_files():
         project_root / "frontend/src/layouts/shortcodes/PhotoBoothDisplay.tsx"
     )
     if not component_path.exists():
-        print(f"❌ PhotoBoothDisplay component not found: {component_path}")
+        print("❌ PhotoBoothDisplay component not found: {component_path}")
         return False
 
     print("✅ Page files exist")
@@ -88,7 +88,7 @@ def test_dashboard_templates():
 
     dashboards_dir = project_root / "frontend/src/content/dashboards"
     if not dashboards_dir.exists():
-        print(f"❌ Dashboards directory not found: {dashboards_dir}")
+        print("❌ Dashboards directory not found: {dashboards_dir}")
         return False
 
     dashboard_files = list(dashboards_dir.glob("*.mdx"))
@@ -96,7 +96,7 @@ def test_dashboard_templates():
         print("❌ No dashboard template files found")
         return False
 
-    print(f"✅ Found {len(dashboard_files)} dashboard templates")
+    print("✅ Found {len(dashboard_files)} dashboard templates")
     return True
 
 
@@ -106,7 +106,7 @@ def test_screenshot_generator():
 
     generator_path = project_root / "scripts/photo_booth_generator.py"
     if not generator_path.exists():
-        print(f"❌ Screenshot generator not found: {generator_path}")
+        print("❌ Screenshot generator not found: {generator_path}")
         return False
 
     print("✅ Screenshot generator exists")
@@ -119,7 +119,7 @@ def test_yarn_scripts():
 
     package_json_path = project_root / "frontend/package.json"
     if not package_json_path.exists():
-        print(f"❌ package.json not found: {package_json_path}")
+        print("❌ package.json not found: {package_json_path}")
         return False
 
     try:
@@ -135,11 +135,11 @@ def test_yarn_scripts():
             print("❌ No photo-booth yarn scripts found")
             return False
 
-        print(f"✅ Found {len(photo_booth_scripts)} photo-booth yarn scripts")
+        print("✅ Found {len(photo_booth_scripts)} photo-booth yarn scripts")
         return True
 
     except json.JSONDecodeError as e:
-        print(f"❌ Invalid JSON in package.json: {e}")
+        print("❌ Invalid JSON in package.json: {e}")
         return False
 
 
@@ -151,7 +151,7 @@ def test_output_directory():
     output_dir.mkdir(parents=True, exist_ok=True)
 
     if not output_dir.exists():
-        print(f"❌ Could not create output directory: {output_dir}")
+        print("❌ Could not create output directory: {output_dir}")
         return False
 
     print("✅ Output directory created successfully")
@@ -181,7 +181,7 @@ def test_dependencies():
         return True
 
     except Exception as e:
-        print(f"❌ Error checking dependencies: {e}")
+        print("❌ Error checking dependencies: {e}")
         return False
 
 
@@ -191,7 +191,7 @@ def test_api_endpoint():
 
     api_path = project_root / "frontend/src/pages/api/dashboards.json.ts"
     if not api_path.exists():
-        print(f"❌ API endpoint file not found: {api_path}")
+        print("❌ API endpoint file not found: {api_path}")
         return False
 
     with open(api_path) as f:
@@ -206,7 +206,7 @@ def test_api_endpoint():
 
     for element in required_elements:
         if element not in content:
-            print(f"❌ Missing required API element: {element}")
+            print("❌ Missing required API element: {element}")
             return False
 
     print("✅ API endpoint is properly configured")
@@ -262,12 +262,12 @@ def main():
             else:
                 failed += 1
         except Exception as e:
-            print(f"❌ Test {test.__name__} failed with exception: {e}")
+            print("❌ Test {test.__name__} failed with exception: {e}")
             failed += 1
         print()
 
     print("=" * 50)
-    print(f"📊 Test Results: {passed} passed, {failed} failed")
+    print("📊 Test Results: {passed} passed, {failed} failed")
 
     if failed == 0:
         print("🎉 All tests passed! Photo booth setup is ready.")

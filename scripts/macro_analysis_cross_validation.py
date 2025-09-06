@@ -66,8 +66,8 @@ class MacroAnalysisCrossValidation:
         analysis_files.sort(key=lambda x: os.path.getmtime(x), reverse=True)
         selected_files = analysis_files[: self.max_files]
 
-        print(f"📁 Discovered {len(analysis_files)} analysis files")
-        print(f"🎯 Selected {len(selected_files)} latest files for cross-validation")
+        print("📁 Discovered {len(analysis_files)} analysis files")
+        print("🎯 Selected {len(selected_files)} latest files for cross-validation")
 
         return selected_files
 
@@ -81,9 +81,9 @@ class MacroAnalysisCrossValidation:
                     data = json.load(f)
                     filename = os.path.basename(file_path)
                     analysis_data[filename] = data
-                    print(f"✅ Loaded: {filename}")
+                    print("✅ Loaded: {filename}")
             except Exception as e:
-                print(f"⚠️  Failed to load {file_path}: {e}")
+                print("⚠️  Failed to load {file_path}: {e}")
 
         return analysis_data
 
@@ -337,7 +337,7 @@ class MacroAnalysisCrossValidation:
         with open(filepath, "w") as f:
             json.dump(serializable_data, f, indent=2)
 
-        print(f"✅ Saved cross-analysis validation output to: {filepath}")
+        print("✅ Saved cross-analysis validation output to: {filepath}")
         return filepath
 
     # Helper methods for structural consistency validation
@@ -1358,9 +1358,9 @@ def main():
             max_files=args.max_files,
         )
 
-        print(f"\n🔍 Starting macro-economic cross-analysis validation")
-        print(f"📁 Analysis directory: {args.analysis_dir}")
-        print(f"📊 Maximum files to analyze: {args.max_files}")
+        print("\n🔍 Starting macro-economic cross-analysis validation")
+        print("📁 Analysis directory: {args.analysis_dir}")
+        print("📊 Maximum files to analyze: {args.max_files}")
 
         # Generate validation report
         validation_report = validator.generate_validation_report()
@@ -1379,18 +1379,18 @@ def main():
             "critical_issues_count"
         ]
 
-        print(f"\n✅ Cross-analysis validation complete!")
-        print(f"📊 Cross-Analysis Score: {cross_analysis_score:.3f}/1.0")
+        print("\n✅ Cross-analysis validation complete!")
+        print("📊 Cross-Analysis Score: {cross_analysis_score:.3f}/1.0")
         print(
             f"🎯 Target Achievement: {'✅ PASS' if cross_analysis_score >= 0.9 else '❌ REVIEW REQUIRED'}"
         )
-        print(f"🏆 Validation Status: {validation_status}")
-        print(f"⚠️  Critical Issues: {critical_issues}")
-        print(f"📁 Validation report saved to: {output_path}")
+        print("🏆 Validation Status: {validation_status}")
+        print("⚠️  Critical Issues: {critical_issues}")
+        print("📁 Validation report saved to: {output_path}")
 
         # Display critical findings if any
         if validation_report["detected_issues"]:
-            print(f"\n🚨 Issues Detected:")
+            print("\n🚨 Issues Detected:")
             for issue in validation_report["detected_issues"]:
                 severity_icon = (
                     "🔴"
@@ -1399,11 +1399,11 @@ def main():
                     if issue["severity"] == "medium"
                     else "🟢"
                 )
-                print(f"  {severity_icon} {issue['category']}: {issue['finding']}")
+                print("  {severity_icon} {issue['category']}: {issue['finding']}")
 
         # Display recommendations
         if validation_report["recommendations"]:
-            print(f"\n💡 Key Recommendations:")
+            print("\n💡 Key Recommendations:")
             for rec in validation_report["recommendations"]:
                 priority_icon = (
                     "🔴"
@@ -1412,10 +1412,10 @@ def main():
                     if rec["priority"] == "medium"
                     else "🟢"
                 )
-                print(f"  {priority_icon} {rec['recommendation']}")
+                print("  {priority_icon} {rec['recommendation']}")
 
     except Exception as e:
-        print(f"❌ Cross-validation failed: {e}")
+        print("❌ Cross-validation failed: {e}")
         sys.exit(1)
 
 

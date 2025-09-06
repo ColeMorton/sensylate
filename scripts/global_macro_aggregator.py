@@ -1182,10 +1182,10 @@ def main():
         logger.warning(f"Schema validation failed: {e}")
 
     # Print summary
-    print(f"\n✓ Global macro-economic discovery analysis completed")
-    print(f"Output: {output_path}")
-    print(f"Regional data sources: {list(aggregator.regional_data.keys())}")
-    print(f"Institutional grade: Ready for analyze phase")
+    print("\n✓ Global macro-economic discovery analysis completed")
+    print("Output: {output_path}")
+    print("Regional data sources: {list(aggregator.regional_data.keys())}")
+    print("Institutional grade: Ready for analyze phase")
 
 
 if __name__ == "__main__":

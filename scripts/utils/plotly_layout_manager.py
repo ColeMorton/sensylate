@@ -444,11 +444,11 @@ if __name__ == "__main__":
     layout_manager = create_plotly_layout_manager(test_config)
     fig = layout_manager.create_dashboard_subplot()
 
-    print(f"Created Plotly figure: {fig.layout.width}x{fig.layout.height}")
+    print("Created Plotly figure: {fig.layout.width}x{fig.layout.height}")
     print(
         f"Subplot grid: {layout_manager.grid_config.rows}x{layout_manager.grid_config.cols}"
     )
 
     # Test export configuration
     export_config = layout_manager.configure_high_dpi_export(scale=2.0)
-    print(f"High-DPI export: {export_config}")
+    print("High-DPI export: {export_config}")

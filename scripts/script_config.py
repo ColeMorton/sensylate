@@ -401,7 +401,7 @@ def load_config_from_file(config_file: Path) -> ScriptConfig:
         return ScriptConfig.from_file(config_file)
     except ConfigurationError as e:
         # Fall back to environment configuration
-        print(f"Warning: Failed to load config file {config_file}: {e}")
+        print("Warning: Failed to load config file {config_file}: {e}")
         print("Falling back to environment configuration")
         return ScriptConfig.from_environment()
 

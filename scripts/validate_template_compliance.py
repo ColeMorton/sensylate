@@ -98,7 +98,7 @@ def main():
     print("=" * 60)
 
     for file_path in recent_files:
-        print(f"\n📄 Validating: {file_path.name}")
+        print("\n📄 Validating: {file_path.name}")
         print("-" * 40)
 
         result = validate_fundamental_analysis_structure(file_path)
@@ -108,19 +108,19 @@ def main():
         else:
             print("❌ FAILED - Template compliance issues found")
 
-        print(f"📊 Compliance Score: {result['template_compliance_score']:.2%}")
+        print("📊 Compliance Score: {result['template_compliance_score']:.2%}")
 
         if result["elements_found"]:
             print("\n✅ Elements Found:")
             for element in result["elements_found"][:3]:  # Show first 3
-                print(f"   {element}")
+                print("   {element}")
             if len(result["elements_found"]) > 3:
-                print(f"   ... and {len(result['elements_found']) - 3} more")
+                print("   ... and {len(result['elements_found']) - 3} more")
 
         if result["issues"]:
             print("\n❌ Issues Found:")
             for issue in result["issues"]:
-                print(f"   • {issue}")
+                print("   • {issue}")
 
     print("\n" + "=" * 60)
     print("✅ Validation complete")

@@ -367,12 +367,12 @@ if __name__ == "__main__":
         specialties = mapping.get_regional_specialties(region)
         data_focus = mapping.get_data_focus(region)
 
-        print(f"\n{region} Configuration:")
-        print(f"  Primary Services: {services['primary']}")
-        print(f"  Central Bank: {data_focus['central_bank']}")
-        print(f"  Currency Focus: {data_focus['currency']}")
-        print(f"  Specialties: {list(specialties.keys())}")
-        print(f"  Min Required: {mapping.get_minimum_services_required(region)}")
+        print("\n{region} Configuration:")
+        print("  Primary Services: {services['primary']}")
+        print("  Central Bank: {data_focus['central_bank']}")
+        print("  Currency Focus: {data_focus['currency']}")
+        print("  Specialties: {list(specialties.keys())}")
+        print("  Min Required: {mapping.get_minimum_services_required(region)}")
 
         # Test coverage validation
         test_services = services["primary"][:3]  # Simulate partial availability

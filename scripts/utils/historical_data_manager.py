@@ -1060,5 +1060,5 @@ if __name__ == "__main__":
         source="yahoo_finance",
     )
 
-    print(f"Storage success: {success}")
-    print(f"Available data: {hdm.get_available_data('AAPL')}")
+    print("Storage success: {success}")
+    print("Available data: {hdm.get_available_data('AAPL')}")

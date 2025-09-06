@@ -513,8 +513,8 @@ def main():
         print("\n" + "=" * 60)
         print("ATOMIC ANALYSIS COMPLETE")
         print("=" * 60)
-        print(f"Portfolio: {result['portfolio']}")
-        print(f"Execution: {result['analysis_metadata']['execution_timestamp']}")
+        print("Portfolio: {result['portfolio']}")
+        print("Execution: {result['analysis_metadata']['execution_timestamp']}")
         print(
             f"Overall Confidence: {result['analysis_metadata']['confidence_score']:.3f}"
         )
@@ -522,9 +522,9 @@ def main():
         print("\nSTATISTICAL ANALYSIS:")
         if "performance_metrics" in result:
             perf = result["performance_metrics"]
-            print(f"  Win Rate: {perf.get('win_rate', 0):.1%}")
-            print(f"  Profit Factor: {perf.get('profit_factor', 0):.2f}")
-            print(f"  Total PnL: ${perf.get('total_pnl', 0):.2f}")
+            print("  Win Rate: {perf.get('win_rate', 0):.1%}")
+            print("  Profit Factor: {perf.get('profit_factor', 0):.2f}")
+            print("  Total PnL: ${perf.get('total_pnl', 0):.2f}")
 
         if (
             "statistical_analysis" in result
@@ -533,8 +533,8 @@ def main():
             sig = result["statistical_analysis"]["statistical_significance"][
                 "return_vs_zero"
             ]
-            print(f"  Statistical Significance: {sig.get('significant_at_95', False)}")
-            print(f"  P-Value: {sig.get('p_value', 1.0):.4f}")
+            print("  Statistical Significance: {sig.get('significant_at_95', False)}")
+            print("  P-Value: {sig.get('p_value', 1.0):.4f}")
 
         print("\nSIGNAL EFFECTIVENESS:")
         signal_analysis = result.get("signal_effectiveness", {}).get(
@@ -543,7 +543,7 @@ def main():
         print(
             f"  Strategies Analyzed: {signal_analysis.get('total_strategies_analyzed', 0)}"
         )
-        print(f"  Strategies Excluded: {signal_analysis.get('strategies_excluded', 0)}")
+        print("  Strategies Excluded: {signal_analysis.get('strategies_excluded', 0)}")
 
         print("\nVALIDATION RESULTS:")
         validation = result.get("unified_engine_validation", {})
@@ -551,7 +551,7 @@ def main():
             f"  Overall Validation Success: {validation.get('overall_validation_success', False)}"
         )
 
-        print(f"\nOutput saved to: {analysis_tool.output_dir}")
+        print("\nOutput saved to: {analysis_tool.output_dir}")
         print("=" * 60)
 
 

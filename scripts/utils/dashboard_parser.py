@@ -386,9 +386,9 @@ if __name__ == "__main__":
 
     try:
         data = parse_dashboard_data(file_path)
-        print(f"Successfully parsed {data['performance_metrics'].total_trades} trades")
-        print(f"Monthly data points: {len(data['monthly_performance'])}")
-        print(f"Quality categories: {len(data['quality_distribution'])}")
+        print("Successfully parsed {data['performance_metrics'].total_trades} trades")
+        print("Monthly data points: {len(data['monthly_performance'])}")
+        print("Quality categories: {len(data['quality_distribution'])}")
     except Exception as e:
-        print(f"Error parsing file: {e}")
+        print("Error parsing file: {e}")
         sys.exit(1)

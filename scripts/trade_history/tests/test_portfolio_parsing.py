@@ -112,14 +112,14 @@ def test_portfolio_parsing():
     print("=== Portfolio Parameter Parsing Tests ===\n")
 
     for portfolio, expected_success, description in test_cases:
-        print(f"Test: {description}")
-        print(f"Input: '{portfolio}'")
+        print("Test: {description}")
+        print("Input: '{portfolio}'")
 
         success, filename, error = parse_portfolio_parameter(portfolio)
 
-        print(f"Result: {'✅ SUCCESS' if success else '❌ FAILED'}")
+        print("Result: {'✅ SUCCESS' if success else '❌ FAILED'}")
         if success:
-            print(f"Resolved to: {filename}")
+            print("Resolved to: {filename}")
 
             # Try to extract CSV info if file exists
             csv_path = f"/Users/colemorton/Projects/sensylate/data/raw/trade_history/{filename}"
@@ -132,7 +132,7 @@ def test_portfolio_parsing():
                 print("Key columns: Position_UUID, Ticker, Strategy_Type, Status")
 
         else:
-            print(f"Error: {error}")
+            print("Error: {error}")
 
         print("-" * 50)
 
@@ -161,7 +161,7 @@ def validate_discovery_schema():
         missing_keys = [key for key in required_keys if key not in schema]
 
         if missing_keys:
-            print(f"❌ Missing required schema keys: {missing_keys}")
+            print("❌ Missing required schema keys: {missing_keys}")
         else:
             print("✅ Schema structure valid")
 
@@ -176,16 +176,16 @@ def validate_discovery_schema():
         missing_props = [prop for prop in required_props if prop not in schema_props]
 
         if missing_props:
-            print(f"❌ Missing required properties: {missing_props}")
+            print("❌ Missing required properties: {missing_props}")
         else:
             print("✅ Required properties present")
 
-        print(f"Total properties defined: {len(schema.get('properties', {}))}")
+        print("Total properties defined: {len(schema.get('properties', {}))}")
 
     except json.JSONDecodeError as e:
-        print(f"❌ Invalid JSON: {e}")
+        print("❌ Invalid JSON: {e}")
     except Exception as e:
-        print(f"❌ Schema validation error: {e}")
+        print("❌ Schema validation error: {e}")
 
 
 def main():

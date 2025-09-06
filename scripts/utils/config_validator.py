@@ -459,15 +459,15 @@ if __name__ == "__main__":
 
         summary = validate_dashboard_config(config)
 
-        print(f"✅ Configuration validation completed")
-        print(f"   Errors: {summary['error_count']}")
-        print(f"   Warnings: {summary['warning_count']}")
+        print("✅ Configuration validation completed")
+        print("   Errors: {summary['error_count']}")
+        print("   Warnings: {summary['warning_count']}")
 
         if summary["warnings"]:
             print("\nWarnings:")
             for warning in summary["warnings"]:
-                print(f"  - {warning}")
+                print("  - {warning}")
 
     except Exception as e:
-        print(f"❌ Configuration validation failed: {e}")
+        print("❌ Configuration validation failed: {e}")
         sys.exit(1)

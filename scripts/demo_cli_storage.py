@@ -12,8 +12,8 @@ from pathlib import Path
 
 def run_command(cmd, description):
     """Run a command and show results"""
-    print(f"\n🔄 {description}")
-    print(f"   Command: {' '.join(cmd)}")
+    print("\n🔄 {description}")
+    print("   Command: {' '.join(cmd)}")
 
     try:
         result = subprocess.run(
@@ -27,16 +27,16 @@ def run_command(cmd, description):
                 lines = result.stdout.strip().split("\n")
                 for line in lines[-3:]:
                     if line.strip():
-                        print(f"   📄 {line}")
+                        print("   📄 {line}")
         else:
             print("   ❌ Command failed")
             if result.stderr:
-                print(f"   Error: {result.stderr[:200]}")
+                print("   Error: {result.stderr[:200]}")
 
         return result.returncode == 0
 
     except Exception as e:
-        print(f"   ❌ Failed to run command: {e}")
+        print("   ❌ Failed to run command: {e}")
         return False
 
 
@@ -77,7 +77,7 @@ def show_latest_files(count=3):
     # Sort by modification time
     all_files.sort(key=lambda x: x.stat().st_mtime, reverse=True)
 
-    print(f"\n📄 Latest {min(count, len(all_files))} files:")
+    print("\n📄 Latest {min(count, len(all_files))} files:")
     for file_path in all_files[:count]:
         relative_path = file_path.relative_to(raw_path)
         size = file_path.stat().st_size
@@ -86,14 +86,14 @@ def show_latest_files(count=3):
             if file_path.suffix == ".csv"
             else ("Metadata" if file_path.name.endswith(".meta.json") else "JSON Data")
         )
-        print(f"   📄 {relative_path} ({size} bytes) [{file_type}]")
+        print("   📄 {relative_path} ({size} bytes) [{file_type}]")
 
     # Show summary of file types
-    print(f"\n📊 File Summary:")
-    print(f"   - CSV Data Files: {len(csv_files)}")
-    print(f"   - Metadata Files: {len(meta_files)}")
-    print(f"   - Old JSON Files: {len(old_json_files)}")
-    print(f"   Total: {len(all_files)} files")
+    print("\n📊 File Summary:")
+    print("   - CSV Data Files: {len(csv_files)}")
+    print("   - Metadata Files: {len(meta_files)}")
+    print("   - Old JSON Files: {len(old_json_files)}")
+    print("   Total: {len(all_files)} files")
 
 
 def main():
@@ -103,7 +103,7 @@ def main():
     print("This demonstrates CLI commands that trigger file creation in ./data/raw/")
 
     initial_count = count_files()
-    print(f"\n📁 Initial file count: {initial_count}")
+    print("\n📁 Initial file count: {initial_count}")
 
     # Test fundamental analysis (should trigger multiple API calls)
     success1 = run_command(
@@ -113,7 +113,7 @@ def main():
 
     # Check file count after first command
     after_first = count_files()
-    print(f"📁 Files after fundamental analysis: {after_first}")
+    print("📁 Files after fundamental analysis: {after_first}")
 
     # Test with different symbol
     success2 = run_command(
@@ -123,13 +123,13 @@ def main():
 
     # Check final count
     final_count = count_files()
-    print(f"📁 Final file count: {final_count}")
+    print("📁 Final file count: {final_count}")
 
     # Show results
     new_files = final_count - initial_count
-    print(f"\n📊 Results:")
-    print(f"   📈 New files created: {new_files}")
-    print(f"   ✅ Fundamental analysis commands: {success1 and success2}")
+    print("\n📊 Results:")
+    print("   📈 New files created: {new_files}")
+    print("   ✅ Fundamental analysis commands: {success1 and success2}")
 
     if new_files > 0:
         show_latest_files(5)

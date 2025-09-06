@@ -19,7 +19,7 @@ def load_test_data(file_path: str):
         with open(file_path, "r") as f:
             return json.load(f)
     except Exception as e:
-        print(f"Error loading test data from {file_path}: {e}")
+        print("Error loading test data from {file_path}: {e}")
         return {}
 
 
@@ -109,10 +109,10 @@ def test_twitter_fundamental_templates():
     results = []
 
     for template_file, data_file, ticker, description in test_cases:
-        print(f"\n📋 Testing {description}")
-        print(f"   Template: {template_file}")
-        print(f"   Data: {data_file}")
-        print(f"   Ticker: {ticker}")
+        print("\n📋 Testing {description}")
+        print("   Template: {template_file}")
+        print("   Data: {data_file}")
+        print("   Ticker: {ticker}")
 
         # Load test data
         data_path = Path(__file__).parent / "test_data" / data_file
@@ -123,13 +123,13 @@ def test_twitter_fundamental_templates():
         results.append(result)
 
         if result["status"] == "SUCCESS":
-            print(f"   ✅ Status: {result['status']}")
-            print(f"   📏 Character Count: {result['character_count']}")
-            print(f"   💬 Word Count: {result['word_count']}")
-            print(f"   🎯 Has Ticker: {result['has_ticker']}")
-            print(f"   ⚠️ Has Disclaimer: {result['has_disclaimer']}")
-            print(f"   🚫 Bold Formatting: {result['has_bold_formatting']}")
-            print(f"   🏷️ Has Hashtags: {result['has_hashtags']}")
+            print("   ✅ Status: {result['status']}")
+            print("   📏 Character Count: {result['character_count']}")
+            print("   💬 Word Count: {result['word_count']}")
+            print("   🎯 Has Ticker: {result['has_ticker']}")
+            print("   ⚠️ Has Disclaimer: {result['has_disclaimer']}")
+            print("   🚫 Bold Formatting: {result['has_bold_formatting']}")
+            print("   🏷️ Has Hashtags: {result['has_hashtags']}")
 
             # Check character limit for Twitter
             if result["character_count"] > 280:
@@ -144,10 +144,10 @@ def test_twitter_fundamental_templates():
                 if len(result["content"]) > 150
                 else result["content"]
             )
-            print(f"      {preview}")
+            print("      {preview}")
         else:
-            print(f"   ❌ Status: {result['status']}")
-            print(f"   Error: {result['error']}")
+            print("   ❌ Status: {result['status']}")
+            print("   Error: {result['error']}")
 
     return results
 
@@ -177,11 +177,11 @@ def test_blog_templates():
     results = []
 
     for template_file, data_file, ticker, sector, description in test_cases:
-        print(f"\n📋 Testing {description}")
-        print(f"   Template: {template_file}")
-        print(f"   Data: {data_file}")
-        print(f"   Ticker: {ticker}")
-        print(f"   Sector: {sector}")
+        print("\n📋 Testing {description}")
+        print("   Template: {template_file}")
+        print("   Data: {data_file}")
+        print("   Ticker: {ticker}")
+        print("   Sector: {sector}")
 
         # Load test data
         data_path = Path(__file__).parent / "test_data" / data_file
@@ -192,14 +192,14 @@ def test_blog_templates():
         results.append(result)
 
         if result["status"] == "SUCCESS":
-            print(f"   ✅ Status: {result['status']}")
-            print(f"   💬 Word Count: {result['word_count']}")
-            print(f"   📏 Character Count: {result['character_count']}")
+            print("   ✅ Status: {result['status']}")
+            print("   💬 Word Count: {result['word_count']}")
+            print("   📏 Character Count: {result['character_count']}")
             print(
                 f"   🎯 Has Ticker/Sector: {result['has_ticker'] or (sector and sector in result['content'])}"
             )
-            print(f"   ⚠️ Has Disclaimer: {result['has_disclaimer']}")
-            print(f"   🚫 Bold Formatting: {result['has_bold_formatting']}")
+            print("   ⚠️ Has Disclaimer: {result['has_disclaimer']}")
+            print("   🚫 Bold Formatting: {result['has_bold_formatting']}")
 
             # Check minimum word count for blog
             if result["word_count"] < 500:
@@ -235,9 +235,9 @@ def test_blog_templates():
             total_sections = len(institutional_sections)
             compliance_rate = section_compliance / total_sections
 
-            print(f"   📋 Has Frontmatter: {has_frontmatter}")
-            print(f"   📑 Has Headers: {has_headers}")
-            print(f"   📊 Has Confidence Scoring: {has_confidence_scoring}")
+            print("   📋 Has Frontmatter: {has_frontmatter}")
+            print("   📑 Has Headers: {has_headers}")
+            print("   📊 Has Confidence Scoring: {has_confidence_scoring}")
             print(
                 f"   🏛️ Institutional Sections: {section_compliance}/{total_sections} ({compliance_rate*100:.1f}%)"
             )
@@ -250,7 +250,7 @@ def test_blog_templates():
             economic_mentions = sum(
                 1 for indicator in economic_indicators if indicator in content
             )
-            print(f"   🌍 Economic Context: {economic_mentions} indicators present")
+            print("   🌍 Economic Context: {economic_mentions} indicators present")
 
             # Multi-source validation check
             data_sources = [
@@ -261,10 +261,10 @@ def test_blog_templates():
                 "validation",
             ]
             source_mentions = sum(1 for source in data_sources if source in content)
-            print(f"   📊 Multi-Source Validation: {source_mentions} sources referenced")
+            print("   📊 Multi-Source Validation: {source_mentions} sources referenced")
         else:
-            print(f"   ❌ Status: {result['status']}")
-            print(f"   Error: {result['error']}")
+            print("   ❌ Status: {result['status']}")
+            print("   Error: {result['error']}")
 
     return results
 
@@ -312,24 +312,24 @@ def test_validation_templates():
     results = []
 
     for template_file, data, description in test_cases:
-        print(f"\n📋 Testing {description}")
-        print(f"   Template: {template_file}")
+        print("\n📋 Testing {description}")
+        print("   Template: {template_file}")
 
         # Test template
         result = test_template_rendering(template_file, data)
         results.append(result)
 
         if result["status"] == "SUCCESS":
-            print(f"   ✅ Status: {result['status']}")
-            print(f"   💬 Word Count: {result['word_count']}")
-            print(f"   📊 Has Quality Metrics: {'quality' in result['content'].lower()}")
-            print(f"   📋 Has Validation Tables: {'|' in result['content']}")
+            print("   ✅ Status: {result['status']}")
+            print("   💬 Word Count: {result['word_count']}")
+            print("   📊 Has Quality Metrics: {'quality' in result['content'].lower()}")
+            print("   📋 Has Validation Tables: {'|' in result['content']}")
             print(
                 f"   🎯 Has Status Indicators: {'✅' in result['content'] or '❌' in result['content']}"
             )
         else:
-            print(f"   ❌ Status: {result['status']}")
-            print(f"   Error: {result['error']}")
+            print("   ❌ Status: {result['status']}")
+            print("   Error: {result['error']}")
 
     return results
 
@@ -426,10 +426,10 @@ def test_template_selection_logic():
         selected = select_optimal_template(scenario["data"])
         correct = selected == scenario["expected_template"]
 
-        print(f"\n   📋 {scenario['name']}")
-        print(f"      Expected: {scenario['expected_template']}")
-        print(f"      Selected: {selected}")
-        print(f"      Result: {'✅ CORRECT' if correct else '❌ INCORRECT'}")
+        print("\n   📋 {scenario['name']}")
+        print("      Expected: {scenario['expected_template']}")
+        print("      Selected: {selected}")
+        print("      Result: {'✅ CORRECT' if correct else '❌ INCORRECT'}")
 
     return scenarios
 
@@ -449,10 +449,10 @@ def generate_test_summary(twitter_results, blog_results, validation_results):
     failed_tests = total_tests - successful_tests
 
     print("📈 Overall Results:")
-    print(f"   Total Tests: {total_tests}")
-    print(f"   Successful: {successful_tests}")
-    print(f"   Failed: {failed_tests}")
-    print(f"   Success Rate: {(successful_tests/total_tests)*100:.1f}%")
+    print("   Total Tests: {total_tests}")
+    print("   Successful: {successful_tests}")
+    print("   Failed: {failed_tests}")
+    print("   Success Rate: {(successful_tests/total_tests)*100:.1f}%")
 
     print("\n📋 Template Categories:")
     print(
@@ -473,8 +473,8 @@ def generate_test_summary(twitter_results, blog_results, validation_results):
         avg_chars = sum(twitter_char_counts) / len(twitter_char_counts)
         over_limit = sum(1 for count in twitter_char_counts if count > 280)
         print("\n📏 Twitter Character Analysis:")
-        print(f"   Average Characters: {avg_chars:.1f}")
-        print(f"   Over 280 Limit: {over_limit}/{len(twitter_char_counts)}")
+        print("   Average Characters: {avg_chars:.1f}")
+        print("   Over 280 Limit: {over_limit}/{len(twitter_char_counts)}")
 
     # Institutional compliance checks
     compliant_content = 0
@@ -488,8 +488,8 @@ def generate_test_summary(twitter_results, blog_results, validation_results):
                 compliant_content += 1
 
     print("\n✅ Institutional Compliance:")
-    print(f"   Compliant Content: {compliant_content}/{successful_tests}")
-    print(f"   Compliance Rate: {(compliant_content/successful_tests)*100:.1f}%")
+    print("   Compliant Content: {compliant_content}/{successful_tests}")
+    print("   Compliance Rate: {(compliant_content/successful_tests)*100:.1f}%")
 
     # Enhanced institutional metrics analysis
     if successful_tests > 0:
@@ -539,15 +539,15 @@ def generate_test_summary(twitter_results, blog_results, validation_results):
             )
 
             print("\n🏛️ Institutional Quality Metrics:")
-            print(f"   Confidence Scoring: {avg_confidence*100:.1f}% adoption")
-            print(f"   Economic Context: {avg_economic*100:.1f}% integration")
-            print(f"   Risk Assessment: {avg_risk*100:.1f}% coverage")
-            print(f"   Multi-Source Validation: {avg_sources*100:.1f}% implementation")
+            print("   Confidence Scoring: {avg_confidence*100:.1f}% adoption")
+            print("   Economic Context: {avg_economic*100:.1f}% integration")
+            print("   Risk Assessment: {avg_risk*100:.1f}% coverage")
+            print("   Multi-Source Validation: {avg_sources*100:.1f}% implementation")
 
             overall_institutional = (
                 avg_confidence + avg_economic + avg_risk + avg_sources
             ) / 4
-            print(f"   📊 Overall Institutional Score: {overall_institutional*100:.1f}%")
+            print("   📊 Overall Institutional Score: {overall_institutional*100:.1f}%")
             print(
                 f"   🏆 Certification Status: {'✅ ACHIEVED' if overall_institutional >= 0.9 else '⚠️ PARTIAL' if overall_institutional >= 0.7 else '❌ NOT ACHIEVED'}"
             )

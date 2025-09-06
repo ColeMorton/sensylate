@@ -235,7 +235,7 @@ class IndicatorMapper:
                     extracted_indicators.append(processed_indicator)
 
             except Exception as e:
-                print(f"Error extracting {mapping.regional_indicator.name}: {e}")
+                print("Error extracting {mapping.regional_indicator.name}: {e}")
                 continue
 
         return extracted_indicators
@@ -528,26 +528,26 @@ def main():
 
     # Test indicator extraction for different regions
     for region in ["US", "EUROPE", "ASIA"]:
-        print(f"\n=== {region} Regional Indicators ===")
+        print("\n=== {region} Regional Indicators ===")
 
         extracted = mapper.extract_regional_indicators(sample_discovery, region)
-        print(f"Extracted {len(extracted)} indicators")
+        print("Extracted {len(extracted)} indicators")
 
         if extracted:
             for indicator in extracted[:3]:  # Show first 3
-                print(f"  {indicator.name}: {indicator.current_value}")
-                print(f"    Trend: {indicator.trend_direction}")
-                print(f"    Confidence: {indicator.confidence:.3f}")
+                print("  {indicator.name}: {indicator.current_value}")
+                print("    Trend: {indicator.trend_direction}")
+                print("    Confidence: {indicator.confidence:.3f}")
                 print(
                     f"    Regional Significance: {indicator.regional_significance:.2f}"
                 )
 
         # Generate summary
         summary = mapper.generate_regional_indicator_summary(extracted, region)
-        print(f"\nSummary:")
-        print(f"  Coverage Score: {summary['coverage_score']:.2f}")
-        print(f"  Average Confidence: {summary['average_confidence']:.3f}")
-        print(f"  Key Signals: {len(summary['key_signals'])}")
+        print("\nSummary:")
+        print("  Coverage Score: {summary['coverage_score']:.2f}")
+        print("  Average Confidence: {summary['average_confidence']:.3f}")
+        print("  Key Signals: {len(summary['key_signals'])}")
 
 
 if __name__ == "__main__":

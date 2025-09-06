@@ -1092,11 +1092,11 @@ def main():
         print("\n" + "=" * 60)
         print("TRADE HISTORY SYNTHESIS COMPLETE")
         print("=" * 60)
-        print(f"Portfolio: {args.portfolio}")
-        print(f"Reports Generated: {len(reports)}")
+        print("Portfolio: {args.portfolio}")
+        print("Reports Generated: {len(reports)}")
 
         for report_type, file_path in reports.items():
-            print(f"  {report_type.capitalize()}: {file_path}")
+            print("  {report_type.capitalize()}: {file_path}")
 
         print("=" * 60)
 

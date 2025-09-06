@@ -1001,13 +1001,13 @@ if __name__ == "__main__":
     available_services = manager.get_available_services()
     if available_services:
         test_service = available_services[0]
-        print(f"\n=== Testing {test_service} service ===")
+        print("\n=== Testing {test_service} service ===")
         try:
             service = get_cli_service(test_service)
             result = service.execute_command("--help")
-            print(f"Success: {result.success}")
+            print("Success: {result.success}")
             print(
                 f"Output: {result.content[:200] if result.content else 'No output'}..."
             )
         except Exception as e:
-            print(f"Error: {e}")
+            print("Error: {e}")

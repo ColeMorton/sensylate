@@ -148,7 +148,7 @@ class PathSynchronizer:
             issues.extend(self._validate_variable_usage(file_path, content))
 
         except Exception as e:
-            print(f"Error scanning {file_path}: {e}")
+            print("Error scanning {file_path}: {e}")
 
         return issues
 
@@ -246,7 +246,7 @@ class PathSynchronizer:
 
     def scan_all_commands(self, file_pattern: str = "*.txt") -> SyncReport:
         """Scan all command files for path issues"""
-        print(f"🔍 Scanning command files in {self.commands_dir}")
+        print("🔍 Scanning command files in {self.commands_dir}")
 
         report = SyncReport(
             timestamp=datetime.now(),
@@ -309,7 +309,7 @@ class PathSynchronizer:
                 with open(file_path, "w") as f:
                     f.write(content)
 
-                print(f"  ✅ Fixed {fixes_applied} issues in {file_path.name}")
+                print("  ✅ Fixed {fixes_applied} issues in {file_path.name}")
             elif fixes_applied > 0:
                 print(
                     f"  🔍 Would fix {fixes_applied} issues in {file_path.name} (dry-run)"
@@ -318,7 +318,7 @@ class PathSynchronizer:
             return fixes_applied
 
         except Exception as e:
-            print(f"  ❌ Error fixing {file_path}: {e}")
+            print("  ❌ Error fixing {file_path}: {e}")
             return 0
 
     def synchronize_paths(
@@ -335,7 +335,7 @@ class PathSynchronizer:
 
         # Apply fixes if not dry run
         if not dry_run and report.file_issues:
-            print(f"\n🔧 Applying fixes to {len(report.file_issues)} files...")
+            print("\n🔧 Applying fixes to {len(report.file_issues)} files...")
 
             for file_path, issues in report.file_issues.items():
                 fixes = self.fix_file(Path(file_path), issues, dry_run=False)
@@ -348,26 +348,26 @@ class PathSynchronizer:
         print("\n" + "=" * 70)
         print("PATH SYNCHRONIZATION REPORT")
         print("=" * 70)
-        print(f"📅 Timestamp: {report.timestamp.strftime('%Y-%m-%d %H:%M:%S')}")
-        print(f"📁 Files scanned: {report.total_files_scanned}")
-        print(f"⚠️  Files with issues: {report.files_with_issues}")
-        print(f"🔍 Total issues found: {report.total_issues}")
+        print("📅 Timestamp: {report.timestamp.strftime('%Y-%m-%d %H:%M:%S')}")
+        print("📁 Files scanned: {report.total_files_scanned}")
+        print("⚠️  Files with issues: {report.files_with_issues}")
+        print("🔍 Total issues found: {report.total_issues}")
 
         if report.issues_fixed > 0:
-            print(f"✅ Issues fixed: {report.issues_fixed}")
+            print("✅ Issues fixed: {report.issues_fixed}")
 
         if report.issues_by_type:
-            print(f"\n📊 Issues by Type:")
+            print("\n📊 Issues by Type:")
             for issue_type, count in sorted(
                 report.issues_by_type.items(), key=lambda x: x[1], reverse=True
             ):
-                print(f"  {issue_type}: {count}")
+                print("  {issue_type}: {count}")
 
         if report.file_issues:
-            print(f"\n📋 Detailed Issues:")
+            print("\n📋 Detailed Issues:")
             for file_path, issues in sorted(report.file_issues.items()):
                 file_name = Path(file_path).name
-                print(f"\n  {file_name} ({len(issues)} issues):")
+                print("\n  {file_name} ({len(issues)} issues):")
 
                 # Group issues by type
                 issues_by_type = {}
@@ -377,15 +377,15 @@ class PathSynchronizer:
                     issues_by_type[issue.issue_type].append(issue)
 
                 for issue_type, typed_issues in issues_by_type.items():
-                    print(f"    {issue_type}:")
+                    print("    {issue_type}:")
                     for issue in typed_issues[:3]:  # Show first 3 of each type
                         print(
                             f"      Line {issue.line_number}: {issue.original_text} → {issue.suggested_fix}"
                         )
                     if len(typed_issues) > 3:
-                        print(f"      ... and {len(typed_issues) - 3} more")
+                        print("      ... and {len(typed_issues) - 3} more")
 
-        print(f"\n✅ Validation: {'PASSED' if report.validation_passed else 'FAILED'}")
+        print("\n✅ Validation: {'PASSED' if report.validation_passed else 'FAILED'}")
 
     def validate_consistency(self) -> bool:
         """Quick validation check for CI/CD integration"""
@@ -474,7 +474,7 @@ def main():
 
         if args.export:
             export_path = synchronizer.export_report(report, args.export)
-            print(f"\n📄 Report exported to: {export_path}")
+            print("\n📄 Report exported to: {export_path}")
 
     else:
         # Default scan mode (dry-run)
@@ -483,10 +483,10 @@ def main():
 
         if args.export:
             export_path = synchronizer.export_report(report, args.export)
-            print(f"\n📄 Report exported to: {export_path}")
+            print("\n📄 Report exported to: {export_path}")
 
         if not report.validation_passed:
-            print(f"\n💡 Run with --fix to apply {report.total_issues} fixes")
+            print("\n💡 Run with --fix to apply {report.total_issues} fixes")
 
 
 if __name__ == "__main__":

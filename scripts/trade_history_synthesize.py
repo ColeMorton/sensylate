@@ -567,21 +567,21 @@ def main():
         print("\n" + "=" * 60)
         print("ATOMIC SYNTHESIS COMPLETE")
         print("=" * 60)
-        print(f"Portfolio: {result['portfolio']}")
-        print(f"Execution: {result['synthesis_metadata']['execution_timestamp']}")
+        print("Portfolio: {result['portfolio']}")
+        print("Execution: {result['synthesis_metadata']['execution_timestamp']}")
         print(
             f"Confidence Score: {result['synthesis_metadata']['confidence_score']:.3f}"
         )
 
         print("\nKEY METRICS:")
         metrics = result["key_metrics"]["performance_summary"]
-        print(f"  Win Rate: {metrics.get('win_rate', 0):.1%}")
-        print(f"  Total P&L: ${metrics.get('total_pnl', 0):.2f}")
-        print(f"  Profit Factor: {metrics.get('profit_factor', 0):.2f}")
+        print("  Win Rate: {metrics.get('win_rate', 0):.1%}")
+        print("  Total P&L: ${metrics.get('total_pnl', 0):.2f}")
+        print("  Profit Factor: {metrics.get('profit_factor', 0):.2f}")
 
         print("\nREPORT DATA STRUCTURES:")
         report_data = result["report_data_structures"]
-        print(f"  Executive Dashboard: Ready")
+        print("  Executive Dashboard: Ready")
         print(
             f"  Historical Analysis: {report_data['historical_analysis']['closed_trades_summary']['count']} closed trades"
         )
@@ -591,11 +591,11 @@ def main():
 
         print("\nCONFIDENCE ASSESSMENT:")
         confidence = result["key_metrics"]["confidence_assessment"]
-        print(f"  Overall Confidence: {confidence['overall_confidence']:.3f}")
-        print(f"  Sample Size Adequate: {confidence['sample_size_adequate']}")
-        print(f"  Statistical Significance: {confidence['statistical_significance']}")
+        print("  Overall Confidence: {confidence['overall_confidence']:.3f}")
+        print("  Sample Size Adequate: {confidence['sample_size_adequate']}")
+        print("  Statistical Significance: {confidence['statistical_significance']}")
 
-        print(f"\nOutput saved to: {synthesis_tool.output_dir}")
+        print("\nOutput saved to: {synthesis_tool.output_dir}")
         print("=" * 60)
 
 

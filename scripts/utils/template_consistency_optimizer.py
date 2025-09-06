@@ -374,7 +374,7 @@ class TemplateConsistencyOptimizer:
                 inconsistencies={"system": ["Templates directory not found"]},
             )
 
-        print(f"🔍 Analyzing templates in {self.templates_dir}")
+        print("🔍 Analyzing templates in {self.templates_dir}")
 
         # Analyze each template file
         self.template_analyses = []
@@ -739,7 +739,7 @@ class TemplateConsistencyOptimizer:
                     f.write(template_content)
 
                 exported_files.append(str(output_file))
-                print(f"  📄 Exported: {output_file.name}")
+                print("  📄 Exported: {output_file.name}")
 
         return exported_files
 
@@ -749,48 +749,48 @@ class TemplateConsistencyOptimizer:
         print("TEMPLATE CONSISTENCY ANALYSIS REPORT")
         print("=" * 60)
 
-        print(f"📊 Analysis Summary:")
-        print(f"  Total templates analyzed: {report.total_templates}")
-        print(f"  Domains covered: {', '.join(report.domains_analyzed)}")
-        print(f"  Template types: {', '.join(report.template_types)}")
-        print(f"  Overall quality score: {report.quality_score:.2f}/1.0")
+        print("📊 Analysis Summary:")
+        print("  Total templates analyzed: {report.total_templates}")
+        print("  Domains covered: {', '.join(report.domains_analyzed)}")
+        print("  Template types: {', '.join(report.template_types)}")
+        print("  Overall quality score: {report.quality_score:.2f}/1.0")
 
         if report.common_variables:
-            print(f"\n🔧 Most Common Variables:")
+            print("\n🔧 Most Common Variables:")
             sorted_variables = sorted(
                 report.common_variables.items(), key=lambda x: x[1], reverse=True
             )
             for variable, count in sorted_variables[:10]:
-                print(f"  {variable}: {count} templates")
+                print("  {variable}: {count} templates")
 
         if report.common_macros:
-            print(f"\n🧩 Most Common Macros:")
+            print("\n🧩 Most Common Macros:")
             sorted_macros = sorted(
                 report.common_macros.items(), key=lambda x: x[1], reverse=True
             )
             for macro, count in sorted_macros:
-                print(f"  {macro}: {count} templates")
+                print("  {macro}: {count} templates")
 
         if report.inconsistencies:
             print(
                 f"\n⚠️  Inconsistencies Found ({len(report.inconsistencies)} templates):"
             )
             for template, issues in report.inconsistencies.items():
-                print(f"  {template}:")
+                print("  {template}:")
                 for issue in issues[:3]:  # Show first 3 issues
-                    print(f"    • {issue}")
+                    print("    • {issue}")
                 if len(issues) > 3:
-                    print(f"    • ... and {len(issues) - 3} more")
+                    print("    • ... and {len(issues) - 3} more")
 
         if report.standardization_opportunities:
-            print(f"\n🎯 Standardization Opportunities:")
+            print("\n🎯 Standardization Opportunities:")
             for i, opportunity in enumerate(report.standardization_opportunities, 1):
-                print(f"  {i}. {opportunity}")
+                print("  {i}. {opportunity}")
 
         if report.recommendations:
-            print(f"\n📋 Recommendations:")
+            print("\n📋 Recommendations:")
             for rec in report.recommendations:
-                print(f"  {rec}")
+                print("  {rec}")
 
 
 def main():
@@ -821,9 +821,9 @@ def main():
 
     if args.export_templates:
         # Export standardized templates
-        print(f"\n📤 Exporting standardized template files...")
+        print("\n📤 Exporting standardized template files...")
         exported_files = optimizer.export_standardized_templates(args.output_dir)
-        print(f"✅ Exported {len(exported_files)} standardized template files")
+        print("✅ Exported {len(exported_files)} standardized template files")
 
 
 if __name__ == "__main__":

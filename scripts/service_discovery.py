@@ -416,10 +416,10 @@ if __name__ == "__main__":
 
     # Test local data availability
     test_tickers = ["AAPL", "MSFT", "GOOGL"]
-    print(f"\n=== Local Data Availability for {test_tickers} ===")
+    print("\n=== Local Data Availability for {test_tickers} ===")
     for ticker in test_tickers:
         availability = discovery.check_local_data_availability(ticker)
-        print(f"{ticker}: {availability['local_coverage']:.1%} coverage")
+        print("{ticker}: {availability['local_coverage']:.1%} coverage")
 
     # Test optimization planning
     print("\n=== Optimization Plan ===")

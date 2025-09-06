@@ -342,7 +342,7 @@ class ChartGenerationOptimizer:
                     results.append(result)
                 except Exception as e:
                     # Log error and continue
-                    print(f"Chart generation failed: {e}")
+                    print("Chart generation failed: {e}")
                     results.append((None, None))
 
         return results
@@ -530,11 +530,11 @@ def performance_monitor(func):
             result = func(*args, **kwargs)
             end_time = time.time()
 
-            print(f"⚡ {func.__name__} completed in {end_time - start_time:.3f}s")
+            print("⚡ {func.__name__} completed in {end_time - start_time:.3f}s")
             return result
         except Exception as e:
             end_time = time.time()
-            print(f"❌ {func.__name__} failed in {end_time - start_time:.3f}s: {e}")
+            print("❌ {func.__name__} failed in {end_time - start_time:.3f}s: {e}")
             raise
 
     return wrapper
@@ -558,20 +558,20 @@ if __name__ == "__main__":
     optimizer = create_production_optimizer()
 
     print("🚀 Production Optimizer Initialized")
-    print(f"Configuration: {optimizer.config}")
+    print("Configuration: {optimizer.config}")
 
     # Test template caching
     optimizer.template_cache.set_template("test", "light", "template_object")
     cached = optimizer.template_cache.get_template("test", "light")
-    print(f"✅ Template caching working: {cached is not None}")
+    print("✅ Template caching working: {cached is not None}")
 
     # Test data sampling
     large_data = list(range(1000))
     sampled = optimizer.data_sampler.sample_data(large_data, 100, "intelligent")
-    print(f"📊 Data sampling: {len(large_data)} -> {len(sampled)} items")
+    print("📊 Data sampling: {len(large_data)} -> {len(sampled)} items")
 
     # Generate performance report
     report = optimizer.get_performance_report()
-    print(f"📈 Performance report: {report.get('message', 'Data available')}")
+    print("📈 Performance report: {report.get('message', 'Data available')}")
 
     print("✅ Production optimizer ready for deployment")

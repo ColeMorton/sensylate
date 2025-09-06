@@ -62,16 +62,16 @@ def test_template_rendering():
     results = []
 
     for test_case in test_cases:
-        print(f"\n📝 Testing: {test_case['name']}")
+        print("\n📝 Testing: {test_case['name']}")
         print("-" * 40)
 
         try:
             # Load sample data
-            print(f"   Loading data: {test_case['data_file'].name}")
+            print("   Loading data: {test_case['data_file'].name}")
             data = load_sample_data(test_case["data_file"])
 
             # Load template
-            print(f"   Loading template: {test_case['template']}")
+            print("   Loading template: {test_case['template']}")
             template = jinja_env.get_template(test_case["template"])
 
             # Prepare context
@@ -82,7 +82,7 @@ def test_template_rendering():
             }
 
             # Render template
-            print(f"   Rendering template...")
+            print("   Rendering template...")
             content = template.render(**context)
 
             # Basic validation
@@ -110,11 +110,11 @@ def test_template_rendering():
                     missing_sections.append(section)
 
             if missing_sections:
-                print(f"   ⚠️  Missing sections: {', '.join(missing_sections)}")
+                print("   ⚠️  Missing sections: {', '.join(missing_sections)}")
 
             # Success
-            print(f"   ✅ Template rendered successfully")
-            print(f"   📊 Content length: {len(content):,} characters")
+            print("   ✅ Template rendered successfully")
+            print("   📊 Content length: {len(content):,} characters")
 
             results.append(
                 {
@@ -126,7 +126,7 @@ def test_template_rendering():
             )
 
         except TemplateError as e:
-            print(f"   ❌ Template Error: {e}")
+            print("   ❌ Template Error: {e}")
             results.append(
                 {
                     "name": test_case["name"],
@@ -136,7 +136,7 @@ def test_template_rendering():
             )
 
         except Exception as e:
-            print(f"   ❌ Error: {e}")
+            print("   ❌ Error: {e}")
             results.append(
                 {"name": test_case["name"], "status": "FAILED", "error": str(e)}
             )
@@ -151,18 +151,18 @@ def test_template_rendering():
 
     for result in results:
         status_icon = "✅" if result["status"] == "PASSED" else "❌"
-        print(f"{status_icon} {result['name']}: {result['status']}")
+        print("{status_icon} {result['name']}: {result['status']}")
 
         if result["status"] == "PASSED":
-            print(f"   📊 Content length: {result['content_length']:,} characters")
+            print("   📊 Content length: {result['content_length']:,} characters")
             if result.get("missing_sections"):
                 print(
                     f"   ⚠️  Missing sections: {', '.join(result['missing_sections'])}"
                 )
         else:
-            print(f"   💥 Error: {result.get('error', 'Unknown error')}")
+            print("   💥 Error: {result.get('error', 'Unknown error')}")
 
-    print(f"\n🎯 OVERALL RESULT: {passed}/{total} tests passed")
+    print("\n🎯 OVERALL RESULT: {passed}/{total} tests passed")
 
     if passed == total:
         print("🎉 All templates rendered successfully!")

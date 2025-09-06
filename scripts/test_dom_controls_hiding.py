@@ -32,7 +32,7 @@ def test_puppeteer_script_has_dom_manipulation():
 
     for element in required_elements:
         if element not in content:
-            print(f"❌ Missing DOM manipulation element: {element}")
+            print("❌ Missing DOM manipulation element: {element}")
             return False
 
     print("✅ Puppeteer script includes DOM manipulation to hide controls")
@@ -112,7 +112,7 @@ def test_component_structure_unchanged():
 
     for element in control_elements:
         if element not in content:
-            print(f"❌ Missing control element: {element}")
+            print("❌ Missing control element: {element}")
             return False
 
     print("✅ PhotoBoothDisplay component structure is unchanged")
@@ -135,7 +135,7 @@ def test_dom_manipulation_console_logging():
 
     for element in logging_elements:
         if element not in content:
-            print(f"❌ Missing logging element: {element}")
+            print("❌ Missing logging element: {element}")
             return False
 
     print("✅ DOM manipulation includes proper console logging")
@@ -165,12 +165,12 @@ def main():
             else:
                 failed += 1
         except Exception as e:
-            print(f"❌ Test {test.__name__} failed with exception: {e}")
+            print("❌ Test {test.__name__} failed with exception: {e}")
             failed += 1
         print()
 
     print("=" * 50)
-    print(f"📊 Test Results: {passed} passed, {failed} failed")
+    print("📊 Test Results: {passed} passed, {failed} failed")
 
     if failed == 0:
         print("🎉 DOM-based photo booth controls hiding is properly implemented!")

@@ -104,10 +104,10 @@ class UnifiedMacroAnalyzer:
             try:
                 self.real_time_discovery = MacroEconomicDiscovery(self.region)
                 self.real_time_available = True
-                print(f"✓ Real-time data validation enabled for {self.region}")
+                print("✓ Real-time data validation enabled for {self.region}")
             except Exception as e:
                 self.real_time_available = False
-                print(f"WARNING: Real-time data initialization failed: {e}")
+                print("WARNING: Real-time data initialization failed: {e}")
         else:
             self.real_time_available = False
 
@@ -282,7 +282,7 @@ class UnifiedMacroAnalyzer:
             )
 
         except Exception as e:
-            print(f"WARNING: Cross-validation failed: {e}")
+            print("WARNING: Cross-validation failed: {e}")
             validation_results["validation_status"] = "failed"
             validation_results["error"] = str(e)
 
@@ -819,7 +819,7 @@ class UnifiedMacroAnalyzer:
 
         except Exception as e:
             # Don't fail analysis for logging issues, but warn
-            print(f"WARNING: Could not store regional validation data: {e}")
+            print("WARNING: Could not store regional validation data: {e}")
 
     def _get_regional_policy_rate(self) -> float:
         """Get region-appropriate policy rate from discovery data - FAIL-FAST on missing data"""
@@ -1904,7 +1904,7 @@ class UnifiedMacroAnalyzer:
             )
 
         except Exception as e:
-            print(f"⚠️  Failed to load freshness config: {e}")
+            print("⚠️  Failed to load freshness config: {e}")
             # Use hardcoded fallbacks for fail-safe operation
             real_time_threshold_hours = 24
             gdp_threshold_days = 90
@@ -1946,7 +1946,7 @@ class UnifiedMacroAnalyzer:
                     )
 
         except Exception as e:
-            print(f"⚠️  Failed to parse discovery timestamp: {e}")
+            print("⚠️  Failed to parse discovery timestamp: {e}")
             freshness_scores.append(0.7)  # Penalty for missing/invalid timestamp
             stale_indicators.append("Discovery timestamp invalid/missing")
 
@@ -2045,11 +2045,11 @@ class UnifiedMacroAnalyzer:
                     f"⚠️  Stale indicators detected: {', '.join(stale_indicators[:3])}"
                 )
             if critical_failures:
-                print(f"❌ Critical freshness failures: {', '.join(critical_failures)}")
+                print("❌ Critical freshness failures: {', '.join(critical_failures)}")
 
             # Auto-refresh suggestion
-            print(f"🔄 AUTO-REFRESH RECOMMENDED:")
-            print(f"   • Re-run discovery phase to update stale economic indicators")
+            print("🔄 AUTO-REFRESH RECOMMENDED:")
+            print("   • Re-run discovery phase to update stale economic indicators")
             print(
                 f"   • Command: macro_analyst_discover --region {self.region} --indicators all"
             )
@@ -2058,7 +2058,7 @@ class UnifiedMacroAnalyzer:
                     f"   • Priority: HIGH (multiple stale indicators: {len(stale_indicators)})"
                 )
             else:
-                print(f"   • Priority: MEDIUM (freshness threshold breach)")
+                print("   • Priority: MEDIUM (freshness threshold breach)")
 
         # Log freshness assessment
         if stale_indicators:
@@ -2074,7 +2074,7 @@ class UnifiedMacroAnalyzer:
 
     def analyze(self) -> Dict[str, Any]:
         """Main analysis method with automated quality assurance gates"""
-        print(f"Executing unified macro-economic analysis for {self.region}...")
+        print("Executing unified macro-economic analysis for {self.region}...")
 
         # Execute all analysis phases
         analysis_output = {
@@ -2105,7 +2105,7 @@ class UnifiedMacroAnalyzer:
         }
 
         # PHASE 3.1: AUTOMATED QUALITY ASSURANCE - Template Artifact Detection
-        print(f"Running automated quality assurance for {self.region} analysis...")
+        print("Running automated quality assurance for {self.region} analysis...")
 
         # Detect template artifacts and hardcoded values
         artifacts_detected = self._detect_template_artifacts(analysis_output)
@@ -2198,7 +2198,7 @@ class UnifiedMacroAnalyzer:
         )
 
         # PHASE 3.4: DYNAMIC CONFIDENCE AND QUALITY SCORING
-        print(f"Performing comprehensive confidence and quality assessment...")
+        print("Performing comprehensive confidence and quality assessment...")
         confidence_and_quality_assessment = self.assess_dynamic_confidence_and_quality(
             analysis_output
         )
@@ -2612,7 +2612,7 @@ class UnifiedMacroAnalyzer:
 
         except Exception as e:
             # Don't fail analysis for validation errors, but warn
-            print(f"WARNING: Economic reasonableness validation error: {e}")
+            print("WARNING: Economic reasonableness validation error: {e}")
 
 
 def main():
@@ -2626,7 +2626,7 @@ def main():
 
     # Validate discovery file exists
     if not Path(discovery_file).exists():
-        print(f"Error: Discovery file not found: {discovery_file}")
+        print("Error: Discovery file not found: {discovery_file}")
         sys.exit(1)
 
     # Create analyzer and run analysis
@@ -2647,10 +2647,10 @@ def main():
     with open(output_file, "w") as f:
         json.dump(analysis_output, f, indent=2)
 
-    print(f"Analysis complete: {output_file}")
+    print("Analysis complete: {output_file}")
 
     # Print summary
-    print(f"\nAnalysis Summary for {region}:")
+    print("\nAnalysis Summary for {region}:")
     print(
         f"- Business Cycle Phase: {analysis_output['business_cycle_modeling']['current_phase']}"
     )

@@ -426,19 +426,19 @@ def main():
 
     # Test sector mapping
     sector = cross_ref.get_sector_for_ticker(args.ticker)
-    print(f"📊 Ticker: {args.ticker}")
-    print(f"🏢 Sector: {sector}")
+    print("📊 Ticker: {args.ticker}")
+    print("🏢 Sector: {sector}")
 
     if sector:
         # Test sector analysis lookup
         sector_analysis = cross_ref.find_latest_sector_analysis(sector)
         if sector_analysis:
-            print(f"📈 Latest sector analysis: {sector_analysis['date']}")
-            print(f"📄 Report path: {sector_analysis['markdown_report']}")
+            print("📈 Latest sector analysis: {sector_analysis['date']}")
+            print("📄 Report path: {sector_analysis['markdown_report']}")
 
             # Test context extraction
             context = cross_ref.extract_sector_context(sector_analysis)
-            print(f"🎯 Integration status: {context['integration_status']}")
+            print("🎯 Integration status: {context['integration_status']}")
             print(
                 f"📊 Confidence score: {context['sector_reference']['confidence_score']}"
             )

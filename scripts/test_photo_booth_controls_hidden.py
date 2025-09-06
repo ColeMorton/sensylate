@@ -19,7 +19,7 @@ def test_photobooth_base_controls_css():
 
     layout_path = project_root / "frontend/src/layouts/PhotoBoothBase.astro"
     if not layout_path.exists():
-        print(f"❌ PhotoBoothBase layout not found: {layout_path}")
+        print("❌ PhotoBoothBase layout not found: {layout_path}")
         return False
 
     with open(layout_path) as f:
@@ -34,7 +34,7 @@ def test_photobooth_base_controls_css():
 
     for css_rule in required_css:
         if css_rule not in content:
-            print(f"❌ Missing CSS rule for hiding controls: {css_rule}")
+            print("❌ Missing CSS rule for hiding controls: {css_rule}")
             return False
 
     print("✅ PhotoBoothBase has CSS to hide photo-booth-controls")
@@ -49,7 +49,7 @@ def test_photobooth_component_has_controls():
         project_root / "frontend/src/layouts/shortcodes/PhotoBoothDisplay.tsx"
     )
     if not component_path.exists():
-        print(f"❌ PhotoBoothDisplay component not found: {component_path}")
+        print("❌ PhotoBoothDisplay component not found: {component_path}")
         return False
 
     with open(component_path) as f:
@@ -74,7 +74,7 @@ def test_photobooth_component_has_controls():
             missing_elements.append(element)
 
     if missing_elements:
-        print(f"❌ Missing control elements: {missing_elements}")
+        print("❌ Missing control elements: {missing_elements}")
         return False
 
     print("✅ PhotoBoothDisplay component has proper control structure")
@@ -155,7 +155,7 @@ def test_dashboard_content_not_hidden():
             f"{selector} {{" in content
             and "display: none" in content[content.find(f"{selector} {{") :]
         ):
-            print(f"❌ Dashboard content selector {selector} is being hidden")
+            print("❌ Dashboard content selector {selector} is being hidden")
             return False
 
     print("✅ Dashboard content selectors are not affected by controls hiding")
@@ -185,12 +185,12 @@ def main():
             else:
                 failed += 1
         except Exception as e:
-            print(f"❌ Test {test.__name__} failed with exception: {e}")
+            print("❌ Test {test.__name__} failed with exception: {e}")
             failed += 1
         print()
 
     print("=" * 50)
-    print(f"📊 Test Results: {passed} passed, {failed} failed")
+    print("📊 Test Results: {passed} passed, {failed} failed")
 
     if failed == 0:
         print("🎉 Photo booth controls are properly hidden from screenshots!")

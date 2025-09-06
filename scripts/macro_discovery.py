@@ -4121,15 +4121,15 @@ def main():
         print("\n" + "=" * 60)
         print("MACRO-ECONOMIC DISCOVERY COMPLETE")
         print("=" * 60)
-        print(f"Region: {result['metadata']['region']}")
-        print(f"Indicators: {result['metadata']['indicators']}")
-        print(f"Timeframe: {result['metadata']['timeframe']}")
-        print(f"Execution: {result['metadata']['execution_timestamp']}")
-        print(f"CLI Services: {len(result['metadata']['cli_services_utilized'])}")
+        print("Region: {result['metadata']['region']}")
+        print("Indicators: {result['metadata']['indicators']}")
+        print("Timeframe: {result['metadata']['timeframe']}")
+        print("Execution: {result['metadata']['execution_timestamp']}")
+        print("CLI Services: {len(result['metadata']['cli_services_utilized'])}")
 
         print("\nDATA QUALITY:")
         quality = result["cli_data_quality"]
-        print(f"  Overall Quality Score: {quality['overall_quality_score']:.3f}")
+        print("  Overall Quality Score: {quality['overall_quality_score']:.3f}")
         print(
             f"  Required Coverage: {quality['completeness_metrics']['required_indicators_coverage']:.1%}"
         )
@@ -4156,7 +4156,7 @@ def main():
                 f"  {i}. {insight['insight'][:80]}... (confidence: {insight['confidence']:.2f})"
             )
 
-        print(f"\nOutput saved to: {discovery.output_dir}")
+        print("\nOutput saved to: {discovery.output_dir}")
         print("=" * 60)
 
 

@@ -97,13 +97,13 @@ class InvestmentSynthesizer:
             if os.path.exists(analysis_file_path):
                 with open(analysis_file_path, "r") as f:
                     self.analysis_data = json.load(f)
-                print(f"📂 Loaded analysis data from: {analysis_file_path}")
+                print("📂 Loaded analysis data from: {analysis_file_path}")
                 return True
             else:
-                print(f"❌ Analysis file not found: {analysis_file_path}")
+                print("❌ Analysis file not found: {analysis_file_path}")
                 return False
         except Exception as e:
-            print(f"❌ Error loading analysis data: {str(e)}")
+            print("❌ Error loading analysis data: {str(e)}")
             return False
 
     def load_discovery_data(self) -> bool:
@@ -124,7 +124,7 @@ class InvestmentSynthesizer:
                 print("⚠️ Discovery data not found, proceeding with analysis data only")
                 return False
         except Exception as e:
-            print(f"⚠️ Could not load discovery data: {str(e)}")
+            print("⚠️ Could not load discovery data: {str(e)}")
             return False
 
     def determine_investment_category(self) -> str:
@@ -343,7 +343,7 @@ All analysis components have been processed and structured for template-complian
         self, analysis_file_path: Optional[str] = None
     ) -> Dict[str, Any]:
         """Execute complete synthesis workflow"""
-        print(f"🔬 Starting investment synthesis for {self.ticker}")
+        print("🔬 Starting investment synthesis for {self.ticker}")
 
         # Load required data
         if not self.load_analysis_data(analysis_file_path):
@@ -425,7 +425,7 @@ All analysis components have been processed and structured for template-complian
             ] = self._calculate_synthesis_confidence(synthesis_result)
 
             # Integrate sector cross-reference
-            print(f"🔗 Integrating sector analysis cross-references for {self.ticker}")
+            print("🔗 Integrating sector analysis cross-references for {self.ticker}")
             synthesis_result = (
                 self.sector_cross_ref.integrate_with_fundamental_analysis(
                     self.ticker, synthesis_result
@@ -435,12 +435,12 @@ All analysis components have been processed and structured for template-complian
             # Save synthesis results
             self._save_synthesis_results(synthesis_result, markdown_content)
 
-            print(f"✅ Synthesis completed for {self.ticker}")
+            print("✅ Synthesis completed for {self.ticker}")
             return synthesis_result
 
         except Exception as e:
             error_msg = f"Synthesis failed for {self.ticker}: {str(e)}"
-            print(f"❌ {error_msg}")
+            print("❌ {error_msg}")
             return {"error": error_msg, "ticker": self.ticker}
 
     # Helper methods for synthesis components
@@ -1178,8 +1178,8 @@ The investment thesis is supported by quantitative analysis and qualitative asse
             f.write(markdown_content)
 
         print("💾 Synthesis results saved:")
-        print(f"   JSON: {json_filepath}")
-        print(f"   Markdown: {md_filepath}")
+        print("   JSON: {json_filepath}")
+        print("   Markdown: {md_filepath}")
 
         return json_filepath, md_filepath
 
@@ -1241,10 +1241,10 @@ def main():
     result = synthesizer.execute_synthesis(args.analysis_file)
 
     if "error" in result:
-        print(f"❌ Synthesis failed: {result['error']}")
+        print("❌ Synthesis failed: {result['error']}")
         sys.exit(1)
     else:
-        print(f"✅ Synthesis completed successfully for {args.ticker}")
+        print("✅ Synthesis completed successfully for {args.ticker}")
         sys.exit(0)
 
 

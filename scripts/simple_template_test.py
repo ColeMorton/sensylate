@@ -51,7 +51,7 @@ try:
     print("\n4. Testing macro files...")
     for macro in macros:
         macro_template = jinja_env.get_template(macro)
-        print(f"   ✅ {macro} loaded successfully")
+        print("   ✅ {macro} loaded successfully")
 
     # Test simple rendering
     print("\n5. Testing basic template rendering...")
@@ -65,7 +65,7 @@ try:
 
     # Just test that it doesn't crash
     content = fund_template.render(**context)
-    print(f"   ✅ Fundamental template rendered: {len(content):,} characters")
+    print("   ✅ Fundamental template rendered: {len(content):,} characters")
 
     context_sector = {
         "data": sector_data,
@@ -75,13 +75,13 @@ try:
     }
 
     content_sector = sector_template.render(**context_sector)
-    print(f"   ✅ Sector template rendered: {len(content_sector):,} characters")
+    print("   ✅ Sector template rendered: {len(content_sector):,} characters")
 
-    print(f"\n🎉 SUCCESS: All templates loaded and rendered successfully!")
-    print(f"✨ Template inheritance and macros are working correctly!")
+    print("\n🎉 SUCCESS: All templates loaded and rendered successfully!")
+    print("✨ Template inheritance and macros are working correctly!")
 
 except Exception as e:
-    print(f"\n❌ ERROR: {e}")
+    print("\n❌ ERROR: {e}")
     import traceback
 
     traceback.print_exc()

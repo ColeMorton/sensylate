@@ -54,9 +54,9 @@ class TradingPerformanceValidator:
             if Path(discovery_path).exists():
                 with open(discovery_path, "r") as f:
                     self.discovery_data = json.load(f)
-                print(f"✅ Discovery data loaded: {discovery_path}")
+                print("✅ Discovery data loaded: {discovery_path}")
             else:
-                print(f"❌ Discovery data not found: {discovery_path}")
+                print("❌ Discovery data not found: {discovery_path}")
                 return False
 
             # Load analysis data
@@ -64,24 +64,24 @@ class TradingPerformanceValidator:
             if Path(analysis_path).exists():
                 with open(analysis_path, "r") as f:
                     self.analysis_data = json.load(f)
-                print(f"✅ Analysis data loaded: {analysis_path}")
+                print("✅ Analysis data loaded: {analysis_path}")
             else:
-                print(f"❌ Analysis data not found: {analysis_path}")
+                print("❌ Analysis data not found: {analysis_path}")
                 return False
 
             # Load raw CSV data for P&L validation
             csv_path = f"./data/raw/trade_history/{self.portfolio}.csv"
             if Path(csv_path).exists():
                 self.csv_data = pd.read_csv(csv_path)
-                print(f"✅ CSV data loaded: {csv_path}")
+                print("✅ CSV data loaded: {csv_path}")
             else:
-                print(f"❌ CSV data not found: {csv_path}")
+                print("❌ CSV data not found: {csv_path}")
                 return False
 
             return True
 
         except Exception as e:
-            print(f"❌ Error loading phase outputs: {str(e)}")
+            print("❌ Error loading phase outputs: {str(e)}")
             return False
 
     def validate_statistical_calculations(self) -> Dict[str, Any]:
@@ -136,10 +136,10 @@ class TradingPerformanceValidator:
                 "overall_statistical_confidence"
             ] = float(avg_accuracy)
 
-            print(f"✅ Statistical validation confidence: {avg_accuracy:.3f}")
+            print("✅ Statistical validation confidence: {avg_accuracy:.3f}")
 
         except Exception as e:
-            print(f"❌ Statistical validation error: {str(e)}")
+            print("❌ Statistical validation error: {str(e)}")
             statistical_validation["validation_results"]["error"] = str(e)
             statistical_validation["confidence_scores"][
                 "overall_statistical_confidence"
@@ -191,7 +191,7 @@ class TradingPerformanceValidator:
                 )
 
         except Exception as e:
-            print(f"  ❌ P&L validation error: {str(e)}")
+            print("  ❌ P&L validation error: {str(e)}")
             pnl_validation["validation_results"]["error"] = str(e)
             pnl_validation["validation_results"]["accuracy_score"] = 0.0
 
@@ -239,10 +239,10 @@ class TradingPerformanceValidator:
                     f"  ✅ Win rate validation PASSED: Analysis {analysis_win_rate:.2%} vs CSV {csv_win_rate:.2%}"
                 )
             else:
-                print(f"  ⚠️ Win rate validation variance: {win_rate_variance:.3%}")
+                print("  ⚠️ Win rate validation variance: {win_rate_variance:.3%}")
 
         except Exception as e:
-            print(f"  ❌ Win rate validation error: {str(e)}")
+            print("  ❌ Win rate validation error: {str(e)}")
             win_rate_validation["validation_results"]["error"] = str(e)
             win_rate_validation["validation_results"]["accuracy_score"] = 0.0
 
@@ -295,7 +295,7 @@ class TradingPerformanceValidator:
             )
 
         except Exception as e:
-            print(f"  ❌ Return validation error: {str(e)}")
+            print("  ❌ Return validation error: {str(e)}")
             return_validation["validation_results"]["error"] = str(e)
             return_validation["validation_results"]["accuracy_score"] = 0.0
 
@@ -371,11 +371,11 @@ class TradingPerformanceValidator:
             print(
                 f"  📊 Portfolio adequacy: {portfolio_adequacy} ({total_trades} trades)"
             )
-            print(f"  📊 SMA adequacy: {sma_adequacy} ({sma_count} trades)")
-            print(f"  📊 EMA adequacy: {ema_adequacy} ({ema_count} trades)")
+            print("  📊 SMA adequacy: {sma_adequacy} ({sma_count} trades)")
+            print("  📊 EMA adequacy: {ema_adequacy} ({ema_count} trades)")
 
         except Exception as e:
-            print(f"  ❌ Sample adequacy validation error: {str(e)}")
+            print("  ❌ Sample adequacy validation error: {str(e)}")
             sample_validation["validation_results"]["error"] = str(e)
             sample_validation["validation_results"]["accuracy_score"] = 0.0
 
@@ -416,10 +416,10 @@ class TradingPerformanceValidator:
                 "overall_business_logic_confidence"
             ] = float(avg_coherence)
 
-            print(f"✅ Business logic coherence: {avg_coherence:.3f}")
+            print("✅ Business logic coherence: {avg_coherence:.3f}")
 
         except Exception as e:
-            print(f"❌ Business logic validation error: {str(e)}")
+            print("❌ Business logic validation error: {str(e)}")
             business_logic_validation["validation_results"]["error"] = str(e)
             business_logic_validation["confidence_scores"][
                 "overall_business_logic_confidence"
@@ -473,10 +473,10 @@ class TradingPerformanceValidator:
                 "coherence_score": float(coherence_rate),
             }
 
-            print(f"  ✅ Signal coherence rate: {coherence_rate:.2%}")
+            print("  ✅ Signal coherence rate: {coherence_rate:.2%}")
 
         except Exception as e:
-            print(f"  ❌ Signal coherence validation error: {str(e)}")
+            print("  ❌ Signal coherence validation error: {str(e)}")
             coherence_validation["validation_results"]["error"] = str(e)
             coherence_validation["validation_results"]["coherence_score"] = 0.0
 
@@ -523,10 +523,10 @@ class TradingPerformanceValidator:
                 "coherence_score": float(feasibility_rate),
             }
 
-            print(f"  ✅ Optimization feasibility: {feasibility_rate:.2%}")
+            print("  ✅ Optimization feasibility: {feasibility_rate:.2%}")
 
         except Exception as e:
-            print(f"  ❌ Optimization feasibility validation error: {str(e)}")
+            print("  ❌ Optimization feasibility validation error: {str(e)}")
             feasibility_validation["validation_results"]["error"] = str(e)
             feasibility_validation["validation_results"]["coherence_score"] = 0.0
 
@@ -615,12 +615,12 @@ class TradingPerformanceValidator:
                 "quality_grade": str(quality_band),
             }
 
-            print(f"✅ Overall confidence score: {overall_confidence:.3f}")
-            print(f"✅ Quality band: {quality_band}")
-            print(f"✅ Threshold met: {overall_confidence >= self.confidence_threshold}")
+            print("✅ Overall confidence score: {overall_confidence:.3f}")
+            print("✅ Quality band: {quality_band}")
+            print("✅ Threshold met: {overall_confidence >= self.confidence_threshold}")
 
         except Exception as e:
-            print(f"❌ Confidence scoring error: {str(e)}")
+            print("❌ Confidence scoring error: {str(e)}")
             confidence_scoring["error"] = str(e)
             confidence_scoring["overall_confidence"] = {"weighted_score": 0.0}
 
@@ -679,7 +679,7 @@ class TradingPerformanceValidator:
             with open(output_file, "w") as f:
                 json.dump(validation_report, f, indent=2)
 
-            print(f"✅ Validation report saved: {output_file}")
+            print("✅ Validation report saved: {output_file}")
 
             # Also save to validate/outputs directory for pipeline integration
             validate_output_dir = Path("./data/outputs/trade_history/validate/outputs")
@@ -693,12 +693,12 @@ class TradingPerformanceValidator:
             with open(validate_output_file, "w") as f:
                 json.dump(validation_report, f, indent=2)
 
-            print(f"✅ Pipeline validation report saved: {validate_output_file}")
+            print("✅ Pipeline validation report saved: {validate_output_file}")
 
             return True
 
         except Exception as e:
-            print(f"❌ Error generating validation report: {str(e)}")
+            print("❌ Error generating validation report: {str(e)}")
             return False
 
     def execute_validation(self) -> bool:
@@ -743,9 +743,9 @@ class TradingPerformanceValidator:
             "meets_threshold", False
         )
 
-        print(f"📊 Overall Confidence Score: {overall_confidence:.3f}")
-        print(f"🏆 Quality Band: {quality_band}")
-        print(f"✅ Validation Status: {'PASSED' if meets_threshold else 'FAILED'}")
+        print("📊 Overall Confidence Score: {overall_confidence:.3f}")
+        print("🏆 Quality Band: {quality_band}")
+        print("✅ Validation Status: {'PASSED' if meets_threshold else 'FAILED'}")
 
         return meets_threshold
 

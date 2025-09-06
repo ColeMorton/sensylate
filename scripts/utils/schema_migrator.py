@@ -282,7 +282,7 @@ class SchemaMigrator:
             shutil.copy2(schema_path, backup_path)
             return str(backup_path)
         except Exception as e:
-            print(f"Failed to backup {schema_path}: {e}")
+            print("Failed to backup {schema_path}: {e}")
             return None
 
     def migrate_schema(self, plan: SchemaMigrationPlan, dry_run: bool = True) -> bool:
@@ -329,7 +329,7 @@ class SchemaMigrator:
                 return True
 
         except Exception as e:
-            print(f"Migration failed for {plan.source_path}: {e}")
+            print("Migration failed for {plan.source_path}: {e}")
             plan.migration_status = "failed"
             return False
 
@@ -636,7 +636,7 @@ class SchemaMigrator:
             # Skip if no changes required
             if not plan.changes_required:
                 report.schemas_skipped += 1
-                print(f"  ✓ {schema_file.name} - No migration needed")
+                print("  ✓ {schema_file.name} - No migration needed")
                 continue
 
             # Migrate schema
@@ -659,10 +659,10 @@ class SchemaMigrator:
                             f"    ✅ Migration successful (score: {validation['score']:.2f})"
                         )
                     else:
-                        print(f"    ⚠️  Migration completed with warnings")
+                        print("    ⚠️  Migration completed with warnings")
             else:
                 report.schemas_failed += 1
-                print(f"    ❌ Migration failed")
+                print("    ❌ Migration failed")
 
         return report
 
@@ -685,9 +685,9 @@ class SchemaMigrator:
                 try:
                     shutil.copy2(plan.backup_path, plan.target_path)
                     success_count += 1
-                    print(f"  ✅ Restored {Path(plan.target_path).name}")
+                    print("  ✅ Restored {Path(plan.target_path).name}")
                 except Exception as e:
-                    print(f"  ❌ Failed to restore {Path(plan.target_path).name}: {e}")
+                    print("  ❌ Failed to restore {Path(plan.target_path).name}: {e}")
 
         print(
             f"✅ Rollback complete: {success_count}/{len(report.migration_plans)} schemas restored"
@@ -699,52 +699,52 @@ class SchemaMigrator:
         print("\n" + "=" * 70)
         print("SCHEMA MIGRATION REPORT")
         print("=" * 70)
-        print(f"📅 Timestamp: {report.timestamp.strftime('%Y-%m-%d %H:%M:%S')}")
-        print(f"📁 Total schemas: {report.total_schemas}")
-        print(f"✅ Migrated: {report.schemas_migrated}")
-        print(f"⏭️  Skipped: {report.schemas_skipped}")
-        print(f"❌ Failed: {report.schemas_failed}")
+        print("📅 Timestamp: {report.timestamp.strftime('%Y-%m-%d %H:%M:%S')}")
+        print("📁 Total schemas: {report.total_schemas}")
+        print("✅ Migrated: {report.schemas_migrated}")
+        print("⏭️  Skipped: {report.schemas_skipped}")
+        print("❌ Failed: {report.schemas_failed}")
 
         if report.backup_directory:
-            print(f"💾 Backup directory: {report.backup_directory}")
+            print("💾 Backup directory: {report.backup_directory}")
 
         # Risk summary
         risk_summary = {"low": 0, "medium": 0, "high": 0}
         for plan in report.migration_plans:
             risk_summary[plan.risk_level] += 1
 
-        print(f"\n📊 Risk Assessment:")
-        print(f"  Low risk: {risk_summary['low']}")
-        print(f"  Medium risk: {risk_summary['medium']}")
-        print(f"  High risk: {risk_summary['high']}")
+        print("\n📊 Risk Assessment:")
+        print("  Low risk: {risk_summary['low']}")
+        print("  Medium risk: {risk_summary['medium']}")
+        print("  High risk: {risk_summary['high']}")
 
         # Validation summary
         if report.validation_results:
-            print(f"\n✅ Validation Results:")
+            print("\n✅ Validation Results:")
             total_score = 0
             for schema, validation in report.validation_results.items():
                 if "score" in validation:
                     total_score += validation["score"]
                     status = "✅" if validation["valid"] else "⚠️"
-                    print(f"  {status} {schema}: {validation['score']:.2f}")
+                    print("  {status} {schema}: {validation['score']:.2f}")
 
             avg_score = (
                 total_score / len(report.validation_results)
                 if report.validation_results
                 else 0
             )
-            print(f"  Average validation score: {avg_score:.2f}")
+            print("  Average validation score: {avg_score:.2f}")
 
         # Detailed plans
         if report.migration_plans:
-            print(f"\n📋 Migration Details:")
+            print("\n📋 Migration Details:")
             for plan in report.migration_plans:
                 if plan.changes_required:
                     print(
                         f"\n  {Path(plan.source_path).name} ({plan.risk_level} risk):"
                     )
                     for change in plan.changes_required[:3]:
-                        print(f"    • {change}")
+                        print("    • {change}")
                     if len(plan.changes_required) > 3:
                         print(
                             f"    • ... and {len(plan.changes_required) - 3} more changes"
@@ -810,7 +810,7 @@ def main():
             with open(export_path, "w") as f:
                 json.dump(report_data, f, indent=2)
 
-            print(f"\n📄 Report exported to: {export_path}")
+            print("\n📄 Report exported to: {export_path}")
 
     elif args.migrate:
         # Apply migrations

@@ -19,7 +19,7 @@ def load_sample_data(file_path):
         with open(file_path, "r") as f:
             return json.load(f)
     except Exception as e:
-        print(f"Error loading {file_path}: {e}")
+        print("Error loading {file_path}: {e}")
         return {}
 
 
@@ -87,9 +87,9 @@ def main():
     results = []
 
     for test_case in test_cases:
-        print(f"\n📋 Testing {test_case['description']}")
-        print(f"   Template: {test_case['template']}")
-        print(f"   Data: {test_case['data_file']}")
+        print("\n📋 Testing {test_case['description']}")
+        print("   Template: {test_case['template']}")
+        print("   Data: {test_case['data_file']}")
 
         # Load test data
         data_path = Path(__file__).parent / test_case["data_file"]
@@ -100,13 +100,13 @@ def main():
         results.append(result)
 
         if result["status"] == "SUCCESS":
-            print(f"   ✅ Status: {result['status']}")
-            print(f"   📏 Content Length: {result['content_length']:,} chars")
-            print(f"   💬 Word Count: {result['word_count']:,} words")
-            print(f"   📋 Has Frontmatter: {result['has_frontmatter']}")
-            print(f"   📊 Has Confidence Scoring: {result['has_confidence_scoring']}")
-            print(f"   🌍 Has Economic Indicators: {result['has_economic_indicators']}")
-            print(f"   ⚠️ Has Risk Assessment: {result['has_risk_assessment']}")
+            print("   ✅ Status: {result['status']}")
+            print("   📏 Content Length: {result['content_length']:,} chars")
+            print("   💬 Word Count: {result['word_count']:,} words")
+            print("   📋 Has Frontmatter: {result['has_frontmatter']}")
+            print("   📊 Has Confidence Scoring: {result['has_confidence_scoring']}")
+            print("   🌍 Has Economic Indicators: {result['has_economic_indicators']}")
+            print("   ⚠️ Has Risk Assessment: {result['has_risk_assessment']}")
             print(
                 f"   🏛️ Has Institutional Sections: {result['has_institutional_sections']}"
             )
@@ -124,33 +124,33 @@ def main():
                 / 4
             )
 
-            print(f"   🏆 Institutional Quality Score: {institutional_score*100:.0f}%")
+            print("   🏆 Institutional Quality Score: {institutional_score*100:.0f}%")
             print(
                 f"   ✅ Certification: {'ACHIEVED' if institutional_score >= 0.8 else 'PARTIAL'}"
             )
 
         else:
-            print(f"   ❌ Status: {result['status']}")
-            print(f"   Error: {result['error']}")
+            print("   ❌ Status: {result['status']}")
+            print("   Error: {result['error']}")
 
     # Summary
-    print(f"\n📊 VALIDATION SUMMARY")
+    print("\n📊 VALIDATION SUMMARY")
     print("=" * 50)
     successful_tests = sum(1 for r in results if r["status"] == "SUCCESS")
     total_tests = len(results)
 
-    print(f"Total Tests: {total_tests}")
-    print(f"Successful: {successful_tests}")
-    print(f"Success Rate: {(successful_tests/total_tests)*100:.1f}%")
+    print("Total Tests: {total_tests}")
+    print("Successful: {successful_tests}")
+    print("Success Rate: {(successful_tests/total_tests)*100:.1f}%")
 
     if successful_tests == total_tests:
-        print(f"\n🏆 ALL TEMPLATES VALIDATED SUCCESSFULLY")
-        print(f"✅ Enhanced templates ready for production use")
-        print(f"✅ Institutional compliance requirements met")
-        print(f"✅ Economic context integration achieved")
-        print(f"✅ Multi-source validation framework active")
+        print("\n🏆 ALL TEMPLATES VALIDATED SUCCESSFULLY")
+        print("✅ Enhanced templates ready for production use")
+        print("✅ Institutional compliance requirements met")
+        print("✅ Economic context integration achieved")
+        print("✅ Multi-source validation framework active")
     else:
-        print(f"\n⚠️ SOME VALIDATION ISSUES FOUND")
+        print("\n⚠️ SOME VALIDATION ISSUES FOUND")
 
     return results
 

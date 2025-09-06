@@ -24,7 +24,7 @@ def test_auto_collection_on_api_calls():
     # Clear any existing collection state
     data_path = Path("data/raw")
     if data_path.exists():
-        print(f"📁 Clearing existing data in {data_path}")
+        print("📁 Clearing existing data in {data_path}")
         import shutil
 
         shutil.rmtree(data_path)
@@ -40,7 +40,7 @@ def test_auto_collection_on_api_calls():
 
         # This single call should trigger comprehensive collection
         result = service.get_stock_info("AAPL")
-        print(f"   ✅ API call successful: {result.get('symbol', 'N/A')}")
+        print("   ✅ API call successful: {result.get('symbol', 'N/A')}")
 
         # Give background collection time to start
         print("   ⏳ Waiting for background collection to start (5 seconds)...")
@@ -48,7 +48,7 @@ def test_auto_collection_on_api_calls():
 
         # Check if comprehensive collection was triggered
         files_created = check_comprehensive_files("AAPL")
-        print(f"   📁 Files found: {files_created}")
+        print("   📁 Files found: {files_created}")
 
         if files_created > 0:
             print(
@@ -58,7 +58,7 @@ def test_auto_collection_on_api_calls():
             print("   ⚠️  No comprehensive files created yet (may still be processing)")
 
     except Exception as e:
-        print(f"   ❌ Yahoo Finance test failed: {e}")
+        print("   ❌ Yahoo Finance test failed: {e}")
 
     # Test 2: Historical data call
     try:
@@ -66,13 +66,13 @@ def test_auto_collection_on_api_calls():
 
         # This call should also trigger comprehensive collection
         result = service.get_historical_data("MSFT", "1mo")
-        print(f"   ✅ Historical API call successful")
+        print("   ✅ Historical API call successful")
 
         # Give background collection time to work
         time.sleep(5)
 
         files_created = check_comprehensive_files("MSFT")
-        print(f"   📁 Files found: {files_created}")
+        print("   📁 Files found: {files_created}")
 
         if files_created > 0:
             print(
@@ -82,7 +82,7 @@ def test_auto_collection_on_api_calls():
             print("   ⚠️  No comprehensive files created yet (may still be processing)")
 
     except Exception as e:
-        print(f"   ❌ Historical data test failed: {e}")
+        print("   ❌ Historical data test failed: {e}")
 
     return True
 
@@ -98,17 +98,17 @@ def test_caching_behavior():
         service = create_yahoo_finance_service()
         symbol = "GOOGL"
 
-        print(f"📈 First call for {symbol} (should trigger collection)...")
+        print("📈 First call for {symbol} (should trigger collection)...")
         start_time = time.time()
         result1 = service.get_stock_info(symbol)
         first_call_time = time.time() - start_time
-        print(f"   ✅ First call completed in {first_call_time:.2f}s")
+        print("   ✅ First call completed in {first_call_time:.2f}s")
 
-        print(f"📈 Second call for {symbol} (should use cache)...")
+        print("📈 Second call for {symbol} (should use cache)...")
         start_time = time.time()
         result2 = service.get_stock_info(symbol)
         second_call_time = time.time() - start_time
-        print(f"   ✅ Second call completed in {second_call_time:.2f}s")
+        print("   ✅ Second call completed in {second_call_time:.2f}s")
 
         # Second call should be much faster (cached)
         if second_call_time < first_call_time * 0.5:
@@ -133,7 +133,7 @@ def test_caching_behavior():
         return True
 
     except Exception as e:
-        print(f"   ❌ Caching test failed: {e}")
+        print("   ❌ Caching test failed: {e}")
         return False
 
 
@@ -155,14 +155,14 @@ def check_comprehensive_files(symbol):
 
     # Show some details
     if files:
-        print(f"   📄 Sample files found:")
+        print("   📄 Sample files found:")
         for file_path in files[:3]:  # Show first 3
             rel_path = file_path.relative_to(data_path)
             size = file_path.stat().st_size
-            print(f"      • {rel_path} ({size} bytes)")
+            print("      • {rel_path} ({size} bytes)")
 
         if len(files) > 3:
-            print(f"      • ... and {len(files) - 3} more files")
+            print("      • ... and {len(files) - 3} more files")
 
     return len(files)
 
@@ -178,13 +178,13 @@ def test_collection_throttling():
         service = create_yahoo_finance_service()
         symbol = "NVDA"
 
-        print(f"📈 First call for {symbol}...")
+        print("📈 First call for {symbol}...")
         service.get_stock_info(symbol)
 
-        print(f"📈 Immediate second call for {symbol}...")
+        print("📈 Immediate second call for {symbol}...")
         service.get_stock_info(symbol)
 
-        print(f"📈 Third call for {symbol}...")
+        print("📈 Third call for {symbol}...")
         service.get_stock_info(symbol)
 
         time.sleep(3)
@@ -193,12 +193,12 @@ def test_collection_throttling():
         print("   🎯 Collection should only be triggered once (throttled)")
 
         files_created = check_comprehensive_files(symbol)
-        print(f"   📁 Files found: {files_created}")
+        print("   📁 Files found: {files_created}")
 
         return True
 
     except Exception as e:
-        print(f"   ❌ Throttling test failed: {e}")
+        print("   ❌ Throttling test failed: {e}")
         return False
 
 
@@ -220,35 +220,35 @@ def show_final_summary():
             with open(metadata_file, "r") as f:
                 metadata = json.load(f)
 
-            print(f"📈 Total files created: {metadata.get('total_files', 0)}")
-            print(f"📊 Symbols tracked: {len(metadata.get('symbols', {}))}")
+            print("📈 Total files created: {metadata.get('total_files', 0)}")
+            print("📊 Symbols tracked: {len(metadata.get('symbols', {}))}")
 
             symbols = list(metadata.get("symbols", {}).keys())
             if symbols:
-                print(f"🎯 Symbols: {', '.join(symbols)}")
+                print("🎯 Symbols: {', '.join(symbols)}")
 
                 # Show sample symbol details
                 sample_symbol = symbols[0]
                 symbol_data = metadata["symbols"][sample_symbol]
-                print(f"\n📋 Sample ({sample_symbol}):")
-                print(f"   Data types: {symbol_data.get('data_types', [])}")
-                print(f"   First date: {symbol_data.get('first_date', 'N/A')}")
-                print(f"   Last date: {symbol_data.get('last_date', 'N/A')}")
+                print("\n📋 Sample ({sample_symbol}):")
+                print("   Data types: {symbol_data.get('data_types', [])}")
+                print("   First date: {symbol_data.get('first_date', 'N/A')}")
+                print("   Last date: {symbol_data.get('last_date', 'N/A')}")
 
         except Exception as e:
-            print(f"⚠️  Failed to read metadata: {e}")
+            print("⚠️  Failed to read metadata: {e}")
 
     # Count all files
     all_files = list(data_path.rglob("*.json"))
     if all_files:
-        print(f"\n📄 Total JSON files found: {len(all_files)}")
+        print("\n📄 Total JSON files found: {len(all_files)}")
 
         # Group by data type
         daily_files = [f for f in all_files if "daily_prices" in str(f)]
         weekly_files = [f for f in all_files if "weekly" in str(f)]
 
-        print(f"   📅 Daily price files: {len(daily_files)}")
-        print(f"   📊 Weekly price files: {len(weekly_files)}")
+        print("   📅 Daily price files: {len(daily_files)}")
+        print("   📊 Weekly price files: {len(weekly_files)}")
 
         if daily_files or weekly_files:
             print("\n🎉 SUCCESS: Auto-collection created comprehensive historical data!")
@@ -280,7 +280,7 @@ def run_all_tests():
         result = test_auto_collection_on_api_calls()
         test_results.append(("Auto-Collection on API Calls", result))
     except Exception as e:
-        print(f"❌ Auto-collection test failed: {e}")
+        print("❌ Auto-collection test failed: {e}")
         test_results.append(("Auto-Collection on API Calls", False))
 
     # Test 2: Caching integration
@@ -288,7 +288,7 @@ def run_all_tests():
         result = test_caching_behavior()
         test_results.append(("Caching + Auto-Collection", result))
     except Exception as e:
-        print(f"❌ Caching test failed: {e}")
+        print("❌ Caching test failed: {e}")
         test_results.append(("Caching + Auto-Collection", False))
 
     # Test 3: Collection throttling
@@ -296,7 +296,7 @@ def run_all_tests():
         result = test_collection_throttling()
         test_results.append(("Collection Throttling", result))
     except Exception as e:
-        print(f"❌ Throttling test failed: {e}")
+        print("❌ Throttling test failed: {e}")
         test_results.append(("Collection Throttling", False))
 
     # Wait for any remaining background collection
@@ -316,9 +316,9 @@ def run_all_tests():
 
     for test_name, result in test_results:
         status = "✅ PASS" if result else "❌ FAIL"
-        print(f"{status} {test_name}")
+        print("{status} {test_name}")
 
-    print(f"\n🎯 Tests Passed: {passed}/{total}")
+    print("\n🎯 Tests Passed: {passed}/{total}")
 
     if passed == total:
         print("\n🎉 ALL TESTS PASSED!")
@@ -329,7 +329,7 @@ def run_all_tests():
         print("   • Collection is properly throttled")
         print("\n🚀 READY FOR PRODUCTION!")
     else:
-        print(f"\n⚠️  {total - passed} tests failed. Review the output above.")
+        print("\n⚠️  {total - passed} tests failed. Review the output above.")
 
     return passed == total
 

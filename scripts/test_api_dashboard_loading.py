@@ -21,7 +21,7 @@ def test_api_endpoint_exists():
 
     api_path = project_root / "frontend/src/pages/api/dashboards.json.ts"
     if not api_path.exists():
-        print(f"❌ API endpoint file not found: {api_path}")
+        print("❌ API endpoint file not found: {api_path}")
         return False
 
     with open(api_path) as f:
@@ -37,7 +37,7 @@ def test_api_endpoint_exists():
 
     for element in required_elements:
         if element not in content:
-            print(f"❌ Missing required element: {element}")
+            print("❌ Missing required element: {element}")
             return False
 
     print("✅ API endpoint file is properly structured")
@@ -75,7 +75,7 @@ def test_dashboard_loader_updated():
 
     for interface in required_interfaces:
         if interface not in content:
-            print(f"❌ Missing required interface: {interface}")
+            print("❌ Missing required interface: {interface}")
             return False
 
     print("✅ DashboardLoader is client-side compatible")
@@ -108,7 +108,7 @@ def test_fallback_configurations():
 
     for dashboard_id in expected_dashboards:
         if dashboard_id not in content:
-            print(f"❌ Missing dashboard configuration: {dashboard_id}")
+            print("❌ Missing dashboard configuration: {dashboard_id}")
             return False
 
     print("✅ Fallback configurations are available")
@@ -127,7 +127,7 @@ def test_api_endpoint_running():
             data = response.json()
 
             if not data.get("success"):
-                print(f"❌ API returned error: {data.get('error', 'Unknown error')}")
+                print("❌ API returned error: {data.get('error', 'Unknown error')}")
                 return False
 
             dashboards = data.get("dashboards", [])
@@ -175,11 +175,11 @@ def test_configuration_consistency():
 
     for pattern in expected_dashboard_patterns:
         if pattern not in api_content:
-            print(f"❌ API missing dashboard: {pattern}")
+            print("❌ API missing dashboard: {pattern}")
             return False
 
         if pattern not in loader_content:
-            print(f"❌ Loader missing dashboard: {pattern}")
+            print("❌ Loader missing dashboard: {pattern}")
             return False
 
     print("✅ API and loader configurations are consistent")
@@ -213,12 +213,12 @@ def main():
             else:  # result is None (skipped)
                 skipped += 1
         except Exception as e:
-            print(f"❌ Test {test.__name__} failed with exception: {e}")
+            print("❌ Test {test.__name__} failed with exception: {e}")
             failed += 1
         print()
 
     print("=" * 50)
-    print(f"📊 Test Results: {passed} passed, {failed} failed, {skipped} skipped")
+    print("📊 Test Results: {passed} passed, {failed} failed, {skipped} skipped")
 
     if failed == 0:
         print("🎉 API dashboard loading is properly implemented!")

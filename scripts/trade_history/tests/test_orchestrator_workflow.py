@@ -109,10 +109,10 @@ def test_workflow_orchestration():
                 confidence_scores[phase] = output.get("confidence", 0.0)
 
                 phase_time = time.time() - phase_start
-                print(f"  ✅ {phase.capitalize()} phase completed in {phase_time:.2f}s")
+                print("  ✅ {phase.capitalize()} phase completed in {phase_time:.2f}s")
 
             except Exception as e:
-                print(f"  ❌ {phase.capitalize()} phase failed: {e}")
+                print("  ❌ {phase.capitalize()} phase failed: {e}")
                 # Implement error handling strategy
                 if phase == "discover":
                     # Critical failure - terminate workflow
@@ -144,17 +144,17 @@ def test_workflow_orchestration():
     workflow_result = execute_dasv_workflow(portfolio)
 
     print("DASV Workflow Execution Results:")
-    print(f"  Success: {'✅' if workflow_result['success'] else '❌'}")
-    print(f"  Total Time: {workflow_result['total_execution_time']:.2f}s")
-    print(f"  Overall Confidence: {workflow_result['overall_confidence']:.3f}")
+    print("  Success: {'✅' if workflow_result['success'] else '❌'}")
+    print("  Total Time: {workflow_result['total_execution_time']:.2f}s")
+    print("  Overall Confidence: {workflow_result['overall_confidence']:.3f}")
 
     if "performance_metrics" in workflow_result:
         perf = workflow_result["performance_metrics"]
-        print(f"  Performance Improvement: {perf['performance_improvement']:.1f}%")
+        print("  Performance Improvement: {perf['performance_improvement']:.1f}%")
 
     print("\nPhase Confidence Scores:")
     for phase, confidence in workflow_result["confidence_scores"].items():
-        print(f"  {phase.capitalize()}: {confidence:.3f}")
+        print("  {phase.capitalize()}: {confidence:.3f}")
 
     print("✅ Workflow orchestration tested\n")
     return workflow_result
@@ -198,7 +198,7 @@ def test_error_handling_and_recovery():
         ]
 
         for scenario in scenarios:
-            print(f"Testing: {scenario['name']}")
+            print("Testing: {scenario['name']}")
 
             # Create microservices with specific failure pattern
             # test_microservices = {
@@ -241,8 +241,8 @@ def test_error_handling_and_recovery():
                 # }
                 print("  ⚠️ Graceful degradation applied")
 
-            print(f"  Description: {scenario['description']}")
-            print(f"  Expected: {scenario['expected_behavior']}")
+            print("  Description: {scenario['description']}")
+            print("  Expected: {scenario['expected_behavior']}")
             print()
 
     def test_rollback_mechanisms():
@@ -268,9 +268,9 @@ def test_error_handling_and_recovery():
 
         print("Rollback Mechanism Tests:")
         for scenario in rollback_scenarios:
-            print(f"  Trigger: {scenario['trigger']}")
-            print(f"  Action: {scenario['action']}")
-            print(f"  Preservation: {scenario['preservation']}")
+            print("  Trigger: {scenario['trigger']}")
+            print("  Action: {scenario['action']}")
+            print("  Preservation: {scenario['preservation']}")
             print("  Status: ✅ Rollback strategy defined")
             print()
 
@@ -321,8 +321,8 @@ def test_performance_optimization():
             )
 
         overall_hit_rate /= len(cache_scenarios)
-        print(f"  Overall Cache Hit Rate: {overall_hit_rate:.1%}")
-        print(f"  Target Achievement: {'✅' if overall_hit_rate > 0.80 else '❌'}")
+        print("  Overall Cache Hit Rate: {overall_hit_rate:.1%}")
+        print("  Target Achievement: {'✅' if overall_hit_rate > 0.80 else '❌'}")
         print()
 
     def test_parallel_execution():
@@ -350,8 +350,8 @@ def test_performance_optimization():
         print("Parallel Execution Optimization:")
         for opp in parallel_opportunities:
             speedup = len(opp["parallelizable"]) * 0.7  # Estimate 70% efficiency
-            print(f"  {opp['phase'].capitalize()}: {speedup:.1f}x speedup potential")
-            print(f"    Parallel tasks: {', '.join(opp['parallelizable'])}")
+            print("  {opp['phase'].capitalize()}: {speedup:.1f}x speedup potential")
+            print("    Parallel tasks: {', '.join(opp['parallelizable'])}")
 
         print(
             "  Overall Parallelization: ✅ Significant optimization opportunities identified"
@@ -418,7 +418,7 @@ def test_quality_assurance_integration():
                 f"  {phase.capitalize()}: {confidence:.3f} (weight: {weight:.2f}, contribution: {contribution:.3f})"
             )
 
-        print(f"  Overall Confidence: {overall_confidence:.3f}")
+        print("  Overall Confidence: {overall_confidence:.3f}")
 
         # Quality band classification
         if overall_confidence >= 0.90:
@@ -434,8 +434,8 @@ def test_quality_assurance_integration():
             quality_band = "developmental_grade"
             description = "Usable with significant caveats and warnings"
 
-        print(f"  Quality Band: {quality_band}")
-        print(f"  Description: {description}")
+        print("  Quality Band: {quality_band}")
+        print("  Description: {description}")
         print()
 
     def test_quality_threshold_enforcement():
@@ -474,10 +474,10 @@ def test_quality_assurance_integration():
             thresh = scenario["threshold"]
             meets_threshold = conf >= thresh
 
-            print(f"  Confidence: {conf:.2f}, Threshold: {thresh:.2f}")
-            print(f"  Meets Threshold: {'✅' if meets_threshold else '❌'}")
-            print(f"  Expected Action: {scenario['action']}")
-            print(f"  Status: {scenario['expected']}")
+            print("  Confidence: {conf:.2f}, Threshold: {thresh:.2f}")
+            print("  Meets Threshold: {'✅' if meets_threshold else '❌'}")
+            print("  Expected Action: {scenario['action']}")
+            print("  Status: {scenario['expected']}")
             print()
 
     test_confidence_aggregation()
@@ -508,10 +508,10 @@ def test_data_output_integration():
         }
 
         print("Output Archival Structure:")
-        print(f"  Base Path: {archival_structure['base_path']}")
+        print("  Base Path: {archival_structure['base_path']}")
         for phase, path in archival_structure["phase_outputs"].items():
-            print(f"  {phase.capitalize()}: {path}")
-        print(f"  Orchestrator Logs: {archival_structure['orchestrator_logs']}")
+            print("  {phase.capitalize()}: {path}")
+        print("  Orchestrator Logs: {archival_structure['orchestrator_logs']}")
         print("  Versioning: ✅ Timestamp-based with metadata preservation")
         print()
 
@@ -539,9 +539,9 @@ def test_data_output_integration():
 
         print("Collaboration Integration:")
         for command, integration in collaboration_points.items():
-            print(f"  {command.title()}:")
-            print(f"    Provides: {', '.join(integration['provides'])}")
-            print(f"    Consumes: {', '.join(integration['consumes'])}")
+            print("  {command.title()}:")
+            print("    Provides: {', '.join(integration['provides'])}")
+            print("    Consumes: {', '.join(integration['consumes'])}")
             print("    Status: ✅ Integration framework defined")
             print()
 
@@ -578,13 +578,13 @@ def main():
     # Summary of key metrics
     if workflow_result and workflow_result.get("success"):
         print("\n📊 Key Performance Metrics:")
-        print(f"   Overall Confidence: {workflow_result['overall_confidence']:.3f}")
-        print(f"   Execution Time: {workflow_result['total_execution_time']:.2f}s")
+        print("   Overall Confidence: {workflow_result['overall_confidence']:.3f}")
+        print("   Execution Time: {workflow_result['total_execution_time']:.2f}s")
         if "performance_metrics" in workflow_result:
             perf_improvement = workflow_result["performance_metrics"][
                 "performance_improvement"
             ]
-            print(f"   Performance Improvement: {perf_improvement:.1f}%")
+            print("   Performance Improvement: {perf_improvement:.1f}%")
 
 
 if __name__ == "__main__":

@@ -182,7 +182,7 @@ class DASVCrossValidator:
                                 "file_path": file_path,
                             }
                 except Exception as e:
-                    print(f"Warning: Could not load {file_path}: {e}")
+                    print("Warning: Could not load {file_path}: {e}")
 
         return phase_data
 

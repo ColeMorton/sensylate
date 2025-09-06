@@ -57,10 +57,10 @@ class SignalEffectivenessAnalyzer:
             self.closed_trades["Entry_Timestamp"] >= self.ytd_start
         ].copy()
 
-        print(f"Total trades loaded: {len(self.df)}")
-        print(f"Closed trades: {len(self.closed_trades)}")
-        print(f"Open trades: {len(self.open_trades)}")
-        print(f"YTD trades (since 2025-01-01): {len(self.ytd_trades)}")
+        print("Total trades loaded: {len(self.df)}")
+        print("Closed trades: {len(self.closed_trades)}")
+        print("Open trades: {len(self.open_trades)}")
+        print("YTD trades (since 2025-01-01): {len(self.ytd_trades)}")
 
     def calculate_signal_metrics(self, trades_df: pd.DataFrame) -> SignalMetrics:
         """Calculate comprehensive signal metrics for a dataset"""
@@ -587,8 +587,8 @@ def main() -> Dict[str, Any]:
     )
 
     print("=== COMPREHENSIVE SIGNAL EFFECTIVENESS ANALYSIS ===")
-    print(f"Analyzing trade history data from: {csv_path}")
-    print(f"Analysis date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    print("Analyzing trade history data from: {csv_path}")
+    print("Analysis date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print()
 
     try:
@@ -603,7 +603,7 @@ def main() -> Dict[str, Any]:
         with open(output_path, "w") as f:
             json.dump(report, f, indent=2, default=str)
 
-        print(f"✅ Detailed analysis saved to: {output_path}")
+        print("✅ Detailed analysis saved to: {output_path}")
 
         # Print executive summary
         print("\n" + "=" * 60)
@@ -611,21 +611,21 @@ def main() -> Dict[str, Any]:
         print("=" * 60)
 
         overall = report["overall_performance"]
-        print(f"📊 Total Closed Trades: {overall['total_closed_trades']}")
+        print("📊 Total Closed Trades: {overall['total_closed_trades']}")
         print(
             f"🎯 Win Rate: {overall['win_rate_pct']:.1f}% "
             f"(CI: {overall['win_rate_confidence_interval'][0]:.1f}%-"
             f"{overall['win_rate_confidence_interval'][1]:.1f}%)"
         )
-        print(f"💰 Total Return: {overall['total_return_pct']:.2f}%")
-        print(f"📈 Profit Factor: {overall['profit_factor']:.2f}")
-        print(f"✅ Sample Adequate: {'Yes' if overall['sample_adequate'] else 'No'}")
+        print("💰 Total Return: {overall['total_return_pct']:.2f}%")
+        print("📈 Profit Factor: {overall['profit_factor']:.2f}")
+        print("✅ Sample Adequate: {'Yes' if overall['sample_adequate'] else 'No'}")
 
         print("\n📅 YTD Performance (2025):")
         ytd = report["ytd_performance"]
-        print(f"   Trades: {ytd['ytd_trades']}")
-        print(f"   Win Rate: {ytd['ytd_win_rate_pct']:.1f}%")
-        print(f"   Total Return: {ytd['ytd_total_return_pct']:.2f}%")
+        print("   Trades: {ytd['ytd_trades']}")
+        print("   Win Rate: {ytd['ytd_win_rate_pct']:.1f}%")
+        print("   Total Return: {ytd['ytd_total_return_pct']:.2f}%")
 
         print("\n🔄 Strategy Comparison:")
         for strategy, metrics in report["strategy_comparison"].items():
@@ -639,7 +639,7 @@ def main() -> Dict[str, Any]:
         for quality, data in report["trade_quality_analysis"][
             "quality_distribution"
         ].items():
-            print(f"   {quality}: {data['count']} trades ({data['percentage']:.1f}%)")
+            print("   {quality}: {data['count']} trades ({data['percentage']:.1f}%)")
 
         print("\n🚀 Top Optimization Opportunities:")
         opps = report["optimization_opportunities"]
@@ -648,18 +648,18 @@ def main() -> Dict[str, Any]:
             all_opportunities.extend(items)
 
         for i, opp in enumerate(all_opportunities[:5], 1):
-            print(f"   {i}. {opp}")
+            print("   {i}. {opp}")
 
         if not all_opportunities:
             print("   No major optimization opportunities identified")
 
-        print(f"\n🔗 Full detailed analysis available in: {output_path}")
+        print("\n🔗 Full detailed analysis available in: {output_path}")
         print("=" * 60)
 
         return report
 
     except Exception as e:
-        print(f"❌ Analysis failed: {str(e)}")
+        print("❌ Analysis failed: {str(e)}")
         raise
 
 

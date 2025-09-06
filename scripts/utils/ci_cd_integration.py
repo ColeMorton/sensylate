@@ -167,8 +167,8 @@ class CICDIntegration:
             raise ValueError(f"Unknown validation suite: {suite_name}")
 
         suite = self.validation_suites[suite_name]
-        print(f"🚀 Running validation suite: {suite.name}")
-        print(f"📝 {suite.description}")
+        print("🚀 Running validation suite: {suite.name}")
+        print("📝 {suite.description}")
         print("=" * 60)
 
         results = []
@@ -187,13 +187,13 @@ class CICDIntegration:
 
                 if result.issues:
                     for issue in result.issues[:2]:  # Show first 2 issues
-                        print(f"    • {issue}")
+                        print("    • {issue}")
                     if len(result.issues) > 2:
-                        print(f"    • ... and {len(result.issues) - 2} more")
+                        print("    • ... and {len(result.issues) - 2} more")
 
                 # Fail fast if enabled
                 if suite.fail_fast and not result.passed:
-                    print(f"\n💥 Validation failed - stopping due to fail_fast mode")
+                    print("\n💥 Validation failed - stopping due to fail_fast mode")
                     break
 
             except Exception as e:
@@ -205,7 +205,7 @@ class CICDIntegration:
                     issues=[f"Validator {validator_name} failed: {e}"],
                 )
                 results.append(error_result)
-                print(f"❌ {validator_name}: failed ({e})")
+                print("❌ {validator_name}: failed ({e})")
 
                 if suite.fail_fast:
                     break
@@ -216,9 +216,9 @@ class CICDIntegration:
         overall_passed = all(r.passed for r in results)
         overall_score = sum(r.score for r in results) / len(results) if results else 0.0
 
-        print(f"\n📊 Suite Results: {'PASSED' if overall_passed else 'FAILED'}")
-        print(f"🎯 Overall Score: {overall_score:.2f}/{suite.required_score}")
-        print(f"⏱️  Total Time: {total_time:.1f}s")
+        print("\n📊 Suite Results: {'PASSED' if overall_passed else 'FAILED'}")
+        print("🎯 Overall Score: {overall_score:.2f}/{suite.required_score}")
+        print("⏱️  Total Time: {total_time:.1f}s")
 
         return results
 
@@ -462,11 +462,11 @@ exit 0
             # Make executable
             hook_script.chmod(0o755)
 
-            print(f"✅ Pre-commit hook installed: {hook_script}")
+            print("✅ Pre-commit hook installed: {hook_script}")
             return True
 
         except Exception as e:
-            print(f"❌ Failed to install pre-commit hook: {e}")
+            print("❌ Failed to install pre-commit hook: {e}")
             return False
 
     def generate_github_action(self) -> str:
@@ -552,7 +552,7 @@ jobs:
         with open(workflow_file, "w") as f:
             f.write(workflow)
 
-        print(f"✅ GitHub Actions workflow generated: {workflow_file}")
+        print("✅ GitHub Actions workflow generated: {workflow_file}")
         return str(workflow_file)
 
     def export_results(self, results: List[CIResult], output_path: str) -> str:
@@ -624,10 +624,10 @@ def main():
     if args.list_suites:
         print("📋 Available Validation Suites:")
         for name, suite in ci_cd.validation_suites.items():
-            print(f"  {name}: {suite.description}")
-            print(f"    Validators: {', '.join(suite.validators)}")
-            print(f"    Required Score: {suite.required_score}")
-            print(f"    Timeout: {suite.timeout_minutes}min")
+            print("  {name}: {suite.description}")
+            print("    Validators: {', '.join(suite.validators)}")
+            print("    Required Score: {suite.required_score}")
+            print("    Timeout: {suite.timeout_minutes}min")
             print()
         return
 
@@ -646,7 +646,7 @@ def main():
         # Export results if requested
         if args.export:
             export_path = ci_cd.export_results(results, args.export)
-            print(f"\n📄 Results exported to: {export_path}")
+            print("\n📄 Results exported to: {export_path}")
 
         # Exit with appropriate code if requested
         if args.exit_code:

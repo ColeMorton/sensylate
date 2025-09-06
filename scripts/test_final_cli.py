@@ -69,7 +69,7 @@ def generate_test_data_directly():
 
         stored_count = 0
         for item in test_data:
-            print(f"📈 Storing {item['symbol']} data...")
+            print("📈 Storing {item['symbol']} data...")
 
             # Directly call the historical storage method
             success = service.store_historical_data(
@@ -78,14 +78,14 @@ def generate_test_data_directly():
 
             if success:
                 stored_count += 1
-                print(f"  ✅ {item['symbol']} stored successfully")
+                print("  ✅ {item['symbol']} stored successfully")
             else:
-                print(f"  ❌ {item['symbol']} storage failed")
+                print("  ❌ {item['symbol']} storage failed")
 
         return stored_count
 
     except Exception as e:
-        print(f"❌ Direct storage test failed: {e}")
+        print("❌ Direct storage test failed: {e}")
         import traceback
 
         traceback.print_exc()
@@ -126,7 +126,7 @@ def test_fmp_with_validation_fix():
             return 0
 
     except Exception as e:
-        print(f"❌ FMP test failed: {e}")
+        print("❌ FMP test failed: {e}")
         return 0
 
 
@@ -153,8 +153,8 @@ def check_new_files():
         if current_time - file_mtime < 60:  # Last 60 seconds
             recent_files.append(file_path)
 
-    print(f"📄 Total JSON files: {len(json_files)}")
-    print(f"📄 Recent files (last 60s): {len(recent_files)}")
+    print("📄 Total JSON files: {len(json_files)}")
+    print("📄 Recent files (last 60s): {len(recent_files)}")
 
     if recent_files:
         print("🆕 Recent files:")
@@ -162,7 +162,7 @@ def check_new_files():
             relative_path = file_path.relative_to(raw_path)
             size = file_path.stat().st_size
             mtime = file_path.stat().st_mtime
-            print(f"  📄 {relative_path} ({size} bytes)")
+            print("  📄 {relative_path} ({size} bytes)")
 
             # Show content preview
             try:
@@ -194,12 +194,12 @@ def show_metadata():
 
                 metadata = json.load(f)
 
-            print(f"📈 Total files: {metadata.get('total_files', 0)}")
-            print(f"📊 Data types: {metadata.get('data_types', {})}")
-            print(f"🏢 Symbols: {list(metadata.get('symbols', {}).keys())}")
+            print("📈 Total files: {metadata.get('total_files', 0)}")
+            print("📊 Data types: {metadata.get('data_types', {})}")
+            print("🏢 Symbols: {list(metadata.get('symbols', {}).keys())}")
 
         except Exception as e:
-            print(f"❌ Could not read metadata: {e}")
+            print("❌ Could not read metadata: {e}")
     else:
         print("📝 No metadata file")
 
@@ -212,7 +212,7 @@ def main():
     # Track initial state
     raw_path = Path("data/raw")
     initial_files = len(list(raw_path.rglob("*.json"))) if raw_path.exists() else 0
-    print(f"📁 Initial files: {initial_files}")
+    print("📁 Initial files: {initial_files}")
 
     # Test direct storage
     yahoo_stored = generate_test_data_directly()
@@ -229,10 +229,10 @@ def main():
     print("\n" + "=" * 60)
     print("📊 FINAL RESULTS")
     print("=" * 60)
-    print(f"📈 Yahoo Finance stored: {yahoo_stored}")
-    print(f"📈 FMP stored: {fmp_stored}")
-    print(f"📈 Total stored: {total_stored}")
-    print(f"📄 Recent files created: {len(recent_files)}")
+    print("📈 Yahoo Finance stored: {yahoo_stored}")
+    print("📈 FMP stored: {fmp_stored}")
+    print("📈 Total stored: {total_stored}")
+    print("📄 Recent files created: {len(recent_files)}")
 
     if total_stored > 0 and len(recent_files) > 0:
         print("🎉 SUCCESS: Historical data storage is working via CLI services!")

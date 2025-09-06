@@ -1,0 +1,931 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sensylate.com/schemas/bitcoin_cycle_intelligence_analysis.json",
+  "title": "Bitcoin Cycle Intelligence Analysis Schema",
+  "description": "Comprehensive validation schema for Bitcoin cycle intelligence analysis JSON outputs from CLI-enhanced analyst framework",
+  "type": "object",
+  "required": [
+    "metadata",
+    "cycle_indicators_dashboard",
+    "valuation_framework_assessment",
+    "cycle_comparison_matrix",
+    "strategic_recommendations",
+    "bitcoin_risk_assessment",
+    "cli_service_validation",
+    "analysis_confidence",
+    "economic_context_integration",
+    "network_health_scoring"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "description": "Core metadata about the Bitcoin cycle analysis execution",
+      "required": [
+        "command_name",
+        "execution_timestamp",
+        "framework_phase",
+        "analysis_date",
+        "analysis_methodology",
+        "discovery_input_file",
+        "confidence_target"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "command_name": {
+          "type": "string",
+          "const": "cli_enhanced_bitcoin_cycle_intelligence_analyze",
+          "description": "Must be the standardized Bitcoin analysis command name"
+        },
+        "execution_timestamp": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d{6})?Z?$",
+          "description": "ISO 8601 timestamp with optional microseconds and timezone"
+        },
+        "framework_phase": {
+          "type": "string",
+          "const": "cli_enhanced_analyze_bitcoin_cycle",
+          "description": "Must indicate the Bitcoin cycle analysis phase"
+        },
+        "analysis_date": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+          "description": "Date for Bitcoin cycle analysis (YYYY-MM-DD format)"
+        },
+        "analysis_methodology": {
+          "type": "string",
+          "const": "institutional_bitcoin_cycle_intelligence",
+          "description": "Must use institutional Bitcoin cycle methodology"
+        },
+        "discovery_input_file": {
+          "type": "string",
+          "pattern": "^bitcoin_cycle_\\d{8}_discovery\\.json$",
+          "description": "Reference to the discovery input file"
+        },
+        "confidence_target": {
+          "type": "number",
+          "minimum": 0.8,
+          "maximum": 1.0,
+          "description": "Target confidence level for analysis (0.8-1.0)"
+        }
+      }
+    },
+    "cycle_indicators_dashboard": {
+      "type": "object",
+      "description": "Comprehensive Bitcoin cycle indicators with institutional-grade analysis",
+      "required": [
+        "mvrv_z_score_analysis",
+        "pi_cycle_evaluation",
+        "lth_behavior_analysis",
+        "rainbow_price_integration",
+        "dashboard_confidence"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "mvrv_z_score_analysis": {
+          "type": "object",
+          "required": [
+            "current_score",
+            "historical_context",
+            "zone_assessment",
+            "trend_analysis",
+            "confidence"
+          ],
+          "properties": {
+            "current_score": {
+              "type": "number",
+              "description": "Current MVRV Z-Score value"
+            },
+            "historical_context": {
+              "type": "object",
+              "properties": {
+                "percentile_ranking": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "cycle_comparison": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "cycle_year": {"type": "number"},
+                      "peak_score": {"type": "number"},
+                      "bottom_score": {"type": "number"}
+                    }
+                  }
+                },
+                "standard_deviation_bands": {
+                  "type": "object",
+                  "properties": {
+                    "upper_2_sigma": {"type": "number"},
+                    "upper_1_sigma": {"type": "number"},
+                    "lower_1_sigma": {"type": "number"},
+                    "lower_2_sigma": {"type": "number"}
+                  }
+                }
+              }
+            },
+            "zone_assessment": {
+              "type": "object",
+              "properties": {
+                "current_zone": {
+                  "type": "string",
+                  "enum": ["deep_capitulation", "capitulation", "accumulation", "neutral", "euphoria", "extreme_euphoria"]
+                },
+                "zone_probability": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "time_in_zone": {
+                  "type": "number",
+                  "description": "Days in current zone"
+                }
+              }
+            },
+            "trend_analysis": {
+              "type": "object",
+              "properties": {
+                "30_day_trend": {
+                  "type": "string",
+                  "enum": ["strongly_rising", "rising", "stable", "declining", "strongly_declining"]
+                },
+                "momentum": {
+                  "type": "number",
+                  "description": "Rate of change"
+                },
+                "reversal_probability": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                }
+              }
+            },
+            "confidence": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0
+            }
+          }
+        },
+        "pi_cycle_evaluation": {
+          "type": "object",
+          "required": [
+            "signal_status",
+            "historical_performance",
+            "current_analysis",
+            "confidence"
+          ],
+          "properties": {
+            "signal_status": {
+              "type": "object",
+              "properties": {
+                "active": {"type": "boolean"},
+                "days_to_crossover": {"type": "number"},
+                "signal_strength": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                }
+              }
+            },
+            "historical_performance": {
+              "type": "object",
+              "properties": {
+                "accuracy_rate": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "false_positive_rate": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "average_lead_time": {
+                  "type": "number",
+                  "description": "Average days before cycle top"
+                }
+              }
+            },
+            "current_analysis": {
+              "type": "object",
+              "properties": {
+                "ma_111_value": {"type": "number"},
+                "ma_350_doubled": {"type": "number"},
+                "spread": {"type": "number"},
+                "trend_direction": {
+                  "type": "string",
+                  "enum": ["converging", "diverging", "parallel"]
+                }
+              }
+            },
+            "confidence": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0
+            }
+          }
+        },
+        "lth_behavior_analysis": {
+          "type": "object",
+          "required": [
+            "supply_dynamics",
+            "realized_price_analysis",
+            "age_distribution",
+            "confidence"
+          ],
+          "properties": {
+            "supply_dynamics": {
+              "type": "object",
+              "properties": {
+                "lth_supply_change_30d": {"type": "number"},
+                "lth_supply_percentage": {"type": "number"},
+                "accumulation_rate": {"type": "number"},
+                "distribution_signals": {
+                  "type": "array",
+                  "items": {"type": "string"}
+                }
+              }
+            },
+            "realized_price_analysis": {
+              "type": "object",
+              "properties": {
+                "lth_realized_price": {"type": "number"},
+                "sth_realized_price": {"type": "number"},
+                "spread": {"type": "number"},
+                "trend": {
+                  "type": "string",
+                  "enum": ["increasing", "stable", "decreasing"]
+                }
+              }
+            },
+            "age_distribution": {
+              "type": "object",
+              "properties": {
+                "coins_1y_plus": {"type": "number"},
+                "coins_2y_plus": {"type": "number"},
+                "coins_3y_plus": {"type": "number"},
+                "hodl_waves": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "age_band": {"type": "string"},
+                      "percentage": {"type": "number"}
+                    }
+                  }
+                }
+              }
+            },
+            "confidence": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0
+            }
+          }
+        },
+        "rainbow_price_integration": {
+          "type": "object",
+          "required": [
+            "current_position",
+            "fair_value_estimates",
+            "historical_accuracy",
+            "confidence"
+          ],
+          "properties": {
+            "current_position": {
+              "type": "object",
+              "properties": {
+                "band": {
+                  "type": "string",
+                  "enum": ["deep_red", "red", "orange", "yellow", "green", "light_blue", "blue", "dark_blue", "purple"]
+                },
+                "band_percentile": {"type": "number"},
+                "time_in_band": {"type": "number"}
+              }
+            },
+            "fair_value_estimates": {
+              "type": "object",
+              "properties": {
+                "rainbow_fair_value": {"type": "number"},
+                "upper_target": {"type": "number"},
+                "lower_support": {"type": "number"},
+                "confidence_interval": {
+                  "type": "object",
+                  "properties": {
+                    "lower_bound": {"type": "number"},
+                    "upper_bound": {"type": "number"}
+                  }
+                }
+              }
+            },
+            "historical_accuracy": {
+              "type": "object",
+              "properties": {
+                "correlation_with_cycles": {"type": "number"},
+                "top_identification_accuracy": {"type": "number"},
+                "bottom_identification_accuracy": {"type": "number"}
+              }
+            },
+            "confidence": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0
+            }
+          }
+        },
+        "dashboard_confidence": {
+          "type": "number",
+          "minimum": 0.8,
+          "maximum": 1.0,
+          "description": "Overall dashboard confidence score (minimum 0.8)"
+        }
+      }
+    },
+    "valuation_framework_assessment": {
+      "type": "object",
+      "description": "Bitcoin valuation framework with multiple model integration",
+      "required": [
+        "realized_price_metrics",
+        "nupl_zone_analysis",
+        "reserve_risk_assessment",
+        "network_value_analysis",
+        "framework_confidence"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "realized_price_metrics": {
+          "type": "object",
+          "required": [
+            "current_realized_price",
+            "market_vs_realized_spread",
+            "lth_sth_divergence",
+            "historical_percentiles"
+          ],
+          "properties": {
+            "current_realized_price": {"type": "number"},
+            "market_vs_realized_spread": {
+              "type": "object",
+              "properties": {
+                "absolute_spread": {"type": "number"},
+                "percentage_spread": {"type": "number"},
+                "trend": {"type": "string"}
+              }
+            },
+            "lth_sth_divergence": {
+              "type": "object",
+              "properties": {
+                "lth_realized_price": {"type": "number"},
+                "sth_realized_price": {"type": "number"},
+                "divergence_magnitude": {"type": "number"}
+              }
+            },
+            "historical_percentiles": {
+              "type": "object",
+              "properties": {
+                "current_percentile": {"type": "number"},
+                "cycle_comparison": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "cycle": {"type": "string"},
+                      "peak_spread": {"type": "number"},
+                      "trough_spread": {"type": "number"}
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "nupl_zone_analysis": {
+          "type": "object",
+          "required": [
+            "current_nupl",
+            "zone_classification",
+            "transition_probabilities",
+            "lth_sth_breakdown"
+          ],
+          "properties": {
+            "current_nupl": {"type": "number"},
+            "zone_classification": {
+              "type": "object",
+              "properties": {
+                "zone": {
+                  "type": "string",
+                  "enum": ["capitulation", "hope", "optimism", "belief", "euphoria", "greed"]
+                },
+                "zone_confidence": {"type": "number"},
+                "time_in_zone": {"type": "number"}
+              }
+            },
+            "transition_probabilities": {
+              "type": "object",
+              "properties": {
+                "next_zone_up": {"type": "number"},
+                "next_zone_down": {"type": "number"},
+                "zone_reversal": {"type": "number"}
+              }
+            },
+            "lth_sth_breakdown": {
+              "type": "object",
+              "properties": {
+                "lth_nupl": {"type": "number"},
+                "sth_nupl": {"type": "number"},
+                "cohort_divergence": {"type": "number"}
+              }
+            }
+          }
+        },
+        "reserve_risk_assessment": {
+          "type": "object",
+          "required": [
+            "current_ratio",
+            "accumulation_opportunity",
+            "conviction_analysis",
+            "historical_context"
+          ],
+          "properties": {
+            "current_ratio": {"type": "number"},
+            "accumulation_opportunity": {
+              "type": "object",
+              "properties": {
+                "opportunity_grade": {
+                  "type": "string",
+                  "enum": ["excellent", "good", "fair", "poor"]
+                },
+                "confidence": {"type": "number"},
+                "risk_adjusted_score": {"type": "number"}
+              }
+            },
+            "conviction_analysis": {
+              "type": "object",
+              "properties": {
+                "lth_conviction": {"type": "number"},
+                "hodl_strength": {"type": "number"},
+                "distribution_pressure": {"type": "number"}
+              }
+            },
+            "historical_context": {
+              "type": "object",
+              "properties": {
+                "percentile_ranking": {"type": "number"},
+                "cycle_lows": {
+                  "type": "array",
+                  "items": {"type": "number"}
+                },
+                "cycle_highs": {
+                  "type": "array",
+                  "items": {"type": "number"}
+                }
+              }
+            }
+          }
+        },
+        "network_value_analysis": {
+          "type": "object",
+          "required": [
+            "stock_to_flow",
+            "metcalfe_law",
+            "hash_rate_valuation",
+            "adoption_metrics"
+          ],
+          "properties": {
+            "stock_to_flow": {
+              "type": "object",
+              "properties": {
+                "current_sf_ratio": {"type": "number"},
+                "model_price": {"type": "number"},
+                "deviation": {"type": "number"},
+                "r_squared": {"type": "number"}
+              }
+            },
+            "metcalfe_law": {
+              "type": "object",
+              "properties": {
+                "network_value": {"type": "number"},
+                "active_addresses": {"type": "number"},
+                "correlation": {"type": "number"}
+              }
+            },
+            "hash_rate_valuation": {
+              "type": "object",
+              "properties": {
+                "security_value": {"type": "number"},
+                "hash_price_correlation": {"type": "number"},
+                "mining_economics": {"type": "number"}
+              }
+            },
+            "adoption_metrics": {
+              "type": "object",
+              "properties": {
+                "user_growth": {"type": "number"},
+                "transaction_volume": {"type": "number"},
+                "network_effects": {"type": "number"}
+              }
+            }
+          }
+        },
+        "framework_confidence": {
+          "type": "number",
+          "minimum": 0.8,
+          "maximum": 1.0,
+          "description": "Overall valuation framework confidence (minimum 0.8)"
+        }
+      }
+    },
+    "cycle_comparison_matrix": {
+      "type": "object",
+      "description": "Multi-cycle analysis and pattern recognition",
+      "required": [
+        "multi_cycle_analysis",
+        "fractal_pattern_recognition",
+        "hash_rate_mining_analysis",
+        "network_health_integration",
+        "matrix_confidence"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "multi_cycle_analysis": {
+          "type": "object",
+          "properties": {
+            "current_cycle_progression": {
+              "type": "object",
+              "properties": {
+                "cycle_start_date": {"type": "string"},
+                "days_into_cycle": {"type": "number"},
+                "estimated_cycle_length": {"type": "number"},
+                "completion_percentage": {"type": "number"}
+              }
+            },
+            "historical_comparisons": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "cycle_period": {"type": "string"},
+                  "similarity_score": {"type": "number"},
+                  "time_alignment": {"type": "number"},
+                  "price_pattern_match": {"type": "number"}
+                }
+              }
+            }
+          }
+        },
+        "fractal_pattern_recognition": {
+          "type": "object",
+          "properties": {
+            "pattern_similarity": {"type": "number"},
+            "cycle_extension_probability": {"type": "number"},
+            "compression_signals": {"type": "array", "items": {"type": "string"}},
+            "key_milestones": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "milestone": {"type": "string"},
+                  "target_price": {"type": "number"},
+                  "target_date": {"type": "string"},
+                  "probability": {"type": "number"}
+                }
+              }
+            }
+          }
+        },
+        "hash_rate_mining_analysis": {
+          "type": "object",
+          "properties": {
+            "hash_ribbons": {
+              "type": "object",
+              "properties": {
+                "signal": {"type": "string"},
+                "ma_30": {"type": "number"},
+                "ma_60": {"type": "number"},
+                "crossover_date": {"type": "string"}
+              }
+            },
+            "puell_multiple": {
+              "type": "object",
+              "properties": {
+                "current_value": {"type": "number"},
+                "historical_percentile": {"type": "number"},
+                "signal": {"type": "string"}
+              }
+            },
+            "mining_difficulty": {
+              "type": "object",
+              "properties": {
+                "current_difficulty": {"type": "number"},
+                "adjustment_trend": {"type": "string"},
+                "network_security": {"type": "number"}
+              }
+            }
+          }
+        },
+        "network_health_integration": {
+          "type": "object",
+          "properties": {
+            "transaction_volume": {"type": "number"},
+            "active_addresses": {"type": "number"},
+            "fee_market": {"type": "number"},
+            "lightning_growth": {"type": "number"}
+          }
+        },
+        "matrix_confidence": {
+          "type": "number",
+          "minimum": 0.8,
+          "maximum": 1.0
+        }
+      }
+    },
+    "strategic_recommendations": {
+      "type": "object",
+      "description": "Strategic recommendations based on cycle analysis",
+      "required": [
+        "cycle_phase_classification",
+        "risk_reward_assessment",
+        "position_sizing_framework",
+        "recommendations_confidence"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "cycle_phase_classification": {
+          "type": "object",
+          "properties": {
+            "current_phase": {
+              "type": "string",
+              "enum": ["accumulation", "bull_market", "distribution", "bear_market"]
+            },
+            "phase_confidence": {"type": "number"},
+            "transition_triggers": {
+              "type": "array",
+              "items": {"type": "string"}
+            },
+            "timeline_estimate": {
+              "type": "object",
+              "properties": {
+                "minimum_duration": {"type": "number"},
+                "expected_duration": {"type": "number"},
+                "maximum_duration": {"type": "number"}
+              }
+            }
+          }
+        },
+        "risk_reward_assessment": {
+          "type": "object",
+          "properties": {
+            "expected_returns": {
+              "type": "object",
+              "properties": {
+                "6_month": {"type": "number"},
+                "12_month": {"type": "number"},
+                "18_month": {"type": "number"}
+              }
+            },
+            "downside_scenarios": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "scenario": {"type": "string"},
+                  "probability": {"type": "number"},
+                  "price_impact": {"type": "number"}
+                }
+              }
+            },
+            "maximum_drawdown": {
+              "type": "object",
+              "properties": {
+                "expected": {"type": "number"},
+                "worst_case": {"type": "number"},
+                "recovery_time": {"type": "number"}
+              }
+            }
+          }
+        },
+        "position_sizing_framework": {
+          "type": "object",
+          "properties": {
+            "recommended_allocation": {
+              "type": "object",
+              "properties": {
+                "conservative": {"type": "number"},
+                "moderate": {"type": "number"},
+                "aggressive": {"type": "number"}
+              }
+            },
+            "dca_optimization": {
+              "type": "object",
+              "properties": {
+                "frequency": {"type": "string"},
+                "amount_adjustment": {"type": "number"},
+                "trigger_levels": {
+                  "type": "array",
+                  "items": {"type": "number"}
+                }
+              }
+            },
+            "rebalancing_triggers": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "trigger": {"type": "string"},
+                  "threshold": {"type": "number"},
+                  "action": {"type": "string"}
+                }
+              }
+            }
+          }
+        },
+        "recommendations_confidence": {
+          "type": "number",
+          "minimum": 0.8,
+          "maximum": 1.0
+        }
+      }
+    },
+    "bitcoin_risk_assessment": {
+      "type": "object",
+      "description": "Comprehensive Bitcoin-specific risk analysis",
+      "required": [
+        "market_risk_matrix",
+        "network_security_risk",
+        "stress_testing",
+        "risk_confidence"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "market_risk_matrix": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "risk_category": {"type": "string"},
+              "probability": {"type": "number"},
+              "impact": {"type": "number"},
+              "mitigation": {"type": "string"},
+              "monitoring_metric": {"type": "string"}
+            }
+          }
+        },
+        "network_security_risk": {
+          "type": "object",
+          "properties": {
+            "hash_rate_concentration": {"type": "number"},
+            "attack_cost": {"type": "number"},
+            "mining_economics": {"type": "number"},
+            "protocol_risks": {
+              "type": "array",
+              "items": {"type": "string"}
+            }
+          }
+        },
+        "stress_testing": {
+          "type": "object",
+          "properties": {
+            "price_stress": {
+              "type": "object",
+              "properties": {
+                "50_percent_drop": {"type": "object"},
+                "80_percent_drop": {"type": "object"}
+              }
+            },
+            "liquidity_stress": {"type": "object"},
+            "regulatory_stress": {"type": "object"}
+          }
+        },
+        "risk_confidence": {
+          "type": "number",
+          "minimum": 0.8,
+          "maximum": 1.0
+        }
+      }
+    },
+    "cli_service_validation": {
+      "type": "object",
+      "description": "Bitcoin CLI service validation and health assessment",
+      "required": [
+        "service_health",
+        "data_quality_scores",
+        "integration_status"
+      ],
+      "properties": {
+        "service_health": {
+          "type": "object",
+          "properties": {
+            "coingecko": {"type": "string"},
+            "mempool_space": {"type": "string"},
+            "coinmetrics": {"type": "string"},
+            "alternative_me": {"type": "string"}
+          }
+        },
+        "data_quality_scores": {
+          "type": "object",
+          "patternProperties": {
+            "^[a-z_]+$": {
+              "type": "number",
+              "minimum": 0.8,
+              "maximum": 1.0
+            }
+          }
+        },
+        "integration_status": {"type": "string"}
+      }
+    },
+    "analysis_confidence": {
+      "type": "object",
+      "description": "Overall analysis confidence scoring",
+      "required": [
+        "overall_score",
+        "component_scores",
+        "evidence_quality"
+      ],
+      "properties": {
+        "overall_score": {
+          "type": "number",
+          "minimum": 0.8,
+          "maximum": 1.0,
+          "description": "Overall analysis confidence (minimum 0.8)"
+        },
+        "component_scores": {
+          "type": "object",
+          "properties": {
+            "cycle_indicators": {"type": "number"},
+            "valuation_framework": {"type": "number"},
+            "cycle_comparison": {"type": "number"},
+            "strategic_recommendations": {"type": "number"},
+            "risk_assessment": {"type": "number"}
+          }
+        },
+        "evidence_quality": {
+          "type": "string",
+          "enum": ["high", "medium", "low"]
+        }
+      }
+    },
+    "economic_context_integration": {
+      "type": "object",
+      "description": "Economic context and macro factor analysis",
+      "required": [
+        "interest_rate_impact",
+        "liquidity_conditions",
+        "bitcoin_correlations"
+      ],
+      "properties": {
+        "interest_rate_impact": {"type": "object"},
+        "liquidity_conditions": {"type": "object"},
+        "bitcoin_correlations": {"type": "object"}
+      }
+    },
+    "network_health_scoring": {
+      "type": "object",
+      "description": "Bitcoin network health comprehensive scoring",
+      "required": [
+        "security_score",
+        "decentralization_score",
+        "development_score",
+        "adoption_score"
+      ],
+      "properties": {
+        "security_score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 10
+        },
+        "decentralization_score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 10
+        },
+        "development_score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 10
+        },
+        "adoption_score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 10
+        }
+      }
+    }
+  },
+  "definitions": {
+    "confidence_score": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0,
+      "description": "Confidence score between 0.0 and 1.0"
+    },
+    "institutional_grade_confidence": {
+      "type": "number",
+      "minimum": 0.8,
+      "maximum": 1.0,
+      "description": "High confidence score required for institutional grade Bitcoin analysis"
+    }
+  }
+}

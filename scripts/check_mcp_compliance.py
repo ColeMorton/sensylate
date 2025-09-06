@@ -466,7 +466,7 @@ class MCPComplianceChecker:
             print("✅ No MCP compliance violations found!")
             return
 
-        print(f"\n❌ Found {len(violations)} MCP compliance violations:\n")
+        print("\n❌ Found {len(violations)} MCP compliance violations:\n")
 
         # Group by file
         by_file = {}
@@ -477,7 +477,7 @@ class MCPComplianceChecker:
             by_file[file_key].append(violation)
 
         for file_path, file_violations in by_file.items():
-            print(f"📁 {file_path}")
+            print("📁 {file_path}")
 
             for violation in file_violations:
                 severity_icon = {
@@ -491,9 +491,9 @@ class MCPComplianceChecker:
                 )
 
                 if verbose:
-                    print(f"     Code: {violation.line_content}")
+                    print("     Code: {violation.line_content}")
                     if violation.suggested_fix:
-                        print(f"     Fix:  {violation.suggested_fix}")
+                        print("     Fix:  {violation.suggested_fix}")
 
             print()
 
@@ -595,21 +595,21 @@ def main():
         if args.report:
             print("📊 MCP Compliance Report")
             print("=" * 50)
-            print(f"Status: {report['status']}")
-            print(f"Total Violations: {report['total_violations']}")
-            print(f"Files Affected: {report['files_affected']}")
+            print("Status: {report['status']}")
+            print("Total Violations: {report['total_violations']}")
+            print("Files Affected: {report['files_affected']}")
             print()
 
             if report["violations_by_severity"]:
                 print("Violations by Severity:")
                 for severity, count in report["violations_by_severity"].items():
-                    print(f"  {severity}: {count}")
+                    print("  {severity}: {count}")
                 print()
 
             if report["violations_by_type"]:
                 print("Violations by Type:")
                 for vtype, count in report["violations_by_type"].items():
-                    print(f"  {vtype}: {count}")
+                    print("  {vtype}: {count}")
                 print()
 
         checker.print_violations(all_violations, args.verbose)
@@ -617,7 +617,7 @@ def main():
     # Auto-fix if requested
     if args.fix:
         fixed_count = checker.auto_fix_violations(all_violations)
-        print(f"🔧 Fixed {fixed_count} violations")
+        print("🔧 Fixed {fixed_count} violations")
 
     # Exit code based on status
     if report["status"] == "FAILED":

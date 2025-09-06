@@ -29,7 +29,7 @@ try:
 
     CLI_SERVICES_AVAILABLE = True
 except ImportError as e:
-    print(f"⚠️  CLI services not available: {e}")
+    print("⚠️  CLI services not available: {e}")
     CLI_SERVICES_AVAILABLE = False
 
 # Import base script and registry for integration
@@ -95,10 +95,10 @@ class IndustryDiscovery:
                 "sec_edgar": create_sec_edgar_service(env),
                 "imf": create_imf_service(env),
             }
-            print(f"✅ Initialized {len(self.cli_services)} CLI services")
+            print("✅ Initialized {len(self.cli_services)} CLI services")
             self._check_cli_service_health()
         except Exception as e:
-            print(f"⚠️  Failed to initialize CLI services: {e}")
+            print("⚠️  Failed to initialize CLI services: {e}")
             self.cli_services = {}
 
     def _check_cli_service_health(self):
@@ -126,7 +126,7 @@ class IndustryDiscovery:
         healthy_count = sum(
             1 for s in self.cli_service_health.values() if s["status"] == "healthy"
         )
-        print(f"📊 CLI Service Health: {healthy_count}/{len(self.cli_services)} healthy")
+        print("📊 CLI Service Health: {healthy_count}/{len(self.cli_services)} healthy")
 
     def discover_industry_scope(self) -> Dict[str, Any]:
         """Define industry scope and boundaries"""
@@ -156,7 +156,7 @@ class IndustryDiscovery:
                 # Would call FMP industry screening endpoint
                 pass
             except Exception as e:
-                print(f"⚠️  Failed to discover companies via FMP: {e}")
+                print("⚠️  Failed to discover companies via FMP: {e}")
 
         # Default representative companies by industry
         industry_defaults = {
@@ -220,7 +220,7 @@ class IndustryDiscovery:
                 indicators["collection_timestamp"] = datetime.now().isoformat()
                 indicators["confidence"] = 9.0
             except Exception as e:
-                print(f"⚠️  Economic indicator collection failed: {e}")
+                print("⚠️  Economic indicator collection failed: {e}")
                 indicators["error"] = str(e)
                 indicators["confidence"] = 0.0
 
@@ -290,7 +290,7 @@ class IndustryDiscovery:
         with open(filepath, "w") as f:
             json.dump(data, f, indent=2)
 
-        print(f"✅ Saved discovery output to: {filepath}")
+        print("✅ Saved discovery output to: {filepath}")
         return filepath
 
     # Helper methods
@@ -597,15 +597,15 @@ def main():
     )
 
     # Generate discovery data
-    print(f"\n🔍 Starting industry discovery for: {args.industry}")
+    print("\n🔍 Starting industry discovery for: {args.industry}")
     discovery_data = discovery.generate_discovery_output()
 
     # Save output
     if args.save_output:
         output_path = discovery.save_discovery_output(discovery_data)
-        print(f"\n✅ Industry discovery complete!")
-        print(f"📊 Confidence Score: {discovery_data['discovery_confidence']}/10.0")
-        print(f"📁 Output saved to: {output_path}")
+        print("\n✅ Industry discovery complete!")
+        print("📊 Confidence Score: {discovery_data['discovery_confidence']}/10.0")
+        print("📁 Output saved to: {output_path}")
     else:
         print(json.dumps(discovery_data, indent=2))
 

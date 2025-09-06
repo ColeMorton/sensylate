@@ -725,7 +725,7 @@ def example_comprehensive_analysis():
     # Save to file
     file_path = mcp.save_analysis_to_file(analysis)
 
-    print(f"Comprehensive analysis saved to: {file_path}")
+    print("Comprehensive analysis saved to: {file_path}")
     return analysis
 
 
@@ -739,34 +739,34 @@ if __name__ == "__main__":
         # Test Yahoo Finance integration
         print("\n1. Testing Yahoo Finance integration...")
         yahoo_data = mcp.get_stock_fundamentals("AAPL")
-        print(f"Yahoo Finance data retrieved: {bool(yahoo_data)}")
+        print("Yahoo Finance data retrieved: {bool(yahoo_data)}")
 
         # Test SEC EDGAR integration
         print("\n2. Testing SEC EDGAR integration...")
         edgar_data = mcp.get_company_filings("AAPL", "10-K")
-        print(f"SEC EDGAR data retrieved: {bool(edgar_data)}")
+        print("SEC EDGAR data retrieved: {bool(edgar_data)}")
 
         # Test FRED integration
         print("\n3. Testing FRED integration...")
         inflation_data = mcp.get_inflation_data("1y")
-        print(f"FRED data retrieved: {bool(inflation_data)}")
+        print("FRED data retrieved: {bool(inflation_data)}")
 
         # Test comprehensive analysis
         print("\n4. Testing comprehensive analysis...")
         comprehensive = mcp.get_comprehensive_analysis("AAPL")
-        print(f"Data sources: {comprehensive.get('data_sources', [])}")
+        print("Data sources: {comprehensive.get('data_sources', [])}")
 
         # Cache stats and performance metrics
-        print(f"\n5. Cache statistics: {mcp.get_cache_stats()}")
-        print(f"\n6. Performance metrics: {mcp.get_performance_metrics()}")
+        print("\n5. Cache statistics: {mcp.get_cache_stats()}")
+        print("\n6. Performance metrics: {mcp.get_performance_metrics()}")
 
         # Performance optimization
-        print(f"\n7. Performance optimization: {mcp.optimize_performance()}")
+        print("\n7. Performance optimization: {mcp.optimize_performance()}")
 
         # Cache cleanup
         print("\n8. Running cache cleanup...")
         mcp.cleanup_cache()
 
     except Exception as e:
-        print(f"Error: {e}")
+        print("Error: {e}")
         logger.error(f"MCP integration test failed: {e}")

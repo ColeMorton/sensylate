@@ -25,14 +25,14 @@ def load_schema():
     )
 
     if not schema_path.exists():
-        print(f"Error: Schema file not found at {schema_path}")
+        print("Error: Schema file not found at {schema_path}")
         return None
 
     try:
         with open(schema_path, "r") as f:
             return json.load(f)
     except json.JSONDecodeError as e:
-        print(f"Error: Invalid JSON in schema file: {e}")
+        print("Error: Invalid JSON in schema file: {e}")
         return None
 
 
@@ -42,10 +42,10 @@ def load_validation_file(file_path):
         with open(file_path, "r") as f:
             return json.load(f)
     except json.JSONDecodeError as e:
-        print(f"Error: Invalid JSON in {file_path}: {e}")
+        print("Error: Invalid JSON in {file_path}: {e}")
         return None
     except FileNotFoundError:
-        print(f"Error: File not found: {file_path}")
+        print("Error: File not found: {file_path}")
         return None
 
 
@@ -90,7 +90,7 @@ def main():
 
     validation_results = []
 
-    print(f"\n📁 Testing {len(test_files)} validation files:")
+    print("\n📁 Testing {len(test_files)} validation files:")
     print("-" * 40)
 
     for file_name in test_files:
@@ -110,10 +110,10 @@ def main():
 
         # Print immediate result
         status_icon = "✅" if is_valid else "❌"
-        print(f"{status_icon} {file_name}: {'VALID' if is_valid else 'INVALID'}")
+        print("{status_icon} {file_name}: {'VALID' if is_valid else 'INVALID'}")
 
         if not is_valid:
-            print(f"   Error: {error_message}")
+            print("   Error: {error_message}")
 
     # Summary
     print("\n" + "=" * 60)
@@ -123,15 +123,15 @@ def main():
     valid_count = sum(1 for _, is_valid, _ in validation_results if is_valid)
     total_count = len(validation_results)
 
-    print(f"✅ Valid files: {valid_count}/{total_count}")
-    print(f"❌ Invalid files: {total_count - valid_count}/{total_count}")
+    print("✅ Valid files: {valid_count}/{total_count}")
+    print("❌ Invalid files: {total_count - valid_count}/{total_count}")
 
     if valid_count == total_count:
         print("\n🎉 ALL VALIDATION FILES PASS SCHEMA VALIDATION!")
         print("Schema is ready for production use.")
         return 0
     else:
-        print(f"\n⚠️  {total_count - valid_count} files failed validation.")
+        print("\n⚠️  {total_count - valid_count} files failed validation.")
         print("Schema may need adjustments.")
 
         # Print detailed errors for failed validations
@@ -139,8 +139,8 @@ def main():
         print("-" * 40)
         for file_name, is_valid, error_message in validation_results:
             if not is_valid:
-                print(f"\n❌ {file_name}:")
-                print(f"   {error_message}")
+                print("\n❌ {file_name}:")
+                print("   {error_message}")
 
         return 1
 

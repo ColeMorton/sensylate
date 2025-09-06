@@ -44,7 +44,7 @@ def test_cli_wrapper_integration():
         twitter_templates_path=templates_path / "twitter",
     )
 
-    print(f"Config created: {config.base_path}")
+    print("Config created: {config.base_path}")
     print()
 
     # Test CLIServiceWrapper
@@ -53,17 +53,17 @@ def test_cli_wrapper_integration():
     # Test with a non-existent service (should handle gracefully)
     wrapper = CLIServiceWrapper("test_service", config)
 
-    print(f"Service name: {wrapper.service_name}")
-    print(f"Global available: {wrapper.global_available}")
-    print(f"Local available: {wrapper.local_available}")
-    print(f"Is available: {wrapper.is_available()}")
-    print(f"Timeout: {wrapper.timeout}")
-    print(f"Config integration: {wrapper.config is not None}")
+    print("Service name: {wrapper.service_name}")
+    print("Global available: {wrapper.global_available}")
+    print("Local available: {wrapper.local_available}")
+    print("Is available: {wrapper.is_available()}")
+    print("Timeout: {wrapper.timeout}")
+    print("Config integration: {wrapper.config is not None}")
     print()
 
     # Test service info
     service_info = wrapper.get_service_info()
-    print(f"Service info: {service_info}")
+    print("Service info: {service_info}")
     print()
 
     # Test CLIServiceManager
@@ -71,20 +71,20 @@ def test_cli_wrapper_integration():
 
     manager = CLIServiceManager(config)
 
-    print(f"Total services: {len(manager.services)}")
-    print(f"Available services: {manager.get_available_services()}")
-    print(f"Config integration: {manager.config is not None}")
-    print(f"Registry integration: {manager.script_registry is not None}")
+    print("Total services: {len(manager.services)}")
+    print("Available services: {manager.get_available_services()}")
+    print("Config integration: {manager.config is not None}")
+    print("Registry integration: {manager.script_registry is not None}")
     print()
 
     # Test service status
     status = manager.get_service_status()
-    print(f"Service status: {status}")
+    print("Service status: {status}")
     print()
 
     # Test health check
     health = manager.health_check_all()
-    print(f"Health check summary: {health['summary']}")
+    print("Health check summary: {health['summary']}")
     print()
 
     # Test error handling
@@ -94,13 +94,13 @@ def test_cli_wrapper_integration():
         # This should fail with proper error handling
         manager.get_service("non_existent_service")
     except Exception as e:
-        print(f"Expected error caught: {type(e).__name__}: {e}")
+        print("Expected error caught: {type(e).__name__}: {e}")
 
     try:
         # This should fail with proper error handling
         wrapper.execute_command("")
     except Exception as e:
-        print(f"Expected error caught: {type(e).__name__}: {e}")
+        print("Expected error caught: {type(e).__name__}: {e}")
 
     print()
 
@@ -118,9 +118,9 @@ def test_cli_wrapper_integration():
     result.add_metadata("service_name", "test_service")
     result.add_metadata("execution_mode", "test")
 
-    print(f"Result success: {result.success}")
-    print(f"Result operation: {result.operation}")
-    print(f"Result metadata: {result.metadata}")
+    print("Result success: {result.success}")
+    print("Result operation: {result.operation}")
+    print("Result metadata: {result.metadata}")
     print()
 
     print("CLI Wrapper Integration test completed successfully!")

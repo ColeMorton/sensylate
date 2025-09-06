@@ -582,14 +582,14 @@ def main():
         analyzer = EnhancedFundamentalAnalyzer(args.output_dir)
 
         # Perform analysis
-        print(f"Starting enhanced fundamental analysis for {args.ticker}...")
+        print("Starting enhanced fundamental analysis for {args.ticker}...")
         analysis = analyzer.analyze_ticker(
             args.ticker, include_economic_context=not args.no_economic
         )
 
         # Save analysis
         json_file = analyzer.save_analysis(analysis, args.ticker)
-        print(f"Analysis saved to: {json_file}")
+        print("Analysis saved to: {json_file}")
 
         # Generate and save report if requested
         if args.save_report:
@@ -602,27 +602,27 @@ def main():
             with open(report_file, "w") as f:
                 f.write(report)
 
-            print(f"Summary report saved to: {report_file}")
+            print("Summary report saved to: {report_file}")
 
         # Print summary
         summary = analysis.get("analysis_summary", {})
-        print(f"\nAnalysis Summary:")
-        print(f"- Data Sources: {summary.get('data_sources_count', 0)}")
-        print(f"- Analysis Complete: {summary.get('analysis_complete', False)}")
-        print(f"- Content Generated: {summary.get('content_generated', False)}")
+        print("\nAnalysis Summary:")
+        print("- Data Sources: {summary.get('data_sources_count', 0)}")
+        print("- Analysis Complete: {summary.get('analysis_complete', False)}")
+        print("- Content Generated: {summary.get('content_generated', False)}")
 
         # Print recommendation
         thesis = analysis.get("investment_thesis", {})
-        print(f"\nInvestment Recommendation:")
-        print(f"- Action: {thesis.get('recommendation', 'hold').upper()}")
-        print(f"- Confidence: {thesis.get('confidence_level', 'medium').upper()}")
+        print("\nInvestment Recommendation:")
+        print("- Action: {thesis.get('recommendation', 'hold').upper()}")
+        print("- Confidence: {thesis.get('confidence_level', 'medium').upper()}")
         print(
             f"- Risk Level: {analysis.get('risk_assessment', {}).get('overall_risk_level', 'medium').upper()}"
         )
 
     except Exception as e:
         logger.error(f"Analysis failed: {e}")
-        print(f"Error: {e}")
+        print("Error: {e}")
         return 1
 
     return 0

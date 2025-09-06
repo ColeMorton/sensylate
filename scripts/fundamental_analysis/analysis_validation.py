@@ -110,12 +110,12 @@ class AnalysisValidator:
             try:
                 with open(discovery_path, "r") as f:
                     self.discovery_data = json.load(f)
-                print(f"📂 Loaded discovery data: {discovery_path}")
+                print("📂 Loaded discovery data: {discovery_path}")
                 success_count += 1
             except Exception as e:
-                print(f"⚠️ Error loading discovery data: {str(e)}")
+                print("⚠️ Error loading discovery data: {str(e)}")
         else:
-            print(f"⚠️ Discovery data not found: {discovery_path}")
+            print("⚠️ Discovery data not found: {discovery_path}")
 
         # Load analysis data
         analysis_path = f"./data/outputs/fundamental_analysis/analysis/{self.ticker}_{date_part}_analysis.json"
@@ -123,12 +123,12 @@ class AnalysisValidator:
             try:
                 with open(analysis_path, "r") as f:
                     self.analysis_data = json.load(f)
-                print(f"📂 Loaded analysis data: {analysis_path}")
+                print("📂 Loaded analysis data: {analysis_path}")
                 success_count += 1
             except Exception as e:
-                print(f"⚠️ Error loading analysis data: {str(e)}")
+                print("⚠️ Error loading analysis data: {str(e)}")
         else:
-            print(f"⚠️ Analysis data not found: {analysis_path}")
+            print("⚠️ Analysis data not found: {analysis_path}")
 
         # Load synthesis data
         if os.path.exists(self.synthesis_file_path):
@@ -148,12 +148,12 @@ class AnalysisValidator:
                         # Create minimal synthesis data structure
                         self.synthesis_data = {"metadata": {"ticker": self.ticker}}
 
-                print(f"📂 Loaded synthesis data: {self.synthesis_file_path}")
+                print("📂 Loaded synthesis data: {self.synthesis_file_path}")
                 success_count += 1
             except Exception as e:
-                print(f"⚠️ Error loading synthesis data: {str(e)}")
+                print("⚠️ Error loading synthesis data: {str(e)}")
         else:
-            print(f"❌ Synthesis file not found: {self.synthesis_file_path}")
+            print("❌ Synthesis file not found: {self.synthesis_file_path}")
 
         return success_count >= 2  # At least 2 out of 3 files needed for validation
 
@@ -665,7 +665,7 @@ class AnalysisValidator:
 
     def execute_validation(self) -> Dict[str, Any]:
         """Execute complete DASV workflow validation"""
-        print(f"🔍 Starting {self.validation_depth} validation for {self.ticker}")
+        print("🔍 Starting {self.validation_depth} validation for {self.ticker}")
 
         # Load all DASV outputs
         if not self.load_dasv_outputs():
@@ -774,15 +774,15 @@ class AnalysisValidator:
             # Save validation results
             self._save_validation_results(validation_result)
 
-            print(f"✅ Validation completed for {self.ticker}")
-            print(f"📊 Overall reliability score: {overall_reliability_score}/10.0")
-            print(f"🎯 Decision confidence: {decision_confidence}")
+            print("✅ Validation completed for {self.ticker}")
+            print("📊 Overall reliability score: {overall_reliability_score}/10.0")
+            print("🎯 Decision confidence: {decision_confidence}")
 
             return validation_result
 
         except Exception as e:
             error_msg = f"Validation failed for {self.ticker}: {str(e)}"
-            print(f"❌ {error_msg}")
+            print("❌ {error_msg}")
             return {"error": error_msg, "ticker": self.ticker}
 
     # Validation method implementations
@@ -1181,7 +1181,7 @@ class AnalysisValidator:
         with open(filepath, "w") as f:
             json.dump(validation_result, f, indent=2, default=str)
 
-        print(f"💾 Validation results saved: {filepath}")
+        print("💾 Validation results saved: {filepath}")
         return filepath
 
 
@@ -1330,7 +1330,7 @@ class DasvPhaseValidator:
                 loaded_files.append(file_info)
 
             except Exception as e:
-                print(f"⚠️  Warning: Failed to load {file_path}: {str(e)}")
+                print("⚠️  Warning: Failed to load {file_path}: {str(e)}")
                 continue
 
         return loaded_files
@@ -1902,7 +1902,7 @@ def main():
     # Execute validation based on mode
     if args.dasv_phase:
         # DASV Phase Cross-Analysis Mode
-        print(f"🔍 Executing DASV Phase Cross-Analysis for {args.dasv_phase} phase...")
+        print("🔍 Executing DASV Phase Cross-Analysis for {args.dasv_phase} phase...")
 
         cross_validator = DasvPhaseValidator(
             dasv_phase=args.dasv_phase,
@@ -1915,7 +1915,7 @@ def main():
         result = cross_validator.execute_cross_analysis()
 
         if "error" in result:
-            print(f"❌ DASV Cross-Analysis failed: {result['error']}")
+            print("❌ DASV Cross-Analysis failed: {result['error']}")
             sys.exit(1)
         else:
             overall_score = result["cross_analysis_results"][
@@ -1925,11 +1925,11 @@ def main():
             print(
                 f"✅ DASV Cross-Analysis completed successfully for {args.dasv_phase} phase"
             )
-            print(f"📊 Overall Score: {overall_score}/10.0 | Grade: {phase_grade}")
+            print("📊 Overall Score: {overall_score}/10.0 | Grade: {phase_grade}")
 
             # Save results
             output_file = cross_validator.save_results(result)
-            print(f"💾 Results saved to: {output_file}")
+            print("💾 Results saved to: {output_file}")
 
     else:
         # Single Ticker Validation Mode (existing functionality)
@@ -1957,14 +1957,14 @@ def main():
         result = validator.execute_validation()
 
         if "error" in result:
-            print(f"❌ Validation failed: {result['error']}")
+            print("❌ Validation failed: {result['error']}")
             sys.exit(1)
         else:
             overall_score = result["overall_assessment"]["overall_reliability_score"]
             decision_confidence = result["overall_assessment"]["decision_confidence"]
-            print(f"✅ Validation completed successfully for {ticker}")
-        print(f"📊 Overall reliability: {overall_score}")
-        print(f"🎯 Decision confidence: {decision_confidence}")
+            print("✅ Validation completed successfully for {ticker}")
+        print("📊 Overall reliability: {overall_score}")
+        print("🎯 Decision confidence: {decision_confidence}")
         sys.exit(0)
 
 

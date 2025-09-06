@@ -7,10 +7,9 @@ Verifies that API calls create the correct CSV + metadata JSON files.
 """
 
 import subprocess
-import sys
 import time
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Tuple
 
 
 def get_current_file_count() -> Tuple[int, int, int]:
@@ -76,7 +75,7 @@ def run_cli_command(cmd: List[str], timeout: int = 30) -> Dict[str, any]:
         # Get file count before command
         csv_before, meta_before, old_before = get_current_file_count()
 
-        print(f"🔄 Running: {result['command']}")
+        print("🔄 Running: {result['command']}")
 
         # Run command
         process = subprocess.run(
@@ -100,18 +99,18 @@ def run_cli_command(cmd: List[str], timeout: int = 30) -> Dict[str, any]:
         result["files_created"] = files_created
 
         if result["success"]:
-            print(f"   ✅ Success ({files_created} files created)")
+            print("   ✅ Success ({files_created} files created)")
         else:
-            print(f"   ❌ Failed (return code: {process.returncode})")
+            print("   ❌ Failed (return code: {process.returncode})")
             if result["stderr"]:
-                print(f"   Error: {result['stderr'][:200]}...")
+                print("   Error: {result['stderr'][:200]}...")
 
     except subprocess.TimeoutExpired:
         result["stderr"] = f"Command timed out after {timeout} seconds"
-        print(f"   ⏰ Timeout after {timeout}s")
+        print("   ⏰ Timeout after {timeout}s")
     except Exception as e:
         result["stderr"] = str(e)
-        print(f"   ❌ Exception: {e}")
+        print("   ❌ Exception: {e}")
 
     return result
 
@@ -132,7 +131,7 @@ from services.yahoo_finance import create_yahoo_finance_service
 
 service = create_yahoo_finance_service(env="dev")
 data = service.get_stock_info("AAPL")
-print(f"Retrieved data for {data.get('symbol', 'unknown')}")
+print("Retrieved data for {data.get('symbol', 'unknown')}")
 """
 
     result = run_cli_command(["python", "-c", test_script], timeout=45)
@@ -148,7 +147,7 @@ from services.fmp import create_fmp_service
 
 service = create_fmp_service(env="dev")
 data = service.get_stock_quote("TSLA")
-print(f"Retrieved {len(data)} quote records")
+print("Retrieved {len(data)} quote records")
 """
 
     result = run_cli_command(["python", "-c", test_script], timeout=45)
@@ -225,20 +224,20 @@ success = hdm.store_data(
     source="cli_test"
 )
 
-print(f"Storage success: {success}")
+print("Storage success: {success}")
 
 # Verify files were created
 data_path = Path("data/raw")
 csv_files = list(data_path.rglob("*DIRECT_TEST*.csv"))
 meta_files = list(data_path.rglob("*DIRECT_TEST*.meta.json"))
 
-print(f"CSV files: {len(csv_files)}")
-print(f"Meta files: {len(meta_files)}")
+print("CSV files: {len(csv_files)}")
+print("Meta files: {len(meta_files)}")
 
 if csv_files:
-    print(f"CSV path: {csv_files[0]}")
+    print("CSV path: {csv_files[0]}")
 if meta_files:
-    print(f"Meta path: {meta_files[0]}")
+    print("Meta path: {meta_files[0]}")
 """
 
     result = run_cli_command(["python", "-c", test_script], timeout=30)
@@ -263,14 +262,14 @@ def analyze_file_structure():
         f for f in raw_path.rglob("*.json") if not f.name.endswith(".meta.json")
     ]
 
-    print(f"📊 File Counts:")
-    print(f"   - CSV Data Files: {len(csv_files)}")
-    print(f"   - Metadata Files: {len(meta_files)}")
-    print(f"   - Old JSON Files: {len(old_json_files)}")
+    print("📊 File Counts:")
+    print("   - CSV Data Files: {len(csv_files)}")
+    print("   - Metadata Files: {len(meta_files)}")
+    print("   - Old JSON Files: {len(old_json_files)}")
 
     # Show file structure
     if csv_files or meta_files:
-        print(f"\n📂 Recent Hybrid Format Files:")
+        print("\n📂 Recent Hybrid Format Files:")
         latest_files = get_latest_files(10)
         for file_path in latest_files:
             relative_path = file_path.relative_to(raw_path)
@@ -280,22 +279,22 @@ def analyze_file_structure():
                 if file_path.suffix == ".csv"
                 else ("META" if file_path.name.endswith(".meta.json") else "JSON")
             )
-            print(f"   📄 {relative_path} ({size}b) [{file_type}]")
+            print("   📄 {relative_path} ({size}b) [{file_type}]")
 
     # Check directory structure
-    print(f"\n🏗️  Directory Structure:")
+    print("\n🏗️  Directory Structure:")
     stocks_path = raw_path / "stocks"
     if stocks_path.exists():
         symbols = [d.name for d in stocks_path.iterdir() if d.is_dir()]
-        print(f"   - Stock symbols: {len(symbols)}")
+        print("   - Stock symbols: {len(symbols)}")
         if symbols:
-            print(f"   - Examples: {', '.join(symbols[:5])}")
+            print("   - Examples: {', '.join(symbols[:5])}")
 
             # Check format of first symbol
             if symbols:
                 symbol_path = stocks_path / symbols[0]
                 subdirs = [d.name for d in symbol_path.iterdir() if d.is_dir()]
-                print(f"   - {symbols[0]} subdirs: {subdirs}")
+                print("   - {symbols[0]} subdirs: {subdirs}")
     else:
         print("   - No stocks directory found")
 
@@ -335,36 +334,36 @@ def main():
         if result["success"]:
             successful_tests.append(test_name)
             total_files_created += result["files_created"]
-            print(f"✅ {test_name}: PASS ({result['files_created']} files)")
+            print("✅ {test_name}: PASS ({result['files_created']} files)")
         else:
             failed_tests.append(test_name)
-            print(f"❌ {test_name}: FAIL")
+            print("❌ {test_name}: FAIL")
             if result["stderr"]:
-                print(f"   Error: {result['stderr'][:150]}...")
+                print("   Error: {result['stderr'][:150]}...")
 
     # Final file analysis
     analyze_file_structure()
 
-    print(f"\n📈 SUMMARY:")
-    print(f"   - Tests Passed: {len(successful_tests)}/{len(all_results)}")
-    print(f"   - Total Files Created: {total_files_created}")
-    print(f"   - Successful Tests: {', '.join(successful_tests)}")
+    print("\n📈 SUMMARY:")
+    print("   - Tests Passed: {len(successful_tests)}/{len(all_results)}")
+    print("   - Total Files Created: {total_files_created}")
+    print("   - Successful Tests: {', '.join(successful_tests)}")
     if failed_tests:
-        print(f"   - Failed Tests: {', '.join(failed_tests)}")
+        print("   - Failed Tests: {', '.join(failed_tests)}")
 
     # Overall assessment
     success_rate = len(successful_tests) / len(all_results) if all_results else 0
 
     if success_rate >= 0.8 and total_files_created > 0:
-        print(f"\n🎉 CLI STORAGE INTEGRATION: SUCCESS!")
-        print(f"   - {success_rate:.0%} of tests passed")
-        print(f"   - Hybrid storage system is working correctly")
-        print(f"   - CLI commands are creating data files as expected")
+        print("\n🎉 CLI STORAGE INTEGRATION: SUCCESS!")
+        print("   - {success_rate:.0%} of tests passed")
+        print("   - Hybrid storage system is working correctly")
+        print("   - CLI commands are creating data files as expected")
         return True
     else:
-        print(f"\n⚠️  CLI STORAGE INTEGRATION: ISSUES DETECTED")
-        print(f"   - Only {success_rate:.0%} of tests passed")
-        print(f"   - Storage system may have integration problems")
+        print("\n⚠️  CLI STORAGE INTEGRATION: ISSUES DETECTED")
+        print("   - Only {success_rate:.0%} of tests passed")
+        print("   - Storage system may have integration problems")
         return False
 
 

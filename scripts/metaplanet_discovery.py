@@ -58,7 +58,7 @@ def collect_yahoo_finance_data(ticker="3350.T"):
             },
         }
     except Exception as e:
-        print(f"Yahoo Finance error: {e}")
+        print("Yahoo Finance error: {e}")
         return {"error": str(e)}
 
 
@@ -75,7 +75,7 @@ def collect_web_intelligence():
         }
         return intelligence
     except Exception as e:
-        print(f"Web intelligence error: {e}")
+        print("Web intelligence error: {e}")
         return {"error": str(e)}
 
 
@@ -378,7 +378,7 @@ def main():
         json.dump(discovery_data, f, indent=2, ensure_ascii=False, default=str)
 
     print("✅ Discovery analysis completed successfully")
-    print(f"📄 Output saved to: {output_file}")
+    print("📄 Output saved to: {output_file}")
     print(
         f"📊 Data quality score: {discovery_data['cli_data_quality']['overall_data_quality']}"
     )

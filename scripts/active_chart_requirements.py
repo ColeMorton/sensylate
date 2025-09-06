@@ -273,14 +273,14 @@ if __name__ == "__main__":
     result = detector.discover_active_requirements()
 
     print("Active Chart Requirements Discovery Results:")
-    print(f"  Active charts: {result.total_active_charts}")
-    print(f"  Frozen charts: {result.total_frozen_charts}")
-    print(f"  Data files needed: {len(result.requirements)}")
-    print(f"  Categories needed: {sorted(result.categories_needed)}")
-    print(f"  Services needed: {sorted(result.services_needed)}")
-    print(f"  Discovery time: {result.discovery_time_seconds:.2f}s")
+    print("  Active charts: {result.total_active_charts}")
+    print("  Frozen charts: {result.total_frozen_charts}")
+    print("  Data files needed: {len(result.requirements)}")
+    print("  Categories needed: {sorted(result.categories_needed)}")
+    print("  Services needed: {sorted(result.services_needed)}")
+    print("  Discovery time: {result.discovery_time_seconds:.2f}s")
 
     if result.requirements:
         print("\nRequired data files:")
         for req in result.requirements:
-            print(f"  {req.chart_type} → {req.data_source}")
+            print("  {req.chart_type} → {req.data_source}")

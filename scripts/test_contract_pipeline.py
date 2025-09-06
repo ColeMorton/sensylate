@@ -565,9 +565,9 @@ def run_all_tests():
     # Print summary
     print("\n" + "=" * 60)
     print("📊 Test Results Summary:")
-    print(f"   Tests run: {result.testsRun}")
-    print(f"   Failures: {len(result.failures)}")
-    print(f"   Errors: {len(result.errors)}")
+    print("   Tests run: {result.testsRun}")
+    print("   Failures: {len(result.failures)}")
+    print("   Errors: {len(result.errors)}")
     print(
         f"   Success rate: {((result.testsRun - len(result.failures) - len(result.errors)) / result.testsRun * 100):.1f}%"
     )
@@ -582,7 +582,7 @@ def run_all_tests():
     if result.errors:
         print("\n💥 Errors:")
         for test, error in result.errors:
-            print(f"   - {test}: {error.split(chr(10))[-2]}")
+            print("   - {test}: {error.split(chr(10))[-2]}")
 
     if len(result.failures) == 0 and len(result.errors) == 0:
         print("\n✅ All tests passed! Contract pipeline is working correctly.")

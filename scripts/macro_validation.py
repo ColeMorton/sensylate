@@ -30,7 +30,7 @@ try:
 
     CLI_SERVICES_AVAILABLE = True
 except ImportError as e:
-    print(f"⚠️  CLI services not available: {e}")
+    print("⚠️  CLI services not available: {e}")
     CLI_SERVICES_AVAILABLE = False
 
 # Import base script and registry
@@ -96,10 +96,10 @@ class MacroEconomicValidation:
             try:
                 with open(self.discovery_file, "r") as f:
                     data = json.load(f)
-                print(f"✅ Loaded discovery data from: {self.discovery_file}")
+                print("✅ Loaded discovery data from: {self.discovery_file}")
                 return data
             except Exception as e:
-                print(f"⚠️  Failed to load discovery data: {e}")
+                print("⚠️  Failed to load discovery data: {e}")
         return None
 
     def _load_analysis_data(self) -> Optional[Dict[str, Any]]:
@@ -108,10 +108,10 @@ class MacroEconomicValidation:
             try:
                 with open(self.analysis_file, "r") as f:
                     data = json.load(f)
-                print(f"✅ Loaded analysis data from: {self.analysis_file}")
+                print("✅ Loaded analysis data from: {self.analysis_file}")
                 return data
             except Exception as e:
-                print(f"⚠️  Failed to load analysis data: {e}")
+                print("⚠️  Failed to load analysis data: {e}")
         return None
 
     def _load_synthesis_content(self) -> Optional[str]:
@@ -120,10 +120,10 @@ class MacroEconomicValidation:
             try:
                 with open(self.synthesis_file, "r", encoding="utf-8") as f:
                     content = f.read()
-                print(f"✅ Loaded synthesis content from: {self.synthesis_file}")
+                print("✅ Loaded synthesis content from: {self.synthesis_file}")
                 return content
             except Exception as e:
-                print(f"⚠️  Failed to load synthesis content: {e}")
+                print("⚠️  Failed to load synthesis content: {e}")
         return None
 
     def _initialize_cli_services(self):
@@ -145,7 +145,7 @@ class MacroEconomicValidation:
             )
             self._check_cli_service_health()
         except Exception as e:
-            print(f"⚠️  Failed to initialize CLI services: {e}")
+            print("⚠️  Failed to initialize CLI services: {e}")
             self.cli_services = {}
 
     def _check_cli_service_health(self):
@@ -543,7 +543,7 @@ class MacroEconomicValidation:
         with open(filepath, "w") as f:
             json.dump(data, f, indent=2)
 
-        print(f"✅ Saved macro-economic validation output to: {filepath}")
+        print("✅ Saved macro-economic validation output to: {filepath}")
         return filepath
 
     # Helper methods for quality assessment
@@ -1992,28 +1992,28 @@ def main():
     )
 
     # Generate validation
-    print(f"\n🔍 Starting macro-economic validation for: {args.region}")
+    print("\n🔍 Starting macro-economic validation for: {args.region}")
     validation_data = validation.generate_validation_output()
 
     # Save output
     output_path = validation.save_validation_output(validation_data)
 
     # Display results
-    print(f"\n✅ Macro-economic validation complete!")
+    print("\n✅ Macro-economic validation complete!")
     print(
         f"📊 Validation Confidence: {validation_data['validation_confidence']:.2f}/1.0"
     )
     print(
         f"🏆 Certification Status: {validation_data['usage_recommendations']['certification_status']}"
     )
-    print(f"⚠️  Critical Issues: {len(validation_data['critical_findings'])}")
-    print(f"📁 Output saved to: {output_path}")
+    print("⚠️  Critical Issues: {len(validation_data['critical_findings'])}")
+    print("📁 Output saved to: {output_path}")
 
     # Display critical findings if any
     if validation_data["critical_findings"]:
-        print(f"\n🚨 Critical Findings:")
+        print("\n🚨 Critical Findings:")
         for finding in validation_data["critical_findings"]:
-            print(f"  • {finding['category']}: {finding['finding']}")
+            print("  • {finding['category']}: {finding['finding']}")
 
 
 if __name__ == "__main__":

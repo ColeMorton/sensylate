@@ -422,18 +422,18 @@ if __name__ == "__main__":
     theme_manager = create_theme_manager()
 
     print("Color Palette:")
-    print(f"  Primary: {theme_manager.color_palette.primary_data}")
-    print(f"  Secondary: {theme_manager.color_palette.secondary_data}")
-    print(f"  Tertiary: {theme_manager.color_palette.tertiary_data}")
+    print("  Primary: {theme_manager.color_palette.primary_data}")
+    print("  Secondary: {theme_manager.color_palette.secondary_data}")
+    print("  Tertiary: {theme_manager.color_palette.tertiary_data}")
 
     print("\nLight Theme:")
     light = theme_manager.light_theme
-    print(f"  Background: {light.background}")
-    print(f"  Text: {light.primary_text}")
+    print("  Background: {light.background}")
+    print("  Text: {light.primary_text}")
 
     print("\nDark Theme:")
     dark = theme_manager.dark_theme
-    print(f"  Background: {dark.background}")
-    print(f"  Text: {dark.primary_text}")
+    print("  Background: {dark.background}")
+    print("  Text: {dark.primary_text}")
 
-    print(f"\nColor validation: {theme_manager.validate_colors()}")
+    print("\nColor validation: {theme_manager.validate_colors()}")

@@ -636,8 +636,8 @@ class ContractComplianceMonitor:
 
         print("📊 Contract Compliance Report")
         print("=" * 60)
-        print(f"Generated: {report.report_timestamp.strftime('%Y-%m-%d %H:%M:%S')}")
-        print(f"Total Contracts: {report.total_contracts}")
+        print("Generated: {report.report_timestamp.strftime('%Y-%m-%d %H:%M:%S')}")
+        print("Total Contracts: {report.total_contracts}")
         print()
 
         # Status breakdown
@@ -658,10 +658,10 @@ class ContractComplianceMonitor:
 
         # Overall scores
         print("🏆 System Health Scores:")
-        print(f"   Overall Compliance: {report.overall_compliance_score:.1f}/10")
-        print(f"   Data Freshness: {report.data_freshness_score:.1f}/10")
-        print(f"   Schema Compliance: {report.schema_compliance_score:.1f}/10")
-        print(f"   Service Availability: {report.service_availability_score:.1f}/10")
+        print("   Overall Compliance: {report.overall_compliance_score:.1f}/10")
+        print("   Data Freshness: {report.data_freshness_score:.1f}/10")
+        print("   Schema Compliance: {report.schema_compliance_score:.1f}/10")
+        print("   Service Availability: {report.service_availability_score:.1f}/10")
         print()
 
         # Category breakdown
@@ -677,21 +677,21 @@ class ContractComplianceMonitor:
         if report.critical_issues:
             print("🚨 Critical Issues:")
             for issue in report.critical_issues:
-                print(f"   - {issue}")
+                print("   - {issue}")
             print()
 
         # Warnings
         if report.warnings:
             print("⚠️  Warnings:")
             for warning in report.warnings:
-                print(f"   - {warning}")
+                print("   - {warning}")
             print()
 
         # Recommendations
         if report.recommendations:
             print("💡 Recommendations:")
             for rec in report.recommendations:
-                print(f"   - {rec}")
+                print("   - {rec}")
             print()
 
         # Overall health indicator
@@ -735,9 +735,9 @@ def main():
         output_file = Path(args.output)
         result = monitor.export_report(report, output_file)
         if result.success:
-            print(f"📄 Full report exported to: {args.output}")
+            print("📄 Full report exported to: {args.output}")
         else:
-            print(f"❌ Failed to export report: {result.error}")
+            print("❌ Failed to export report: {result.error}")
 
     # Exit with appropriate code based on system health
     if report.critical_contracts > 0 or report.missing_contracts > 0:

@@ -714,25 +714,25 @@ if __name__ == "__main__":
         weekly_years=1,  # Start with 1 year for testing
     )
 
-    print(f"\n📊 Collection Results:")
-    print(f"   Session ID: {results.get('session_id')}")
-    print(f"   Total files created: {results.get('total_files_created')}")
-    print(f"   Overall success: {results.get('overall_success')}")
+    print("\n📊 Collection Results:")
+    print("   Session ID: {results.get('session_id')}")
+    print("   Total files created: {results.get('total_files_created')}")
+    print("   Overall success: {results.get('overall_success')}")
 
     if results.get("daily_collection"):
         daily = results["daily_collection"]
-        print(f"\n📈 Daily Collection:")
-        print(f"   Successful: {len(daily.get('symbols_successful', []))}")
-        print(f"   Failed: {len(daily.get('symbols_failed', []))}")
+        print("\n📈 Daily Collection:")
+        print("   Successful: {len(daily.get('symbols_successful', []))}")
+        print("   Failed: {len(daily.get('symbols_failed', []))}")
 
     if results.get("weekly_collection"):
         weekly = results["weekly_collection"]
-        print(f"\n📊 Weekly Collection:")
-        print(f"   Successful: {len(weekly.get('symbols_successful', []))}")
-        print(f"   Failed: {len(weekly.get('symbols_failed', []))}")
+        print("\n📊 Weekly Collection:")
+        print("   Successful: {len(weekly.get('symbols_successful', []))}")
+        print("   Failed: {len(weekly.get('symbols_failed', []))}")
 
     # Show collection status
     status = collector.get_collection_status()
-    print(f"\n📁 Storage Status:")
-    print(f"   Total files: {status['available_data'].get('total_files', 0)}")
-    print(f"   Symbols tracked: {status['available_data'].get('symbol_count', 0)}")
+    print("\n📁 Storage Status:")
+    print("   Total files: {status['available_data'].get('total_files', 0)}")
+    print("   Symbols tracked: {status['available_data'].get('symbol_count', 0)}")

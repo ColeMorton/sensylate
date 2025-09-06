@@ -122,11 +122,11 @@ class ConfidenceStandardizer:
                 self.files_processed += 1
                 return True
             else:
-                print(f"No confidence scores to standardize in {file_path}")
+                print("No confidence scores to standardize in {file_path}")
                 return False
 
         except Exception as e:
-            print(f"Error processing {file_path}: {e}")
+            print("Error processing {file_path}: {e}")
             return False
 
     def standardize_directory(
@@ -142,7 +142,7 @@ class ConfidenceStandardizer:
         files_found = list(directory.glob(file_pattern))
 
         if not files_found:
-            print(f"No files matching {file_pattern} found in {directory_path}")
+            print("No files matching {file_pattern} found in {directory_path}")
             return {"files_processed": 0, "conversions_made": 0, "files_found": 0}
 
         initial_conversions = self.conversion_count
@@ -200,7 +200,7 @@ if __name__ == "__main__":
     else:
         directory = "./data/outputs/industry_analysis"
 
-    print(f"Standardizing confidence scores in {directory}")
+    print("Standardizing confidence scores in {directory}")
     results = standardize_industry_analysis_files(directory)
 
     print("\nStandardization Results:")

@@ -32,9 +32,9 @@ def test_comprehensive_collector():
     # Test symbols (small set for testing)
     test_symbols = ["AAPL", "MSFT"]
 
-    print(f"🎯 Testing with symbols: {', '.join(test_symbols)}")
-    print(f"📈 Daily collection: 30 days (for testing)")
-    print(f"📊 Weekly collection: 1 year (for testing)")
+    print("🎯 Testing with symbols: {', '.join(test_symbols)}")
+    print("📈 Daily collection: 30 days (for testing)")
+    print("📊 Weekly collection: 1 year (for testing)")
     print()
 
     # Test comprehensive collection
@@ -48,34 +48,34 @@ def test_comprehensive_collector():
 
     print("\n📊 Test Results:")
     print("-" * 40)
-    print(f"Session ID: {results.get('session_id')}")
-    print(f"Total symbols: {results.get('total_symbols')}")
-    print(f"Total files created: {results.get('total_files_created')}")
-    print(f"Overall success: {results.get('overall_success')}")
+    print("Session ID: {results.get('session_id')}")
+    print("Total symbols: {results.get('total_symbols')}")
+    print("Total files created: {results.get('total_files_created')}")
+    print("Overall success: {results.get('overall_success')}")
 
     # Daily results
     if "daily_collection" in results:
         daily = results["daily_collection"]
-        print(f"\n📈 Daily Collection:")
-        print(f"   Successful: {len(daily.get('symbols_successful', []))}")
-        print(f"   Failed: {len(daily.get('symbols_failed', []))}")
-        print(f"   Files created: {daily.get('files_created', 0)}")
+        print("\n📈 Daily Collection:")
+        print("   Successful: {len(daily.get('symbols_successful', []))}")
+        print("   Failed: {len(daily.get('symbols_failed', []))}")
+        print("   Files created: {daily.get('files_created', 0)}")
         if daily.get("errors"):
-            print(f"   Errors: {len(daily['errors'])}")
+            print("   Errors: {len(daily['errors'])}")
             for error in daily["errors"][:3]:  # Show first 3 errors
-                print(f"     • {error}")
+                print("     • {error}")
 
     # Weekly results
     if "weekly_collection" in results:
         weekly = results["weekly_collection"]
-        print(f"\n📊 Weekly Collection:")
-        print(f"   Successful: {len(weekly.get('symbols_successful', []))}")
-        print(f"   Failed: {len(weekly.get('symbols_failed', []))}")
-        print(f"   Files created: {weekly.get('files_created', 0)}")
+        print("\n📊 Weekly Collection:")
+        print("   Successful: {len(weekly.get('symbols_successful', []))}")
+        print("   Failed: {len(weekly.get('symbols_failed', []))}")
+        print("   Files created: {weekly.get('files_created', 0)}")
         if weekly.get("errors"):
-            print(f"   Errors: {len(weekly['errors'])}")
+            print("   Errors: {len(weekly['errors'])}")
             for error in weekly["errors"][:3]:  # Show first 3 errors
-                print(f"     • {error}")
+                print("     • {error}")
 
     return results
 
@@ -96,13 +96,13 @@ def test_gap_detection():
         timeframe=Timeframe.DAILY,
     )
 
-    print(f"Checking gaps for {test_symbol} (last 30 days):")
-    print(f"   Found {len(gaps)} missing days")
+    print("Checking gaps for {test_symbol} (last 30 days):")
+    print("   Found {len(gaps)} missing days")
 
     if gaps:
-        print(f"   Sample missing dates: {[g.strftime('%Y-%m-%d') for g in gaps[:5]]}")
+        print("   Sample missing dates: {[g.strftime('%Y-%m-%d') for g in gaps[:5]]}")
         if len(gaps) > 5:
-            print(f"   ... and {len(gaps) - 5} more")
+            print("   ... and {len(gaps) - 5} more")
     else:
         print("   No gaps detected!")
 
@@ -127,16 +127,16 @@ def test_file_structure():
         # List some stock directories
         stock_dirs = [d for d in stocks_path.iterdir() if d.is_dir()]
         if stock_dirs:
-            print(f"   Found {len(stock_dirs)} stock directories")
+            print("   Found {len(stock_dirs)} stock directories")
             for stock_dir in stock_dirs[:3]:
-                print(f"   📂 {stock_dir.name}")
+                print("   📂 {stock_dir.name}")
 
                 # Check for data type subdirectories
                 data_types = [d for d in stock_dir.iterdir() if d.is_dir()]
                 for dt in data_types:
                     files = list(dt.rglob("*.json"))
                     if files:
-                        print(f"      📄 {dt.name}: {len(files)} files")
+                        print("      📄 {dt.name}: {len(files)} files")
     else:
         print("⚠️  No stocks directory found")
 
@@ -147,11 +147,11 @@ def test_file_structure():
         try:
             with open(metadata_file, "r") as f:
                 metadata = json.load(f)
-            print(f"   Total files: {metadata.get('total_files', 0)}")
-            print(f"   Symbols tracked: {len(metadata.get('symbols', {}))}")
-            print(f"   Data types: {list(metadata.get('data_types', {}).keys())}")
+            print("   Total files: {metadata.get('total_files', 0)}")
+            print("   Symbols tracked: {len(metadata.get('symbols', {}))}")
+            print("   Data types: {list(metadata.get('data_types', {}).keys())}")
         except Exception as e:
-            print(f"   ⚠️  Failed to read metadata: {e}")
+            print("   ⚠️  Failed to read metadata: {e}")
     else:
         print("⚠️  No metadata file found")
 
@@ -167,16 +167,16 @@ def test_collection_status():
     status = collector.get_collection_status()
 
     print("Collection Status:")
-    print(f"   Services loaded: {status.get('services_loaded', [])}")
-    print(f"   Storage location: {status.get('storage_location')}")
+    print("   Services loaded: {status.get('services_loaded', [])}")
+    print("   Storage location: {status.get('storage_location')}")
 
     available = status.get("available_data", {})
-    print(f"   Available files: {available.get('total_files', 0)}")
-    print(f"   Tracked symbols: {available.get('symbol_count', 0)}")
+    print("   Available files: {available.get('total_files', 0)}")
+    print("   Tracked symbols: {available.get('symbol_count', 0)}")
 
     if available.get("symbols"):
         symbols = available["symbols"][:5]  # Show first 5
-        print(f"   Sample symbols: {', '.join(symbols)}")
+        print("   Sample symbols: {', '.join(symbols)}")
 
     return status
 
@@ -202,7 +202,7 @@ def run_all_tests():
             ),
         }
     except Exception as e:
-        print(f"❌ Comprehensive collection test failed: {e}")
+        print("❌ Comprehensive collection test failed: {e}")
         test_results["comprehensive_collection"] = {"success": False, "error": str(e)}
 
     # Test 2: Gap detection
@@ -210,7 +210,7 @@ def run_all_tests():
         gaps_found = test_gap_detection()
         test_results["gap_detection"] = {"success": True, "gaps_found": gaps_found}
     except Exception as e:
-        print(f"❌ Gap detection test failed: {e}")
+        print("❌ Gap detection test failed: {e}")
         test_results["gap_detection"] = {"success": False, "error": str(e)}
 
     # Test 3: File structure
@@ -218,7 +218,7 @@ def run_all_tests():
         structure_ok = test_file_structure()
         test_results["file_structure"] = {"success": structure_ok}
     except Exception as e:
-        print(f"❌ File structure test failed: {e}")
+        print("❌ File structure test failed: {e}")
         test_results["file_structure"] = {"success": False, "error": str(e)}
 
     # Test 4: Collection status
@@ -229,7 +229,7 @@ def run_all_tests():
             "available_files": status.get("available_data", {}).get("total_files", 0),
         }
     except Exception as e:
-        print(f"❌ Collection status test failed: {e}")
+        print("❌ Collection status test failed: {e}")
         test_results["collection_status"] = {"success": False, "error": str(e)}
 
     # Final summary
@@ -242,22 +242,22 @@ def run_all_tests():
 
     for test_name, result in test_results.items():
         status = "✅ PASS" if result.get("success") else "❌ FAIL"
-        print(f"{status} {test_name.replace('_', ' ').title()}")
+        print("{status} {test_name.replace('_', ' ').title()}")
 
         if result.get("error"):
-            print(f"     Error: {result['error']}")
+            print("     Error: {result['error']}")
 
         # Additional details
         if test_name == "comprehensive_collection" and result.get("success"):
-            print(f"     Files created: {result.get('files_created', 0)}")
-            print(f"     Daily successful: {result.get('daily_success', 0)}")
-            print(f"     Weekly successful: {result.get('weekly_success', 0)}")
+            print("     Files created: {result.get('files_created', 0)}")
+            print("     Daily successful: {result.get('daily_success', 0)}")
+            print("     Weekly successful: {result.get('weekly_success', 0)}")
         elif test_name == "gap_detection" and result.get("success"):
-            print(f"     Gaps found: {result.get('gaps_found', 0)}")
+            print("     Gaps found: {result.get('gaps_found', 0)}")
         elif test_name == "collection_status" and result.get("success"):
-            print(f"     Available files: {result.get('available_files', 0)}")
+            print("     Available files: {result.get('available_files', 0)}")
 
-    print(f"\n🎯 Test Results: {successful_tests}/{total_tests} tests passed")
+    print("\n🎯 Test Results: {successful_tests}/{total_tests} tests passed")
 
     if successful_tests == total_tests:
         print(
