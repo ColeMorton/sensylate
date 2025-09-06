@@ -1,0 +1,68 @@
+{
+  "regional_validation_entries": [
+    {
+      "region": "EUROPE",
+      "gdp_growth": 0.3,
+      "unemployment_rate": 6.1,
+      "participation_rate": 70.2,
+      "policy_rate": 3.5,
+      "analysis_timestamp": "2025-09-05T17:31:53.072580"
+    },
+    {
+      "region": "EUROPE",
+      "gdp_growth": 0.3,
+      "unemployment_rate": 6.1,
+      "participation_rate": 70.2,
+      "policy_rate": 3.5,
+      "analysis_timestamp": "2025-09-05T17:31:53.094554"
+    },
+    {
+      "region": "EUROPE",
+      "gdp_growth": 0.3,
+      "unemployment_rate": 6.1,
+      "participation_rate": 70.2,
+      "policy_rate": 3.5,
+      "analysis_timestamp": "2025-09-05T17:31:53.114629"
+    },
+    {
+      "region": "EUROPE",
+      "gdp_growth": 0.3,
+      "unemployment_rate": 6.1,
+      "participation_rate": 70.2,
+      "policy_rate": 3.5,
+      "analysis_timestamp": "2025-09-05T17:31:53.115222"
+    },
+    {
+      "region": "EUROPE",
+      "gdp_growth": 0.3,
+      "unemployment_rate": 6.1,
+      "participation_rate": 70.2,
+      "policy_rate": 3.5,
+      "analysis_timestamp": "2025-09-05T17:31:53.118705"
+    },
+    {
+      "region": "EUROPE",
+      "gdp_growth": 0.3,
+      "unemployment_rate": 6.1,
+      "participation_rate": 70.2,
+      "policy_rate": 3.5,
+      "analysis_timestamp": "2025-09-05T17:31:53.142132"
+    },
+    {
+      "region": "EUROPE",
+      "gdp_growth": 0.3,
+      "unemployment_rate": 6.1,
+      "participation_rate": 70.2,
+      "policy_rate": 3.5,
+      "analysis_timestamp": "2025-09-05T17:31:53.162015"
+    },
+    {
+      "region": "EUROPE",
+      "gdp_growth": 0.3,
+      "unemployment_rate": 6.1,
+      "participation_rate": 70.2,
+      "policy_rate": 3.5,
+      "analysis_timestamp": "2025-09-05T17:31:53.185454"
+    }
+  ]
+}

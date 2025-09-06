@@ -10,3 +10,8 @@
 @utility form-label {
   @apply font-secondary text-text-dark dark:text-darkmode-text-light mb-4 block text-xl font-normal;
 }
+
+/* hero image container */
+@utility hero-image-container {
+  @apply max-h-[45vh] md:max-h-[60vh] object-cover overflow-hidden;
+}
