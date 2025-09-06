@@ -52,7 +52,7 @@ export default function ImageLightbox({
       alt={alt}
       width={width}
       height={height}
-      className={`${thumbnailClassName} ${enableLightbox && !isMobile ? "cursor-pointer transition-opacity hover:opacity-90" : ""}`}
+      className={`${className} ${thumbnailClassName} ${enableLightbox && !isMobile ? "cursor-pointer transition-opacity hover:opacity-90" : ""}`}
       onClick={handleImageClick}
       onKeyDown={(e) => {
         if (
@@ -73,7 +73,7 @@ export default function ImageLightbox({
   );
 
   return (
-    <div className={className}>
+    <div>
       {imageElement}
       <Lightbox
         open={enableLightbox && isOpen}
