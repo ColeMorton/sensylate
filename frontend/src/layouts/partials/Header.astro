@@ -207,17 +207,6 @@ const { pathname } = Astro.url;
             ))
           }
 
-          <!-- Divider if there are overflow items -->
-          {
-            (responsiveMenus.lg.overflowItems.length > 0 ||
-              responsiveMenus.xl.overflowItems.length > 0) &&
-              pagesChildren.length > 0 && (
-                <li class="nav-dropdown-item">
-                  <hr class="border-border dark:border-darkmode-border my-2" />
-                </li>
-              )
-          }
-
           <!-- Original Pages dropdown children -->
           {
             pagesChildren.map((child) => (
