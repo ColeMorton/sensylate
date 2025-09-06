@@ -13,5 +13,5 @@
 
 /* hero image container */
 @utility hero-image-container {
-  @apply max-h-[45vh] md:max-h-[60vh] object-cover overflow-hidden;
+  @apply max-h-[45vh] overflow-hidden object-cover object-center md:max-h-[60vh];
 }
