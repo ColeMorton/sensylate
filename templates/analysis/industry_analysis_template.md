@@ -37,7 +37,10 @@ tags:
 [2-3 sentence thesis describing the industry's investment opportunity and key value drivers]
 
 ### Industry Investment Recommendation Summary
-[INDUSTRY] industry offers superior risk-adjusted returns through [KEY CATALYST 1], [KEY CATALYST 2], and [KEY CATALYST 3] creating multi-year growth visibility. [Industry structure assessment with competitive positioning]. Economic context supports [economic trends] with [specific catalyst] providing monetization catalyst, while [geographic/market expansion] creates opportunities in [specific markets]. Target allocation [X-Y%] for moderate positioning, focusing on [key investment themes] and [diversification strategy].
+
+[INDUSTRY] industry offers superior risk-adjusted returns through [KEY CATALYST 1], [KEY CATALYST 2], and [KEY CATALYST 3] creating multi-year growth visibility. [Industry structure assessment with competitive positioning].
+
+Economic context supports [economic trends] with [specific catalyst] providing monetization catalyst, while [geographic/market expansion] creates opportunities in [specific markets]. Target allocation [X-Y%] for moderate positioning, focusing on [key investment themes] and [diversification strategy].
 
 ### Recommendation: [BUY/HOLD/SELL] | Position Size: [X-Y% of Sector Allocation] | Confidence: [X.X/10.0]
 - **Growth Forecast**: [X%] 2025, [X%] 2026, [X%] 2027 | Long-term CAGR: [X%] (2025-2030)
