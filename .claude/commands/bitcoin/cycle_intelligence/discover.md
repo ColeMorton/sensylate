@@ -42,10 +42,12 @@ The Bitcoin Cycle Intelligence Discovery phase defines the requirements for syst
 
 **Market Cycle Indicator Requirements**:
 - Current and historical pricing with multi-source Bitcoin exchange validation
-- MVRV Z-Score, PI Cycle Top, and Rainbow Price Model calculations
-- Realized price analysis and Net Unrealized Profit/Loss (NUPL) zones
-- Reserve Risk Indicator and Long-Term Holder supply dynamics
-- Bitcoin market performance across multiple cycle timeframes
+- **MVRV Z-Score: MUST be acquired EXCLUSIVELY via web search from verified on-chain analytics platforms (Glassnode, CryptoQuant, MacroMicro, etc.) - NO API or CLI service usage permitted**
+- **Net Unrealized Profit/Loss (NUPL) zones: MUST be acquired EXCLUSIVELY via web search from verified on-chain analytics platforms (Glassnode, CryptoQuant, MacroMicro, etc.) - NO API or CLI service usage permitted**
+- PI Cycle Top and Rainbow Price Model calculations (via CLI services)
+- Realized price analysis (via CLI services)
+- Reserve Risk Indicator and Long-Term Holder supply dynamics (via CLI services)
+- Bitcoin market performance across multiple cycle timeframes (via CLI services)
 
 **Economic Context Requirements**:
 - Federal Reserve policy impact on Bitcoin as digital asset
@@ -59,11 +61,33 @@ The Bitcoin Cycle Intelligence Discovery phase defines the requirements for syst
 - Lightning Network growth and second-layer development
 - Developer activity and protocol upgrade assessment
 
+### Data Acquisition Methodology
+
+**Web Search Requirements (CRITICAL)**:
+- **MVRV Z-Score**: Must be acquired using WebSearch tool targeting verified on-chain analytics platforms including but not limited to:
+  - Glassnode Studio charts and data
+  - CryptoQuant Bitcoin MVRV indicators
+  - MacroMicro Bitcoin MVRV Z-Score data
+  - Bitcoin Magazine Pro on-chain metrics
+  - Any established on-chain analytics platform with current MVRV Z-Score data
+- **NUPL (Net Unrealized Profit/Loss)**: Must be acquired using WebSearch tool targeting verified platforms including but not limited to:
+  - CryptoQuant Bitcoin NUPL charts
+  - Glassnode NUPL indicators
+  - MacroMicro Bitcoin NUPL data
+  - Bitcoin Magazine Pro NUPL metrics
+  - Any established on-chain analytics platform with current NUPL data
+
+**CLI Service Requirements**:
+- All other Bitcoin metrics (pricing, network health, mining data, institutional flows) must continue using production CLI services
+- Multi-source CLI validation required for price consistency and institutional flows
+- CLI service health monitoring for operational reliability
+
 ### Quality Standards
 - **Multi-Source Validation**: Cross-validation across multiple Bitcoin data sources with confidence scoring
+- **Web Search Data Quality**: MVRV Z-Score and NUPL must include source attribution and timestamp validation
 - **Institutional-Grade Thresholds**: Overall Bitcoin data quality ≥ 0.90 for institutional standards
 - **Data Completeness**: ≥ 85% field population for comprehensive Bitcoin cycle analysis
-- **Service Reliability**: ≥ 80% health score across Bitcoin data services
+- **Service Reliability**: ≥ 80% health score across Bitcoin CLI services (excluding web search metrics)
 
 ## Output Structure and Schema
 
@@ -80,25 +104,29 @@ The Bitcoin Cycle Intelligence Discovery phase defines the requirements for syst
 - **Quality Metrics**: Confidence scores, data completeness, source reliability
 
 ### Schema Compliance Standards
-- Multi-source Bitcoin data validation targeting high confidence scores
+- **Web Search Attribution**: MVRV Z-Score and NUPL data must include explicit source attribution indicating web search methodology and specific platform sources
+- Multi-source Bitcoin CLI data validation targeting high confidence scores for other metrics
 - Complete Bitcoin cycle discovery insights with analysis priorities identified
 - Institutional-grade quality standards compliance for Bitcoin intelligence
+- **Mixed Methodology Documentation**: Clear distinction between web search sourced metrics (MVRV Z-Score, NUPL) and CLI service sourced metrics in output structure
 
 ## Expected Outcomes
 
 ### Discovery Quality Targets
-- **Overall Data Quality**: ≥ 97% confidence through multi-source Bitcoin data validation
-- **Data Completeness**: ≥ 92% across all required Bitcoin cycle categories
-- **On-Chain Data Confidence**: ≥ 95% with complete blockchain metrics integration
-- **Service Health**: ≥ 80% operational status across Bitcoin data services
+- **Overall Data Quality**: ≥ 97% confidence through multi-source Bitcoin data validation and web search verification
+- **Web Search Metrics Quality**: MVRV Z-Score and NUPL must include current timestamp, source platform attribution, and confidence assessment based on data recency and source authority
+- **CLI Metrics Quality**: ≥ 95% confidence for CLI-sourced metrics (pricing, network health, institutional flows)
+- **Data Completeness**: ≥ 92% across all required Bitcoin cycle categories (including web search sourced metrics)
+- **Service Health**: ≥ 80% operational status across Bitcoin CLI services
 
 ### Key Deliverables
-- Comprehensive Bitcoin network profile with blockchain intelligence
-- Multi-source validated on-chain metrics and cycle indicators
-- Economic context with Bitcoin-specific macro implications
-- Institutional flow analysis with ETF and corporate adoption patterns
+- Comprehensive Bitcoin network profile with blockchain intelligence (via CLI services)
+- **Web Search Validated Cycle Indicators**: Current MVRV Z-Score and NUPL with source attribution and timestamp validation
+- **CLI Validated Metrics**: Multi-source validated pricing, network health, and institutional flow data
+- Economic context with Bitcoin-specific macro implications (via CLI services)
+- Institutional flow analysis with ETF and corporate adoption patterns (via CLI services)
 - Discovery insights identifying Bitcoin cycle analysis priorities and data gaps
-- Quality assessment with confidence scoring and Bitcoin data source reliability metrics
+- Quality assessment with confidence scoring distinguishing web search vs CLI data source reliability metrics
 
 **Integration with DASV Framework**: This command provides the foundational Bitcoin data required for the subsequent analyze phase, ensuring high-quality input for systematic Bitcoin cycle intelligence analysis.
 

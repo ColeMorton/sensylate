@@ -1,41 +1,50 @@
 ---
-title: "Asia Macro-Economic Analysis - September 2025"
-meta_title: "Asia Macro Analysis - EXPANSIONARY Outlook | Mid-Cycle Expansion | September 2025"
-description: "Comprehensive Asia macro-economic analysis with expansionary outlook. 4.6% GDP growth, 15% recession probability, 2.82% policy rate with regional divergence. Mid-cycle expansion positioning with geopolitical risk management."
-date: 2025-09-06T10:00:00Z
-image: "/images/macro/asia-min.png"
-authors: ["Cole Morton", "Claude"]
+title: Asia Macro Economic Analysis - September 2025
+meta_title: Asia Economic Analysis - Business Cycle | Sep 2025
+description: "Comprehensive Asia macro economic analysis with business cycle positioning
+  and recession probabilities. Current phase: EXPANSIONARY with 91% confidence."
+date: 2025-09-06 10:00:00+00:00
+image: /images/macro/asia-min.png
+authors:
+  - Cole Morton
+  - Claude
 categories:
-  ["Investing", "Analysis", "Macro Analysis", "Asia", "Economic Analysis", "Market Analysis"]
+  - Economics
+  - Analysis
+  - Macro Analysis
+  - Asia
+  - Economic Outlook
 tags:
-  [
-    "asia",
-    "macro-analysis",
-    "expansionary",
-    "mid-cycle",
-    "gdp-growth",
-    "monetary-policy",
-    "regional-divergence",
-    "geopolitical-risk",
-  ]
+  - asia
+  - macro-analysis
+  - expansionary
+  - mid-cycle
+  - gdp-growth
+  - monetary-policy
+  - regional-divergence
+  - geopolitical-risk
 draft: false
 macro_data:
   confidence: 0.91
   data_quality: 0.91
-  economic_context: "Current"
-  outlook: "EXPANSIONARY"
-  business_cycle: "Mid-cycle expansion"
-  gdp_growth: "4.6%"
-  recession_probability: "15%"
-  policy_rate: "2.82%"
-  unemployment_rate: "3.2%"
-  inflation_rate: "1.6%"
+  economic_context: Current
+  outlook: EXPANSIONARY
+  business_cycle: Mid-cycle expansion
+  gdp_growth: 4.6%
+  recession_probability: 15%
+  policy_rate: 2.82%
+  unemployment_rate: 3.2%
+  inflation_rate: 1.6%
   key_risks:
-    [
-      "Taiwan Strait escalation (35%)",
-      "Capital flow volatility (55%)",
-      "Geopolitical premium persistence (65%)",
-    ]
+    - Taiwan Strait escalation (35%)
+    - Capital flow volatility (55%)
+    - Geopolitical premium persistence (65%)
+  economic_phase: Expansion
+  policy_stance: Neutral
+  business_cycle_position: Mid-Expansion
+  interest_rate_environment: Stable
+  inflation_trajectory: Stable
+  risk_score: 2.5/5.0
 ---
 
 ## 🎯 Executive Summary & Economic Thesis

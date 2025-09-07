@@ -1,35 +1,50 @@
 ---
-title: "Global Macro-Economic Analysis - September 2025"
-meta_title: "Global Macro Economic Analysis - Late Expansion Outlook | September 2025"
-description: "Comprehensive global macro-economic analysis with neutral outlook. Late expansion phase, 15% recession probability, 4.33% policy rate with restrictive stance. Strong economic momentum with controlled transition potential."
-date: 2025-09-06T10:00:00Z
-image: "/images/macro/global-min.png"
-authors: ["Cole Morton", "Claude"]
-categories: ["Economics", "Analysis", "Macro Analysis", "Global", "Economic Outlook"]
+title: Global Macro Economic Analysis - September 2025
+meta_title: Global Economic Analysis - Business Cycle | Sep 2025
+description: "Comprehensive Global macro economic analysis with business cycle positioning
+  and recession probabilities. Current phase: EXPANSIONARY with 910% confidence."
+date: 2025-09-06 10:00:00+00:00
+image: /images/macro/global-min.png
+authors:
+  - Cole Morton
+  - Claude
+categories:
+  - Economics
+  - Analysis
+  - Macro Analysis
+  - Global
+  - Economic Outlook
 tags:
-  [
-    "global",
-    "macro-analysis",
-    "late-expansion",
-    "restrictive-policy",
-    "gdp-growth",
-    "monetary-policy",
-    "economic-outlook",
-    "business-cycle",
-  ]
+  - global
+  - macro-analysis
+  - late-expansion
+  - restrictive-policy
+  - gdp-growth
+  - monetary-policy
+  - economic-outlook
+  - business-cycle
 draft: false
 macro_data:
-  confidence: 9.1
-  data_quality: 9.1
-  economic_context: "Current"
-  outlook: "EXPANSIONARY"
-  business_cycle: "Late Expansion"
-  gdp_growth: "2.8%"
-  recession_probability: "15%"
-  policy_rate: "4.33%"
-  unemployment_rate: "4.3%"
-  inflation_rate: "2.8%"
-  key_risks: ["Policy Error (25%)", "Geopolitical Risk (35%)", "Financial System Risk (15%)"]
+  confidence: 0.9099999999999999
+  data_quality: 0.9099999999999999
+  economic_context: Current
+  outlook: EXPANSIONARY
+  business_cycle: Late Expansion
+  gdp_growth: 2.8%
+  recession_probability: 15%
+  policy_rate: 4.33%
+  unemployment_rate: 4.3%
+  inflation_rate: 2.8%
+  key_risks:
+    - Policy Error (25%)
+    - Geopolitical Risk (35%)
+    - Financial System Risk (15%)
+  economic_phase: Expansion
+  policy_stance: Neutral
+  business_cycle_position: Late-Expansion
+  interest_rate_environment: Stable
+  inflation_trajectory: Stable
+  risk_score: 2.5/5.0
 ---
 
 _Generated: September 6, 2025 | Confidence: 9.1/10.0 | Data Quality: 9.1/10.0 | Economic Context: Current_

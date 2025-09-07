@@ -11,8 +11,9 @@
 **Script Class**: `MacroPublisherScript`
 **Registry Name**: `macro_publisher`
 **Content Types**: `["macro_analysis", "economic_outlook"]`
-**Requires Validation**: `true`
+**Requires Validation**: `true` (via macro_analysis/validate)
 **Implementation**: Publisher sub-agent with macro analysis specialization
+**Validation Integration**: Uses macro_analysis/validate instead of content_evaluator
 
 **Registry Decorator**:
 ```python
@@ -145,9 +146,10 @@ def select_macro_publication_template(content_analysis):
 
 **Macro Content Delegation Framework**:
 - **Tool Integration**: Automated `macro_publisher_script.py` execution via publisher sub-agent
-- **Quality Enforcement**: Publisher implements ≥95% publication success rate with macro content fidelity validation
+- **Quality Enforcement**: Publisher implements ≥95% publication success rate with macro content fidelity validation via macro_analysis/validate
 - **Professional Generation**: Publication-ready macro blog content with frontend integration specialization
 - **Macro Content Expertise**: Publisher handles macro analysis and economic outlook content exclusively
+- **Unified Validation**: Uses macro_analysis/validate for specialized macro-economic validation logic
 
 **Macro Content Publication Enhancement Requirements**:
 - **Content Discovery Implementation**: Publisher executes macro content discovery with gap analysis
@@ -392,14 +394,20 @@ MACRO FRONTMATTER COMPLIANCE VALIDATION:
 - **macro_analyst**: Publisher processes macro analysis outputs exclusively from DASV framework
 
 **Downstream Quality Assurance**:
-- **macro_content_evaluator**: Evaluates publisher-generated macro blog content for quality validation
+- **macro_analysis/validate**: Validates publisher-generated macro blog content using specialized macro-economic validation logic
 - **documentation_owner**: Documents macro publisher workflows and content publication standards
 
 **Macro Publication Orchestration Requirements**:
 - **Sequential Workflows**: Publisher executes macro content publication following analytical generation
 - **Regional Processing**: Publisher handles batch publication across all macro regions
-- **Quality Integration**: Publisher coordinates with downstream evaluation and documentation commands
+- **Quality Integration**: Publisher coordinates with macro_analysis/validate for comprehensive validation
 - **Economic Timing**: Publisher optimizes publication scheduling based on economic events and policy announcements
+
+**Unified Validation Workflow**:
+1. **Content Publication**: Publisher generates macro blog content from DASV synthesis
+2. **Quality Validation**: macro_analysis/validate verifies published content using `published_content` or `comprehensive` validation modes
+3. **CLI Integration**: Real-time economic data validation via production CLI services
+4. **Institutional Certification**: Confidence scoring >9.5/10 for publication approval
 
 ## Strategic Usage Requirements
 

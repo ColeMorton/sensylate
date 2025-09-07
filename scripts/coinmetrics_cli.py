@@ -172,6 +172,28 @@ class CoinMetricsCLI(BaseFinancialCLI):
             except Exception as e:
                 self._handle_error(e, "Failed to get Bitcoin cycle metrics")
 
+        @self.app.command("nupl")
+        def get_nupl_data(
+            asset: str = typer.Option("btc", help="Asset symbol (default: btc)"),
+            start_date: str = typer.Option(
+                "2025-08-01", help="Start date for trend analysis (YYYY-MM-DD)"
+            ),
+            end_date: str = typer.Option(
+                "", help="End date (YYYY-MM-DD, default: latest)"
+            ),
+            env: str = typer.Option("dev", help="Environment"),
+            output_format: str = typer.Option(OutputFormat.JSON, help="Output format"),
+        ):
+            """Get NUPL (Net Unrealized Profit/Loss) data for Bitcoin cycle analysis"""
+            try:
+                service = self._get_service(env)
+
+                result = service.get_nupl_data(asset, start_date, end_date)
+                self._output_result(result, output_format, "Bitcoin NUPL Data")
+
+            except Exception as e:
+                self._handle_error(e, "Failed to get NUPL data")
+
         @self.app.command("supply-data")
         def get_supply_data(
             asset: str = typer.Option("btc", help="Asset symbol (e.g., btc, eth)"),

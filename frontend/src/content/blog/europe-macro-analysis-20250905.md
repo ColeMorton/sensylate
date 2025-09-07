@@ -1,22 +1,44 @@
 ---
-title: "Europe Macro-Economic Analysis - September 2025"
-meta_title: "Europe Macro-Economic Analysis - Expansionary Rating | September 2025"
-description: "Comprehensive European macro-economic analysis with EXPANSIONARY outlook. Late expansion phase with 12% recession probability and 1.4% GDP growth acceleration supporting asset allocation positioning."
-date: 2025-09-05T16:30:00Z
-image: "/images/macro/europe-min.png"
-authors: ["Cole Morton", "Claude"]
-categories: ["Investing", "Analysis", "Macro Analysis", "Europe", "Economic Outlook"]
-tags: ["europe", "macro-analysis", "expansionary", "late-expansion", "ecb", "gdp-growth"]
+title: Europe Macro Economic Analysis - September 2025
+meta_title: Europe Economic Analysis - Business Cycle | Sep 2025
+description: Comprehensive European macro-economic analysis with EXPANSIONARY outlook.
+  Late expansion phase with 12% recession probability and 1.4% GDP growth acceleration
+  supporting asset allocation positioning.
+date: 2025-09-05 16:30:00+00:00
+image: /images/macro/europe-min.png
+authors:
+  - Cole Morton
+  - Claude
+categories:
+  - Economics
+  - Analysis
+  - Macro Analysis
+  - Europe
+  - Economic Outlook
+tags:
+  - europe
+  - macro-analysis
+  - expansionary
+  - late-expansion
+  - ecb
+  - gdp-growth
+  - economic-analysis
+  - business-cycle
 draft: false
 macro_data:
   confidence: 0.95
   data_quality: 0.95
-  economic_context: "Current"
-  phase: "Late Expansion"
-  recession_probability: "12%"
-  gdp_growth: "1.4%"
-  policy_stance: "Accommodative"
-  outlook_rating: "EXPANSIONARY"
+  economic_context: Current
+  phase: Late Expansion
+  recession_probability: 12%
+  gdp_growth: 1.4%
+  policy_stance: Accommodative
+  outlook_rating: EXPANSIONARY
+  economic_phase: Expansion
+  business_cycle_position: Late-Expansion
+  interest_rate_environment: Stable
+  inflation_trajectory: Falling
+  risk_score: 2.5/5.0
 ---
 
 ## 🎯 Executive Summary & Economic Thesis

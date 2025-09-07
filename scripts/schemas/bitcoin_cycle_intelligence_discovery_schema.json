@@ -59,8 +59,8 @@
         },
         "data_collection_methodology": {
           "type": "string",
-          "const": "production_cli_bitcoin_services_unified_access",
-          "description": "Must use production Bitcoin CLI services methodology"
+          "enum": ["production_cli_bitcoin_services_unified_access", "hybrid_cli_and_web_search_methodology"],
+          "description": "Must use hybrid methodology: CLI services for most metrics, web search for MVRV Z-Score and NUPL"
         },
         "cli_services_utilized": {
           "type": "array",
@@ -249,12 +249,15 @@
           "required": [
             "current_score",
             "historical_percentile",
-            "zone_classification"
+            "zone_classification",
+            "web_search_source",
+            "data_timestamp",
+            "source_platform"
           ],
           "properties": {
             "current_score": {
               "type": "number",
-              "description": "Current MVRV Z-Score value"
+              "description": "Current MVRV Z-Score value acquired via web search"
             },
             "historical_percentile": {
               "type": "number",
@@ -266,6 +269,21 @@
               "type": "string",
               "enum": ["deep_capitulation", "capitulation", "accumulation", "neutral", "euphoria", "extreme_euphoria"],
               "description": "Current MVRV zone classification"
+            },
+            "web_search_source": {
+              "type": "boolean",
+              "const": true,
+              "description": "Must be true indicating data acquired via web search"
+            },
+            "data_timestamp": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}(T\\d{2}:\\d{2}:\\d{2}(\\.\\d{3,6})?Z?)?$",
+              "description": "Timestamp when data was obtained from web search source"
+            },
+            "source_platform": {
+              "type": "string",
+              "enum": ["Glassnode", "CryptoQuant", "MacroMicro", "Bitcoin Magazine Pro", "CoinGlass", "BitcoinVisuals", "Other On-Chain Analytics Platform"],
+              "description": "Specific platform from which MVRV Z-Score was obtained via web search"
             }
           }
         },
@@ -302,14 +320,17 @@
             "current_nupl",
             "zone_classification",
             "lth_nupl",
-            "sth_nupl"
+            "sth_nupl",
+            "web_search_source",
+            "data_timestamp",
+            "source_platform"
           ],
           "properties": {
             "current_nupl": {
               "type": "number",
               "minimum": -1,
               "maximum": 1,
-              "description": "Current NUPL value (-1 to 1)"
+              "description": "Current NUPL value (-1 to 1) acquired via web search"
             },
             "zone_classification": {
               "type": "string",
@@ -323,6 +344,21 @@
             "sth_nupl": {
               "type": "number",
               "description": "Short-term holder NUPL"
+            },
+            "web_search_source": {
+              "type": "boolean",
+              "const": true,
+              "description": "Must be true indicating data acquired via web search"
+            },
+            "data_timestamp": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}(T\\d{2}:\\d{2}:\\d{2}(\\.\\d{3,6})?Z?)?$",
+              "description": "Timestamp when data was obtained from web search source"
+            },
+            "source_platform": {
+              "type": "string",
+              "enum": ["Glassnode", "CryptoQuant", "MacroMicro", "Bitcoin Magazine Pro", "CoinGlass", "BitcoinVisuals", "Other On-Chain Analytics Platform"],
+              "description": "Specific platform from which NUPL was obtained via web search"
             }
           }
         },
@@ -980,7 +1016,7 @@
         "execution_timestamp": "2025-09-04T12:57:40.000000Z",
         "framework_phase": "cli_enhanced_discover_bitcoin_sources",
         "analysis_date": "2025-09-04",
-        "data_collection_methodology": "production_cli_bitcoin_services_unified_access",
+        "data_collection_methodology": "hybrid_cli_and_web_search_methodology",
         "cli_services_utilized": ["coingecko_cli", "mempool_space_cli", "coinmetrics_cli", "alternative_me_cli", "fred_economic_cli"],
         "api_keys_configured": "production_keys_from_config/bitcoin_services.yaml"
       }

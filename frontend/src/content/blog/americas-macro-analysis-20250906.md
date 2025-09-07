@@ -1,35 +1,50 @@
 ---
-title: "Americas Macro-Economic Analysis - September 2025"
-meta_title: "Americas Macro Economic Analysis - Business Cycle Assessment | September 2025"
-description: "Comprehensive Americas macro-economic analysis with balanced outlook. 2.1% GDP growth, 15% recession probability, 4.75% policy rate with neutral positioning. Expansion phase with moderate momentum and manageable risks."
-date: 2025-09-06T10:00:00Z
-image: "/images/macro/americas-min.png"
-authors: ["Cole Morton", "Claude"]
-categories: ["Economics", "Analysis", "Macro Analysis", "Americas", "Economic Outlook"]
+title: Americas Macro Economic Analysis - September 2025
+meta_title: Americas Economic Analysis - Business Cycle | Sep 2025
+description: "Comprehensive Americas macro economic analysis with business cycle positioning
+  and recession probabilities. Current phase: EXPANSIONARY with 94% confidence."
+date: 2025-09-06 10:00:00+00:00
+image: /images/macro/americas-min.png
+authors:
+  - Cole Morton
+  - Claude
+categories:
+  - Economics
+  - Analysis
+  - Macro Analysis
+  - Americas
+  - Economic Outlook
 tags:
-  [
-    "americas",
-    "macro-analysis",
-    "expansion",
-    "neutral-policy",
-    "gdp-growth",
-    "monetary-policy",
-    "economic-outlook",
-    "business-cycle",
-  ]
+  - americas
+  - macro-analysis
+  - expansion
+  - neutral-policy
+  - gdp-growth
+  - monetary-policy
+  - economic-outlook
+  - business-cycle
 draft: false
 macro_data:
-  confidence: 0.8
-  data_quality: 0.9
-  economic_context: "Current"
-  outlook: "CONTRACTIONARY"
-  business_cycle: "Expansion"
-  gdp_growth: "2.1%"
-  recession_probability: "15%"
-  policy_rate: "4.75%"
-  unemployment_rate: "4.0%"
-  inflation_rate: "2.3%"
-  key_risks: ["Policy Error (18%)", "Inflation Acceleration (25%)", "Employment Shock (12%)"]
+  confidence: 0.94
+  data_quality: 0.96
+  economic_context: Current
+  outlook: EXPANSIONARY
+  business_cycle: Expansion
+  gdp_growth: 2.1%
+  recession_probability: 15%
+  policy_rate: 4.75%
+  unemployment_rate: 4.0%
+  inflation_rate: 2.3%
+  key_risks:
+    - Policy Error (18%)
+    - Inflation Acceleration (25%)
+    - Employment Shock (12%)
+  economic_phase: Expansion
+  policy_stance: Restrictive
+  business_cycle_position: Late-Expansion
+  interest_rate_environment: Stable
+  inflation_trajectory: Stable
+  risk_score: 2.5/5.0
 ---
 
 ## 🎯 Executive Summary & Economic Thesis
@@ -38,7 +53,7 @@ macro_data:
 
 US economic environment presents a balanced outlook with moderate growth expectations and manageable risk factors.
 
-### Economic Outlook: CONTRACTIONARY | Business Cycle: Expansion | Confidence: 0.8/1.0
+### Economic Outlook: EXPANSIONARY | Business Cycle: Expansion | Confidence: 0.94/1.0
 
 - **Recession Probability**: 15% over next 12 months | Economic Cycle: Expansion phase
 - **Monetary Policy Context**: Tapering policy stance | FOMC Rate: 5.25% | Market Implied: 5.00%
