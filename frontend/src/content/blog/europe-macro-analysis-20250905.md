@@ -240,8 +240,6 @@ European economic expansion demonstrates robust acceleration with Q2 2025 GDP gr
 
 ---
 
-_Framework: Multi-source European economic intelligence, ECB-coordinated business cycle analysis, policy-transmission asset allocation optimization_
-
 ## 🏁 Economic Outlook & Investment Recommendation Summary
 
 Europe economic environment presents a compelling investment landscape characterized by late expansion business cycle positioning with 12% recession probability over the next 12 months. Current monetary policy stance of accommodative positioning with 3.5% ECB Main Refinancing Rate and normal steepening yield curve creates supportive conditions for equity and real estate asset classes, while 1.4% GDP growth acceleration and strengthening employment dynamics with 6.1% unemployment rate indicate robust economic momentum.
