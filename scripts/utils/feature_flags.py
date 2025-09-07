@@ -234,7 +234,7 @@ class FeatureFlagManager:
                             expires_at=flag_data.get("expires_at"),
                         )
         except Exception as e:
-            print(f"Warning: Could not load feature flags from {self.config_path}: {e}")
+            print("Warning: Could not load feature flags from {self.config_path}: {e}")
 
     def save_to_file(self):
         """Save current feature flags to configuration file."""
@@ -259,7 +259,7 @@ class FeatureFlagManager:
                 json.dump(data, f, indent=2)
 
         except Exception as e:
-            print(f"Warning: Could not save feature flags to {self.config_path}: {e}")
+            print("Warning: Could not save feature flags to {self.config_path}: {e}")
 
     def is_enabled(
         self, flag_name: str, context: Optional[Dict[str, Any]] = None
@@ -312,7 +312,7 @@ class FeatureFlagManager:
 
         # Check if flag is deprecated
         if flag.state == FeatureState.DEPRECATED:
-            print(f"Warning: Feature flag '{flag_name}' is deprecated")
+            print("Warning: Feature flag '{flag_name}' is deprecated")
             return False
 
         # Check expiration
@@ -579,13 +579,13 @@ if __name__ == "__main__":
 
     # Test basic functionality
     enabled_features = manager.get_enabled_features()
-    print(f"✅ Enabled features: {len(enabled_features)}")
+    print("✅ Enabled features: {len(enabled_features)}")
 
     for feature in enabled_features[:5]:  # Show first 5
-        print(f"  - {feature}")
+        print("  - {feature}")
 
     if len(enabled_features) > 5:
-        print(f"  ... and {len(enabled_features) - 5} more")
+        print("  ... and {len(enabled_features) - 5} more")
 
     # Test specific flags
     test_flags = [
@@ -595,11 +595,11 @@ if __name__ == "__main__":
         "experimental_features",
     ]
 
-    print(f"\n🔍 Testing specific flags:")
+    print("\n🔍 Testing specific flags:")
     for flag in test_flags:
         enabled = manager.is_enabled(flag)
         status = "✅ ENABLED" if enabled else "❌ DISABLED"
-        print(f"  {flag}: {status}")
+        print("  {flag}: {status}")
 
     # Test rollout percentage
     manager.set_flag("test_rollout", FeatureState.ENABLED, rollout_percentage=50.0)
@@ -610,10 +610,10 @@ if __name__ == "__main__":
         if manager.is_enabled("test_rollout", context):
             enabled_count += 1
 
-    print(f"\n📊 Rollout test (50%): {enabled_count}/100 users enabled")
+    print("\n📊 Rollout test (50%): {enabled_count}/100 users enabled")
 
     # Save configuration
     manager.save_to_file()
-    print(f"\n💾 Configuration saved to: {manager.config_path}")
+    print("\n💾 Configuration saved to: {manager.config_path}")
 
     print("\n✅ Feature flag system ready for production")

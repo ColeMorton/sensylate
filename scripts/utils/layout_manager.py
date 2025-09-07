@@ -427,7 +427,7 @@ if __name__ == "__main__":
     layout_manager = create_layout_manager(test_config)
     fig, gs = layout_manager.create_dashboard_figure()
 
-    print(f"Created figure: {fig.get_size_inches()}")
-    print(f"Grid shape: {gs.get_geometry()}")
+    print("Created figure: {fig.get_size_inches()}")
+    print("Grid shape: {gs.get_geometry()}")
 
     plt.close(fig)

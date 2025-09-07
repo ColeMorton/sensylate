@@ -59,10 +59,10 @@ class EnhancedMacroAnalyzer:
             self.discovery_data, self.region
         )
 
-        print(f"Initialized enhanced analyzer for {self.region}")
-        print(f"Central Bank: {self.central_bank_info.name}")
-        print(f"Currency: {self.currency_info.code} ({self.currency_info.name})")
-        print(f"Extracted {len(self.regional_indicators)} regional indicators")
+        print("Initialized enhanced analyzer for {self.region}")
+        print("Central Bank: {self.central_bank_info.name}")
+        print("Currency: {self.currency_info.code} ({self.currency_info.name})")
+        print("Extracted {len(self.regional_indicators)} regional indicators")
 
     def _load_discovery_data(self) -> Dict[str, Any]:
         """Load discovery JSON data"""
@@ -1655,8 +1655,8 @@ class EnhancedMacroAnalyzer:
     def analyze(self) -> Dict[str, Any]:
         """Main enhanced analysis method with regional intelligence integration"""
 
-        print(f"Executing enhanced macro-economic analysis for {self.region}...")
-        print(f"Using {len(self.regional_indicators)} regional indicators")
+        print("Executing enhanced macro-economic analysis for {self.region}...")
+        print("Using {len(self.regional_indicators)} regional indicators")
 
         # Currency analysis
         policy_rate = self._get_indicator_value("POLICY_RATE", 4.0)
@@ -1806,7 +1806,7 @@ def main():
 
     # Validate discovery file exists
     if not Path(discovery_file).exists():
-        print(f"Error: Discovery file not found: {discovery_file}")
+        print("Error: Discovery file not found: {discovery_file}")
         sys.exit(1)
 
     try:
@@ -1828,25 +1828,25 @@ def main():
         with open(output_file, "w") as f:
             json.dump(analysis_output, f, indent=2)
 
-        print(f"Enhanced analysis complete: {output_file}")
+        print("Enhanced analysis complete: {output_file}")
 
         # Print enhanced summary
         ri_summary = analysis_output["regional_intelligence_summary"]
         quality_metrics = analysis_output["analysis_quality_metrics"]
 
-        print(f"\nEnhanced Analysis Summary for {region}:")
-        print(f"- Central Bank: {ri_summary['central_bank']}")
-        print(f"- Currency: {ri_summary['currency']}")
-        print(f"- Policy Framework: {ri_summary['policy_framework']}")
-        print(f"- Indicators Extracted: {ri_summary['indicators_extracted']}")
-        print(f"- Regional Specificity: {ri_summary['regional_specificity_score']:.3f}")
-        print(f"- Overall Confidence: {quality_metrics['confidence_propagation']:.3f}")
+        print("\nEnhanced Analysis Summary for {region}:")
+        print("- Central Bank: {ri_summary['central_bank']}")
+        print("- Currency: {ri_summary['currency']}")
+        print("- Policy Framework: {ri_summary['policy_framework']}")
+        print("- Indicators Extracted: {ri_summary['indicators_extracted']}")
+        print("- Regional Specificity: {ri_summary['regional_specificity_score']:.3f}")
+        print("- Overall Confidence: {quality_metrics['confidence_propagation']:.3f}")
         print(
             f"- Regional Intelligence Integration: {quality_metrics['regional_intelligence_integration']:.3f}"
         )
 
     except Exception as e:
-        print(f"Error in enhanced analysis: {e}")
+        print("Error in enhanced analysis: {e}")
         import traceback
 
         traceback.print_exc()

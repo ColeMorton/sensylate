@@ -141,8 +141,8 @@ def test_scalability_detection():
     ]
 
     for trade_count, month_count, description in test_cases:
-        print(f"📊 {description}:")
-        print(f"   Trades: {trade_count}, Months: {month_count}")
+        print("📊 {description}:")
+        print("   Trades: {trade_count}, Months: {month_count}")
 
         # Generate test data
         trades = generate_synthetic_trades(trade_count)
@@ -155,18 +155,18 @@ def test_scalability_detection():
         )
         scatter_category = scalability_manager.detect_scatter_density_category(trades)
 
-        print(f"   → Trade volume: {trade_category}")
-        print(f"   → Monthly timeline: {monthly_category}")
-        print(f"   → Scatter density: {scatter_category}")
+        print("   → Trade volume: {trade_category}")
+        print("   → Monthly timeline: {monthly_category}")
+        print("   → Scatter density: {scatter_category}")
 
         # Test recommendations
         recommendations = scalability_manager.get_chart_recommendation(
             trades, monthly_data
         )
-        print(f"   → Chart recommendations:")
-        print(f"     - Trade performance: {recommendations['trade_performance']}")
-        print(f"     - Monthly timeline: {recommendations['monthly_timeline']}")
-        print(f"     - Scatter plot: {recommendations['scatter_plot']}")
+        print("   → Chart recommendations:")
+        print("     - Trade performance: {recommendations['trade_performance']}")
+        print("     - Monthly timeline: {recommendations['monthly_timeline']}")
+        print("     - Scatter plot: {recommendations['scatter_plot']}")
         print()
 
 
@@ -188,9 +188,9 @@ def test_performance_bands():
 
     for band_name, band_trades in bands.items():
         percentage = (len(band_trades) / total_trades) * 100
-        print(f"   {band_name}: {len(band_trades)} trades ({percentage:.1f}%)")
+        print("   {band_name}: {len(band_trades)} trades ({percentage:.1f}%)")
 
-    print(f"\nTotal trades: {total_trades}")
+    print("\nTotal trades: {total_trades}")
     print()
 
 
@@ -208,16 +208,16 @@ def test_clustering():
     cluster_info = scalability_manager.cluster_scatter_points(trades)
 
     print("Clustering Results:")
-    print(f"   Total clusters: {cluster_info['total_clusters']}")
-    print(f"   Clustered points: {cluster_info['clustered_points']}")
-    print(f"   Individual points: {cluster_info['noise_points']}")
+    print("   Total clusters: {cluster_info['total_clusters']}")
+    print("   Clustered points: {cluster_info['clustered_points']}")
+    print("   Individual points: {cluster_info['noise_points']}")
 
     if cluster_info["clusters"]:
         print("\nCluster Details:")
         for cluster in cluster_info["clusters"][:5]:  # Show first 5 clusters
             centroid_dur, centroid_ret = cluster["centroid"]
-            print(f"   Cluster {cluster['id']}: {cluster['size']} trades")
-            print(f"      Centroid: {centroid_dur:.1f} days, {centroid_ret:+.1f}%")
+            print("   Cluster {cluster['id']}: {cluster['size']} trades")
+            print("      Centroid: {centroid_dur:.1f} days, {centroid_ret:+.1f}%")
 
     print()
 
@@ -242,7 +242,7 @@ def test_label_optimization():
             monthly_data, category
         )
 
-        print(f"Timeline: {month_count} months ({category})")
+        print("Timeline: {month_count} months ({category})")
         print(
             f"   Labels: {optimized_labels[:3]}..."
             if len(optimized_labels) > 3
@@ -264,7 +264,7 @@ if __name__ == "__main__":
         print("✅ All scalability tests completed successfully!")
 
     except Exception as e:
-        print(f"❌ Test failed: {e}")
+        print("❌ Test failed: {e}")
         import traceback
 
         traceback.print_exc()

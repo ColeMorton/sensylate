@@ -65,9 +65,20 @@
           "enum": [
             "comprehensive_dasv_macro_validation_via_cli_services",
             "institutional_dasv_macro_validation",
-            "macro_economic_multi_source_validation"
+            "macro_economic_multi_source_validation",
+            "comprehensive_macro_validation_comprehensive",
+            "comprehensive_macro_validation_discovery",
+            "comprehensive_macro_validation_analysis",
+            "comprehensive_macro_validation_synthesis",
+            "comprehensive_macro_validation_validation",
+            "comprehensive_macro_validation_publishing"
           ],
           "description": "Systematic macro-economic validation methodology identifier"
+        },
+        "validation_mode": {
+          "type": "string",
+          "enum": ["comprehensive", "discovery", "analysis", "synthesis", "validation", "publishing"],
+          "description": "Validation mode specifying scope of validation: comprehensive (all phases), discovery (CLI data integration), analysis (economic modeling), synthesis (template compliance), validation (meta-validation), or publishing (published content)"
         },
         "cli_services_utilized": {
           "type": "array",
@@ -683,6 +694,78 @@
           "type": "array",
           "items": {"type": "string"},
           "description": "Cross-regional validation requirements"
+        }
+      }
+    },
+    "published_content_validation": {
+      "type": "object",
+      "description": "Published blog content validation results for macro economic analysis",
+      "additionalProperties": true,
+      "properties": {
+        "published_content_present": {
+          "type": "boolean",
+          "description": "Whether published content was provided for validation"
+        },
+        "validation_mode": {
+          "type": "string",
+          "enum": ["comprehensive", "discovery", "analysis", "synthesis", "validation", "publishing"],
+          "description": "Current validation mode"
+        },
+        "frontmatter_compliance": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Frontmatter compliance score for macro analysis blog post"
+        },
+        "content_structure": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Content structure validation score"
+        },
+        "macro_template_adherence": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Macro analysis template adherence score"
+        },
+        "content_fidelity": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Content fidelity preservation score from synthesis to published"
+        },
+        "seo_optimization": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "SEO optimization validation score"
+        },
+        "asset_integration": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Static asset integration validation score"
+        },
+        "professional_quality": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Professional quality assessment score"
+        },
+        "overall_published_quality": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Overall published content quality score"
+        },
+        "published_content_validation_skipped": {
+          "type": "boolean",
+          "description": "Whether published content validation was skipped"
+        },
+        "reason": {
+          "type": "string",
+          "description": "Reason for skipping published content validation"
         }
       }
     },

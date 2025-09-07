@@ -30,7 +30,7 @@ try:
 
     CLI_SERVICES_AVAILABLE = True
 except ImportError as e:
-    print(f"⚠️  CLI services not available: {e}")
+    print("⚠️  CLI services not available: {e}")
     CLI_SERVICES_AVAILABLE = False
 
 # Import sector cross-reference for sector analysis integration
@@ -39,7 +39,7 @@ try:
 
     SECTOR_CROSS_REFERENCE_AVAILABLE = True
 except ImportError as e:
-    print(f"⚠️  Sector cross-reference not available: {e}")
+    print("⚠️  Sector cross-reference not available: {e}")
     SECTOR_CROSS_REFERENCE_AVAILABLE = False
 
 
@@ -86,9 +86,9 @@ class FundamentalDiscovery:
                     "sec_edgar": create_sec_edgar_service(env),
                     "imf": create_imf_service(env),
                 }
-                print(f"✅ Initialized {len(self.cli_services)} CLI services")
+                print("✅ Initialized {len(self.cli_services)} CLI services")
             except Exception as e:
-                print(f"⚠️  Failed to initialize some CLI services: {e}")
+                print("⚠️  Failed to initialize some CLI services: {e}")
                 self.cli_services = {}
 
         # Track service health
@@ -111,7 +111,7 @@ class FundamentalDiscovery:
                 )
                 print("✅ Initialized sector cross-reference system")
             except Exception as e:
-                print(f"⚠️  Failed to initialize sector cross-reference: {e}")
+                print("⚠️  Failed to initialize sector cross-reference: {e}")
                 self.sector_cross_ref = None
         else:
             self.sector_cross_ref = None
@@ -181,7 +181,7 @@ class FundamentalDiscovery:
                     )
 
         except Exception as e:
-            print(f"⚠️  FMP cash flow data unavailable for {self.ticker}: {e}")
+            print("⚠️  FMP cash flow data unavailable for {self.ticker}: {e}")
             # Use Yahoo Finance as fallback
             yahoo_fcf = self.safe_get(self.fundamentals_data, "freeCashflow", 0)
             if yahoo_fcf > 0:
@@ -258,7 +258,7 @@ class FundamentalDiscovery:
                         f"✅ Retrieved fundamental data for {self.ticker} via Yahoo Finance CLI"
                     )
                 except Exception as e:
-                    print(f"⚠️  Yahoo Finance CLI error: {e}")
+                    print("⚠️  Yahoo Finance CLI error: {e}")
                     # Use fallback data structure
                     self.fundamentals_data = {
                         "symbol": self.ticker,
@@ -276,17 +276,17 @@ class FundamentalDiscovery:
                     "industry": "Software",
                     "currentPrice": 100.0,  # Placeholder
                 }
-                print(f"⚠️  Using fallback data structure for {self.ticker}")
+                print("⚠️  Using fallback data structure for {self.ticker}")
 
             # Validate ticker exists by checking for required fields
             if not self.fundamentals_data or not self.fundamentals_data.get("symbol"):
-                print(f"❌ Invalid ticker symbol: {self.ticker}")
+                print("❌ Invalid ticker symbol: {self.ticker}")
                 return False
 
             return True
 
         except Exception as e:
-            print(f"❌ Error initializing data source for {self.ticker}: {str(e)}")
+            print("❌ Error initializing data source for {self.ticker}: {str(e)}")
             return False
 
     def collect_company_intelligence(self) -> Dict[str, Any]:
@@ -402,7 +402,7 @@ class FundamentalDiscovery:
                 raise Exception("Financial statements not available")
 
         except Exception as e:
-            print(f"⚠️ Limited financial statements data for {self.ticker}: {str(e)}")
+            print("⚠️ Limited financial statements data for {self.ticker}: {str(e)}")
             return {
                 "income_statement": {},
                 "balance_sheet": {},
@@ -426,7 +426,7 @@ class FundamentalDiscovery:
                 "confidence": 0.7,
             }
         except Exception as e:
-            print(f"⚠️ Limited peer data available for {self.ticker}: {str(e)}")
+            print("⚠️ Limited peer data available for {self.ticker}: {str(e)}")
             return {
                 "peer_selection_rationale": "Limited peer data available",
                 "peer_companies": [],
@@ -505,7 +505,7 @@ class FundamentalDiscovery:
 
     def execute_discovery(self) -> Dict[str, Any]:
         """Execute complete discovery workflow"""
-        print(f"🔍 Starting {self.depth} fundamental discovery for {self.ticker}")
+        print("🔍 Starting {self.depth} fundamental discovery for {self.ticker}")
 
         if not self.initialize_data_source():
             return {"error": f"Failed to initialize data source for {self.ticker}"}
@@ -567,12 +567,12 @@ class FundamentalDiscovery:
             # Save discovery data
             self._save_discovery_data(discovery_data)
 
-            print(f"✅ Discovery completed for {self.ticker}")
+            print("✅ Discovery completed for {self.ticker}")
             return discovery_data
 
         except Exception as e:
             error_msg = f"Discovery failed for {self.ticker}: {str(e)}"
-            print(f"❌ {error_msg}")
+            print("❌ {error_msg}")
             return {"error": error_msg, "ticker": self.ticker}
 
     def _identify_revenue_streams(self) -> list:
@@ -802,7 +802,7 @@ class FundamentalDiscovery:
                     )
 
                 except Exception as e:
-                    print(f"⚠️  FRED service error: {e}")
+                    print("⚠️  FRED service error: {e}")
                     # Use fallback values
                     fred_data = {
                         "federal_funds_rate": 4.33,
@@ -835,7 +835,7 @@ class FundamentalDiscovery:
                             "market_sentiment": "slightly_bullish",
                         }
                 except Exception as e:
-                    print(f"⚠️  CoinGecko service error: {e}")
+                    print("⚠️  CoinGecko service error: {e}")
                     coingecko_data = {
                         "bitcoin_price": 119142,
                         "price_change_24h": 1968,
@@ -1268,7 +1268,7 @@ class FundamentalDiscovery:
         with open(filepath, "w") as f:
             json.dump(data, f, indent=2, default=str)
 
-        print(f"💾 Discovery data saved: {filepath}")
+        print("💾 Discovery data saved: {filepath}")
         return filepath
 
 
@@ -1322,10 +1322,10 @@ def main():
     result = discovery.execute_discovery()
 
     if "error" in result:
-        print(f"❌ Discovery failed: {result['error']}")
+        print("❌ Discovery failed: {result['error']}")
         sys.exit(1)
     else:
-        print(f"✅ Discovery completed successfully for {args.ticker}")
+        print("✅ Discovery completed successfully for {args.ticker}")
         sys.exit(0)
 
 

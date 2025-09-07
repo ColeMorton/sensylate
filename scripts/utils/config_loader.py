@@ -217,7 +217,7 @@ class ConfigLoader:
                     base_config = self._merge_configs(shared_config, base_config)
             except Exception as e:
                 # Log warning but continue with base config
-                print(f"Warning: Failed to load shared config from {shared_dir}: {e}")
+                print("Warning: Failed to load shared config from {shared_dir}: {e}")
 
         return base_config
 

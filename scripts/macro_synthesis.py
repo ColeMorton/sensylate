@@ -89,10 +89,10 @@ class MacroEconomicSynthesis:
             try:
                 with open(self.discovery_file, "r") as f:
                     data = json.load(f)
-                print(f"✅ Loaded discovery data from: {self.discovery_file}")
+                print("✅ Loaded discovery data from: {self.discovery_file}")
                 return data
             except Exception as e:
-                print(f"⚠️  Failed to load discovery data: {e}")
+                print("⚠️  Failed to load discovery data: {e}")
         return None
 
     def _load_analysis_data(self) -> Optional[Dict[str, Any]]:
@@ -101,10 +101,10 @@ class MacroEconomicSynthesis:
             try:
                 with open(self.analysis_file, "r") as f:
                     data = json.load(f)
-                print(f"✅ Loaded analysis data from: {self.analysis_file}")
+                print("✅ Loaded analysis data from: {self.analysis_file}")
                 return data
             except Exception as e:
-                print(f"⚠️  Failed to load analysis data: {e}")
+                print("⚠️  Failed to load analysis data: {e}")
         return None
 
     def _initialize_jinja_environment(self) -> Optional[Environment]:
@@ -124,7 +124,7 @@ class MacroEconomicSynthesis:
             )
             return env
         except Exception as e:
-            print(f"⚠️  Failed to initialize Jinja2 environment: {e}")
+            print("⚠️  Failed to initialize Jinja2 environment: {e}")
             return None
 
     def _collect_enhanced_service_data(self) -> None:
@@ -177,13 +177,13 @@ class MacroEconomicSynthesis:
                 print("✅ Economic calendar service operational")
             except ImportError as e:
                 error_msg = f"Import failed: {e}"
-                print(f"❌ Economic calendar service import failed: {error_msg}")
+                print("❌ Economic calendar service import failed: {error_msg}")
                 self.service_health["economic_calendar"]["status"] = "import_failed"
                 self.service_health["economic_calendar"]["error"] = error_msg
                 self.economic_calendar_data = {}
             except Exception as e:
                 error_msg = f"Service failed: {e}"
-                print(f"⚠️  Economic calendar service failed: {error_msg}")
+                print("⚠️  Economic calendar service failed: {error_msg}")
                 self.service_health["economic_calendar"]["status"] = "failed"
                 self.service_health["economic_calendar"]["error"] = error_msg
                 self.economic_calendar_data = {}
@@ -236,13 +236,13 @@ class MacroEconomicSynthesis:
                 print("✅ Global liquidity monitor operational")
             except ImportError as e:
                 error_msg = f"Import failed: {e}"
-                print(f"❌ Global liquidity monitor import failed: {error_msg}")
+                print("❌ Global liquidity monitor import failed: {error_msg}")
                 self.service_health["global_liquidity"]["status"] = "import_failed"
                 self.service_health["global_liquidity"]["error"] = error_msg
                 self.global_liquidity_data = {}
             except Exception as e:
                 error_msg = f"Service failed: {e}"
-                print(f"⚠️  Global liquidity monitor failed: {error_msg}")
+                print("⚠️  Global liquidity monitor failed: {error_msg}")
                 self.service_health["global_liquidity"]["status"] = "failed"
                 self.service_health["global_liquidity"]["error"] = error_msg
                 self.global_liquidity_data = {}
@@ -295,13 +295,13 @@ class MacroEconomicSynthesis:
                 print("✅ Sector correlation service operational")
             except ImportError as e:
                 error_msg = f"Import failed: {e}"
-                print(f"❌ Sector correlation service import failed: {error_msg}")
+                print("❌ Sector correlation service import failed: {error_msg}")
                 self.service_health["sector_correlations"]["status"] = "import_failed"
                 self.service_health["sector_correlations"]["error"] = error_msg
                 self.sector_correlation_data = {}
             except Exception as e:
                 error_msg = f"Service failed: {e}"
-                print(f"⚠️  Sector correlation service failed: {error_msg}")
+                print("⚠️  Sector correlation service failed: {error_msg}")
                 self.service_health["sector_correlations"]["status"] = "failed"
                 self.service_health["sector_correlations"]["error"] = error_msg
                 self.sector_correlation_data = {}
@@ -325,7 +325,7 @@ class MacroEconomicSynthesis:
                 )
 
         except Exception as e:
-            print(f"❌ Critical failure in enhanced service collection: {e}")
+            print("❌ Critical failure in enhanced service collection: {e}")
             # Ensure all data structures exist even in critical failure
             if not hasattr(self, "economic_calendar_data"):
                 self.economic_calendar_data = {}
@@ -745,7 +745,7 @@ class MacroEconomicSynthesis:
         with open(filepath, "w", encoding="utf-8") as f:
             f.write(document)
 
-        print(f"✅ Saved macro-economic synthesis document to: {filepath}")
+        print("✅ Saved macro-economic synthesis document to: {filepath}")
         return filepath
 
     def generate_synthesis_output(self) -> Dict[str, Any]:
@@ -788,7 +788,7 @@ class MacroEconomicSynthesis:
         with open(filepath, "w") as f:
             json.dump(data, f, indent=2)
 
-        print(f"✅ Saved synthesis metadata to: {filepath}")
+        print("✅ Saved synthesis metadata to: {filepath}")
         return filepath
 
     # Helper methods for economic thesis synthesis
@@ -1582,7 +1582,7 @@ class MacroEconomicSynthesis:
 - **Monitoring**: Weekly sector performance attribution, monthly rotation signal review"""
 
         except Exception as e:
-            print(f"⚠️  Error generating sector rotation guidance: {e}")
+            print("⚠️  Error generating sector rotation guidance: {e}")
             return """| Economic Phase | Sector Preferences | Duration Positioning | Style Bias |
 |----------------|-------------------|---------------------|------------|
 | Current Cycle | Balanced allocation | Neutral duration | Quality focus |
@@ -1795,7 +1795,7 @@ class MacroEconomicSynthesis:
             return thesis
 
         except Exception as e:
-            print(f"⚠️  Error generating enhanced thesis: {e}")
+            print("⚠️  Error generating enhanced thesis: {e}")
             return "US economic environment presents a balanced outlook with moderate growth expectations and manageable risk factors."
 
     def _extract_business_cycle_phase(self, business_cycle_data: Dict[str, Any]) -> str:
@@ -1907,7 +1907,7 @@ class MacroEconomicSynthesis:
             return catalysts[:4]  # Limit to 4 catalysts
 
         except Exception as e:
-            print(f"⚠️  Error identifying catalysts: {e}")
+            print("⚠️  Error identifying catalysts: {e}")
             return [
                 "Monetary policy effectiveness",
                 "Employment momentum",
@@ -1961,7 +1961,7 @@ class MacroEconomicSynthesis:
                 return 0.88  # Default
 
         except Exception as e:
-            print(f"⚠️  Error calculating enhanced confidence: {e}")
+            print("⚠️  Error calculating enhanced confidence: {e}")
             return 0.88
 
     def _synthesize_fomc_analysis(self) -> Dict[str, Any]:
@@ -1987,7 +1987,7 @@ class MacroEconomicSynthesis:
             }
 
         except Exception as e:
-            print(f"⚠️  Error synthesizing FOMC analysis: {e}")
+            print("⚠️  Error synthesizing FOMC analysis: {e}")
             return {}
 
     def _synthesize_liquidity_assessment(self) -> Dict[str, Any]:
@@ -2010,7 +2010,7 @@ class MacroEconomicSynthesis:
             }
 
         except Exception as e:
-            print(f"⚠️  Error synthesizing liquidity assessment: {e}")
+            print("⚠️  Error synthesizing liquidity assessment: {e}")
             return {}
 
     def _summarize_central_bank_analysis(self) -> Dict[str, Any]:
@@ -2033,7 +2033,7 @@ class MacroEconomicSynthesis:
             return summary
 
         except Exception as e:
-            print(f"⚠️  Error summarizing central bank analysis: {e}")
+            print("⚠️  Error summarizing central bank analysis: {e}")
             return {}
 
     def _generate_fomc_analysis_section(self, fomc_analysis: Dict[str, Any]) -> str:
@@ -2063,7 +2063,7 @@ class MacroEconomicSynthesis:
 - **Policy Communication**: Forward guidance impact on economic expectations and market positioning"""
 
         except Exception as e:
-            print(f"⚠️  Error generating FOMC section: {e}")
+            print("⚠️  Error generating FOMC section: {e}")
             return "- **FOMC Analysis**: Policy expectations based on current economic conditions"
 
     def _generate_liquidity_analysis_section(
@@ -2107,7 +2107,7 @@ class MacroEconomicSynthesis:
 - **Risk Asset Implications**: Liquidity conditions {regime} for risk asset performance"""
 
         except Exception as e:
-            print(f"⚠️  Error generating liquidity section: {e}")
+            print("⚠️  Error generating liquidity section: {e}")
             return "- **Global Liquidity**: Monitoring global liquidity conditions and policy coordination"
 
     def _generate_sector_correlation_section(self) -> str:
@@ -2161,7 +2161,7 @@ class MacroEconomicSynthesis:
 - **Portfolio Implications**: Sector allocation guidance based on economic cycle positioning"""
 
         except Exception as e:
-            print(f"⚠️  Error generating sector correlation section: {e}")
+            print("⚠️  Error generating sector correlation section: {e}")
             return "- **Sector Analysis**: Economic factor analysis supporting sector allocation decisions"
 
     def _generate_data_sources_quality_section(self, context: Dict[str, Any]) -> str:
@@ -2209,7 +2209,7 @@ class MacroEconomicSynthesis:
 - **Enhanced Services**: Economic calendar, global liquidity monitor, sector correlations integrated"""
 
         except Exception as e:
-            print(f"⚠️  Error generating data sources section: {e}")
+            print("⚠️  Error generating data sources section: {e}")
             return """### Data Sources & Quality
 - **Primary APIs**: FRED (economic indicators), IMF (global data), Alpha Vantage (market data), EIA (energy)
 - **Secondary Sources**: CoinGecko (risk sentiment), Yahoo Finance (market data), FMP (financials)
@@ -2240,7 +2240,7 @@ class MacroEconomicSynthesis:
 - **Confidence Propagation**: {enhanced_confidence:.1f}/1.0 baseline with enhanced service integration"""
 
         except Exception as e:
-            print(f"⚠️  Error generating methodology section: {e}")
+            print("⚠️  Error generating methodology section: {e}")
             return """- **Update Frequency**: Daily (indicators), Weekly (forecasts), Monthly (comprehensive review)
 - **Multi-source Validation**: Economic indicator cross-checking across data providers
 - **Economic Model Integration**: Leading/coincident/lagging indicator framework
@@ -2277,7 +2277,7 @@ class MacroEconomicSynthesis:
 - **Model Performance**: Backtesting results, forecast error analysis, continuous improvement with service integration"""
 
         except Exception as e:
-            print(f"⚠️  Error generating performance attribution section: {e}")
+            print("⚠️  Error generating performance attribution section: {e}")
             return """- **Benchmark**: Economic forecast accuracy vs consensus, policy prediction success
 - **Success Metrics**: Recession probability calibration, inflation forecast accuracy, asset allocation performance
 - **Review Cycle**: Monthly forecast updates, quarterly comprehensive assessment
@@ -2400,7 +2400,7 @@ def main():
     )
 
     # Generate synthesis
-    print(f"\n📝 Starting macro-economic synthesis for: {args.region}")
+    print("\n📝 Starting macro-economic synthesis for: {args.region}")
 
     # Generate document
     document = synthesis.generate_synthesis_document()
@@ -2410,10 +2410,10 @@ def main():
     synthesis_data = synthesis.generate_synthesis_output()
     metadata_path = synthesis.save_synthesis_metadata(synthesis_data)
 
-    print(f"\n✅ Macro-economic synthesis complete!")
-    print(f"📊 Confidence Score: {synthesis_data['synthesis_confidence']:.1f}/1.0")
-    print(f"📄 Document saved to: {document_path}")
-    print(f"📋 Metadata saved to: {metadata_path}")
+    print("\n✅ Macro-economic synthesis complete!")
+    print("📊 Confidence Score: {synthesis_data['synthesis_confidence']:.1f}/1.0")
+    print("📄 Document saved to: {document_path}")
+    print("📋 Metadata saved to: {metadata_path}")
 
 
 if __name__ == "__main__":

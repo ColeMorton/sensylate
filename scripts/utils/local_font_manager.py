@@ -244,15 +244,15 @@ if __name__ == "__main__":
     font_manager = create_font_manager()
 
     print("Font Manager Status:")
-    print(f"Project root: {font_manager.project_root}")
-    print(f"Fonts directory: {font_manager.fonts_dir}")
-    print(f"Directory exists: {font_manager.fonts_dir.exists()}")
-    print(f"Font validation: {font_manager.validate_font_directory()}")
+    print("Project root: {font_manager.project_root}")
+    print("Fonts directory: {font_manager.fonts_dir}")
+    print("Directory exists: {font_manager.fonts_dir.exists()}")
+    print("Font validation: {font_manager.validate_font_directory()}")
 
     success = font_manager.initialize_for_plotting()
-    print(f"Initialization success: {success}")
+    print("Initialization success: {success}")
 
     info = font_manager.get_font_info()
     print("\nFont Info:")
     for key, value in info.items():
-        print(f"  {key}: {value}")
+        print("  {key}: {value}")

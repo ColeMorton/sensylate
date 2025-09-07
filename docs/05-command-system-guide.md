@@ -580,6 +580,187 @@ python tests/integration/test_command_workflow.py
 
 ---
 
+## Bitcoin Cycle Intelligence Commands
+
+### Overview
+
+The Bitcoin Cycle Intelligence system demonstrates advanced DASV framework implementation for cryptocurrency analysis. This specialized command set provides institutional-grade Bitcoin cycle analysis with comprehensive on-chain data integration and multi-source validation.
+
+**Command Classification**: 📊 **Core Product Command**
+**Knowledge Domain**: `bitcoin-cycle-intelligence-expertise`
+**Ecosystem Version**: `1.0.0` *(Last Updated: 2025-09-04)*
+**Framework**: DASV (Discover, Analyze, Synthesize, Validate)
+
+### Command Architecture
+
+#### DASV Phase Implementation
+
+**Discovery Phase:**
+```markdown
+**Command**: `cli_enhanced_bitcoin_cycle_intelligence_discover`
+**Location**: `.claude/commands/bitcoin/cycle_intelligence/discover.md`
+**Purpose**: Multi-source Bitcoin on-chain data collection with 80+ data source integration
+**Output**: `{DATA_OUTPUTS}/bitcoin_cycle_intelligence/discovery/bitcoin_cycle_{YYYYMMDD}_discovery.json`
+```
+
+**Analysis Phase:**
+```markdown
+**Command**: `cli_enhanced_bitcoin_cycle_intelligence_analyze`
+**Location**: `.claude/commands/bitcoin/cycle_intelligence/analyze.md`
+**Purpose**: Bitcoin cycle indicators analysis (MVRV, PI Cycle, NUPL, Reserve Risk)
+**Output**: `{DATA_OUTPUTS}/bitcoin_cycle_intelligence/analysis/bitcoin_cycle_{YYYYMMDD}_analysis.json`
+```
+
+**Synthesis Phase:**
+```markdown
+**Command**: `cli_enhanced_bitcoin_cycle_intelligence_synthesize`
+**Location**: `.claude/commands/bitcoin/cycle_intelligence/synthesize.md`
+**Purpose**: Bitcoin Cycle Intelligence Report generation with institutional-grade formatting
+**Output**: `{DATA_OUTPUTS}/bitcoin_cycle_intelligence/bitcoin_cycle_{YYYYMMDD}.md`
+```
+
+**Validation Phase:**
+```markdown
+**Command**: `cli_enhanced_bitcoin_cycle_intelligence_validate`
+**Location**: `.claude/commands/bitcoin/cycle_intelligence/validate.md`
+**Purpose**: Multi-source validation with >9.5/10 confidence requirement
+**Output**: Quality assurance report with validation metrics
+```
+
+### Schema Integration
+
+**Discovery Validation:**
+```json
+**Schema**: `{SCRIPTS_BASE}/schemas/bitcoin_cycle_intelligence_discovery_schema.json`
+**Purpose**: Bitcoin discovery data structure validation
+**Requirements**:
+- CLI services: minimum 5 operational Bitcoin services
+- Data quality: ≥0.90 institutional grade
+- Price validation: cross-validated across CoinGecko, Mempool.space, CoinMetrics
+```
+
+**Analysis Validation:**
+```json
+**Schema**: `{SCRIPTS_BASE}/schemas/bitcoin_cycle_intelligence_analysis_schema.json`
+**Purpose**: Bitcoin cycle analysis output validation
+**Requirements**:
+- Confidence threshold: ≥0.8 for all components
+- Multi-model validation: MVRV, PI Cycle, NUPL triangulation
+- Network health scoring: 0-10 scale across security, decentralization, development
+```
+
+### Template Architecture
+
+**Report Template:**
+```markdown
+**Template**: `{TEMPLATES_BASE}/analysis/bitcoin_cycle_intelligence_template.md`
+**Format**: Institutional-grade Bitcoin Cycle Intelligence Dashboard
+**Features**:
+- Executive summary with cycle thesis and conviction scoring
+- Cycle indicators dashboard with emojis (🌈, 💰, 📈, 🎯)
+- Network health assessment with trend analysis
+- Multi-cycle comparison with historical pattern recognition
+- Strategic recommendations with position sizing framework
+```
+
+### CLI Integration Framework
+
+**Bitcoin-Specific CLI Services:**
+```yaml
+Primary Services (Free Tier):
+  coingecko_cli: "Comprehensive Bitcoin market data"
+  mempool_space_cli: "Bitcoin blockchain and mempool analysis"
+  coinmetrics_cli: "Institutional-grade network metrics"
+  alternative_me_cli: "Fear & Greed sentiment index"
+  blockchain_com_cli: "Bitcoin network statistics"
+
+Enhanced Services (Paid Tiers):
+  glassnode_cli: "Advanced on-chain analytics ($29/mo)"
+  whale_alert_cli: "Large transaction monitoring (paid)"
+  hashrate_index_cli: "Mining industry analytics (mixed)"
+```
+
+**CLI Integration Pattern:**
+```python
+# Sub-agent delegation approach
+User Request → DASV Phase → Sub-Agent → CLI Framework → Bitcoin Data Sources
+
+# Quality validation workflow
+CLI Service → Data Validation → Multi-Source Cross-Check → Confidence Scoring
+```
+
+### Usage Examples
+
+#### Basic Bitcoin Cycle Analysis
+```bash
+# Discovery phase - gather Bitcoin on-chain data
+python bitcoin_cycle_intelligence_discover.py --analysis-date 2025-09-04 --services coingecko,mempool,coinmetrics
+
+# Analysis phase - comprehensive cycle indicators
+python bitcoin_cycle_intelligence_analyze.py --discovery-file bitcoin_cycle_20250904_discovery.json --confidence-threshold 0.9
+
+# Synthesis phase - generate intelligence report
+python bitcoin_cycle_intelligence_synthesize.py --analysis-file bitcoin_cycle_20250904_analysis.json --depth institutional
+
+# Validation phase - quality assurance
+python bitcoin_cycle_intelligence_validate.py --report-files bitcoin_cycle_20250904.md --validation-threshold 9.5
+```
+
+#### Expected Output Structure
+```
+data/outputs/bitcoin_cycle_intelligence/
+├── discovery/
+│   └── bitcoin_cycle_20250904_discovery.json
+├── analysis/
+│   └── bitcoin_cycle_20250904_analysis.json
+├── bitcoin_cycle_20250904.md
+└── validation_report_20250904.json
+```
+
+### Key Features
+
+**Institutional-Grade Analysis:**
+- Multi-source data validation with ≤2% price tolerance
+- Confidence scoring ≥0.8 for all recommendations
+- Cross-validation across 5+ Bitcoin data sources
+- Real-time service health monitoring
+
+**Bitcoin Cycle Indicators:**
+- MVRV Z-Score with historical cycle overlays
+- PI Cycle Top Indicator with accuracy tracking
+- Long-Term Holder behavior analysis
+- Rainbow Price Model integration
+- NUPL zone classification
+- Reserve Risk opportunity assessment
+
+**Economic Context Integration:**
+- Federal Reserve policy impact analysis
+- Global liquidity cycle positioning
+- Bitcoin correlations with traditional assets
+- Macroeconomic sensitivity assessment
+
+**Risk Quantification:**
+- Bitcoin-specific risk matrices (probability × impact)
+- Network security risk assessment
+- Stress testing scenarios (50%, 80% drawdowns)
+- Institutional adoption barriers analysis
+
+### Implementation Benefits
+
+**Sub-Agent Delegation Architecture:**
+- ✅ Separation of concerns between Bitcoin domain logic and CLI implementation
+- ✅ Institutional-grade quality standards maintained through sub-agent validation
+- ✅ Flexibility to add new CLI services without changing DASV files
+- ✅ Reduced complexity in Bitcoin-specific analysis files
+
+**Production Readiness:**
+- ✅ Framework integration complete with all DASV phases configured
+- ✅ Schema compliance with institutional validation requirements
+- ✅ Free tier data sources prioritized for cost-effective implementation
+- ✅ CLI wrapper framework supports incremental service integration
+
+---
+
 The command system provides a comprehensive framework for developing, standardizing, and executing AI-powered analysis workflows. Through consistent interfaces, intelligent template selection, and robust quality assurance, commands enable institutional-grade content generation with full traceability and validation.
 
 ---

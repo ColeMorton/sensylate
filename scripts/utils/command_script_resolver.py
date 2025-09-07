@@ -385,30 +385,30 @@ def main():
     elif args.validate:
         print("Validating script paths...")
         script_validation = resolver.validate_script_paths_exist()
-        print(f"Found: {len(script_validation['found'])} scripts")
-        print(f"Missing: {len(script_validation['missing'])} scripts")
+        print("Found: {len(script_validation['found'])} scripts")
+        print("Missing: {len(script_validation['missing'])} scripts")
 
         if script_validation["missing"]:
             print("\nMissing scripts:")
             for script in script_validation["missing"]:
-                print(f"  - {script}")
+                print("  - {script}")
 
         print("\nValidating schema paths...")
         schema_validation = resolver.validate_schema_paths_exist()
-        print(f"Found: {len(schema_validation['found'])} schemas")
-        print(f"Missing: {len(schema_validation['missing'])} schemas")
+        print("Found: {len(schema_validation['found'])} schemas")
+        print("Missing: {len(schema_validation['missing'])} schemas")
 
         if schema_validation["missing"]:
             print("\nMissing schemas:")
             for schema in schema_validation["missing"]:
-                print(f"  - {schema}")
+                print("  - {schema}")
 
     elif args.list_domains:
         domains = resolver.list_available_domains()
         print("Available domains:")
         for domain in domains:
             phases = resolver.list_available_phases(domain)
-            print(f"  - {domain}: {', '.join(phases)}")
+            print("  - {domain}: {', '.join(phases)}")
 
     elif args.domain and args.phase:
         mapping = resolver.get_scripts_for_command(args.domain, args.phase)
@@ -431,7 +431,7 @@ def main():
                 )
             )
         else:
-            print(f"No mapping found for {args.domain}/{args.phase}")
+            print("No mapping found for {args.domain}/{args.phase}")
 
     elif args.twitter_command:
         mapping = resolver.get_twitter_command(args.twitter_command)
@@ -451,7 +451,7 @@ def main():
                 )
             )
         else:
-            print(f"No Twitter command found: {args.twitter_command}")
+            print("No Twitter command found: {args.twitter_command}")
 
     elif args.cli_service:
         mapping = resolver.get_cli_service(args.cli_service)
@@ -469,7 +469,7 @@ def main():
                 )
             )
         else:
-            print(f"No CLI service found: {args.cli_service}")
+            print("No CLI service found: {args.cli_service}")
 
     else:
         parser.print_help()

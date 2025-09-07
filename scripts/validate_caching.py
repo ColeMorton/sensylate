@@ -33,7 +33,7 @@ class CacheValidator:
 
     def test_service_caching(self, service_name: str) -> Dict[str, Any]:
         """Test caching for a specific service"""
-        print(f"Testing caching for {service_name}...")
+        print("Testing caching for {service_name}...")
 
         result = {
             "service_name": service_name,
@@ -65,7 +65,7 @@ class CacheValidator:
 
             # Test cache get
             retrieved_data = cache_manager.get(test_key)
-            if retrieved_data and retrieved_data.get("test") == True:
+            if retrieved_data and retrieved_data.get("test") is True:
                 result["cache_get_works"] = True
             else:
                 result["errors"].append("Cache get returned incorrect data")
@@ -76,11 +76,11 @@ class CacheValidator:
                 result["stats_available"] = True
                 result["current_stats"] = stats
 
-            print(f"  ✅ {service_name}: Cache working, TTL={cache_manager.ttl}s")
+            print("  ✅ {service_name}: Cache working, TTL={cache_manager.ttl}s")
 
         except Exception as e:
             result["errors"].append(f"Cache validation error: {str(e)}")
-            print(f"  ❌ {service_name}: {str(e)}")
+            print("  ❌ {service_name}: {str(e)}")
 
         return result
 
@@ -162,9 +162,9 @@ class CacheValidator:
                     directory_info["total_cache_size_mb"] += service_info["size_mb"]
                     directory_info["total_files"] += service_info["cache_files"]
 
-        print(f"  📁 Cache root exists: {directory_info['cache_root_exists']}")
-        print(f"  📁 Total cache size: {directory_info['total_cache_size_mb']:.2f} MB")
-        print(f"  📁 Total cache files: {directory_info['total_files']}")
+        print("  📁 Cache root exists: {directory_info['cache_root_exists']}")
+        print("  📁 Total cache size: {directory_info['total_cache_size_mb']:.2f} MB")
+        print("  📁 Total cache files: {directory_info['total_files']}")
 
         return directory_info
 
@@ -333,26 +333,26 @@ class CacheValidator:
         print("🏆 CACHE VALIDATION SUMMARY")
         print("=" * 60)
 
-        print(f"📊 Services tested: {summary['total_services_tested']}")
-        print(f"✅ Working cache: {summary['services_with_working_cache']}")
-        print(f"📈 Success rate: {summary['cache_success_rate']:.1%}")
+        print("📊 Services tested: {summary['total_services_tested']}")
+        print("✅ Working cache: {summary['services_with_working_cache']}")
+        print("📈 Success rate: {summary['cache_success_rate']:.1%}")
 
         if summary["critical_issues"]:
-            print(f"\n❌ Critical issues ({len(summary['critical_issues'])}):")
+            print("\n❌ Critical issues ({len(summary['critical_issues'])}):")
             for issue in summary["critical_issues"]:
-                print(f"   • {issue}")
+                print("   • {issue}")
 
         if summary["recommendations"]:
-            print(f"\n💡 Recommendations ({len(summary['recommendations'])}):")
+            print("\n💡 Recommendations ({len(summary['recommendations'])}):")
             for rec in summary["recommendations"]:
-                print(f"   • {rec}")
+                print("   • {rec}")
 
         if summary["cache_success_rate"] >= 0.9:
             print(
                 f"\n🎉 Excellent! Cache implementation is working well across services."
             )
         elif summary["cache_success_rate"] >= 0.7:
-            print(f"\n👍 Good cache implementation with room for improvement.")
+            print("\n👍 Good cache implementation with room for improvement.")
         else:
             print(
                 f"\n⚠️  Cache implementation needs attention - several services have issues."
@@ -370,4 +370,4 @@ if __name__ == "__main__":
     with open(results_file, "w") as f:
         json.dump(results, f, indent=2, default=str)
 
-    print(f"\n💾 Full results saved to: {results_file}")
+    print("\n💾 Full results saved to: {results_file}")

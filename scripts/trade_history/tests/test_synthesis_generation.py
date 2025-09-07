@@ -135,11 +135,11 @@ def test_report_generation_logic():
         sample_discovery_data, sample_analysis_data
     )
 
-    print(f"Portfolio Health Score: {internal_report['portfolio_health_score']}/100")
-    print(f"Critical Issues Identified: {len(internal_report['critical_issues'])}")
-    print(f"Optimization Opportunities: {len(internal_report['optimization_roadmap'])}")
-    print(f"Report Sections Generated: {internal_report['sections_generated']}/9")
-    print(f"Content Quality Score: {internal_report['content_quality']:.2f}")
+    print("Portfolio Health Score: {internal_report['portfolio_health_score']}/100")
+    print("Critical Issues Identified: {len(internal_report['critical_issues'])}")
+    print("Optimization Opportunities: {len(internal_report['optimization_roadmap'])}")
+    print("Report Sections Generated: {internal_report['sections_generated']}/9")
+    print("Content Quality Score: {internal_report['content_quality']:.2f}")
 
     print("✅ Report generation logic validated\n")
 
@@ -230,20 +230,20 @@ def test_executive_dashboard_generation():
     print(
         f"  Portfolio Health: {dashboard['key_metrics']['portfolio_health_score']}/100"
     )
-    print(f"  YTD Return: {dashboard['key_metrics']['ytd_return']:+.1%}")
-    print(f"  Sharpe Ratio: {dashboard['key_metrics']['sharpe_ratio']:.2f}")
-    print(f"  Max Drawdown: {dashboard['key_metrics']['max_drawdown']:.1%}")
+    print("  YTD Return: {dashboard['key_metrics']['ytd_return']:+.1%}")
+    print("  Sharpe Ratio: {dashboard['key_metrics']['sharpe_ratio']:.2f}")
+    print("  Max Drawdown: {dashboard['key_metrics']['max_drawdown']:.1%}")
 
     print("\nTrend Indicators:")
     for trend, direction in dashboard["trend_indicators"].items():
         emoji = (
             "↗️" if direction == "improving" else "→" if direction == "stable" else "↘️"
         )
-        print(f"  {trend}: {direction} {emoji}")
+        print("  {trend}: {direction} {emoji}")
 
-    print(f"\nAction Requirements: {len(dashboard['action_requirements'])}")
+    print("\nAction Requirements: {len(dashboard['action_requirements'])}")
     for action in dashboard["action_requirements"]:
-        print(f"  - {action['action']} (by {action['deadline']})")
+        print("  - {action['action']} (by {action['deadline']})")
 
     print("✅ Executive dashboard generation validated\n")
 
@@ -375,12 +375,12 @@ def test_live_monitor_generation():
     monitor = generate_live_monitor(sample_positions)
 
     print("Live Monitor Generated:")
-    print(f"  Total Positions: {monitor['total_positions']}")
-    print(f"  Top Performers: {len(monitor['top_performers'])}")
-    print(f"  Watch List: {len(monitor['watch_list'])}")
-    print(f"  Signal Strength: {monitor['signal_strength']['overall_strength']}")
-    print(f"  Positive Rate: {monitor['signal_strength']['positive_rate']:.1%}")
-    print(f"  Generation Confidence: {monitor['generation_confidence']:.2f}")
+    print("  Total Positions: {monitor['total_positions']}")
+    print("  Top Performers: {len(monitor['top_performers'])}")
+    print("  Watch List: {len(monitor['watch_list'])}")
+    print("  Signal Strength: {monitor['signal_strength']['overall_strength']}")
+    print("  Positive Rate: {monitor['signal_strength']['positive_rate']:.1%}")
+    print("  Generation Confidence: {monitor['generation_confidence']:.2f}")
 
     print("\nTop Performers:")
     for performer in monitor["top_performers"]:
@@ -473,18 +473,18 @@ def test_template_compliance():
         sample_report_content
     )
 
-    print(f"Template Compliance: {compliance_score:.1%}")
+    print("Template Compliance: {compliance_score:.1%}")
     for check, passed in compliance_details.items():
         status = "✅" if passed else "❌"
-        print(f"  {check}: {status}")
+        print("  {check}: {status}")
 
-    print(f"\nFormatting Consistency: {formatting_score:.1%}")
+    print("\nFormatting Consistency: {formatting_score:.1%}")
     for check, passed in formatting_details.items():
         status = "✅" if passed else "❌"
-        print(f"  {check}: {status}")
+        print("  {check}: {status}")
 
     overall_template_score = (compliance_score + formatting_score) / 2
-    print(f"\nOverall Template Quality: {overall_template_score:.1%}")
+    print("\nOverall Template Quality: {overall_template_score:.1%}")
 
     print("✅ Template compliance validation complete\n")
 
@@ -519,7 +519,7 @@ def validate_synthesis_schema():
         missing_props = [prop for prop in required_props if prop not in schema_props]
 
         if missing_props:
-            print(f"❌ Missing required properties: {missing_props}")
+            print("❌ Missing required properties: {missing_props}")
         else:
             print("✅ All required properties present")
 
@@ -550,15 +550,15 @@ def validate_synthesis_schema():
         else:
             print("❌ Content validation structure incomplete")
 
-        print(f"Total top-level properties: {len(schema_props)}")
+        print("Total top-level properties: {len(schema_props)}")
         print("✅ Schema validation complete")
 
     except FileNotFoundError:
         print("❌ Schema file not found")
     except json.JSONDecodeError as e:
-        print(f"❌ Invalid JSON in schema: {e}")
+        print("❌ Invalid JSON in schema: {e}")
     except Exception as e:
-        print(f"❌ Schema validation error: {e}")
+        print("❌ Schema validation error: {e}")
 
 
 def main():

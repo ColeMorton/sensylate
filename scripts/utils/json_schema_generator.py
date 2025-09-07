@@ -893,14 +893,14 @@ if __name__ == "__main__":
 
     print("📋 Generated JSON Schemas:")
     for schema_name in generator.get_all_schemas().keys():
-        print(f"  - {schema_name}")
+        print("  - {schema_name}")
 
     # Export schemas
     exported = generator.export_schemas()
-    print(f"\n💾 Exported {len(exported)} schema files:")
+    print("\n💾 Exported {len(exported)} schema files:")
     for name, path in exported.items():
-        print(f"  - {name}: {path}")
+        print("  - {name}: {path}")
 
     # Generate examples
     examples = generator.generate_example_configs()
-    print(f"\n🔧 Generated {len(examples)} example configurations")
+    print("\n🔧 Generated {len(examples)} example configurations")

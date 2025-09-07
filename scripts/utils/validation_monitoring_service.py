@@ -592,7 +592,6 @@ if __name__ == "__main__":
     monitor = create_validation_monitoring_service()
 
     # Simulate some validation events for testing
-    import time
     from datetime import datetime
 
     print("Testing monitoring service...")
@@ -627,8 +626,8 @@ if __name__ == "__main__":
 
     # Get status
     sla_status = monitor.get_sla_status()
-    print(f"\nSLA Status: {sla_status['overall_sla_status']}")
-    print(f"Recent alerts: {len(sla_status['recent_alerts'])}")
+    print("\nSLA Status: {sla_status['overall_sla_status']}")
+    print("Recent alerts: {len(sla_status['recent_alerts'])}")
 
     performance = monitor.get_performance_metrics()
     print(

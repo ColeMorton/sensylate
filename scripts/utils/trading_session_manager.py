@@ -133,10 +133,10 @@ class USMarketHolidays:
         h = (19 * a + b - d - g + 15) % 30
         i = c // 4
         k = c % 4
-        l = (32 + 2 * e + 2 * i - h - k) % 7
-        m = (a + 11 * h + 22 * l) // 451
-        month = (h + l - 7 * m + 114) // 31
-        day = ((h + l - 7 * m + 114) % 31) + 1
+        ell = (32 + 2 * e + 2 * i - h - k) % 7
+        m = (a + 11 * h + 22 * ell) // 451
+        month = (h + ell - 7 * m + 114) // 31
+        day = ((h + ell - 7 * m + 114) % 31) + 1
 
         return datetime(year, month, day)
 
@@ -398,8 +398,8 @@ if __name__ == "__main__":
 
     for i, test_time in enumerate(test_times, 1):
         test_status = manager.get_market_status(test_time)
-        print(f"\n{i}. {test_time.strftime('%Y-%m-%d %H:%M')} ET:")
-        print(f"   Trading Day: {test_status['is_trading_day']}")
-        print(f"   Market Open: {test_status['is_market_open']}")
-        print(f"   Cache TTL: {test_status['cache_ttl_seconds']}s")
-        print(f"   Next Close: {test_status['next_market_close']}")
+        print("\n{i}. {test_time.strftime('%Y-%m-%d %H:%M')} ET:")
+        print("   Trading Day: {test_status['is_trading_day']}")
+        print("   Market Open: {test_status['is_market_open']}")
+        print("   Cache TTL: {test_status['cache_ttl_seconds']}s")
+        print("   Next Close: {test_status['next_market_close']}")

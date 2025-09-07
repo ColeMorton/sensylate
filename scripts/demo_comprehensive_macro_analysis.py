@@ -96,8 +96,8 @@ class MacroEconomicFrameworkDemo:
             },
         }
 
-        print(f"\n✅ Framework Demo Complete")
-        print(f"Total Analysis Components: {len(comprehensive_result) - 2}")
+        print("\n✅ Framework Demo Complete")
+        print("Total Analysis Components: {len(comprehensive_result) - 2}")
 
         return comprehensive_result
 
@@ -253,14 +253,14 @@ class MacroEconomicFrameworkDemo:
         mean_reversion = result.get("mean_reversion_analysis", {})
         signals = result.get("trading_signals", [])
 
-        print(f"📊 Current VIX: {current_vix}")
+        print("📊 Current VIX: {current_vix}")
         print(
             f"🎭 Volatility Regime: {regime.regime_type.title()} (Confidence: {regime.regime_probability:.1%})"
         )
         print(
             f"📈 Mean Reversion: {mean_reversion.get('reversion_strength', 'Unknown')} strength"
         )
-        print(f"🎯 Trading Signals: {len(signals)} generated")
+        print("🎯 Trading Signals: {len(signals)} generated")
 
         if signals:
             primary_signal = signals[0]
@@ -312,12 +312,12 @@ class MacroEconomicFrameworkDemo:
         print(
             f"⚠️  Recession Probability: {recession_signal.recession_probability:.1%}"
         )
-        print(f"💪 Signal Strength: {recession_signal.signal_strength.title()}")
-        print(f"⏰ Time Horizon: {recession_signal.time_horizon}")
+        print("💪 Signal Strength: {recession_signal.signal_strength.title()}")
+        print("⏰ Time Horizon: {recession_signal.time_horizon}")
         print(
             f"📊 Confidence Range: {recession_signal.confidence_interval[0]:.1%} - {recession_signal.confidence_interval[1]:.1%}"
         )
-        print(f"🔑 Key Drivers: {', '.join(recession_signal.key_drivers)}")
+        print("🔑 Key Drivers: {', '.join(recession_signal.key_drivers)}")
 
         return {
             "recession_probability": recession_signal.recession_probability,
@@ -356,12 +356,12 @@ class MacroEconomicFrameworkDemo:
             ],
         }
 
-        print(f"🎭 Market Regime: {regime_data['regime_type'].title()}")
+        print("🎭 Market Regime: {regime_data['regime_type'].title()}")
         print(
             f"🌪️  Volatility Environment: {regime_data['volatility_environment'].title()}"
         )
-        print(f"📊 Confidence: {regime_data['confidence_score']:.1%}")
-        print(f"⏱️  Duration: {regime_data['regime_duration_days']} days")
+        print("📊 Confidence: {regime_data['confidence_score']:.1%}")
+        print("⏱️  Duration: {regime_data['regime_duration_days']} days")
 
         return regime_data
 
@@ -418,9 +418,9 @@ class MacroEconomicFrameworkDemo:
             "confidence_level": min(0.9, composite_score + 0.1),
         }
 
-        print(f"🎯 Composite Score: {composite_score:.2f}")
-        print(f"📊 Overall Assessment: {overall_assessment.title()}")
-        print(f"⚠️  Risk Level: {risk_level.title()}")
+        print("🎯 Composite Score: {composite_score:.2f}")
+        print("📊 Overall Assessment: {overall_assessment.title()}")
+        print("⚠️  Risk Level: {risk_level.title()}")
         print(
             f"🔗 Factor Coherence: {integrated_result['cross_factor_analysis']['overall_coherence'].title()}"
         )
@@ -503,11 +503,11 @@ class MacroEconomicFrameworkDemo:
             "strategy_confidence": integrated_analysis.get("confidence_level", 0.7),
         }
 
-        print(f"💼 Portfolio Stance: {portfolio_stance.replace('_', ' ').title()}")
-        print(f"📏 Position Sizing: {position_sizing.replace('_', ' ').title()}")
-        print(f"🔄 Sector Strategy: {sector_rotation.replace('_', ' ').title()}")
-        print(f"🛡️  Hedging: {hedging_approach.title()}")
-        print(f"📊 Risk Budget: {strategy_implications['risk_budget_adjustment']}")
+        print("💼 Portfolio Stance: {portfolio_stance.replace('_', ' ').title()}")
+        print("📏 Position Sizing: {position_sizing.replace('_', ' ').title()}")
+        print("🔄 Sector Strategy: {sector_rotation.replace('_', ' ').title()}")
+        print("🛡️  Hedging: {hedging_approach.title()}")
+        print("📊 Risk Budget: {strategy_implications['risk_budget_adjustment']}")
         print(
             f"🎯 Strategy Confidence: {strategy_implications['strategy_confidence']:.1%}"
         )
@@ -576,7 +576,7 @@ def main():
     with open(output_path, "w") as f:
         json.dump(results, f, indent=2, default=str)
 
-    print(f"\n💾 Demo results saved to: {output_path}")
+    print("\n💾 Demo results saved to: {output_path}")
     print("\n🎉 Macro-Economic Analysis Framework Demo Complete!")
     print("\nFramework Capabilities Demonstrated:")
     print("✅ Business cycle analysis with statistical modeling")

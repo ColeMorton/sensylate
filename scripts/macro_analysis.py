@@ -1004,20 +1004,20 @@ def main():
         print("\n" + "=" * 60)
         print("MACRO-ECONOMIC ANALYSIS COMPLETE")
         print("=" * 60)
-        print(f"Region: {result['metadata']['region']}")
-        print(f"Discovery File: {result['metadata']['discovery_file_reference']}")
-        print(f"Execution: {result['metadata']['execution_timestamp']}")
-        print(f"Confidence Threshold: {result['metadata']['confidence_threshold']}")
+        print("Region: {result['metadata']['region']}")
+        print("Discovery File: {result['metadata']['discovery_file_reference']}")
+        print("Execution: {result['metadata']['execution_timestamp']}")
+        print("Confidence Threshold: {result['metadata']['confidence_threshold']}")
 
         print("\nBUSINESS CYCLE ASSESSMENT:")
         bc = result["business_cycle_modeling"]
-        print(f"  Current Phase: {bc['current_phase'].title()}")
-        print(f"  Recession Probability: {bc['recession_probability']:.1%}")
-        print(f"  GDP Elasticity: {bc['gdp_growth_correlation']['gdp_elasticity']:.2f}")
+        print("  Current Phase: {bc['current_phase'].title()}")
+        print("  Recession Probability: {bc['recession_probability']:.1%}")
+        print("  GDP Elasticity: {bc['gdp_growth_correlation']['gdp_elasticity']:.2f}")
 
         print("\nRISK ASSESSMENT:")
         risk = result["quantified_risk_assessment"]
-        print(f"  Aggregate Risk Score: {risk['aggregate_risk_score']:.2f}")
+        print("  Aggregate Risk Score: {risk['aggregate_risk_score']:.2f}")
         print(
             f"  Economic Recession Risk: {risk['risk_matrix']['economic_recession']['probability']:.1%}"
         )
@@ -1039,11 +1039,11 @@ def main():
 
         print("\nANALYSIS QUALITY:")
         quality = result["analysis_quality_metrics"]
-        print(f"  Gap Coverage: {quality['gap_coverage']:.1%}")
-        print(f"  Analytical Rigor: {quality['analytical_rigor']:.3f}")
-        print(f"  Evidence Strength: {quality['evidence_strength']:.3f}")
+        print("  Gap Coverage: {quality['gap_coverage']:.1%}")
+        print("  Analytical Rigor: {quality['analytical_rigor']:.3f}")
+        print("  Evidence Strength: {quality['evidence_strength']:.3f}")
 
-        print(f"\nOutput saved to: {analysis.output_dir}")
+        print("\nOutput saved to: {analysis.output_dir}")
         print("=" * 60)
 
 

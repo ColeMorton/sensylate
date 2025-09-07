@@ -819,9 +819,9 @@ def main():
     with open(output_file, "w") as f:
         json.dump(analysis_results, f, indent=2, default=str)
 
-    print(f"\n=== DASV Phase 2 Analysis Complete ===")
-    print(f"Analysis saved to: {output_file}")
-    print(f"Total trades analyzed: {len(analyzer.closed_trades)}")
+    print("\n=== DASV Phase 2 Analysis Complete ===")
+    print("Analysis saved to: {output_file}")
+    print("Total trades analyzed: {len(analyzer.closed_trades)}")
     print(
         f"Overall confidence: {analysis_results['confidence_assessment']['overall_confidence']:.2f}"
     )

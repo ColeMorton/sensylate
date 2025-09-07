@@ -688,12 +688,12 @@ if __name__ == "__main__":
     result = service.validate_stock_claims(test_claims)
 
     print("\nValidation Result:")
-    print(f"Status: {result.status.value}")
-    print(f"Overall Score: {result.overall_score}/10.0")
-    print(f"Ready for Publication: {result.ready_for_publication}")
-    print(f"Blocking Issues: {result.is_blocking}")
+    print("Status: {result.status.value}")
+    print("Overall Score: {result.overall_score}/10.0")
+    print("Ready for Publication: {result.ready_for_publication}")
+    print("Blocking Issues: {result.is_blocking}")
 
     for issue in result.issues:
-        print(f"\n{issue.severity.value.upper()} - {issue.metric}:")
-        print(f"  {issue.description}")
-        print(f"  Recommendation: {issue.recommendation}")
+        print("\n{issue.severity.value.upper()} - {issue.metric}:")
+        print("  {issue.description}")
+        print("  Recommendation: {issue.recommendation}")

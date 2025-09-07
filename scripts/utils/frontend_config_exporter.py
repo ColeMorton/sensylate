@@ -501,17 +501,17 @@ if __name__ == "__main__":
     )
 
     print("📊 Generated Frontend Configuration:")
-    print(f"  Chart Type: {config['chart_type']}")
-    print(f"  Data Points: {len(config['data'])}")
-    print(f"  Theme Mode: {config['theme']['mode']}")
-    print(f"  Layout Options: {len(config['layout'])} settings")
+    print("  Chart Type: {config['chart_type']}")
+    print("  Data Points: {len(config['data'])}")
+    print("  Theme Mode: {config['theme']['mode']}")
+    print("  Layout Options: {len(config['layout'])} settings")
 
     # Validate configuration
     is_valid, errors = exporter.validate_config(config)
-    print(f"\n✅ Configuration Valid: {is_valid}")
+    print("\n✅ Configuration Valid: {is_valid}")
     if errors:
-        print(f"❌ Validation Errors: {errors}")
+        print("❌ Validation Errors: {errors}")
 
     # Generate React props
     react_props = exporter.generate_react_component_props(config)
-    print(f"\n⚛️  React Props Generated: {len(react_props)} properties")
+    print("\n⚛️  React Props Generated: {len(react_props)} properties")

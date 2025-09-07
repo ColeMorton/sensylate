@@ -415,9 +415,9 @@ def main():
         )
 
         if generated_images:
-            print(f"✅ Successfully generated {len(generated_images)} image(s):")
+            print("✅ Successfully generated {len(generated_images)} image(s):")
             for image_path in generated_images:
-                print(f"   {image_path}")
+                print("   {image_path}")
         else:
             print("⚠️  No images generated")
 

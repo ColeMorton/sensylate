@@ -997,7 +997,7 @@ def main():
     try:
         datetime.strptime(date_str, "%Y%m%d")
     except ValueError:
-        print(f"Invalid date format: {date_str}. Use YYYYMMDD")
+        print("Invalid date format: {date_str}. Use YYYYMMDD")
         sys.exit(1)
 
     # Run generator

@@ -258,11 +258,11 @@ if __name__ == "__main__":
             requirements = selector.get_regional_requirements(region)
             mappings = selector.get_field_mapping(region)
 
-            print(f"\n{region} Schema:")
-            print(f"  Central Bank: {requirements['central_bank']}")
-            print(f"  Policy Rate Field: {requirements['policy_rate_field']}")
-            print(f"  Volatility Index: {requirements['volatility_index']}")
-            print(f"  Schema ID: {schema.get('$id', 'Unknown')}")
+            print("\n{region} Schema:")
+            print("  Central Bank: {requirements['central_bank']}")
+            print("  Policy Rate Field: {requirements['policy_rate_field']}")
+            print("  Volatility Index: {requirements['volatility_index']}")
+            print("  Schema ID: {schema.get('$id', 'Unknown')}")
 
         except Exception as e:
-            print(f"{region} Schema Error: {e}")
+            print("{region} Schema Error: {e}")

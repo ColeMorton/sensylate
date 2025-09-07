@@ -710,9 +710,9 @@ def main():
             generator.cleanup_old_screenshots()
 
         # Print results
-        print(f"✅ Generated {len(generated_files)} screenshot(s):")
+        print("✅ Generated {len(generated_files)} screenshot(s):")
         for path in generated_files:
-            print(f"  - {path}")
+            print("  - {path}")
 
     except Exception as e:
         logging.error(f"Photo booth generation failed: {e}")

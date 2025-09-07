@@ -7,6 +7,7 @@
 - [🚀 Getting Started](#-getting-started)
 - [🐍 Python Data Pipeline](#-python-data-pipeline)
 - [📊 Trading Analysis](#-trading-analysis)
+- [₿ Bitcoin Cycle Intelligence](#-bitcoin-cycle-intelligence)
 - [🌐 Frontend Features](#-frontend-features)
 - [🔧 Development Tools](#-development-tools)
 - [⚙️ Configuration](#-configuration)
@@ -316,6 +317,183 @@ Use AI commands to enhance your trading analysis:
 # Prioritize strategy improvements
 > "/product-owner - prioritize trading strategy enhancements"
 ```
+
+---
+
+## ₿ Bitcoin Cycle Intelligence
+
+> **⭐ FEATURE**: Advanced Bitcoin cycle analysis with on-chain data integration and institutional-grade cycle intelligence.
+
+### What is Bitcoin Cycle Intelligence?
+
+The Bitcoin Cycle Intelligence system provides comprehensive Bitcoin analysis through the DASV framework:
+- **On-Chain Analytics**: Integrates with 80+ Bitcoin data sources including Mempool.space, CoinMetrics, Glassnode
+- **Cycle Indicators**: MVRV Z-Score, PI Cycle Top, NUPL zones, Reserve Risk assessment
+- **Network Health**: Hash rate analysis, mining economics, network security metrics
+- **Economic Context**: Federal Reserve policy impact, global liquidity positioning
+- **Multi-Source Validation**: Cross-validation across free tier Bitcoin data sources
+
+### Quick Start (5 Minutes)
+
+#### 1. Discovery Phase - Gather Bitcoin Data
+```bash
+# Discovery phase - gather comprehensive Bitcoin on-chain data
+> "Think like a Bitcoin technical specialist and run the discover phase for Bitcoin cycle analysis"
+
+# Or with specific parameters
+> "Run cli_enhanced_bitcoin_cycle_intelligence_discover with analysis date 2025-09-04"
+```
+
+**What it does**: Collects Bitcoin on-chain data, market prices, cycle indicators, network health metrics, and institutional flows.
+
+#### 2. Analysis Phase - Cycle Intelligence
+```bash
+# Analysis phase - comprehensive cycle indicators analysis
+> "Analyze the Bitcoin discovery data using the cycle intelligence framework"
+
+# Or with confidence threshold
+> "Run cli_enhanced_bitcoin_cycle_intelligence_analyze with confidence threshold 0.9"
+```
+
+**What it does**: Calculates MVRV Z-Score, PI Cycle signals, LTH behavior, Rainbow Price Model positioning, NUPL zones, and Reserve Risk opportunities.
+
+#### 3. Synthesis Phase - Intelligence Report
+```bash
+# Synthesis phase - generate Bitcoin Cycle Intelligence Report
+> "Generate a comprehensive Bitcoin Cycle Intelligence Report from the analysis data"
+
+# Or with specific depth
+> "Run cli_enhanced_bitcoin_cycle_intelligence_synthesize with institutional depth"
+```
+
+**What it does**: Creates institutional-grade Bitcoin intelligence reports with cycle thesis, strategic recommendations, and risk assessment.
+
+#### 4. Validation Phase - Quality Assurance
+```bash
+# Validation phase - ensure institutional quality
+> "Validate the Bitcoin intelligence report with >9.5/10 confidence requirement"
+```
+
+**What it does**: Multi-source validation, confidence scoring verification, and quality assurance for institutional standards.
+
+### Expected Output Structure
+
+All Bitcoin analysis outputs are organized in `data/outputs/bitcoin_cycle_intelligence/`:
+
+```
+data/outputs/bitcoin_cycle_intelligence/
+├── discovery/
+│   └── bitcoin_cycle_20250904_discovery.json     # On-chain data collection
+├── analysis/
+│   └── bitcoin_cycle_20250904_analysis.json      # Cycle indicators analysis
+├── bitcoin_cycle_20250904.md                     # Intelligence report
+└── validation_report_20250904.json               # Quality assurance
+```
+
+### Key Bitcoin Cycle Indicators
+
+#### MVRV Z-Score Analysis
+- **Purpose**: Identify market cycle extremes (euphoria vs capitulation zones)
+- **Ranges**: -2 to +7 with zone classifications
+- **Usage**: Accumulation opportunities at low scores, distribution signals at high scores
+
+#### PI Cycle Top Indicator
+- **Purpose**: Identify potential cycle tops with historical accuracy
+- **Mechanism**: 111-day MA vs 350-day MA × 2 crossover
+- **Track Record**: High accuracy in identifying Bitcoin cycle peaks
+
+#### NUPL (Net Unrealized Profit/Loss) Zones
+- **Purpose**: Assess market sentiment through holder profit/loss analysis
+- **Zones**: Capitulation → Hope → Optimism → Belief → Euphoria → Greed
+- **Application**: Strategic positioning based on market psychology
+
+#### Reserve Risk Assessment
+- **Purpose**: Evaluate long-term holder conviction and accumulation opportunities
+- **Calculation**: Price/HODL Bank ratio analysis
+- **Insight**: Lower values indicate stronger accumulation opportunities
+
+### CLI Services Integration
+
+Bitcoin Cycle Intelligence integrates with multiple data sources:
+
+#### Free Tier Services (Recommended)
+```yaml
+Primary Data Sources:
+  - CoinGecko API: Comprehensive Bitcoin market data (50 calls/month free)
+  - Mempool.space API: Bitcoin blockchain and mempool analysis (free)
+  - CoinMetrics API: Institutional-grade network metrics (free tier)
+  - Alternative.me API: Fear & Greed sentiment index (free)
+  - Blockchain.com API: Bitcoin network statistics (free)
+```
+
+#### Enhanced Services (Paid Tiers)
+```yaml
+Advanced Analytics:
+  - Glassnode: Advanced on-chain analytics ($29/month)
+  - Whale Alert: Large transaction monitoring (paid)
+  - Hashrate Index: Mining industry analytics (mixed pricing)
+```
+
+### Configuration and Customization
+
+#### Analysis Parameters
+```bash
+# Discovery phase options
+--analysis-date: Target date for analysis (YYYY-MM-DD)
+--services: Comma-separated list of CLI services to use
+--data-quality-threshold: Minimum data quality score (0.8-1.0)
+
+# Analysis phase options
+--confidence-threshold: Minimum confidence for conclusions (0.8-1.0)
+--cycle-indicators: Enable comprehensive cycle analysis (true/false)
+--valuation-framework: Enable Bitcoin valuation models (true/false)
+--risk-quantification: Enable Bitcoin-specific risk matrices (true/false)
+
+# Synthesis phase options
+--synthesis-depth: Analysis complexity (institutional/comprehensive/executive)
+--economic-context: Integrate macro intelligence (true/false)
+--cycle-scenario-count: Number of scenarios to analyze (3/5/7)
+```
+
+### AI-Enhanced Bitcoin Analysis
+
+Use AI commands to enhance your Bitcoin analysis:
+
+```bash
+# Analyze current Bitcoin cycle position
+> "/architect - analyze Bitcoin's current cycle phase using MVRV and PI Cycle indicators"
+
+# Create social content about Bitcoin analysis
+> "/twitter-post - share our Bitcoin cycle analysis insights"
+
+# Compare with historical cycles
+> "/researcher - compare current Bitcoin cycle with 2017 and 2021 patterns"
+
+# Risk assessment focus
+> "/analyst - assess Bitcoin network security risks and hash rate concentration"
+```
+
+### Quality Standards
+
+Bitcoin Cycle Intelligence maintains institutional-grade quality:
+
+**Data Validation:**
+- ✅ Multi-source price validation (≤2% tolerance)
+- ✅ Cross-validation across 5+ Bitcoin services
+- ✅ Real-time service health monitoring
+- ✅ Data quality scoring ≥0.9 for institutional grade
+
+**Analysis Standards:**
+- ✅ Confidence threshold ≥0.8 for all components
+- ✅ Evidence-backed cycle assessments
+- ✅ Historical accuracy validation
+- ✅ Risk-adjusted recommendations
+
+**Report Quality:**
+- ✅ Institutional-grade presentation format
+- ✅ Multi-model valuation triangulation
+- ✅ Comprehensive risk quantification
+- ✅ Strategic positioning framework
 
 ---
 

@@ -784,20 +784,20 @@ if __name__ == "__main__":
         # Test confidence calculation
         result = engine.calculate_confidence(test_data, context, "market_data")
 
-        print(f"Composite Confidence: {result['composite_confidence']:.3f}")
-        print(f"Confidence Level: {result['confidence_level']}")
-        print(f"Meets Institutional Grade: {result['meets_institutional_grade']}")
-        print(f"Quality Score: {result['quality_metrics'].overall_quality:.3f}")
+        print("Composite Confidence: {result['composite_confidence']:.3f}")
+        print("Confidence Level: {result['confidence_level']}")
+        print("Meets Institutional Grade: {result['meets_institutional_grade']}")
+        print("Quality Score: {result['quality_metrics'].overall_quality:.3f}")
 
         if result["recommendations"]:
             print("Recommendations:")
             for rec in result["recommendations"]:
-                print(f"  - {rec}")
+                print("  - {rec}")
 
         print("\n✅ Dynamic confidence engine test completed successfully!")
 
     except Exception as e:
-        print(f"❌ Dynamic confidence engine test failed: {e}")
+        print("❌ Dynamic confidence engine test failed: {e}")
         import traceback
 
         traceback.print_exc()

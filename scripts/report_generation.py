@@ -42,7 +42,7 @@ def main(config: Dict[str, Any], input_file: Path) -> None:
     output_file = generator.generate_report(input_file)
 
     # Print output for Make dependency tracking
-    print(f"OUTPUT_FILE={output_file}")
+    print("OUTPUT_FILE={output_file}")
 
 
 if __name__ == "__main__":

@@ -33,7 +33,7 @@ def test_dashboard_config():
         )
         return False
 
-    print(f"✅ Default dashboard '{default_dashboard}' is properly configured")
+    print("✅ Default dashboard '{default_dashboard}' is properly configured")
     return True
 
 
@@ -58,19 +58,19 @@ def test_dashboard_mdx_files():
     ]
 
     for file_path in dashboard_files:
-        print(f"  📄 Checking {file_path.name}...")
+        print("  📄 Checking {file_path.name}...")
 
         with open(file_path) as f:
             content = f.read()
 
         # Extract frontmatter
         if not content.startswith("---"):
-            print(f"    ❌ Missing frontmatter in {file_path.name}")
+            print("    ❌ Missing frontmatter in {file_path.name}")
             return False
 
         frontmatter_end = content.find("---", 3)
         if frontmatter_end == -1:
-            print(f"    ❌ Invalid frontmatter format in {file_path.name}")
+            print("    ❌ Invalid frontmatter format in {file_path.name}")
             return False
 
         frontmatter = content[3:frontmatter_end].strip()
@@ -78,12 +78,12 @@ def test_dashboard_mdx_files():
         # Check for required keys (basic check)
         for key in expected_frontmatter_keys:
             if f"{key}:" not in frontmatter:
-                print(f"    ❌ Missing '{key}' in frontmatter of {file_path.name}")
+                print("    ❌ Missing '{key}' in frontmatter of {file_path.name}")
                 return False
 
-        print(f"    ✅ {file_path.name} has valid frontmatter")
+        print("    ✅ {file_path.name} has valid frontmatter")
 
-    print(f"✅ All {len(dashboard_files)} dashboard files are valid")
+    print("✅ All {len(dashboard_files)} dashboard files are valid")
     return True
 
 
@@ -127,11 +127,11 @@ def test_chart_types_consistency():
     # Check for unsupported chart types
     unsupported = used_chart_types - supported_chart_types
     if unsupported:
-        print(f"❌ Unsupported chart types found: {unsupported}")
+        print("❌ Unsupported chart types found: {unsupported}")
         return False
 
-    print(f"✅ All {len(used_chart_types)} chart types are supported")
-    print(f"  Used chart types: {sorted(used_chart_types)}")
+    print("✅ All {len(used_chart_types)} chart types are supported")
+    print("  Used chart types: {sorted(used_chart_types)}")
     return True
 
 
@@ -181,7 +181,7 @@ def test_dashboard_loader():
 
     for export in required_exports:
         if export not in content:
-            print(f"❌ Missing required export: {export}")
+            print("❌ Missing required export: {export}")
             return False
 
     print("✅ Dashboard loader is properly implemented")
@@ -211,12 +211,12 @@ def main():
             else:
                 failed += 1
         except Exception as e:
-            print(f"❌ Test {test.__name__} failed with exception: {e}")
+            print("❌ Test {test.__name__} failed with exception: {e}")
             failed += 1
         print()
 
     print("=" * 50)
-    print(f"📊 Test Results: {passed} passed, {failed} failed")
+    print("📊 Test Results: {passed} passed, {failed} failed")
 
     if failed == 0:
         print("🎉 All dashboard loading tests passed!")

@@ -586,13 +586,13 @@ if __name__ == "__main__":
 
     # Search for symbols
     symbols = api.search_symbols(pattern="A*", min_records=10)
-    print(f"Found symbols: {symbols[:5]}")
+    print("Found symbols: {symbols[:5]}")
 
     # Get availability for a symbol
     if symbols:
         availability = api.get_symbol_availability(symbols[0])
-        print(f"Availability for {symbols[0]}: {availability}")
+        print("Availability for {symbols[0]}: {availability}")
 
     # Generate discovery report
     report = api.generate_discovery_report(symbols[:3])
-    print(f"Report summary: {report.get('summary', {})}")
+    print("Report summary: {report.get('summary', {})}")

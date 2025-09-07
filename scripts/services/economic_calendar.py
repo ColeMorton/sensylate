@@ -758,5 +758,5 @@ def create_economic_calendar_service(env: str = "prod") -> EconomicCalendarServi
         return EconomicCalendarService(config)
 
     except Exception as e:
-        print(f"❌ Failed to create economic calendar service: {e}")
+        print("❌ Failed to create economic calendar service: {e}")
         return None

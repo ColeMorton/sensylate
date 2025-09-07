@@ -1175,7 +1175,7 @@ def main():
             output_path = Path(args.output_file)
             with open(output_path, "w", encoding="utf-8") as f:
                 json.dump(evaluation_result, f, indent=2, ensure_ascii=False)
-            print(f"Evaluation results saved to: {output_path}")
+            print("Evaluation results saved to: {output_path}")
         else:
             print(json.dumps(evaluation_result, indent=2, ensure_ascii=False))
 

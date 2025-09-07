@@ -12,6 +12,7 @@
 **Registry Name**: `content_publisher`
 **Content Types**: `["blog_publication", "asset_coordination", "comparative_analysis"]`
 **Requires Validation**: `true`
+**Implementation**: Publisher sub-agent with content publication specialization
 
 **Registry Decorator**:
 ```python
@@ -64,13 +65,13 @@ comparative_synthesis_script:
 
 ## Purpose
 
-Systematically manages the content publication pipeline by discovering unpublished analysis content, coordinating visual assets, and publishing analytical content with **absolute content fidelity** to maintain the integrity and accuracy of financial analysis while ensuring quality publication standards throughout the Sensylate content ecosystem.
+You are the Content Publication Strategy Specialist, responsible for defining comprehensive content publication requirements for publisher-generated blog-ready content. This command implements content publication strategic requirements, focusing on content discovery specifications and publication quality standards while delegating implementation methodology to the publisher sub-agent.
 
 ### Content Fidelity Mandate
 
-**CRITICAL**: This command serves as a faithful custodian of analytical content. The primary responsibility is preserving 100% content accuracy without any transformation, summarization, or editorial modification. The only permitted change is removing the H1 title heading to prevent duplication with frontmatter titles.
+**CRITICAL**: This command defines content fidelity requirements for publisher implementation. All analytical content must preserve 100% accuracy without transformation, summarization, or editorial modification. The only permitted change is removing the H1 title heading to prevent duplication with frontmatter titles.
 
-**Output Location**: Published content in `frontend/src/content/blog/` with supporting assets in `frontend/public/images/`
+**Output Location**: Published content in `frontend/src/content/blog/` with supporting assets in `frontend/public/images/` (publisher-generated)
 
 ## Template Integration Architecture
 
@@ -125,113 +126,65 @@ def select_publication_template(content_analysis):
     return 'publishing/blog_frontmatter.j2'
 ```
 
-## Content Pipeline Management
+## Content Publication Strategy Requirements
 
-### Content Discovery & Assessment
-```
-CONTENT AUDIT PROTOCOL:
-1. Scan @{DATA_OUTPUTS}/fundamental_analysis/ for unpublished fundamental analysis markdown files
-2. Scan @{DATA_OUTPUTS}/trade_history/ for unpublished trade history reports
-3. Scan @{DATA_OUTPUTS}/sector_analysis/ for unpublished sector analysis markdown files
-4. Scan @{DATA_OUTPUTS}/comparative_analysis/ for unpublished comparative analysis markdown files
-5. Check @frontend/src/content/blog/ for existing publications
-6. Identify content gaps and publication opportunities across all content types
-7. Assess content quality and readiness for publication
-8. Prioritize content by relevance, timeliness, and audience value
-```
+### Content Discovery Requirements
+**Content Audit Specifications**:
+- Multi-source content discovery across all analytical output directories
+- Publication gap analysis comparing existing blog content against available outputs
+- Content readiness assessment with quality standard evaluation
+- Priority optimization based on relevance, timeliness, and audience value
+- Cross-content type integration for unified discovery workflows
 
-### Asset Management & Synchronization
-```
-ASSET COORDINATION WORKFLOW:
-1. Map analysis files to corresponding visualizations in @data/images/
-   → tradingview/ - Trading charts and technical analysis
-   → trendspider_full/ - Comprehensive market analysis charts
-   → trendspider_tabular/ - Data visualization tables
-   → sector_analysis/ - Sector-specific charts and comparative analysis
-   → comparative_analysis/ - Cross-stock comparative charts and side-by-side analysis
-2. Verify image availability and quality standards
-3. Copy/optimize images to @frontend/public/images/
-   → Maintain directory structure: tradingview/, trendspider_full/, trendspider_tabular/, sector_analysis/, comparative_analysis/
-4. Validate image paths and accessibility
-5. Ensure consistent asset naming and organization
-   → Sector analysis: {sector-slug}_{YYYYMMDD}.png format
-   → Comparative analysis: {ticker1}_vs_{ticker2}_{YYYYMMDD}.png format
-```
+### Asset Coordination Requirements
+**Asset Management Specifications**:
+- Image discovery and mapping protocols for all visualization types
+- Asset synchronization with frontend integration requirements
+- Responsive optimization for web presentation standards
+- Path validation with consistent naming convention enforcement
+- Multi-type asset management across tradingview/, trendspider_full/, sector_analysis/, comparative_analysis/
 
-### Content Transformation
-```
-ASTRO CONTENT CONVERSION - CRITICAL CONTENT FIDELITY RULES:
-1. **NEVER TRANSFORM SOURCE CONTENT**: Content from @data/outputs/fundamental_analysis/, @data/outputs/trade_history/, and @{DATA_OUTPUTS}/comparative_analysis/ must be preserved 100% without any modifications, summarization, or editorial changes
-2. **ONLY REMOVE TITLE HEADING**: Remove the H1 title heading (e.g., "# Company Name - Fundamental Analysis", "# Historical Trading Performance - Closed Positions", or "# Stock A vs Stock B - Comprehensive Investment Analysis") to prevent duplication with frontmatter title
-3. **PRESERVE ALL ANALYSIS CONTENT**: Maintain exact confidence scores, data quality metrics, investment recommendations, financial data, trading performance metrics, comparative analysis matrices, cross-stock valuations, and methodology
-4. **ADD FRONTMATTER ONLY**: Add proper frontmatter with metadata, SEO data, tags, categories without altering content body
-5. **MAINTAIN ANALYTICAL INTEGRITY**: Preserve the analytical voice, formatting, tables, bullet points, comparative frameworks, risk matrices, and structure exactly as generated
-6. **NO CONTENT OPTIMIZATION**: Do not modify content for "web readability" - analytical accuracy takes precedence over accessibility
-```
+### Content Transformation Standards
+**Content Fidelity Requirements**:
+- **ZERO TRANSFORMATION POLICY**: 100% preservation of analytical content
+- **STRATEGIC H1 REMOVAL**: Remove only title heading to prevent frontmatter duplication
+- **ANALYTICAL INTEGRITY**: Preserve all confidence scores, recommendations, financial data, methodology
+- **FRONTMATTER STANDARDIZATION**: Apply content type-specific templates with proper metadata
+- **QUALITY GATE ENFORCEMENT**: Fail-fast protocols for content modification attempts
 
-### Publication & Validation
-```
-FRONTEND INTEGRATION:
-1. Publish content to @frontend/src/content/blog/
-2. Validate content rendering on development server
-3. Test image display and responsive behavior
-4. Verify cross-references and internal links
-5. Confirm search functionality includes new content
-6. Validate SEO metadata and social sharing
-```
+### Publication Integration Standards
+**Frontend Compatibility Requirements**:
+- Astro framework compatibility with content collection standards
+- Development server validation with rendering verification
+- Cross-browser testing and mobile responsiveness
+- SEO optimization with social sharing metadata
+- Search functionality integration for content discoverability
 
-## CLI Service Integration
+## Publisher Integration Specifications
 
-**Service Commands**:
-```yaml
-astro_dev_server:
-  command: "cd frontend && yarn dev"
-  usage: "Start development server for content validation"
-  purpose: "Real-time content rendering validation"
-  health_check: "curl http://localhost:4321/health"
-  priority: "primary"
+**Content Delegation Framework**:
+- **Tool Integration**: Automated `content_publisher_script.py` execution via publisher sub-agent
+- **Quality Enforcement**: Publisher implements ≥95% publication success rate with content fidelity validation
+- **Professional Generation**: Publication-ready blog content with frontend integration specialization
+- **Multi-Content Expertise**: Publisher handles all content types (fundamental, trade history, sector, comparative)
 
-content_validator:
-  command: "cd frontend && yarn check"
-  usage: "TypeScript and content validation"
-  purpose: "Content integrity and type safety validation"
-  health_check: "cd frontend && yarn check --help"
-  priority: "primary"
+**Content Publication Enhancement Requirements**:
+- **Content Discovery Implementation**: Publisher executes multi-source content discovery with gap analysis
+- **Asset Coordination Implementation**: Publisher manages image optimization and frontend integration workflows
+- **Content Fidelity Implementation**: Publisher enforces 100% content preservation with strategic H1 removal
+- **Frontend Integration Implementation**: Publisher ensures Astro framework compatibility and validation protocols
 
-image_optimizer:
-  command: "python {SCRIPTS_BASE}/image_processing/optimize_images.py"
-  usage: "{command} --source {source_path} --dest {dest_path}"
-  purpose: "Image optimization and responsive asset generation"
-  health_check: "{command} --help"
-  priority: "secondary"
-```
+**Quality Assurance Protocol**:
+- **Methodology Compliance**: Publisher implements content publication standards and validation workflows
+- **Asset Integration**: Publisher manages responsive optimization and web presentation requirements
+- **Publication Logic Verification**: Publisher ensures content readiness and frontend compatibility
+- **Professional Standards**: Publisher delivers publication-ready content with quality gate enforcement
 
-**Publication Integration Protocol**:
-```bash
-# Content validation
-cd frontend && yarn check
-
-# Development server validation
-cd frontend && yarn dev &
-sleep 5 && curl http://localhost:4321/blog/
-
-# Image optimization
-python {SCRIPTS_BASE}/image_processing/optimize_images.py --source data/images/ --dest frontend/public/images/
-```
-
-**Data Authority Protocol**:
-```yaml
-authority_hierarchy:
-  source_content: "HIGHEST_AUTHORITY"  # Data outputs are authoritative source
-  frontmatter_templates: "METADATA_AUTHORITY"  # Templates control metadata structure
-  astro_framework: "RENDERING_AUTHORITY"  # Astro framework controls final presentation
-
-conflict_resolution:
-  content_precedence: "source_content"  # Source content takes priority
-  metadata_standards: "frontmatter_templates"  # Templates enforce standardization
-  rendering_compatibility: "astro_framework"  # Framework requirements must be met
-  action: "preserve_content_fidelity"  # Resolution strategy
-```
+**Content Authority Standards**:
+- **Source Content Authority**: Data outputs maintain highest authority for analytical accuracy
+- **Template Authority**: Frontmatter templates control metadata structure and standardization
+- **Framework Authority**: Astro framework requirements govern final presentation compatibility
+- **Conflict Resolution**: Publisher implements content precedence with fidelity preservation strategy
 
 ## Data Flow & File References
 
@@ -614,212 +567,170 @@ FRONTMATTER COMPLIANCE VALIDATION:
 
 **STANDARDIZATION ENFORCEMENT**: The content_publisher command will automatically verify and correct any frontmatter issues to ensure 100% compliance with the comparative analysis standard template.
 
-## Content Standards & Quality Gates
+## Content Publication Quality Standards
 
-### Publication Requirements
+### Publication Requirements Specification
 
-#### Fundamental Analysis Content
-- **Naming Convention**: `[ticker]-fundamental-analysis-[YYYYMMDD].md`
-- **Frontmatter Schema**: MANDATORY compliance with Fundamental Analysis Standard Template
-- **Tag Taxonomy**: STRICT adherence to standardized tag structure (see Standard Template below)
+**Content Type Requirements**:
+- **Fundamental Analysis**: Publisher implements ticker-based naming and frontmatter compliance
+- **Sector Analysis**: Publisher implements sector-slug naming and economic context metadata
+- **Trade History**: Publisher implements performance-focused schema and trading categorization
+- **Comparative Analysis**: Publisher implements cross-stock naming and comparative data objects
 
-#### Sector Analysis Content
-- **Naming Convention**: `[sector-slug]-sector-analysis-[YYYYMMDD].md`
-- **Frontmatter Schema**: MANDATORY compliance with Sector Analysis Standard Template
-- **Tag Taxonomy**: STRICT adherence to standardized tag structure (see Sector Analysis Standard Template)
+**Universal Publication Standards**:
+- **Asset Integration**: Publisher ensures consistent image paths across all visualization types
+- **SEO Optimization**: Publisher implements complete metadata and social sharing requirements
+- **Template Compliance**: Publisher enforces mandatory frontmatter standardization per content type
+- **Quality Validation**: Publisher executes comprehensive publication readiness assessment
 
-#### Trade History Reports
-- **Naming Convention**: `trading-performance-[report-type]-[YYYYMMDD].md`
-- **Frontmatter Schema**: Performance-focused blog post structure
-- **Tag Taxonomy**: Use categories (trading-performance, trade-history, signals, analysis)
+### Quality Assurance Standards
+**Content Fidelity Enforcement Requirements**:
+- **Content Preservation**: Publisher must preserve 100% of source analytical content without transformations
+- **Strategic Modification**: Publisher removes only H1 title heading while maintaining all other content
+- **Data Integrity**: Publisher preserves all confidence scores, financial data, trading metrics, and methodology
+- **Analytical Accuracy**: Publisher maintains investment recommendations, valuations, and risk assessments exactly
+- **Performance Preservation**: Publisher keeps win rates, statistical analysis, and comparative frameworks identical
+- **Economic Data Accuracy**: Publisher preserves GDP correlations, sector metrics, and economic analysis unchanged
 
-#### Comparative Analysis Content
-- **Naming Convention**: `[ticker1]-vs-[ticker2]-comparative-analysis-[YYYYMMDD].md`
-- **Frontmatter Schema**: MANDATORY compliance with Comparative Analysis Standard Template
-- **Tag Taxonomy**: STRICT adherence to standardized tag structure (see Comparative Analysis Standard Template)
+**Publication Validation Requirements**:
+- **Template Compliance**: Publisher enforces frontmatter standardization per content type
+- **Metadata Standards**: Publisher implements author, category, tag, and date standardization
+- **Asset Integration**: Publisher ensures image accessibility and responsive optimization
+- **Frontend Validation**: Publisher confirms development server rendering and cross-browser compatibility
+- **SEO Optimization**: Publisher validates metadata completeness and search functionality integration
 
-#### Universal Requirements
-- **Image Integration**: Consistent paths to `/images/tradingview/`, `/images/trendspider_full/`, `/images/sector_analysis/`, or `/images/comparative_analysis/`
-- **SEO Optimization**: Complete titles, descriptions, tags, and metadata
-- **MANDATORY COMPLIANCE**: All frontmatter MUST follow respective Standard Templates (Fundamental Analysis, Sector Analysis, or Trade History)
+### Post-Publication Standards
+**Integration Validation Requirements**:
+- **Frontend Display**: Publisher validates content rendering across devices and browsers
+- **Asset Functionality**: Publisher ensures image rendering and responsive behavior
+- **Link Validation**: Publisher tests internal linking and cross-reference functionality
+- **Search Integration**: Publisher confirms content discoverability and analytics implementation
+- **Social Sharing**: Publisher validates metadata functionality for social platforms
 
-### Quality Assurance Checklist
-```
-PRE-PUBLICATION VALIDATION - CONTENT FIDELITY ENFORCEMENT:
-□ **CONTENT FIDELITY**: Source content preserved 100% without any transformations
-□ **TITLE REMOVAL ONLY**: H1 title heading removed, all other content identical to source
-□ **ANALYTICAL INTEGRITY**: All confidence scores, data quality metrics, recommendations, and trading performance metrics exactly as generated
-□ **FINANCIAL DATA ACCURACY**: Investment thesis, valuations, risk assessments, trading results, and methodology unchanged
-□ **PERFORMANCE DATA INTEGRITY**: Win rates, profit factors, trade durations, and statistical analysis preserved exactly
-□ **SECTOR ANALYSIS INTEGRITY**: Economic indicators, correlation data, sector performance metrics, and risk assessments preserved exactly
-□ **COMPARATIVE ANALYSIS INTEGRITY**: Cross-stock comparisons, risk matrices, portfolio allocation recommendations, and winner determinations preserved exactly
-□ **ECONOMIC DATA ACCURACY**: GDP correlations, employment sensitivity, interest rate impacts, and economic cycle analysis unchanged
-□ **FORMATTING PRESERVATION**: Tables, bullet points, section structure, and emphasis maintained exactly
-□ **NO EDITORIAL CHANGES**: Zero summarization, optimization, or content modifications applied
-□ **FRONTMATTER COMPLIANCE**: MANDATORY adherence to respective Standard Templates (Fundamental Analysis, Sector Analysis, Trade History, or Comparative Analysis)
-□ **AUTHOR STANDARDIZATION**: Must use authors: ["Cole Morton", "Claude"]
-□ **CATEGORY STANDARDIZATION**: Must use proper category structure per content type
-□ **TAG STANDARDIZATION**: Must use lowercase identifiers + standardized tag structure per content type
-□ **DATE STANDARDIZATION**: Must use ISO 8601 with timezone format
-□ **TITLE STANDARDIZATION**: Must use clean format without ratings/returns per content type
-□ **META_TITLE STANDARDIZATION**: Must include rating information in standardized format per content type
-□ **SECTOR DATA VALIDATION**: For sector analysis, must include complete sector_data object with confidence scores
-□ **COMPARATIVE DATA VALIDATION**: For comparative analysis, must include complete comparative_data object with both recommendations
-□ All referenced images properly linked and accessible
-□ SEO metadata complete and optimized (frontmatter only)
-□ Proper categorization and tagging applied (frontmatter only)
-□ Cross-references validated and functional
-□ Mobile responsiveness confirmed
-□ Development server rendering verified
-```
+## Content State Management Requirements
 
-### Post-Publication Verification
-```
-INTEGRATION VALIDATION:
-□ Content displays correctly on frontend
-□ Images render properly across devices
-□ Internal linking functions correctly
-□ Search functionality includes new content
-□ Analytics tracking implemented
-□ Social sharing metadata functional
-```
+### Publication Tracking Strategy
+**Publisher Content Monitoring Requirements**:
+- **Publication Timeline Tracking**: Publisher monitors existing blog content for freshness assessment
+- **Content Gap Analysis**: Publisher identifies opportunities for content updates and new publications
+- **Calendar Management**: Publisher maintains publication scheduling and content pipeline optimization
+- **Performance Monitoring**: Publisher tracks audience engagement and content effectiveness metrics
 
-## Current Content State Management
+### Publication Queue Strategy
+**Publisher Queue Management Requirements**:
+- **Systematic Processing**: Publisher processes unpublished analysis with strategic prioritization
+- **Pipeline Optimization**: Publisher manages content flow for maximum publication efficiency
+- **Quality Coordination**: Publisher balances publication velocity with content quality standards
 
-### Published Content Tracking
-Monitor existing publications in `@frontend/src/content/blog/`:
-- Track publication dates and content freshness
-- Identify opportunities for content updates
-- Maintain publication calendar and content gaps
-- Monitor audience engagement and content performance
+## Publication Success Criteria
 
-### Content Publication Queue
-Systematically process unpublished analysis for publication opportunities and content pipeline optimization.
+### Content Quality Standards
+**Publisher Quality Metrics Requirements**:
+- **Content Fidelity Achievement**: Publisher must deliver 100% analytical content preservation
+- **Publication Readiness Assessment**: Publisher evaluates content completeness and quality standards
+- **Asset Integration Excellence**: Publisher ensures proper visual asset coordination and optimization
+- **SEO Performance**: Publisher implements complete metadata and search optimization
+- **Cross-Reference Integration**: Publisher manages internal linking and content interconnection
 
-## Publication Metrics & Success Criteria
+### Performance Success Indicators
+**Publisher Performance Requirements**:
+- **Publication Efficiency**: Publisher optimizes time from analysis generation to blog publication
+- **Content Timeliness**: Publisher ensures market analysis publication freshness and relevance
+- **Engagement Optimization**: Publisher supports reader interaction and social sharing capabilities
+- **Search Visibility**: Publisher enables organic discovery and keyword ranking performance
 
-### Content Quality Metrics
-- **Content Fidelity Score**: 100% preservation of source analytical content (mandatory)
-- **Publication Readiness Score**: Comprehensive assessment of content completeness
-- **Asset Integration Rate**: Percentage of content with proper visual assets
-- **SEO Optimization Score**: Metadata completeness and search optimization
-- **Cross-Reference Density**: Internal linking and content interconnection
+## Strategic Integration Requirements
 
-### Performance Indicators
-- **Publication Velocity**: Time from analysis to published content
-- **Content Freshness**: Timeliness of market analysis publication
-- **Audience Engagement**: Reader interaction and content sharing
-- **Search Performance**: Organic discovery and keyword ranking
+### Data Pipeline Strategy
+**Publisher Data Coordination Requirements**:
+- **Content Monitoring**: Publisher monitors data outputs for new analytical content availability
+- **Timing Coordination**: Publisher coordinates with upstream analysis commands for optimal publication scheduling
+- **Automated Discovery**: Publisher maintains content freshness through systematic discovery protocols
 
-## Integration Requirements
+### Frontend Platform Strategy
+**Publisher Platform Integration Requirements**:
+- **Framework Compatibility**: Publisher ensures Astro 5.7+ framework compliance and compatibility
+- **Styling Consistency**: Publisher maintains TailwindCSS 4+ styling standards and responsive design
+- **Type Safety**: Publisher supports TypeScript integration and React component compatibility
+- **Content Format Support**: Publisher validates MDX content processing and shortcode functionality
 
-### Data Pipeline Coordination
-- Monitor `@{DATA_OUTPUTS}/` for new analysis content
-- Coordinate with analysis generation commands for publication timing
-- Maintain content freshness through automated discovery
-
-### Frontend Platform Integration
-- Ensure compatibility with Astro 5.7+ framework requirements
-- Maintain TailwindCSS 4+ styling consistency
-- Support TypeScript type safety and React component integration
-- Validate MDX content authoring and shortcode functionality
-
-### Quality Enforcement
-- Enforce comprehensive pre-commit quality standards
-- Maintain publication consistency with established style guide
-- Validate cross-platform compatibility and responsive design
-- Ensure SEO optimization and social media integration
+### Quality Strategy
+**Publisher Quality Enforcement Requirements**:
+- **Standards Compliance**: Publisher enforces comprehensive publication quality standards
+- **Style Consistency**: Publisher maintains established content style guide and presentation standards
+- **Cross-Platform Validation**: Publisher ensures responsive design and browser compatibility
+- **Optimization Integration**: Publisher implements SEO optimization and social media integration protocols
 
 ## Quality Standards Framework
 
-### Confidence Scoring
-**Publication-Quality Thresholds**:
-- **Content Fidelity**: 100% preservation of source analytical content (mandatory)
-- **Frontmatter Compliance**: 100% adherence to standardized templates
-- **Asset Integration**: 95% successful image optimization and linking
-- **Frontend Validation**: 98% rendering compatibility across devices
+### Publication Quality Requirements
+**Publisher Performance Thresholds**:
+- **Content Fidelity**: Publisher must achieve 100% preservation of source analytical content
+- **Template Compliance**: Publisher must maintain 100% adherence to standardized frontmatter
+- **Asset Integration**: Publisher must deliver ≥95% successful optimization and frontend linking
+- **Frontend Compatibility**: Publisher must ensure ≥98% rendering compatibility across devices
 
-### Validation Protocols
-**Multi-Phase Validation Standards**:
-- **Content Integrity**: 0% variance from source analytical content
-- **Metadata Accuracy**: 100% compliance with frontmatter templates
-- **Asset Optimization**: <500KB image sizes with responsive breakpoints
-- **Frontend Health**: Development server rendering validation
+### Validation Protocol Standards
+**Publisher Implementation Requirements**:
+- **Content Integrity**: Publisher must maintain 0% variance from source analytical content
+- **Metadata Accuracy**: Publisher must achieve 100% frontmatter template compliance
+- **Asset Performance**: Publisher must optimize images to <500KB with responsive breakpoints
+- **Frontend Health**: Publisher must validate development server rendering and compatibility
 
-### Quality Gate Enforcement
-**Critical Validation Points**:
-1. **Discovery Phase**: Content completeness and publication readiness
-2. **Asset Phase**: Image optimization and responsive asset generation
-3. **Transformation Phase**: Content fidelity and frontmatter compliance
-4. **Publication Phase**: Frontend validation and cross-platform compatibility
+### Quality Gate Specifications
+**Publisher Validation Phases**:
+1. **Discovery Phase**: Publisher assesses content completeness and publication readiness
+2. **Asset Phase**: Publisher executes image optimization and responsive generation
+3. **Transformation Phase**: Publisher enforces content fidelity and frontmatter compliance
+4. **Publication Phase**: Publisher validates frontend compatibility and cross-platform performance
 
 ## Cross-Command Integration
 
-### Upstream Dependencies
-**Commands that provide input to this command**:
-- `fundamental_analyst`: Provides fundamental analysis reports via {DATA_OUTPUTS}/fundamental_analysis/
-- `trade_history`: Provides trade history reports via {DATA_OUTPUTS}/trade_history/
-- `sector_analyst`: Provides sector analysis reports via {DATA_OUTPUTS}/sector_analysis/
-- `comparative_analyst`: Provides comparative analysis reports via {DATA_OUTPUTS}/comparative_analysis/ (DASV framework)
+### Cross-Command Integration Strategy
+**Upstream Content Sources**:
+- **fundamental_analyst**: Publisher processes fundamental analysis outputs for blog publication
+- **trade_history**: Publisher handles trade history reports with performance-focused presentation
+- **sector_analyst**: Publisher manages sector analysis content with economic context integration
+- **comparative_analyst**: Publisher processes DASV framework comparative analysis outputs
 
-### Downstream Dependencies
-**Commands that consume this command's outputs**:
-- `content_evaluator`: Evaluates published content for quality assurance
-- `documentation_owner`: Documents publication workflows and standards
+**Downstream Quality Assurance**:
+- **content_evaluator**: Evaluates publisher-generated blog content for quality validation
+- **documentation_owner**: Documents publisher workflows and content publication standards
 
-### Coordination Workflows
-**Multi-Command Orchestration**:
-```bash
-# Sequential publication workflow
-/fundamental_analyst TICKER
-/content_publisher ticker=TICKER content_type=fundamental_analysis
-/content_evaluator filename="frontend/src/content/blog/{ticker}-fundamental-analysis-{date}.md"
+**Publication Orchestration Requirements**:
+- **Sequential Workflows**: Publisher executes content-specific publication following analytical generation
+- **Multi-Content Processing**: Publisher handles batch publication across all content types
+- **Quality Integration**: Publisher coordinates with downstream evaluation and documentation commands
+- **Strategic Timing**: Publisher optimizes publication scheduling based on content freshness and market relevance
 
-# Comparative analysis workflow
-/comparative_analyst/discover ticker_1=AAPL ticker_2=MSFT
-/comparative_analyst/analyze discovery_file="{DATA_OUTPUTS}/comparative_analysis/discovery/AAPL_vs_MSFT_{date}_discovery.json"
-/comparative_analyst/synthesize analysis_file="{DATA_OUTPUTS}/comparative_analysis/analysis/AAPL_vs_MSFT_{date}_analysis.json"
-/content_publisher content_type=comparative_analysis
+## Strategic Usage Requirements
 
-# Multi-content publication
-/content_publisher content_type=all scope=comprehensive
-```
+### Content Publication Strategy
+**Basic Publication Requirements**:
+- Publisher executes comprehensive content discovery and publication workflows
+- Publisher implements content type-specific processing with quality validation
+- Publisher handles multi-content type publication with unified standards
 
-## Usage Examples
+**Advanced Publication Strategy**:
+- Publisher optimizes content prioritization with market relevance assessment
+- Publisher implements comprehensive validation with frontend compatibility testing
+- Publisher coordinates asset optimization with responsive web presentation
 
-### Basic Usage
-```
-/content_publisher
-/content_publisher content_type=fundamental_analysis
-/content_publisher content_type=comparative_analysis
-```
-
-### Advanced Usage
-```
-/content_publisher ticker=AAPL priority=high validation_level=comprehensive
-/content_publisher content_type=comparative_analysis scope=comprehensive
-```
-
-### Comparative Analysis Publication
-```
-/content_publisher content_type=comparative_analysis priority=high
-/content_publisher content_type=comparative_analysis mode=assets_only
-```
-
-### Validation Enhancement
-```
-/content_publisher mode=validation_only frontend_validation=true
-/content_publisher content_type=comparative_analysis mode=validation_only
-```
+**Specialized Publication Requirements**:
+- **Comparative Analysis Focus**: Publisher handles cross-stock comparative content with specialized metadata
+- **Asset-Only Processing**: Publisher manages image optimization workflows independently
+- **Validation-Only Mode**: Publisher executes quality assurance without content publication
+- **Comprehensive Scope**: Publisher processes all available content types with strategic prioritization
 
 ---
 
-**Integration with Framework**: This command integrates with the broader Sensylate ecosystem through standardized script registry, template system, CLI service integration, and validation framework protocols.
+**Integration with Framework**: This command defines strategic content publication requirements for publisher-generated blog content within the broader Sensylate ecosystem through standardized template specifications, quality enforcement protocols, and cross-command coordination.
 
 **Author**: Cole Morton
-**Framework**: Content Publication Workflow Framework
-**Confidence**: High - Standardized publication methodology
-**Data Quality**: High - Content fidelity preservation protocols
+**Framework**: Content Publication Strategy Framework
+**Implementation**: Publisher sub-agent with content publication specialization
+**Confidence**: High - Strategic publication methodology with publisher delegation
+**Data Quality**: High - Content fidelity preservation through publisher implementation
 
 ## Trade History Report Management
 
@@ -867,17 +778,18 @@ TRADING CONTENT VALIDATION:
 
 ## Content Fidelity Enforcement
 
-**ZERO TOLERANCE POLICY**: Any transformation, summarization, optimization, or editorial modification of source analytical content is strictly prohibited. The content publisher role is to be a faithful custodian, not an editor, ensuring that:
+**PUBLISHER IMPLEMENTATION REQUIREMENT**: Publisher sub-agent must implement zero-tolerance policy for analytical content modification, serving as faithful custodian through systematic preservation protocols:
 
-1. **Investment Recommendations**: BUY/SELL/HOLD ratings remain exactly as generated
-2. **Confidence Scores**: All analytical confidence metrics preserved precisely
-3. **Financial Data**: Valuations, price targets, and risk assessments unchanged
-4. **Trading Performance Data**: Win rates, profit factors, trade statistics, and performance metrics unchanged
-5. **Comparative Analysis Data**: Cross-stock comparisons, risk matrices, portfolio allocations, and winner determinations unchanged
-6. **Methodology**: Analysis methodology and data sources maintained verbatim
-7. **Author Voice**: Analytical voice and technical language preserved completely
+**Content Preservation Standards**:
+- **Investment Recommendations**: Publisher maintains BUY/SELL/HOLD ratings exactly as generated
+- **Confidence Scores**: Publisher preserves all analytical confidence metrics precisely
+- **Financial Data**: Publisher keeps valuations, price targets, and risk assessments unchanged
+- **Trading Performance Data**: Publisher maintains win rates, profit factors, and statistical metrics exactly
+- **Comparative Analysis Data**: Publisher preserves cross-stock comparisons and portfolio allocations
+- **Methodology Integrity**: Publisher maintains analysis methodology and data sources verbatim
+- **Author Voice Preservation**: Publisher preserves analytical voice and technical language completely
 
-This ensures readers receive the exact analytical output generated by the fundamental analysis system, trade history analysis system, and comparative analysis system, maintaining credibility and accuracy in all financial content publication.
+Publisher implementation ensures readers receive exact analytical output with maintained credibility and accuracy.
 
 ## Sector Analysis Content Management
 

@@ -72,7 +72,7 @@ def test_output_directory():
 
     output_dir = project_root / "frontend/data/outputs/photo-booth"
     if not output_dir.exists():
-        print(f"❌ Output directory doesn't exist: {output_dir}")
+        print("❌ Output directory doesn't exist: {output_dir}")
         return False
 
     # Check for recent screenshot files
@@ -81,7 +81,7 @@ def test_output_directory():
         print("⚠️ No screenshot files found (may need to run generation first)")
         return None  # Neutral result
 
-    print(f"✅ Found {len(screenshot_files)} screenshot files in output directory")
+    print("✅ Found {len(screenshot_files)} screenshot files in output directory")
     return True
 
 
@@ -137,12 +137,12 @@ def main():
             else:  # result is None (skipped)
                 skipped += 1
         except Exception as e:
-            print(f"❌ Test {test.__name__} failed with exception: {e}")
+            print("❌ Test {test.__name__} failed with exception: {e}")
             failed += 1
         print()
 
     print("=" * 50)
-    print(f"📊 Test Results: {passed} passed, {failed} failed, {skipped} skipped")
+    print("📊 Test Results: {passed} passed, {failed} failed, {skipped} skipped")
 
     if failed == 0:
         print("🎉 Puppeteer ES module/CommonJS fix is working correctly!")

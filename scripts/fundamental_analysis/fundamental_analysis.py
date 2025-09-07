@@ -73,13 +73,13 @@ class FundamentalAnalyzer:
             if os.path.exists(discovery_file_path):
                 with open(discovery_file_path, "r") as f:
                     self.discovery_data = json.load(f)
-                print(f"📂 Loaded discovery data from: {discovery_file_path}")
+                print("📂 Loaded discovery data from: {discovery_file_path}")
                 return True
             else:
-                print(f"❌ Discovery file not found: {discovery_file_path}")
+                print("❌ Discovery file not found: {discovery_file_path}")
                 return False
         except Exception as e:
-            print(f"❌ Error loading discovery data: {str(e)}")
+            print("❌ Error loading discovery data: {str(e)}")
             return False
 
     def get_industry_benchmarks(self) -> Dict[str, float]:
@@ -479,7 +479,7 @@ class FundamentalAnalyzer:
         self, discovery_file_path: Optional[str] = None
     ) -> Dict[str, Any]:
         """Execute complete fundamental analysis workflow"""
-        print(f"📊 Starting fundamental analysis for {self.ticker}")
+        print("📊 Starting fundamental analysis for {self.ticker}")
 
         # Load discovery data if needed
         if not self.load_discovery_data(discovery_file_path):
@@ -513,12 +513,12 @@ class FundamentalAnalyzer:
             # Save analysis results
             self._save_analysis_results(analysis_result)
 
-            print(f"✅ Analysis completed for {self.ticker}")
+            print("✅ Analysis completed for {self.ticker}")
             return analysis_result
 
         except Exception as e:
             error_msg = f"Analysis failed for {self.ticker}: {str(e)}"
-            print(f"❌ {error_msg}")
+            print("❌ {error_msg}")
             return {"error": error_msg, "ticker": self.ticker}
 
     # Helper methods for analysis calculations
@@ -996,7 +996,7 @@ class FundamentalAnalyzer:
         with open(filepath, "w") as f:
             json.dump(analysis_result, f, indent=2, default=str)
 
-        print(f"💾 Analysis results saved: {filepath}")
+        print("💾 Analysis results saved: {filepath}")
         return filepath
 
     # Economic Sensitivity Analysis Helper Methods
@@ -2567,10 +2567,10 @@ def main():
     result = analyzer.execute_analysis(args.discovery_file)
 
     if "error" in result:
-        print(f"❌ Analysis failed: {result['error']}")
+        print("❌ Analysis failed: {result['error']}")
         sys.exit(1)
     else:
-        print(f"✅ Analysis completed successfully for {args.ticker}")
+        print("✅ Analysis completed successfully for {args.ticker}")
         sys.exit(0)
 
 

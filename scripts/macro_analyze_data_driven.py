@@ -989,7 +989,7 @@ class DataDrivenMacroAnalyzer:
 
     def generate_analysis_output(self) -> Dict[str, Any]:
         """Generate complete data-driven analysis output"""
-        print(f"🔄 Processing discovery data for {self.region}...")
+        print("🔄 Processing discovery data for {self.region}...")
 
         # Execute all analysis phases with data processing
         business_cycle = self.analyze_business_cycle_modeling()
@@ -1076,7 +1076,7 @@ class DataDrivenMacroAnalyzer:
             for issue in validation_results["validation_issues"][
                 :5
             ]:  # Show first 5 issues
-                print(f"  - {issue}")
+                print("  - {issue}")
             if len(validation_results["validation_issues"]) > 5:
                 print(
                     f"  ... and {len(validation_results['validation_issues']) - 5} more issues"
@@ -1406,7 +1406,7 @@ def main():
 
     # Check if discovery file exists
     if not Path(discovery_file).exists():
-        print(f"Error: Discovery file not found: {discovery_file}")
+        print("Error: Discovery file not found: {discovery_file}")
         sys.exit(1)
 
     # Create output directory if needed
@@ -1420,7 +1420,7 @@ def main():
     with open(output_file, "w") as f:
         json.dump(analysis_output, f, indent=2)
 
-    print(f"✅ Data-driven analysis complete. Output saved to: {output_file}")
+    print("✅ Data-driven analysis complete. Output saved to: {output_file}")
     print(
         f"📊 Analysis methodology: {analysis_output['metadata']['analysis_methodology']}"
     )

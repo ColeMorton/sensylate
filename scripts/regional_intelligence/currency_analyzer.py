@@ -527,18 +527,18 @@ def main():
             volatility=15.0,
         )
 
-        print(f"\n{currency} Analysis:")
-        print(f"  Regime: {analysis.regime.value}")
-        print(f"  Safe Haven Score: {analysis.safe_haven_score}")
-        print(f"  Carry Trade Appeal: {analysis.carry_trade_attractiveness}")
-        print(f"  Volatility Regime: {analysis.volatility_regime}")
-        print(f"  PPP Deviation: {analysis.ppp_deviation}%")
-        print(f"  Intervention Probability: {analysis.intervention_probability:.0%}")
+        print("\n{currency} Analysis:")
+        print("  Regime: {analysis.regime.value}")
+        print("  Safe Haven Score: {analysis.safe_haven_score}")
+        print("  Carry Trade Appeal: {analysis.carry_trade_attractiveness}")
+        print("  Volatility Regime: {analysis.volatility_regime}")
+        print("  PPP Deviation: {analysis.ppp_deviation}%")
+        print("  Intervention Probability: {analysis.intervention_probability:.0%}")
 
         # Risk assessment
         risk_assessment = analyzer.generate_currency_risk_assessment(analysis)
-        print(f"  Overall Risk Score: {risk_assessment['overall_risk_score']:.2f}")
-        print(f"  Risk Factors: {len(risk_assessment['risk_factors'])}")
+        print("  Overall Risk Score: {risk_assessment['overall_risk_score']:.2f}")
+        print("  Risk Factors: {len(risk_assessment['risk_factors'])}")
 
 
 if __name__ == "__main__":

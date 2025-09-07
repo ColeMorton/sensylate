@@ -201,10 +201,10 @@ def enhance_discovery_with_sections(ticker: str, date_str: str) -> bool:
     )
 
     if not discovery_file.exists():
-        print(f"Discovery file not found: {discovery_file}")
+        print("Discovery file not found: {discovery_file}")
         return False
 
-    print(f"Enhancing discovery sections for {ticker}...")
+    print("Enhancing discovery sections for {ticker}...")
 
     # Load current discovery data
     with open(discovery_file, "r") as f:
@@ -282,16 +282,16 @@ def enhance_discovery_with_sections(ticker: str, date_str: str) -> bool:
     with open(discovery_file, "w") as f:
         json.dump(discovery_data, f, indent=2)
 
-    print(f"✅ Enhanced discovery sections for {ticker}")
-    print(f"📈 Enhancements made: {len(enhancements_made)}")
+    print("✅ Enhanced discovery sections for {ticker}")
+    print("📈 Enhancements made: {len(enhancements_made)}")
     for enhancement in enhancements_made:
-        print(f"   • {enhancement}")
+        print("   • {enhancement}")
 
     print("📊 Final quality scores:")
     print(
         f"   • Overall data quality: {discovery_data['cli_data_quality']['overall_data_quality']}"
     )
-    print(f"   • Discovery confidence: {discovery_data['discovery_confidence']}")
+    print("   • Discovery confidence: {discovery_data['discovery_confidence']}")
     print(
         f"   • Institutional grade: {discovery_data['institutional_grade_assessment']}"
     )

@@ -454,17 +454,17 @@ if __name__ == "__main__":
 
     # Check current status
     status = trigger_manager.get_trigger_status()
-    print(f"Current earnings season: {status['current_earnings_season']}")
-    print(f"Is earnings season: {status['is_earnings_season']}")
-    print(f"Completed collections: {status['total_completed_collections']}")
+    print("Current earnings season: {status['current_earnings_season']}")
+    print("Is earnings season: {status['is_earnings_season']}")
+    print("Completed collections: {status['total_completed_collections']}")
 
     # Scan for triggers
     print("\n🔍 Scanning for quarterly triggers...")
     scan_results = trigger_manager.scan_for_triggers(["AAPL", "MSFT", "GOOGL"])
 
-    print(f"Symbols scanned: {scan_results['scanned_symbols']}")
-    print(f"Collections triggered: {scan_results['triggered_collections']}")
+    print("Symbols scanned: {scan_results['scanned_symbols']}")
+    print("Collections triggered: {scan_results['triggered_collections']}")
     if scan_results["symbols_triggered"]:
-        print(f"Symbols triggered: {', '.join(scan_results['symbols_triggered'])}")
+        print("Symbols triggered: {', '.join(scan_results['symbols_triggered'])}")
     if scan_results["errors"]:
-        print(f"Errors: {len(scan_results['errors'])}")
+        print("Errors: {len(scan_results['errors'])}")

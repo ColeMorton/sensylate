@@ -1,0 +1,1044 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sensylate.com/schemas/bitcoin_cycle_intelligence_discovery.json",
+  "title": "Bitcoin Cycle Intelligence Discovery Schema",
+  "description": "Comprehensive validation schema for Bitcoin cycle intelligence discovery JSON outputs from CLI-enhanced analyst framework",
+  "type": "object",
+  "required": [
+    "metadata",
+    "cli_comprehensive_analysis",
+    "bitcoin_market_data",
+    "cycle_indicators",
+    "network_health",
+    "cli_bitcoin_context",
+    "economic_analysis",
+    "institutional_intelligence",
+    "cli_service_validation",
+    "cli_data_quality",
+    "cli_insights",
+    "bitcoin_ecosystem_data",
+    "discovery_insights",
+    "data_quality_assessment",
+    "local_data_references"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "description": "Core metadata about the Bitcoin cycle discovery analysis execution",
+      "required": [
+        "command_name",
+        "execution_timestamp",
+        "framework_phase",
+        "analysis_date",
+        "data_collection_methodology",
+        "cli_services_utilized",
+        "api_keys_configured"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "command_name": {
+          "type": "string",
+          "const": "cli_enhanced_bitcoin_cycle_intelligence_discover",
+          "description": "Must be the standardized Bitcoin discovery command name"
+        },
+        "execution_timestamp": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d{6})?Z?$",
+          "description": "ISO 8601 timestamp with optional microseconds and timezone"
+        },
+        "framework_phase": {
+          "type": "string",
+          "const": "cli_enhanced_discover_bitcoin_sources",
+          "description": "Must indicate the Bitcoin-source discovery phase"
+        },
+        "analysis_date": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+          "description": "Date for Bitcoin cycle analysis (YYYY-MM-DD format)"
+        },
+        "data_collection_methodology": {
+          "type": "string",
+          "enum": ["production_cli_bitcoin_services_unified_access", "hybrid_cli_and_web_search_methodology"],
+          "description": "Must use hybrid methodology: CLI services for most metrics, web search for MVRV Z-Score and NUPL"
+        },
+        "cli_services_utilized": {
+          "type": "array",
+          "minItems": 5,
+          "maxItems": 8,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": [
+              "coingecko_cli",
+              "mempool_space_cli",
+              "coinmetrics_cli",
+              "blockchain_com_cli",
+              "binance_api_cli",
+              "alternative_me_cli",
+              "fred_economic_cli",
+              "bitcoin_visuals_cli"
+            ]
+          },
+          "description": "Minimum 5 Bitcoin CLI services required for institutional grade analysis"
+        },
+        "api_keys_configured": {
+          "type": "string",
+          "const": "production_keys_from_config/bitcoin_services.yaml",
+          "description": "Must reference production Bitcoin API keys configuration"
+        }
+      }
+    },
+    "cli_comprehensive_analysis": {
+      "type": "object",
+      "description": "High-level Bitcoin analysis summary and methodology overview",
+      "required": [
+        "metadata",
+        "bitcoin_overview",
+        "market_data",
+        "cycle_intelligence",
+        "data_validation",
+        "quality_metrics"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "metadata": {
+          "type": "string",
+          "description": "Bitcoin analysis methodology description"
+        },
+        "bitcoin_overview": {
+          "oneOf": [
+            {"type": "string"},
+            {"type": "object"}
+          ],
+          "description": "Bitcoin network overview - can be string or structured object"
+        },
+        "market_data": {
+          "oneOf": [
+            {"type": "string"},
+            {"type": "object"}
+          ],
+          "description": "Bitcoin market data validation summary - can be string description or structured data object"
+        },
+        "cycle_intelligence": {
+          "oneOf": [
+            {"type": "string"},
+            {"type": "object"}
+          ],
+          "description": "Bitcoin cycle intelligence methodology - can be string description or structured intelligence object"
+        },
+        "data_validation": {
+          "oneOf": [
+            {"type": "string"},
+            {"type": "object"}
+          ],
+          "description": "Bitcoin data validation approach summary - can be string description or structured validation object"
+        },
+        "quality_metrics": {
+          "oneOf": [
+            {"type": "string"},
+            {"type": "object"}
+          ],
+          "description": "Bitcoin quality assessment methodology - can be string description or structured metrics object"
+        }
+      }
+    },
+    "bitcoin_market_data": {
+      "type": "object",
+      "description": "Cross-validated Bitcoin market data with pricing consistency verification",
+      "required": [
+        "current_price",
+        "market_cap",
+        "price_validation",
+        "volume_24h",
+        "circulating_supply",
+        "all_time_high",
+        "all_time_low",
+        "confidence"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "current_price": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Current Bitcoin price in USD"
+        },
+        "market_cap": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Bitcoin market capitalization in USD"
+        },
+        "price_validation": {
+          "type": "object",
+          "required": [
+            "coingecko_price",
+            "binance_price",
+            "coinmetrics_price",
+            "price_consistency",
+            "confidence_score"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "coingecko_price": {
+              "type": "number",
+              "minimum": 0
+            },
+            "binance_price": {
+              "type": "number",
+              "minimum": 0
+            },
+            "coinmetrics_price": {
+              "type": "number",
+              "minimum": 0
+            },
+            "price_consistency": {
+              "type": "boolean",
+              "const": true,
+              "description": "Must be true for institutional grade Bitcoin data"
+            },
+            "confidence_score": {
+              "type": "number",
+              "const": 1.0,
+              "description": "Must be 1.0 for perfect price consistency"
+            }
+          }
+        },
+        "volume_24h": {
+          "type": "number",
+          "minimum": 0,
+          "description": "24-hour trading volume in USD"
+        },
+        "circulating_supply": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Current circulating Bitcoin supply"
+        },
+        "all_time_high": {
+          "type": "number",
+          "minimum": 0,
+          "description": "All-time high price in USD"
+        },
+        "all_time_low": {
+          "type": "number",
+          "minimum": 0,
+          "description": "All-time low price in USD"
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Confidence score for Bitcoin market data quality (0.0-1.0)"
+        }
+      }
+    },
+    "cycle_indicators": {
+      "type": "object",
+      "description": "Core Bitcoin cycle indicators with institutional-grade calculations",
+      "required": [
+        "mvrv_z_score",
+        "pi_cycle_top",
+        "nupl_zones",
+        "reserve_risk",
+        "rainbow_price_model",
+        "confidence"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "mvrv_z_score": {
+          "type": "object",
+          "required": [
+            "current_score",
+            "historical_percentile",
+            "zone_classification",
+            "web_search_source",
+            "data_timestamp",
+            "source_platform"
+          ],
+          "properties": {
+            "current_score": {
+              "type": "number",
+              "description": "Current MVRV Z-Score value acquired via web search"
+            },
+            "historical_percentile": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100,
+              "description": "Historical percentile ranking"
+            },
+            "zone_classification": {
+              "type": "string",
+              "enum": ["deep_capitulation", "capitulation", "accumulation", "neutral", "euphoria", "extreme_euphoria"],
+              "description": "Current MVRV zone classification"
+            },
+            "web_search_source": {
+              "type": "boolean",
+              "const": true,
+              "description": "Must be true indicating data acquired via web search"
+            },
+            "data_timestamp": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}(T\\d{2}:\\d{2}:\\d{2}(\\.\\d{3,6})?Z?)?$",
+              "description": "Timestamp when data was obtained from web search source"
+            },
+            "source_platform": {
+              "type": "string",
+              "enum": ["Glassnode", "CryptoQuant", "MacroMicro", "Bitcoin Magazine Pro", "CoinGlass", "BitcoinVisuals", "Other On-Chain Analytics Platform"],
+              "description": "Specific platform from which MVRV Z-Score was obtained via web search"
+            }
+          }
+        },
+        "pi_cycle_top": {
+          "type": "object",
+          "required": [
+            "signal_active",
+            "days_to_signal",
+            "historical_accuracy"
+          ],
+          "properties": {
+            "signal_active": {
+              "type": "boolean",
+              "description": "Whether PI Cycle top signal is currently active"
+            },
+            "days_to_signal": {
+              "oneOf": [
+                {"type": "number"},
+                {"type": "null"}
+              ],
+              "description": "Days until potential signal trigger (null if signal active)"
+            },
+            "historical_accuracy": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "description": "Historical accuracy of PI Cycle indicator"
+            }
+          }
+        },
+        "nupl_zones": {
+          "type": "object",
+          "required": [
+            "current_nupl",
+            "zone_classification",
+            "lth_nupl",
+            "sth_nupl",
+            "web_search_source",
+            "data_timestamp",
+            "source_platform"
+          ],
+          "properties": {
+            "current_nupl": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Current NUPL value (-1 to 1) acquired via web search"
+            },
+            "zone_classification": {
+              "type": "string",
+              "enum": ["capitulation", "hope", "optimism", "belief", "euphoria", "greed"],
+              "description": "Current NUPL zone classification"
+            },
+            "lth_nupl": {
+              "type": "number",
+              "description": "Long-term holder NUPL"
+            },
+            "sth_nupl": {
+              "type": "number",
+              "description": "Short-term holder NUPL"
+            },
+            "web_search_source": {
+              "type": "boolean",
+              "const": true,
+              "description": "Must be true indicating data acquired via web search"
+            },
+            "data_timestamp": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}(T\\d{2}:\\d{2}:\\d{2}(\\.\\d{3,6})?Z?)?$",
+              "description": "Timestamp when data was obtained from web search source"
+            },
+            "source_platform": {
+              "type": "string",
+              "enum": ["Glassnode", "CryptoQuant", "MacroMicro", "Bitcoin Magazine Pro", "CoinGlass", "BitcoinVisuals", "Other On-Chain Analytics Platform"],
+              "description": "Specific platform from which NUPL was obtained via web search"
+            }
+          }
+        },
+        "reserve_risk": {
+          "type": "object",
+          "required": [
+            "current_value",
+            "historical_percentile",
+            "accumulation_opportunity"
+          ],
+          "properties": {
+            "current_value": {
+              "type": "number",
+              "minimum": 0,
+              "description": "Current Reserve Risk value"
+            },
+            "historical_percentile": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100,
+              "description": "Historical percentile ranking"
+            },
+            "accumulation_opportunity": {
+              "type": "string",
+              "enum": ["excellent", "good", "fair", "poor"],
+              "description": "Current accumulation opportunity assessment"
+            }
+          }
+        },
+        "rainbow_price_model": {
+          "type": "object",
+          "required": [
+            "current_band",
+            "fair_value_estimate",
+            "band_description"
+          ],
+          "properties": {
+            "current_band": {
+              "type": "string",
+              "enum": ["deep_red", "red", "orange", "yellow", "green", "light_blue", "blue", "dark_blue", "purple"],
+              "description": "Current rainbow price band"
+            },
+            "fair_value_estimate": {
+              "type": "number",
+              "minimum": 0,
+              "description": "Rainbow model fair value estimate"
+            },
+            "band_description": {
+              "type": "string",
+              "description": "Description of current band implications"
+            }
+          }
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Confidence score for cycle indicators (0.0-1.0)"
+        }
+      }
+    },
+    "network_health": {
+      "type": "object",
+      "description": "Comprehensive Bitcoin network health and security metrics",
+      "required": [
+        "hash_rate",
+        "mining_economics",
+        "network_security",
+        "development_activity"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "hash_rate": {
+          "type": "object",
+          "required": [
+            "current_hashrate",
+            "difficulty_adjustment",
+            "hash_ribbons",
+            "confidence"
+          ],
+          "additionalProperties": true,
+          "properties": {
+            "current_hashrate": {
+              "type": "number",
+              "minimum": 0,
+              "description": "Current network hash rate in EH/s"
+            },
+            "difficulty_adjustment": {
+              "type": "number",
+              "description": "Most recent difficulty adjustment percentage"
+            },
+            "hash_ribbons": {
+              "type": "object",
+              "properties": {
+                "signal": {
+                  "type": "string",
+                  "enum": ["capitulation", "recovery", "neutral"]
+                },
+                "ma_30": {
+                  "type": "number"
+                },
+                "ma_60": {
+                  "type": "number"
+                }
+              }
+            },
+            "confidence": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0
+            }
+          }
+        },
+        "mining_economics": {
+          "type": "object",
+          "required": [
+            "puell_multiple",
+            "miner_revenue",
+            "fee_percentage",
+            "confidence"
+          ],
+          "additionalProperties": true,
+          "properties": {
+            "puell_multiple": {
+              "type": "number",
+              "minimum": 0,
+              "description": "Current Puell Multiple value"
+            },
+            "miner_revenue": {
+              "type": "number",
+              "minimum": 0,
+              "description": "Daily miner revenue in USD"
+            },
+            "fee_percentage": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100,
+              "description": "Fees as percentage of total miner revenue"
+            },
+            "confidence": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0
+            }
+          }
+        },
+        "network_security": {
+          "type": "object",
+          "required": [
+            "security_budget",
+            "attack_cost",
+            "decentralization_score",
+            "confidence"
+          ],
+          "properties": {
+            "security_budget": {
+              "type": "number",
+              "minimum": 0,
+              "description": "Annual security budget in USD"
+            },
+            "attack_cost": {
+              "type": "number",
+              "minimum": 0,
+              "description": "Estimated cost of 51% attack"
+            },
+            "decentralization_score": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 10,
+              "description": "Mining decentralization score (0-10)"
+            },
+            "confidence": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0
+            }
+          }
+        },
+        "development_activity": {
+          "type": "object",
+          "required": [
+            "github_commits",
+            "active_developers",
+            "protocol_upgrades",
+            "confidence"
+          ],
+          "properties": {
+            "github_commits": {
+              "type": "number",
+              "minimum": 0,
+              "description": "Recent GitHub commits to Bitcoin Core"
+            },
+            "active_developers": {
+              "type": "number",
+              "minimum": 0,
+              "description": "Number of active developers"
+            },
+            "protocol_upgrades": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Recent or upcoming protocol upgrades"
+            },
+            "confidence": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0
+            }
+          }
+        }
+      }
+    },
+    "cli_bitcoin_context": {
+      "type": "object",
+      "description": "Economic and market context from Bitcoin CLI services integration",
+      "required": [
+        "metadata"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "metadata": {
+          "type": "string"
+        },
+        "economic_indicators": {
+          "oneOf": [
+            {"type": "string"},
+            {"type": "object"}
+          ]
+        },
+        "bitcoin_correlations": {
+          "oneOf": [
+            {"type": "string"},
+            {"type": "object"}
+          ]
+        },
+        "market_summary": {
+          "type": "string"
+        },
+        "macro_implications": {
+          "type": "string"
+        }
+      }
+    },
+    "economic_analysis": {
+      "type": "object",
+      "description": "Economic environment analysis and Bitcoin-specific implications",
+      "required": [
+        "interest_rate_environment",
+        "liquidity_conditions",
+        "policy_implications",
+        "bitcoin_correlation"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "interest_rate_environment": {
+          "type": "string",
+          "enum": ["restrictive", "neutral", "accommodative", "moderately_restrictive"],
+          "description": "Current interest rate environment classification"
+        },
+        "liquidity_conditions": {
+          "type": "string",
+          "enum": ["tight", "neutral", "loose", "extreme_loose"],
+          "description": "Global liquidity conditions assessment"
+        },
+        "policy_implications": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of policy implications for Bitcoin"
+        },
+        "bitcoin_correlation": {
+          "type": "object",
+          "properties": {
+            "with_gold": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1
+            },
+            "with_stocks": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1
+            },
+            "with_bonds": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1
+            },
+            "with_dxy": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1
+            }
+          }
+        }
+      }
+    },
+    "institutional_intelligence": {
+      "type": "object",
+      "description": "Institutional adoption and flow analysis",
+      "required": [
+        "etf_flows",
+        "corporate_treasuries",
+        "exchange_flows"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "etf_flows": {
+          "type": "object",
+          "properties": {
+            "net_flows_7d": {
+              "type": "number"
+            },
+            "net_flows_30d": {
+              "type": "number"
+            },
+            "total_aum": {
+              "type": "number"
+            }
+          }
+        },
+        "corporate_treasuries": {
+          "type": "object",
+          "properties": {
+            "total_corporate_holdings": {
+              "type": "number"
+            },
+            "recent_additions": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "exchange_flows": {
+          "type": "object",
+          "properties": {
+            "net_exchange_flows": {
+              "type": "number"
+            },
+            "whale_transactions": {
+              "type": "number"
+            }
+          }
+        }
+      }
+    },
+    "cli_service_validation": {
+      "type": "object",
+      "description": "Bitcoin CLI service health and operational status validation",
+      "required": [
+        "service_health",
+        "health_score",
+        "services_operational",
+        "services_healthy"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "service_health": {
+          "oneOf": [
+            {"type": "string"},
+            {"type": "object"}
+          ],
+          "description": "Bitcoin service health status summary or detailed breakdown"
+        },
+        "health_score": {
+          "type": "number",
+          "const": 1.0,
+          "description": "Must be 1.0 for production-grade Bitcoin analysis"
+        },
+        "services_operational": {
+          "type": "number",
+          "minimum": 5,
+          "description": "Number of operational Bitcoin services (minimum 5 required)"
+        },
+        "services_healthy": {
+          "type": "boolean",
+          "const": true,
+          "description": "Must be true for institutional grade Bitcoin analysis"
+        }
+      }
+    },
+    "cli_data_quality": {
+      "type": "object",
+      "description": "Overall Bitcoin data quality assessment from CLI integration",
+      "required": [
+        "overall_data_quality",
+        "cli_service_health",
+        "institutional_grade",
+        "data_sources_via_cli",
+        "cli_integration_status"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "overall_data_quality": {
+          "type": "number",
+          "minimum": 0.90,
+          "maximum": 1.0,
+          "description": "Must be >= 0.90 for institutional grade Bitcoin data"
+        },
+        "cli_service_health": {
+          "type": "number",
+          "const": 1.0,
+          "description": "Must be 1.0 for operational Bitcoin services"
+        },
+        "institutional_grade": {
+          "type": "boolean",
+          "const": true,
+          "description": "Must be true for high-quality Bitcoin analysis"
+        },
+        "data_sources_via_cli": {
+          "type": "array",
+          "minItems": 5,
+          "uniqueItems": true,
+          "items": {
+            "type": "string"
+          },
+          "description": "List of Bitcoin CLI data sources utilized"
+        },
+        "cli_integration_status": {
+          "type": "string",
+          "const": "operational",
+          "description": "Must be operational for valid Bitcoin analysis"
+        }
+      }
+    },
+    "cli_insights": {
+      "type": "object",
+      "description": "Insights from Bitcoin CLI integration and data quality analysis",
+      "required": [
+        "cli_integration_observations",
+        "data_quality_insights",
+        "market_context_insights",
+        "service_performance_insights"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "cli_integration_observations": {
+          "type": "array",
+          "minItems": 3,
+          "items": {
+            "type": "string"
+          },
+          "description": "Key observations from Bitcoin CLI integration"
+        },
+        "data_quality_insights": {
+          "type": "array",
+          "minItems": 3,
+          "items": {
+            "type": "string"
+          },
+          "description": "Bitcoin data quality assessment insights"
+        },
+        "market_context_insights": {
+          "type": "array",
+          "minItems": 3,
+          "items": {
+            "type": "string"
+          },
+          "description": "Bitcoin market context and economic insights"
+        },
+        "service_performance_insights": {
+          "type": "array",
+          "minItems": 3,
+          "items": {
+            "type": "string"
+          },
+          "description": "Bitcoin CLI service performance insights"
+        }
+      }
+    },
+    "bitcoin_ecosystem_data": {
+      "type": "object",
+      "description": "Bitcoin ecosystem analysis and comparative metrics",
+      "required": [
+        "lightning_network",
+        "defi_integration",
+        "adoption_metrics",
+        "confidence"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "lightning_network": {
+          "type": "object",
+          "required": [
+            "channel_capacity",
+            "node_count",
+            "growth_metrics"
+          ],
+          "properties": {
+            "channel_capacity": {
+              "type": "number",
+              "minimum": 0,
+              "description": "Total Lightning Network capacity in BTC"
+            },
+            "node_count": {
+              "type": "number",
+              "minimum": 0,
+              "description": "Number of Lightning Network nodes"
+            },
+            "growth_metrics": {
+              "type": "object",
+              "properties": {
+                "capacity_growth_30d": {
+                  "type": "number"
+                },
+                "node_growth_30d": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        },
+        "defi_integration": {
+          "type": "object",
+          "properties": {
+            "wrapped_bitcoin_tvl": {
+              "type": "number",
+              "minimum": 0
+            },
+            "defi_protocols": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "adoption_metrics": {
+          "type": "object",
+          "properties": {
+            "active_addresses": {
+              "type": "number",
+              "minimum": 0
+            },
+            "transaction_count": {
+              "type": "number",
+              "minimum": 0
+            },
+            "addresses_with_balance": {
+              "type": "number",
+              "minimum": 0
+            }
+          }
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Confidence in Bitcoin ecosystem analysis"
+        }
+      }
+    },
+    "discovery_insights": {
+      "type": "object",
+      "description": "Bitcoin discovery phase insights and next phase readiness assessment",
+      "required": [
+        "initial_observations",
+        "data_gaps_identified",
+        "research_priorities",
+        "next_phase_readiness"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "initial_observations": {
+          "type": "array",
+          "minItems": 3,
+          "items": {
+            "type": "string"
+          },
+          "description": "Key initial observations from Bitcoin discovery analysis"
+        },
+        "data_gaps_identified": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "type": "string"
+          },
+          "description": "Identified gaps requiring further Bitcoin research"
+        },
+        "research_priorities": {
+          "type": "array",
+          "minItems": 3,
+          "items": {
+            "type": "string"
+          },
+          "description": "Priority areas for next phase Bitcoin analysis"
+        },
+        "next_phase_readiness": {
+          "type": "boolean",
+          "const": true,
+          "description": "Must be true to proceed to next Bitcoin analysis phase"
+        }
+      }
+    },
+    "data_quality_assessment": {
+      "type": "object",
+      "description": "Comprehensive Bitcoin data quality assessment and reliability scoring",
+      "required": [
+        "source_reliability_scores",
+        "data_completeness",
+        "data_freshness",
+        "quality_flags"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "source_reliability_scores": {
+          "type": "object",
+          "patternProperties": {
+            "^[a-z_]+_cli$": {
+              "type": "number",
+              "minimum": 0.90,
+              "maximum": 1.0
+            },
+            "^[a-z_]+$": {
+              "type": "number",
+              "minimum": 0.90,
+              "maximum": 1.0
+            }
+          },
+          "additionalProperties": false,
+          "description": "Reliability scores for each Bitcoin data source (minimum 0.90)"
+        },
+        "data_completeness": {
+          "type": "number",
+          "minimum": 0.90,
+          "maximum": 1.0,
+          "description": "Bitcoin data completeness score (minimum 0.90 for institutional grade)"
+        },
+        "data_freshness": {
+          "type": "object",
+          "description": "Bitcoin data freshness indicators by category"
+        },
+        "quality_flags": {
+          "type": "array",
+          "minItems": 3,
+          "items": {
+            "type": "string"
+          },
+          "description": "Bitcoin quality assurance flags and confirmations"
+        }
+      }
+    },
+    "local_data_references": {
+      "$ref": "./local_data_references_schema.json"
+    }
+  },
+  "examples": [
+    {
+      "metadata": {
+        "command_name": "cli_enhanced_bitcoin_cycle_intelligence_discover",
+        "execution_timestamp": "2025-09-04T12:57:40.000000Z",
+        "framework_phase": "cli_enhanced_discover_bitcoin_sources",
+        "analysis_date": "2025-09-04",
+        "data_collection_methodology": "hybrid_cli_and_web_search_methodology",
+        "cli_services_utilized": ["coingecko_cli", "mempool_space_cli", "coinmetrics_cli", "alternative_me_cli", "fred_economic_cli"],
+        "api_keys_configured": "production_keys_from_config/bitcoin_services.yaml"
+      }
+    }
+  ],
+  "definitions": {
+    "confidence_score": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0,
+      "description": "Confidence score between 0.0 and 1.0"
+    },
+    "institutional_grade_confidence": {
+      "type": "number",
+      "minimum": 0.90,
+      "maximum": 1.0,
+      "description": "High confidence score required for institutional grade Bitcoin analysis"
+    },
+    "bitcoin_date": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+      "description": "Valid Bitcoin analysis date (YYYY-MM-DD format)"
+    }
+  }
+}

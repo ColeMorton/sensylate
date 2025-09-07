@@ -301,8 +301,8 @@ def main():
         print("\n" + "=" * 60)
         print("CACHE OPTIMIZATION SUMMARY")
         print("=" * 60)
-        print(f"📁 Files deleted: {results['files_deleted']}")
-        print(f"🔄 Files migrated: {results['files_migrated']}")
+        print("📁 Files deleted: {results['files_deleted']}")
+        print("🔄 Files migrated: {results['files_migrated']}")
         print(
             f"📂 Directories created: {results['structure_optimization']['directories_created']}"
         )

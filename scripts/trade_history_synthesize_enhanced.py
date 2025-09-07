@@ -1131,25 +1131,25 @@ def main():
 
     synthesizer = EnhancedTradeHistorySynthesizer(args.env)
 
-    print(f"🚀 Starting Enhanced Trade History Synthesis for {args.portfolio}")
+    print("🚀 Starting Enhanced Trade History Synthesis for {args.portfolio}")
     print("📊 Integrating comprehensive macro-economic analysis...")
 
     result = synthesizer.synthesize_with_macro_context(args.portfolio, args.date)
 
     if "error" in result:
-        print(f"❌ Synthesis failed: {result['error']}")
+        print("❌ Synthesis failed: {result['error']}")
         return 1
 
     print("✅ Enhanced synthesis completed successfully!")
-    print(f"📁 Enhanced reports generated:")
+    print("📁 Enhanced reports generated:")
 
     for report_type, file_path in result.get("enhanced_reports", {}).items():
-        print(f"   - {report_type}: {file_path}")
+        print("   - {report_type}: {file_path}")
 
     print(
         f"🎯 Macro-economic confidence: {result.get('macro_economic_context', {}).get('confidence_score', 0.7):.0%}"
     )
-    print(f"📅 Analysis timestamp: {result.get('synthesis_timestamp')}")
+    print("📅 Analysis timestamp: {result.get('synthesis_timestamp')}")
 
     return 0
 

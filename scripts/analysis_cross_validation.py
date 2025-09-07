@@ -34,7 +34,7 @@ class AnalysisCrossValidator:
             with open(filepath, "r") as f:
                 return json.load(f)
         except Exception as e:
-            print(f"Error loading {filepath}: {e}")
+            print("Error loading {filepath}: {e}")
             return {}
 
     def extract_ticker_from_filename(self, filepath: Path) -> str:
@@ -487,11 +487,11 @@ def main():
     with open(output_file, "w") as f:
         json.dump(report, f, indent=2)
 
-    print(f"Cross-analysis validation complete. Report saved to: {output_file}")
+    print("Cross-analysis validation complete. Report saved to: {output_file}")
     print(
         f"Overall Score: {report['cross_analysis_results']['overall_cross_analysis_score']}"
     )
-    print(f"Files Analyzed: {report['metadata']['files_analyzed_count']}")
+    print("Files Analyzed: {report['metadata']['files_analyzed_count']}")
 
 
 if __name__ == "__main__":

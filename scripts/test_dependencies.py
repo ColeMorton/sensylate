@@ -218,12 +218,12 @@ def main() -> int:
     report = tester.generate_compatibility_report()
 
     # Print summary
-    print(f"\nCompatibility Test Results ({report['timestamp']})")
+    print("\nCompatibility Test Results ({report['timestamp']})")
     print("-" * 50)
-    print(f"Python Build:     {'✅ PASS' if report['python_build'] else '❌ FAIL'}")
-    print(f"Frontend Build:   {'✅ PASS' if report['frontend_build'] else '❌ FAIL'}")
-    print(f"Python Tests:     {'✅ PASS' if report['python_tests'] else '❌ FAIL'}")
-    print(f"Frontend Tests:   {'✅ PASS' if report['frontend_tests'] else '❌ FAIL'}")
+    print("Python Build:     {'✅ PASS' if report['python_build'] else '❌ FAIL'}")
+    print("Frontend Build:   {'✅ PASS' if report['frontend_build'] else '❌ FAIL'}")
+    print("Python Tests:     {'✅ PASS' if report['python_tests'] else '❌ FAIL'}")
+    print("Frontend Tests:   {'✅ PASS' if report['frontend_tests'] else '❌ FAIL'}")
 
     security = report["security_scans"]
     print(
@@ -246,7 +246,7 @@ def main() -> int:
     with open(report_file, "w") as f:
         json.dump(report, f, indent=2)
 
-    print(f"\nDetailed report saved to: {report_file}")
+    print("\nDetailed report saved to: {report_file}")
 
     return 0 if report["overall_status"] else 1
 

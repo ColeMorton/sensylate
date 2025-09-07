@@ -339,12 +339,12 @@ class TestConsolidatedStorageSystem(unittest.TestCase):
         # Hybrid format should be smaller
         reduction_percentage = (1 - total_hybrid_size / old_format_size) * 100
 
-        print(f"\nFile Size Comparison:")
-        print(f"Old JSON format: {old_format_size} bytes")
+        print("\nFile Size Comparison:")
+        print("Old JSON format: {old_format_size} bytes")
         print(
             f"New hybrid format: {total_hybrid_size} bytes (CSV: {csv_size}, Meta: {meta_size})"
         )
-        print(f"Reduction: {reduction_percentage:.1f}%")
+        print("Reduction: {reduction_percentage:.1f}%")
 
         self.assertLess(
             total_hybrid_size, old_format_size, "Hybrid format should be smaller"
@@ -416,15 +416,15 @@ class TestConsolidatedStorageSystem(unittest.TestCase):
                 json_data = json.load(f)
         json_read_time = time.time() - start_time
 
-        print(f"\nRead Performance Comparison (100 iterations):")
-        print(f"CSV reading: {csv_read_time:.4f} seconds")
-        print(f"JSON reading: {json_read_time:.4f} seconds")
-        print(f"CSV is {json_read_time/csv_read_time:.1f}x faster")
+        print("\nRead Performance Comparison (100 iterations):")
+        print("CSV reading: {csv_read_time:.4f} seconds")
+        print("JSON reading: {json_read_time:.4f} seconds")
+        print("CSV is {json_read_time/csv_read_time:.1f}x faster")
 
         # CSV should be competitive with JSON for small datasets
         # For larger datasets, CSV will be significantly faster
         performance_ratio = csv_read_time / json_read_time
-        print(f"Performance ratio (CSV/JSON): {performance_ratio:.2f}")
+        print("Performance ratio (CSV/JSON): {performance_ratio:.2f}")
 
         # CSV may be slower for small datasets but provides major file size benefits
         # For small datasets, allow up to 3x slower as the trade-off is acceptable
@@ -650,7 +650,7 @@ def run_performance_benchmarks():
                 }
             )
 
-        print(f"Testing with {len(large_dataset['data'])} records...")
+        print("Testing with {len(large_dataset['data'])} records...")
 
         # Benchmark storage performance
         start_time = time.time()
@@ -662,8 +662,8 @@ def run_performance_benchmarks():
         )
         storage_time = time.time() - start_time
 
-        print(f"Storage time: {storage_time:.4f} seconds")
-        print(f"Records per second: {len(large_dataset['data'])/storage_time:.0f}")
+        print("Storage time: {storage_time:.4f} seconds")
+        print("Records per second: {len(large_dataset['data'])/storage_time:.0f}")
 
         # Benchmark read performance
         csv_files = list(test_dir.rglob("*.csv"))
@@ -678,19 +678,19 @@ def run_performance_benchmarks():
             total_read_time += read_time
             total_records += len(records)
 
-        print(f"Read time: {total_read_time:.4f} seconds")
-        print(f"Read records per second: {total_records/total_read_time:.0f}")
+        print("Read time: {total_read_time:.4f} seconds")
+        print("Read records per second: {total_records/total_read_time:.0f}")
 
         # File size analysis
         total_csv_size = sum(f.stat().st_size for f in test_dir.rglob("*.csv"))
         total_meta_size = sum(f.stat().st_size for f in test_dir.rglob("*.meta.json"))
         total_size = total_csv_size + total_meta_size
 
-        print(f"\nFile Size Analysis:")
-        print(f"CSV files: {total_csv_size} bytes")
-        print(f"Metadata files: {total_meta_size} bytes")
-        print(f"Total: {total_size} bytes")
-        print(f"Bytes per record: {total_size/total_records:.1f}")
+        print("\nFile Size Analysis:")
+        print("CSV files: {total_csv_size} bytes")
+        print("Metadata files: {total_meta_size} bytes")
+        print("Total: {total_size} bytes")
+        print("Bytes per record: {total_size/total_records:.1f}")
 
     finally:
         # Cleanup
@@ -719,25 +719,25 @@ if __name__ == "__main__":
     run_performance_benchmarks()
 
     # Summary
-    print(f"\n📊 Test Summary:")
-    print(f"Tests run: {test_results.testsRun}")
-    print(f"Failures: {len(test_results.failures)}")
-    print(f"Errors: {len(test_results.errors)}")
+    print("\n📊 Test Summary:")
+    print("Tests run: {test_results.testsRun}")
+    print("Failures: {len(test_results.failures)}")
+    print("Errors: {len(test_results.errors)}")
     print(
         f"Success rate: {(test_results.testsRun - len(test_results.failures) - len(test_results.errors))/test_results.testsRun*100:.1f}%"
     )
 
     if test_results.failures:
-        print(f"\n❌ Failures:")
+        print("\n❌ Failures:")
         for test, traceback in test_results.failures:
-            print(f"  - {test}: {traceback}")
+            print("  - {test}: {traceback}")
 
     if test_results.errors:
-        print(f"\n💥 Errors:")
+        print("\n💥 Errors:")
         for test, traceback in test_results.errors:
-            print(f"  - {test}: {traceback}")
+            print("  - {test}: {traceback}")
 
     success = len(test_results.failures) == 0 and len(test_results.errors) == 0
-    print(f"\n{'✅ All tests passed!' if success else '❌ Some tests failed!'}")
+    print("\n{'✅ All tests passed!' if success else '❌ Some tests failed!'}")
 
     exit(0 if success else 1)

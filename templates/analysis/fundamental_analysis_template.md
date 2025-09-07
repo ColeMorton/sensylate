@@ -259,15 +259,13 @@ Key variables impact on fair value:
 
 ## 🏁 Investment Recommendation Summary
 
-[Comprehensive 200-250 word summary integrating sector analysis context and economic intelligence into institutional-quality investment decision framework. Include:
+**Core Investment Framework**: [Investment thesis with core value proposition and competitive advantages. Include economic cycle positioning with GDP/employment sensitivity ([±0.XX] correlations), sector rotation context and relative timing considerations ([X.X]/10 rotation score), economic stress test results and downside protection ([±XX]% worst case impact), and cross-sector valuation attractiveness with competitive positioning ([Top/Bottom] quartile ranking).]
 
-**Core Investment Framework**: (1) Investment thesis with economic cycle positioning and GDP/employment sensitivity ([±0.XX] correlations), (2) Sector rotation context and relative timing considerations ([X.X]/10 rotation score), (3) Economic stress test results and downside protection ([±XX]% worst case impact), (4) Cross-sector valuation attractiveness and competitive positioning ([Top/Bottom] quartile ranking).
+**Risk-Adjusted Analysis**: [Quantified risk assessment with probability-weighted scenarios ([XX.X]/35.0 aggregate risk score) and business cycle sensitivity analysis showing recession vulnerability ([XX]% probability with [X.X]x GDP elasticity). Detail interest rate environment impact and duration sensitivity ([X.X] years with [±0.XX] Fed correlation), and provide position sizing guidance based on stress test vulnerability ([Conservative/Moderate/Standard] sizing with [X-X]% portfolio allocation).]
 
-**Risk-Adjusted Analysis**: (5) Quantified risk assessment with probability-weighted scenarios ([XX.X]/35.0 aggregate risk score), (6) Business cycle sensitivity and recession vulnerability ([XX]% probability with [X.X]x GDP elasticity), (7) Interest rate environment impact and duration sensitivity ([X.X] years with [±0.XX] Fed correlation), (8) Position sizing guidance based on stress test vulnerability ([Conservative/Moderate/Standard] sizing).
+**Economic Environment Integration**: [Current economic environment assessment with impact on investment timeline and expected returns under [Restrictive/Neutral/Supportive] monetary policy. Include sector rotation timing considerations for tactical allocation based on [Early/Mid/Late] cycle preference, FRED economic indicator integration with [0.XX] confidence weighting, and key economic catalysts with probability assessments.]
 
-**Economic Environment Integration**: (9) Current economic environment impact on investment timeline and returns ([Restrictive/Neutral/Supportive] monetary policy), (10) Sector rotation timing considerations for tactical allocation ([Early/Mid/Late] cycle preference), (11) FRED economic indicator freshness and confidence weighting ([0.XX] overall economic confidence).
-
-**Institutional Certification**: (12) Multi-source validation results and institutional confidence level ([0.XX]/1.0 overall confidence with [Achieved/Not Achieved] certification), (13) Clear articulation of why this represents exceptional/adequate/poor risk-adjusted value at current levels within economic and sector context, (14) Complete investment recommendation suitable for institutional decision-making with economic stress testing and sector rotation framework integration.]
+**Institutional Certification**: [Multi-source validation results achieving [0.XX]/1.0 overall confidence with [Achieved/Not Achieved] institutional certification status. Clear articulation of why this represents [exceptional/adequate/poor] risk-adjusted value at current levels within economic and sector context. Complete investment recommendation suitable for institutional decision-making with [XX-XX] month investment horizon and comprehensive risk monitoring framework.]
 ```
 
 ## Template Requirements

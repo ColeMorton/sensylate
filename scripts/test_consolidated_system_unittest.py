@@ -372,29 +372,29 @@ def run_test_suite():
     test_results = runner.run(test_suite)
 
     # Generate summary
-    print(f"\n📊 Test Suite Summary:")
-    print(f"   Tests run: {test_results.testsRun}")
-    print(f"   Failures: {len(test_results.failures)}")
-    print(f"   Errors: {len(test_results.errors)}")
+    print("\n📊 Test Suite Summary:")
+    print("   Tests run: {test_results.testsRun}")
+    print("   Failures: {len(test_results.failures)}")
+    print("   Errors: {len(test_results.errors)}")
     success_rate = (
         (test_results.testsRun - len(test_results.failures) - len(test_results.errors))
         / test_results.testsRun
         * 100
     )
-    print(f"   Success rate: {success_rate:.1f}%")
+    print("   Success rate: {success_rate:.1f}%")
 
     if test_results.failures:
-        print(f"\n❌ Failures:")
+        print("\n❌ Failures:")
         for test, traceback in test_results.failures:
-            print(f"   - {test}: {traceback}")
+            print("   - {test}: {traceback}")
 
     if test_results.errors:
-        print(f"\n💥 Errors:")
+        print("\n💥 Errors:")
         for test, traceback in test_results.errors:
-            print(f"   - {test}: {traceback}")
+            print("   - {test}: {traceback}")
 
     overall_success = len(test_results.failures) == 0 and len(test_results.errors) == 0
-    print(f"\n{'✅ All tests passed!' if overall_success else '❌ Some tests failed!'}")
+    print("\n{'✅ All tests passed!' if overall_success else '❌ Some tests failed!'}")
 
     return overall_success
 

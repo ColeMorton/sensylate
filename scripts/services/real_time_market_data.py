@@ -1306,15 +1306,15 @@ if __name__ == "__main__":
         )
 
         wti_price = service.get_current_wti_crude_price()
-        print(f"WTI Crude: ${wti_price.value}/bbl (source: {wti_price.source})")
+        print("WTI Crude: ${wti_price.value}/bbl (source: {wti_price.source})")
 
         # Get comprehensive refresh
         summary = service.refresh_all_market_data()
-        print(f"\nRefresh Summary:")
-        print(f"Real-time coverage: {summary['real_time_coverage']:.1%}")
+        print("\nRefresh Summary:")
+        print("Real-time coverage: {summary['real_time_coverage']:.1%}")
         print(
             f"Data sources available: {len([s for s in summary['source_status'].values() if s.is_available])}"
         )
 
     except Exception as e:
-        print(f"Service test failed: {e}")
+        print("Service test failed: {e}")

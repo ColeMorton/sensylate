@@ -1326,38 +1326,38 @@ def main():
         print("\n" + "=" * 60)
         print("TRADE HISTORY DISCOVERY COMPLETE")
         print("=" * 60)
-        print(f"Portfolio: {result['portfolio']}")
-        print(f"Execution: {result['discovery_metadata']['execution_timestamp']}")
-        print(f"Data Source: {result['discovery_metadata']['data_source']}")
+        print("Portfolio: {result['portfolio']}")
+        print("Execution: {result['discovery_metadata']['execution_timestamp']}")
+        print("Data Source: {result['discovery_metadata']['data_source']}")
         print(
             f"Overall Confidence: {result['discovery_metadata']['confidence_score']:.3f}"
         )
 
         print("\nTRADE SUMMARY:")
         summary = result["portfolio_summary"]
-        print(f"  Total Trades: {summary['total_trades']}")
-        print(f"  Closed Positions: {summary['closed_trades']}")
-        print(f"  Active Positions: {summary['active_trades']}")
-        print(f"  Unique Tickers: {summary['unique_tickers']}")
+        print("  Total Trades: {summary['total_trades']}")
+        print("  Closed Positions: {summary['closed_trades']}")
+        print("  Active Positions: {summary['active_trades']}")
+        print("  Unique Tickers: {summary['unique_tickers']}")
 
         print("\nPERFORMANCE (Closed Trades Only):")
         perf = result["performance_metrics"]
-        print(f"  Win Rate: {perf['win_rate']:.1%}")
-        print(f"  Total Wins: {perf['total_wins']}")
-        print(f"  Total Losses: {perf['total_losses']}")
-        print(f"  Profit Factor: {perf['profit_factor']:.2f}")
-        print(f"  Total PnL: ${perf['total_pnl']:.2f}")
+        print("  Win Rate: {perf['win_rate']:.1%}")
+        print("  Total Wins: {perf['total_wins']}")
+        print("  Total Losses: {perf['total_losses']}")
+        print("  Profit Factor: {perf['profit_factor']:.2f}")
+        print("  Total PnL: ${perf['total_pnl']:.2f}")
 
         print("\nACTIVE PORTFOLIO:")
-        print(f"  Active Positions: {summary['active_trades']}")
+        print("  Active Positions: {summary['active_trades']}")
 
         print("\nDATA QUALITY:")
         quality = result["data_quality_assessment"]
-        print(f"  Overall Confidence: {quality['overall_confidence']:.3f}")
-        print(f"  Derivable Fields: {quality['derivable_fields_confidence']:.3f}")
-        print(f"  Validation Issues: {quality['validation_issues_count']}")
+        print("  Overall Confidence: {quality['overall_confidence']:.3f}")
+        print("  Derivable Fields: {quality['derivable_fields_confidence']:.3f}")
+        print("  Validation Issues: {quality['validation_issues_count']}")
 
-        print(f"\nOutput saved to: {discovery.output_dir}")
+        print("\nOutput saved to: {discovery.output_dir}")
         print("=" * 60)
 
 

@@ -73,7 +73,7 @@ class CommandReferenceStandardizer:
             with open(file_path, "r", encoding="utf-8") as f:
                 content = f.read()
         except Exception as e:
-            print(f"Error reading {file_path}: {e}")
+            print("Error reading {file_path}: {e}")
             return False, []
 
         original_content = content
@@ -111,7 +111,7 @@ class CommandReferenceStandardizer:
                     f.write(content)
                 return True, changes_made
             except Exception as e:
-                print(f"Error writing {file_path}: {e}")
+                print("Error writing {file_path}: {e}")
                 return False, []
 
         return False, []
@@ -127,7 +127,7 @@ class CommandReferenceStandardizer:
         total_files = 0
         changed_files = 0
 
-        print(f"Scanning commands directory: {self.commands_dir}")
+        print("Scanning commands directory: {self.commands_dir}")
 
         # Find all .md files recursively
         for file_path in self.commands_dir.rglob("*.md"):
@@ -138,19 +138,19 @@ class CommandReferenceStandardizer:
                 changed_files += 1
                 relative_path = file_path.relative_to(self.commands_dir)
                 results[str(relative_path)] = changes
-                print(f"✅ Updated: {relative_path}")
+                print("✅ Updated: {relative_path}")
                 for change in changes[:6]:  # Show first 6 changes
-                    print(f"    {change}")
+                    print("    {change}")
                 if len(changes) > 6:
-                    print(f"    ... and {len(changes) - 6} more changes")
+                    print("    ... and {len(changes) - 6} more changes")
             else:
                 relative_path = file_path.relative_to(self.commands_dir)
-                print(f"⚡ No changes needed: {relative_path}")
+                print("⚡ No changes needed: {relative_path}")
 
-        print(f"\n📊 Summary:")
-        print(f"  Total files processed: {total_files}")
-        print(f"  Files updated: {changed_files}")
-        print(f"  Files unchanged: {total_files - changed_files}")
+        print("\n📊 Summary:")
+        print("  Total files processed: {total_files}")
+        print("  Files updated: {changed_files}")
+        print("  Files unchanged: {total_files - changed_files}")
 
         return results
 
@@ -225,7 +225,7 @@ class CommandReferenceStandardizer:
                     issues[str(relative_path)] = file_issues
 
             except Exception as e:
-                print(f"Error validating {file_path}: {e}")
+                print("Error validating {file_path}: {e}")
 
         return issues
 
@@ -308,9 +308,9 @@ def main():
         if results:
             print("\n📋 Detailed changes made:")
             for file_path, changes in results.items():
-                print(f"\n📄 {file_path}:")
+                print("\n📄 {file_path}:")
                 for change in changes:
-                    print(f"  {change}")
+                    print("  {change}")
 
         # Run validation after changes
         print("\n" + "=" * 60)

@@ -548,14 +548,14 @@ def main(
     for dashboard_mode in modes_to_generate:
         output_file = generator.generate_dashboard(input_file, dashboard_mode)
         generated_files.append(output_file)
-        print(f"Generated {dashboard_mode} mode dashboard: {output_file}")
+        print("Generated {dashboard_mode} mode dashboard: {output_file}")
 
     # Print Make-compatible output for pipeline integration
     if len(generated_files) == 1:
-        print(f"OUTPUT_FILE={generated_files[0]}")
+        print("OUTPUT_FILE={generated_files[0]}")
     else:
         for i, file_path in enumerate(generated_files):
-            print(f"OUTPUT_FILE_{i+1}={file_path}")
+            print("OUTPUT_FILE_{i+1}={file_path}")
 
     return generated_files
 
@@ -627,7 +627,7 @@ if __name__ == "__main__":
                         f"⚠️  Configuration validation passed with {validation_summary['warning_count']} warning(s)"
                     )
         except ConfigValidationError as e:
-            print(f"❌ Configuration validation failed: {e}")
+            print("❌ Configuration validation failed: {e}")
             sys.exit(1)
 
         # Validate input file
@@ -635,7 +635,7 @@ if __name__ == "__main__":
         try:
             validate_input_file(input_path)
         except ConfigValidationError as e:
-            print(f"❌ Input file validation failed: {e}")
+            print("❌ Input file validation failed: {e}")
             sys.exit(1)
 
         output_dir = Path(args.output_dir) if args.output_dir else None
@@ -649,7 +649,7 @@ if __name__ == "__main__":
         generated_files = main(config, input_path, args.mode, output_dir)
 
         if not args.quiet:
-            print(f"✅ Successfully generated {len(generated_files)} dashboard file(s)")
+            print("✅ Successfully generated {len(generated_files)} dashboard file(s)")
 
     except Exception as e:
         logging.error(f"Dashboard generation failed: {e}")

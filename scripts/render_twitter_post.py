@@ -124,5 +124,5 @@ if __name__ == "__main__":
         content = render_twitter_post(ticker, date)
         print(content)
     except Exception as e:
-        print(f"Error rendering Twitter post: {e}")
+        print("Error rendering Twitter post: {e}")
         sys.exit(1)

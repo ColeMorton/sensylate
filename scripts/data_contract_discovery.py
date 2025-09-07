@@ -553,20 +553,20 @@ if __name__ == "__main__":
     result = discovery.discover_all_contracts()
 
     print("\n📋 Discovery Results:")
-    print(f"   Total files: {result.total_files}")
-    print(f"   Successful discoveries: {result.successful_discoveries}")
-    print(f"   Categories found: {len(result.categories)}")
-    print(f"   Discovery time: {result.discovery_time:.2f}s")
+    print("   Total files: {result.total_files}")
+    print("   Successful discoveries: {result.successful_discoveries}")
+    print("   Categories found: {len(result.categories)}")
+    print("   Discovery time: {result.discovery_time:.2f}s")
 
     if result.failed_discoveries:
         print("\n❌ Failed discoveries:")
         for failure in result.failed_discoveries:
-            print(f"   - {failure}")
+            print("   - {failure}")
 
     print("\n📊 Discovered Categories:")
     for category in sorted(result.categories):
         contracts = result.get_contracts_by_category(category)
-        print(f"   {category}: {len(contracts)} contracts")
+        print("   {category}: {len(contracts)} contracts")
 
         for contract in contracts:
             print(
@@ -575,11 +575,11 @@ if __name__ == "__main__":
 
     # Validate contract completeness
     validation = discovery.validate_contract_completeness(result)
-    print(f"\n✅ Contract validation: {'PASSED' if validation.success else 'FAILED'}")
+    print("\n✅ Contract validation: {'PASSED' if validation.success else 'FAILED'}")
     if not validation.success:
-        print(f"   Issues: {validation.error}")
+        print("   Issues: {validation.error}")
 
     # Export contracts to JSON
     output_file = Path(__file__).parent / "data_contracts.json"
     discovery.export_contracts_to_json(result.contracts, output_file)
-    print(f"\n💾 Contracts exported to: {output_file}")
+    print("\n💾 Contracts exported to: {output_file}")

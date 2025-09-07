@@ -68,7 +68,7 @@ class ContentPublisherScript:
         if content_type in ["all", "trade_history"]:
             discovered_content.extend(self._discover_trade_history())
 
-        print(f"✅ Discovered {len(discovered_content)} content items for publication")
+        print("✅ Discovered {len(discovered_content)} content items for publication")
         return discovered_content
 
     def _discover_industry_analysis(self) -> List[Dict[str, Any]]:
@@ -143,10 +143,10 @@ class ContentPublisherScript:
                     result = self._publish_trade_history(item)
                     published_results.append(result)
                 else:
-                    print(f"⚠️  Unknown content type: {item['content_type']}")
+                    print("⚠️  Unknown content type: {item['content_type']}")
 
             except Exception as e:
-                print(f"❌ Failed to publish {item['source_file']}: {e}")
+                print("❌ Failed to publish {item['source_file']}: {e}")
                 published_results.append(
                     {
                         "status": "failed",
@@ -183,7 +183,7 @@ class ContentPublisherScript:
             with open(item["target_path"], "w") as f:
                 f.write(blog_content)
 
-            print(f"✅ Published industry analysis: {item['target_filename']}")
+            print("✅ Published industry analysis: {item['target_filename']}")
 
             return {
                 "status": "success",
@@ -289,7 +289,7 @@ industry_data:
                     "has_frontmatter": True,
                 }
             except Exception as e:
-                print(f"Warning: Failed to parse frontmatter: {e}")
+                print("Warning: Failed to parse frontmatter: {e}")
 
         return {"frontmatter": {}, "content": content, "has_frontmatter": False}
 
@@ -381,7 +381,7 @@ industry_data:
 
     def execute_full_workflow(self, content_type: str = "all") -> Dict[str, Any]:
         """Execute complete content publisher workflow"""
-        print(f"\n📊 Starting content publisher workflow for: {content_type}")
+        print("\n📊 Starting content publisher workflow for: {content_type}")
 
         # Phase 1: Discovery
         discovered = self.discover_content(content_type)
@@ -400,14 +400,14 @@ industry_data:
         validation = self.validate_published_content(published)
 
         print("\n✅ Content publisher workflow complete!")
-        print(f"📊 Discovered: {len(discovered)} items")
-        print(f"📝 Published: {validation['successful']} items")
-        print(f"❌ Failed: {validation['failed']} items")
+        print("📊 Discovered: {len(discovered)} items")
+        print("📝 Published: {validation['successful']} items")
+        print("❌ Failed: {validation['failed']} items")
 
         if validation["validation_issues"]:
-            print(f"⚠️  Validation issues: {len(validation['validation_issues'])}")
+            print("⚠️  Validation issues: {len(validation['validation_issues'])}")
             for issue in validation["validation_issues"]:
-                print(f"  - {issue}")
+                print("  - {issue}")
 
         return {
             "status": "completed",
@@ -460,13 +460,13 @@ def main():
         # Discovery only
         discovered = publisher.discover_content(args.content_type)
         print("\n📊 Discovery Results:")
-        print(f"Found {len(discovered)} items for publication:")
+        print("Found {len(discovered)} items for publication:")
         for item in discovered:
-            print(f"  - {item['content_type']}: {item['source_file']}")
+            print("  - {item['content_type']}: {item['source_file']}")
     else:
         # Full workflow
         result = publisher.execute_full_workflow(args.content_type)
-        print(f"\n📋 Final Results: {json.dumps(result, indent=2)}")
+        print("\n📋 Final Results: {json.dumps(result, indent=2)}")
 
 
 if __name__ == "__main__":

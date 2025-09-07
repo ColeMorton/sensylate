@@ -114,10 +114,10 @@ def enhance_discovery_metrics(ticker: str, date_str: str) -> bool:
     )
 
     if not discovery_file.exists():
-        print(f"Discovery file not found: {discovery_file}")
+        print("Discovery file not found: {discovery_file}")
         return False
 
-    print(f"Enhancing discovery metrics for {ticker}...")
+    print("Enhancing discovery metrics for {ticker}...")
 
     # Load current discovery data
     with open(discovery_file, "r") as f:
@@ -216,19 +216,19 @@ def enhance_discovery_metrics(ticker: str, date_str: str) -> bool:
         with open(discovery_file, "w") as f:
             json.dump(discovery_data, f, indent=2)
 
-        print(f"✅ Enhanced discovery metrics for {ticker}")
-        print(f"📈 Enhancements made: {len(enhancements_made)}")
+        print("✅ Enhanced discovery metrics for {ticker}")
+        print("📈 Enhancements made: {len(enhancements_made)}")
         for enhancement in enhancements_made:
-            print(f"   • {enhancement}")
+            print("   • {enhancement}")
 
-        print(f"📊 Updated quality scores:")
+        print("📊 Updated quality scores:")
         print(
             f"   • Financial metrics confidence: {discovery_data['financial_metrics']['confidence']}"
         )
         print(
             f"   • Overall data quality: {discovery_data['cli_data_quality']['overall_data_quality']}"
         )
-        print(f"   • Discovery confidence: {discovery_data['discovery_confidence']}")
+        print("   • Discovery confidence: {discovery_data['discovery_confidence']}")
         print(
             f"   • Institutional grade: {discovery_data['institutional_grade_assessment']}"
         )
@@ -236,7 +236,7 @@ def enhance_discovery_metrics(ticker: str, date_str: str) -> bool:
         return True
 
     except Exception as e:
-        print(f"❌ Error enhancing discovery metrics: {e}")
+        print("❌ Error enhancing discovery metrics: {e}")
         return False
 
 

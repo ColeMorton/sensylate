@@ -274,10 +274,10 @@ if __name__ == "__main__":
 
     # Retrieve data
     data = cache.get("test_key")
-    print(f"Retrieved: {data}")
+    print("Retrieved: {data}")
 
     # Show stats
-    print(f"Cache stats: {cache.get_stats()}")
+    print("Cache stats: {cache.get_stats()}")
 
     # Cleanup
     cache.cleanup_expired()

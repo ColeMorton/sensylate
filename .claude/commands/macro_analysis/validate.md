@@ -2,11 +2,13 @@
 
 **DASV Phase 4: Comprehensive Macro-Economic Analysis Validation**
 
-Execute comprehensive validation and quality assurance for the complete macro-economic analysis DASV workflow including Economic Outlook and Policy Assessment validation using systematic verification methodologies via production-grade CLI financial services and institutional quality standards targeting >9.5/10 confidence levels across multi-source economic analysis.
+Execute comprehensive validation and quality assurance for the complete macro-economic analysis DASV workflow including Economic Outlook and Policy Assessment validation using systematic verification methodologies via production-grade CLI financial services and institutional quality standards targeting >9.5/10 confidence levels across multi-source economic analysis. **NEW**: Also validates published blog content for macro analysis with unified validation standards.
 
 ## Purpose
 
 You are the Macro-Economic Analysis Validation Specialist, functioning as a comprehensive quality assurance framework specialized for macro-economic DASV workflow validation including Economic Outlook and Policy Assessment quality assurance using production-grade CLI financial services. You systematically validate ALL outputs from a complete macro DASV cycle (Discovery → Analysis → Synthesis) for a specific region and date, ensuring institutional-quality reliability scores >9.5/10 with a minimum threshold of 9.0/10 through multi-source CLI validation across economic indicators, policy consistency verification, and economic forecast quality validation.
+
+**Enhanced Capability**: This validation system now serves as the unified validation authority for ALL macro analysis outputs, including published blog content. It replaces content_evaluator for macro analysis validation, providing specialized macro-economic validation logic with CLI service integration.
 
 ## Microservice Integration
 
@@ -23,6 +25,15 @@ You are the Macro-Economic Analysis Validation Specialist, functioning as a comp
 ### Mode 1: Single Region Validation
 **Trigger**: Filename argument matching `{REGION}_{YYYYMMDD}.md`
 - `synthesis_filename`: Path to synthesis output file (required) - format: {REGION}_{YYYYMMDD}.md
+- `published_content_file`: Path to published blog content markdown file (optional, for publishing mode)
+- `validation_mode`: Validation scope - `comprehensive` | `discovery` | `analysis` | `synthesis` | `validation` | `publishing` | `twitter` (optional, default: comprehensive)
+  - `comprehensive` (default): Validates all phases - discovery, analysis, synthesis, validation, publishing
+  - `discovery`: Validates only discovery phase outputs and CLI data integration
+  - `analysis`: Validates only analysis phase outputs and economic modeling
+  - `synthesis`: Validates only synthesis documents and template compliance
+  - `validation`: Validates only validation reports (meta-validation)
+  - `publishing`: Validates only published blog content and SEO optimization
+  - `twitter`: Validates Twitter content generated from macro analysis outputs with social media optimization and engagement assessment
 - `confidence_threshold`: Minimum confidence requirement - `9.0` | `9.5` | `9.8` (optional, default: 9.0)
 - `validation_depth`: Validation rigor - `standard` | `comprehensive` | `institutional` (optional, default: institutional)
 - `real_time_validation`: Use current economic data for validation with fail-fast on staleness - `true` | `false` (optional, default: true)
@@ -32,8 +43,14 @@ You are the Macro-Economic Analysis Validation Specialist, functioning as a comp
 - `policy_validation`: Enable monetary/fiscal policy consistency validation - `true` | `false` (optional, default: true)
 
 ### Mode 2: Macro-Economic DASV Phase Cross-Analysis
-**Trigger**: Phase argument matching `discovery|analysis|synthesis|validation`
-- `dasv_phase`: DASV phase for cross-analysis (required) - `discovery` | `analysis` | `synthesis` | `validation`
+**Trigger**: Phase argument matching `discovery|analysis|synthesis|validation|publishing|twitter`
+- `dasv_phase`: DASV phase for cross-analysis (required) - `discovery` | `analysis` | `synthesis` | `validation` | `publishing` | `twitter`
+  - `discovery`: Cross-analyze discovery phase outputs for consistency and data quality
+  - `analysis`: Cross-analyze analysis phase outputs for economic modeling coherence
+  - `synthesis`: Cross-analyze synthesis documents for template adherence
+  - `validation`: Cross-analyze validation reports for meta-validation quality
+  - `publishing`: Cross-analyze published blog content for publication standards
+  - `twitter`: Cross-analyze Twitter outputs for social media optimization, template consistency, and engagement effectiveness
 - `file_count`: Number of latest files to analyze (optional, default: 7)
 - `confidence_threshold`: Minimum confidence requirement - `9.0` | `9.5` | `9.8` (optional, default: 9.0)
 - `validation_depth`: Validation rigor - `standard` | `comprehensive` | `institutional` (optional, default: institutional)
@@ -45,30 +62,32 @@ You are the Macro-Economic Analysis Validation Specialist, functioning as a comp
 ### Argument Parsing Logic
 ```bash
 # Command Invocation Examples:
-/macro_analysis:validate REGION_20250725.md          # Single Region Mode
+/macro_analysis:validate REGION_20250725.md          # Single Region Mode (comprehensive validation)
 /macro_analysis:validate analysis                     # Macro DASV Cross-Analysis Mode
 /macro_analysis:validate discovery --file_count=5    # Macro DASV Cross-Analysis Mode (custom count)
+/macro_analysis:validate publishing                  # Publishing Phase Cross-Analysis Mode
+/macro_analysis:validate twitter                     # Twitter Phase Cross-Analysis Mode
 ```
 
 **Detection Algorithm**:
 1. If argument matches pattern `{REGION}_{YYYYMMDD}.md` → Single Region Validation Mode
-2. If argument matches `discovery|analysis|synthesis|validation` → Macro DASV Phase Cross-Analysis Mode
+2. If argument matches `discovery|analysis|synthesis|validation|publishing|twitter` → Macro DASV Phase Cross-Analysis Mode
 3. If no arguments provided → Error: Missing required parameter
 4. If invalid argument → Error: Invalid parameter format
 
 ### Execution Routing
-- **Single Region Mode**: Extract region and date from filename, validate complete macro DASV workflow
-- **Macro DASV Cross-Analysis Mode**: Analyze latest files in specified phase directory for consistency
+- **Single Region Mode**: Extract region and date from filename, execute phase-specific or comprehensive validation
+- **Macro DASV Cross-Analysis Mode**: Analyze latest files in specified phase directory for cross-file consistency
 
 ### Parameter Validation Rules
 - **Mutually Exclusive**: Cannot specify both synthesis_filename and dasv_phase
 - **Required**: Must specify either synthesis_filename OR dasv_phase
 - **Format Validation**: synthesis_filename must match exact pattern {REGION}_{YYYYMMDD}.md
-- **Phase Validation**: dasv_phase must be one of the four valid DASV phases
+- **Phase Validation**: dasv_phase must be one of the six valid DASV phases
 
 ### Error Handling for Invalid Parameters
 - **Invalid Filename Format**: Must match {REGION}_{YYYYMMDD}.md pattern exactly
-- **Non-existent Phase**: Phase must be discovery, analysis, synthesis, or validation
+- **Non-existent Phase**: Phase must be discovery, analysis, synthesis, validation, publishing, or twitter
 - **Missing Required Parameters**: Must provide either filename or phase argument
 - **Conflicting Parameters**: Cannot combine single region and cross-analysis modes
 
@@ -131,6 +150,7 @@ Use production CLI financial services for comprehensive multi-source economic va
   - `analysis`: `./{DATA_OUTPUTS}/macro_analysis/analysis/`
   - `synthesis`: `./{DATA_OUTPUTS}/macro_analysis/` (root level)
   - `validation`: `./{DATA_OUTPUTS}/macro_analysis/validation/`
+  - `twitter`: `./{DATA_OUTPUTS}/twitter/macro_analysis/`
 
 ### Core Validation Dimensions
 
@@ -276,6 +296,156 @@ CLI INTEGRATION VALIDATION:
   - Synthesis: `./{DATA_OUTPUTS}/macro_analysis/{REGION}_{YYYYMMDD}.md`
 - Document validation date and economic data freshness requirements
 - Initialize systematic macro-economic validation framework targeting >9.5/10 reliability
+
+## Comprehensive Macro Twitter Validation Methodology
+
+**Enhanced for Twitter Mode**: When `validation_mode=twitter` is specified, execute specialized Twitter content validation protocol for macro-economic analysis outputs using systematic verification methodologies and institutional content standards targeting >9.0/10 reliability scores.
+
+**Before beginning Twitter validation, establish macro Twitter context:**
+- Extract region identifier and date from Twitter content filename
+- Locate ALL macro-economic Twitter content sources for validation:
+  - Twitter Content: `./{DATA_OUTPUTS}/twitter/macro_analysis/{REGION}_{YYYYMMDD}.md`
+  - Source Macro Analysis: `./{DATA_OUTPUTS}/macro_analysis/{REGION}_{YYYYMMDD}.md`
+  - Macro Discovery: `./{DATA_OUTPUTS}/macro_analysis/discovery/{REGION}_{YYYYMMDD}_discovery.json`
+  - Macro Analysis: `./{DATA_OUTPUTS}/macro_analysis/analysis/{REGION}_{YYYYMMDD}_analysis.json`
+- Initialize MCP servers for real-time economic validation (FRED for economic indicators, IMF for cross-regional data)
+- Document validation timestamp and economic cycle context
+
+### Phase 1: Macro Twitter Content Accuracy & Template Validation
+
+**Macro Analysis Source Verification**
+```
+MACRO TWITTER CONTENT ACCURACY VALIDATION PROTOCOL:
+1. Macro Analysis Source Verification
+   → Cross-validate all economic claims against source macro analysis document
+   → Verify economic investment thesis coherence and business cycle positioning
+   → Check economic sensitivity metrics (GDP correlations, policy transmission coefficients, confidence scores)
+   → Confirm economic catalyst identification and cross-regional risk factor presentation
+   → Confidence threshold: 9.8/10 (economic claims require precision)
+
+2. Template Selection Appropriateness
+   → Validate template choice matches primary economic insight type
+   → Verify Template selection: Business Cycle Analysis, Cross-Regional Comparison, Monetary Policy, Economic Outlook, or Economic Indicators
+   → Check template structure adherence and macro-specific content flow
+   → Assess template effectiveness for economic thesis presentation
+   → Confidence threshold: 9.0/10 (template optimization standards)
+
+3. Economic Investment Thesis Translation Accuracy
+   → Verify complex macro analysis distilled correctly into Twitter format
+   → Check preservation of key economic insights and business cycle conviction levels
+   → Validate economic risk/reward presentation accuracy
+   → Confirm economic cycle timeline and policy transmission assessments
+   → Confidence threshold: 9.5/10 (economic thesis coherence critical)
+
+4. Blog URL Generation & Attribution
+   → Verify URL follows pattern: https://www.colemorton.com/blog/{region-lowercase}-macro-analysis-{yyyymmdd}/
+   → Check region case conversion accuracy (US → us, EUROPE → europe)
+   → Validate date format preservation (YYYYMMDD)
+   → Confirm URL integration in selected template
+   → Confidence threshold: 9.5/10 (attribution accuracy required)
+```
+
+### Phase 2: Macro Twitter Engagement & Social Media Optimization Validation
+
+**Twitter Platform Compliance & Optimization Assessment**
+```
+MACRO TWITTER ENGAGEMENT OPTIMIZATION VALIDATION:
+1. Hook Effectiveness & Character Limit Compliance
+   → Verify hook stays within 280 character limit for each tweet
+   → Validate region/economic symbol integration and compelling economic metric highlighting
+   → Assess hook engagement potential using proven macro economic patterns
+   → Check for economic curiosity creation and macro discussion potential
+   → Confidence threshold: 9.0/10 (engagement optimization standards)
+
+2. Content Structure & Format Validation
+   → Verify template structure adherence and macro-specific section completeness
+   → Check bullet point formatting and emoji usage appropriateness for macro content
+   → Validate thread cohesion if multi-tweet economic analysis format used
+   → Confirm hashtag strategy (2-3 relevant macro hashtags maximum: #MacroAnalysis, #EconomicOutlook, regional tags)
+   → Confidence threshold: 9.0/10 (professional presentation standards)
+
+3. Economic Insight Selection & Prioritization
+   → Validate 2-3 most compelling economic insights properly extracted
+   → Check contrarian/actionable/surprising economic element identification
+   → Assess economic thesis value proposition clarity for target audience
+   → Verify macro insight accessibility and jargon elimination
+   → Confidence threshold: 9.0/10 (content optimization effectiveness)
+
+4. Call-to-Action & Engagement Mechanics
+   → Verify clear next step provided for macro analysis reader engagement
+   → Check blog link placement and economic analysis call-to-action effectiveness
+   → Assess economic discussion trigger potential and shareability
+   → Validate urgency creation and business cycle timing relevance
+   → Confidence threshold: 8.5/10 (engagement mechanics standards)
+```
+
+### Phase 3: Macro Twitter Real-Time Data Integration & Economic Context Validation
+
+**Economic Context Verification & Data Currency Assessment**
+```
+MACRO TWITTER ECONOMIC CONTEXT VALIDATION PROTOCOL:
+1. Real-Time Economic Data Integration
+   → Use FRED MCP server to verify current economic indicators accuracy (GDP, employment, inflation, Fed Funds)
+   → Validate economic data context and recent macro performance claims
+   → Check cross-regional economic data consistency and correlations
+   → Confirm economic catalyst timing and business cycle relevance
+   → Confidence threshold: 9.0/10 (real-time economic data accuracy required)
+
+2. Business Cycle Context Currency
+   → Verify analysis reflects current business cycle conditions
+   → Check economic catalyst timing relevance and cycle transition probability updates
+   → Validate GDP/employment/policy correlation currency
+   → Assess Fed policy/yield curve alignment with economic positioning
+   → Confidence threshold: 8.5/10 (economic context relevance)
+
+3. Data Source Authority & Consistency
+   → Prioritize macro analysis as primary source
+   → Cross-validate macro discovery and analysis JSON data when present
+   → Check FRED/IMF economic indicators for consistency (validation only)
+   → Resolve any source conflicts with established DASV hierarchy
+   → Confidence threshold: 9.5/10 (data authority compliance)
+
+4. Economic Claim Accuracy Verification
+   → Verify all economic performance percentages against source analysis
+   → Cross-check economic forecasting method results and confidence levels
+   → Confirm business cycle assessment grades and cross-regional rankings
+   → Validate economic scenario analysis probabilities and policy outcomes
+   → Confidence threshold: 9.8/10 (economic precision required)
+```
+
+### Phase 4: Macro Twitter Compliance & Risk Management Validation
+
+**Regulatory Compliance & Economic Forecast Disclaimer Assessment**
+```
+MACRO TWITTER COMPLIANCE VALIDATION FRAMEWORK:
+1. Economic Forecast Disclaimer Compliance
+   → Check for explicit economic forecast disclaimer integration (MANDATORY for macro Twitter content)
+   → Verify appropriate economic uncertainty warnings for macro analysis content
+   → Validate historical economic performance disclaimer presence
+   → Ensure no unauthorized economic investment advice language
+   → Confidence threshold: 9.5/10 (compliance is non-negotiable)
+
+2. Economic Financial Marketing Standards
+   → Verify balanced presentation of economic risks and opportunities
+   → Check for appropriate business cycle uncertainty acknowledgment
+   → Validate confidence level communication accuracy for economic analysis
+   → Ensure no economic return guarantees or allocation promises
+   → Confidence threshold: 9.5/10 (regulatory adherence required)
+
+3. Source Attribution & Transparency
+   → Verify clear economic data source attribution and limitations
+   → Check economic analysis confidence score inclusion
+   → Validate DASV methodology transparency in content
+   → Confirm proper context for economic research presentation
+   → Confidence threshold: 9.0/10 (transparency standards)
+
+4. Economic Risk Communication Effectiveness
+   → Assess economic risk factor communication clarity
+   → Verify business cycle downside scenario acknowledgment
+   → Check economic sensitivity analysis integration
+   → Validate economic thesis limitation communication
+   → Confidence threshold: 9.0/10 (risk communication standards)
+```
 
 ## Validation Execution Protocol
 
@@ -585,6 +755,40 @@ ECONOMIC OUTLOOK VALIDATION REQUIREMENTS:
       "confidence": "0.0-1.0"
     }
   },
+  "macro_twitter_validation": {
+    "twitter_content_accuracy_template": {
+      "macro_analysis_accuracy": "9.X/10.0",
+      "template_selection_appropriateness": "9.X/10.0",
+      "economic_investment_thesis_translation": "9.X/10.0",
+      "blog_url_generation_accuracy": "9.X/10.0",
+      "overall_twitter_content_accuracy_score": "9.X/10.0",
+      "twitter_content_accuracy_issues": "array_of_findings"
+    },
+    "twitter_engagement_optimization": {
+      "hook_effectiveness_compliance": "9.X/10.0",
+      "content_structure_format": "9.X/10.0",
+      "economic_insight_selection_prioritization": "9.X/10.0",
+      "call_to_action_engagement": "9.X/10.0",
+      "overall_twitter_engagement_score": "9.X/10.0",
+      "twitter_engagement_improvement_areas": "array_of_suggestions"
+    },
+    "twitter_economic_context_validation": {
+      "real_time_economic_data_integration": "9.X/10.0",
+      "business_cycle_context_currency": "9.X/10.0",
+      "data_source_authority_consistency": "9.X/10.0",
+      "economic_claim_accuracy": "9.X/10.0",
+      "overall_twitter_economic_context_score": "9.X/10.0",
+      "twitter_economic_context_concerns": "array_of_issues"
+    },
+    "twitter_compliance_risk_management": {
+      "economic_forecast_disclaimer_compliance": "9.X/10.0",
+      "economic_financial_marketing_standards": "9.X/10.0",
+      "source_attribution_transparency": "9.X/10.0",
+      "economic_risk_communication_effectiveness": "9.X/10.0",
+      "overall_twitter_compliance_score": "9.X/10.0",
+      "twitter_compliance_violations": "array_of_issues"
+    }
+  },
   "macro_synthesis_validation": {
     "economic_investment_thesis_coherence": {
       "thesis_business_cycle_integration": "business_cycle_employment_policy_context_consistency",
@@ -744,6 +948,7 @@ ECONOMIC OUTLOOK VALIDATION REQUIREMENTS:
    - Prepare cross-regional economic analysis validation framework
 
 ### Main Execution
+**For Comprehensive/Discovery/Analysis/Synthesis/Validation/Publishing Modes:**
 1. **Phase 1: Multi-Source Economic Discovery Validation**
    - Validate economic indicator consistency across all data sources
    - Verify business cycle positioning and recession probability calculations
@@ -770,74 +975,282 @@ ECONOMIC OUTLOOK VALIDATION REQUIREMENTS:
    - Validate economic policy indicators currency
    - Cross-check cross-regional economic real-time consistency
 
-### Post-Execution
-1. **Generate Comprehensive Economic Validation Report**
-   - Create JSON output with detailed economic validation results
-   - Include confidence scores for all economic validation categories
-   - Document blocking issues and economic improvement recommendations
-   - Provide institutional economic certification status
+**For Twitter Mode (`validation_mode=twitter`):**
+1. **Phase 1: Macro Twitter Content Accuracy & Template Validation**
+   - Cross-validate all economic claims against source macro analysis document
+   - Verify template selection appropriateness (business_cycle_analysis, cross_regional_comparison, etc.)
+   - Validate economic investment thesis translation accuracy for Twitter format
+   - Confirm blog URL generation and attribution accuracy
 
-2. **Economic Quality Certification**
-   - Verify 9.5/10 minimum confidence threshold achievement
-   - Validate institutional-grade quality across all economic components
-   - Document usage safety for asset allocation decisions
-   - Generate economic validation metadata and performance metrics
+2. **Phase 2: Macro Twitter Engagement & Social Media Optimization**
+   - Verify hook effectiveness and character limit compliance (280 chars)
+   - Validate content structure, format, and hashtag strategy
+   - Assess economic insight selection and prioritization effectiveness
+   - Verify call-to-action and engagement mechanics
+
+3. **Phase 3: Macro Twitter Real-Time Data Integration**
+   - Execute FRED MCP server validation for current economic indicators
+   - Verify business cycle context currency and catalyst timing relevance
+   - Cross-validate data source authority and consistency
+   - Confirm economic claim accuracy against multiple sources
+
+4. **Phase 4: Macro Twitter Compliance & Risk Management**
+   - Validate economic forecast disclaimer compliance (MANDATORY)
+   - Verify economic financial marketing standards adherence
+   - Check source attribution and transparency requirements
+   - Assess economic risk communication effectiveness
+
+### Post-Execution
+**For All Validation Modes:**
+1. **Generate Comprehensive Validation Report**
+   - Create JSON output with detailed validation results
+   - Include confidence scores for all validation categories
+   - Document blocking issues and improvement recommendations
+   - Provide institutional certification status
+
+2. **Quality Certification**
+   - Verify minimum confidence threshold achievement (9.0/10 default, 9.5/10 institutional)
+   - Validate institutional-grade quality across all components
+   - Document usage safety and decision-making reliability
+   - Generate validation metadata and performance metrics
+
+**Additional for Twitter Mode:**
+3. **Twitter-Specific Quality Assurance**
+   - Verify Twitter content publication readiness
+   - Validate character count optimization and engagement metrics
+   - Confirm economic forecast disclaimer compliance
+   - Document social media optimization effectiveness
+
+4. **Twitter Content Certification**
+   - Assess template selection appropriateness and effectiveness
+   - Validate economic insight prioritization quality
+   - Confirm regulatory compliance for social media content
+   - Generate Twitter-specific engagement and compliance metrics
+
+## Validation Mode Capabilities
+
+### Comprehensive Validation (Default)
+**Mode**: `comprehensive` (default)
+- Validates ALL macro analysis phases: discovery, analysis, synthesis, validation, publishing
+- Complete DASV workflow validation with publishing integration
+- Multi-source CLI economic data validation across all phases
+- Unified confidence scoring across all validation dimensions
+- Maximum validation coverage for institutional use
+- Institutional confidence scoring >9.5/10
+
+### Discovery Phase Validation
+**Mode**: `discovery`
+- Validates only discovery phase outputs and CLI data integration
+- Multi-source economic data accuracy verification
+- Business cycle data validation and indicator consistency
+- Cross-regional economic data integrity assessment
+- CLI service health validation for economic data sources
+
+### Analysis Phase Validation
+**Mode**: `analysis`
+- Validates only analysis phase outputs and economic modeling
+- Business cycle modeling verification and recession probability validation
+- Policy analysis coherence and transmission mechanism assessment
+- Macroeconomic risk assessment validation and stress testing
+- Economic forecasting methodology verification
+
+### Synthesis Phase Validation
+**Mode**: `synthesis`
+- Validates only synthesis documents and template compliance
+- Economic thesis coherence and investment recommendation validation
+- Content structure and professional presentation quality
+- Template adherence and institutional formatting standards
+- Author attribution and confidence reporting validation
+
+### Validation Phase Validation (Meta-Validation)
+**Mode**: `validation`
+- Validates only validation reports for meta-validation quality
+- Validation methodology consistency and confidence scoring accuracy
+- Critical findings matrix validation and decision impact assessment
+- Usage recommendations validation and certification status verification
+- CLI service validation quality and multi-source consistency
+
+### Publishing Phase Validation
+**Mode**: `publishing`
+- Validates only published blog content and SEO optimization
+- Frontmatter compliance with macro analysis standards
+- Content structure validation and template adherence verification
+- Asset integration validation and professional quality assessment
+- Content fidelity preservation from synthesis to published content
+
+### Twitter Phase Validation
+**Mode**: `twitter`
+- Validates Twitter content generated from macro analysis outputs
+- Template selection validation for macro Twitter templates (business_cycle_analysis, cross_regional_comparison, monetary_policy, economic_outlook, economic_indicators)
+- Character count optimization and engagement metrics assessment
+- Economic forecast disclaimer compliance and social media regulatory adherence
+- Hook effectiveness validation and economic insight prioritization
+- Blog URL generation accuracy for macro analysis pattern
+- Real-time economic data integration for Twitter content validation
 
 ## Usage Examples
 
 ### Single Region Validation Examples
 
-**Basic Single Region Validation:**
+**Comprehensive Validation (Default - All Phases):**
 ```bash
 /macro_analysis:validate US_20250725.md
 ```
-- Validates complete DASV workflow for US economic analysis on July 25, 2025
-- Uses default institutional validation depth
-- Performs real-time economic data validation
+- Validates ALL phases: discovery, analysis, synthesis, validation, publishing
+- Uses default comprehensive validation mode
+- Maximum institutional validation coverage
 - Output: `US_20250725_validation.json`
 
-**Advanced Single Region Validation:**
+**Discovery Phase Validation:**
 ```bash
-/macro_analysis:validate EU_20250725.md --confidence_threshold=9.5 --validation_depth=comprehensive
+/macro_analysis:validate US_20250725.md --validation_mode=discovery
 ```
-- Higher confidence threshold requiring 9.5/10 minimum
-- Comprehensive validation rigor
+- Validates only discovery phase outputs and CLI data integration
+- Multi-source economic data accuracy verification
+- Output: `US_20250725_validation.json`
+
+**Analysis Phase Validation:**
+```bash
+/macro_analysis:validate US_20250725.md --validation_mode=analysis
+```
+- Validates only analysis phase outputs and economic modeling
+- Business cycle modeling and policy analysis validation
+- Output: `US_20250725_validation.json`
+
+**Synthesis Phase Validation:**
+```bash
+/macro_analysis:validate US_20250725.md --validation_mode=synthesis
+```
+- Validates only synthesis documents and template compliance
+- Economic thesis coherence and professional presentation quality
+- Output: `US_20250725_validation.json`
+
+**Validation Phase Validation (Meta-Validation):**
+```bash
+/macro_analysis:validate US_20250725.md --validation_mode=validation
+```
+- Validates only validation reports for meta-validation quality
+- Validation methodology consistency and confidence scoring accuracy
+- Output: `US_20250725_validation.json`
+
+**Publishing Phase Validation:**
+```bash
+/macro_analysis:validate US_20250725.md --published_content_file="frontend/src/content/blog/us-macro-analysis-20250725.md" --validation_mode=publishing
+```
+- Validates only published blog content and SEO optimization
+- Content fidelity preservation and asset integration validation
+- Output: `US_20250725_validation.json`
+
+**Twitter Phase Validation:**
+```bash
+/macro_analysis:validate US_20250725.md --validation_mode=twitter
+```
+- Validates Twitter content from macro analysis outputs
+- Template selection, character count, and engagement optimization validation
+- Economic forecast disclaimer compliance for social media
+- Output: `US_20250725_validation.json`
+
+**Advanced Twitter Validation with High Confidence Requirements:**
+```bash
+/macro_analysis:validate EUROPE_20250725.md --validation_mode=twitter --confidence_threshold=9.8 --validation_depth=institutional
+```
+- Institutional-grade Twitter validation with maximum confidence requirements
+- Enhanced economic forecast disclaimer validation and compliance checking
+- Comprehensive template effectiveness assessment
+- Output: `EUROPE_20250725_validation.json`
+
+**Twitter Validation with Real-Time Data Validation:**
+```bash
+/macro_analysis:validate GLOBAL_20250725.md --validation_mode=twitter --real_time_validation=true --variance_threshold=0.02
+```
+- Real-time economic data integration validation with fail-fast on staleness
+- Strict variance threshold (2%) for economic data consistency
+- Current business cycle and policy transmission validation
+- Output: `GLOBAL_20250725_validation.json`
+
+**Advanced Validation with High Confidence Threshold:**
+```bash
+/macro_analysis:validate EU_20250725.md --confidence_threshold=9.8 --validation_depth=institutional
+```
+- Comprehensive validation (default mode) with maximum confidence requirements
+- Institutional-grade validation rigor
 - Output: `EU_20250725_validation.json`
 
 ### Macro DASV Phase Cross-Analysis Examples
-
-**Analysis Phase Cross-Analysis:**
-```bash
-/macro_analysis:validate analysis
-```
-- Analyzes latest 7 analysis files for consistency
-- Detects hardcoded values and template artifacts
-- Validates region specificity across files
-- Output: `analysis_cross_analysis_20250725_validation.json`
 
 **Discovery Phase Cross-Analysis:**
 ```bash
 /macro_analysis:validate discovery --file_count=5
 ```
-- Analyzes latest 5 discovery files
-- Focuses on economic data collection consistency
+- Cross-analyzes latest 5 discovery files for economic data consistency
+- Validates CLI data integration patterns across regions
 - Output: `discovery_cross_analysis_20250725_validation.json`
+
+**Analysis Phase Cross-Analysis:**
+```bash
+/macro_analysis:validate analysis
+```
+- Cross-analyzes latest 7 analysis files for economic modeling consistency
+- Detects hardcoded values and validates region specificity
+- Business cycle modeling coherence across regions
+- Output: `analysis_cross_analysis_20250725_validation.json`
 
 **Synthesis Phase Cross-Analysis:**
 ```bash
 /macro_analysis:validate synthesis --confidence_threshold=9.8
 ```
-- Institutional-grade synthesis validation
-- Higher confidence threshold for final documents
+- Cross-analyzes synthesis documents for template adherence consistency
+- Higher confidence threshold for institutional-grade documents
+- Economic thesis coherence validation across regions
 - Output: `synthesis_cross_analysis_20250725_validation.json`
 
-**Validation Phase Cross-Analysis:**
+**Validation Phase Cross-Analysis (Meta-Validation):**
 ```bash
 /macro_analysis:validate validation
 ```
-- Meta-validation of validation reports
-- Ensures validation consistency and quality
+- Cross-analyzes validation reports for meta-validation quality
+- Ensures validation methodology consistency across regions
+- Confidence scoring accuracy and critical findings validation
 - Output: `validation_cross_analysis_20250725_validation.json`
+
+**Publishing Phase Cross-Analysis:**
+```bash
+/macro_analysis:validate publishing --file_count=10
+```
+- Cross-analyzes latest 10 published blog posts for publication standards
+- Content structure consistency and SEO optimization validation
+- Asset integration patterns and professional quality assessment
+- Output: `publishing_cross_analysis_20250725_validation.json`
+
+**Twitter Phase Cross-Analysis:**
+```bash
+/macro_analysis:validate twitter --file_count=7
+```
+- Cross-analyzes latest 7 Twitter posts for social media optimization consistency
+- Template selection patterns and engagement effectiveness validation
+- Character count optimization and economic insight prioritization assessment
+- Economic forecast disclaimer compliance across Twitter content
+- Output: `twitter_cross_analysis_20250725_validation.json`
+
+**Advanced Twitter Cross-Analysis with High Standards:**
+```bash
+/macro_analysis:validate twitter --file_count=10 --confidence_threshold=9.8 --validation_depth=institutional
+```
+- Cross-analyzes latest 10 Twitter posts with institutional-grade standards
+- Advanced template effectiveness assessment across multiple regions
+- Enhanced engagement optimization consistency validation
+- Comprehensive economic forecast disclaimer compliance review
+- Output: `twitter_cross_analysis_20250725_validation.json`
+
+**Twitter Template Consistency Cross-Analysis:**
+```bash
+/macro_analysis:validate twitter --file_count=5 --cross_validation_mode=strict
+```
+- Strict cross-validation of Twitter template selection across regions
+- Identifies hardcoded values and ensures region-specific content
+- Validates consistent economic insight prioritization patterns
+- Comprehensive social media optimization consistency assessment
+- Output: `twitter_cross_analysis_20250725_validation.json`
 
 ### Error Examples
 
@@ -850,13 +1263,19 @@ ECONOMIC OUTLOOK VALIDATION REQUIREMENTS:
 **Invalid Phase Specification:**
 ```bash
 /macro_analysis:validate testing   # Invalid phase name
-# Error: Invalid phase. Must be discovery, analysis, synthesis, or validation
+# Error: Invalid phase. Must be discovery, analysis, synthesis, validation, publishing, or twitter
 ```
 
 **Missing Parameters:**
 ```bash
 /macro_analysis:validate           # No arguments
 # Error: Missing required parameter. Specify filename or phase
+```
+
+**Twitter Content Not Found:**
+```bash
+/macro_analysis:validate US_20250725.md --validation_mode=twitter
+# Error: Twitter content file not found at ./data/outputs/twitter/macro_analysis/US_20250725.md
 ```
 
 ## Security and Compliance
@@ -867,7 +1286,7 @@ ECONOMIC OUTLOOK VALIDATION REQUIREMENTS:
 - **Error Handling**: Graceful degradation for individual economic indicator validation failures
 - **Quality Monitoring**: Real-time health assessment across economic and policy validation
 
-**Integration with Macro-Economic DASV Framework**: This validation command serves as the final quality assurance checkpoint for the entire macro-economic analysis ecosystem, ensuring institutional-quality reliability for asset allocation strategies through comprehensive multi-source economic validation, business cycle consistency verification, and policy/employment integration validation. Validates compliance with `./{TEMPLATES_BASE}/analysis/macro_analysis_template.md` specification (authoritative standard implemented via enhanced Jinja2 templates with macro-economic customization).
+**Integration with Macro-Economic DASV Framework**: This validation command serves as the final quality assurance checkpoint for the entire macro-economic analysis ecosystem, ensuring institutional-quality reliability for asset allocation strategies through comprehensive multi-source economic validation, business cycle consistency verification, and policy/employment integration validation. **Enhanced Twitter Integration**: Now includes specialized Twitter content validation for macro analysis outputs, providing comprehensive social media optimization assessment, engagement metrics validation, and regulatory compliance verification. Validates compliance with `./{TEMPLATES_BASE}/analysis/macro_analysis_template.md` specification (authoritative standard implemented via enhanced Jinja2 templates with macro-economic customization).
 
 **Author**: Cole Morton
 **Confidence**: [Validation confidence reflects comprehensive sector framework verification and institutional-quality standards]

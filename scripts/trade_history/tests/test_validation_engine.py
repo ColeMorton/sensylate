@@ -120,17 +120,17 @@ def test_statistical_validation_engine():
     sample_adequacy = validate_sample_adequacy(sample_analysis_data)
 
     print("Win Rate Validation:")
-    print(f"  Reported: {win_rate_validation['calculated_value']:.1%}")
-    print(f"  Cross-check: {win_rate_validation['cross_check_value']:.1%}")
-    print(f"  Variance: {win_rate_validation['variance']:.3f}")
-    print(f"  Tolerance Met: {'✅' if win_rate_validation['tolerance_met'] else '❌'}")
-    print(f"  Confidence: {win_rate_validation['validation_confidence']:.2f}")
+    print("  Reported: {win_rate_validation['calculated_value']:.1%}")
+    print("  Cross-check: {win_rate_validation['cross_check_value']:.1%}")
+    print("  Variance: {win_rate_validation['variance']:.3f}")
+    print("  Tolerance Met: {'✅' if win_rate_validation['tolerance_met'] else '❌'}")
+    print("  Confidence: {win_rate_validation['validation_confidence']:.2f}")
 
     print("\nSharpe Ratio Validation:")
-    print(f"  Reported: {sharpe_validation['calculated_value']:.2f}")
-    print(f"  Cross-check: {sharpe_validation['cross_check_value']:.2f}")
-    print(f"  Variance: {sharpe_validation['variance']:.3f}")
-    print(f"  Tolerance Met: {'✅' if sharpe_validation['tolerance_met'] else '❌'}")
+    print("  Reported: {sharpe_validation['calculated_value']:.2f}")
+    print("  Cross-check: {sharpe_validation['cross_check_value']:.2f}")
+    print("  Variance: {sharpe_validation['variance']:.3f}")
+    print("  Tolerance Met: {'✅' if sharpe_validation['tolerance_met'] else '❌'}")
 
     print("\nSample Adequacy:")
     print(
@@ -139,8 +139,8 @@ def test_statistical_validation_engine():
     print(
         f"  Threshold Met: {'✅' if sample_adequacy['minimum_threshold_met'] else '❌'}"
     )
-    print(f"  Statistical Power: {sample_adequacy['statistical_power']:.2f}")
-    print(f"  Adequacy Score: {sample_adequacy['adequacy_score']:.2f}")
+    print("  Statistical Power: {sample_adequacy['statistical_power']:.2f}")
+    print("  Adequacy Score: {sample_adequacy['adequacy_score']:.2f}")
 
     print("✅ Statistical validation engine tested\n")
 
@@ -256,17 +256,17 @@ def test_report_integrity_validation():
     print(
         f"  Optimization Roadmap: {'✅' if internal_validation['optimization_roadmap'] else '❌'}"
     )
-    print(f"  Section Count: {internal_validation['section_count']}/9")
-    print(f"  Completeness Score: {internal_validation['completeness_score']:.1%}")
+    print("  Section Count: {internal_validation['section_count']}/9")
+    print("  Completeness Score: {internal_validation['completeness_score']:.1%}")
 
     print("\nLive Monitor Structure:")
     print(
         f"  Position Tracking: {'✅' if live_validation['position_tracking'] else '❌'}"
     )
-    print(f"  Market Context: {'✅' if live_validation['market_context'] else '❌'}")
-    print(f"  Signal Strength: {'✅' if live_validation['signal_strength'] else '❌'}")
-    print(f"  Real-time Focus: {'✅' if live_validation['real_time_focus'] else '❌'}")
-    print(f"  Completeness Score: {live_validation['completeness_score']:.1%}")
+    print("  Market Context: {'✅' if live_validation['market_context'] else '❌'}")
+    print("  Signal Strength: {'✅' if live_validation['signal_strength'] else '❌'}")
+    print("  Real-time Focus: {'✅' if live_validation['real_time_focus'] else '❌'}")
+    print("  Completeness Score: {live_validation['completeness_score']:.1%}")
 
     print("\nContent Accuracy:")
     print(
@@ -405,13 +405,13 @@ def test_business_logic_validation():
     print("Signal Effectiveness Coherence:")
     for check, result in signal_coherence.items():
         status = "✅" if result else "❌"
-        print(f"  {check}: {status}")
+        print("  {check}: {status}")
 
     print("\nOptimization Feasibility:")
     for opp in optimization_feasibility:
-        print(f"  Area: {opp['optimization_area']}")
-        print(f"  Feasibility Score: {opp['feasibility_score']:.2f}")
-        print(f"  Timeline Realistic: {'✅' if opp['timeline_realistic'] else '❌'}")
+        print("  Area: {opp['optimization_area']}")
+        print("  Feasibility Score: {opp['feasibility_score']:.2f}")
+        print("  Timeline Realistic: {'✅' if opp['timeline_realistic'] else '❌'}")
 
     print("\nRisk Assessment Coherence:")
     portfolio_risk = risk_coherence["portfolio_risk_coherence"]
@@ -420,8 +420,8 @@ def test_business_logic_validation():
     print(
         f"  Portfolio Risk Checks: {sum(portfolio_risk.values())}/{len(portfolio_risk)} ✅"
     )
-    print(f"  Market Context: {market_context['regime_classification']}")
-    print(f"  Context Accuracy: {'✅' if market_context['regime_accuracy'] else '❌'}")
+    print("  Market Context: {market_context['regime_classification']}")
+    print("  Context Accuracy: {'✅' if market_context['regime_accuracy'] else '❌'}")
 
     print("✅ Business logic validation tested\n")
 
@@ -533,7 +533,7 @@ def test_confidence_scoring_methodology():
     quality_band, band_description = classify_quality_band(overall_confidence)
 
     print("Component Confidence Scores:")
-    print(f"  Discovery Phase: {discovery_confidence:.3f}")
+    print("  Discovery Phase: {discovery_confidence:.3f}")
     print(
         f"    Data Completeness: {phase_scores['discovery']['data_completeness']:.2f}"
     )
@@ -547,7 +547,7 @@ def test_confidence_scoring_methodology():
         f"    Portfolio Metadata: {phase_scores['discovery']['portfolio_metadata']:.2f}"
     )
 
-    print(f"\n  Analysis Phase: {analysis_confidence:.3f}")
+    print("\n  Analysis Phase: {analysis_confidence:.3f}")
     print(
         f"    Statistical Significance: {phase_scores['analysis']['statistical_significance']:.2f}"
     )
@@ -561,8 +561,8 @@ def test_confidence_scoring_methodology():
         f"    Optimization Feasibility: {phase_scores['analysis']['optimization_feasibility']:.2f}"
     )
 
-    print(f"\n  Synthesis Phase: {synthesis_confidence:.3f}")
-    print(f"    Content Accuracy: {phase_scores['synthesis']['content_accuracy']:.2f}")
+    print("\n  Synthesis Phase: {synthesis_confidence:.3f}")
+    print("    Content Accuracy: {phase_scores['synthesis']['content_accuracy']:.2f}")
     print(
         f"    Template Compliance: {phase_scores['synthesis']['template_compliance']:.2f}"
     )
@@ -574,9 +574,9 @@ def test_confidence_scoring_methodology():
     )
 
     print("\nOverall Assessment:")
-    print(f"  Overall Confidence: {overall_confidence:.3f}")
-    print(f"  Quality Band: {quality_band}")
-    print(f"  Description: {band_description}")
+    print("  Overall Confidence: {overall_confidence:.3f}")
+    print("  Quality Band: {quality_band}")
+    print("  Description: {band_description}")
 
     # Threshold assessment
     threshold = 0.70
@@ -584,9 +584,9 @@ def test_confidence_scoring_methodology():
     threshold_margin = overall_confidence - threshold
 
     print("\nThreshold Assessment:")
-    print(f"  Minimum Threshold: {threshold:.2f}")
-    print(f"  Threshold Met: {'✅' if threshold_met else '❌'}")
-    print(f"  Margin: {threshold_margin:+.3f}")
+    print("  Minimum Threshold: {threshold:.2f}")
+    print("  Threshold Met: {'✅' if threshold_met else '❌'}")
+    print("  Margin: {threshold_margin:+.3f}")
 
     print("✅ Confidence scoring methodology tested\n")
 
@@ -621,7 +621,7 @@ def validate_validation_schema():
         missing_props = [prop for prop in required_props if prop not in schema_props]
 
         if missing_props:
-            print(f"❌ Missing required properties: {missing_props}")
+            print("❌ Missing required properties: {missing_props}")
         else:
             print("✅ All required properties present")
 
@@ -655,15 +655,15 @@ def validate_validation_schema():
         else:
             print("❌ Overall assessment structure incomplete")
 
-        print(f"Total top-level properties: {len(schema_props)}")
+        print("Total top-level properties: {len(schema_props)}")
         print("✅ Schema validation complete")
 
     except FileNotFoundError:
         print("❌ Schema file not found")
     except json.JSONDecodeError as e:
-        print(f"❌ Invalid JSON in schema: {e}")
+        print("❌ Invalid JSON in schema: {e}")
     except Exception as e:
-        print(f"❌ Schema validation error: {e}")
+        print("❌ Schema validation error: {e}")
 
 
 def main():

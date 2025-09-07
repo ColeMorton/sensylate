@@ -33,14 +33,14 @@ def test_with_debug():
         # Check configuration
         print("⚙️  Configuration Check:")
         config = service.config.historical_storage
-        print(f"   Auto-collection enabled: {config.auto_collection_enabled}")
-        print(f"   Trigger on price calls: {config.trigger_on_price_calls}")
-        print(f"   Background collection: {config.background_collection}")
-        print(f"   Daily days: {config.daily_days}")
-        print(f"   Weekly years: {config.weekly_years}")
+        print("   Auto-collection enabled: {config.auto_collection_enabled}")
+        print("   Trigger on price calls: {config.trigger_on_price_calls}")
+        print("   Background collection: {config.background_collection}")
+        print("   Daily days: {config.daily_days}")
+        print("   Weekly years: {config.weekly_years}")
 
         # Check if historical manager is initialized
-        print(f"   Historical manager: {service.historical_manager is not None}")
+        print("   Historical manager: {service.historical_manager is not None}")
 
         print("\n📈 Making API call with debug logging...")
 
@@ -50,31 +50,31 @@ def test_with_debug():
         result = service.get_stock_info("AMD")
 
         if result:
-            print(f"   ✅ API call successful for: {result.get('symbol', 'N/A')}")
+            print("   ✅ API call successful for: {result.get('symbol', 'N/A')}")
 
             # Check if data type detection worked
             from services.base_financial_service import DataType
 
             detected_type = service._detect_data_type("stock_info_AMD", result)
-            print(f"   🔍 Detected data type: {detected_type}")
+            print("   🔍 Detected data type: {detected_type}")
 
             # Check if symbol extraction worked
             symbol = service._extract_symbol_from_data(result, {"symbol": "AMD"})
-            print(f"   🔍 Extracted symbol: {symbol}")
+            print("   🔍 Extracted symbol: {symbol}")
 
             # Check if collection should be triggered
             if detected_type:
                 should_trigger = service._should_trigger_comprehensive_collection(
                     symbol or "AMD", detected_type
                 )
-                print(f"   🔍 Should trigger collection: {should_trigger}")
+                print("   🔍 Should trigger collection: {should_trigger}")
 
             # Wait and check for collection activity
             print("   ⏳ Waiting 10 seconds for background activity...")
             time.sleep(10)
 
             # Check collection cache
-            print(f"   🔍 Collection cache: {list(service._collection_cache.keys())}")
+            print("   🔍 Collection cache: {list(service._collection_cache.keys())}")
 
         else:
             print("❌ API call failed")
@@ -82,7 +82,7 @@ def test_with_debug():
         return True
 
     except Exception as e:
-        print(f"❌ Debug test failed: {e}")
+        print("❌ Debug test failed: {e}")
         import traceback
 
         traceback.print_exc()
@@ -143,21 +143,21 @@ def test_synchronous_collection():
         # Count files before
         data_path = Path("data/raw")
         files_before = len(list(data_path.rglob("*.json"))) if data_path.exists() else 0
-        print(f"   📁 Files before: {files_before}")
+        print("   📁 Files before: {files_before}")
 
         result = service.get_stock_info("INTC")
 
         if result:
-            print(f"   ✅ API call completed: {result.get('symbol', 'N/A')}")
+            print("   ✅ API call completed: {result.get('symbol', 'N/A')}")
 
             # Count files after (should be immediate with sync collection)
             files_after = (
                 len(list(data_path.rglob("*.json"))) if data_path.exists() else 0
             )
-            print(f"   📁 Files after: {files_after}")
+            print("   📁 Files after: {files_after}")
 
             new_files = files_after - files_before
-            print(f"   📈 New files: {new_files}")
+            print("   📈 New files: {new_files}")
 
             if new_files > 0:
                 print("   🎉 SYNCHRONOUS COLLECTION SUCCESS!")
@@ -170,7 +170,7 @@ def test_synchronous_collection():
                         ):  # Modified in last 5 seconds
                             rel_path = file_path.relative_to(data_path)
                             size = file_path.stat().st_size
-                            print(f"      📄 {rel_path} ({size} bytes)")
+                            print("      📄 {rel_path} ({size} bytes)")
 
                 return True
             else:
@@ -181,7 +181,7 @@ def test_synchronous_collection():
             return False
 
     except Exception as e:
-        print(f"❌ Synchronous test failed: {e}")
+        print("❌ Synchronous test failed: {e}")
         import traceback
 
         traceback.print_exc()

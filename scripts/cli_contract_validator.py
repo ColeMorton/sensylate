@@ -119,7 +119,7 @@ class CLIContractValidator:
                 commands.append(command_name)
 
         except Exception as e:
-            print(f"Warning: Could not extract commands from {cli_file}: {e}")
+            print("Warning: Could not extract commands from {cli_file}: {e}")
 
         return sorted(list(set(commands)))  # Remove duplicates and sort
 
@@ -257,7 +257,7 @@ class CLIContractValidator:
                 classes[found_class] = sorted(methods)
 
         except Exception as e:
-            print(f"Warning: Could not extract methods from {module_file}: {e}")
+            print("Warning: Could not extract methods from {module_file}: {e}")
 
         return classes
 
@@ -340,16 +340,16 @@ def main():
     results = validator.validate_batch(test_cases)
 
     print("CLI Contract Validation Results:")
-    print(f"Overall Valid: {results['overall_valid']}")
-    print(f"Passed: {results['passed']}/{results['total_validations']}")
-    print(f"Failed: {results['failed']}/{results['total_validations']}")
+    print("Overall Valid: {results['overall_valid']}")
+    print("Passed: {results['passed']}/{results['total_validations']}")
+    print("Failed: {results['failed']}/{results['total_validations']}")
     print()
 
     for detail in results["details"]:
         status = "✅ PASS" if detail["valid"] else "❌ FAIL"
 
         if "service_name" in detail:
-            print(f"{status} CLI Command: {detail['service_name']}.{detail['command']}")
+            print("{status} CLI Command: {detail['service_name']}.{detail['command']}")
         elif "class_name" in detail:
             print(
                 f"{status} Class Method: {detail['class_name']}.{detail['method_name']}"
@@ -357,14 +357,14 @@ def main():
 
         if detail.get("errors"):
             for error in detail["errors"]:
-                print(f"   Error: {error}")
+                print("   Error: {error}")
 
         if detail.get("available_commands"):
-            print(f"   Available commands: {', '.join(detail['available_commands'])}")
+            print("   Available commands: {', '.join(detail['available_commands'])}")
 
         if detail.get("available_methods"):
             for class_name, methods in detail["available_methods"].items():
-                print(f"   Available methods in {class_name}: {', '.join(methods)}")
+                print("   Available methods in {class_name}: {', '.join(methods)}")
 
         print()
 

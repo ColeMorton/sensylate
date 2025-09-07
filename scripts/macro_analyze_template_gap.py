@@ -724,7 +724,7 @@ def main():
 
     # Check if discovery file exists
     if not Path(discovery_file).exists():
-        print(f"Error: Discovery file not found: {discovery_file}")
+        print("Error: Discovery file not found: {discovery_file}")
         sys.exit(1)
 
     # Create output directory if needed
@@ -738,7 +738,7 @@ def main():
     with open(output_file, "w") as f:
         json.dump(analysis_output, f, indent=2)
 
-    print(f"Analysis complete. Output saved to: {output_file}")
+    print("Analysis complete. Output saved to: {output_file}")
     print(
         f"Gap coverage: {analysis_output['analysis_quality_metrics']['gap_coverage']:.1%}"
     )

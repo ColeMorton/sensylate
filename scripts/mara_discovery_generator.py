@@ -595,9 +595,9 @@ def main():
         filepath = generator.save_discovery_file(discovery_data)
 
         # Output summary
-        print(f"\n✅ MARA Discovery Analysis Complete")
-        print(f"📁 Output file: {filepath}")
-        print(f"🔍 Services integrated: {len(generator.successful_services)}/7")
+        print("\n✅ MARA Discovery Analysis Complete")
+        print("📁 Output file: {filepath}")
+        print("🔍 Services integrated: {len(generator.successful_services)}/7")
         print(
             f"📊 Overall data quality: {discovery_data['cli_data_quality']['overall_data_quality']:.2f}"
         )
@@ -606,14 +606,14 @@ def main():
         )
 
         # Service status
-        print(f"\n🚀 Successful services:")
+        print("\n🚀 Successful services:")
         for service in generator.successful_services:
-            print(f"  ✓ {service}")
+            print("  ✓ {service}")
 
         if generator.service_errors:
-            print(f"\n⚠️  Service errors:")
+            print("\n⚠️  Service errors:")
             for service, error in generator.service_errors.items():
-                print(f"  ✗ {service}: {error}")
+                print("  ✗ {service}: {error}")
 
         return True
 

@@ -120,7 +120,7 @@ class FedRateValidator:
                     file_issues.append(issue)
 
         except Exception as e:
-            print(f"Warning: Could not read file {file_path}: {e}")
+            print("Warning: Could not read file {file_path}: {e}")
 
         return file_issues
 
@@ -292,14 +292,14 @@ def main():
         if os.path.exists(args.file):
             all_issues = validator.check_file(args.file)
         else:
-            print(f"Error: File not found: {args.file}")
+            print("Error: File not found: {args.file}")
             sys.exit(1)
 
     elif args.directory:
         if os.path.exists(args.directory):
             all_issues = validator.check_directory(args.directory)
         else:
-            print(f"Error: Directory not found: {args.directory}")
+            print("Error: Directory not found: {args.directory}")
             sys.exit(1)
 
     else:
@@ -328,18 +328,18 @@ def main():
             print("=" * 30)
             fixes = validator.get_suggested_fixes(all_issues)
             for file_path, file_fixes in fixes.items():
-                print(f"\n{file_path}:")
+                print("\n{file_path}:")
                 for fix in file_fixes:
-                    print(f"  - {fix}")
+                    print("  - {fix}")
 
     # Exit with error code if issues found
     if all_issues:
         high_priority = [i for i in all_issues if i["severity"] == "HIGH"]
         if high_priority:
-            print(f"\n❌ {len(high_priority)} HIGH priority issues found!")
+            print("\n❌ {len(high_priority)} HIGH priority issues found!")
             sys.exit(2)  # High priority issues
         else:
-            print(f"\n⚠️  {len(all_issues)} issues found (no high priority)")
+            print("\n⚠️  {len(all_issues)} issues found (no high priority)")
             sys.exit(1)  # Medium/low priority issues
     else:
         print("\n✅ Validation passed!")

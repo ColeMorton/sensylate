@@ -145,8 +145,8 @@ class UnifiedCommandInterface:
                 "phase": phase,
             }
 
-        print(f"🔧 Executing {domain}:{phase}")
-        print(f"   📋 Parameters: {parameters}")
+        print("🔧 Executing {domain}:{phase}")
+        print("   📋 Parameters: {parameters}")
 
         # Execute command
         result = self.execution_service.execute_command(domain, phase, parameters, mode)
@@ -170,18 +170,18 @@ class UnifiedCommandInterface:
 
         # Print results
         status_emoji = "✅" if result.status == ExecutionStatus.SUCCESS else "❌"
-        print(f"   {status_emoji} Status: {result.status.value}")
-        print(f"   ⏱️  Time: {result.execution_time:.2f}s")
+        print("   {status_emoji} Status: {result.status.value}")
+        print("   ⏱️  Time: {result.execution_time:.2f}s")
 
         if result.output_files:
-            print(f"   📄 Output: {result.output_files[0]}")
+            print("   📄 Output: {result.output_files[0]}")
 
         if result.confidence_score:
-            print(f"   🎯 Confidence: {result.confidence_score:.2f}")
+            print("   🎯 Confidence: {result.confidence_score:.2f}")
 
         if result.warnings:
             for warning in result.warnings:
-                print(f"   ⚠️  {warning}")
+                print("   ⚠️  {warning}")
 
         return response
 
@@ -218,8 +218,8 @@ class UnifiedCommandInterface:
                 "domain": domain,
             }
 
-        print(f"🚀 Starting full DASV workflow for {domain}")
-        print(f"   📋 Parameters: {parameters}")
+        print("🚀 Starting full DASV workflow for {domain}")
+        print("   📋 Parameters: {parameters}")
 
         # Execute workflow
         result = self.orchestrator.execute_workflow(
@@ -413,25 +413,25 @@ Examples:
         commands_info = interface.list_all_commands()
         print("📋 Available Commands:")
         for domain, phases in commands_info["commands"].items():
-            print(f"  {domain}: {', '.join(phases)}")
+            print("  {domain}: {', '.join(phases)}")
 
         print("\n🔄 Available Workflows:")
         for workflow in commands_info["workflows"]:
-            print(f"  {workflow}")
+            print("  {workflow}")
 
         print("\n📝 Command Aliases:")
         for alias, full_name in commands_info["command_aliases"].items():
-            print(f"  {alias} → {full_name}")
+            print("  {alias} → {full_name}")
 
         print("\n⚡ Phase Aliases:")
         for alias, full_name in commands_info["phase_aliases"].items():
-            print(f"  {alias} → {full_name}")
+            print("  {alias} → {full_name}")
 
         return
 
     if args.info:
         info = interface.get_command_info(args.info)
-        print(f"ℹ️  Command Information:")
+        print("ℹ️  Command Information:")
         print(json.dumps(info, indent=2))
         return
 
@@ -442,7 +442,7 @@ Examples:
     # Execute command
     mode = ExecutionMode.DIRECT if args.mode == "direct" else ExecutionMode.SUB_AGENT
 
-    print(f"🎯 Executing: {args.command}")
+    print("🎯 Executing: {args.command}")
     result = interface.execute_command_string(args.command, mode)
 
     # Print results
@@ -451,20 +451,20 @@ Examples:
     print("=" * 60)
 
     if "error" in result:
-        print(f"❌ Error: {result['error']}")
+        print("❌ Error: {result['error']}")
     else:
-        print(f"Status: {result['status']}")
+        print("Status: {result['status']}")
 
         if "workflow_id" in result:
             # Workflow result
-            print(f"Workflow ID: {result['workflow_id']}")
-            print(f"Domain: {result['domain']}")
-            print(f"Duration: {result.get('duration', 'N/A')}")
-            print(f"Phases Completed: {result['phases_completed']}")
-            print(f"Final Outputs: {len(result['final_outputs'])}")
+            print("Workflow ID: {result['workflow_id']}")
+            print("Domain: {result['domain']}")
+            print("Duration: {result.get('duration', 'N/A')}")
+            print("Phases Completed: {result['phases_completed']}")
+            print("Final Outputs: {len(result['final_outputs'])}")
 
             if result.get("overall_confidence"):
-                print(f"Overall Confidence: {result['overall_confidence']:.2f}")
+                print("Overall Confidence: {result['overall_confidence']:.2f}")
 
             print("\nPhase Results:")
             for phase, phase_info in result.get("phase_results", {}).items():
@@ -476,20 +476,20 @@ Examples:
 
         else:
             # Single phase result
-            print(f"Domain: {result['domain']}")
-            print(f"Phase: {result['phase']}")
-            print(f"Execution Time: {result['execution_time']:.2f}s")
+            print("Domain: {result['domain']}")
+            print("Phase: {result['phase']}")
+            print("Execution Time: {result['execution_time']:.2f}s")
 
             if result.get("confidence_score"):
-                print(f"Confidence Score: {result['confidence_score']:.2f}")
+                print("Confidence Score: {result['confidence_score']:.2f}")
 
             if result.get("output_files"):
-                print(f"Output Files: {result['output_files']}")
+                print("Output Files: {result['output_files']}")
 
         if result.get("warnings"):
-            print(f"\nWarnings:")
+            print("\nWarnings:")
             for warning in result["warnings"]:
-                print(f"  ⚠️  {warning}")
+                print("  ⚠️  {warning}")
 
 
 if __name__ == "__main__":

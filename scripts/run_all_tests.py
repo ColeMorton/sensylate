@@ -25,8 +25,8 @@ class TestRunner:
 
         print("🚀 Unified Test Runner - Consolidated Storage System")
         print("=" * 70)
-        print(f"Started: {self.start_time}")
-        print(f"Working directory: {self.script_dir}")
+        print("Started: {self.start_time}")
+        print("Working directory: {self.script_dir}")
 
     def run_unittest_suite(self, test_module: str, description: str) -> Dict[str, Any]:
         """Run a unittest-based test suite"""
@@ -42,7 +42,7 @@ class TestRunner:
             "details": [],
         }
 
-        print(f"\n🧪 {description}")
+        print("\n🧪 {description}")
         print("-" * 50)
 
         start_time = time.time()
@@ -88,12 +88,12 @@ class TestRunner:
             print(
                 f"   ✅ {result['tests_run']} tests, {result['failures']} failures, {result['errors']} errors"
             )
-            print(f"   ⏱️  Execution time: {result['execution_time']:.2f}s")
+            print("   ⏱️  Execution time: {result['execution_time']:.2f}s")
 
         except Exception as e:
             result["execution_time"] = time.time() - start_time
             result["details"].append(f"EXCEPTION: {str(e)}")
-            print(f"   ❌ Failed to run test suite: {e}")
+            print("   ❌ Failed to run test suite: {e}")
 
         self.results.append(result)
         return result
@@ -114,7 +114,7 @@ class TestRunner:
             "details": [],
         }
 
-        print(f"\n🖥️  {description}")
+        print("\n🖥️  {description}")
         print("-" * 50)
 
         start_time = time.time()
@@ -135,29 +135,29 @@ class TestRunner:
             result["success"] = process.returncode == 0
 
             if result["success"]:
-                print(f"   ✅ Script completed successfully")
+                print("   ✅ Script completed successfully")
             else:
-                print(f"   ❌ Script failed (return code: {process.returncode})")
+                print("   ❌ Script failed (return code: {process.returncode})")
                 if result["stderr"]:
                     result["details"].append(f"STDERR: {result['stderr'][:200]}...")
 
-            print(f"   ⏱️  Execution time: {result['execution_time']:.2f}s")
+            print("   ⏱️  Execution time: {result['execution_time']:.2f}s")
 
         except subprocess.TimeoutExpired:
             result["execution_time"] = timeout
             result["details"].append(f"Script timed out after {timeout} seconds")
-            print(f"   ⏰ Script timed out ({timeout}s)")
+            print("   ⏰ Script timed out ({timeout}s)")
         except Exception as e:
             result["execution_time"] = time.time() - start_time
             result["details"].append(f"EXCEPTION: {str(e)}")
-            print(f"   ❌ Failed to run script: {e}")
+            print("   ❌ Failed to run script: {e}")
 
         self.results.append(result)
         return result
 
     def analyze_file_system_state(self) -> Dict[str, Any]:
         """Analyze current file system state"""
-        print(f"\n📁 File System State Analysis")
+        print("\n📁 File System State Analysis")
         print("-" * 50)
 
         analysis = {
@@ -216,22 +216,22 @@ class TestRunner:
         print(
             f"   📂 Data directory exists: {'✅' if analysis['data_directory_exists'] else '❌'}"
         )
-        print(f"   📄 CSV files: {analysis['csv_files']}")
-        print(f"   📋 Metadata files: {analysis['meta_files']}")
-        print(f"   📋 JSON files: {analysis['json_files']}")
-        print(f"   📊 Total files: {analysis['total_files']}")
+        print("   📄 CSV files: {analysis['csv_files']}")
+        print("   📋 Metadata files: {analysis['meta_files']}")
+        print("   📋 JSON files: {analysis['json_files']}")
+        print("   📊 Total files: {analysis['total_files']}")
 
         if analysis["symbols_found"]:
-            print(f"   📈 Symbols: {', '.join(analysis['symbols_found'][:5])}")
+            print("   📈 Symbols: {', '.join(analysis['symbols_found'][:5])}")
             if len(analysis["symbols_found"]) > 5:
-                print(f"        ... and {len(analysis['symbols_found']) - 5} more")
+                print("        ... and {len(analysis['symbols_found']) - 5} more")
 
         if analysis["timeframes_found"]:
-            print(f"   ⏰ Timeframes: {', '.join(sorted(analysis['timeframes_found']))}")
+            print("   ⏰ Timeframes: {', '.join(sorted(analysis['timeframes_found']))}")
 
         if analysis.get("file_sizes", {}).get("grand_total", 0) > 0:
             sizes = analysis["file_sizes"]
-            print(f"   💾 Storage: {sizes['grand_total']} bytes total")
+            print("   💾 Storage: {sizes['grand_total']} bytes total")
             print(
                 f"      CSV: {sizes['csv_total']} bytes, Meta: {sizes['meta_total']} bytes"
             )
@@ -240,7 +240,7 @@ class TestRunner:
 
     def run_all_tests(self):
         """Execute all test suites"""
-        print(f"\n🎯 Starting Comprehensive Test Execution")
+        print("\n🎯 Starting Comprehensive Test Execution")
 
         # Test suite configuration
         test_suites = [
@@ -273,10 +273,10 @@ class TestRunner:
         """Generate comprehensive test execution report"""
         total_duration = datetime.now() - self.start_time
 
-        print(f"\n📊 COMPREHENSIVE TEST EXECUTION REPORT")
+        print("\n📊 COMPREHENSIVE TEST EXECUTION REPORT")
         print("=" * 70)
-        print(f"Total Duration: {total_duration}")
-        print(f"Test Suites Executed: {len(self.results)}")
+        print("Total Duration: {total_duration}")
+        print("Test Suites Executed: {len(self.results)}")
 
         # Categorize results
         unittest_results = [r for r in self.results if r["test_type"] == "unittest"]
@@ -286,7 +286,7 @@ class TestRunner:
         successful_scripts = [r for r in script_results if r["success"]]
 
         # Unittest summary
-        print(f"\n🧪 Unit Test Suite Results:")
+        print("\n🧪 Unit Test Suite Results:")
         total_tests = sum(r["tests_run"] for r in unittest_results)
         total_failures = sum(r["failures"] for r in unittest_results)
         total_errors = sum(r["errors"] for r in unittest_results)
@@ -305,8 +305,8 @@ class TestRunner:
             )
 
         # Script test summary
-        print(f"\n🖥️  Script Test Results:")
-        print(f"   Scripts: {len(successful_scripts)}/{len(script_results)} passed")
+        print("\n🖥️  Script Test Results:")
+        print("   Scripts: {len(successful_scripts)}/{len(script_results)} passed")
 
         for result in script_results:
             status = "✅" if result["success"] else "❌"
@@ -320,9 +320,9 @@ class TestRunner:
             total_execution_time / len(self.results) if self.results else 0
         )
 
-        print(f"\n⚡ Performance Metrics:")
-        print(f"   Total Test Execution Time: {total_execution_time:.2f}s")
-        print(f"   Average Test Suite Time: {avg_execution_time:.2f}s")
+        print("\n⚡ Performance Metrics:")
+        print("   Total Test Execution Time: {total_execution_time:.2f}s")
+        print("   Average Test Suite Time: {avg_execution_time:.2f}s")
         print(
             f"   Tests per Second: {total_tests/total_execution_time:.1f}"
             if total_execution_time > 0
@@ -331,8 +331,8 @@ class TestRunner:
 
         # File system efficiency
         if file_analysis["total_files"] > 0:
-            print(f"\n💾 Storage Efficiency:")
-            print(f"   Files Created: {file_analysis['total_files']}")
+            print("\n💾 Storage Efficiency:")
+            print("   Files Created: {file_analysis['total_files']}")
             print(
                 f"   Consolidated Format: {file_analysis['csv_files']} CSV + {file_analysis['meta_files']} metadata"
             )
@@ -358,11 +358,11 @@ class TestRunner:
         # Error summary
         failed_results = [r for r in self.results if not r["success"]]
         if failed_results:
-            print(f"\n⚠️  Failed Tests:")
+            print("\n⚠️  Failed Tests:")
             for result in failed_results:
-                print(f"   ❌ {result['description']}")
+                print("   ❌ {result['description']}")
                 for detail in result["details"]:
-                    print(f"      {detail}")
+                    print("      {detail}")
 
         # Overall assessment
         unittest_success_rate = (
@@ -377,13 +377,13 @@ class TestRunner:
             else 0
         )
 
-        print(f"\n🎯 OVERALL ASSESSMENT:")
-        print(f"   Unit Test Success Rate: {unittest_success_rate:.0%}")
-        print(f"   Script Test Success Rate: {script_success_rate:.0%}")
-        print(f"   Overall Success Rate: {overall_success_rate:.0%}")
+        print("\n🎯 OVERALL ASSESSMENT:")
+        print("   Unit Test Success Rate: {unittest_success_rate:.0%}")
+        print("   Script Test Success Rate: {script_success_rate:.0%}")
+        print("   Overall Success Rate: {overall_success_rate:.0%}")
 
         if overall_success_rate >= 0.8 and total_failures == 0 and total_errors == 0:
-            print(f"\n🎉 CONSOLIDATED STORAGE SYSTEM: ALL TESTS PASSED!")
+            print("\n🎉 CONSOLIDATED STORAGE SYSTEM: ALL TESTS PASSED!")
             print("   ✅ Core functionality verified")
             print("   ✅ Integration tests successful")
             print("   ✅ File system efficiency confirmed")
@@ -391,9 +391,9 @@ class TestRunner:
             print("   ✅ CLI integration working")
             return True
         else:
-            print(f"\n⚠️  CONSOLIDATED STORAGE SYSTEM: ISSUES DETECTED")
-            print(f"   - Success rate: {overall_success_rate:.0%}")
-            print(f"   - Check individual test results above")
+            print("\n⚠️  CONSOLIDATED STORAGE SYSTEM: ISSUES DETECTED")
+            print("   - Success rate: {overall_success_rate:.0%}")
+            print("   - Check individual test results above")
             return False
 
 
@@ -402,7 +402,7 @@ def main():
     runner = TestRunner()
     success = runner.run_all_tests()
 
-    print(f"\n{'='*70}")
+    print("\n{'='*70}")
     if success:
         print("🏆 Unified Test Runner: ALL SYSTEMS OPERATIONAL")
     else:

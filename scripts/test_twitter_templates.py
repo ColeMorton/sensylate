@@ -69,14 +69,14 @@ class TwitterTemplateTest:
             # Validate content
             self.validate_content(content, "fundamental")
             print("✅ Fundamental valuation template test PASSED")
-            print(f"Generated content preview:\n{content[:200]}...\n")
+            print("Generated content preview:\n{content[:200]}...\n")
             return True
 
         except TemplateNotFound as e:
-            print(f"❌ Template not found: {e}")
+            print("❌ Template not found: {e}")
             return False
         except Exception as e:
-            print(f"❌ Template rendering failed: {e}")
+            print("❌ Template rendering failed: {e}")
             return False
 
     def test_strategy_template(self):
@@ -121,7 +121,7 @@ class TwitterTemplateTest:
             try:
                 content = template.render(**context)
             except Exception as render_error:
-                print(f"❌ Template rendering failed: {render_error}")
+                print("❌ Template rendering failed: {render_error}")
                 # Try with just required variables
                 minimal_context = {
                     "ticker": context["ticker"],
@@ -132,19 +132,19 @@ class TwitterTemplateTest:
                     template.render(**minimal_context)
                     print("✅ Minimal context worked - issue is with data structure")
                 except Exception as minimal_error:
-                    print(f"❌ Even minimal context failed: {minimal_error}")
+                    print("❌ Even minimal context failed: {minimal_error}")
                 return False
 
             self.validate_content(content, "strategy")
             print("✅ Strategy template test PASSED")
-            print(f"Generated content preview:\n{content[:200]}...\n")
+            print("Generated content preview:\n{content[:200]}...\n")
             return True
 
         except TemplateNotFound as e:
-            print(f"❌ Template not found: {e}")
+            print("❌ Template not found: {e}")
             return False
         except Exception as e:
-            print(f"❌ Unexpected error: {e}")
+            print("❌ Unexpected error: {e}")
             return False
 
     def test_base_template_macros(self):
@@ -169,7 +169,7 @@ class TwitterTemplateTest:
                 return False
 
         except Exception as e:
-            print(f"❌ Base template macro test failed: {e}")
+            print("❌ Base template macro test failed: {e}")
             return False
 
     def validate_content(self, content, content_type):
@@ -184,7 +184,7 @@ class TwitterTemplateTest:
 
         for check, passed in checks.items():
             if not passed:
-                print(f"⚠️  Validation warning: {check} failed")
+                print("⚠️  Validation warning: {check} failed")
 
         return all(checks.values())
 
@@ -199,14 +199,14 @@ class TwitterTemplateTest:
             for file_path in shared_files:
                 template_path = self.templates_dir / file_path
                 if not template_path.exists():
-                    print(f"❌ Missing shared component: {file_path}")
+                    print("❌ Missing shared component: {file_path}")
                     return False
 
             print("✅ Template inheritance structure test PASSED")
             return True
 
         except Exception as e:
-            print(f"❌ Template inheritance test failed: {e}")
+            print("❌ Template inheritance test failed: {e}")
             return False
 
     def run_all_tests(self):
@@ -226,7 +226,7 @@ class TwitterTemplateTest:
                 result = test()
                 results.append(result)
             except Exception as e:
-                print(f"❌ Test failed with exception: {e}")
+                print("❌ Test failed with exception: {e}")
                 results.append(False)
             print()  # Add spacing between tests
 
@@ -234,7 +234,7 @@ class TwitterTemplateTest:
         passed = sum(results)
         total = len(results)
 
-        print(f"📊 Test Results: {passed}/{total} tests passed")
+        print("📊 Test Results: {passed}/{total} tests passed")
 
         if passed == total:
             print("🎉 All tests PASSED! Template integration is working correctly.")
@@ -253,7 +253,7 @@ def main():
         success = test_suite.run_all_tests()
         sys.exit(0 if success else 1)
     except Exception as e:
-        print(f"❌ Test suite failed to initialize: {e}")
+        print("❌ Test suite failed to initialize: {e}")
         sys.exit(1)
 
 

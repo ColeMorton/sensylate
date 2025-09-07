@@ -970,17 +970,17 @@ def main():
         print("=" * 80)
 
         metadata = analysis_report["analysis_metadata"]
-        print(f"📊 Analysis Confidence: {metadata['confidence_score']:.1%}")
-        print(f"📈 Closed Trades Analyzed: {len(analyzer.closed_trades)}")
-        print(f"💼 Active Positions: {len(analyzer.active_trades)}")
-        print(f"🎯 Statistical Significance: {metadata['statistical_significance']:.1%}")
+        print("📊 Analysis Confidence: {metadata['confidence_score']:.1%}")
+        print("📈 Closed Trades Analyzed: {len(analyzer.closed_trades)}")
+        print("💼 Active Positions: {len(analyzer.active_trades)}")
+        print("🎯 Statistical Significance: {metadata['statistical_significance']:.1%}")
 
         print("\n📁 Full analysis saved to:")
-        print(f"   {output_path}")
+        print("   {output_path}")
 
         print("\n🔍 Key Findings:")
         for finding in analysis_report["next_phase_inputs"]["critical_findings"]:
-            print(f"   • {finding}")
+            print("   • {finding}")
 
         print("\n" + "=" * 80)
 

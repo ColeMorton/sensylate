@@ -538,7 +538,7 @@ if __name__ == "__main__":
         trades = data["trades"]
         monthly_data = data["monthly_performance"]
 
-        print(f"Trades: {len(trades)}")
+        print("Trades: {len(trades)}")
         print(
             f"Trade volume category: {scalability_manager.detect_trade_volume_category(trades)}"
         )
@@ -553,12 +553,12 @@ if __name__ == "__main__":
         recommendations = scalability_manager.get_chart_recommendation(
             trades, monthly_data
         )
-        print(f"Chart recommendations: {recommendations}")
+        print("Chart recommendations: {recommendations}")
 
         print("Scalability manager test completed successfully!")
 
     except Exception as e:
-        print(f"Test failed: {e}")
+        print("Test failed: {e}")
         import traceback
 
         traceback.print_exc()

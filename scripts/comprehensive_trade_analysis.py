@@ -1140,7 +1140,7 @@ def main():
             f"✅ Successfully generated {len(saved_files)} comprehensive trade analysis reports:"
         )
         for report_type, filepath in saved_files.items():
-            print(f"   {report_type.title()}: {filepath}")
+            print("   {report_type.title()}: {filepath}")
 
         # Generate summary statistics
         metrics = analyzer.calculate_performance_metrics()
@@ -1148,10 +1148,10 @@ def main():
         print(
             f"   Total Trades: {metrics.get('total_trades', 0)} closed, {metrics.get('open_positions', 0)} open"
         )
-        print(f"   Win Rate: {metrics.get('win_rate', 0):.1%}")
-        print(f"   Total Return: {metrics.get('total_return', 0):.2%}")
-        print(f"   Profit Factor: {metrics.get('profit_factor', 0):.2f}")
-        print(f"   Exit Efficiency: {metrics.get('avg_exit_efficiency', 0):.2f}")
+        print("   Win Rate: {metrics.get('win_rate', 0):.1%}")
+        print("   Total Return: {metrics.get('total_return', 0):.2%}")
+        print("   Profit Factor: {metrics.get('profit_factor', 0):.2f}")
+        print("   Exit Efficiency: {metrics.get('avg_exit_efficiency', 0):.2f}")
 
     except Exception as e:
         logger.error(f"Analysis failed: {e}")

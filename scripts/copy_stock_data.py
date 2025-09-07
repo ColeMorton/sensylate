@@ -29,7 +29,7 @@ def get_symbol_data_years(symbol: str) -> int:
         data_years = symbol_config.get("dataYears")
 
         if data_years is not None:
-            print(f"Found dataYears configuration for {symbol}: {data_years} years")
+            print("Found dataYears configuration for {symbol}: {data_years} years")
             return data_years
         else:
             print(
@@ -62,7 +62,7 @@ def filter_data_by_years(df: pd.DataFrame, years: int) -> pd.DataFrame:
     # Convert date back to string format
     filtered_df["date"] = filtered_df["date"].dt.strftime("%Y-%m-%d")
 
-    print(f"Filtered data from {len(df)} to {len(filtered_df)} rows ({years} years)")
+    print("Filtered data from {len(df)} to {len(filtered_df)} rows ({years} years)")
     return filtered_df
 
 
@@ -83,12 +83,12 @@ def fetch_and_copy_stock_data(symbol: str) -> bool:
 
     try:
         if scripts_csv_path.exists():
-            print(f"Found existing processed data for {symbol}")
+            print("Found existing processed data for {symbol}")
             # Read the existing processed data
             df = pd.read_csv(scripts_csv_path)
-            print(f"Found existing processed data with {len(df)} rows")
+            print("Found existing processed data with {len(df)} rows")
         else:
-            print(f"Fetching 1 year of {symbol} data...")
+            print("Fetching 1 year of {symbol} data...")
             # Use Yahoo Finance CLI to get 1 year of data for the specified symbol
             result = subprocess.run(
                 [
@@ -109,16 +109,16 @@ def fetch_and_copy_stock_data(symbol: str) -> bool:
             )
 
             if result.returncode != 0:
-                print(f"Error fetching {symbol} data: {result.stderr}")
+                print("Error fetching {symbol} data: {result.stderr}")
                 return False
 
             if not scripts_csv_path.exists():
-                print(f"No {symbol} data found at {scripts_csv_path} after fetch")
+                print("No {symbol} data found at {scripts_csv_path} after fetch")
                 return False
 
             # Read the newly fetched data
             df = pd.read_csv(scripts_csv_path)
-            print(f"Retrieved {len(df)} rows of data")
+            print("Retrieved {len(df)} rows of data")
 
         # Ensure we have date column in the right format
         if "date" in df.columns:
@@ -142,7 +142,7 @@ def fetch_and_copy_stock_data(symbol: str) -> bool:
         return True
 
     except Exception as e:
-        print(f"Error processing {symbol} data: {e}")
+        print("Error processing {symbol} data: {e}")
         return False
 
 
@@ -155,14 +155,14 @@ def main():
     args = parser.parse_args()
     symbol = args.symbol.upper()  # Ensure uppercase
 
-    print(f"Starting data copy process for symbol: {symbol}")
+    print("Starting data copy process for symbol: {symbol}")
 
     success = fetch_and_copy_stock_data(symbol)
 
     if success:
-        print(f"✅ Successfully completed data copy for {symbol}")
+        print("✅ Successfully completed data copy for {symbol}")
     else:
-        print(f"❌ Failed to copy data for {symbol}")
+        print("❌ Failed to copy data for {symbol}")
 
     sys.exit(0 if success else 1)
 

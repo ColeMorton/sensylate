@@ -281,7 +281,7 @@ class TemplateUpgrader:
             shutil.copy2(template_path, backup_path)
             return str(backup_path)
         except Exception as e:
-            print(f"Failed to backup {template_path}: {e}")
+            print("Failed to backup {template_path}: {e}")
             return None
 
     def upgrade_template(self, plan: TemplateUpgradePlan, dry_run: bool = True) -> bool:
@@ -318,7 +318,7 @@ class TemplateUpgrader:
                 return True
 
         except Exception as e:
-            print(f"Upgrade failed for {plan.source_path}: {e}")
+            print("Upgrade failed for {plan.source_path}: {e}")
             plan.upgrade_status = "failed"
             return False
 
@@ -552,10 +552,10 @@ class TemplateUpgrader:
                             f"    ✅ Upgrade successful (score: {validation['score']:.2f})"
                         )
                     else:
-                        print(f"    ⚠️  Upgrade completed with warnings")
+                        print("    ⚠️  Upgrade completed with warnings")
             else:
                 report.templates_failed += 1
-                print(f"    ❌ Upgrade failed")
+                print("    ❌ Upgrade failed")
 
         return report
 
@@ -578,9 +578,9 @@ class TemplateUpgrader:
                 try:
                     shutil.copy2(plan.backup_path, plan.target_path)
                     success_count += 1
-                    print(f"  ✅ Restored {Path(plan.target_path).name}")
+                    print("  ✅ Restored {Path(plan.target_path).name}")
                 except Exception as e:
-                    print(f"  ❌ Failed to restore {Path(plan.target_path).name}: {e}")
+                    print("  ❌ Failed to restore {Path(plan.target_path).name}: {e}")
 
         print(
             f"✅ Rollback complete: {success_count}/{len(report.upgrade_plans)} templates restored"
@@ -592,41 +592,41 @@ class TemplateUpgrader:
         print("\n" + "=" * 70)
         print("TEMPLATE UPGRADE REPORT")
         print("=" * 70)
-        print(f"📅 Timestamp: {report.timestamp.strftime('%Y-%m-%d %H:%M:%S')}")
-        print(f"📁 Total templates: {report.total_templates}")
-        print(f"✅ Upgraded: {report.templates_upgraded}")
-        print(f"⏭️  Skipped: {report.templates_skipped}")
-        print(f"❌ Failed: {report.templates_failed}")
+        print("📅 Timestamp: {report.timestamp.strftime('%Y-%m-%d %H:%M:%S')}")
+        print("📁 Total templates: {report.total_templates}")
+        print("✅ Upgraded: {report.templates_upgraded}")
+        print("⏭️  Skipped: {report.templates_skipped}")
+        print("❌ Failed: {report.templates_failed}")
 
         if report.backup_directory:
-            print(f"💾 Backup directory: {report.backup_directory}")
+            print("💾 Backup directory: {report.backup_directory}")
 
         # Risk summary
         risk_summary = {"low": 0, "medium": 0, "high": 0}
         for plan in report.upgrade_plans:
             risk_summary[plan.risk_level] += 1
 
-        print(f"\n📊 Risk Assessment:")
-        print(f"  Low risk: {risk_summary['low']}")
-        print(f"  Medium risk: {risk_summary['medium']}")
-        print(f"  High risk: {risk_summary['high']}")
+        print("\n📊 Risk Assessment:")
+        print("  Low risk: {risk_summary['low']}")
+        print("  Medium risk: {risk_summary['medium']}")
+        print("  High risk: {risk_summary['high']}")
 
         # Validation summary
         if report.validation_results:
-            print(f"\n✅ Validation Results:")
+            print("\n✅ Validation Results:")
             total_score = 0
             for template, validation in report.validation_results.items():
                 if "score" in validation:
                     total_score += validation["score"]
                     status = "✅" if validation["valid"] else "⚠️"
-                    print(f"  {status} {template}: {validation['score']:.2f}")
+                    print("  {status} {template}: {validation['score']:.2f}")
 
             avg_score = (
                 total_score / len(report.validation_results)
                 if report.validation_results
                 else 0
             )
-            print(f"  Average validation score: {avg_score:.2f}")
+            print("  Average validation score: {avg_score:.2f}")
 
         # Common upgrades
         upgrade_frequency = {}
@@ -638,11 +638,11 @@ class TemplateUpgrader:
                 )
 
         if upgrade_frequency:
-            print(f"\n📋 Most Common Upgrades:")
+            print("\n📋 Most Common Upgrades:")
             for upgrade_type, count in sorted(
                 upgrade_frequency.items(), key=lambda x: x[1], reverse=True
             )[:5]:
-                print(f"  {upgrade_type}: {count} templates")
+                print("  {upgrade_type}: {count} templates")
 
 
 def main():
@@ -709,7 +709,7 @@ def main():
 
                 json.dump(report_data, f, indent=2)
 
-            print(f"\n📄 Report exported to: {export_path}")
+            print("\n📄 Report exported to: {export_path}")
 
     elif args.upgrade:
         # Apply upgrades

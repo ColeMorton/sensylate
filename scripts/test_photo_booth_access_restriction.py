@@ -47,7 +47,7 @@ def test_config_implementation():
 
     for element in required_elements:
         if element not in content:
-            print(f"❌ Missing configuration element: {element}")
+            print("❌ Missing configuration element: {element}")
             return False
 
     # Check validation array
@@ -140,7 +140,7 @@ def test_environment_logic():
 
     for func in env_functions:
         if func not in content:
-            print(f"❌ Missing environment function: {func}")
+            print("❌ Missing environment function: {func}")
             return False
 
     # Check photoBooth uses environment detection
@@ -201,12 +201,12 @@ def main():
             else:
                 failed += 1
         except Exception as e:
-            print(f"❌ Test {test.__name__} failed with exception: {e}")
+            print("❌ Test {test.__name__} failed with exception: {e}")
             failed += 1
         print()
 
     print("=" * 50)
-    print(f"📊 Test Results: {passed} passed, {failed} failed")
+    print("📊 Test Results: {passed} passed, {failed} failed")
 
     if failed == 0:
         print("🎉 Photo booth access restrictions are properly implemented!")

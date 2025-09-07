@@ -27,15 +27,15 @@ from config_manager import ConfigManager, ConfigurationError
 
 def print_header(title: str) -> None:
     """Print a formatted header"""
-    print(f"\n{'=' * 60}")
-    print(f" {title}")
-    print(f"{'=' * 60}")
+    print("\n{'=' * 60}")
+    print(" {title}")
+    print("{'=' * 60}")
 
 
 def print_status(status: str, message: str) -> None:
     """Print a status message with colored indicator"""
     indicators = {"SUCCESS": "✅", "WARNING": "⚠️ ", "ERROR": "❌", "INFO": "ℹ️ "}
-    print(f"{indicators.get(status, '•')} {message}")
+    print("{indicators.get(status, '•')} {message}")
 
 
 def check_environment_file() -> Dict[str, str]:
@@ -165,13 +165,13 @@ def provide_setup_guidance(error_keys: List[str]) -> None:
     for key_name in error_keys:
         if key_name in key_instructions:
             info = key_instructions[key_name]
-            print(f"\n🔑 {key_name}:")
-            print(f"   Description: {info['description']}")
-            print(f"   Get API key: {info['url']}")
-            print(f"   Expected format: {info['format']}")
-            print(f"   Add to .env: {key_name}=your_api_key_here")
+            print("\n🔑 {key_name}:")
+            print("   Description: {info['description']}")
+            print("   Get API key: {info['url']}")
+            print("   Expected format: {info['format']}")
+            print("   Add to .env: {key_name}=your_api_key_here")
 
-    print(f"\n📝 Next steps:")
+    print("\n📝 Next steps:")
     print("1. Obtain the missing API keys from the URLs above")
     print("2. Add them to your .env file")
     print("3. Run this script again to validate")

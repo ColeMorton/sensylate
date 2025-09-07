@@ -93,7 +93,7 @@ class CompletePathStandardizer:
             with open(file_path, "r", encoding="utf-8") as f:
                 content = f.read()
         except Exception as e:
-            print(f"Error reading {file_path}: {e}")
+            print("Error reading {file_path}: {e}")
             return False, []
 
         original_content = content
@@ -148,7 +148,7 @@ class CompletePathStandardizer:
                 with open(file_path, "w", encoding="utf-8") as f:
                     f.write(content)
             except Exception as e:
-                print(f"Error writing {file_path}: {e}")
+                print("Error writing {file_path}: {e}")
                 return False, []
 
         return changed, changes_made
@@ -161,7 +161,7 @@ class CompletePathStandardizer:
             Dictionary mapping file paths to changes made
         """
         print("🔧 Completing path standardization across all command files...")
-        print(f"Scanning commands directory: {self.commands_dir}")
+        print("Scanning commands directory: {self.commands_dir}")
 
         results = {}
         total_files = 0
@@ -176,19 +176,19 @@ class CompletePathStandardizer:
                 changed_files += 1
                 results[str(file_path)] = changes
                 relative_path = file_path.relative_to(self.commands_dir)
-                print(f"✅ Updated: {relative_path}")
+                print("✅ Updated: {relative_path}")
                 for change in changes[:6]:  # Show first 6 changes
-                    print(f"    {change}")
+                    print("    {change}")
                 if len(changes) > 6:
-                    print(f"    ... and {len(changes) - 6} more changes")
+                    print("    ... and {len(changes) - 6} more changes")
             else:
                 relative_path = file_path.relative_to(self.commands_dir)
-                print(f"⚡ No changes needed: {relative_path}")
+                print("⚡ No changes needed: {relative_path}")
 
-        print(f"\n📊 Summary:")
-        print(f"  Total files processed: {total_files}")
-        print(f"  Files updated: {changed_files}")
-        print(f"  Files unchanged: {total_files - changed_files}")
+        print("\n📊 Summary:")
+        print("  Total files processed: {total_files}")
+        print("  Files updated: {changed_files}")
+        print("  Files unchanged: {total_files - changed_files}")
 
         return results
 
@@ -239,7 +239,7 @@ class CompletePathStandardizer:
                                 f"{description}: {len(matches)} occurrences"
                             )
                     except re.error as e:
-                        print(f"Regex error with pattern {pattern}: {e}")
+                        print("Regex error with pattern {pattern}: {e}")
                         continue
 
                 if file_issues:
@@ -247,7 +247,7 @@ class CompletePathStandardizer:
                     issues[str(relative_path)] = file_issues
 
             except Exception as e:
-                print(f"Error validating {file_path}: {e}")
+                print("Error validating {file_path}: {e}")
                 continue
 
         return issues
@@ -273,14 +273,14 @@ def main():
         print("- `{DATA_OUTPUTS}/` for output directories")
         print("- `{SCHEMAS_BASE}/` for schema paths")
     else:
-        print(f"⚠️  Still found {len(issues)} files with inconsistent references:")
+        print("⚠️  Still found {len(issues)} files with inconsistent references:")
         for file, problems in list(issues.items())[:10]:  # Show first 10
-            print(f"  {file}:")
+            print("  {file}:")
             for problem in problems:
-                print(f"    {problem}")
+                print("    {problem}")
 
         if len(issues) > 10:
-            print(f"  ... and {len(issues) - 10} more files")
+            print("  ... and {len(issues) - 10} more files")
 
     return len(issues) == 0
 

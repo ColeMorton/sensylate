@@ -1498,11 +1498,11 @@ def main():
 
     # Check if required files exist
     if not Path(discovery_file).exists():
-        print(f"Error: Discovery file not found: {discovery_file}")
+        print("Error: Discovery file not found: {discovery_file}")
         sys.exit(1)
 
     if not Path(analysis_file).exists():
-        print(f"Error: Analysis file not found: {analysis_file}")
+        print("Error: Analysis file not found: {analysis_file}")
         sys.exit(1)
 
     # Create output directory if needed
@@ -1516,7 +1516,7 @@ def main():
     with open(output_file, "w") as f:
         json.dump(comprehensive_output, f, indent=2)
 
-    print(f"✅ Enhanced comprehensive analysis complete. Output saved to: {output_file}")
+    print("✅ Enhanced comprehensive analysis complete. Output saved to: {output_file}")
     print(
         f"📊 Analysis components: {comprehensive_output['metadata']['components_analyzed']}"
     )
