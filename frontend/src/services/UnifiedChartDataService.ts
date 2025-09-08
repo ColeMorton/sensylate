@@ -172,16 +172,18 @@ class UnifiedChartDataService {
   // Legacy methods (kept for backward compatibility)
   async fetchAppleStockData(signal?: AbortSignal): Promise<StockDataRow[]> {
     const response = await fetch("/data/raw/stocks/AAPL/daily.csv", { signal });
-    if (!response.ok)
-      {throw new Error(`Failed to fetch Apple data: ${response.status}`);}
+    if (!response.ok) {
+      throw new Error(`Failed to fetch Apple data: ${response.status}`);
+    }
     const csvText = await response.text();
     return this.parseCSV(csvText);
   }
 
   async fetchMSTRStockData(signal?: AbortSignal): Promise<StockDataRow[]> {
     const response = await fetch("/data/raw/stocks/MSTR/daily.csv", { signal });
-    if (!response.ok)
-      {throw new Error(`Failed to fetch MSTR data: ${response.status}`);}
+    if (!response.ok) {
+      throw new Error(`Failed to fetch MSTR data: ${response.status}`);
+    }
     const csvText = await response.text();
     return this.parseCSV(csvText);
   }
@@ -190,8 +192,9 @@ class UnifiedChartDataService {
     const response = await fetch("/data/raw/stocks/BTC-USD/daily.csv", {
       signal,
     });
-    if (!response.ok)
-      {throw new Error(`Failed to fetch BTC data: ${response.status}`);}
+    if (!response.ok) {
+      throw new Error(`Failed to fetch BTC data: ${response.status}`);
+    }
     const csvText = await response.text();
     return this.parseCSV(csvText);
   }
@@ -201,8 +204,9 @@ class UnifiedChartDataService {
       "/data/outputs/multi_strategy_bitcoin_portfolio.csv",
       { signal },
     );
-    if (!response.ok)
-      {throw new Error(`Failed to fetch portfolio data: ${response.status}`);}
+    if (!response.ok) {
+      throw new Error(`Failed to fetch portfolio data: ${response.status}`);
+    }
     const csvText = await response.text();
     return this.parsePortfolioCSV(csvText);
   }
@@ -213,8 +217,9 @@ class UnifiedChartDataService {
     const response = await fetch("/data/outputs/live_signals_portfolio.csv", {
       signal,
     });
-    if (!response.ok)
-      {throw new Error(`Failed to fetch live signals data: ${response.status}`);}
+    if (!response.ok) {
+      throw new Error(`Failed to fetch live signals data: ${response.status}`);
+    }
     const csvText = await response.text();
     return this.parseLiveSignalsCSV(csvText);
   }
@@ -226,8 +231,9 @@ class UnifiedChartDataService {
       "/data/outputs/live_signals_closed_positions.csv",
       { signal },
     );
-    if (!response.ok)
-      {throw new Error(`Failed to fetch trade history data: ${response.status}`);}
+    if (!response.ok) {
+      throw new Error(`Failed to fetch trade history data: ${response.status}`);
+    }
     const csvText = await response.text();
     return this.parseTradeHistoryCSV(csvText);
   }

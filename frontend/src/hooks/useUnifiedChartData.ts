@@ -7,10 +7,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { unifiedChartDataService } from "@/services/UnifiedChartDataService";
-import type {
-  ChartType,
-  DataServiceResponse,
-} from "@/types/ChartTypes";
+import type { ChartType, DataServiceResponse } from "@/types/ChartTypes";
 
 interface UseChartDataOptions {
   /** Enable enhanced features (data status, refresh capability) */

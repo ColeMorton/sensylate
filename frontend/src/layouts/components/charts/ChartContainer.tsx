@@ -17,7 +17,7 @@ const ChartContainer: React.FC<ChartContainerProps> = ({
 
   return (
     <div
-      className={`bg-body dark:bg-darkmode-body flex min-h-0 flex-1 flex-col rounded-lg p-6 ${isDashboardContext ? '' : 'shadow-sm transition-all duration-300 hover:shadow-lg'} ${className}`}
+      className={`bg-body dark:bg-darkmode-body flex min-h-0 flex-1 flex-col rounded-lg p-6 ${isDashboardContext ? "" : "shadow-sm transition-all duration-300 hover:shadow-lg"} ${className}`}
     >
       {!titleOnly && category && (
         <div className="mb-4">

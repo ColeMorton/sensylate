@@ -17,7 +17,10 @@ export class BTCPriceDataAdapterImpl implements BTCPriceDataAdapter {
   private lastFetched: number | null = null;
   private readonly cacheDuration = 5 * 60 * 1000; // 5 minutes
 
-  async fetchData(signal?: AbortSignal, _params?: unknown): Promise<StockDataRow[]> {
+  async fetchData(
+    signal?: AbortSignal,
+    _params?: unknown,
+  ): Promise<StockDataRow[]> {
     // Check cache validity
     if (
       this.cache &&
