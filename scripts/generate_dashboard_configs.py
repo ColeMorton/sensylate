@@ -33,51 +33,57 @@ class DashboardConfigGenerator:
         self.project_root = project_root
         self.content_dir = project_root / "frontend" / "src" / "content" / "dashboards"
         self.output_dir = project_root / "frontend" / "public" / "data"
-        
+
         # Load chart configurations from auto-discovery
         self.chart_configs = self._load_chart_configs()
-    
+
     def _load_chart_configs(self) -> Dict[str, List[Dict[str, Any]]]:
         """Load chart configurations from auto-discovery process"""
         try:
             # First, run the chart config extraction script
             extract_script = self.project_root / "scripts" / "extract-chart-configs.js"
             if not extract_script.exists():
-                logger.warning("Chart config extraction script not found. Using fallback configurations.")
+                logger.warning(
+                    "Chart config extraction script not found. Using fallback configurations."
+                )
                 return self._get_fallback_chart_configs()
-            
+
             # Run Node.js script to extract chart configs
             logger.info("🔨 Running chart configuration auto-discovery...")
             result = subprocess.run(
                 ["node", str(extract_script)],
                 cwd=self.project_root,
                 capture_output=True,
-                text=True
+                text=True,
             )
-            
+
             if result.returncode != 0:
                 logger.error(f"Chart config extraction failed: {result.stderr}")
                 return self._get_fallback_chart_configs()
-            
+
             # Load the extracted configurations
             config_file = self.project_root / "scripts" / "chart-configs.json"
             if config_file.exists():
-                with open(config_file, 'r', encoding='utf-8') as f:
+                with open(config_file, "r", encoding="utf-8") as f:
                     extracted_configs = json.load(f)
-                    logger.info(f"✅ Loaded {len(extracted_configs)} auto-discovered chart configurations")
-                    
+                    logger.info(
+                        f"✅ Loaded {len(extracted_configs)} auto-discovered chart configurations"
+                    )
+
                     # Merge with fallback configurations for dashboards not yet migrated
                     fallback_configs = self._get_fallback_chart_configs()
                     merged_configs = {**fallback_configs, **extracted_configs}
                     return merged_configs
             else:
-                logger.warning("Chart config file not found. Using fallback configurations.")
+                logger.warning(
+                    "Chart config file not found. Using fallback configurations."
+                )
                 return self._get_fallback_chart_configs()
-                
+
         except Exception as e:
             logger.error(f"Failed to load chart configurations: {e}")
             return self._get_fallback_chart_configs()
-    
+
     def _get_fallback_chart_configs(self) -> Dict[str, List[Dict[str, Any]]]:
         """Fallback chart configurations for dashboards not yet migrated to colocation"""
         return {

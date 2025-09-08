@@ -4,9 +4,6 @@ import {
   DashboardLoader,
   type DashboardConfig,
 } from "@/services/dashboardLoader";
-import ChartDisplay from "@/shortcodes/ChartDisplay";
-import FundamentalAnalysisDashboard from "@/layouts/components/fundamentals/FundamentalAnalysisDashboard";
-import ErrorBoundary from "@/layouts/components/ErrorBoundary";
 import ConfigurableDashboardRenderer from "@/layouts/components/dashboard/ConfigurableDashboardRenderer";
 
 interface PhotoBoothDisplayProps {
@@ -46,7 +43,7 @@ const PhotoBoothDisplay: React.FC<PhotoBoothDisplayProps> = ({
   const [selectedTicker, setSelectedTicker] = useState<string>("GOOGL");
   const [availableTickers, setAvailableTickers] = useState<string[]>(["GOOGL"]);
   const [fundamentalMockDataFn, setFundamentalMockDataFn] = useState<
-    ((ticker: string) => any) | null
+    ((ticker: string) => unknown) | null
   >(null);
 
   // Load mock data functions in development only
@@ -737,6 +734,5 @@ const PhotoBoothDisplay: React.FC<PhotoBoothDisplayProps> = ({
     </div>
   );
 };
-
 
 export default PhotoBoothDisplay;

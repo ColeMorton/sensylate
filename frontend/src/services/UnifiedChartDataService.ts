@@ -1,12 +1,12 @@
 /**
  * Unified Chart Data Service
- * 
+ *
  * Consolidates ChartDataService and EnhancedChartDataService into a single
  * service that uses chart-specific adapters for data fetching.
- * 
+ *
  * Architecture:
  * - Registry-driven adapter resolution
- * - Colocated chart data logic  
+ * - Colocated chart data logic
  * - Enhanced features (caching, dependency management)
  * - Backward compatibility with existing hooks
  */
@@ -64,13 +64,13 @@ class UnifiedChartDataService {
   async fetchChartData<T = any>(
     chartType: ChartType,
     signal?: AbortSignal,
-    params?: any
+    params?: any,
   ): Promise<T[]> {
     // Try to get adapter from chart registry
     const chartConfig = chartRegistry.getChartConfig(chartType);
     const adapter = chartConfig?.dataAdapter;
 
-    if (adapter && typeof adapter.fetchData === 'function') {
+    if (adapter && typeof adapter.fetchData === "function") {
       // Use colocated adapter
       return await adapter.fetchData(signal, params);
     }
@@ -85,14 +85,15 @@ class UnifiedChartDataService {
   async fetchEnhancedChartData<T = any>(
     chartType: ChartType,
     signal?: AbortSignal,
-    params?: any
+    params?: any,
   ): Promise<EnhancedDataServiceResponse<T>> {
     try {
       const data = await this.fetchChartData<T>(chartType, signal, params);
-      
+
       // Get data status from dependency manager
       const dataStatus = dataDependencyManager.getDataStatus(chartType);
-      const refreshCapability = dataDependencyManager.getChartRefreshCapability(chartType);
+      const refreshCapability =
+        dataDependencyManager.getChartRefreshCapability(chartType);
 
       return {
         data,
@@ -100,13 +101,13 @@ class UnifiedChartDataService {
         error: null,
         dataStatus,
         refreshCapability,
-        refresh: () => this.refreshChartData(chartType, params)
+        refresh: () => this.refreshChartData(chartType, params),
       };
     } catch (error) {
       return {
         data: [],
         loading: false,
-        error: error instanceof Error ? error.message : 'Unknown error',
+        error: error instanceof Error ? error.message : "Unknown error",
       };
     }
   }
@@ -118,7 +119,7 @@ class UnifiedChartDataService {
     chartType: ChartType,
     signal?: AbortSignal,
     params?: any,
-    cacheDuration?: number
+    cacheDuration?: number,
   ): Promise<T[]> {
     const cacheKey = this.getCacheKey(chartType, params);
     const cached = this.cache.get(cacheKey);
@@ -131,11 +132,11 @@ class UnifiedChartDataService {
 
     // Fetch fresh data
     const data = await this.fetchChartData<T>(chartType, signal, params);
-    
+
     // Update cache
     this.cache.set(cacheKey, {
       data,
-      lastFetched: Date.now()
+      lastFetched: Date.now(),
     });
 
     return data;
@@ -147,16 +148,16 @@ class UnifiedChartDataService {
   private async fetchLegacyData<T = any>(
     chartType: ChartType,
     signal?: AbortSignal,
-    params?: any
+    params?: any,
   ): Promise<T[]> {
     // Legacy chart type mappings
     const legacyMethods: Record<string, () => Promise<any[]>> = {
-      'apple-price': () => this.fetchAppleStockData(signal),
-      'mstr-price': () => this.fetchMSTRStockData(signal),
-      'btc-price': () => this.fetchBTCPriceData(signal),
-      'portfolio-value-comparison': () => this.fetchPortfolioData(signal),
-      'live-signals-equity-curve': () => this.fetchLiveSignalsData(signal),
-      'trade-pnl-waterfall': () => this.fetchTradeHistoryData(signal),
+      "apple-price": () => this.fetchAppleStockData(signal),
+      "mstr-price": () => this.fetchMSTRStockData(signal),
+      "btc-price": () => this.fetchBTCPriceData(signal),
+      "portfolio-value-comparison": () => this.fetchPortfolioData(signal),
+      "live-signals-equity-curve": () => this.fetchLiveSignalsData(signal),
+      "trade-pnl-waterfall": () => this.fetchTradeHistoryData(signal),
       // Add more mappings as needed
     };
 
@@ -171,42 +172,62 @@ class UnifiedChartDataService {
   // Legacy methods (kept for backward compatibility)
   async fetchAppleStockData(signal?: AbortSignal): Promise<StockDataRow[]> {
     const response = await fetch("/data/raw/stocks/AAPL/daily.csv", { signal });
-    if (!response.ok) throw new Error(`Failed to fetch Apple data: ${response.status}`);
+    if (!response.ok)
+      {throw new Error(`Failed to fetch Apple data: ${response.status}`);}
     const csvText = await response.text();
     return this.parseCSV(csvText);
   }
 
   async fetchMSTRStockData(signal?: AbortSignal): Promise<StockDataRow[]> {
     const response = await fetch("/data/raw/stocks/MSTR/daily.csv", { signal });
-    if (!response.ok) throw new Error(`Failed to fetch MSTR data: ${response.status}`);
+    if (!response.ok)
+      {throw new Error(`Failed to fetch MSTR data: ${response.status}`);}
     const csvText = await response.text();
     return this.parseCSV(csvText);
   }
 
   async fetchBTCPriceData(signal?: AbortSignal): Promise<StockDataRow[]> {
-    const response = await fetch("/data/raw/stocks/BTC-USD/daily.csv", { signal });
-    if (!response.ok) throw new Error(`Failed to fetch BTC data: ${response.status}`);
+    const response = await fetch("/data/raw/stocks/BTC-USD/daily.csv", {
+      signal,
+    });
+    if (!response.ok)
+      {throw new Error(`Failed to fetch BTC data: ${response.status}`);}
     const csvText = await response.text();
     return this.parseCSV(csvText);
   }
 
   async fetchPortfolioData(signal?: AbortSignal): Promise<PortfolioDataRow[]> {
-    const response = await fetch("/data/outputs/multi_strategy_bitcoin_portfolio.csv", { signal });
-    if (!response.ok) throw new Error(`Failed to fetch portfolio data: ${response.status}`);
+    const response = await fetch(
+      "/data/outputs/multi_strategy_bitcoin_portfolio.csv",
+      { signal },
+    );
+    if (!response.ok)
+      {throw new Error(`Failed to fetch portfolio data: ${response.status}`);}
     const csvText = await response.text();
     return this.parsePortfolioCSV(csvText);
   }
 
-  async fetchLiveSignalsData(signal?: AbortSignal): Promise<LiveSignalsDataRow[]> {
-    const response = await fetch("/data/outputs/live_signals_portfolio.csv", { signal });
-    if (!response.ok) throw new Error(`Failed to fetch live signals data: ${response.status}`);
+  async fetchLiveSignalsData(
+    signal?: AbortSignal,
+  ): Promise<LiveSignalsDataRow[]> {
+    const response = await fetch("/data/outputs/live_signals_portfolio.csv", {
+      signal,
+    });
+    if (!response.ok)
+      {throw new Error(`Failed to fetch live signals data: ${response.status}`);}
     const csvText = await response.text();
     return this.parseLiveSignalsCSV(csvText);
   }
 
-  async fetchTradeHistoryData(signal?: AbortSignal): Promise<TradeHistoryDataRow[]> {
-    const response = await fetch("/data/outputs/live_signals_closed_positions.csv", { signal });
-    if (!response.ok) throw new Error(`Failed to fetch trade history data: ${response.status}`);
+  async fetchTradeHistoryData(
+    signal?: AbortSignal,
+  ): Promise<TradeHistoryDataRow[]> {
+    const response = await fetch(
+      "/data/outputs/live_signals_closed_positions.csv",
+      { signal },
+    );
+    if (!response.ok)
+      {throw new Error(`Failed to fetch trade history data: ${response.status}`);}
     const csvText = await response.text();
     return this.parseTradeHistoryCSV(csvText);
   }
@@ -234,7 +255,8 @@ class UnifiedChartDataService {
       const values = line.split(",");
       const row: Partial<PortfolioDataRow> = {};
       headers.forEach((header, index) => {
-        row[header.trim() as keyof PortfolioDataRow] = values[index]?.trim() || "";
+        row[header.trim() as keyof PortfolioDataRow] =
+          values[index]?.trim() || "";
       });
       return row as PortfolioDataRow;
     });
@@ -248,7 +270,8 @@ class UnifiedChartDataService {
       const values = line.split(",");
       const row: Partial<LiveSignalsDataRow> = {};
       headers.forEach((header, index) => {
-        row[header.trim() as keyof LiveSignalsDataRow] = values[index]?.trim() || "";
+        row[header.trim() as keyof LiveSignalsDataRow] =
+          values[index]?.trim() || "";
       });
       return row as LiveSignalsDataRow;
     });
@@ -262,7 +285,8 @@ class UnifiedChartDataService {
       const values = line.split(",");
       const row: Partial<TradeHistoryDataRow> = {};
       headers.forEach((header, index) => {
-        row[header.trim() as keyof TradeHistoryDataRow] = values[index]?.trim() || "";
+        row[header.trim() as keyof TradeHistoryDataRow] =
+          values[index]?.trim() || "";
       });
       return row as TradeHistoryDataRow;
     });
@@ -291,11 +315,14 @@ class UnifiedChartDataService {
   private notifyRefreshSubscribers(chartType: ChartType): void {
     const subscribers = this.refreshCallbacks.get(chartType);
     if (subscribers) {
-      subscribers.forEach(callback => callback());
+      subscribers.forEach((callback) => callback());
     }
   }
 
-  private async refreshChartData(chartType: ChartType, params?: any): Promise<DataRefreshResult> {
+  private async refreshChartData(
+    chartType: ChartType,
+    params?: any,
+  ): Promise<DataRefreshResult> {
     try {
       // Clear cache for this chart
       const cacheKey = this.getCacheKey(chartType, params);
@@ -306,10 +333,10 @@ class UnifiedChartDataService {
 
       return { success: true, timestamp: Date.now() };
     } catch (error) {
-      return { 
-        success: false, 
-        error: error instanceof Error ? error.message : 'Unknown error',
-        timestamp: Date.now()
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : "Unknown error",
+        timestamp: Date.now(),
       };
     }
   }
@@ -323,7 +350,7 @@ class UnifiedChartDataService {
     if (!this.refreshCallbacks.has(chartType)) {
       this.refreshCallbacks.set(chartType, new Set());
     }
-    
+
     const subscribers = this.refreshCallbacks.get(chartType)!;
     subscribers.add(callback);
 

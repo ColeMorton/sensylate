@@ -1,6 +1,6 @@
 /**
  * Dashboard Layout Configuration Types
- * 
+ *
  * Defines configuration-driven layout behavior for PhotoBooth dashboards.
  * Eliminates hardcoded dashboard-specific logic from components.
  */
@@ -27,7 +27,7 @@ export interface ChartDisplayOptions {
   /** Display charts with title only (no category/description) */
   titleOnly?: boolean;
   /** Custom chart display mode */
-  displayMode?: 'full' | 'compact' | 'minimal';
+  displayMode?: "full" | "compact" | "minimal";
   /** Chart-specific CSS classes */
   chartClassName?: string;
 }
@@ -42,7 +42,7 @@ export interface DashboardLayoutConfig {
   /** Custom CSS classes for dashboard container */
   containerClassName?: string;
   /** Special layout modes */
-  layoutMode?: 'standard' | 'portrait' | 'landscape' | 'minimal';
+  layoutMode?: "standard" | "portrait" | "landscape" | "minimal";
 }
 
 /**

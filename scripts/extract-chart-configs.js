@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 /**
  * Chart Configuration Extractor
- * 
- * Extracts chart configurations from TypeScript files and makes them 
+ *
+ * Extracts chart configurations from TypeScript files and makes them
  * available to the Python dashboard generation pipeline.
  * This eliminates hardcoded chart configurations in Python.
  */
@@ -21,21 +21,21 @@ const OUTPUT_FILE = path.join(__dirname, 'chart-configs.json');
 function extractChartConfig(configPath) {
   try {
     const content = fs.readFileSync(configPath, 'utf8');
-    
+
     // Simple regex extraction (would be more robust with AST parsing)
     const titleMatch = content.match(/title:\s*["']([^"']+)["']/);
     const categoryMatch = content.match(/category:\s*["']([^"']+)["']/);
     const descriptionMatch = content.match(/description:\s*["']([^"']+)["']/);
     const chartTypeMatch = content.match(/chartType:\s*["']([^"']+)["']/);
-    
+
     if (!titleMatch || !categoryMatch || !descriptionMatch || !chartTypeMatch) {
       console.warn(`Could not parse configuration from: ${configPath}`);
       return null;
     }
-    
+
     return {
       title: titleMatch[1],
-      category: categoryMatch[1], 
+      category: categoryMatch[1],
       description: descriptionMatch[1],
       chartType: chartTypeMatch[1]
     };
@@ -59,26 +59,26 @@ const DASHBOARD_CHART_MAPPINGS = {
  */
 function discoverChartConfigs() {
   const chartConfigs = {};
-  
+
   if (!fs.existsSync(CHARTS_DIR)) {
     console.warn(`Charts directory not found: ${CHARTS_DIR}`);
     return chartConfigs;
   }
-  
+
   // First, collect all available chart configurations
   const availableCharts = {};
-  
+
   // Scan for chart directories
   const entries = fs.readdirSync(CHARTS_DIR, { withFileTypes: true });
-  
+
   for (const entry of entries) {
     if (!entry.isDirectory() || entry.name.startsWith('.')) {
       continue;
     }
-    
+
     const chartDir = path.join(CHARTS_DIR, entry.name);
     const configPath = path.join(chartDir, 'chart.config.ts');
-    
+
     if (fs.existsSync(configPath)) {
       const config = extractChartConfig(configPath);
       if (config) {
@@ -89,11 +89,11 @@ function discoverChartConfigs() {
       console.warn(`⏭️  No chart.config.ts found in: ${chartDir}`);
     }
   }
-  
+
   // Now organize charts by dashboard based on mappings
   for (const [dashboardId, chartTypes] of Object.entries(DASHBOARD_CHART_MAPPINGS)) {
     const dashboardCharts = [];
-    
+
     for (const chartType of chartTypes) {
       if (availableCharts[chartType]) {
         dashboardCharts.push(availableCharts[chartType]);
@@ -102,12 +102,12 @@ function discoverChartConfigs() {
         console.warn(`⚠️  Chart type ${chartType} not found for dashboard: ${dashboardId}`);
       }
     }
-    
+
     if (dashboardCharts.length > 0) {
       chartConfigs[dashboardId] = dashboardCharts;
     }
   }
-  
+
   return chartConfigs;
 }
 
@@ -117,12 +117,12 @@ function discoverChartConfigs() {
 function main() {
   console.log('🔨 Extracting chart configurations...');
   console.log(`📁 Scanning: ${CHARTS_DIR}`);
-  
+
   const chartConfigs = discoverChartConfigs();
-  
+
   // Write to JSON file for Python consumption
   fs.writeFileSync(OUTPUT_FILE, JSON.stringify(chartConfigs, null, 2));
-  
+
   console.log(`✅ Extracted ${Object.keys(chartConfigs).length} chart configurations`);
   console.log(`📄 Output written to: ${OUTPUT_FILE}`);
 }

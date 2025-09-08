@@ -1,11 +1,13 @@
 /**
  * Chart Configuration Schema
- * 
+ *
  * Defines the standard structure for chart configurations that enables:
  * - Chart component colocation
  * - Auto-discovery by GenContentOps pipeline
  * - Type-safe configuration management
  */
+
+import type { ComponentType } from "react";
 
 export interface ChartMetadata {
   /** Display title for the chart */
@@ -54,9 +56,9 @@ export interface ChartConfig {
  */
 export interface ChartRegistryEntry extends ChartConfig {
   /** The React component for this chart */
-  component: React.ComponentType<any>;
+  component: ComponentType<unknown> | null;
   /** Data adapter for fetching chart-specific data */
-  dataAdapter?: any;
+  dataAdapter?: unknown;
 }
 
 /**

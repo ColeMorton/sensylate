@@ -1,28 +1,30 @@
 /**
  * Configurable Dashboard Renderer
- * 
+ *
  * Replaces hardcoded dashboard logic with configuration-driven rendering.
  * Dynamically renders headers, footers, and charts based on dashboard configuration.
  */
 
-import React from 'react';
+import React from "react";
 import { DashboardLoader } from "@/services/dashboardLoader";
 import ChartDisplay from "@/shortcodes/ChartDisplay";
 import FundamentalAnalysisDashboard from "@/layouts/components/fundamentals/FundamentalAnalysisDashboard";
 import ErrorBoundary from "@/layouts/components/ErrorBoundary";
-import DashboardHeader from './DashboardHeader';
-import DashboardFooter from './DashboardFooter';
-import type { ExtendedDashboardConfig } from '@/types/DashboardLayoutTypes';
+import DashboardHeader from "./DashboardHeader";
+import DashboardFooter from "./DashboardFooter";
+import type { ExtendedDashboardConfig } from "@/types/DashboardLayoutTypes";
 
 interface ConfigurableDashboardRendererProps {
   dashboard: ExtendedDashboardConfig;
-  mode: 'light' | 'dark';
-  aspectRatio: '16:9' | '4:3' | '3:4';
+  mode: "light" | "dark";
+  aspectRatio: "16:9" | "4:3" | "3:4";
   selectedTicker?: string;
-  fundamentalMockDataFn?: ((ticker: string) => any) | null;
+  fundamentalMockDataFn?: ((ticker: string) => unknown) | null;
 }
 
-const ConfigurableDashboardRenderer: React.FC<ConfigurableDashboardRendererProps> = ({
+const ConfigurableDashboardRenderer: React.FC<
+  ConfigurableDashboardRendererProps
+> = ({
   dashboard,
   mode,
   aspectRatio: _aspectRatio,
@@ -41,7 +43,8 @@ const ConfigurableDashboardRenderer: React.FC<ConfigurableDashboardRendererProps
         <div className="flex items-center justify-center rounded-lg border p-8">
           <div className="text-center">
             <p className="text-gray-600 dark:text-gray-400">
-              Fundamental analysis dashboard is only available in development mode
+              Fundamental analysis dashboard is only available in development
+              mode
             </p>
           </div>
         </div>
@@ -60,7 +63,7 @@ const ConfigurableDashboardRenderer: React.FC<ConfigurableDashboardRendererProps
         }}
       >
         <ErrorBoundary
-          onError={(error, errorInfo) => {
+          onError={(error, _errorInfo) => {
             console.error("FundamentalAnalysisDashboard error:", error);
           }}
           fallback={
@@ -94,13 +97,14 @@ const ConfigurableDashboardRenderer: React.FC<ConfigurableDashboardRendererProps
   }
 
   // Configuration-driven dashboard rendering
-  const containerClasses = layoutConfig?.containerClassName 
+  const containerClasses = layoutConfig?.containerClassName
     ? `dashboard-content ${dashboard.layout} ${mode}-mode flex flex-col ${layoutConfig.containerClassName}`
     : `dashboard-content ${dashboard.layout} ${mode}-mode flex flex-col`;
 
-  const chartDisplayMode = layoutConfig?.chartOptions?.displayMode || 'full';
+  // const chartDisplayMode = layoutConfig?.chartOptions?.displayMode || "full";
   const titleOnly = layoutConfig?.chartOptions?.titleOnly ?? false;
-  const chartClassName = layoutConfig?.chartOptions?.chartClassName || 'photo-booth-chart';
+  const chartClassName =
+    layoutConfig?.chartOptions?.chartClassName || "photo-booth-chart";
 
   return (
     <div
