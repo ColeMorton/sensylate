@@ -210,6 +210,19 @@ export function useEnhancedAppleStockData(): UseEnhancedDataResponse<
 }
 
 /**
+ * Enhanced Bitcoin price data hook with dependency management
+ */
+export function useEnhancedBTCPriceData(): UseEnhancedDataResponse<
+  StockDataRow[]
+> {
+  return useEnhancedData(
+    "btc-price",
+    () => enhancedChartDataService.useBTCPriceData(),
+    [],
+  );
+}
+
+/**
  * Enhanced portfolio data hook with dependency management
  */
 export function useEnhancedPortfolioData(

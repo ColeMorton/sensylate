@@ -1,7 +1,7 @@
 import React from "react";
 import FundamentalChart from "../charts/FundamentalCharts";
 import type { FundamentalAnalysisData } from "@/types/ChartTypes";
-import { DashboardLoader } from "@/lib/dashboardLoader";
+import { DashboardLoader } from "@/services/dashboardLoader";
 
 interface FundamentalAnalysisDashboardProps {
   data: FundamentalAnalysisData;

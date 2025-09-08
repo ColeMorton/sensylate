@@ -1348,6 +1348,33 @@ class DataPipelineManager:
                     f"contracts successful, {service_health_status} in {processing_time:.2f}s. Errors: {result.error}"
                 )
 
+            # Step 5: Generate static dashboard configuration
+            dashboard_generation_start = datetime.now()
+            try:
+                self.logger.info("Generating static dashboard configuration...")
+                dashboard_result = self._generate_dashboard_config()
+                dashboard_generation_time = (datetime.now() - dashboard_generation_start).total_seconds()
+                
+                result.add_metadata("dashboard_generation", {
+                    "success": dashboard_result.success,
+                    "processing_time": dashboard_generation_time,
+                    "error": dashboard_result.error if not dashboard_result.success else None
+                })
+                
+                if dashboard_result.success:
+                    self.logger.info(f"Dashboard configuration generated successfully in {dashboard_generation_time:.2f}s")
+                else:
+                    self.logger.error(f"Dashboard configuration generation failed: {dashboard_result.error}")
+                    
+            except Exception as e:
+                dashboard_generation_time = (datetime.now() - dashboard_generation_start).total_seconds()
+                self.logger.error(f"Dashboard configuration generation failed: {e}")
+                result.add_metadata("dashboard_generation", {
+                    "success": False,
+                    "processing_time": dashboard_generation_time,
+                    "error": str(e)
+                })
+
             return result
 
         except Exception as e:
@@ -1854,6 +1881,48 @@ class DataPipelineManager:
                 operation=f"refresh_{category}",
                 error=str(e),
                 processing_time=processing_time,
+            )
+
+    def _generate_dashboard_config(self) -> ProcessingResult:
+        """Generate static dashboard configuration from content collection"""
+        start_time = datetime.now()
+        
+        try:
+            import subprocess
+            from pathlib import Path
+            
+            # Get the script path relative to this script
+            script_dir = Path(__file__).parent
+            dashboard_generator_script = script_dir / "generate_dashboard_configs.py"
+            
+            # Execute the dashboard generator
+            result = subprocess.run([
+                sys.executable, str(dashboard_generator_script)
+            ], capture_output=True, text=True, cwd=script_dir.parent)
+            
+            processing_time = (datetime.now() - start_time).total_seconds()
+            
+            if result.returncode == 0:
+                return ProcessingResult(
+                    success=True,
+                    operation="generate_dashboard_config",
+                    processing_time=processing_time
+                )
+            else:
+                return ProcessingResult(
+                    success=False,
+                    operation="generate_dashboard_config", 
+                    error=f"Dashboard generator failed with code {result.returncode}: {result.stderr}",
+                    processing_time=processing_time
+                )
+                
+        except Exception as e:
+            processing_time = (datetime.now() - start_time).total_seconds()
+            return ProcessingResult(
+                success=False,
+                operation="generate_dashboard_config",
+                error=str(e),
+                processing_time=processing_time
             )
 
     def _fetch_from_source(self, source: str) -> ProcessingResult:

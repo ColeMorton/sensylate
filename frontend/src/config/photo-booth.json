@@ -40,6 +40,14 @@
       "description": "Comprehensive fundamental analysis dashboard with 3x3 layout",
       "layout": "fundamental_3x3",
       "enabled": true
+    },
+    {
+      "id": "bitcoin_cycle_intelligence",
+      "name": "Bitcoin Cycle Intelligence",
+      "file": "bitcoin-cycle-intelligence.mdx",
+      "description": "Bitcoin price analysis with 210-day price history",
+      "layout": "1x1",
+      "enabled": true
     }
   ],
   "screenshot_settings": {
@@ -213,6 +221,14 @@
         "error_threshold_hours": 72
       },
       "refresh_priority": "low"
+    },
+    "bitcoin_cycle_intelligence": {
+      "primary_charts": ["btc-price"],
+      "data_freshness_requirements": {
+        "warning_threshold_hours": 6,
+        "error_threshold_hours": 24
+      },
+      "refresh_priority": "high"
     }
   }
 }

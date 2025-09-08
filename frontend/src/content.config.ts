@@ -157,7 +157,7 @@ const dashboardsCollection = defineCollection({
   schema: z.object({
     title: z.string(),
     description: z.string().optional(),
-    layout: z.string().default("2x2_grid"),
+    layout: z.string().optional(),
     mode: z.string().default("both"),
     enabled: z.boolean().default(true),
     draft: z.boolean().optional(),

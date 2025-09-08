@@ -33,11 +33,20 @@
       "sector": "Electric Vehicles",
       "description": "NIO Inc. stock price data from Yahoo Finance",
       "dataYears": 6
+    },
+    "BTC-USD": {
+      "name": "Bitcoin",
+      "displayName": "Bitcoin Price",
+      "chartType": "btc-price",
+      "sector": "Cryptocurrency",
+      "description": "Bitcoin (BTC-USD) price data for cycle intelligence analysis",
+      "dataYears": 1
     }
   },
   "chartTypeMapping": {
     "apple-price": "AAPL",
-    "mstr-price": "MSTR"
+    "mstr-price": "MSTR",
+    "btc-price": "BTC-USD"
   },
   "multiStockMapping": {
     "xpev-nio-stock-price": ["XPEV", "NIO"]
@@ -122,6 +131,35 @@
         "allowManualRefresh": true,
         "refreshOnVisible": true,
         "maxRetries": 3,
+        "retryBackoff": "exponential"
+      }
+    },
+    "btc-price": {
+      "chartType": "btc-price",
+      "chartStatus": "active",
+      "primarySource": {
+        "type": "manual",
+        "location": "/data/raw/stocks/BTC-USD/daily.csv",
+        "refreshMethod": "manual-update",
+        "frequency": "daily",
+        "metadata": {
+          "description": "Bitcoin (BTC-USD) price data for cycle intelligence analysis",
+          "format": "csv",
+          "lastUpdatedBy": "manual"
+        }
+      },
+      "freshness": {
+        "warningThreshold": 6,
+        "errorThreshold": 24,
+        "blockOnStale": false,
+        "manualGracePeriod": 6
+      },
+      "refreshPolicy": {
+        "autoRefresh": false,
+        "refreshInterval": 86400000,
+        "allowManualRefresh": true,
+        "refreshOnVisible": true,
+        "maxRetries": 2,
         "retryBackoff": "exponential"
       }
     },

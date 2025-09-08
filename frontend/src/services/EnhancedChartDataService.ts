@@ -148,6 +148,15 @@ class EnhancedChartDataService {
   }
 
   /**
+   * Enhanced Bitcoin price data with dependency management
+   */
+  public useBTCPriceData(): EnhancedDataServiceResponse<StockDataRow[]> {
+    // Get base data from original service
+    const baseResponse = this.getBaseBTCPriceData();
+    return this.createEnhancedResponse("btc-price", baseResponse);
+  }
+
+  /**
    * Enhanced portfolio data with dependency management
    */
   public usePortfolioData(chartType: ChartType): EnhancedDataServiceResponse<{
@@ -225,6 +234,15 @@ class EnhancedChartDataService {
   // These simulate the current ChartDataService behavior
 
   private getBaseAppleStockData(): DataServiceResponse<StockDataRow[]> {
+    // Simulate current service behavior
+    return {
+      data: [],
+      loading: false,
+      error: null,
+    };
+  }
+
+  private getBaseBTCPriceData(): DataServiceResponse<StockDataRow[]> {
     // Simulate current service behavior
     return {
       data: [],

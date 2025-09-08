@@ -12,7 +12,7 @@ YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
-# Default values
+# Default values (will be updated from dashboard configuration)
 DASHBOARD_ID="portfolio_history_portrait"
 MODE="light"
 ASPECT_RATIO="3:4"
@@ -36,6 +36,89 @@ print_error() {
 
 print_warning() {
     echo -e "${YELLOW}[WARNING]${NC} $1"
+}
+
+# Function to read dashboard configuration and set defaults
+get_dashboard_defaults() {
+    local dashboard_id="$1"
+    local config_file="$(dirname "$0")/../frontend/public/data/dashboards.json"
+    
+    if [ ! -f "$config_file" ]; then
+        print_warning "Dashboard configuration not found: $config_file"
+        print_warning "Using hardcoded defaults"
+        return 1
+    fi
+    
+    # Try to extract export_defaults for the specified dashboard
+    if command -v jq >/dev/null 2>&1; then
+        # Use jq if available (preferred)
+        local dashboard_config=$(jq -r --arg id "$dashboard_id" '.dashboards[] | select(.id == $id) | .export_defaults' "$config_file" 2>/dev/null)
+        
+        if [ "$dashboard_config" != "null" ] && [ -n "$dashboard_config" ]; then
+            # Extract specific values from export_defaults
+            local aspect_ratio=$(echo "$dashboard_config" | jq -r '.aspect_ratio // empty' 2>/dev/null)
+            local format=$(echo "$dashboard_config" | jq -r '.format // empty' 2>/dev/null)
+            local dpi=$(echo "$dashboard_config" | jq -r '.dpi // empty' 2>/dev/null)
+            
+            # Update defaults if values exist in configuration
+            [ -n "$aspect_ratio" ] && ASPECT_RATIO="$aspect_ratio"
+            [ -n "$format" ] && FORMAT="$format"
+            [ -n "$dpi" ] && DPI="$dpi"
+            
+            print_status "Using dashboard configuration defaults for: $dashboard_id"
+            return 0
+        fi
+    else
+        # Fallback: basic grep parsing (less reliable but works without jq)
+        print_warning "jq not available, using basic configuration parsing"
+        
+        # Find the dashboard section and extract export_defaults
+        local in_dashboard=false
+        local in_export_defaults=false
+        
+        while IFS= read -r line; do
+            # Check if we found the target dashboard
+            if [[ "$line" == *"\"id\": \"$dashboard_id\""* ]]; then
+                in_dashboard=true
+                continue
+            fi
+            
+            # If we're in the dashboard and find export_defaults
+            if [ "$in_dashboard" = true ] && [[ "$line" == *"\"export_defaults\":"* ]]; then
+                in_export_defaults=true
+                continue
+            fi
+            
+            # Extract values from export_defaults
+            if [ "$in_export_defaults" = true ]; then
+                if [[ "$line" == *"\"aspect_ratio\":"* ]]; then
+                    local aspect_ratio=$(echo "$line" | sed 's/.*"aspect_ratio": *"\([^"]*\)".*/\1/')
+                    [ -n "$aspect_ratio" ] && ASPECT_RATIO="$aspect_ratio"
+                elif [[ "$line" == *"\"format\":"* ]]; then
+                    local format=$(echo "$line" | sed 's/.*"format": *"\([^"]*\)".*/\1/')
+                    [ -n "$format" ] && FORMAT="$format"
+                elif [[ "$line" == *"\"dpi\":"* ]]; then
+                    local dpi=$(echo "$line" | sed 's/.*"dpi": *\([0-9]*\).*/\1/')
+                    [ -n "$dpi" ] && DPI="$dpi"
+                elif [[ "$line" == *"}"* ]]; then
+                    # End of export_defaults or dashboard
+                    break
+                fi
+            fi
+            
+            # If we hit the next dashboard, stop
+            if [ "$in_dashboard" = true ] && [[ "$line" == *"\"id\":"* ]] && [[ "$line" != *"\"$dashboard_id\""* ]]; then
+                break
+            fi
+            
+        done < "$config_file"
+        
+        print_status "Using basic configuration parsing for: $dashboard_id"
+        return 0
+    fi
+    
+    print_warning "No export_defaults found for dashboard: $dashboard_id"
+    return 1
 }
 
 # Function to check if server is running
@@ -134,7 +217,23 @@ show_usage() {
     echo "  $0 --aspect-ratio 16:9 --format both --dpi 600"
 }
 
-# Parse command line arguments
+# First pass: extract dashboard ID to load configuration defaults
+temp_dashboard_id="$DASHBOARD_ID"
+temp_args=("$@")
+i=0
+while [ $i -lt ${#temp_args[@]} ]; do
+    if [ "${temp_args[$i]}" = "--dashboard" ] && [ $((i+1)) -lt ${#temp_args[@]} ]; then
+        temp_dashboard_id="${temp_args[$((i+1))]}"
+        break
+    fi
+    i=$((i+1))
+done
+
+# Load dashboard-specific configuration defaults
+get_dashboard_defaults "$temp_dashboard_id"
+DASHBOARD_ID="$temp_dashboard_id"
+
+# Parse command line arguments (second pass for all parameters)
 while [[ $# -gt 0 ]]; do
     case $1 in
         --dashboard)

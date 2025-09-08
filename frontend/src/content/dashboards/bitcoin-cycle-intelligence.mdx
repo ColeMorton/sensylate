@@ -1,0 +1,21 @@
+---
+title: "Bitcoin Cycle Intelligence"
+description: "Bitcoin price analysis with 210-day price history"
+layout: "1x1"
+mode: "both"
+enabled: true
+export_defaults:
+  aspect_ratio: "16:9"
+  format: "png"
+  dpi: 300
+---
+
+import ChartDisplay from "@/layouts/shortcodes/ChartDisplay.tsx";
+
+<ChartDisplay
+  client:only="react"
+  title="Bitcoin Price - 210 Day History"
+  category="Bitcoin Analysis"
+  description="Interactive Bitcoin (BTC-USD) price chart showing the last 210 days of market data. Displays daily open, high, low, close prices with volume data for cycle intelligence analysis."
+  chartType="btc-price"
+/>

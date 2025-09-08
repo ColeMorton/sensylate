@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import photoBoothConfig from "@/config/photo-booth.json";
-import { DashboardLoader, type DashboardConfig } from "@/lib/dashboardLoader";
+import { DashboardLoader, type DashboardConfig } from "@/services/dashboardLoader";
 import ChartDisplay from "@/shortcodes/ChartDisplay";
 import FundamentalAnalysisDashboard from "@/layouts/components/fundamentals/FundamentalAnalysisDashboard";
 import ErrorBoundary from "@/layouts/components/ErrorBoundary";
@@ -61,8 +61,11 @@ const PhotoBoothDisplay: React.FC<PhotoBoothDisplayProps> = ({
 
   // Get available aspect ratios based on selected dashboard
   const getAvailableAspectRatios = () => {
-    if (selectedDashboard === "fundamental_analysis") {
-      // Lock fundamental analysis to 3:4 portrait only
+    const dashboardConfig = activeDashboards.find(d => d.id === selectedDashboard);
+    const defaultAspectRatio = dashboardConfig?.export_defaults?.aspect_ratio;
+    
+    if (defaultAspectRatio === "3:4") {
+      // Lock portrait dashboards to 3:4 only
       return photoBoothConfig.export_options.aspect_ratios.available.filter(
         (ratio) => ratio.id === "3:4",
       );
@@ -98,9 +101,11 @@ const PhotoBoothDisplay: React.FC<PhotoBoothDisplayProps> = ({
         if (dashboardParam) {
           setSelectedDashboard(dashboardParam);
 
-          // Force 3:4 aspect ratio for fundamental analysis dashboard
-          if (dashboardParam === "fundamental_analysis") {
-            setSelectedAspectRatio("3:4");
+          // Set default aspect ratio from dashboard configuration
+          const dashboardConfig = dashboards.find(d => d.id === dashboardParam);
+          const defaultAspectRatio = dashboardConfig?.export_defaults?.aspect_ratio;
+          if (defaultAspectRatio && ["16:9", "4:3", "3:4"].includes(defaultAspectRatio)) {
+            setSelectedAspectRatio(defaultAspectRatio as "16:9" | "4:3" | "3:4");
           }
         }
 
@@ -138,9 +143,12 @@ const PhotoBoothDisplay: React.FC<PhotoBoothDisplayProps> = ({
           aspectRatioParam &&
           ["16:9", "4:3", "3:4"].includes(aspectRatioParam)
         ) {
-          // Only set aspect ratio from URL if not fundamental analysis dashboard
-          // (fundamental analysis is locked to 3:4)
-          if (dashboardParam !== "fundamental_analysis") {
+          // Only set aspect ratio from URL if dashboard allows flexible ratios
+          const dashboardConfig = dashboards.find(d => d.id === dashboardParam);
+          const defaultAspectRatio = dashboardConfig?.export_defaults?.aspect_ratio;
+          
+          // Allow URL override unless dashboard is locked to portrait (3:4)
+          if (defaultAspectRatio !== "3:4") {
             setSelectedAspectRatio(aspectRatioParam);
           }
         }
@@ -217,26 +225,27 @@ const PhotoBoothDisplay: React.FC<PhotoBoothDisplayProps> = ({
       setIsReady(false);
       setSelectedDashboard(dashboardId);
 
-      // Force 3:4 aspect ratio for fundamental analysis dashboard
-      if (
-        dashboardId === "fundamental_analysis" &&
-        selectedAspectRatio !== "3:4"
-      ) {
-        setSelectedAspectRatio("3:4");
+      // Set default aspect ratio from dashboard configuration
+      const dashboardConfig = activeDashboards.find(d => d.id === dashboardId);
+      const defaultAspectRatio = dashboardConfig?.export_defaults?.aspect_ratio;
+      
+      if (defaultAspectRatio && ["16:9", "4:3", "3:4"].includes(defaultAspectRatio) && 
+          selectedAspectRatio !== defaultAspectRatio) {
+        setSelectedAspectRatio(defaultAspectRatio as "16:9" | "4:3" | "3:4");
       }
 
       // Update URL without page reload
       const url = new URL(window.location.href);
       url.searchParams.set("dashboard", dashboardId);
 
-      // Update aspect ratio in URL if forcing 3:4
-      if (dashboardId === "fundamental_analysis") {
-        url.searchParams.set("aspect_ratio", "3:4");
+      // Update aspect ratio in URL if dashboard has default
+      if (defaultAspectRatio) {
+        url.searchParams.set("aspect_ratio", defaultAspectRatio);
       }
 
       window.history.replaceState({}, "", url.toString());
     },
-    [selectedAspectRatio],
+    [selectedAspectRatio, activeDashboards],
   );
 
   const handleModeChange = useCallback((mode: "light" | "dark") => {
@@ -808,6 +817,10 @@ const DashboardRenderer: React.FC<{
   const isPortfolioHistoryPortrait =
     dashboard.id === "portfolio_history_portrait";
 
+  // Enable special layout for Bitcoin Cycle Intelligence dashboard
+  const isBitcoinCycleIntelligence =
+    dashboard.id === "bitcoin_cycle_intelligence";
+
   return (
     <div
       className={`dashboard-content ${dashboard.layout} ${mode}-mode flex flex-col`}
@@ -825,6 +838,15 @@ const DashboardRenderer: React.FC<{
           </h1>
         </div>
       )}
+      
+      {/* Header Section - Only for Bitcoin Cycle Intelligence */}
+      {isBitcoinCycleIntelligence && (
+        <div className="dashboard-header text-center">
+          <h1 className="text-dark mt-8 text-4xl font-bold dark:text-white">
+            Bitcoin Cycle Intelligence
+          </h1>
+        </div>
+      )}
 
       {/* Charts Section */}
       <div className={`${layoutClasses} min-h-0 flex-1`}>
@@ -836,13 +858,22 @@ const DashboardRenderer: React.FC<{
             description={chart.description}
             chartType={chart.chartType}
             className="photo-booth-chart"
-            titleOnly={isPortfolioHistoryPortrait}
+            titleOnly={isPortfolioHistoryPortrait || isBitcoinCycleIntelligence}
           />
         ))}
       </div>
 
       {/* Footer Section - Only for Portfolio History Portrait */}
       {isPortfolioHistoryPortrait && (
+        <div className="dashboard-footer flex justify-center">
+          <h1 className="brand-text text-text-dark dark:text-darkmode-text-dark m-0 mb-8 text-4xl font-semibold">
+            colemorton.com
+          </h1>
+        </div>
+      )}
+      
+      {/* Footer Section - Only for Bitcoin Cycle Intelligence */}
+      {isBitcoinCycleIntelligence && (
         <div className="dashboard-footer flex justify-center">
           <h1 className="brand-text text-text-dark dark:text-darkmode-text-dark m-0 mb-8 text-4xl font-semibold">
             colemorton.com

@@ -219,6 +219,29 @@ class ChartDataService {
     }
   }
 
+  async fetchBTCPriceData(signal?: AbortSignal): Promise<StockDataRow[]> {
+    try {
+      const response = await fetch("/data/raw/crypto/BTC-USD/daily.csv", {
+        signal,
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const csvText = await response.text();
+      return this.parseCSV(csvText);
+    } catch (error) {
+      // Re-throw AbortError without wrapping to preserve abort handling
+      if (error instanceof Error && error.name === "AbortError") {
+        throw error;
+      }
+      throw new Error(
+        error instanceof Error
+          ? error.message
+          : "Failed to fetch Bitcoin price data",
+      );
+    }
+  }
+
   async fetchStockData(
     symbol: string,
     signal?: AbortSignal,

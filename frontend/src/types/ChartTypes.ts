@@ -126,6 +126,7 @@ export interface LiveSignalsBenchmarkDataRow {
 // Chart configuration types
 export type ChartType =
   | "apple-price"
+  | "btc-price"
   | "portfolio-value-comparison"
   | "returns-comparison"
   | "portfolio-drawdowns"

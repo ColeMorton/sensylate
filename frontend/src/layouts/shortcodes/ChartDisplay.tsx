@@ -20,6 +20,7 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({
   const supportedChartTypes = [
     "apple-price",
     "mstr-price",
+    "btc-price",
     "portfolio-value-comparison",
     "returns-comparison",
     "portfolio-drawdowns",
