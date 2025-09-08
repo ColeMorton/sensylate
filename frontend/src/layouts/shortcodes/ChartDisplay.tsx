@@ -3,6 +3,7 @@ import type { ChartDisplayProps } from "@/types/ChartTypes";
 import ChartContainer from "@/layouts/components/charts/ChartContainer";
 import PortfolioChart from "@/layouts/components/charts/PortfolioChart";
 import FundamentalChart from "@/layouts/components/charts/FundamentalCharts";
+import { chartRegistry } from "@/charts/chart-registry";
 
 const ChartDisplay: React.FC<ChartDisplayProps> = ({
   title,
@@ -16,35 +17,12 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({
   className = "",
   titleOnly = false,
 }) => {
-  // Handle unsupported chart types
-  const supportedChartTypes = [
-    "apple-price",
-    "mstr-price",
-    "btc-price",
-    "portfolio-value-comparison",
-    "returns-comparison",
-    "portfolio-drawdowns",
-    "live-signals-equity-curve",
-    "live-signals-benchmark-comparison",
-    "live-signals-drawdowns",
-    "live-signals-weekly-candlestick",
-    "trade-pnl-waterfall",
-    "open-positions-pnl-timeseries",
-    "closed-positions-pnl-timeseries",
-    "multi-stock-price",
-    "xpev-nio-stock-price",
-    "fundamental-revenue-fcf",
-    "fundamental-revenue-source",
-    "fundamental-geography",
-    "fundamental-key-metrics",
-    "fundamental-quality-rating",
-    "fundamental-financial-health",
-    "fundamental-pros-cons",
-    "fundamental-valuation",
-    "fundamental-balance-sheet",
-  ];
+  // Use chart registry instead of hardcoded array
+  const isSupported = chartRegistry.isSupported(chartType);
+  const isFundamentalChart = chartRegistry.isFundamentalChart(chartType);
+  const isProductionReady = chartRegistry.isProductionReady(chartType);
 
-  if (!supportedChartTypes.includes(chartType)) {
+  if (!isSupported) {
     return (
       <ChartContainer
         title={title}
@@ -67,12 +45,9 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({
     );
   }
 
-  // Check if this is a fundamental chart type
-  const isFundamentalChart = chartType.startsWith("fundamental-");
-
   if (isFundamentalChart) {
     // In production, show a message that fundamental charts are not available
-    if (!import.meta.env.DEV) {
+    if (!import.meta.env.DEV || !isProductionReady) {
       return (
         <ChartContainer
           title={title}

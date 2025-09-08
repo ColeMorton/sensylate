@@ -34,7 +34,10 @@
           "chartType": "open-positions-pnl-timeseries"
         }
       ],
-      "export_defaults": {}
+      "export_defaults": {},
+      "layout_config": {
+        "layoutMode": "standard"
+      }
     },
     {
       "id": "fundamental_analysis",
@@ -103,6 +106,9 @@
         "aspect_ratio": "3:4",
         "format": "png",
         "dpi": 300
+      },
+      "layout_config": {
+        "layoutMode": "standard"
       }
     },
     {
@@ -138,7 +144,10 @@
           "chartType": "live-signals-equity-curve"
         }
       ],
-      "export_defaults": {}
+      "export_defaults": {},
+      "layout_config": {
+        "layoutMode": "standard"
+      }
     },
     {
       "id": "portfolio_history_portrait",
@@ -161,7 +170,20 @@
           "chartType": "closed-positions-pnl-timeseries"
         }
       ],
-      "export_defaults": {}
+      "export_defaults": {},
+      "layout_config": {
+        "header": {
+          "enabled": true,
+          "title": "Twitter Live Signals"
+        },
+        "footer": {
+          "enabled": true,
+          "text": "colemorton.com"
+        },
+        "chartOptions": {
+          "titleOnly": true
+        }
+      }
     },
     {
       "id": "bitcoin_cycle_intelligence",
@@ -182,6 +204,21 @@
         "aspect_ratio": "16:9",
         "format": "png",
         "dpi": 300
+      },
+      "layout_config": {
+        "header": {
+          "enabled": true,
+          "title": "Bitcoin Cycle Intelligence"
+        },
+        "footer": {
+          "enabled": true,
+          "text": "colemorton.com"
+        },
+        "chartOptions": {
+          "titleOnly": true,
+          "displayMode": "full"
+        },
+        "layoutMode": "standard"
       }
     }
   ],

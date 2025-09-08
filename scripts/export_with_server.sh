@@ -42,53 +42,53 @@ print_warning() {
 get_dashboard_defaults() {
     local dashboard_id="$1"
     local config_file="$(dirname "$0")/../frontend/public/data/dashboards.json"
-    
+
     if [ ! -f "$config_file" ]; then
         print_warning "Dashboard configuration not found: $config_file"
         print_warning "Using hardcoded defaults"
         return 1
     fi
-    
+
     # Try to extract export_defaults for the specified dashboard
     if command -v jq >/dev/null 2>&1; then
         # Use jq if available (preferred)
         local dashboard_config=$(jq -r --arg id "$dashboard_id" '.dashboards[] | select(.id == $id) | .export_defaults' "$config_file" 2>/dev/null)
-        
+
         if [ "$dashboard_config" != "null" ] && [ -n "$dashboard_config" ]; then
             # Extract specific values from export_defaults
             local aspect_ratio=$(echo "$dashboard_config" | jq -r '.aspect_ratio // empty' 2>/dev/null)
             local format=$(echo "$dashboard_config" | jq -r '.format // empty' 2>/dev/null)
             local dpi=$(echo "$dashboard_config" | jq -r '.dpi // empty' 2>/dev/null)
-            
+
             # Update defaults if values exist in configuration
             [ -n "$aspect_ratio" ] && ASPECT_RATIO="$aspect_ratio"
             [ -n "$format" ] && FORMAT="$format"
             [ -n "$dpi" ] && DPI="$dpi"
-            
+
             print_status "Using dashboard configuration defaults for: $dashboard_id"
             return 0
         fi
     else
         # Fallback: basic grep parsing (less reliable but works without jq)
         print_warning "jq not available, using basic configuration parsing"
-        
+
         # Find the dashboard section and extract export_defaults
         local in_dashboard=false
         local in_export_defaults=false
-        
+
         while IFS= read -r line; do
             # Check if we found the target dashboard
             if [[ "$line" == *"\"id\": \"$dashboard_id\""* ]]; then
                 in_dashboard=true
                 continue
             fi
-            
+
             # If we're in the dashboard and find export_defaults
             if [ "$in_dashboard" = true ] && [[ "$line" == *"\"export_defaults\":"* ]]; then
                 in_export_defaults=true
                 continue
             fi
-            
+
             # Extract values from export_defaults
             if [ "$in_export_defaults" = true ]; then
                 if [[ "$line" == *"\"aspect_ratio\":"* ]]; then
@@ -105,18 +105,18 @@ get_dashboard_defaults() {
                     break
                 fi
             fi
-            
+
             # If we hit the next dashboard, stop
             if [ "$in_dashboard" = true ] && [[ "$line" == *"\"id\":"* ]] && [[ "$line" != *"\"$dashboard_id\""* ]]; then
                 break
             fi
-            
+
         done < "$config_file"
-        
+
         print_status "Using basic configuration parsing for: $dashboard_id"
         return 0
     fi
-    
+
     print_warning "No export_defaults found for dashboard: $dashboard_id"
     return 1
 }

@@ -1,9 +1,13 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import photoBoothConfig from "@/config/photo-booth.json";
-import { DashboardLoader, type DashboardConfig } from "@/services/dashboardLoader";
+import {
+  DashboardLoader,
+  type DashboardConfig,
+} from "@/services/dashboardLoader";
 import ChartDisplay from "@/shortcodes/ChartDisplay";
 import FundamentalAnalysisDashboard from "@/layouts/components/fundamentals/FundamentalAnalysisDashboard";
 import ErrorBoundary from "@/layouts/components/ErrorBoundary";
+import ConfigurableDashboardRenderer from "@/layouts/components/dashboard/ConfigurableDashboardRenderer";
 
 interface PhotoBoothDisplayProps {
   className?: string;
@@ -61,9 +65,11 @@ const PhotoBoothDisplay: React.FC<PhotoBoothDisplayProps> = ({
 
   // Get available aspect ratios based on selected dashboard
   const getAvailableAspectRatios = () => {
-    const dashboardConfig = activeDashboards.find(d => d.id === selectedDashboard);
+    const dashboardConfig = activeDashboards.find(
+      (d) => d.id === selectedDashboard,
+    );
     const defaultAspectRatio = dashboardConfig?.export_defaults?.aspect_ratio;
-    
+
     if (defaultAspectRatio === "3:4") {
       // Lock portrait dashboards to 3:4 only
       return photoBoothConfig.export_options.aspect_ratios.available.filter(
@@ -102,10 +108,18 @@ const PhotoBoothDisplay: React.FC<PhotoBoothDisplayProps> = ({
           setSelectedDashboard(dashboardParam);
 
           // Set default aspect ratio from dashboard configuration
-          const dashboardConfig = dashboards.find(d => d.id === dashboardParam);
-          const defaultAspectRatio = dashboardConfig?.export_defaults?.aspect_ratio;
-          if (defaultAspectRatio && ["16:9", "4:3", "3:4"].includes(defaultAspectRatio)) {
-            setSelectedAspectRatio(defaultAspectRatio as "16:9" | "4:3" | "3:4");
+          const dashboardConfig = dashboards.find(
+            (d) => d.id === dashboardParam,
+          );
+          const defaultAspectRatio =
+            dashboardConfig?.export_defaults?.aspect_ratio;
+          if (
+            defaultAspectRatio &&
+            ["16:9", "4:3", "3:4"].includes(defaultAspectRatio)
+          ) {
+            setSelectedAspectRatio(
+              defaultAspectRatio as "16:9" | "4:3" | "3:4",
+            );
           }
         }
 
@@ -144,9 +158,12 @@ const PhotoBoothDisplay: React.FC<PhotoBoothDisplayProps> = ({
           ["16:9", "4:3", "3:4"].includes(aspectRatioParam)
         ) {
           // Only set aspect ratio from URL if dashboard allows flexible ratios
-          const dashboardConfig = dashboards.find(d => d.id === dashboardParam);
-          const defaultAspectRatio = dashboardConfig?.export_defaults?.aspect_ratio;
-          
+          const dashboardConfig = dashboards.find(
+            (d) => d.id === dashboardParam,
+          );
+          const defaultAspectRatio =
+            dashboardConfig?.export_defaults?.aspect_ratio;
+
           // Allow URL override unless dashboard is locked to portrait (3:4)
           if (defaultAspectRatio !== "3:4") {
             setSelectedAspectRatio(aspectRatioParam);
@@ -226,11 +243,16 @@ const PhotoBoothDisplay: React.FC<PhotoBoothDisplayProps> = ({
       setSelectedDashboard(dashboardId);
 
       // Set default aspect ratio from dashboard configuration
-      const dashboardConfig = activeDashboards.find(d => d.id === dashboardId);
+      const dashboardConfig = activeDashboards.find(
+        (d) => d.id === dashboardId,
+      );
       const defaultAspectRatio = dashboardConfig?.export_defaults?.aspect_ratio;
-      
-      if (defaultAspectRatio && ["16:9", "4:3", "3:4"].includes(defaultAspectRatio) && 
-          selectedAspectRatio !== defaultAspectRatio) {
+
+      if (
+        defaultAspectRatio &&
+        ["16:9", "4:3", "3:4"].includes(defaultAspectRatio) &&
+        selectedAspectRatio !== defaultAspectRatio
+      ) {
         setSelectedAspectRatio(defaultAspectRatio as "16:9" | "4:3" | "3:4");
       }
 
@@ -704,7 +726,7 @@ const PhotoBoothDisplay: React.FC<PhotoBoothDisplayProps> = ({
         data-scale-factor={selectedScaleFactor}
         style={{ colorScheme: currentMode === "dark" ? "dark" : "light" }}
       >
-        <DashboardRenderer
+        <ConfigurableDashboardRenderer
           dashboard={currentDashboard}
           mode={currentMode}
           aspectRatio={selectedAspectRatio}
@@ -716,172 +738,5 @@ const PhotoBoothDisplay: React.FC<PhotoBoothDisplayProps> = ({
   );
 };
 
-// Dashboard renderer component that renders actual chart content
-const DashboardRenderer: React.FC<{
-  dashboard: DashboardConfig;
-  mode: "light" | "dark";
-  aspectRatio: "16:9" | "4:3" | "3:4";
-  selectedTicker?: string;
-  fundamentalMockDataFn?: ((ticker: string) => any) | null;
-}> = ({
-  dashboard,
-  mode,
-  aspectRatio: _aspectRatio,
-  selectedTicker,
-  fundamentalMockDataFn,
-}) => {
-  const layoutClasses = DashboardLoader.getLayoutClasses(dashboard.layout);
-
-  // Handle fundamental analysis dashboard specially
-  if (dashboard.layout === "fundamental_3x3") {
-    const ticker = selectedTicker || "GOOGL";
-
-    // Only available in development mode
-    if (!import.meta.env.DEV || !fundamentalMockDataFn) {
-      return (
-        <div className="flex items-center justify-center rounded-lg border p-8">
-          <div className="text-center">
-            <p className="text-gray-600 dark:text-gray-400">
-              Fundamental analysis dashboard is only available in development
-              mode
-            </p>
-          </div>
-        </div>
-      );
-    }
-
-    const fundamentalData = fundamentalMockDataFn(ticker);
-
-    console.log("FundamentalAnalysisDashboard rendering debug:", {
-      selectedTicker,
-      ticker,
-      companyName: fundamentalData?.company?.name,
-      hasRevenueData: !!fundamentalData?.financialData?.revenue?.values?.length,
-      hasFcfData: !!fundamentalData?.financialData?.fcf?.values?.length,
-      hasRevenueSource:
-        !!fundamentalData?.financialData?.revenueSource?.values?.length,
-      hasGeography: !!fundamentalData?.financialData?.geography?.values?.length,
-      revenueYears: fundamentalData?.financialData?.revenue?.years,
-      revenueValues: fundamentalData?.financialData?.revenue?.values,
-      fcfYears: fundamentalData?.financialData?.fcf?.years,
-      fcfValues: fundamentalData?.financialData?.fcf?.values,
-    });
-
-    return (
-      <div
-        className={`${mode}-mode ${mode}`}
-        style={{
-          width: "100%",
-          height: "100%",
-          colorScheme: mode === "dark" ? "dark" : "light",
-        }}
-      >
-        <ErrorBoundary
-          onError={(error, errorInfo) => {
-            console.error("FundamentalAnalysisDashboard error:", error);
-            console.error("Error info:", errorInfo);
-            console.error("Error stack:", error.stack);
-            console.error("Component stack:", errorInfo.componentStack);
-          }}
-          fallback={
-            <div className="flex min-h-[400px] items-center justify-center">
-              <div className="text-center">
-                <h3 className="text-lg font-semibold text-red-600">
-                  Fundamental Analysis Error
-                </h3>
-                <p className="text-gray-600">
-                  Unable to load fundamental analysis dashboard for {ticker}
-                </p>
-                <button
-                  onClick={() => window.location.reload()}
-                  className="mt-4 rounded-md bg-blue-500 px-4 py-2 text-white transition-colors hover:bg-blue-600"
-                >
-                  Reload Page
-                </button>
-              </div>
-            </div>
-          }
-        >
-          <FundamentalAnalysisDashboard
-            data={fundamentalData}
-            ticker={ticker}
-            exportMode={true}
-            className="photo-booth-chart"
-          />
-        </ErrorBoundary>
-      </div>
-    );
-  }
-
-  // Enable title-only mode for Portfolio History Portrait dashboard
-  const isPortfolioHistoryPortrait =
-    dashboard.id === "portfolio_history_portrait";
-
-  // Enable special layout for Bitcoin Cycle Intelligence dashboard
-  const isBitcoinCycleIntelligence =
-    dashboard.id === "bitcoin_cycle_intelligence";
-
-  return (
-    <div
-      className={`dashboard-content ${dashboard.layout} ${mode}-mode flex flex-col`}
-      style={{
-        width: "100%",
-        height: "100%",
-        overflow: "hidden",
-      }}
-    >
-      {/* Header Section - Only for Portfolio History Portrait */}
-      {isPortfolioHistoryPortrait && (
-        <div className="dashboard-header text-center">
-          <h1 className="text-dark mt-8 text-4xl font-bold dark:text-white">
-            Twitter Live Signals
-          </h1>
-        </div>
-      )}
-      
-      {/* Header Section - Only for Bitcoin Cycle Intelligence */}
-      {isBitcoinCycleIntelligence && (
-        <div className="dashboard-header text-center">
-          <h1 className="text-dark mt-8 text-4xl font-bold dark:text-white">
-            Bitcoin Cycle Intelligence
-          </h1>
-        </div>
-      )}
-
-      {/* Charts Section */}
-      <div className={`${layoutClasses} min-h-0 flex-1`}>
-        {dashboard.charts.map((chart, index) => (
-          <ChartDisplay
-            key={`${dashboard.id}-${chart.chartType}-${index}`}
-            title={chart.title}
-            category={chart.category}
-            description={chart.description}
-            chartType={chart.chartType}
-            className="photo-booth-chart"
-            titleOnly={isPortfolioHistoryPortrait || isBitcoinCycleIntelligence}
-          />
-        ))}
-      </div>
-
-      {/* Footer Section - Only for Portfolio History Portrait */}
-      {isPortfolioHistoryPortrait && (
-        <div className="dashboard-footer flex justify-center">
-          <h1 className="brand-text text-text-dark dark:text-darkmode-text-dark m-0 mb-8 text-4xl font-semibold">
-            colemorton.com
-          </h1>
-        </div>
-      )}
-      
-      {/* Footer Section - Only for Bitcoin Cycle Intelligence */}
-      {isBitcoinCycleIntelligence && (
-        <div className="dashboard-footer flex justify-center">
-          <h1 className="brand-text text-text-dark dark:text-darkmode-text-dark m-0 mb-8 text-4xl font-semibold">
-            colemorton.com
-          </h1>
-        </div>
-      )}
-    </div>
-  );
-};
 
 export default PhotoBoothDisplay;
