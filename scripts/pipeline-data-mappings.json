@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "chartDataMapping": {
     "btc-price": {
-      "data_source": "raw/stocks/BITCOIN/daily.csv",
+      "data_source": "raw/stocks/BTC-USD/daily.csv",
       "category": "raw",
       "services": [
         "yahoo_finance"
@@ -16,6 +16,6 @@
       ]
     }
   },
-  "discoveredAt": "2025-09-10T02:55:11.231Z",
+  "discoveredAt": "2025-09-10T06:12:15.649Z",
   "source": "colocated-charts-auto-discovery"
 }

@@ -16,7 +16,7 @@ export const btcPriceChartConfig: ChartConfig = {
     chartType: "btc-price",
   },
   dataRequirements: {
-    dataSources: ["/data/raw/stocks/BITCOIN/daily.csv"],
+    dataSources: ["/data/raw/stocks/BTC-USD/daily.csv"],
     cacheable: true,
     cacheDuration: 5 * 60 * 1000, // 5 minutes
   },

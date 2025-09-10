@@ -1,12 +1,12 @@
 {
   "version": "1.0.0",
   "description": "Auto-discovered data mappings from colocated chart directories",
-  "discoveredAt": "2025-09-10T02:55:11.231Z",
+  "discoveredAt": "2025-09-10T06:12:15.648Z",
   "totalCharts": 2,
   "chartsWithDataMappings": 2,
   "dataMappings": {
     "btc-price": {
-      "data_source": "raw/stocks/BITCOIN/daily.csv",
+      "data_source": "raw/stocks/BTC-USD/daily.csv",
       "category": "raw",
       "services": [
         "yahoo_finance"

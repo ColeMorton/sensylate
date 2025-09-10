@@ -14,6 +14,10 @@ const blogCollection = defineCollection({
     tags: z.array(z.string()).default(["others"]),
     draft: z.boolean().optional(),
     pinned: z.boolean().optional(),
+    // Bitcoin Cycle Intelligence fields
+    bitcoin_cycle_enabled: z.boolean().optional(),
+    bitcoin_cycle_confidence: z.number().optional(),
+    bitcoin_cycle_phase: z.string().optional(),
   }),
 });
 

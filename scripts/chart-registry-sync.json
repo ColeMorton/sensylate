@@ -6,21 +6,6 @@
   "production_ready_charts": 4,
   "synchronization_status": "success",
   "charts": {
-    "btc-price": {
-      "metadata": {
-        "title": "Bitcoin Price",
-        "category": "Bitcoin Analysis",
-        "description": "Bitcoin price chart with cycle intelligence",
-        "chartType": "btc-price"
-      },
-      "has_colocated_config": true,
-      "has_pipeline_mapping": true,
-      "production_ready": true,
-      "data_requirements": {
-        "dataSources": [],
-        "cacheable": true
-      }
-    },
     "multi-stock-price": {
       "metadata": {
         "title": "Multi Stock Price",
@@ -45,6 +30,21 @@
       },
       "has_colocated_config": false,
       "has_pipeline_mapping": false,
+      "production_ready": true,
+      "data_requirements": {
+        "dataSources": [],
+        "cacheable": true
+      }
+    },
+    "btc-price": {
+      "metadata": {
+        "title": "Bitcoin Price",
+        "category": "Bitcoin Analysis",
+        "description": "Bitcoin price chart with cycle intelligence",
+        "chartType": "btc-price"
+      },
+      "has_colocated_config": true,
+      "has_pipeline_mapping": true,
       "production_ready": true,
       "data_requirements": {
         "dataSources": [],
