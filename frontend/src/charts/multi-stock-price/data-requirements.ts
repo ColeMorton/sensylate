@@ -5,11 +5,11 @@
  * Supports dynamic symbol configuration and peer analysis.
  */
 
-import type { 
-  DataRequirements, 
+import type {
+  DataRequirements,
   ExtendedChartDataRequirements,
   MultiSymbolConfig,
-  DefaultDataRequirements 
+  DefaultDataRequirements,
 } from "../data-requirements.schema";
 
 /**
@@ -31,7 +31,7 @@ export const multiStockPriceDataRequirements: DataRequirements = {
   chartStatus: "active",
   category: "raw",
   requiredServices: ["yahoo_finance"],
-  
+
   primarySource: {
     type: "cli-api",
     location: "dynamic", // Location determined by selected symbols
@@ -44,18 +44,18 @@ export const multiStockPriceDataRequirements: DataRequirements = {
       lastUpdatedBy: "yahoo-finance-api",
     },
   },
-  
+
   freshness: {
     ...DefaultDataRequirements.stockPrice.freshness,
   },
-  
+
   refreshPolicy: {
     ...DefaultDataRequirements.stockPrice.refreshPolicy,
     refreshInterval: 24 * 60 * 60 * 1000, // 24 hours
   },
-  
+
   multiSymbolConfig: xpevNioMultiSymbolConfig,
-  
+
   serviceConfigs: [
     {
       name: "yahoo_finance",
@@ -68,7 +68,7 @@ export const multiStockPriceDataRequirements: DataRequirements = {
       timeout: 120, // Longer timeout for multiple symbols
     },
   ],
-  
+
   pipelineSettings: {
     enableFileWatching: true,
     maxConcurrency: 3, // Can fetch multiple symbols concurrently
@@ -79,14 +79,15 @@ export const multiStockPriceDataRequirements: DataRequirements = {
 /**
  * Combined data requirements for multi-stock-price chart
  */
-export const multiStockPriceExtendedDataRequirements: ExtendedChartDataRequirements = {
-  basic: {
-    dataSources: [], // Dynamic based on selected symbols
-    cacheable: true,
-    cacheDuration: 5 * 60 * 1000, // 5 minutes
-  },
-  pipeline: multiStockPriceDataRequirements,
-};
+export const multiStockPriceExtendedDataRequirements: ExtendedChartDataRequirements =
+  {
+    basic: {
+      dataSources: [], // Dynamic based on selected symbols
+      cacheable: true,
+      cacheDuration: 5 * 60 * 1000, // 5 minutes
+    },
+    pipeline: multiStockPriceDataRequirements,
+  };
 
 /**
  * Data mapping for pipeline discovery
@@ -110,12 +111,12 @@ export const PredefinedSymbolConfigs = {
     displayName: "Chinese EV Comparison",
     dataSources: ["raw/stocks/XPEV/daily.csv", "raw/stocks/NIO/daily.csv"],
   },
-  "faang": {
+  faang: {
     symbols: ["META", "AMZN", "AAPL", "NFLX", "GOOGL"],
     displayName: "FAANG Stocks",
     dataSources: [
       "raw/stocks/META/daily.csv",
-      "raw/stocks/AMZN/daily.csv", 
+      "raw/stocks/AMZN/daily.csv",
       "raw/stocks/AAPL/daily.csv",
       "raw/stocks/NFLX/daily.csv",
       "raw/stocks/GOOGL/daily.csv",

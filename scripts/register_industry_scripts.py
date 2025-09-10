@@ -108,9 +108,9 @@ def test_industry_script_execution():
 
     # Test analysis script (requires discovery output)
     test_params_analysis = test_params.copy()
-    test_params_analysis["discovery_file"] = (
-        "./data/outputs/industry_analysis/discovery/software_infrastructure_20250728_discovery.json"
-    )
+    test_params_analysis[
+        "discovery_file"
+    ] = "./data/outputs/industry_analysis/discovery/software_infrastructure_20250728_discovery.json"
 
     try:
         result = registry.execute_script("industry_analysis", **test_params_analysis)

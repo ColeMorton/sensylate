@@ -121,7 +121,7 @@ export interface LiveSignalsBenchmarkDataRow {
   Portfolio: string;
   SPY: string;
   QQQ: string;
-  "BITCOIN": string;
+  BITCOIN: string;
 }
 // Chart configuration types
 export type ChartType =

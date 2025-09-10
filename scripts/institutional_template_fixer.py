@@ -104,9 +104,9 @@ class InstitutionalTemplateFixer:
             month_year = self._extract_month_year_from_title(
                 frontmatter.get("title", "")
             )
-            frontmatter["meta_title"] = (
-                f"{region} Macro Economic Analysis - Business Cycle Assessment | {month_year}"
-            )
+            frontmatter[
+                "meta_title"
+            ] = f"{region} Macro Economic Analysis - Business Cycle Assessment | {month_year}"
             fixes_applied += 1
             print("  ✓ Fixed meta_title format")
 

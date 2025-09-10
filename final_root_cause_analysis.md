@@ -10,7 +10,7 @@ After systematic elimination of all major theories, the corruption requires the 
 yarn data:pipeline (Node.js process)
   → python3 data_pipeline_manager.py (subprocess spawning)
     → Yahoo Finance API call for BTC-USD "max" period
-      → ~1.9MB JSON response processing  
+      → ~1.9MB JSON response processing
         → DataFrame conversion in memory
           → File write to BTC-USD/daily.csv (~371KB)
             → **EXTERNAL PROCESS INTERVENTION** (macOS system process)

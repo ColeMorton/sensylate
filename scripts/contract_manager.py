@@ -36,7 +36,7 @@ class ContractManager(ComponentLifecycle):
     ):
         # Initialize ComponentLifecycle
         super().__init__("contract_manager")
-        
+
         # Store dependencies (injected during init phase)
         self.frontend_src_path = frontend_src_path
         self.frontend_data_path = frontend_data_path
@@ -45,7 +45,7 @@ class ContractManager(ComponentLifecycle):
         # Cache for discovered contracts (populated during configure phase)
         self.discovery_result: Optional[ContractDiscoveryResult] = None
         self.contracts: List[DataContract] = []
-        
+
         # Cached active requirements (expensive operation moved to configure phase)
         self._cached_active_requirements = None
         self._cached_detector = None
@@ -53,52 +53,62 @@ class ContractManager(ComponentLifecycle):
     def _do_init(self) -> None:
         """Phase 1: Basic initialization - dependencies already injected in __init__"""
         self.logger.debug("ContractManager initialized with ComponentLifecycle")
-        
+
     def _do_configure(self) -> None:
         """Phase 2: Expensive chart discovery operations and caching"""
-        self.logger.info("Configuring ContractManager - performing expensive chart discovery operations...")
-        
+        self.logger.info(
+            "Configuring ContractManager - performing expensive chart discovery operations..."
+        )
+
         # Cache the expensive ActiveChartRequirementsDetector operations
         self._cache_active_requirements()
-        
+
         # Cache the contract discovery results
         self._cache_contract_discovery()
-        
-        self.logger.info("ContractManager configuration completed - all expensive discovery operations cached")
-        
+
+        self.logger.info(
+            "ContractManager configuration completed - all expensive discovery operations cached"
+        )
+
     def _do_start(self) -> None:
         """Phase 3: Ready for fast operations using cached results"""
         self.logger.debug("ContractManager started - using cached discovery results")
-        
+
     def _cache_active_requirements(self) -> None:
         """Cache expensive active chart requirements discovery"""
         self.logger.debug("Caching active chart requirements discovery...")
-        
+
         # Import and create detector once
         from active_chart_requirements import ActiveChartRequirementsDetector
-        
+
         self._cached_detector = ActiveChartRequirementsDetector(
             frontend_src_path=self.frontend_src_path,
             frontend_data_path=self.frontend_data_path,
         )
-        
+
         # Perform expensive discovery once and cache results
-        self._cached_active_requirements = self._cached_detector.discover_active_requirements()
-        
-        self.logger.debug(f"Active requirements cached: {len(self._cached_active_requirements.requirements)} requirements")
-        
+        self._cached_active_requirements = (
+            self._cached_detector.discover_active_requirements()
+        )
+
+        self.logger.debug(
+            f"Active requirements cached: {len(self._cached_active_requirements.requirements)} requirements"
+        )
+
     def _cache_contract_discovery(self) -> None:
         """Cache contract discovery results using cached active requirements"""
         if self._cached_active_requirements is None:
-            raise RuntimeError("Active requirements must be cached before contract discovery")
-            
+            raise RuntimeError(
+                "Active requirements must be cached before contract discovery"
+            )
+
         self.logger.debug("Caching contract discovery results...")
-        
+
         active_requirements = self._cached_active_requirements
-        
+
         # Convert active requirements to contracts format for compatibility
         active_contracts = []
-        
+
         for req in active_requirements.requirements:
             # Create virtual contract from active chart requirement
             contract = DataContract(
@@ -111,7 +121,7 @@ class ContractManager(ComponentLifecycle):
                 freshness_threshold_hours=24,
             )
             active_contracts.append(contract)
-        
+
         # Create discovery result with only active chart requirements
         self.discovery_result = ContractDiscoveryResult(
             contracts=active_contracts,
@@ -121,38 +131,44 @@ class ContractManager(ComponentLifecycle):
             failed_discoveries=[],
             discovery_time=active_requirements.discovery_time_seconds,
         )
-        
+
         self.contracts = active_contracts
-        
+
         self.logger.info(
             f"Contract discovery cached: {len(active_contracts)} data files needed for "
             f"{active_requirements.total_active_charts} active charts "
             f"(skipped {active_requirements.total_frozen_charts} frozen charts)"
         )
-        
+
         if active_requirements.total_frozen_charts > 0:
             self.logger.debug(
                 f"Runtime filtering: excluded {active_requirements.total_frozen_charts} frozen charts "
                 f"from data requirements (demand-driven approach)"
             )
-        
+
     def discover_contracts(self) -> ContractDiscoveryResult:
         """Fast contract discovery using cached results from configure() phase"""
         # Ensure component is configured
         if not self.is_configured():
-            raise RuntimeError("ContractManager must be configured before discovery operations")
-            
+            raise RuntimeError(
+                "ContractManager must be configured before discovery operations"
+            )
+
         if self.discovery_result is None:
-            raise RuntimeError("Contract discovery cache not available - configuration may have failed")
-            
-        self.logger.debug(f"Returning cached contract discovery: {len(self.contracts)} contracts")
+            raise RuntimeError(
+                "Contract discovery cache not available - configuration may have failed"
+            )
+
+        self.logger.debug(
+            f"Returning cached contract discovery: {len(self.contracts)} contracts"
+        )
         return self.discovery_result
 
     def get_contracts_by_category(self, category: str) -> List[DataContract]:
         """Get contracts for a specific category using cached results"""
         # Ensure discovery has been performed (uses cached results)
         self.discover_contracts()
-        
+
         contracts = [c for c in self.contracts if c.category == category]
         self.logger.debug(f"Found {len(contracts)} contracts for category '{category}'")
         return contracts
@@ -161,17 +177,23 @@ class ContractManager(ComponentLifecycle):
         """Fast contract-to-service mapping using cached active requirements"""
         # Ensure component is configured
         if not self.is_configured():
-            raise RuntimeError("ContractManager must be configured before service mapping operations")
-            
+            raise RuntimeError(
+                "ContractManager must be configured before service mapping operations"
+            )
+
         if self._cached_active_requirements is None:
-            raise RuntimeError("Active requirements cache not available - configuration may have failed")
-            
+            raise RuntimeError(
+                "Active requirements cache not available - configuration may have failed"
+            )
+
         try:
             # Find matching requirement for this contract using cached results
             active_requirements = self._cached_active_requirements
             for req in active_requirements.requirements:
                 if str(contract.relative_path) == req.data_source:
-                    self.logger.debug(f"Found cached service mapping for {contract.contract_id}: {req.required_services}")
+                    self.logger.debug(
+                        f"Found cached service mapping for {contract.contract_id}: {req.required_services}"
+                    )
                     return req.required_services
 
             # Fallback to category-based service mapping if no specific requirement found
@@ -183,7 +205,9 @@ class ContractManager(ComponentLifecycle):
             }
 
             services = category_service_map.get(contract.category, [])
-            self.logger.debug(f"Used category-based mapping for {contract.contract_id}: {services}")
+            self.logger.debug(
+                f"Used category-based mapping for {contract.contract_id}: {services}"
+            )
             return services
 
         except Exception as e:
@@ -194,7 +218,9 @@ class ContractManager(ComponentLifecycle):
             for service_name, capabilities in self.cli_service_capabilities.items():
                 if contract.category in capabilities["categories"]:
                     capable_services.append(service_name)
-            self.logger.debug(f"Used fallback mapping for {contract.contract_id}: {capable_services}")
+            self.logger.debug(
+                f"Used fallback mapping for {contract.contract_id}: {capable_services}"
+            )
             return capable_services
 
     def validate_contract_fulfillment(self, contract: DataContract) -> ProcessingResult:
@@ -217,7 +243,7 @@ class ContractManager(ComponentLifecycle):
             )
 
         # Check freshness if file has last_modified time
-        if hasattr(contract, 'last_modified') and contract.last_modified is not None:
+        if hasattr(contract, "last_modified") and contract.last_modified is not None:
             file_age_hours = (
                 datetime.now() - contract.last_modified
             ).total_seconds() / 3600
@@ -255,21 +281,23 @@ class ContractManager(ComponentLifecycle):
     def get_unfulfillable_contracts(self, contracts: List[DataContract]) -> List[str]:
         """Get list of contracts that cannot be fulfilled by available services"""
         unfulfillable = []
-        
+
         for contract in contracts:
             capable_services = self.map_contract_to_services(contract)
             if not capable_services:
                 unfulfillable.append(contract.contract_id)
-                
+
         return unfulfillable
 
-    def group_contracts_by_category(self, contracts: List[DataContract]) -> Dict[str, List[DataContract]]:
+    def group_contracts_by_category(
+        self, contracts: List[DataContract]
+    ) -> Dict[str, List[DataContract]]:
         """Group contracts by category for efficient processing"""
         contracts_by_category = {}
-        
+
         for contract in contracts:
             if contract.category not in contracts_by_category:
                 contracts_by_category[contract.category] = []
             contracts_by_category[contract.category].append(contract)
-            
+
         return contracts_by_category

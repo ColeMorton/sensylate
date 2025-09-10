@@ -20,7 +20,7 @@ export interface RefreshPolicy {
   /** Maximum retry attempts on failure */
   maxRetries: number;
   /** Retry backoff strategy */
-  retryBackoff: 'exponential' | 'linear' | 'fixed';
+  retryBackoff: "exponential" | "linear" | "fixed";
 }
 
 /**
@@ -74,19 +74,19 @@ export interface SymbolMetadata {
  */
 export interface DataSourceConfig {
   /** Data source type */
-  type: 'cli-api' | 'manual' | 'hybrid' | 'file-watch';
+  type: "cli-api" | "manual" | "hybrid" | "file-watch";
   /** File location relative to frontend/public/data */
   location: string;
   /** Data refresh method */
-  refreshMethod: 'api-poll' | 'manual-update' | 'hybrid-sync' | 'file-watch';
+  refreshMethod: "api-poll" | "manual-update" | "hybrid-sync" | "file-watch";
   /** Update frequency */
-  frequency: 'real-time' | 'daily' | 'weekly' | 'event-driven' | 'scheduled';
+  frequency: "real-time" | "daily" | "weekly" | "event-driven" | "scheduled";
   /** Required CLI service */
   cliService?: string;
   /** Additional metadata */
   metadata?: {
     description: string;
-    format: 'csv' | 'json' | 'api';
+    format: "csv" | "json" | "api";
     lastUpdatedBy?: string;
   };
 }
@@ -102,7 +102,11 @@ export interface MultiSymbolConfig {
   /** Description of comparison purpose */
   description: string;
   /** Comparison type */
-  comparisonType: 'peer_analysis' | 'sector_comparison' | 'benchmark' | 'correlation';
+  comparisonType:
+    | "peer_analysis"
+    | "sector_comparison"
+    | "benchmark"
+    | "correlation";
   /** Use same percentage scale */
   samePercentageScale?: boolean;
 }
@@ -113,37 +117,42 @@ export interface MultiSymbolConfig {
 export interface DataRequirements {
   /** Chart type identifier */
   chartType: string;
-  
+
   /** Chart status for pipeline filtering */
-  chartStatus: 'active' | 'frozen' | 'disabled';
-  
+  chartStatus: "active" | "frozen" | "disabled";
+
   /** Primary data source configuration */
   primarySource: DataSourceConfig;
-  
+
   /** Fallback data sources */
   fallbackSources?: DataSourceConfig[];
-  
+
   /** Data freshness monitoring */
   freshness: FreshnessPolicy;
-  
+
   /** Data refresh policy */
   refreshPolicy: RefreshPolicy;
-  
+
   /** Required CLI services */
   requiredServices: string[];
-  
+
   /** Data category for pipeline organization */
-  category: 'raw' | 'portfolio' | 'trade-history' | 'open-positions' | 'processed';
-  
+  category:
+    | "raw"
+    | "portfolio"
+    | "trade-history"
+    | "open-positions"
+    | "processed";
+
   /** Symbol metadata (for stock/crypto charts) */
   symbolMetadata?: SymbolMetadata;
-  
+
   /** Multi-symbol configuration (for comparison charts) */
   multiSymbolConfig?: MultiSymbolConfig;
-  
+
   /** CLI service configurations */
   serviceConfigs?: CLIServiceConfig[];
-  
+
   /** Additional pipeline settings */
   pipelineSettings?: {
     /** Maximum concurrent operations */
@@ -168,7 +177,7 @@ export interface ExtendedChartDataRequirements {
     /** Cache duration in milliseconds */
     cacheDuration?: number;
   };
-  
+
   /** Pipeline data requirements (for backend) */
   pipeline?: DataRequirements;
 }
@@ -179,9 +188,9 @@ export interface ExtendedChartDataRequirements {
 export const DefaultDataRequirements = {
   /** Default for stock price charts */
   stockPrice: {
-    chartStatus: 'active' as const,
-    category: 'raw' as const,
-    requiredServices: ['yahoo_finance'],
+    chartStatus: "active" as const,
+    category: "raw" as const,
+    requiredServices: ["yahoo_finance"],
     freshness: {
       warningThreshold: 24,
       errorThreshold: 48,
@@ -194,15 +203,15 @@ export const DefaultDataRequirements = {
       allowManualRefresh: true,
       refreshOnVisible: true,
       maxRetries: 3,
-      retryBackoff: 'exponential' as const,
+      retryBackoff: "exponential" as const,
     },
   },
-  
+
   /** Default for crypto price charts */
   cryptoPrice: {
-    chartStatus: 'active' as const,
-    category: 'raw' as const,
-    requiredServices: ['yahoo_finance'],
+    chartStatus: "active" as const,
+    category: "raw" as const,
+    requiredServices: ["yahoo_finance"],
     freshness: {
       warningThreshold: 6,
       errorThreshold: 24,
@@ -215,15 +224,15 @@ export const DefaultDataRequirements = {
       allowManualRefresh: true,
       refreshOnVisible: true,
       maxRetries: 2,
-      retryBackoff: 'exponential' as const,
+      retryBackoff: "exponential" as const,
     },
   },
-  
+
   /** Default for portfolio charts */
   portfolio: {
-    chartStatus: 'frozen' as const,
-    category: 'portfolio' as const,
-    requiredServices: ['trade_history'],
+    chartStatus: "frozen" as const,
+    category: "portfolio" as const,
+    requiredServices: ["trade_history"],
     freshness: {
       warningThreshold: 24,
       errorThreshold: 72,
@@ -236,7 +245,7 @@ export const DefaultDataRequirements = {
       allowManualRefresh: true,
       refreshOnVisible: true,
       maxRetries: 1,
-      retryBackoff: 'linear' as const,
+      retryBackoff: "linear" as const,
     },
   },
 } as const;

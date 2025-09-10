@@ -9,7 +9,7 @@ Comprehensive service health monitoring and validation system that:
 
 Implements ComponentLifecycle for proper initialization phases:
 - init(): Basic initialization, dependency injection
-- configure(): Expensive CLI health checks and caching operations  
+- configure(): Expensive CLI health checks and caching operations
 - start(): Use cached health check results for fast operations
 """
 
@@ -31,11 +31,11 @@ class ServiceHealthManager(ComponentLifecycle):
     def __init__(self, scripts_dir: Path, cli_service_capabilities: Dict[str, Any]):
         # Initialize ComponentLifecycle
         super().__init__("service_health_manager")
-        
+
         # Store dependencies (injected during init phase)
         self.scripts_dir = scripts_dir
         self.cli_service_capabilities = cli_service_capabilities
-        
+
         # Cached health check results (populated during configure phase)
         self._cached_service_dependencies: Optional[Dict[str, Any]] = None
         self._cached_schema_validation: Optional[Dict[str, Any]] = None
@@ -44,47 +44,63 @@ class ServiceHealthManager(ComponentLifecycle):
         """Phase 1: Basic initialization"""
         self.logger.info(f"ServiceHealthManager: Phase 1 - Basic initialization")
         # Basic dependency validation already done in __init__
-        
+
     def _do_configure(self) -> None:
         """Phase 2: Expensive CLI health checks and caching operations"""
-        self.logger.info(f"ServiceHealthManager: Phase 2 - Caching expensive health checks")
-        
+        self.logger.info(
+            f"ServiceHealthManager: Phase 2 - Caching expensive health checks"
+        )
+
         # Cache service dependencies during configure phase
         self._cache_service_dependencies()
-        
+
     def _do_start(self) -> None:
         """Phase 3: Ready for fast operations"""
         self.logger.info(f"ServiceHealthManager: Phase 3 - Ready for cached operations")
         # Service health manager ready for fast cached operations
-        
+
     def _cache_service_dependencies(self) -> None:
         """Cache expensive service dependency validation (CLI health checks)"""
-        self.logger.info("Caching service dependency validation (expensive CLI operations)")
-        
+        self.logger.info(
+            "Caching service dependency validation (expensive CLI operations)"
+        )
+
         # Perform expensive operations once during configure phase
         availability_result = self._validate_service_availability()
         health_result = None
-        
+
         if availability_result["success"]:
             health_result = self._validate_service_health()
-            
+
         # Cache the complete validation result
         self._cached_service_dependencies = {
-            "success": availability_result["success"] and (health_result is None or health_result["success"]),
+            "success": availability_result["success"]
+            and (health_result is None or health_result["success"]),
             "availability": availability_result,
             "health": health_result,
-            "stage": "health" if health_result and not health_result["success"] else "availability" if not availability_result["success"] else None,
-            "error": (health_result and health_result.get("error")) or availability_result.get("error")
+            "stage": "health"
+            if health_result and not health_result["success"]
+            else "availability"
+            if not availability_result["success"]
+            else None,
+            "error": (health_result and health_result.get("error"))
+            or availability_result.get("error"),
         }
-        
-        self.logger.info(f"Cached service dependencies validation: {self._cached_service_dependencies['success']}")
+
+        self.logger.info(
+            f"Cached service dependencies validation: {self._cached_service_dependencies['success']}"
+        )
 
     def validate_service_dependencies(self) -> Dict[str, Any]:
         """Fast service dependency validation using cached results"""
         if self._cached_service_dependencies is None:
-            self.logger.error("ServiceHealthManager not properly configured - cached dependencies missing")
-            raise RuntimeError("ServiceHealthManager must go through configure() phase before validate_service_dependencies()")
-            
+            self.logger.error(
+                "ServiceHealthManager not properly configured - cached dependencies missing"
+            )
+            raise RuntimeError(
+                "ServiceHealthManager must go through configure() phase before validate_service_dependencies()"
+            )
+
         self.logger.info("Using cached service dependency validation results")
         return self._cached_service_dependencies.copy()
 

@@ -248,10 +248,11 @@ class ChartDataService {
   ): Promise<StockDataRow[]> {
     try {
       // Special handling for BTC-USD: use BITCOIN directory and apply date filtering
-      const filePath = symbol === "BTC-USD" 
-        ? "/data/raw/stocks/BITCOIN/daily.csv"
-        : `/data/raw/stocks/${symbol}/daily.csv`;
-      
+      const filePath =
+        symbol === "BTC-USD"
+          ? "/data/raw/stocks/BITCOIN/daily.csv"
+          : `/data/raw/stocks/${symbol}/daily.csv`;
+
       const response = await fetch(filePath, {
         signal,
       });
@@ -262,18 +263,18 @@ class ChartDataService {
 
       const csvText = await response.text();
       const allData = this.parseCSV(csvText);
-      
+
       // Apply date filtering for BTC-USD to show only last 365 days
       if (symbol === "BTC-USD") {
         const oneYearAgo = new Date();
         oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
-        
-        return allData.filter(row => {
+
+        return allData.filter((row) => {
           const rowDate = new Date(row.date);
           return rowDate >= oneYearAgo;
         });
       }
-      
+
       return allData;
     } catch (error) {
       // Re-throw AbortError without wrapping to preserve abort handling

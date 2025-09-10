@@ -158,7 +158,9 @@ def print_quality_assessment(metrics, file_name):
         status = (
             "✅"
             if statistical_power >= 0.8
-            else "⚠️" if statistical_power >= 0.7 else "❌"
+            else "⚠️"
+            if statistical_power >= 0.7
+            else "❌"
         )
         print(
             f"     Statistical Power: {status} {statistical_power:.3f} (institutional minimum: >0.80)"
@@ -194,7 +196,9 @@ def print_quality_assessment(metrics, file_name):
         status = (
             "✅"
             if statistical_significance >= 0.8
-            else "⚠️" if statistical_significance >= 0.5 else "❌"
+            else "⚠️"
+            if statistical_significance >= 0.5
+            else "❌"
         )
         print("     Statistical Significance: {status} {statistical_significance:.3f}")
 

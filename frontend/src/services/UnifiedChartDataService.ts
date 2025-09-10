@@ -18,15 +18,10 @@ import type {
   PortfolioDataRow,
   LiveSignalsDataRow,
   TradeHistoryDataRow,
-  ClosedPositionPnLDataRow,
-  OpenPositionPnLDataRow,
-  BenchmarkDataRow,
-  LiveSignalsBenchmarkDataRow,
 } from "@/types/ChartTypes";
 
 import type {
   DataSourceStatus,
-  DataRefreshRequest,
   DataRefreshResult,
   ChartRefreshCapability,
 } from "@/types/DataDependencyTypes";

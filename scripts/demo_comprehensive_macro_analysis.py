@@ -309,7 +309,9 @@ class MacroEconomicFrameworkDemo:
             leading_scores, coincident_scores
         )
 
-        print(f"⚠️  Recession Probability: {recession_signal.recession_probability:.1%}")
+        print(
+            f"⚠️  Recession Probability: {recession_signal.recession_probability:.1%}"
+        )
         print("💪 Signal Strength: {recession_signal.signal_strength.title()}")
         print("⏰ Time Horizon: {recession_signal.time_horizon}")
         print(

@@ -73,8 +73,8 @@ export class BTCPriceDataAdapterImpl implements BTCPriceDataAdapter {
     // Filter to show only the last 365 days of data
     const oneYearAgo = new Date();
     oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
-    
-    return allData.filter(row => {
+
+    return allData.filter((row) => {
       const rowDate = new Date(row.date);
       return rowDate >= oneYearAgo;
     });

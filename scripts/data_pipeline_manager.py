@@ -30,11 +30,13 @@ sys.path.insert(0, str(Path(__file__).parent))
 from chart_data_dependency_manager import ChartDataDependencyManager
 from chart_registry_bridge import ChartRegistryBridge
 from cli_service_script import CLIServiceScript
+from contract_manager import ContractManager
 from data_contract_discovery import (
     ContractDiscoveryResult,
     DataContract,
     DataContractDiscovery,
 )
+from data_fetch_coordinator import DataFetchCoordinator
 from data_service_adapter import (
     BaseDataServiceAdapter,
     DataFetchRequest,
@@ -43,14 +45,12 @@ from data_service_adapter import (
 )
 from errors import ConfigurationError, ValidationError
 from file_operation_manager import FileOperationManager
+from file_protection_manager import FileProtectionManager
 from result_types import ProcessingResult
 from script_config import ScriptConfig
 from service_health_manager import ServiceHealthManager
-from contract_manager import ContractManager
-from data_fetch_coordinator import DataFetchCoordinator
-from validation_engine import ValidationEngine
-from file_protection_manager import FileProtectionManager
 from utils.logging_setup import setup_logging
+from validation_engine import ValidationEngine
 
 
 class DryRunReport:
@@ -349,10 +349,10 @@ class DataPipelineManager:
         self.logger = logging.getLogger("data_pipeline_manager")
         self.scripts_dir = Path(__file__).parent
         self.project_root = self.scripts_dir.parent
-        
+
         # Initialize file operation manager for atomic writes and corruption prevention
         self.file_manager = FileOperationManager(self.logger)
-        
+
         # Initialize file protection manager for race condition protection
         self.file_protection_manager = FileProtectionManager()
 
@@ -381,7 +381,6 @@ class DataPipelineManager:
         )
         self.cli_service = CLIServiceScript(config)
 
-
         # Contract management is now handled by ContractManager
 
         # CLI service capability mapping (what each service can provide)
@@ -391,7 +390,7 @@ class DataPipelineManager:
         self.service_health_manager = ServiceHealthManager(
             self.scripts_dir, self.cli_service_capabilities
         )
-        
+
         # Initialize ServiceHealthManager lifecycle phases
         self.service_health_manager.init()  # Phase 1: Basic initialization
         self.service_health_manager.configure()  # Phase 2: Expensive CLI health checks and caching
@@ -399,9 +398,11 @@ class DataPipelineManager:
 
         # Initialize contract manager with ComponentLifecycle pattern
         self.contract_manager = ContractManager(
-            self.frontend_src_path, self.frontend_data_path, self.cli_service_capabilities
+            self.frontend_src_path,
+            self.frontend_data_path,
+            self.cli_service_capabilities,
         )
-        
+
         # Initialize ContractManager lifecycle phases
         self.contract_manager.init()  # Phase 1: Basic initialization
         self.contract_manager.configure()  # Phase 2: Expensive chart discovery and caching
@@ -437,7 +438,7 @@ class DataPipelineManager:
             contract_manager=self.contract_manager,
             cli_service_capabilities=self.cli_service_capabilities,
         )
-        
+
         # Initialize ValidationEngine lifecycle phases
         self.validation_engine.init()  # Phase 1: Basic initialization
         self.validation_engine.configure()  # Phase 2: Expensive operations and caching
@@ -454,14 +455,12 @@ class DataPipelineManager:
 
         # Initialize Yahoo Finance adapter
         try:
-            self.data_adapters["yahoo_finance"] = (
-                DataServiceAdapterFactory.create_adapter(
-                    "yahoo_finance",
-                    cli_wrapper=self.cli_service.cli_manager.get_service(
-                        "yahoo_finance"
-                    ),
-                    cache_dir=cache_dir / "yahoo_finance",
-                )
+            self.data_adapters[
+                "yahoo_finance"
+            ] = DataServiceAdapterFactory.create_adapter(
+                "yahoo_finance",
+                cli_wrapper=self.cli_service.cli_manager.get_service("yahoo_finance"),
+                cache_dir=cache_dir / "yahoo_finance",
             )
             self.logger.info("Initialized Yahoo Finance data adapter")
         except Exception as e:
@@ -469,14 +468,12 @@ class DataPipelineManager:
 
         # Initialize Alpha Vantage adapter
         try:
-            self.data_adapters["alpha_vantage"] = (
-                DataServiceAdapterFactory.create_adapter(
-                    "alpha_vantage",
-                    cli_wrapper=self.cli_service.cli_manager.get_service(
-                        "alpha_vantage"
-                    ),
-                    cache_dir=cache_dir / "alpha_vantage",
-                )
+            self.data_adapters[
+                "alpha_vantage"
+            ] = DataServiceAdapterFactory.create_adapter(
+                "alpha_vantage",
+                cli_wrapper=self.cli_service.cli_manager.get_service("alpha_vantage"),
+                cache_dir=cache_dir / "alpha_vantage",
             )
             self.logger.info("Initialized Alpha Vantage data adapter")
         except Exception as e:
@@ -579,11 +576,6 @@ class DataPipelineManager:
             },
         }
 
-
-
-
-
-
     def refresh_all_chart_data(self, skip_errors: bool = False) -> ProcessingResult:
         """
         Contract-driven data refresh: discovers frontend requirements and fulfills them
@@ -646,7 +638,9 @@ class DataPipelineManager:
             self.logger.info(
                 "Performing comprehensive service dependency validation..."
             )
-            dependency_validation = self.validation_engine.validate_service_dependencies()
+            dependency_validation = (
+                self.validation_engine.validate_service_dependencies()
+            )
             performance_metrics["validation_time"] = (
                 datetime.now() - validation_start
             ).total_seconds()
@@ -673,7 +667,9 @@ class DataPipelineManager:
             unfulfillable_contracts = []
 
             for contract in discovery_result.contracts:
-                capable_services = self.contract_manager.map_contract_to_services(contract)
+                capable_services = self.contract_manager.map_contract_to_services(
+                    contract
+                )
                 if not capable_services:
                     unfulfillable_contracts.append(contract.contract_id)
                     self.logger.warning(
@@ -925,36 +921,64 @@ class DataPipelineManager:
                 )
 
             # Pre-verification check - verify files are intact before final operations (using directory mapping)
-            self.logger.info("🔍 Pre-verification: Checking stock data files before final verification...")
+            self.logger.info(
+                "🔍 Pre-verification: Checking stock data files before final verification..."
+            )
             for symbol in ["AAPL", "BTC-USD", "MSTR"]:
                 # Use directory mapping to get correct file path
                 output_directory = self._get_output_directory_for_symbol(symbol)
-                file_path = self.frontend_data_path / "raw" / "stocks" / output_directory / "daily.csv"
+                file_path = (
+                    self.frontend_data_path
+                    / "raw"
+                    / "stocks"
+                    / output_directory
+                    / "daily.csv"
+                )
                 if file_path.exists():
                     file_size = file_path.stat().st_size
-                    self.logger.info(f"🔍 Pre-check - {symbol} ({output_directory}): {file_size} bytes")
+                    self.logger.info(
+                        f"🔍 Pre-check - {symbol} ({output_directory}): {file_size} bytes"
+                    )
                 else:
-                    self.logger.info(f"🔍 Pre-check - {symbol} ({output_directory}): File does not exist")
-            
+                    self.logger.info(
+                        f"🔍 Pre-check - {symbol} ({output_directory}): File does not exist"
+                    )
+
             # Final file verification - check all stock files are correct (using directory mapping)
             self.logger.info("🔍 Final verification: Checking all stock data files...")
             for symbol in ["AAPL", "BTC-USD", "MSTR"]:
                 # Use directory mapping to get correct file path
                 output_directory = self._get_output_directory_for_symbol(symbol)
-                file_path = self.frontend_data_path / "raw" / "stocks" / output_directory / "daily.csv"
-                
+                file_path = (
+                    self.frontend_data_path
+                    / "raw"
+                    / "stocks"
+                    / output_directory
+                    / "daily.csv"
+                )
+
                 if file_path.exists():
                     file_size = file_path.stat().st_size
-                    self.logger.info(f"🔍 Final check - {symbol} ({output_directory}): {file_size} bytes")
+                    self.logger.info(
+                        f"🔍 Final check - {symbol} ({output_directory}): {file_size} bytes"
+                    )
                     if file_size < 100:
-                        self.logger.warning(f"⚠️ {symbol} file corrupted by external process ({file_size} bytes) - attempting automatic recovery")
+                        self.logger.warning(
+                            f"⚠️ {symbol} file corrupted by external process ({file_size} bytes) - attempting automatic recovery"
+                        )
                         # Use FileProtectionManager with automatic backup recovery
                         if self.file_protection_manager.check_file_integrity(file_path):
-                            self.logger.info(f"✅ {symbol} file successfully recovered from backup")
+                            self.logger.info(
+                                f"✅ {symbol} file successfully recovered from backup"
+                            )
                         else:
-                            self.logger.error(f"❌ {symbol} automatic recovery failed - backup may be corrupted or missing")
+                            self.logger.error(
+                                f"❌ {symbol} automatic recovery failed - backup may be corrupted or missing"
+                            )
                 else:
-                    self.logger.error(f"❌ {symbol} ({output_directory}) file does not exist")
+                    self.logger.error(
+                        f"❌ {symbol} ({output_directory}) file does not exist"
+                    )
 
             return result
 
@@ -985,7 +1009,9 @@ class DataPipelineManager:
             # Step 1: Identify required CLI services for this category
             required_services = set()
             for contract in contracts:
-                capable_services = self.contract_manager.map_contract_to_services(contract)
+                capable_services = self.contract_manager.map_contract_to_services(
+                    contract
+                )
                 required_services.update(capable_services)
 
             self.logger.info(
@@ -1149,7 +1175,6 @@ class DataPipelineManager:
                 operation=f"generate_contract_data_{contract.contract_id}",
                 error=str(e),
             )
-
 
     def _generate_portfolio_contract_data(
         self, contract: DataContract
@@ -1460,7 +1485,7 @@ class DataPipelineManager:
         """Fetch data from a specific CLI source using DataFetchCoordinator"""
         # Update coordinator with current contracts
         self.data_fetch_coordinator.discovered_contracts = self.discovered_contracts
-        
+
         if source == "yahoo_finance":
             return self.data_fetch_coordinator.fetch_yahoo_finance_data()
         elif source == "alpha_vantage":
@@ -1518,14 +1543,18 @@ class DataPipelineManager:
         try:
             # Use ContractManager's cached active requirements (eliminates redundant discovery call)
             if not self.contract_manager.is_configured():
-                raise RuntimeError("ContractManager must be configured before symbol extraction")
-                
+                raise RuntimeError(
+                    "ContractManager must be configured before symbol extraction"
+                )
+
             # Access cached requirements from ContractManager to avoid redundant discovery call
             active_requirements = self.contract_manager._cached_active_requirements
             if active_requirements is None:
                 raise RuntimeError("ContractManager cached requirements not available")
-                
-            self.logger.debug("Using cached active requirements for symbol extraction (no redundant discovery call)")
+
+            self.logger.debug(
+                "Using cached active requirements for symbol extraction (no redundant discovery call)"
+            )
 
             # Only extract symbols if portfolio or raw data charts are active
             portfolio_active = any(
@@ -1570,7 +1599,7 @@ class DataPipelineManager:
                     if symbol is None:
                         # Fall back to path-based extraction
                         symbol = req.data_source.split("/stocks/")[1].split("/")[0]
-                    
+
                     symbols.add(symbol)
                     self.logger.info(
                         f"Extracted symbol '{symbol}' from active raw chart '{req.chart_type}'"
@@ -1644,17 +1673,17 @@ class DataPipelineManager:
     def _get_symbol_from_chart_mapping(self, chart_type: str) -> Optional[str]:
         """
         Get the symbol from chartTypeMapping configuration for the given chart type.
-        
+
         Args:
             chart_type: Chart type to look up (e.g., "btc-price")
-            
+
         Returns:
             Symbol from chartTypeMapping if found, None otherwise
         """
         try:
             import json
             from pathlib import Path
-            
+
             # Look for chart-data-dependencies.json in frontend/src/config/
             config_file = Path("frontend/src/config/chart-data-dependencies.json")
             if config_file.exists():
@@ -1663,52 +1692,66 @@ class DataPipelineManager:
                     chart_type_mapping = config.get("chartTypeMapping", {})
                     symbol = chart_type_mapping.get(chart_type)
                     if symbol:
-                        self.logger.info(f"Found chartTypeMapping override: {chart_type} -> {symbol}")
+                        self.logger.info(
+                            f"Found chartTypeMapping override: {chart_type} -> {symbol}"
+                        )
                         return symbol
-                        
+
         except Exception as e:
             self.logger.debug(f"Could not read chartTypeMapping for {chart_type}: {e}")
-            
+
         return None
 
     def _get_output_directory_for_symbol(self, symbol: str) -> str:
         """
         Get the output directory for a symbol, checking for reverse chart type mappings.
         For BTC-USD with btc-price chart type, returns "BITCOIN" instead of "BTC-USD".
-        
+
         Args:
             symbol: The symbol to get directory for (e.g., "BTC-USD")
-            
+
         Returns:
             Directory name to use for output (e.g., "BITCOIN" for BTC-USD, symbol itself for others)
         """
         try:
             import json
             from pathlib import Path
-            
+
             # Look for chart-data-dependencies.json in frontend/src/config/
             config_file = Path("frontend/src/config/chart-data-dependencies.json")
             if config_file.exists():
                 with open(config_file, "r", encoding="utf-8") as f:
                     config = json.load(f)
                     chart_type_mapping = config.get("chartTypeMapping", {})
-                    
+
                     # Find chart type that maps to this symbol
                     for chart_type, mapped_symbol in chart_type_mapping.items():
                         if mapped_symbol == symbol:
                             # Check if there's a data requirement with different directory
                             data_mappings = config.get("dependencies", {})
                             if chart_type in data_mappings:
-                                location = data_mappings[chart_type].get("primarySource", {}).get("location", "")
+                                location = (
+                                    data_mappings[chart_type]
+                                    .get("primarySource", {})
+                                    .get("location", "")
+                                )
                                 # Extract directory from location like "/data/raw/stocks/BITCOIN/daily.csv"
-                                if "/stocks/" in location and location.endswith("/daily.csv"):
-                                    directory = location.split("/stocks/")[1].split("/")[0]
-                                    self.logger.info(f"Found directory mapping: {symbol} -> {directory} (for chart type {chart_type})")
+                                if "/stocks/" in location and location.endswith(
+                                    "/daily.csv"
+                                ):
+                                    directory = location.split("/stocks/")[1].split(
+                                        "/"
+                                    )[0]
+                                    self.logger.info(
+                                        f"Found directory mapping: {symbol} -> {directory} (for chart type {chart_type})"
+                                    )
                                     return directory
-                                    
+
         except Exception as e:
-            self.logger.debug(f"Could not read directory mapping for symbol {symbol}: {e}")
-            
+            self.logger.debug(
+                f"Could not read directory mapping for symbol {symbol}: {e}"
+            )
+
         # Default: use symbol as directory name
         return symbol
 
@@ -2001,8 +2044,10 @@ class DataPipelineManager:
     def _save_symbol_data_to_frontend(self, symbol: str, data: pd.DataFrame) -> None:
         """Save symbol data to frontend directory structure"""
         try:
-            self.logger.debug(f"Starting frontend save for {symbol}, input data shape: {data.shape}")
-            
+            self.logger.debug(
+                f"Starting frontend save for {symbol}, input data shape: {data.shape}"
+            )
+
             # Convert adapter cache format to frontend CSV format
             df = data.copy()
             self.logger.debug(f"Created data copy, shape: {df.shape}")
@@ -2021,85 +2066,117 @@ class DataPipelineManager:
 
             # Ensure column names match expected format (lowercase)
             df.columns = [col.lower() if col != "date" else col for col in df.columns]
-            self.logger.debug(f"After conversion, shape: {df.shape}, columns: {df.columns.tolist()}")
-            
+            self.logger.debug(
+                f"After conversion, shape: {df.shape}, columns: {df.columns.tolist()}"
+            )
+
             # Check if DataFrame is empty before writing
             if df.empty:
-                raise ValueError(f"Converted DataFrame for {symbol} is empty - no data to save")
+                raise ValueError(
+                    f"Converted DataFrame for {symbol} is empty - no data to save"
+                )
 
             # Determine output directory (with chart type mapping support)
             output_directory = self._get_output_directory_for_symbol(symbol)
             output_path = (
-                self.frontend_data_path / "raw" / "stocks" / output_directory / "daily.csv"
+                self.frontend_data_path
+                / "raw"
+                / "stocks"
+                / output_directory
+                / "daily.csv"
             )
             output_path.parent.mkdir(parents=True, exist_ok=True)
             self.logger.debug(f"Writing to path: {output_path}")
 
             # Use protected write operation with race condition protection
             write_success = self.file_protection_manager.protected_write_csv(
-                df=df,
-                file_path=output_path,
-                timeout=30
+                df=df, file_path=output_path, timeout=30
             )
-            
+
             if not write_success:
                 raise ValueError(f"Protected file write failed for {symbol}")
-            
+
             # Verify file size and integrity immediately after protected write
             file_size = output_path.stat().st_size
             row_count = len(df)
-            self.logger.info(f"✅ Protected write successful for {symbol}: Successfully wrote {row_count} rows ({file_size} bytes)")
-            
+            self.logger.info(
+                f"✅ Protected write successful for {symbol}: Successfully wrote {row_count} rows ({file_size} bytes)"
+            )
+
             # Enhanced file integrity verification with auto-recovery
             import time
+
             time.sleep(0.1)  # Brief pause to allow system sync
-            
+
             # Enhanced verification for critical files
             is_critical_file = output_directory == "BITCOIN"
             verification_attempts = 3 if is_critical_file else 1
-            
+
             for attempt in range(verification_attempts):
                 immediate_size = output_path.stat().st_size
-                
+
                 if immediate_size != file_size:
-                    self.logger.error(f"🚨 CORRUPTION DETECTED on attempt {attempt + 1}: {symbol} went from {file_size} to {immediate_size} bytes")
-                    
+                    self.logger.error(
+                        f"🚨 CORRUPTION DETECTED on attempt {attempt + 1}: {symbol} went from {file_size} to {immediate_size} bytes"
+                    )
+
                     if is_critical_file and attempt < verification_attempts - 1:
                         # Attempt auto-recovery for critical files
-                        backup_path = output_path.parent / f"{output_path.stem}.backup.csv"
+                        backup_path = (
+                            output_path.parent / f"{output_path.stem}.backup.csv"
+                        )
                         if backup_path.exists():
-                            self.logger.warning(f"🔄 Auto-recovery: Restoring {symbol} from backup...")
-                            
+                            self.logger.warning(
+                                f"🔄 Auto-recovery: Restoring {symbol} from backup..."
+                            )
+
                             # Copy backup to main file
                             import shutil
+
                             shutil.copy2(backup_path, output_path)
-                            
+
                             recovery_size = output_path.stat().st_size
                             if recovery_size == file_size:
-                                self.logger.info(f"✅ Auto-recovery successful: {symbol} restored to {recovery_size} bytes")
+                                self.logger.info(
+                                    f"✅ Auto-recovery successful: {symbol} restored to {recovery_size} bytes"
+                                )
                                 break
                             else:
-                                self.logger.error(f"❌ Auto-recovery failed: {symbol} size {recovery_size} != expected {file_size}")
+                                self.logger.error(
+                                    f"❌ Auto-recovery failed: {symbol} size {recovery_size} != expected {file_size}"
+                                )
                                 time.sleep(0.2)  # Wait before next attempt
                         else:
-                            self.logger.error(f"❌ No backup available for auto-recovery: {symbol}")
+                            self.logger.error(
+                                f"❌ No backup available for auto-recovery: {symbol}"
+                            )
                             break
                     elif attempt == verification_attempts - 1:
                         # Final attempt failed
-                        self.logger.error(f"❌ File integrity verification failed after {verification_attempts} attempts: {symbol}")
-                        raise ValueError(f"File corruption detected and auto-recovery failed for {symbol}")
+                        self.logger.error(
+                            f"❌ File integrity verification failed after {verification_attempts} attempts: {symbol}"
+                        )
+                        raise ValueError(
+                            f"File corruption detected and auto-recovery failed for {symbol}"
+                        )
                 else:
-                    self.logger.info(f"🔍 Integrity verification passed (attempt {attempt + 1}): {symbol} ({immediate_size} bytes)")
+                    self.logger.info(
+                        f"🔍 Integrity verification passed (attempt {attempt + 1}): {symbol} ({immediate_size} bytes)"
+                    )
                     break
-                    
+
             return  # Explicit success return
 
         except Exception as e:
             self.logger.error(f"Error saving {symbol} data to frontend: {e}")
             # Log additional debug info on error
-            self.logger.error(f"Error context - symbol: {symbol}, input data shape: {data.shape if data is not None else 'None'}")
-            if 'df' in locals():
-                self.logger.error(f"Converted data shape: {df.shape}, empty: {df.empty}")
+            self.logger.error(
+                f"Error context - symbol: {symbol}, input data shape: {data.shape if data is not None else 'None'}"
+            )
+            if "df" in locals():
+                self.logger.error(
+                    f"Converted data shape: {df.shape}, empty: {df.empty}"
+                )
             raise
 
     def _fetch_single_symbol_legacy(
@@ -2156,10 +2233,14 @@ class DataPipelineManager:
             if result.success:
                 # For incremental updates, we need to merge with existing data
                 if fetch_type == "incremental" and freshness_info["exists"]:
-                    self.logger.info(f"🔄 Running incremental merge for {symbol} (fetch_type: {fetch_type}, exists: {freshness_info['exists']})")
+                    self.logger.info(
+                        f"🔄 Running incremental merge for {symbol} (fetch_type: {fetch_type}, exists: {freshness_info['exists']})"
+                    )
                     self._merge_incremental_data(symbol, freshness_info["last_date"])
                 else:
-                    self.logger.info(f"🚫 Skipping incremental merge for {symbol} (fetch_type: {fetch_type}, exists: {freshness_info.get('exists', False)})")
+                    self.logger.info(
+                        f"🚫 Skipping incremental merge for {symbol} (fetch_type: {fetch_type}, exists: {freshness_info.get('exists', False)})"
+                    )
 
                 self.logger.info(
                     f"Successfully fetched {fetch_type} historical data for {symbol}"
@@ -2413,7 +2494,6 @@ class DataPipelineManager:
                 error=error_msg,
                 error_category="infrastructure",
             )
-
 
     def _categorize_service_error(self, error_message: str) -> str:
         """Categorize service errors for better debugging and monitoring"""
@@ -3851,7 +3931,9 @@ class DataPipelineManager:
                     report.add_contract(contract, status, reason)
 
                     # Add service mapping
-                    capable_services = self.contract_manager.map_contract_to_services(contract)
+                    capable_services = self.contract_manager.map_contract_to_services(
+                        contract
+                    )
                     report.set_service_mapping(contract.contract_id, capable_services)
 
                     # Add to update plan if needed
@@ -3879,7 +3961,9 @@ class DataPipelineManager:
                         )
 
                     # Simulate validation
-                    validation_issues = self.validation_engine.simulate_validation(contract)
+                    validation_issues = self.validation_engine.simulate_validation(
+                        contract
+                    )
                     report.add_validation_result(
                         contract.contract_id,
                         len(validation_issues) == 0,
@@ -3899,7 +3983,9 @@ class DataPipelineManager:
                 "Data Status Analysis", 0.5, "Checking file freshness and sizes"
             )
 
-            current_status = self.validation_engine.validate_data_freshness(self.contracts)
+            current_status = self.validation_engine.validate_data_freshness(
+                self.contracts
+            )
             for category, status_data in current_status.items():
                 report.set_current_data_status(category, status_data)
 
@@ -4029,7 +4115,10 @@ class DataPipelineManager:
                     # Check if basic commands are available
                     # Note: Detailed command validation is handled by ValidationEngine
                     # For this health check, we'll assume commands are available if CLI exists
-                    available_commands = ["health", "version"]  # Basic commands expected
+                    available_commands = [
+                        "health",
+                        "version",
+                    ]  # Basic commands expected
                     if available_commands:
                         service_health["basic_commands_available"] = True
                         service_health["available_commands"] = available_commands
@@ -4158,7 +4247,9 @@ def main():
 
     if args.validate_only:
         # Validate data freshness only
-        validation_results = pipeline.validation_engine.validate_data_freshness(pipeline.contracts)
+        validation_results = pipeline.validation_engine.validate_data_freshness(
+            pipeline.contracts
+        )
 
         print("📊 Chart Data Freshness Validation")
         print("=" * 50)

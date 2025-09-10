@@ -141,9 +141,7 @@ class MacroEconomicValidation:
             try:
                 with open(self.published_content_file, "r", encoding="utf-8") as f:
                     content = f.read()
-                print(
-                    f"✅ Loaded published content from: {self.published_content_file}"
-                )
+                print(f"✅ Loaded published content from: {self.published_content_file}")
                 return content
             except Exception as e:
                 print(f"⚠️  Failed to load published content: {e}")
@@ -807,7 +805,9 @@ class MacroEconomicValidation:
         return (
             "HIGH"
             if len(relevant_tags) >= 2
-            else "MEDIUM" if len(relevant_tags) == 1 else "LOW"
+            else "MEDIUM"
+            if len(relevant_tags) == 1
+            else "LOW"
         )
 
     def _assess_shareability(self, content: str) -> str:

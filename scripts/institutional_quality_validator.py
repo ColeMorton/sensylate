@@ -75,9 +75,7 @@ class InstitutionalQualityValidator:
         if not self.published_files:
             return self._create_no_content_report()
 
-        print(
-            f"📊 Analyzing {len(self.published_files)} published macro analysis files"
-        )
+        print(f"📊 Analyzing {len(self.published_files)} published macro analysis files")
 
         # Execute validation phases
         validation_results = {}

@@ -61,9 +61,7 @@ class ChartRegistryBridge:
             frontend_charts, pipeline_mappings, colocated_charts
         )
 
-        logger.info(
-            f"✅ Unified registry created: {len(unified_registry)} total charts"
-        )
+        logger.info(f"✅ Unified registry created: {len(unified_registry)} total charts")
         return unified_registry
 
     def _load_frontend_registry(self) -> Dict[str, Any]:

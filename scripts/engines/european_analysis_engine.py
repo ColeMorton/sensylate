@@ -62,7 +62,9 @@ class EuropeanAnalysisEngine:
             "restrictiveness": (
                 "restrictive"
                 if rate_gap > 0.5
-                else "neutral" if abs(rate_gap) <= 0.5 else "accommodative"
+                else "neutral"
+                if abs(rate_gap) <= 0.5
+                else "accommodative"
             ),
             "rate_gap": rate_gap,
             "analysis": f"ECB deposit rate at {current_rate}% is {rate_gap:.2f}pp above estimated neutral rate, indicating {'restrictive' if rate_gap > 0.5 else 'neutral'} policy stance",

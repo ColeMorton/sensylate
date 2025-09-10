@@ -5,10 +5,10 @@
  * Integrates with DevContentOps data pipeline for automated data management.
  */
 
-import type { 
-  DataRequirements, 
+import type {
+  DataRequirements,
   ExtendedChartDataRequirements,
-  DefaultDataRequirements 
+  DefaultDataRequirements,
 } from "../data-requirements.schema";
 
 /**
@@ -19,7 +19,7 @@ export const btcPriceDataRequirements: DataRequirements = {
   chartStatus: "active",
   category: "raw",
   requiredServices: ["yahoo_finance"],
-  
+
   primarySource: {
     type: "cli-api",
     location: "raw/stocks/BITCOIN/daily.csv",
@@ -27,24 +27,25 @@ export const btcPriceDataRequirements: DataRequirements = {
     frequency: "daily",
     cliService: "yahoo_finance",
     metadata: {
-      description: "Bitcoin (BITCOIN) price data for cycle intelligence analysis",
+      description:
+        "Bitcoin (BITCOIN) price data for cycle intelligence analysis",
       format: "csv",
       lastUpdatedBy: "yahoo-finance-api",
     },
   },
-  
+
   freshness: {
     ...DefaultDataRequirements.cryptoPrice.freshness,
     warningThreshold: 6,
     errorThreshold: 24,
   },
-  
+
   refreshPolicy: {
     ...DefaultDataRequirements.cryptoPrice.refreshPolicy,
     // Override for more frequent updates during active periods
     refreshInterval: 24 * 60 * 60 * 1000, // 24 hours
   },
-  
+
   symbolMetadata: {
     symbol: "BTC-USD",
     displayName: "Bitcoin Price",
@@ -52,7 +53,7 @@ export const btcPriceDataRequirements: DataRequirements = {
     sector: "Cryptocurrency",
     dataYears: 1, // 1 year of Bitcoin price data
   },
-  
+
   serviceConfigs: [
     {
       name: "yahoo_finance",
@@ -61,7 +62,7 @@ export const btcPriceDataRequirements: DataRequirements = {
       timeout: 60,
     },
   ],
-  
+
   pipelineSettings: {
     enableFileWatching: true,
     maxConcurrency: 1,

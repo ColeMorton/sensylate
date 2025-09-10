@@ -505,12 +505,16 @@ class AdvancedBusinessCycleEngine:
                 "phase_maturity_assessment": (
                     "early"
                     if phase_duration < 12
-                    else "mid" if phase_duration < 36 else "late"
+                    else "mid"
+                    if phase_duration < 36
+                    else "late"
                 ),
                 "transition_urgency": (
                     "low"
                     if expected_quarters_to_peak > 8
-                    else "moderate" if expected_quarters_to_peak > 4 else "high"
+                    else "moderate"
+                    if expected_quarters_to_peak > 4
+                    else "high"
                 ),
             }
 
@@ -647,7 +651,9 @@ class AdvancedBusinessCycleEngine:
             "risk_level": (
                 "low"
                 if overall_risk < 0.3
-                else "moderate" if overall_risk < 0.6 else "high"
+                else "moderate"
+                if overall_risk < 0.6
+                else "high"
             ),
             "key_monitoring_indicators": [
                 "yield_curve_slope",

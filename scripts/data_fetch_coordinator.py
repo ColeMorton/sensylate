@@ -343,7 +343,9 @@ class DataFetchCoordinator:
                     )
 
         symbols_list = list(symbols)
-        self.logger.info(f"Discovered {len(symbols_list)} unique symbols: {symbols_list}")
+        self.logger.info(
+            f"Discovered {len(symbols_list)} unique symbols: {symbols_list}"
+        )
 
         return symbols_list
 
@@ -351,11 +353,15 @@ class DataFetchCoordinator:
         """Get comprehensive freshness analysis for a symbol to determine refresh strategy"""
         try:
             # Define file paths
-            frontend_file = self.frontend_data_dir / "raw" / "stocks" / symbol / "daily.csv"
+            frontend_file = (
+                self.frontend_data_dir / "raw" / "stocks" / symbol / "daily.csv"
+            )
 
             # Check if data file exists
             if not frontend_file.exists():
-                self.logger.debug(f"No existing data file for {symbol}, needs full refresh")
+                self.logger.debug(
+                    f"No existing data file for {symbol}, needs full refresh"
+                )
                 return {
                     "needs_update": True,
                     "needs_full_refresh": True,
@@ -367,7 +373,9 @@ class DataFetchCoordinator:
             # Check file size
             file_size = frontend_file.stat().st_size
             if file_size <= 100:  # Very small files likely corrupted or empty
-                self.logger.debug(f"Data file for {symbol} is too small ({file_size} bytes), needs full refresh")
+                self.logger.debug(
+                    f"Data file for {symbol} is too small ({file_size} bytes), needs full refresh"
+                )
                 return {
                     "needs_update": True,
                     "needs_full_refresh": True,
@@ -380,7 +388,9 @@ class DataFetchCoordinator:
             try:
                 df = pd.read_csv(frontend_file)
                 if df.empty:
-                    self.logger.debug(f"Data file for {symbol} is empty, needs full refresh")
+                    self.logger.debug(
+                        f"Data file for {symbol} is empty, needs full refresh"
+                    )
                     return {
                         "needs_update": True,
                         "needs_full_refresh": True,
@@ -392,7 +402,9 @@ class DataFetchCoordinator:
                 # Get the most recent date in the data
                 last_date_str = df["date"].iloc[-1] if "date" in df.columns else None
                 if not last_date_str:
-                    self.logger.debug(f"No date column in {symbol} data, needs full refresh")
+                    self.logger.debug(
+                        f"No date column in {symbol} data, needs full refresh"
+                    )
                     return {
                         "needs_update": True,
                         "needs_full_refresh": True,
@@ -422,7 +434,9 @@ class DataFetchCoordinator:
                         "last_date": last_date,
                         "days_since_update": days_since_update,
                     }
-                elif days_since_update <= 30:  # Within last 30 days - incremental update
+                elif (
+                    days_since_update <= 30
+                ):  # Within last 30 days - incremental update
                     return {
                         "needs_update": True,
                         "needs_full_refresh": False,
@@ -487,16 +501,24 @@ class DataFetchCoordinator:
 
             # Skip if data is fresh
             if not freshness_info["needs_update"]:
-                self.logger.info(f"📊 {symbol}: Data is fresh (last updated {freshness_info['days_since_update']:.1f} days ago)")
+                self.logger.info(
+                    f"📊 {symbol}: Data is fresh (last updated {freshness_info['days_since_update']:.1f} days ago)"
+                )
                 return symbol, True, None
 
             # Determine fetch strategy
             if freshness_info["needs_full_refresh"]:
-                self.logger.info(f"🔄 {symbol}: Full refresh needed ({freshness_info['reason']})")
+                self.logger.info(
+                    f"🔄 {symbol}: Full refresh needed ({freshness_info['reason']})"
+                )
                 success, error = self._fetch_full_data(symbol)
             else:
-                self.logger.info(f"📈 {symbol}: Incremental update (last: {freshness_info['last_date'].strftime('%Y-%m-%d')})")
-                success, error = self._fetch_incremental_data(symbol, freshness_info["last_date"])
+                self.logger.info(
+                    f"📈 {symbol}: Incremental update (last: {freshness_info['last_date'].strftime('%Y-%m-%d')})"
+                )
+                success, error = self._fetch_incremental_data(
+                    symbol, freshness_info["last_date"]
+                )
 
             if success:
                 self.logger.debug(f"✅ Successfully fetched data for {symbol}")
@@ -517,10 +539,14 @@ class DataFetchCoordinator:
             end_date = datetime.now()
             start_date = end_date - timedelta(days=5 * 365)
 
-            self.logger.debug(f"Fetching full data for {symbol} from {start_date.date()} to {end_date.date()}")
+            self.logger.debug(
+                f"Fetching full data for {symbol} from {start_date.date()} to {end_date.date()}"
+            )
 
             ticker = yf.Ticker(symbol)
-            hist_data = ticker.history(start=start_date, end=end_date, auto_adjust=True, back_adjust=True)
+            hist_data = ticker.history(
+                start=start_date, end=end_date, auto_adjust=True, back_adjust=True
+            )
 
             if hist_data.empty:
                 return False, f"No data returned for {symbol}"
@@ -528,7 +554,9 @@ class DataFetchCoordinator:
             # Convert to our standard format
             hist_data = hist_data.reset_index()
             hist_data["Date"] = hist_data["Date"].dt.strftime("%Y-%m-%d")
-            hist_data.columns = [col.lower().replace(" ", "_") for col in hist_data.columns]
+            hist_data.columns = [
+                col.lower().replace(" ", "_") for col in hist_data.columns
+            ]
 
             # Rename columns to match frontend expectations
             hist_data = hist_data.rename(columns={"date": "date"})
@@ -540,13 +568,24 @@ class DataFetchCoordinator:
                 hist_data["stock_splits"] = 0.0
 
             # Reorder columns to match expected format
-            column_order = ["open", "high", "low", "close", "volume", "dividends", "stock_splits", "date"]
+            column_order = [
+                "open",
+                "high",
+                "low",
+                "close",
+                "volume",
+                "dividends",
+                "stock_splits",
+                "date",
+            ]
             hist_data = hist_data[column_order]
 
             # Save data to frontend location
             self._save_symbol_data_to_frontend(symbol, hist_data)
 
-            self.logger.debug(f"Successfully saved {len(hist_data)} rows of full data for {symbol}")
+            self.logger.debug(
+                f"Successfully saved {len(hist_data)} rows of full data for {symbol}"
+            )
             return True, None
 
         except Exception as e:
@@ -554,17 +593,23 @@ class DataFetchCoordinator:
             self.logger.error(error_msg)
             return False, error_msg
 
-    def _fetch_incremental_data(self, symbol: str, last_date: datetime) -> Tuple[bool, Optional[str]]:
+    def _fetch_incremental_data(
+        self, symbol: str, last_date: datetime
+    ) -> Tuple[bool, Optional[str]]:
         """Fetch only new data since the last update"""
         try:
             # Fetch data from day after last_date to today
             start_date = last_date + timedelta(days=1)
             end_date = datetime.now()
 
-            self.logger.debug(f"Fetching incremental data for {symbol} from {start_date.date()} to {end_date.date()}")
+            self.logger.debug(
+                f"Fetching incremental data for {symbol} from {start_date.date()} to {end_date.date()}"
+            )
 
             ticker = yf.Ticker(symbol)
-            new_data = ticker.history(start=start_date, end=end_date, auto_adjust=True, back_adjust=True)
+            new_data = ticker.history(
+                start=start_date, end=end_date, auto_adjust=True, back_adjust=True
+            )
 
             if new_data.empty:
                 self.logger.info(f"No new data available for {symbol}")
@@ -573,7 +618,9 @@ class DataFetchCoordinator:
             # Convert to our standard format
             new_data = new_data.reset_index()
             new_data["Date"] = new_data["Date"].dt.strftime("%Y-%m-%d")
-            new_data.columns = [col.lower().replace(" ", "_") for col in new_data.columns]
+            new_data.columns = [
+                col.lower().replace(" ", "_") for col in new_data.columns
+            ]
             new_data = new_data.rename(columns={"date": "date"})
 
             # Add required columns if missing
@@ -583,14 +630,25 @@ class DataFetchCoordinator:
                 new_data["stock_splits"] = 0.0
 
             # Reorder columns
-            column_order = ["open", "high", "low", "close", "volume", "dividends", "stock_splits", "date"]
+            column_order = [
+                "open",
+                "high",
+                "low",
+                "close",
+                "volume",
+                "dividends",
+                "stock_splits",
+                "date",
+            ]
             new_data = new_data[column_order]
 
             # Merge with existing data
             success = self._merge_incremental_data(symbol, new_data)
 
             if success:
-                self.logger.debug(f"Successfully merged {len(new_data)} rows of incremental data for {symbol}")
+                self.logger.debug(
+                    f"Successfully merged {len(new_data)} rows of incremental data for {symbol}"
+                )
                 return True, None
             else:
                 return False, f"Failed to merge incremental data for {symbol}"
@@ -600,10 +658,14 @@ class DataFetchCoordinator:
             self.logger.error(error_msg)
             return False, error_msg
 
-    def _merge_incremental_data(self, symbol: str, incremental_df: pd.DataFrame) -> bool:
+    def _merge_incremental_data(
+        self, symbol: str, incremental_df: pd.DataFrame
+    ) -> bool:
         """Merge new incremental data with existing data"""
         try:
-            existing_data_path = self.frontend_data_dir / "raw" / "stocks" / symbol / "daily.csv"
+            existing_data_path = (
+                self.frontend_data_dir / "raw" / "stocks" / symbol / "daily.csv"
+            )
 
             if not existing_data_path.exists():
                 # No existing data, save the incremental data as new file
@@ -614,21 +676,29 @@ class DataFetchCoordinator:
             existing_df = pd.read_csv(existing_data_path)
 
             # Ensure date columns are comparable
-            existing_df['date'] = pd.to_datetime(existing_df['date']).dt.strftime('%Y-%m-%d')
-            incremental_df['date'] = pd.to_datetime(incremental_df['date']).dt.strftime('%Y-%m-%d')
+            existing_df["date"] = pd.to_datetime(existing_df["date"]).dt.strftime(
+                "%Y-%m-%d"
+            )
+            incremental_df["date"] = pd.to_datetime(incremental_df["date"]).dt.strftime(
+                "%Y-%m-%d"
+            )
 
             # Remove any overlapping dates from incremental data (avoid duplicates)
-            existing_dates = set(existing_df['date'])
-            incremental_df = incremental_df[~incremental_df['date'].isin(existing_dates)]
+            existing_dates = set(existing_df["date"])
+            incremental_df = incremental_df[
+                ~incremental_df["date"].isin(existing_dates)
+            ]
 
             if not incremental_df.empty:
                 # Combine the dataframes
-                combined_df = pd.concat([existing_df, incremental_df], ignore_index=True)
+                combined_df = pd.concat(
+                    [existing_df, incremental_df], ignore_index=True
+                )
 
                 # Sort by date
-                combined_df['date'] = pd.to_datetime(combined_df['date'])
-                combined_df = combined_df.sort_values('date')
-                combined_df['date'] = combined_df['date'].dt.strftime('%Y-%m-%d')
+                combined_df["date"] = pd.to_datetime(combined_df["date"])
+                combined_df = combined_df.sort_values("date")
+                combined_df["date"] = combined_df["date"].dt.strftime("%Y-%m-%d")
 
                 # Write merged data back to file
                 combined_df.to_csv(existing_data_path, index=False)
@@ -653,20 +723,26 @@ class DataFetchCoordinator:
             output_dir.mkdir(parents=True, exist_ok=True)
             output_path = output_dir / "daily.csv"
 
-            self.logger.info(f"💾 Saving {len(data)} rows of data for {symbol} to {output_path}")
+            self.logger.info(
+                f"💾 Saving {len(data)} rows of data for {symbol} to {output_path}"
+            )
 
             # Use atomic file operations to prevent corruption
             operation_result = self.file_operation_manager.atomic_csv_write(
                 file_path=output_path,
                 dataframe=data,
                 backup_original=True,
-                verify_content=True
+                verify_content=True,
             )
 
             if operation_result.success:
-                self.logger.info(f"✅ Successfully saved {symbol} data ({operation_result.file_size} bytes)")
+                self.logger.info(
+                    f"✅ Successfully saved {symbol} data ({operation_result.file_size} bytes)"
+                )
             else:
-                self.logger.error(f"❌ Failed to save {symbol} data: {operation_result.error}")
+                self.logger.error(
+                    f"❌ Failed to save {symbol} data: {operation_result.error}"
+                )
 
         except Exception as e:
             self.logger.error(f"Exception saving data for {symbol}: {e}")
@@ -678,7 +754,9 @@ class DataFetchCoordinator:
         for contract in self.discovered_contracts:
             try:
                 # Look for pipeline settings in the chart's data-requirements.ts file
-                chart_dir = contract.file_path.parent.parent  # Go up from data/raw/stocks/BTC-USD/daily.csv
+                chart_dir = (
+                    contract.file_path.parent.parent
+                )  # Go up from data/raw/stocks/BTC-USD/daily.csv
                 data_requirements_file = chart_dir / "data-requirements.ts"
 
                 if data_requirements_file.exists():
@@ -692,21 +770,31 @@ class DataFetchCoordinator:
                             if "maxConcurrency:" in line:
                                 # Extract number from line like "    maxConcurrency: 5,"
                                 try:
-                                    value_part = line.split("maxConcurrency:")[1].strip()
+                                    value_part = line.split("maxConcurrency:")[
+                                        1
+                                    ].strip()
                                     value_part = value_part.split(",")[0].strip()
                                     max_concurrency = int(value_part)
                                     max_concurrency_values.append(max_concurrency)
-                                    self.logger.debug(f"Found maxConcurrency: {max_concurrency} in {data_requirements_file}")
+                                    self.logger.debug(
+                                        f"Found maxConcurrency: {max_concurrency} in {data_requirements_file}"
+                                    )
                                 except (ValueError, IndexError) as e:
-                                    self.logger.debug(f"Could not parse maxConcurrency from line: {line} - {e}")
+                                    self.logger.debug(
+                                        f"Could not parse maxConcurrency from line: {line} - {e}"
+                                    )
 
             except Exception as e:
-                self.logger.debug(f"Error checking chart config {contract.file_path}: {e}")
+                self.logger.debug(
+                    f"Error checking chart config {contract.file_path}: {e}"
+                )
 
         if max_concurrency_values:
             # Use the minimum value to respect the most conservative setting
             result = min(max_concurrency_values)
-            self.logger.info(f"Using maxConcurrency from chart configs: {result} (from values: {max_concurrency_values})")
+            self.logger.info(
+                f"Using maxConcurrency from chart configs: {result} (from values: {max_concurrency_values})"
+            )
             return result
 
         return None
@@ -898,7 +986,9 @@ class DataFetchCoordinator:
 
             if closed_trades.empty:
                 # Create empty waterfall data with correct structure
-                waterfall_data = pd.DataFrame(columns=["Ticker", "PnL", "CumulativePnL"])
+                waterfall_data = pd.DataFrame(
+                    columns=["Ticker", "PnL", "CumulativePnL"]
+                )
             else:
                 # Sort by PnL magnitude (absolute value) for better visual impact
                 closed_trades["PnL_abs"] = closed_trades["PnL"].abs()
@@ -1036,9 +1126,7 @@ class DataFetchCoordinator:
             closed_trades["PnL"] = pd.to_numeric(closed_trades["PnL"], errors="coerce")
 
             # Group by exit date and sum PnL for trades closed on the same day
-            daily_pnl = (
-                closed_trades.groupby("Exit_Date")["PnL"].sum().reset_index()
-            )
+            daily_pnl = closed_trades.groupby("Exit_Date")["PnL"].sum().reset_index()
             daily_pnl["Exit_Date"] = pd.to_datetime(daily_pnl["Exit_Date"])
             daily_pnl = daily_pnl.sort_values("Exit_Date")
 
@@ -1059,7 +1147,9 @@ class DataFetchCoordinator:
 
             # Save to frontend location
             output_path = (
-                self.frontend_data_dir / "portfolio" / "closed_positions_pnl_progression.csv"
+                self.frontend_data_dir
+                / "portfolio"
+                / "closed_positions_pnl_progression.csv"
             )
             output_path.parent.mkdir(parents=True, exist_ok=True)
             output_data.to_csv(output_path, index=False)
@@ -1118,11 +1208,17 @@ class DataFetchCoordinator:
                             direction = trade["Direction"]
 
                             if direction == "Long":
-                                unrealized_pnl = (current_price - entry_price) * position_size
+                                unrealized_pnl = (
+                                    current_price - entry_price
+                                ) * position_size
                             else:  # Short
-                                unrealized_pnl = (entry_price - current_price) * position_size
+                                unrealized_pnl = (
+                                    entry_price - current_price
+                                ) * position_size
 
-                            pnl_percent = ((current_price - entry_price) / entry_price * 100)
+                            pnl_percent = (
+                                (current_price - entry_price) / entry_price * 100
+                            )
                             if direction == "Short":
                                 pnl_percent = -pnl_percent
 
@@ -1130,38 +1226,52 @@ class DataFetchCoordinator:
                             entry_date = pd.to_datetime(trade["Entry_Timestamp"]).date()
                             days_held = (datetime.now().date() - entry_date).days
 
-                            open_positions_data.append({
-                                "Position_UUID": trade["Position_UUID"],
-                                "Ticker": trade["Ticker"],
-                                "Direction": direction,
-                                "Position_Size": position_size,
-                                "Avg_Entry_Price": entry_price,
-                                "Current_Price": current_price,
-                                "Unrealized_PnL": round(unrealized_pnl, 2),
-                                "PnL_Percent": round(pnl_percent, 2),
-                                "Entry_Date": entry_date.strftime("%Y-%m-%d"),
-                                "Days_Held": days_held,
-                            })
+                            open_positions_data.append(
+                                {
+                                    "Position_UUID": trade["Position_UUID"],
+                                    "Ticker": trade["Ticker"],
+                                    "Direction": direction,
+                                    "Position_Size": position_size,
+                                    "Avg_Entry_Price": entry_price,
+                                    "Current_Price": current_price,
+                                    "Unrealized_PnL": round(unrealized_pnl, 2),
+                                    "PnL_Percent": round(pnl_percent, 2),
+                                    "Entry_Date": entry_date.strftime("%Y-%m-%d"),
+                                    "Days_Held": days_held,
+                                }
+                            )
                         else:
-                            self.logger.warning(f"Could not get current price for {trade['Ticker']}")
+                            self.logger.warning(
+                                f"Could not get current price for {trade['Ticker']}"
+                            )
 
                     except Exception as e:
-                        self.logger.warning(f"Error processing open position for {trade.get('Ticker', 'unknown')}: {e}")
+                        self.logger.warning(
+                            f"Error processing open position for {trade.get('Ticker', 'unknown')}: {e}"
+                        )
 
                 open_positions_data = pd.DataFrame(open_positions_data)
 
             # Save to frontend location
-            output_path = self.frontend_data_dir / "portfolio" / "open_positions_pnl_current.csv"
+            output_path = (
+                self.frontend_data_dir / "portfolio" / "open_positions_pnl_current.csv"
+            )
             output_path.parent.mkdir(parents=True, exist_ok=True)
             open_positions_data.to_csv(output_path, index=False)
 
-            total_unrealized_pnl = open_positions_data["Unrealized_PnL"].sum() if not open_positions_data.empty else 0
+            total_unrealized_pnl = (
+                open_positions_data["Unrealized_PnL"].sum()
+                if not open_positions_data.empty
+                else 0
+            )
             self.logger.info(
                 f"Generated open positions data: {len(open_positions_data)} positions, "
                 f"total unrealized PnL: ${total_unrealized_pnl:.2f}"
             )
 
-            return ProcessingResult(success=True, operation="generate_open_positions_data")
+            return ProcessingResult(
+                success=True, operation="generate_open_positions_data"
+            )
 
         except Exception as e:
             return ProcessingResult(

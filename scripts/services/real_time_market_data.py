@@ -463,9 +463,9 @@ class RealTimeMarketDataService:
 
                 response_time = (time.time() - start_time) * 1000
                 self.source_status["alpha_vantage"].response_time_ms = response_time
-                self.source_status["alpha_vantage"].last_successful_fetch = (
-                    datetime.now()
-                )
+                self.source_status[
+                    "alpha_vantage"
+                ].last_successful_fetch = datetime.now()
 
                 for pair, rate in mock_rates.items():
                     exchange_rates[pair] = MarketDataPoint(
@@ -543,9 +543,9 @@ class RealTimeMarketDataService:
 
                 response_time = (time.time() - start_time) * 1000
                 self.source_status["alpha_vantage"].response_time_ms = response_time
-                self.source_status["alpha_vantage"].last_successful_fetch = (
-                    datetime.now()
-                )
+                self.source_status[
+                    "alpha_vantage"
+                ].last_successful_fetch = datetime.now()
 
                 data_point = MarketDataPoint(
                     value=mock_vix_level,

@@ -689,7 +689,7 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
           Portfolio: colors.tertiary, // Cyan for portfolio
           SPY: colors.multiStrategy, // Blue for SPY
           QQQ: colors.buyHold, // Purple for QQQ
-          "BITCOIN": colors.drawdown, // Orange for BTC
+          BITCOIN: colors.drawdown, // Orange for BTC
         };
 
         // Define display names
@@ -697,7 +697,7 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
           Portfolio: "Live Signals Portfolio",
           SPY: "SPY",
           QQQ: "QQQ",
-          "BITCOIN": "Bitcoin",
+          BITCOIN: "Bitcoin",
         };
 
         // Create series for each column (Portfolio, SPY, QQQ, BITCOIN)

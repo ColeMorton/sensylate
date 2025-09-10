@@ -346,12 +346,16 @@ class TradingPerformanceValidator:
             sma_adequacy = (
                 "✅ ADEQUATE"
                 if sma_count >= 15
-                else "⚠️ MINIMAL" if sma_count >= 10 else "❌ INSUFFICIENT"
+                else "⚠️ MINIMAL"
+                if sma_count >= 10
+                else "❌ INSUFFICIENT"
             )
             ema_adequacy = (
                 "✅ ADEQUATE"
                 if ema_count >= 15
-                else "⚠️ MINIMAL" if ema_count >= 10 else "❌ INSUFFICIENT"
+                else "⚠️ MINIMAL"
+                if ema_count >= 10
+                else "❌ INSUFFICIENT"
             )
 
             sample_validation["validation_results"] = {

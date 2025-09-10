@@ -360,9 +360,9 @@ class SchemaMigrator:
                     merged_props[prop_name] = prop_def
 
         # Update schema metadata
-        merged["title"] = (
-            f"{plan.schema_domain.replace('_', ' ').title()} - {plan.schema_phase.title()} Schema"
-        )
+        merged[
+            "title"
+        ] = f"{plan.schema_domain.replace('_', ' ').title()} - {plan.schema_phase.title()} Schema"
         merged["description"] = current.get(
             "description", merged.get("description", "")
         )
