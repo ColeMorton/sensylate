@@ -221,7 +221,7 @@ class ChartDataService {
 
   async fetchBTCPriceData(signal?: AbortSignal): Promise<StockDataRow[]> {
     try {
-      const response = await fetch("/data/raw/crypto/BTC-USD/daily.csv", {
+      const response = await fetch("/data/raw/stocks/BITCOIN/daily.csv", {
         signal,
       });
       if (!response.ok) {
@@ -247,7 +247,12 @@ class ChartDataService {
     signal?: AbortSignal,
   ): Promise<StockDataRow[]> {
     try {
-      const response = await fetch(`/data/raw/stocks/${symbol}/daily.csv`, {
+      // Special handling for BTC-USD: use BITCOIN directory and apply date filtering
+      const filePath = symbol === "BTC-USD" 
+        ? "/data/raw/stocks/BITCOIN/daily.csv"
+        : `/data/raw/stocks/${symbol}/daily.csv`;
+      
+      const response = await fetch(filePath, {
         signal,
       });
 
@@ -256,7 +261,20 @@ class ChartDataService {
       }
 
       const csvText = await response.text();
-      return this.parseCSV(csvText);
+      const allData = this.parseCSV(csvText);
+      
+      // Apply date filtering for BTC-USD to show only last 365 days
+      if (symbol === "BTC-USD") {
+        const oneYearAgo = new Date();
+        oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
+        
+        return allData.filter(row => {
+          const rowDate = new Date(row.date);
+          return rowDate >= oneYearAgo;
+        });
+      }
+      
+      return allData;
     } catch (error) {
       // Re-throw AbortError without wrapping to preserve abort handling
       if (error instanceof Error && error.name === "AbortError") {
@@ -547,7 +565,7 @@ class ChartDataService {
       return this.benchmarkCache.data;
     }
 
-    const benchmarkTickers = ["SPY", "QQQ", "BTC-USD"];
+    const benchmarkTickers = ["SPY", "QQQ", "BITCOIN"];
     const liveSignalsStartDate = "2025-04-01";
 
     try {

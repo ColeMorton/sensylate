@@ -148,9 +148,9 @@ class BlockchainComService(BaseFinancialService):
             mempool_size = 0
 
         return {
-            "unconfirmed_transactions": unconfirmed_count
-            if isinstance(unconfirmed_count, int)
-            else 0,
+            "unconfirmed_transactions": (
+                unconfirmed_count if isinstance(unconfirmed_count, int) else 0
+            ),
             "mempool_size_bytes": mempool_size if isinstance(mempool_size, int) else 0,
             "timestamp": datetime.now().isoformat(),
         }
@@ -171,12 +171,12 @@ class BlockchainComService(BaseFinancialService):
         hashrate = self._make_request_with_retry(endpoint)
 
         return {
-            "hashrate_ghash_per_sec": hashrate
-            if isinstance(hashrate, (int, float))
-            else 0,
-            "hashrate_thash_per_sec": (hashrate / 1000)
-            if isinstance(hashrate, (int, float))
-            else 0,
+            "hashrate_ghash_per_sec": (
+                hashrate if isinstance(hashrate, (int, float)) else 0
+            ),
+            "hashrate_thash_per_sec": (
+                (hashrate / 1000) if isinstance(hashrate, (int, float)) else 0
+            ),
             "timestamp": datetime.now().isoformat(),
         }
 
@@ -187,9 +187,9 @@ class BlockchainComService(BaseFinancialService):
 
         return {
             "total_bitcoins_satoshis": total_bc if isinstance(total_bc, int) else 0,
-            "total_bitcoins": (total_bc / 100000000)
-            if isinstance(total_bc, int)
-            else 0.0,
+            "total_bitcoins": (
+                (total_bc / 100000000) if isinstance(total_bc, int) else 0.0
+            ),
             "timestamp": datetime.now().isoformat(),
         }
 
@@ -220,18 +220,18 @@ class BlockchainComService(BaseFinancialService):
             avg_tx_fee = 0
 
         return {
-            "average_transaction_value_satoshis": avg_tx_value
-            if isinstance(avg_tx_value, int)
-            else 0,
-            "average_transaction_fee_satoshis": avg_tx_fee
-            if isinstance(avg_tx_fee, int)
-            else 0,
-            "average_transaction_value_btc": (avg_tx_value / 100000000)
-            if isinstance(avg_tx_value, int)
-            else 0.0,
-            "average_transaction_fee_btc": (avg_tx_fee / 100000000)
-            if isinstance(avg_tx_fee, int)
-            else 0.0,
+            "average_transaction_value_satoshis": (
+                avg_tx_value if isinstance(avg_tx_value, int) else 0
+            ),
+            "average_transaction_fee_satoshis": (
+                avg_tx_fee if isinstance(avg_tx_fee, int) else 0
+            ),
+            "average_transaction_value_btc": (
+                (avg_tx_value / 100000000) if isinstance(avg_tx_value, int) else 0.0
+            ),
+            "average_transaction_fee_btc": (
+                (avg_tx_fee / 100000000) if isinstance(avg_tx_fee, int) else 0.0
+            ),
             "timestamp": datetime.now().isoformat(),
         }
 

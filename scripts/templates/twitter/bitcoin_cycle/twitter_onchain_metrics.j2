@@ -1,0 +1,27 @@
+{#- Bitcoin On-Chain Metrics Twitter Template
+
+    Use this template when:
+    - NUPL zone = optimism AND LTH accumulation active
+    - Focus on on-chain indicators and network health
+    - Emphasize cycle positioning indicators and network metrics
+-#}
+
+📊 Bitcoin on-chain metrics analysis:
+
+Cycle positioning indicators:
+• MVRV Z-Score: {{ data.mvrv_z_score | default("N/A") }} ({{ data.mvrv_zone | default("neutral") }})
+• NUPL: {{ data.nupl_value | default("N/A") }} ({{ data.nupl_zone | default("optimism") }})
+• PI Cycle signal: {{ data.pi_cycle_status | default("inactive") }}
+
+Network health metrics:
+• Hash rate growth: {{ data.hash_rate_growth | default("N/A") }}%
+• Mining difficulty: {{ data.difficulty_adjustment | default("N/A") }}
+• LTH behavior: {{ data.lth_behavior_trend | default("accumulating") }}
+
+Valuation assessment: {{ data.valuation_grade | default("fair") }} vs historical range
+
+📋 Full analysis: https://www.colemorton.com/blog/bitcoin-cycle-intelligence-{{ data.date | default(timestamp[:10] | replace("-", "")) }}/
+
+⚠️ On-chain data reflects point-in-time metrics. Network dynamics evolve.
+
+#Bitcoin #OnChain #CycleMetrics

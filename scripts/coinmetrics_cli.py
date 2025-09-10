@@ -451,9 +451,11 @@ class CoinMetricsCLI(BaseFinancialCLI):
                     "analysis_metadata": {
                         "analysis_date": mvrv_analysis["analysis_date"],
                         "current_mvrv_ratio": mvrv_analysis["current_mvrv_ratio"],
-                        "data_quality": "institutional_grade"
-                        if mvrv_analysis["confidence"] >= 0.9
-                        else "standard_grade",
+                        "data_quality": (
+                            "institutional_grade"
+                            if mvrv_analysis["confidence"] >= 0.9
+                            else "standard_grade"
+                        ),
                     },
                 }
 

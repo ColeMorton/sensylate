@@ -1,9 +1,9 @@
 {
   "bitcoin_cycle_intelligence": [
     {
-      "title": "Bitcoin Price - 210 Day History",
+      "title": "Bitcoin Price - 1 Year History",
       "category": "Bitcoin Analysis",
-      "description": "Interactive Bitcoin (BTC-USD) price chart showing the last 210 days of market data. Displays daily open, high, low, close prices with volume data for cycle intelligence analysis.",
+      "description": "Interactive Bitcoin (BITCOIN) price chart showing the last 1 year of market data. Displays daily open, high, low, close prices with volume data for cycle intelligence analysis.",
       "chartType": "btc-price"
     }
   ]

@@ -223,12 +223,16 @@ class CircuitBreaker:
                     "average_response_time": round(
                         self.metrics.average_response_time, 3
                     ),
-                    "last_success": self.metrics.last_success.isoformat()
-                    if self.metrics.last_success
-                    else None,
-                    "last_failure": self.metrics.last_failure.isoformat()
-                    if self.metrics.last_failure
-                    else None,
+                    "last_success": (
+                        self.metrics.last_success.isoformat()
+                        if self.metrics.last_success
+                        else None
+                    ),
+                    "last_failure": (
+                        self.metrics.last_failure.isoformat()
+                        if self.metrics.last_failure
+                        else None
+                    ),
                 },
                 "config": {
                     "failure_threshold": self.config.failure_threshold,

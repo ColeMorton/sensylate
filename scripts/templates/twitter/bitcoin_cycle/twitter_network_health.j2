@@ -1,0 +1,27 @@
+{#- Bitcoin Network Health Twitter Template
+
+    Use this template when:
+    - Hash rate growth >5% AND mining health score >8.0
+    - Focus on network security and mining economics
+    - Emphasize network health and mining profitability
+-#}
+
+🎯 Bitcoin network health outlook and security implications:
+
+Network security assessment:
+• Hash rate: {{ data.hash_rate | default("N/A") }} EH/s ({{ data.hash_rate_trend | default("stable") }})
+• Mining health: {{ data.mining_health_score | default("N/A") }}/10
+• Decentralization: {{ data.decentralization_grade | default("good") }}
+
+Network economics:
+• Security budget: ${{ data.security_budget | default("N/A") }}M
+• Puell Multiple: {{ data.puell_multiple | default("N/A") }}
+• Mining profitability: {{ data.mining_profitability_status | default("healthy") }}
+
+Network adoption: {{ data.adoption_trend | default("growing") }} ({{ data.institutional_flows | default("positive") }})
+
+📋 Full analysis: https://www.colemorton.com/blog/bitcoin-cycle-intelligence-{{ data.date | default(timestamp[:10] | replace("-", "")) }}/
+
+⚠️ Network metrics reflect current conditions. Mining dynamics evolve.
+
+#Bitcoin #NetworkHealth #Mining

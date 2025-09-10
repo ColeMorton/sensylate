@@ -440,7 +440,7 @@ export class CLIServiceIntegration {
       case "live-signals-benchmark-comparison":
         if (service.capabilities.includes("market-data")) {
           command = "get-benchmarks";
-          args = ["--symbols", "SPY,QQQ,BTC-USD", "--format", "csv"];
+          args = ["--symbols", "SPY,QQQ,BITCOIN", "--format", "csv"];
           if (request.outputPath) {
             args.push("--output", request.outputPath);
           }

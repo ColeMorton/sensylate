@@ -78,15 +78,39 @@ def fetch_and_copy_stock_data(symbol: str) -> bool:
         project_root / f"frontend/public/data/raw/stocks/{symbol}/daily.csv"
     )
 
-    # Check if data already exists in data directory (from pipeline)
+    # Check for data in adapter cache first (new adapter pattern)
+    adapter_cache_path = (
+        project_root / f"data/outputs/adapter_cache/yahoo_finance/{symbol}_1d.parquet"
+    )
     scripts_csv_path = project_root / f"data/raw/stocks/{symbol}/daily.csv"
 
     try:
-        if scripts_csv_path.exists():
-            print("Found existing processed data for {symbol}")
+        if adapter_cache_path.exists():
+            print(f"Found adapter cache data for {symbol}")
+            # Read the adapter cache data (Parquet format)
+            df = pd.read_parquet(adapter_cache_path)
+            print(f"Found adapter cache data with {len(df)} rows")
+
+            # Convert datetime index to date column for filtering
+            if isinstance(df.index, pd.DatetimeIndex):
+                df = df.reset_index()
+                df["date"] = df["Date"].dt.strftime("%Y-%m-%d")
+                # Drop the original Date column if it exists
+                if "Date" in df.columns:
+                    df = df.drop("Date", axis=1)
+            elif "Date" in df.columns:
+                # If Date is a column, rename and format it
+                df["date"] = pd.to_datetime(df["Date"]).dt.strftime("%Y-%m-%d")
+                df = df.drop("Date", axis=1)
+
+            # Ensure column names match expected format (lowercase)
+            df.columns = [col.lower() if col != "date" else col for col in df.columns]
+
+        elif scripts_csv_path.exists():
+            print(f"Found existing processed data for {symbol}")
             # Read the existing processed data
             df = pd.read_csv(scripts_csv_path)
-            print("Found existing processed data with {len(df)} rows")
+            print(f"Found existing processed data with {len(df)} rows")
         else:
             print("Fetching 1 year of {symbol} data...")
             # Use Yahoo Finance CLI to get 1 year of data for the specified symbol

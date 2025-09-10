@@ -300,17 +300,17 @@ class TemplateCriteriaManager:
             ScoringCriteria("transparency_level", 0.3, 0.5),
         ]
 
-        trade_history_profile.template_requirements[
-            "performance"
-        ] = TemplateRequirement(
-            name="performance_template",
-            description="Trade performance analysis",
-            required_fields=["analysis_name", "performance_metrics"],
-            optional_fields=["win_rate", "total_trades", "period_return"],
-            validation_rules={
-                "performance_metrics": {"type": "enum", "values": [True, False]},
-                "win_rate": {"type": "numeric", "min": 0.0, "max": 1.0},
-            },
+        trade_history_profile.template_requirements["performance"] = (
+            TemplateRequirement(
+                name="performance_template",
+                description="Trade performance analysis",
+                required_fields=["analysis_name", "performance_metrics"],
+                optional_fields=["win_rate", "total_trades", "period_return"],
+                validation_rules={
+                    "performance_metrics": {"type": "enum", "values": [True, False]},
+                    "win_rate": {"type": "numeric", "min": 0.0, "max": 1.0},
+                },
+            )
         )
 
         self.criteria_profiles["trade_history"] = trade_history_profile

@@ -72,9 +72,7 @@ def test_quality_improvements():
             status = (
                 "✅ GOOD"
                 if value >= 0.9
-                else "⚠️ NEEDS IMPROVEMENT"
-                if value >= 0.8
-                else "❌ POOR"
+                else "⚠️ NEEDS IMPROVEMENT" if value >= 0.8 else "❌ POOR"
             )
             print("  {metric}: {value:.3f} {status}")
         else:

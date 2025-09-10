@@ -121,6 +121,22 @@ def select_bitcoin_cycle_publication_template(content_analysis):
 - `bitcoin-rainbow-min.png` - Rainbow price model visualization
 - `bitcoin-network-min.png` - Bitcoin network health metrics visualization
 
+### Dynamic Image Management Protocol
+**Bitcoin Cycle Intelligence Image Update Requirements**:
+- **Source Location**: Latest image from `data/outputs/photo-booth/bitcoin_cycle_intelligence_light_16x9_png_*.png` pattern
+- **Freshness Validation**: Image must be created on current date for publication accuracy
+- **Generation Command**: `./scripts/export_with_server.sh --dashboard bitcoin_cycle_intelligence` (if image missing or outdated)
+- **Publication Path**: Copy to `frontend/public/images/bitcoin/bitcoin-cycle-min.png` for publisher integration
+- **Quality Standards**: PNG format, 16:9 aspect ratio, web-optimized file size
+- **Integration Verification**: Confirm path mapping `/images/bitcoin/bitcoin-cycle-min.png` accessibility
+
+**Bitcoin Cycle Image Update Workflow**:
+1. **Detection Phase**: Check for latest `bitcoin_cycle_intelligence_light_16x9_png_{YYYYMMDD}_*.png` in photo-booth outputs
+2. **Validation Phase**: Verify image creation date matches current date
+3. **Generation Phase**: Execute dashboard export command if image missing or outdated
+4. **Publication Phase**: Copy latest image to `bitcoin-cycle-min.png` publication path
+5. **Integration Phase**: Validate publisher workflow accessibility and format compliance
+
 ### Bitcoin Cycle Content Transformation Standards
 **Bitcoin Cycle Content Fidelity Requirements**:
 - **ZERO TRANSFORMATION POLICY**: 100% preservation of Bitcoin cycle intelligence analytical content

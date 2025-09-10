@@ -578,9 +578,7 @@ class CLIServiceWrapper:
             "execution_mode": (
                 "global"
                 if self.global_available
-                else "local"
-                if self.local_available
-                else "unavailable"
+                else "local" if self.local_available else "unavailable"
             ),
         }
 

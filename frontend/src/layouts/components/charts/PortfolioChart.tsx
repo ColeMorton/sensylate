@@ -689,7 +689,7 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
           Portfolio: colors.tertiary, // Cyan for portfolio
           SPY: colors.multiStrategy, // Blue for SPY
           QQQ: colors.buyHold, // Purple for QQQ
-          "BTC-USD": colors.drawdown, // Orange for BTC
+          "BITCOIN": colors.drawdown, // Orange for BTC
         };
 
         // Define display names
@@ -697,11 +697,11 @@ const PortfolioChart: React.FC<PortfolioChartProps> = ({
           Portfolio: "Live Signals Portfolio",
           SPY: "SPY",
           QQQ: "QQQ",
-          "BTC-USD": "Bitcoin",
+          "BITCOIN": "Bitcoin",
         };
 
-        // Create series for each column (Portfolio, SPY, QQQ, BTC-USD)
-        const seriesColumns = ["Portfolio", "SPY", "QQQ", "BTC-USD"] as const;
+        // Create series for each column (Portfolio, SPY, QQQ, BITCOIN)
+        const seriesColumns = ["Portfolio", "SPY", "QQQ", "BITCOIN"] as const;
 
         seriesColumns.forEach((column) => {
           const values = benchmarkRows.map((row) => parseFloat(row[column]));

@@ -157,3 +157,4 @@ src/test/e2e/screenshots/homepage-light-mode-2025-08-08T03-38-13-432Z.png
 
 scripts/job_scraper
 data/outputs/job_descriptions
+data/outputs/adapter_cache

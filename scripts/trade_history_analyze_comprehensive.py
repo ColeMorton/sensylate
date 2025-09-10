@@ -545,9 +545,9 @@ class TradeHistoryAnalyzer:
         }
 
         # Optimization recommendations
-        analysis[
-            "optimization_recommendations"
-        ] = self._generate_optimization_recommendations()
+        analysis["optimization_recommendations"] = (
+            self._generate_optimization_recommendations()
+        )
 
         return analysis
 

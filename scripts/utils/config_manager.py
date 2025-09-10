@@ -695,9 +695,9 @@ class ConfigManager:
                 if len(api_key) > 8:
                     status["obfuscated_value"] = f"{api_key[:4]}...{api_key[-4:]}"
                 else:
-                    status[
-                        "obfuscated_value"
-                    ] = f"{api_key[:2]}{'*' * (len(api_key)-4)}{api_key[-2:]}"
+                    status["obfuscated_value"] = (
+                        f"{api_key[:2]}{'*' * (len(api_key)-4)}{api_key[-2:]}"
+                    )
             elif api_key == "not_required":
                 status["found"] = True
                 status["source"] = "config"

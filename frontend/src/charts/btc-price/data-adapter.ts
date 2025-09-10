@@ -31,7 +31,7 @@ export class BTCPriceDataAdapterImpl implements BTCPriceDataAdapter {
     }
 
     try {
-      const response = await fetch("/data/raw/stocks/BTC-USD/daily.csv", {
+      const response = await fetch("/data/raw/stocks/BITCOIN/daily.csv", {
         signal,
       });
 
@@ -61,13 +61,22 @@ export class BTCPriceDataAdapterImpl implements BTCPriceDataAdapter {
     const lines = csvText.trim().split("\n");
     const headers = lines[0].split(",");
 
-    return lines.slice(1).map((line) => {
+    const allData = lines.slice(1).map((line) => {
       const values = line.split(",");
       const row: StockDataRow = {} as StockDataRow;
       headers.forEach((header, index) => {
         row[header.trim()] = values[index]?.trim() || "";
       });
       return row;
+    });
+
+    // Filter to show only the last 365 days of data
+    const oneYearAgo = new Date();
+    oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
+    
+    return allData.filter(row => {
+      const rowDate = new Date(row.date);
+      return rowDate >= oneYearAgo;
     });
   }
 }

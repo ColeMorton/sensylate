@@ -278,16 +278,16 @@ class RegionalCentralBankService(BaseFinancialService):
 
             if result:
                 gdp_data["observations"] = result.get("observations", [])
-                gdp_data[
-                    "analysis"
-                ] = f"{central_bank.jurisdiction} GDP analysis for {timeframe} period"
+                gdp_data["analysis"] = (
+                    f"{central_bank.jurisdiction} GDP analysis for {timeframe} period"
+                )
                 gdp_data["confidence"] = 0.90
 
         except Exception as e:
             logger.warning(f"Failed to collect GDP data for {central_bank.name}: {e}")
-            gdp_data[
-                "analysis"
-            ] = f"GDP data unavailable for {central_bank.jurisdiction}"
+            gdp_data["analysis"] = (
+                f"GDP data unavailable for {central_bank.jurisdiction}"
+            )
             gdp_data["confidence"] = 0.0
 
         return gdp_data
@@ -310,9 +310,9 @@ class RegionalCentralBankService(BaseFinancialService):
                     "PAYEMS", timeframe
                 )
                 if primary_result:
-                    employment_data["primary_indicator"][
-                        "observations"
-                    ] = primary_result.get("observations", [])
+                    employment_data["primary_indicator"]["observations"] = (
+                        primary_result.get("observations", [])
+                    )
                     employment_data["primary_indicator"]["trend"] = "payroll_growth"
 
                 # Unemployment rate
@@ -320,9 +320,9 @@ class RegionalCentralBankService(BaseFinancialService):
                     "UNRATE", timeframe
                 )
                 if unemployment_result:
-                    employment_data["unemployment_data"][
-                        "observations"
-                    ] = unemployment_result.get("observations", [])
+                    employment_data["unemployment_data"]["observations"] = (
+                        unemployment_result.get("observations", [])
+                    )
                     employment_data["unemployment_data"]["trend"] = "stable"
 
             else:
@@ -332,9 +332,9 @@ class RegionalCentralBankService(BaseFinancialService):
                     primary_indicator, timeframe
                 )
                 if unemployment_result:
-                    employment_data["primary_indicator"][
-                        "observations"
-                    ] = unemployment_result.get("observations", [])
+                    employment_data["primary_indicator"]["observations"] = (
+                        unemployment_result.get("observations", [])
+                    )
                     employment_data["primary_indicator"]["trend"] = "unemployment_rate"
                     employment_data["unemployment_data"] = employment_data[
                         "primary_indicator"
@@ -377,9 +377,9 @@ class RegionalCentralBankService(BaseFinancialService):
                     core_indicator, timeframe
                 )
                 if core_result:
-                    inflation_data["core_inflation_data"][
-                        "observations"
-                    ] = core_result.get("observations", [])
+                    inflation_data["core_inflation_data"]["observations"] = (
+                        core_result.get("observations", [])
+                    )
                     inflation_data["core_inflation_data"]["trend"] = "stable"
 
             inflation_data["confidence"] = 0.85

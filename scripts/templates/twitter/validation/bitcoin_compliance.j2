@@ -1,0 +1,134 @@
+{#- Bitcoin Investment Compliance Validation Template
+
+    Use this template for:
+    - Bitcoin investment content compliance verification
+    - Cryptocurrency-specific risk assessment
+    - Bitcoin cycle analysis validation
+    - On-chain data attribution verification
+-#}
+
+{#- Bitcoin Compliance Validation Macro -#}
+{%- macro validate_bitcoin_compliance(content_data) -%}
+{
+  "bitcoin_compliance_results": {
+    "character_count": {{ content_data.character_count | default(0) }},
+    "character_limit_compliance": {{ "true" if content_data.character_count and content_data.character_count <= 280 else "false" }},
+    "bitcoin_disclaimer_present": {{ "true" if content_data.bitcoin_disclaimer_present else "false" }},
+    "onchain_data_attribution": {{ "true" if content_data.onchain_data_sources else "false" }},
+    "bitcoin_engagement_elements": {
+      "bitcoin_emoji_usage": {{ "true" if content_data.bitcoin_emoji_count and content_data.bitcoin_emoji_count >= 1 else "false" }},
+      "cycle_hook_effectiveness": {{ content_data.cycle_hook_score | default(0.0) }},
+      "bitcoin_hashtags": {{ "true" if content_data.bitcoin_hashtag_count and content_data.bitcoin_hashtag_count >= 2 and content_data.bitcoin_hashtag_count <= 5 else "false" }}
+    },
+    "bitcoin_compliance_checks": {
+      "bitcoin_investment_disclaimer": {{ "true" if content_data.bitcoin_investment_disclaimer else "false" }},
+      "cryptocurrency_risk_warning": {{ "true" if content_data.crypto_risk_warning else "false" }},
+      "cycle_uncertainty_noted": {{ "true" if content_data.cycle_uncertainty else "false" }},
+      "past_performance_disclaimers": {{ "true" if content_data.past_performance_disclaimers else "false" }},
+      "volatility_warnings": {{ "true" if content_data.volatility_warnings else "false" }}
+    },
+    "bitcoin_data_quality": {
+      "onchain_data_confidence": {{ content_data.onchain_confidence | default(0.0) }},
+      "bitcoin_price_freshness": {{ "true" if content_data.price_age_hours and content_data.price_age_hours <= 1 else "false" }},
+      "cycle_data_freshness": {{ "true" if content_data.cycle_data_age_hours and content_data.cycle_data_age_hours <= 24 else "false" }},
+      "multi_source_validation": {{ "true" if content_data.multi_source_validated else "false" }},
+      "bitcoin_authority_protocol_applied": {{ "true" if content_data.bitcoin_authority_protocol else "false" }}
+    },
+    "cycle_analysis_quality": {
+      "mvrv_data_present": {{ "true" if content_data.mvrv_data else "false" }},
+      "nupl_data_present": {{ "true" if content_data.nupl_data else "false" }},
+      "hash_rate_data_present": {{ "true" if content_data.hash_rate_data else "false" }},
+      "cycle_phase_justified": {{ "true" if content_data.cycle_phase_justification else "false" }},
+      "network_health_assessed": {{ "true" if content_data.network_health_assessment else "false" }}
+    }
+  },
+  "bitcoin_compliance_score": {{ calculate_bitcoin_compliance_score(content_data) }},
+  "bitcoin_institutional_ready": {{ "true" if calculate_bitcoin_compliance_score(content_data) >= 0.9 else "false" }},
+  "bitcoin_recommendations": [
+    {%- if not content_data.bitcoin_disclaimer_present -%}
+    "Add required Bitcoin investment disclaimer",
+    {%- endif -%}
+    {%- if content_data.character_count and content_data.character_count > 280 -%}
+    "Reduce character count to meet Twitter limit",
+    {%- endif -%}
+    {%- if not content_data.bitcoin_hashtag_count or content_data.bitcoin_hashtag_count < 2 -%}
+    "Add relevant Bitcoin hashtags for discoverability",
+    {%- endif -%}
+    {%- if content_data.onchain_confidence and content_data.onchain_confidence < 0.9 -%}
+    "Improve on-chain data source confidence before publication",
+    {%- endif -%}
+    {%- if not content_data.multi_source_validated -%}
+    "Perform multi-source validation with Bitcoin data services",
+    {%- endif -%}
+    {%- if not content_data.cycle_uncertainty -%}
+    "Include Bitcoin cycle uncertainty disclaimers",
+    {%- endif -%}
+    {%- if not content_data.volatility_warnings -%}
+    "Add Bitcoin volatility risk warnings"
+    {%- endif -%}
+  ]
+}
+{%- endmacro -%}
+
+{#- Calculate Bitcoin Compliance Score -#}
+{%- macro calculate_bitcoin_compliance_score(data) -%}
+{%- set base_score = 0.0 -%}
+{%- set score_components = [] -%}
+
+{#- Character count compliance (10%) -#}
+{%- if data.character_count and data.character_count <= 280 -%}
+{%- set score_components = score_components + [0.1] -%}
+{%- endif -%}
+
+{#- Bitcoin disclaimer compliance (25%) -#}
+{%- if data.bitcoin_disclaimer_present -%}
+{%- set score_components = score_components + [0.25] -%}
+{%- endif -%}
+
+{#- On-chain data quality (25%) -#}
+{%- if data.onchain_confidence -%}
+{%- set score_components = score_components + [data.onchain_confidence * 0.25] -%}
+{%- endif -%}
+
+{#- Bitcoin-specific engagement (15%) -#}
+{%- set bitcoin_engagement_score = 0.0 -%}
+{%- if data.bitcoin_emoji_count and data.bitcoin_emoji_count >= 1 -%}
+{%- set bitcoin_engagement_score = bitcoin_engagement_score + 0.05 -%}
+{%- endif -%}
+{%- if data.cycle_hook_score -%}
+{%- set bitcoin_engagement_score = bitcoin_engagement_score + (data.cycle_hook_score * 0.10) -%}
+{%- endif -%}
+{%- set score_components = score_components + [bitcoin_engagement_score] -%}
+
+{#- Bitcoin risk management (15%) -#}
+{%- set bitcoin_risk_score = 0.0 -%}
+{%- if data.crypto_risk_warning -%}
+{%- set bitcoin_risk_score = bitcoin_risk_score + 0.05 -%}
+{%- endif -%}
+{%- if data.volatility_warnings -%}
+{%- set bitcoin_risk_score = bitcoin_risk_score + 0.05 -%}
+{%- endif -%}
+{%- if data.cycle_uncertainty -%}
+{%- set bitcoin_risk_score = bitcoin_risk_score + 0.05 -%}
+{%- endif -%}
+{%- set score_components = score_components + [bitcoin_risk_score] -%}
+
+{#- On-chain data attribution (10%) -#}
+{%- if data.onchain_data_sources -%}
+{%- set score_components = score_components + [0.1] -%}
+{%- endif -%}
+
+{{ (score_components | sum) | round(2) }}
+{%- endmacro -%}
+
+{#- Bitcoin Compliance Validation Report Template -#}
+{%- if content_data -%}
+{{ validate_bitcoin_compliance(content_data) }}
+{%- else -%}
+{
+  "error": "No Bitcoin content data provided for validation",
+  "bitcoin_compliance_results": null,
+  "bitcoin_compliance_score": 0.0,
+  "bitcoin_institutional_ready": false
+}
+{%- endif -%}

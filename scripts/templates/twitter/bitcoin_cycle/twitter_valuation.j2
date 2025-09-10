@@ -1,0 +1,27 @@
+{#- Bitcoin Valuation Framework Twitter Template
+
+    Use this template when:
+    - Multiple valuation models AND fair value confidence >0.85
+    - Focus on Bitcoin valuation and price discovery
+    - Emphasize multi-model approach and scenario analysis
+-#}
+
+📈 Bitcoin valuation outlook and price discovery analysis:
+
+Multi-model valuation:
+• Stock-to-Flow: ${{ data.s2f_value | default("N/A") }} ({{ data.s2f_deviation | default("N/A") }}% deviation)
+• Realized Price: ${{ data.realized_price | default("N/A") }} ({{ data.price_vs_realized | default("N/A") }}%)
+• Network Value: {{ data.network_value_grade | default("fair") }}
+
+Valuation scenario probabilities:
+• Fair value: {{ data.fair_value_probability | default("N/A") }}% - ${{ data.fair_value_range | default("N/A") }}
+• Upside: {{ data.upside_probability | default("N/A") }}% - ${{ data.upside_target | default("N/A") }}
+• Downside: {{ data.downside_probability | default("N/A") }}% - ${{ data.downside_support | default("N/A") }}
+
+Key cycle catalysts: {{ data.primary_catalyst | default("market dynamics") }} ({{ data.catalyst_probability | default("N/A") }}%)
+
+📋 Full analysis: https://www.colemorton.com/blog/bitcoin-cycle-intelligence-{{ data.date | default(timestamp[:10] | replace("-", "")) }}/
+
+⚠️ Bitcoin valuations are estimates. Multiple scenarios possible.
+
+#Bitcoin #Valuation #CycleAnalysis

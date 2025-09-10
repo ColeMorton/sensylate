@@ -388,16 +388,12 @@ class VolatilityAnalysisService:
             "reversion_direction": (
                 "downward"
                 if deviation > 0
-                else "upward"
-                if deviation < 0
-                else "at_equilibrium"
+                else "upward" if deviation < 0 else "at_equilibrium"
             ),
             "reversion_strength": (
                 "strong"
                 if abs(deviation) > long_term_mean * 0.3
-                else "moderate"
-                if abs(deviation) > long_term_mean * 0.15
-                else "weak"
+                else "moderate" if abs(deviation) > long_term_mean * 0.15 else "weak"
             ),
         }
 
@@ -528,17 +524,13 @@ class VolatilityAnalysisService:
             "risk_level": (
                 "low"
                 if risk_score < 0.4
-                else "moderate"
-                if risk_score < 0.7
-                else "high"
+                else "moderate" if risk_score < 0.7 else "high"
             ),
             "portfolio_implications": {
                 "recommended_hedging": (
                     "increase"
                     if risk_score > 0.7
-                    else "maintain"
-                    if risk_score > 0.4
-                    else "reduce"
+                    else "maintain" if risk_score > 0.4 else "reduce"
                 ),
                 "asset_allocation_impact": (
                     "defensive" if risk_score > 0.7 else "balanced"
@@ -546,26 +538,20 @@ class VolatilityAnalysisService:
                 "options_positioning": (
                     "long_vol"
                     if percentiles["1y"] < 25
-                    else "short_vol"
-                    if percentiles["1y"] > 75
-                    else "neutral"
+                    else "short_vol" if percentiles["1y"] > 75 else "neutral"
                 ),
             },
             "economic_implications": {
                 "financial_stress": (
                     "elevated"
                     if risk_score > 0.8
-                    else "moderate"
-                    if risk_score > 0.6
-                    else "low"
+                    else "moderate" if risk_score > 0.6 else "low"
                 ),
                 "credit_conditions": "tightening" if risk_score > 0.7 else "stable",
                 "policy_response_likelihood": (
                     "high"
                     if risk_score > 0.85
-                    else "moderate"
-                    if risk_score > 0.65
-                    else "low"
+                    else "moderate" if risk_score > 0.65 else "low"
                 ),
             },
         }

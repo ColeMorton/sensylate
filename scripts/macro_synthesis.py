@@ -316,9 +316,7 @@ class MacroEconomicSynthesis:
             )
 
             if healthy_services == 0:
-                print(
-                    "⚠️  All enhanced services failed - using fallback synthesis mode"
-                )
+                print("⚠️  All enhanced services failed - using fallback synthesis mode")
             elif healthy_services < total_services:
                 print(
                     f"⚠️  {total_services - healthy_services} enhanced service(s) degraded - continuing with available data"
@@ -1369,9 +1367,7 @@ class MacroEconomicSynthesis:
         cc_signal = (
             "Optimistic"
             if cc_current_safe > 100
-            else "Pessimistic"
-            if cc_current_safe < 90
-            else "Neutral"
+            else "Pessimistic" if cc_current_safe < 90 else "Neutral"
         )
 
         # Extract stock market data as proxy for sentiment

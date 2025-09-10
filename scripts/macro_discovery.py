@@ -659,9 +659,9 @@ class MacroEconomicDiscovery:
                     "PAYEMS", self.timeframe
                 )
                 if payroll_result:
-                    fred_data["employment_data"]["payroll_data"][
-                        "observations"
-                    ] = payroll_result.get("observations", [])
+                    fred_data["employment_data"]["payroll_data"]["observations"] = (
+                        payroll_result.get("observations", [])
+                    )
                     fred_data["employment_data"]["payroll_data"][
                         "trend"
                     ] = "payroll_growth"
@@ -671,9 +671,9 @@ class MacroEconomicDiscovery:
                 fed_funds_result = service.get_economic_indicator("FEDFUNDS", "1y")
                 if fed_funds_result and fed_funds_result.get("observations"):
                     latest_rate = fed_funds_result["observations"][-1]
-                    fred_data["monetary_policy_data"]["policy_rate"][
-                        "current_rate"
-                    ] = float(latest_rate)
+                    fred_data["monetary_policy_data"]["policy_rate"]["current_rate"] = (
+                        float(latest_rate)
+                    )
                     fred_data["monetary_policy_data"]["confidence"] = 0.85
 
         except Exception as e:
@@ -1936,10 +1936,10 @@ class MacroEconomicDiscovery:
                 if k in ["fed_funds_rate", "wti_crude_price", "vix_level", "eur_usd"]
             }
             if market_data_subset:
-                confidence_results[
-                    "market_data"
-                ] = self.confidence_engine.calculate_confidence(
-                    market_data_subset, context, "market_data"
+                confidence_results["market_data"] = (
+                    self.confidence_engine.calculate_confidence(
+                        market_data_subset, context, "market_data"
+                    )
                 )
 
             # Economic indicators confidence (GDP, employment)
@@ -1949,10 +1949,10 @@ class MacroEconomicDiscovery:
                 if k in ["gdp_growth_rate", "unemployment_rate", "payroll_change"]
             }
             if economic_data_subset:
-                confidence_results[
-                    "economic_indicators"
-                ] = self.confidence_engine.calculate_confidence(
-                    economic_data_subset, context, "economic_indicators"
+                confidence_results["economic_indicators"] = (
+                    self.confidence_engine.calculate_confidence(
+                        economic_data_subset, context, "economic_indicators"
+                    )
                 )
 
             # Volatility analysis confidence
@@ -1962,10 +1962,10 @@ class MacroEconomicDiscovery:
                 if "volatility" in k or k in ["vix_level", "vstoxx_level"]
             }
             if volatility_data_subset:
-                confidence_results[
-                    "volatility_analysis"
-                ] = self.confidence_engine.calculate_confidence(
-                    volatility_data_subset, context, "volatility_data"
+                confidence_results["volatility_analysis"] = (
+                    self.confidence_engine.calculate_confidence(
+                        volatility_data_subset, context, "volatility_data"
+                    )
                 )
 
             # Consumer confidence analysis
@@ -1973,10 +1973,10 @@ class MacroEconomicDiscovery:
                 k: v for k, v in data_points.items() if "consumer_confidence" in k
             }
             if consumer_conf_subset:
-                confidence_results[
-                    "consumer_confidence"
-                ] = self.confidence_engine.calculate_confidence(
-                    consumer_conf_subset, context, "consumer_confidence"
+                confidence_results["consumer_confidence"] = (
+                    self.confidence_engine.calculate_confidence(
+                        consumer_conf_subset, context, "consumer_confidence"
+                    )
                 )
 
             # Calculate overall composite confidence
@@ -2135,9 +2135,9 @@ class MacroEconomicDiscovery:
             validation_results["validation_checks"]["service_availability"][
                 "passed"
             ] = True
-            validation_results["validation_checks"]["service_availability"][
-                "score"
-            ] = min(1.0, services_used / 7.0)
+            validation_results["validation_checks"]["service_availability"]["score"] = (
+                min(1.0, services_used / 7.0)
+            )
         else:
             validation_results["blocking_issues"].append(
                 f"Insufficient services: {services_used} < 4 required"
@@ -2322,9 +2322,7 @@ class MacroEconomicDiscovery:
                 sustainability = (
                     "strong"
                     if gdp_growth.value > 3.0
-                    else "moderate"
-                    if gdp_growth.value > 2.0
-                    else "weak"
+                    else "moderate" if gdp_growth.value > 2.0 else "weak"
                 )
 
                 return {
@@ -2425,9 +2423,7 @@ class MacroEconomicDiscovery:
                 trends = (
                     "improving"
                     if payroll_change.value > 100000
-                    else "stable"
-                    if payroll_change.value > 50000
-                    else "weakening"
+                    else "stable" if payroll_change.value > 50000 else "weakening"
                 )
                 quality = (
                     "high"
@@ -2511,16 +2507,12 @@ class MacroEconomicDiscovery:
                 duration = (
                     "short_term"
                     if unemployment_rate.value < 4.0
-                    else "medium_term"
-                    if unemployment_rate.value < 5.0
-                    else "long_term"
+                    else "medium_term" if unemployment_rate.value < 5.0 else "long_term"
                 )
                 structural_factors = (
                     "minimal"
                     if unemployment_rate.value < 4.5
-                    else "moderate"
-                    if unemployment_rate.value < 6.0
-                    else "significant"
+                    else "moderate" if unemployment_rate.value < 6.0 else "significant"
                 )
 
                 return {
@@ -2918,9 +2910,7 @@ class MacroEconomicDiscovery:
                     trend = (
                         "improving"
                         if confidence_point.value > 80
-                        else "stable"
-                        if confidence_point.value > 70
-                        else "declining"
+                        else "stable" if confidence_point.value > 70 else "declining"
                     )
                 else:
                     trend = "stable"  # Default for older data

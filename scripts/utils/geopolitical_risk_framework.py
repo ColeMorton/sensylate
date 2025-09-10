@@ -297,9 +297,7 @@ class GeopoliticalRiskEngine:
             "current_safe_haven_flows": (
                 "high"
                 if market_stress > 0.6
-                else "moderate"
-                if market_stress > 0.3
-                else "low"
+                else "moderate" if market_stress > 0.3 else "low"
             ),
         }
 
@@ -703,18 +701,18 @@ class GeopoliticalRiskEngine:
                                 contagion_map[target_region]["contagion_probability"],
                                 contagion_prob,
                             )
-                            contagion_map[target_region][
-                                "transmission_channels"
-                            ] = list(
-                                set(
-                                    contagion_map[target_region][
-                                        "transmission_channels"
-                                    ]
-                                    + [
-                                        "trade_links",
-                                        "financial_flows",
-                                        "sentiment",
-                                    ]
+                            contagion_map[target_region]["transmission_channels"] = (
+                                list(
+                                    set(
+                                        contagion_map[target_region][
+                                            "transmission_channels"
+                                        ]
+                                        + [
+                                            "trade_links",
+                                            "financial_flows",
+                                            "sentiment",
+                                        ]
+                                    )
                                 )
                             )
 
@@ -1136,9 +1134,7 @@ class GeopoliticalRiskEngine:
                 "investment_recommendation": (
                     "overweight"
                     if sector_impact > 0.2
-                    else "underweight"
-                    if sector_impact < -0.3
-                    else "neutral"
+                    else "underweight" if sector_impact < -0.3 else "neutral"
                 ),
             }
 

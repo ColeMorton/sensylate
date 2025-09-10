@@ -559,7 +559,7 @@ export function useClosedPositionsPnLData(): DataServiceResponse<
   return { data, loading, error };
 }
 
-// Hook for benchmark data (SPY, QQQ, BTC-USD)
+// Hook for benchmark data (SPY, QQQ, BITCOIN)
 export function useBenchmarkData(): DataServiceResponse<BenchmarkDataRow[]> {
   const [data, setData] = useState<BenchmarkDataRow[]>([]);
   const [loading, setLoading] = useState(true);

@@ -8,12 +8,12 @@ import os
 import sys
 
 # Set environment variables
-os.environ[
-    "DATA_OUTPUTS_PATH"
-] = "/Users/colemorton/Projects/sensylate-command-system-enhancements/data/outputs"
-os.environ[
-    "TEMPLATES_PATH"
-] = "/Users/colemorton/Projects/sensylate-command-system-enhancements/templates"
+os.environ["DATA_OUTPUTS_PATH"] = (
+    "/Users/colemorton/Projects/sensylate-command-system-enhancements/data/outputs"
+)
+os.environ["TEMPLATES_PATH"] = (
+    "/Users/colemorton/Projects/sensylate-command-system-enhancements/templates"
+)
 
 # Test contract discovery
 try:

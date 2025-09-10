@@ -189,7 +189,7 @@ class UnifiedChartDataService {
   }
 
   async fetchBTCPriceData(signal?: AbortSignal): Promise<StockDataRow[]> {
-    const response = await fetch("/data/raw/stocks/BTC-USD/daily.csv", {
+    const response = await fetch("/data/raw/stocks/BITCOIN/daily.csv", {
       signal,
     });
     if (!response.ok) {

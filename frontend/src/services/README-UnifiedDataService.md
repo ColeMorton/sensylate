@@ -92,7 +92,7 @@ interface ChartDataAdapter<T = any> {
 // /src/charts/btc-price/data-adapter.ts
 export class BTCPriceDataAdapterImpl implements ChartDataAdapter<StockDataRow> {
   async fetchData(signal?: AbortSignal): Promise<StockDataRow[]> {
-    const response = await fetch("/data/raw/stocks/BTC-USD/daily.csv", { signal });
+    const response = await fetch("/data/raw/stocks/BITCOIN/daily.csv", { signal });
     const csvText = await response.text();
     return this.parseCSV(csvText);
   }

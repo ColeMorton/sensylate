@@ -299,18 +299,12 @@ class AtomicSynthesisTool:
         total_pnl = key_metrics["performance_summary"].get("total_pnl", 0)
 
         return {
-            "win_rate_trend": "↗️"
-            if win_rate > 0.6
-            else "→"
-            if win_rate > 0.4
-            else "↘️",
+            "win_rate_trend": "↗️" if win_rate > 0.6 else "→" if win_rate > 0.4 else "↘️",
             "pnl_trend": "↗️" if total_pnl > 0 else "↘️",
             "overall_trend": (
                 "↗️"
                 if win_rate > 0.5 and total_pnl > 0
-                else "→"
-                if total_pnl >= 0
-                else "↘️"
+                else "→" if total_pnl >= 0 else "↘️"
             ),
         }
 
@@ -412,9 +406,7 @@ class AtomicSynthesisTool:
             "concentration_risk": (
                 "LOW"
                 if len(active_trades) > 5
-                else "MEDIUM"
-                if len(active_trades) > 2
-                else "HIGH"
+                else "MEDIUM" if len(active_trades) > 2 else "HIGH"
             ),
             "status": "ACTIVE" if len(active_trades) > 0 else "NO_POSITIONS",
         }

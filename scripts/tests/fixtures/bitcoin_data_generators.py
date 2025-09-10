@@ -161,9 +161,9 @@ class MempoolSpaceDataGenerator(BitcoinDataGenerator):
                 "size": self.random.randint(800000, 1400000),
                 "weight": self.random.randint(3000000, 4000000),
                 "merkle_root": self._generate_hex_string(64),
-                "previousblockhash": self.generate_block_hash()
-                if i < count - 1
-                else None,
+                "previousblockhash": (
+                    self.generate_block_hash() if i < count - 1 else None
+                ),
                 "mediantime": self.generate_timestamp(hours_ago=i * 1 + 1),
                 "nonce": self.random.randint(1000000000, 4000000000),
                 "bits": 386089497,
@@ -186,15 +186,21 @@ class MempoolSpaceDataGenerator(BitcoinDataGenerator):
             "fee": self.random.randint(1000, 50000),  # satoshis
             "status": {
                 "confirmed": self.random.choice([True, False]),
-                "block_height": self.generate_block_height()
-                if self.random.choice([True, False])
-                else None,
-                "block_hash": self.generate_block_hash()
-                if self.random.choice([True, False])
-                else None,
-                "block_time": self.generate_timestamp()
-                if self.random.choice([True, False])
-                else None,
+                "block_height": (
+                    self.generate_block_height()
+                    if self.random.choice([True, False])
+                    else None
+                ),
+                "block_hash": (
+                    self.generate_block_hash()
+                    if self.random.choice([True, False])
+                    else None
+                ),
+                "block_time": (
+                    self.generate_timestamp()
+                    if self.random.choice([True, False])
+                    else None
+                ),
             },
             "vin": [
                 {

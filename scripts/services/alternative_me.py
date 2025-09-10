@@ -203,14 +203,14 @@ class AlternativeMeService(BaseFinancialService):
             "median": statistics.median(values),
             "min_value": min(values),
             "max_value": max(values),
-            "standard_deviation": round(statistics.stdev(values), 2)
-            if len(values) > 1
-            else 0,
-            "volatility": round(
-                statistics.stdev(values) / statistics.mean(values) * 100, 2
-            )
-            if len(values) > 1 and statistics.mean(values) > 0
-            else 0,
+            "standard_deviation": (
+                round(statistics.stdev(values), 2) if len(values) > 1 else 0
+            ),
+            "volatility": (
+                round(statistics.stdev(values) / statistics.mean(values) * 100, 2)
+                if len(values) > 1 and statistics.mean(values) > 0
+                else 0
+            ),
         }
 
         # Zone distribution
@@ -278,12 +278,12 @@ class AlternativeMeService(BaseFinancialService):
         analysis = {
             "period_days": days,
             "sentiment_trend": "Improving" if sum(changes) > 0 else "Declining",
-            "average_daily_change": round(statistics.mean(changes), 2)
-            if changes
-            else 0,
-            "volatility": round(statistics.stdev(changes), 2)
-            if len(changes) > 1
-            else 0,
+            "average_daily_change": (
+                round(statistics.mean(changes), 2) if changes else 0
+            ),
+            "volatility": (
+                round(statistics.stdev(changes), 2) if len(changes) > 1 else 0
+            ),
             "note": "Full correlation analysis requires price data integration",
         }
 

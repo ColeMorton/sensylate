@@ -1712,14 +1712,14 @@ class EnhancedMacroAnalyzer:
             }
 
         # Add enhanced analysis quality metrics
-        analysis_output[
-            "analysis_quality_metrics"
-        ] = self._calculate_enhanced_quality_metrics(analysis_output)
+        analysis_output["analysis_quality_metrics"] = (
+            self._calculate_enhanced_quality_metrics(analysis_output)
+        )
 
         # Enhanced CLI service attribution
-        analysis_output[
-            "cli_service_attribution"
-        ] = self._get_enhanced_cli_service_attribution()
+        analysis_output["cli_service_attribution"] = (
+            self._get_enhanced_cli_service_attribution()
+        )
 
         return analysis_output
 

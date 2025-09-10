@@ -139,7 +139,7 @@
       "chartStatus": "active",
       "primarySource": {
         "type": "manual",
-        "location": "/data/raw/stocks/BTC-USD/daily.csv",
+        "location": "/data/raw/stocks/BITCOIN/daily.csv",
         "refreshMethod": "manual-update",
         "frequency": "daily",
         "metadata": {

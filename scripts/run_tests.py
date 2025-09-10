@@ -119,7 +119,9 @@ Examples:
     if args.test_type == "unit":
         total_exit_code = exit_codes[0] if exit_codes else 1
         if total_exit_code == 0:
-            print("🎉 All unit tests passed! Services are working correctly with mocks.")
+            print(
+                "🎉 All unit tests passed! Services are working correctly with mocks."
+            )
         else:
             print("💥 Unit tests failed! Check service logic and mocking setup.")
 

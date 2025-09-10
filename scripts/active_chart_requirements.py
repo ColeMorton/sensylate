@@ -6,12 +6,15 @@ Dynamically determines data requirements by scanning only active (non-frozen) ch
 at runtime, eliminating the need for static contract discovery.
 
 This module replaces the contract discovery system with runtime active chart scanning.
+Enhanced with colocated chart data requirements auto-discovery integration.
 """
 
+import json
 import logging
+import subprocess
 from dataclasses import dataclass
 from pathlib import Path
-from typing import List, Optional, Set
+from typing import Dict, List, Optional, Set
 
 from chart_data_dependency_manager import ChartDataDependencyManager, ChartStatus
 
@@ -61,8 +64,79 @@ class ActiveChartRequirementsDetector:
         # Initialize chart data dependency manager
         self.chart_status_manager = ChartDataDependencyManager(self.frontend_src_path)
 
-        # Chart type to data source mapping
-        self.chart_data_mapping = {
+        # Load data mappings from colocated charts + fallback mappings
+        self.chart_data_mapping = self._load_combined_data_mappings()
+
+    def _load_auto_discovered_mappings(self) -> Dict[str, Dict[str, any]]:
+        """
+        Load auto-discovered data mappings from colocated chart directories
+
+        Returns:
+            Dictionary of chart type to data mapping, empty if discovery fails
+        """
+        try:
+            # Path to the discovery script and output file
+            project_root = Path.cwd()
+            discovery_script = project_root / "scripts" / "extract-data-mappings.js"
+            mappings_file = project_root / "scripts" / "pipeline-data-mappings.json"
+
+            # Run auto-discovery if script exists
+            if discovery_script.exists():
+                self.logger.info(
+                    "🔨 Running colocated chart data mappings auto-discovery..."
+                )
+                result = subprocess.run(
+                    ["node", str(discovery_script)],
+                    cwd=project_root,
+                    capture_output=True,
+                    text=True,
+                    timeout=30,
+                )
+
+                if result.returncode != 0:
+                    self.logger.warning(
+                        f"Data mappings auto-discovery failed: {result.stderr}"
+                    )
+                    return {}
+            else:
+                self.logger.info(
+                    "Data mappings auto-discovery script not found, using fallback mappings"
+                )
+                return {}
+
+            # Load discovered mappings
+            if mappings_file.exists():
+                with open(mappings_file, "r", encoding="utf-8") as f:
+                    discovered_data = json.load(f)
+                    discovered_mappings = discovered_data.get("chartDataMapping", {})
+
+                    if discovered_mappings:
+                        self.logger.info(
+                            f"✅ Loaded {len(discovered_mappings)} auto-discovered data mappings"
+                        )
+
+                        # Log discovered mappings
+                        for chart_type, mapping in discovered_mappings.items():
+                            self.logger.debug(
+                                f"   - {chart_type}: {mapping.get('data_source')} ({mapping.get('category')})"
+                            )
+
+                        return discovered_mappings
+
+            return {}
+
+        except Exception as e:
+            self.logger.warning(f"Failed to load auto-discovered data mappings: {e}")
+            return {}
+
+    def _get_fallback_data_mappings(self) -> Dict[str, Dict[str, any]]:
+        """
+        Get fallback data mappings for charts not yet migrated to colocation
+
+        Returns:
+            Dictionary of hardcoded fallback mappings
+        """
+        return {
             # Portfolio charts
             "portfolio-value-comparison": {
                 "data_source": "portfolio/multi_strategy_portfolio_portfolio_value.csv",
@@ -123,6 +197,41 @@ class ActiveChartRequirementsDetector:
                 "services": ["yahoo_finance"],
             },
         }
+
+    def _load_combined_data_mappings(self) -> Dict[str, Dict[str, any]]:
+        """
+        Load combined data mappings from auto-discovery and fallback sources
+
+        Auto-discovered mappings take precedence over fallback mappings.
+
+        Returns:
+            Combined dictionary of chart type to data mapping
+        """
+        # Start with fallback mappings
+        combined_mappings = self._get_fallback_data_mappings()
+
+        # Load and merge auto-discovered mappings (takes precedence)
+        auto_discovered = self._load_auto_discovered_mappings()
+        if auto_discovered:
+            combined_mappings.update(auto_discovered)
+
+            # Log the integration
+            auto_discovered_types = list(auto_discovered.keys())
+            fallback_types = list(self._get_fallback_data_mappings().keys())
+
+            self.logger.info(
+                f"📊 Integrated data mappings: "
+                f"{len(auto_discovered_types)} colocated + "
+                f"{len(fallback_types)} fallback = "
+                f"{len(combined_mappings)} total"
+            )
+
+            if auto_discovered_types:
+                self.logger.info(
+                    f"🎯 Colocated charts: {', '.join(sorted(auto_discovered_types))}"
+                )
+
+        return combined_mappings
 
     def discover_active_requirements(self) -> ActiveRequirementsResult:
         """

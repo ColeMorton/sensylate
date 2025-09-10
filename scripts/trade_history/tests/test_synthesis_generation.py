@@ -455,7 +455,9 @@ def test_template_compliance():
         formatting_checks = {
             "consistent_percentages": len(re.findall(r"\d+\.\d%", content)) >= 3,
             "proper_table_format": content.count("|") >= 8,  # Table structure
-            "emoji_usage": content.count("📊") + content.count("✅") + content.count("❌")
+            "emoji_usage": content.count("📊")
+            + content.count("✅")
+            + content.count("❌")
             >= 3,
             "section_hierarchy": content.count("##") >= 2,
             "bullet_points": content.count("-") >= 5,

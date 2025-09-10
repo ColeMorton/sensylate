@@ -75,7 +75,9 @@ class InstitutionalQualityValidator:
         if not self.published_files:
             return self._create_no_content_report()
 
-        print(f"📊 Analyzing {len(self.published_files)} published macro analysis files")
+        print(
+            f"📊 Analyzing {len(self.published_files)} published macro analysis files"
+        )
 
         # Execute validation phases
         validation_results = {}
@@ -746,9 +748,11 @@ class InstitutionalQualityValidator:
                 "overall_institutional_score": f"{overall_score:.1f}/10.0",
                 "institutional_certified_count": institutional_certified,
                 "professional_approved_count": professional_approved,
-                "certification_rate": f"{(professional_approved/total_files)*100:.1f}%"
-                if total_files > 0
-                else "0.0%",
+                "certification_rate": (
+                    f"{(professional_approved/total_files)*100:.1f}%"
+                    if total_files > 0
+                    else "0.0%"
+                ),
                 "category_scores": {k: f"{v:.2f}" for k, v in avg_scores.items()},
             },
             "detected_issues": detected_issues,

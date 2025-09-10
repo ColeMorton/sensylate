@@ -1,0 +1,41 @@
+{
+  "timestamp": "build-time",
+  "total_validations": 4,
+  "passed": 2,
+  "failed": 0,
+  "warnings": 2,
+  "results": {
+    "btc-price": {
+      "status": "pass",
+      "message": "Chart has complete frontend-backend integration",
+      "has_frontend": true,
+      "has_pipeline": true,
+      "has_colocated_config": true,
+      "production_ready": true
+    },
+    "mstr-price": {
+      "status": "warning",
+      "message": "Chart registered in frontend but missing pipeline data mapping",
+      "has_frontend": true,
+      "has_pipeline": false,
+      "has_colocated_config": false,
+      "production_ready": true
+    },
+    "apple-price": {
+      "status": "warning",
+      "message": "Chart registered in frontend but missing pipeline data mapping",
+      "has_frontend": true,
+      "has_pipeline": false,
+      "has_colocated_config": false,
+      "production_ready": true
+    },
+    "multi-stock-price": {
+      "status": "pass",
+      "message": "Chart has complete frontend-backend integration",
+      "has_frontend": true,
+      "has_pipeline": true,
+      "has_colocated_config": true,
+      "production_ready": true
+    }
+  }
+}

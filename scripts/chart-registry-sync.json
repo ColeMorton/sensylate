@@ -1,0 +1,70 @@
+{
+  "timestamp": "build-time",
+  "total_charts": 4,
+  "colocated_charts": 2,
+  "pipeline_mapped_charts": 2,
+  "production_ready_charts": 4,
+  "synchronization_status": "success",
+  "charts": {
+    "btc-price": {
+      "metadata": {
+        "title": "Bitcoin Price",
+        "category": "Bitcoin Analysis",
+        "description": "Bitcoin price chart with cycle intelligence",
+        "chartType": "btc-price"
+      },
+      "has_colocated_config": true,
+      "has_pipeline_mapping": true,
+      "production_ready": true,
+      "data_requirements": {
+        "dataSources": [],
+        "cacheable": true
+      }
+    },
+    "multi-stock-price": {
+      "metadata": {
+        "title": "Multi Stock Price",
+        "category": "Stock Comparison",
+        "description": "Multi-stock comparison chart",
+        "chartType": "multi-stock-price"
+      },
+      "has_colocated_config": true,
+      "has_pipeline_mapping": true,
+      "production_ready": true,
+      "data_requirements": {
+        "dataSources": [],
+        "cacheable": true
+      }
+    },
+    "mstr-price": {
+      "metadata": {
+        "title": "MSTR Price",
+        "category": "Stock Analysis",
+        "description": "MicroStrategy stock price chart",
+        "chartType": "mstr-price"
+      },
+      "has_colocated_config": false,
+      "has_pipeline_mapping": false,
+      "production_ready": true,
+      "data_requirements": {
+        "dataSources": [],
+        "cacheable": true
+      }
+    },
+    "apple-price": {
+      "metadata": {
+        "title": "Apple Price",
+        "category": "Stock Analysis",
+        "description": "Apple stock price chart",
+        "chartType": "apple-price"
+      },
+      "has_colocated_config": false,
+      "has_pipeline_mapping": false,
+      "production_ready": true,
+      "data_requirements": {
+        "dataSources": [],
+        "cacheable": true
+      }
+    }
+  }
+}

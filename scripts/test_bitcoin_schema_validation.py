@@ -451,11 +451,13 @@ class TestBitcoinDiscoverySchemaCompliance(BitcoinSchemaValidationTestBase):
                 )
                 / real_data["binance_price"]
                 < 0.05,
-                "confidence_score": 1.0
-                if abs(real_data["binance_price"] - real_data["blockchain_price"])
-                / real_data["binance_price"]
-                < 0.05
-                else 0.9,
+                "confidence_score": (
+                    1.0
+                    if abs(real_data["binance_price"] - real_data["blockchain_price"])
+                    / real_data["binance_price"]
+                    < 0.05
+                    else 0.9
+                ),
             }
 
             # Test price validation structure

@@ -1,0 +1,44 @@
+{
+  "version": "1.0.0",
+  "description": "Auto-discovered data mappings from colocated chart directories",
+  "discoveredAt": "2025-09-10T02:55:11.231Z",
+  "totalCharts": 2,
+  "chartsWithDataMappings": 2,
+  "dataMappings": {
+    "btc-price": {
+      "data_source": "raw/stocks/BITCOIN/daily.csv",
+      "category": "raw",
+      "services": [
+        "yahoo_finance"
+      ]
+    },
+    "multi-stock-price": {
+      "data_source": "dynamic",
+      "category": "raw",
+      "services": [
+        "yahoo_finance"
+      ]
+    }
+  },
+  "dataRequirements": [
+    {
+      "chartType": "btc-price",
+      "symbolMetadata": {
+        "symbol": "BTC-USD",
+        "name": "Bitcoin",
+        "dataYears": 1
+      },
+      "multiSymbolConfig": null
+    },
+    {
+      "chartType": "multi-stock-price",
+      "symbolMetadata": null,
+      "multiSymbolConfig": {
+        "symbols": [
+          "XPEV",
+          "NIO"
+        ]
+      }
+    }
+  ]
+}

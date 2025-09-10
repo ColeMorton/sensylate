@@ -1127,9 +1127,7 @@ class DataDrivenMacroAnalyzer:
                 "trend": (
                     "stable"
                     if abs(gdp_growth - 2.0) < 0.5
-                    else "improving"
-                    if gdp_growth > 2.0
-                    else "declining"
+                    else "improving" if gdp_growth > 2.0 else "declining"
                 ),
                 "key_metrics": f"GDP growth at {gdp_growth}% indicates {profitability_grade} profitability environment",
                 "supporting_evidence": f"Economic growth momentum and employment trends support {profitability_grade} assessment",

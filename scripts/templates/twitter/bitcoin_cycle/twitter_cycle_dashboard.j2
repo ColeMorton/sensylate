@@ -1,0 +1,27 @@
+{#- Bitcoin Cycle Dashboard Twitter Template
+
+    Use this template when:
+    - Default fallback for Bitcoin cycle intelligence
+    - Comprehensive cycle indicator dashboard
+    - General Bitcoin cycle intelligence content
+-#}
+
+📊 Bitcoin cycle intelligence comprehensive dashboard:
+
+Core cycle metrics:
+• Cycle phase: {{ data.cycle_phase | default("N/A") }} ({{ data.cycle_confidence | default("N/A") }}% confidence)
+• MVRV Z-Score: {{ data.mvrv_z_score | default("N/A") }} ({{ data.mvrv_trend | default("stable") }})
+• NUPL zone: {{ data.nupl_zone | default("N/A") }} ({{ data.nupl_value | default("N/A") }})
+
+Network conditions:
+• Hash rate: {{ data.hash_rate | default("N/A") }} EH/s ({{ data.hash_rate_change | default("stable") }})
+• Network health: {{ data.network_health_score | default("N/A") }}/10 ({{ data.health_trend | default("stable") }})
+• Mining economics: {{ data.mining_economics_grade | default("healthy") }} ({{ data.profitability_trend | default("stable") }})
+
+Cycle momentum: {{ data.cycle_momentum_assessment | default("neutral") }}
+
+📋 Full analysis: https://www.colemorton.com/blog/bitcoin-cycle-intelligence-{{ data.date | default(timestamp[:10] | replace("-", "")) }}/
+
+⚠️ Bitcoin cycle indicators reflect current data. Trends may vary.
+
+#Bitcoin #CycleDashboard #BitcoinIntelligence

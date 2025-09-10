@@ -379,43 +379,55 @@ class BitcoinNetworkStatsService(BaseFinancialService):
 
                     health_metrics["activity_metrics"]["coinmetrics"] = {
                         "transaction_count_7d_avg": round(recent_tx_count, 2),
-                        "transaction_count_trend": "up"
-                        if recent_tx_count > older_tx_count
-                        else "down",
-                        "transaction_count_change_percent": round(
-                            ((recent_tx_count - older_tx_count) / older_tx_count * 100),
-                            2,
-                        )
-                        if older_tx_count > 0
-                        else 0,
+                        "transaction_count_trend": (
+                            "up" if recent_tx_count > older_tx_count else "down"
+                        ),
+                        "transaction_count_change_percent": (
+                            round(
+                                (
+                                    (recent_tx_count - older_tx_count)
+                                    / older_tx_count
+                                    * 100
+                                ),
+                                2,
+                            )
+                            if older_tx_count > 0
+                            else 0
+                        ),
                         "active_addresses_7d_avg": round(recent_active_addr, 2),
-                        "active_addresses_trend": "up"
-                        if recent_active_addr > older_active_addr
-                        else "down",
-                        "active_addresses_change_percent": round(
-                            (
-                                (recent_active_addr - older_active_addr)
-                                / older_active_addr
-                                * 100
-                            ),
-                            2,
-                        )
-                        if older_active_addr > 0
-                        else 0,
+                        "active_addresses_trend": (
+                            "up" if recent_active_addr > older_active_addr else "down"
+                        ),
+                        "active_addresses_change_percent": (
+                            round(
+                                (
+                                    (recent_active_addr - older_active_addr)
+                                    / older_active_addr
+                                    * 100
+                                ),
+                                2,
+                            )
+                            if older_active_addr > 0
+                            else 0
+                        ),
                         "transfer_value_usd_7d_avg": round(recent_transfer_value, 2),
-                        "transfer_value_trend": "up"
-                        if recent_transfer_value > older_transfer_value
-                        else "down",
-                        "transfer_value_change_percent": round(
-                            (
-                                (recent_transfer_value - older_transfer_value)
-                                / older_transfer_value
-                                * 100
-                            ),
-                            2,
-                        )
-                        if older_transfer_value > 0
-                        else 0,
+                        "transfer_value_trend": (
+                            "up"
+                            if recent_transfer_value > older_transfer_value
+                            else "down"
+                        ),
+                        "transfer_value_change_percent": (
+                            round(
+                                (
+                                    (recent_transfer_value - older_transfer_value)
+                                    / older_transfer_value
+                                    * 100
+                                ),
+                                2,
+                            )
+                            if older_transfer_value > 0
+                            else 0
+                        ),
                     }
 
                 health_metrics["sources"].append("coinmetrics")

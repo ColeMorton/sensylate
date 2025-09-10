@@ -444,9 +444,9 @@ class TemplateScoringEngine:
             raise ValidationError(f"Unknown template variant: {template_variant}")
 
         # Create new algorithm with updated criteria
-        self.scoring_algorithms[content_type][
-            template_variant
-        ] = WeightedScoringAlgorithm(criteria)
+        self.scoring_algorithms[content_type][template_variant] = (
+            WeightedScoringAlgorithm(criteria)
+        )
 
         self.logger.log_operation(
             f"Updated scoring criteria for {content_type}/{template_variant}",

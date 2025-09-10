@@ -1,0 +1,25 @@
+{#- Bitcoin Cycle Analysis Twitter Template
+
+    Use this template when:
+    - MVRV Z-Score >2.0 AND cycle phase = bull_market
+    - Focus on Bitcoin cycle positioning and phase analysis
+    - Emphasize cycle completion and transition probabilities
+-#}
+
+₿ Bitcoin positioned in {{ data.cycle_phase | default("bull_market") }} with MVRV Z-Score at {{ data.mvrv_z_score | default("N/A") }}
+
+Bitcoin cycle metrics:
+• Current phase: {{ data.current_phase | default("bull_market") }} ({{ data.cycle_duration | default("N/A") }} days)
+• Cycle completion: {{ data.cycle_completion | default("N/A") }}%
+• NUPL zone: {{ data.nupl_zone | default("N/A") }} ({{ data.nupl_value | default("N/A") }})
+
+On-chain indicators:
+• Hash rate: {{ data.hash_rate | default("N/A") }} EH/s ({{ data.hash_rate_trend | default("stable") }})
+• LTH supply: {{ data.lth_supply | default("N/A") }}% ({{ data.lth_trend | default("stable") }})
+• Network value: {{ data.network_value_assessment | default("healthy") }}
+
+📋 Full analysis: https://www.colemorton.com/blog/bitcoin-cycle-intelligence-{{ data.date | default(timestamp[:10] | replace("-", "")) }}/
+
+⚠️ Bitcoin investments carry significant risk. Past cycles don't guarantee future patterns.
+
+#Bitcoin #CycleAnalysis #OnChain

@@ -1395,9 +1395,7 @@ def main():
                 severity_icon = (
                     "🔴"
                     if issue["severity"] == "high"
-                    else "🟡"
-                    if issue["severity"] == "medium"
-                    else "🟢"
+                    else "🟡" if issue["severity"] == "medium" else "🟢"
                 )
                 print("  {severity_icon} {issue['category']}: {issue['finding']}")
 
@@ -1408,9 +1406,7 @@ def main():
                 priority_icon = (
                     "🔴"
                     if rec["priority"] == "high"
-                    else "🟡"
-                    if rec["priority"] == "medium"
-                    else "🟢"
+                    else "🟡" if rec["priority"] == "medium" else "🟢"
                 )
                 print("  {priority_icon} {rec['recommendation']}")
 

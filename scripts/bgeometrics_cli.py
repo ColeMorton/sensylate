@@ -293,9 +293,11 @@ class BGeometricsCLI(BaseFinancialCLI):
                     "zone_distribution": {
                         zone: {
                             "days": count,
-                            "percentage": round((count / total_days) * 100, 1)
-                            if total_days > 0
-                            else 0,
+                            "percentage": (
+                                round((count / total_days) * 100, 1)
+                                if total_days > 0
+                                else 0
+                            ),
                         }
                         for zone, count in zones.items()
                     },

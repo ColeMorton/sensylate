@@ -1,0 +1,135 @@
+{#- Bitcoin Cycle Specific Components
+
+    Bitcoin-specific components for on-chain indicators and cycle analysis:
+    - Bitcoin cycle URL generation
+    - Bitcoin investment disclaimers
+    - MVRV and NUPL zone assessments
+    - Bitcoin cycle hashtag strategies
+    - On-chain data formatting
+-#}
+
+{#- Bitcoin Cycle URL Generation Macro -#}
+{%- macro generate_bitcoin_blog_url(date=None, timestamp=None) -%}
+{%- if date -%}
+{%- set formatted_date = date -%}
+{%- elif timestamp -%}
+{%- set formatted_date = timestamp[:10] | replace("-", "") -%}
+{%- else -%}
+{%- set formatted_date = "unknown" -%}
+{%- endif -%}
+https://www.colemorton.com/blog/bitcoin-cycle-intelligence-{{ formatted_date }}/
+{%- endmacro -%}
+
+{#- Bitcoin Investment Disclaimer Macro -#}
+{%- macro bitcoin_disclaimer(type="default") -%}
+{%- if type == "cycle_analysis" -%}
+⚠️ Bitcoin investments carry significant risk. Past cycles don't guarantee future patterns.
+{%- elif type == "onchain_metrics" -%}
+⚠️ On-chain data reflects point-in-time metrics. Network dynamics evolve.
+{%- elif type == "network_health" -%}
+⚠️ Network metrics reflect current conditions. Mining dynamics evolve.
+{%- elif type == "valuation" -%}
+⚠️ Bitcoin valuations are estimates. Multiple scenarios possible.
+{%- elif type == "cycle_dashboard" -%}
+⚠️ Bitcoin cycle indicators reflect current data. Trends may vary.
+{%- else -%}
+⚠️ Bitcoin investments carry significant risk. Past performance doesn't guarantee future results.
+{%- endif -%}
+{%- endmacro -%}
+
+{#- Bitcoin Cycle Hashtag Generation Macro -#}
+{%- macro bitcoin_hashtags(template_type, additional_tags=[]) -%}
+{%- set base_tags = [] -%}
+{%- if template_type == "cycle_analysis" -%}
+{%- set base_tags = ["#Bitcoin", "#CycleAnalysis", "#OnChain"] -%}
+{%- elif template_type == "onchain_metrics" -%}
+{%- set base_tags = ["#Bitcoin", "#OnChain", "#CycleMetrics"] -%}
+{%- elif template_type == "network_health" -%}
+{%- set base_tags = ["#Bitcoin", "#NetworkHealth", "#Mining"] -%}
+{%- elif template_type == "valuation" -%}
+{%- set base_tags = ["#Bitcoin", "#Valuation", "#CycleAnalysis"] -%}
+{%- elif template_type == "cycle_dashboard" -%}
+{%- set base_tags = ["#Bitcoin", "#CycleDashboard", "#BitcoinIntelligence"] -%}
+{%- else -%}
+{%- set base_tags = ["#Bitcoin", "#CycleAnalysis", "#OnChain"] -%}
+{%- endif -%}
+{%- for tag in (base_tags + additional_tags) -%}
+{{ tag }}{{ " " if not loop.last }}
+{%- endfor -%}
+{%- endmacro -%}
+
+{#- MVRV Zone Assessment Macro -#}
+{%- macro mvrv_zone_emoji(mvrv_z_score) -%}
+{%- if mvrv_z_score and mvrv_z_score|float > 6 -%}
+🔴
+{%- elif mvrv_z_score and mvrv_z_score|float > 3 -%}
+🟠
+{%- elif mvrv_z_score and mvrv_z_score|float > 1 -%}
+🟡
+{%- elif mvrv_z_score and mvrv_z_score|float > -1 -%}
+🟢
+{%- else -%}
+🔵
+{%- endif -%}
+{%- endmacro -%}
+
+{#- NUPL Zone Assessment Macro -#}
+{%- macro nupl_zone_emoji(nupl_zone) -%}
+{%- if nupl_zone == "euphoria" -%}
+🔴
+{%- elif nupl_zone == "greed" -%}
+🟠
+{%- elif nupl_zone == "optimism" -%}
+🟡
+{%- elif nupl_zone == "hope" -%}
+🟢
+{%- elif nupl_zone == "fear" -%}
+🔵
+{%- elif nupl_zone == "capitulation" -%}
+🟣
+{%- else -%}
+⚪
+{%- endif -%}
+{%- endmacro -%}
+
+{#- Bitcoin Cycle Phase Emoji Macro -#}
+{%- macro cycle_phase_emoji(cycle_phase) -%}
+{%- if cycle_phase == "bull_market" -%}
+📈
+{%- elif cycle_phase == "bear_market" -%}
+📉
+{%- elif cycle_phase == "accumulation" -%}
+🔄
+{%- elif cycle_phase == "distribution" -%}
+📊
+{%- else -%}
+₿
+{%- endif -%}
+{%- endmacro -%}
+
+{#- Hash Rate Trend Formatting Macro -#}
+{%- macro format_hash_rate(hash_rate, trend=None) -%}
+{%- if hash_rate -%}
+{{ hash_rate }} EH/s{% if trend %} ({{ trend }}){% endif %}
+{%- else -%}
+N/A
+{%- endif -%}
+{%- endmacro -%}
+
+{#- Percentage Formatting with Trend Macro -#}
+{%- macro format_percentage_with_trend(value, trend=None) -%}
+{%- if value -%}
+{{ value }}%{% if trend %} ({{ trend }}){% endif %}
+{%- else -%}
+N/A
+{%- endif -%}
+{%- endmacro -%}
+
+{#- Bitcoin Price Formatting Macro -#}
+{%- macro format_bitcoin_price(price) -%}
+{%- if price -%}
+${{ "{:,.0f}".format(price|float) if price|string|regex_match('^[0-9.]+$') else price }}
+{%- else -%}
+N/A
+{%- endif -%}
+{%- endmacro -%}

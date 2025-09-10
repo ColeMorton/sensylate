@@ -267,9 +267,9 @@ class BinanceAPIService(BaseFinancialService):
                     "spread_percent": round(spread_percent, 4),
                     "bid_volume_top_10": round(bid_volume, 4),
                     "ask_volume_top_10": round(ask_volume, 4),
-                    "buy_sell_ratio": round(bid_volume / ask_volume, 4)
-                    if ask_volume > 0
-                    else 0,
+                    "buy_sell_ratio": (
+                        round(bid_volume / ask_volume, 4) if ask_volume > 0 else 0
+                    ),
                 },
                 "timestamp": datetime.now().isoformat(),
             }
@@ -400,9 +400,11 @@ class BinanceAPIService(BaseFinancialService):
                     "start_price": closes[0] if closes else 0,
                     "end_price": closes[-1] if closes else 0,
                     "price_change": closes[-1] - closes[0] if len(closes) >= 2 else 0,
-                    "price_change_percent": ((closes[-1] - closes[0]) / closes[0] * 100)
-                    if len(closes) >= 2 and closes[0] > 0
-                    else 0,
+                    "price_change_percent": (
+                        ((closes[-1] - closes[0]) / closes[0] * 100)
+                        if len(closes) >= 2 and closes[0] > 0
+                        else 0
+                    ),
                     "highest_price": max(highs) if highs else 0,
                     "lowest_price": min(lows) if lows else 0,
                     "average_volume": sum(volumes) / len(volumes) if volumes else 0,

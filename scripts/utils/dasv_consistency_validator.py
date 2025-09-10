@@ -539,9 +539,7 @@ class DASVConsistencyValidator:
                 status_emoji = (
                     "✅"
                     if result.status == "pass"
-                    else "⚠️"
-                    if result.status == "warning"
-                    else "❌"
+                    else "⚠️" if result.status == "warning" else "❌"
                 )
                 print(
                     f"{status_emoji} {result.check_name}: {result.status} ({result.score:.2f})"
@@ -589,9 +587,7 @@ class DASVConsistencyValidator:
                 else (
                     "good"
                     if overall_score >= 0.8
-                    else "needs_attention"
-                    if overall_score >= 0.7
-                    else "critical"
+                    else "needs_attention" if overall_score >= 0.7 else "critical"
                 )
             ),
         }
@@ -649,9 +645,7 @@ class DASVConsistencyValidator:
             status_emoji = (
                 "✅"
                 if result.status == "pass"
-                else "⚠️"
-                if result.status == "warning"
-                else "❌"
+                else "⚠️" if result.status == "warning" else "❌"
             )
             print(
                 f"  {status_emoji} {check_name}: {result.score:.2f} ({result.status})"
