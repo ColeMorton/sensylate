@@ -5,14 +5,6 @@ description: "Connect with Cole Morton about technical collaboration, profession
 draft: false
 ---
 
-## Contact Information
-
-**Location**: Chermside West, Queensland, Australia (Brisbane)  
-**Phone**: 0415583331  
-<strong>Email</strong>: <a href="mailto:cole.morton@hotmail.com" onclick="window.open(this.href, '_blank'); return false;" rel="noopener noreferrer">cole.morton@hotmail.com</a>  
-**LinkedIn**: [linkedin.com/in/colemorton-72300745](https://www.linkedin.com/in/colemorton-72300745)  
-**Portfolio**: [colemorton.com](https://www.colemorton.com/)
-
 ## Professional Inquiries Welcome
 
 I'm interested in connecting with technical professionals, trading firms, and organizations working with systematic market analysis. The Sensylate platform demonstrates **enterprise-grade GenContentOps capabilities** that can be adapted for institutional applications.
