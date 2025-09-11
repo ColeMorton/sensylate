@@ -2,7 +2,6 @@
 import type { ImageMetadata } from "astro";
 import { Image } from "astro:assets";
 import ImageLightbox from "@/helpers/ImageLightbox.tsx";
-import ChartLightbox from "@/layouts/helpers/ChartLightbox.tsx";
 
 // Props interface for the component
 interface Props {
@@ -16,9 +15,6 @@ interface Props {
   class?: string;
   style?: any;
   enableLightbox?: boolean;
-  chartType?: string;
-  chartTitle?: string;
-  enableChartLightbox?: boolean;
 }
 
 // Destructuring Astro.props to get the component's props
@@ -33,9 +29,6 @@ let {
   format,
   style,
   enableLightbox = true,
-  chartType,
-  chartTitle,
-  enableChartLightbox = false,
 } = Astro.props;
 
 src = `/public${src}`;
@@ -66,19 +59,7 @@ const originalSrc = src.replace("/public", "");
 ---
 
 {
-  isValidPath && enableChartLightbox && chartType ? (
-    <ChartLightbox
-      src={originalSrc}
-      alt={alt}
-      width={width || imageData?.width}
-      height={height || imageData?.height}
-      className={className}
-      thumbnailClassName="rounded"
-      chartType={chartType}
-      chartTitle={chartTitle}
-      client:load
-    />
-  ) : isValidPath && enableLightbox ? (
+  isValidPath && enableLightbox ? (
     <ImageLightbox
       src={originalSrc}
       alt={alt}

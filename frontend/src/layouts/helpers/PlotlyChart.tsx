@@ -24,18 +24,27 @@ const Plot = lazy(() => {
 
   // Simplified import chain - try to avoid the complex factory pattern
   try {
-    return import("react-plotly.js").then((module) => {
-      console.log("✅ Successfully imported react-plotly.js:", !!module.default);
-      return { default: module.default };
-    }).catch((error) => {
-      console.error("❌ Failed to import react-plotly.js:", error);
-      // Fallback to factory approach
-      return import("react-plotly.js/factory").then(async (factory) => {
-        const Plotly = await import("plotly.js-basic-dist");
-        console.log("✅ Factory fallback loaded:", !!factory.default, !!Plotly.default);
-        return { default: factory.default(Plotly.default || Plotly) };
+    return import("react-plotly.js")
+      .then((module) => {
+        console.log(
+          "✅ Successfully imported react-plotly.js:",
+          !!module.default,
+        );
+        return { default: module.default };
+      })
+      .catch((error) => {
+        console.error("❌ Failed to import react-plotly.js:", error);
+        // Fallback to factory approach
+        return import("react-plotly.js/factory").then(async (factory) => {
+          const Plotly = await import("plotly.js-basic-dist");
+          console.log(
+            "✅ Factory fallback loaded:",
+            !!factory.default,
+            !!Plotly.default,
+          );
+          return { default: factory.default(Plotly.default || Plotly) };
+        });
       });
-    });
   } catch (error) {
     console.error("❌ Critical Plotly import error:", error);
     return Promise.resolve({
@@ -390,7 +399,7 @@ const PlotlyChart: React.FC<PlotlyChartProps> = ({
     hasLayout: !!defaultLayout,
     hasConfig: !!defaultConfig,
     isChartLoaded,
-    isChartRendered
+    isChartRendered,
   });
 
   return (
@@ -426,7 +435,9 @@ const PlotlyChart: React.FC<PlotlyChartProps> = ({
           fallback={
             <div className="bg-red-100 p-4 text-red-800">
               <h3 className="font-bold">Chart Error</h3>
-              <p className="text-sm">Failed to render Plotly chart. Check console for details.</p>
+              <p className="text-sm">
+                Failed to render Plotly chart. Check console for details.
+              </p>
               <p className="text-xs">Data: {chartData?.length || 0} series</p>
             </div>
           }
@@ -451,6 +462,7 @@ const PlotlyChart: React.FC<PlotlyChartProps> = ({
       </Suspense>
     </div>
   );
+};
 
 // Simple Error Boundary component
 class ErrorBoundary extends React.Component<

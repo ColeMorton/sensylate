@@ -13,8 +13,6 @@ import { humanize, markdownify, slugify } from "@/lib/utils/textConverter";
 import { render } from "astro:content";
 import { FaRegClock, FaRegFolder } from "react-icons/fa";
 import ImageMod from "./components/ImageMod.astro";
-import ChartDisplay from "@/layouts/shortcodes/ChartDisplay.tsx";
-import BlogChartEnhancer from "@/layouts/helpers/BlogChartEnhancer.tsx";
 
 const { post } = Astro.props;
 
@@ -38,30 +36,8 @@ const {
   date,
   tags = [],
   author,
-  bitcoin_cycle_enabled,
-  bitcoin_cycle_confidence,
-  bitcoin_cycle_phase,
 } = post.data || {};
 
-// Chart detection logic for extensible blog post types
-const getChartConfig = () => {
-  // Bitcoin Cycle Intelligence posts
-  if (bitcoin_cycle_enabled) {
-    return {
-      chartType: "btc-price",
-      chartTitle: "Bitcoin Cycle Intelligence",
-      enabled: true,
-    };
-  }
-
-  // Future extensibility: add other post type detection here
-  // if (trading_analysis_data) return { chartType: "portfolio-performance", ... };
-  // if (sector_analysis_data) return { chartType: "sector-comparison", ... };
-
-  return { enabled: false };
-};
-
-const chartConfig = getChartConfig();
 
 // Get raw content for meta analysis
 const rawContent = post.body || "";
@@ -111,39 +87,12 @@ const getTagUrl = (tag: string) => {
         {
           image && (
             <div class="mb-10">
-              {chartConfig.enabled ? (
-                <>
-                  {/* Desktop (LG+): Show interactive chart */}
-                  <div class="hidden lg:block">
-                    <ChartDisplay
-                      key={`chart-${post.id || post.slug}`}
-                      client:only="react"
-                      title={chartConfig.chartTitle}
-                      category="Interactive Analysis"
-                      description={`Interactive ${chartConfig.chartTitle} chart visualization`}
-                      chartType={chartConfig.chartType}
-                      className="hero-chart-container w-full rounded"
-                      titleOnly={true}
-                    />
-                  </div>
-                  {/* Mobile/Tablet: Show original image with lightbox */}
-                  <div class="block lg:hidden">
-                    <ImageMod
-                      src={image}
-                      alt={title}
-                      class="hero-image-container w-full rounded"
-                      format="webp"
-                    />
-                  </div>
-                </>
-              ) : (
-                <ImageMod
-                  src={image}
-                  alt={title}
-                  class="hero-image-container w-full rounded"
-                  format="webp"
-                />
-              )}
+              <ImageMod
+                src={image}
+                alt={title}
+                class="hero-image-container w-full rounded"
+                format="webp"
+              />
             </div>
           )
         }
@@ -179,17 +128,6 @@ const getTagUrl = (tag: string) => {
           <Content />
         </div>
 
-        {/* Chart Enhancer for content images */}
-        {
-          chartConfig.enabled && (
-            <BlogChartEnhancer
-              chartType={chartConfig.chartType}
-              chartTitle={chartConfig.chartTitle}
-              enabled={true}
-              client:only="react"
-            />
-          )
-        }
         <!-- Post Meta Section -->
         <div
           class="border-border dark:border-darkmode-border bg-light dark:bg-darkmode-light mt-10 rounded-lg border p-6"
