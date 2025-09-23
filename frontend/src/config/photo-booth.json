@@ -40,6 +40,14 @@
       "description": "Comprehensive fundamental analysis dashboard with 3x3 layout",
       "layout": "fundamental_3x3",
       "enabled": true
+    },
+    {
+      "id": "logo_generation",
+      "name": "Logo Generation Dashboard",
+      "file": "logo-generation.mdx",
+      "description": "Brand logo generation with multiple sizes and formats for high-quality captures",
+      "layout": "logo_variants",
+      "enabled": true
     }
   ],
   "screenshot_settings": {
@@ -109,7 +117,7 @@
   },
   "output": {
     "directory": "data/outputs/photo-booth",
-    "filename_template": "{dashboard_id}_{mode}_{aspect_ratio}_{format}_{dpi}dpi_{timestamp}.{extension}",
+    "filename_template": "{dashboard_id}_{mode}_{aspect_ratio}_{format}_{dpi}dpi_{brand}_{timestamp}.{extension}",
     "legacy_filename_template": "{dashboard_id}_{mode}_{timestamp}.png",
     "modes": ["light", "dark"],
     "auto_cleanup": {
@@ -211,6 +219,14 @@
       "data_freshness_requirements": {
         "warning_threshold_hours": 24,
         "error_threshold_hours": 72
+      },
+      "refresh_priority": "low"
+    },
+    "logo_generation": {
+      "primary_charts": [],
+      "data_freshness_requirements": {
+        "warning_threshold_hours": 8760,
+        "error_threshold_hours": 17520
       },
       "refresh_priority": "low"
     }

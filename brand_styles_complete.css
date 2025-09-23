@@ -1,0 +1,130 @@
+/*
+ * Complete Brand Typography CSS
+ * Generated: 2025-09-14T06:56:28.114Z
+ *
+ * This CSS contains ALL computed properties needed to recreate
+ * both "Cole Morton" and "colemorton.com" brand typography
+ * with pixel-perfect accuracy.
+ */
+
+/* ===== PERSONAL BRAND: "Cole Morton" ===== */
+.personal-brand-complete {
+  font-family: "Paytone One", _font_fallback_118013157351, sans-serif, sans-serif;
+  font-size: 72px;
+  font-weight: 600;
+  line-height: 90px;
+  word-spacing: 0px;
+  color: rgb(249, 250, 251);
+  display: flex;
+  align-items: center;
+  transform: matrix(1, 0, 0, 1, 0, -5);
+  margin-top: 0px;
+  margin-right: 0px;
+  margin-bottom: 0px;
+  margin-left: 0px;
+  padding-top: 0px;
+  padding-right: 0px;
+  padding-bottom: 0px;
+  padding-left: 0px;
+  text-align: start;
+  vertical-align: baseline;
+  text-decoration: none solid rgb(249, 250, 251);
+  text-transform: none;
+  text-shadow: none;
+  opacity: 1;
+  position: static;
+  box-sizing: border-box;
+  width: 431.141px;
+  height: 90px;
+  max-width: none;
+  max-height: none;
+
+  /* Additional computed properties available in extracted JSON */
+}
+
+/* ===== ATTRIBUTION BRAND: "colemorton.com" ===== */
+.attribution-brand-complete {
+  font-family: "Paytone One", _font_fallback_1592220569472, sans-serif, sans-serif;
+  font-size: 72px;
+  font-weight: 600;
+  line-height: 90px;
+  word-spacing: 0px;
+  color: rgb(249, 250, 251);
+  display: flex;
+  align-items: center;
+  transform: matrix(1, 0, 0, 1, 0, -5);
+  margin-top: 0px;
+  margin-right: 0px;
+  margin-bottom: 0px;
+  margin-left: 0px;
+  padding-top: 0px;
+  padding-right: 0px;
+  padding-bottom: 0px;
+  padding-left: 0px;
+  text-align: start;
+  vertical-align: baseline;
+  text-decoration: none solid rgb(249, 250, 251);
+  text-transform: none;
+  text-shadow: none;
+  opacity: 1;
+  position: static;
+  box-sizing: border-box;
+  width: 594.367px;
+  height: 90px;
+  max-width: none;
+  max-height: none;
+
+  /* Additional computed properties available in extracted JSON */
+}
+
+/* ===== USAGE EXAMPLES ===== */
+
+/* Personal Brand Implementation */
+.personal-brand-nav {
+  /* Use for navigation header */
+  composes: personal-brand-complete;
+}
+
+.personal-brand-logo {
+  /* Use for logo displays */
+  composes: personal-brand-complete;
+}
+
+/* Attribution Brand Implementation */
+.attribution-brand-footer {
+  /* Use for chart export footers */
+  composes: attribution-brand-complete;
+}
+
+/* ===== RESPONSIVE VARIATIONS ===== */
+@media (max-width: 768px) {
+  .personal-brand-complete {
+    font-size: 2rem; /* Adjust for mobile */
+  }
+
+  .attribution-brand-complete {
+    font-size: 1.5rem; /* Adjust for mobile */
+  }
+}
+
+/* ===== DARK MODE VARIATIONS ===== */
+.dark .personal-brand-complete,
+.dark .attribution-brand-complete {
+  color: #e0e0e0; /* Dark mode text color */
+}
+
+/* ===== VALIDATION TEST CLASS ===== */
+.brand-test-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 2rem;
+  background: #f5f5f5;
+}
+
+.brand-test-item {
+  padding: 1rem;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}

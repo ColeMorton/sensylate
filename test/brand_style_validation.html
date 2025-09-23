@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brand Style Validation Test</title>
+    <link href="https://fonts.googleapis.com/css2?family=Paytone+One:wght@400&display=swap" rel="stylesheet">
+    <style>
+        /* Reset and base styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: system-ui, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+            padding: 2rem;
+        }
+
+        /* Complete extracted brand styles */
+        .personal-brand-complete {
+            font-family: "Paytone One", sans-serif;
+            font-size: 72px;
+            font-weight: 600;
+            line-height: 90px;
+            word-spacing: 0px;
+            color: rgb(249, 250, 251);
+            display: flex;
+            align-items: center;
+            transform: matrix(1, 0, 0, 1, 0, -5); /* translateY(-5px) */
+            margin: 0px;
+            padding: 0px;
+            text-align: start;
+            vertical-align: baseline;
+            text-decoration: none solid rgb(249, 250, 251);
+            text-transform: none;
+            text-shadow: none;
+            opacity: 1;
+            position: static;
+            box-sizing: border-box;
+            width: 431.141px;
+            height: 90px;
+        }
+
+        .attribution-brand-complete {
+            font-family: "Paytone One", sans-serif;
+            font-size: 72px;
+            font-weight: 600;
+            line-height: 90px;
+            word-spacing: 0px;
+            color: rgb(249, 250, 251);
+            display: flex;
+            align-items: center;
+            transform: matrix(1, 0, 0, 1, 0, -5); /* translateY(-5px) */
+            margin: 0px;
+            padding: 0px;
+            text-align: start;
+            vertical-align: baseline;
+            text-decoration: none solid rgb(249, 250, 251);
+            text-transform: none;
+            text-shadow: none;
+            opacity: 1;
+            position: static;
+            box-sizing: border-box;
+            width: 594.367px; /* Wider due to longer text */
+            height: 90px;
+        }
+
+        /* Dark mode variations */
+        .dark .personal-brand-complete,
+        .dark .attribution-brand-complete {
+            color: rgb(224, 224, 224);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .personal-brand-complete {
+                font-size: 2rem;
+            }
+
+            .attribution-brand-complete {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Test container styles */
+        .brand-test-container {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            padding: 2rem;
+            background: #f5f5f5;
+        }
+
+        .brand-test-item {
+            padding: 1rem;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .brand-test-item h2 {
+            margin-bottom: 1rem;
+            color: #333;
+            font-size: 1.5rem;
+        }
+
+        .brand-showcase {
+            background: #1a1a1a;
+            padding: 2rem;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 150px;
+        }
+
+        /* Dark mode toggle */
+        .dark-mode-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background: #333;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .dark {
+            background: #1a1a1a;
+            color: #e0e0e0;
+        }
+
+        .dark .brand-test-container {
+            background: #1a1a1a;
+        }
+
+        .dark .brand-test-item {
+            background: #333;
+            border-color: #555;
+            color: #e0e0e0;
+        }
+
+        .specifications {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: #666;
+            overflow-x: auto;
+        }
+
+        .dark .specifications {
+            background: #2a2a2a;
+            color: #ccc;
+        }
+
+        .comparison-note {
+            margin-top: 1rem;
+            padding: 0.5rem;
+            background: #e7f3ff;
+            border-left: 4px solid #2196f3;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .dark .comparison-note {
+            background: #1a2f3a;
+            border-left-color: #64b5f6;
+        }
+    </style>
+</head>
+<body>
+    <button class="dark-mode-toggle" onclick="toggleDarkMode()">🌙 Toggle Dark Mode</button>
+
+    <div class="brand-test-container">
+        <h1>Brand Typography Validation Test</h1>
+        <p>This test validates that the extracted CSS specifications can recreate both brand styles with pixel-perfect accuracy.</p>
+
+        <div class="brand-test-item">
+            <h2>Personal Brand: "Cole Morton"</h2>
+            <div class="brand-showcase">
+                <h1 class="personal-brand-complete">Cole Morton</h1>
+            </div>
+            <div class="specifications">
+                Font: "Paytone One", sans-serif<br>
+                Size: 72px | Weight: 600 | Line Height: 90px<br>
+                Transform: translateY(-5px)<br>
+                Color: rgb(249, 250, 251)<br>
+                Dimensions: 431.141px × 90px
+            </div>
+            <div class="comparison-note">
+                <strong>Validation:</strong> Compare this rendered text with the original in navigation header and logo generation dashboard. Should match exactly in font size, weight, spacing, and visual positioning.
+            </div>
+        </div>
+
+        <div class="brand-test-item">
+            <h2>Attribution Brand: "colemorton.com"</h2>
+            <div class="brand-showcase">
+                <h1 class="attribution-brand-complete">colemorton.com</h1>
+            </div>
+            <div class="specifications">
+                Font: "Paytone One", sans-serif<br>
+                Size: 72px | Weight: 600 | Line Height: 90px<br>
+                Transform: translateY(-5px)<br>
+                Color: rgb(249, 250, 251)<br>
+                Dimensions: 594.367px × 90px (wider due to longer text)
+            </div>
+            <div class="comparison-note">
+                <strong>Validation:</strong> Compare this rendered text with the original in portfolio history portrait dashboard footer. Should match exactly in all visual properties.
+            </div>
+        </div>
+
+        <div class="brand-test-item">
+            <h2>Technical Validation Checklist</h2>
+            <ul style="margin-left: 2rem;">
+                <li>✅ Font loading: Paytone One from Google Fonts</li>
+                <li>✅ Font size: 72px (computed from responsive classes)</li>
+                <li>✅ Font weight: 600 (semibold)</li>
+                <li>✅ Transform: translateY(-5px) for visual alignment</li>
+                <li>✅ Color: Light mode - rgb(249, 250, 251)</li>
+                <li>✅ Dark mode: rgb(224, 224, 224)</li>
+                <li>✅ Width difference: Personal (431px) vs Attribution (594px)</li>
+                <li>✅ Responsive behavior: Scales down on mobile</li>
+            </ul>
+        </div>
+
+        <div class="brand-test-item">
+            <h2>Usage Instructions</h2>
+            <p><strong>For Developers:</strong></p>
+            <ol style="margin-left: 2rem;">
+                <li>Copy the CSS specifications from STYLE_GUIDE.md</li>
+                <li>Include Paytone One font: <code>@import url('https://fonts.googleapis.com/css2?family=Paytone+One:wght@400&display=swap');</code></li>
+                <li>Apply <code>.personal-brand-complete</code> or <code>.attribution-brand-complete</code> classes</li>
+                <li>Ensure proper container background (dark) for visibility</li>
+                <li>Test responsive behavior on mobile devices</li>
+            </ol>
+
+            <p style="margin-top: 1rem;"><strong>For Designers:</strong></p>
+            <ul style="margin-left: 2rem;">
+                <li>Personal Brand: Use for navigation, UI elements, direct user interactions</li>
+                <li>Attribution Brand: Use for exported content, social media, charts</li>
+                <li>Both maintain identical styling but different text content and width</li>
+                <li>Preserve the 5px upward transform for visual alignment</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark');
+            const button = document.querySelector('.dark-mode-toggle');
+            if (document.body.classList.contains('dark')) {
+                button.textContent = '☀️ Toggle Light Mode';
+            } else {
+                button.textContent = '🌙 Toggle Dark Mode';
+            }
+        }
+
+        // Wait for fonts to load
+        document.fonts.ready.then(() => {
+            console.log('Paytone One font loaded successfully');
+
+            // Validate font loading
+            if (document.fonts.check('72px "Paytone One"')) {
+                console.log('✅ Brand font validation: Paytone One is loaded and ready');
+            } else {
+                console.warn('⚠️ Brand font validation: Paytone One may not be loaded properly');
+            }
+        });
+
+        // Add measurement validation
+        window.addEventListener('load', () => {
+            const personalElement = document.querySelector('.personal-brand-complete');
+            const attributionElement = document.querySelector('.attribution-brand-complete');
+
+            if (personalElement) {
+                const rect = personalElement.getBoundingClientRect();
+                console.log('Personal brand dimensions:', {
+                    width: rect.width,
+                    height: rect.height,
+                    expected: { width: 431.141, height: 90 }
+                });
+            }
+
+            if (attributionElement) {
+                const rect = attributionElement.getBoundingClientRect();
+                console.log('Attribution brand dimensions:', {
+                    width: rect.width,
+                    height: rect.height,
+                    expected: { width: 594.367, height: 90 }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

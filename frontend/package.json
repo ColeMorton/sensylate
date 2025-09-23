@@ -33,6 +33,8 @@
     "test:photo-booth:e2e": "vitest run src/test/photo-booth/e2e --config vitest.e2e.config.ts",
     "test:photo-booth:e2e:dev": "PHOTOBOOTH_E2E_DEV=true NODE_ENV=development vitest run src/test/photo-booth/e2e --config vitest.e2e.config.ts",
     "test:photo-booth:e2e:prod": "PHOTOBOOTH_E2E_DEV=false NODE_ENV=production vitest run src/test/photo-booth/e2e --config vitest.e2e.config.ts",
+    "test:photo-booth:light-theme": "PHOTOBOOTH_E2E_DEV=true NODE_ENV=development vitest run src/test/photo-booth/e2e/light-theme-logo.test.ts --config vitest.e2e.config.ts",
+    "test:photo-booth:theme-regression": "E2E_SCREENSHOTS=true PHOTOBOOTH_E2E_DEV=true NODE_ENV=development vitest run src/test/photo-booth/e2e/light-theme-logo.test.ts --config vitest.e2e.config.ts",
     "photo-booth:generate": "python3 ../scripts/photo_booth_generator.py",
     "photo-booth:generate:single": "python3 ../scripts/photo_booth_generator.py --dashboard",
     "photo-booth:generate:light": "python3 ../scripts/photo_booth_generator.py --mode light",

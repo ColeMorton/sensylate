@@ -38,6 +38,11 @@ const PhotoBoothDisplay: React.FC<PhotoBoothDisplayProps> = ({
   const [exportMessage, setExportMessage] = useState<string | null>(null);
   const [exportError, setExportError] = useState<string | null>(null);
 
+  // Brand parameter for logo generation
+  const [brandType, setBrandType] = useState<"personal" | "attribution">(
+    "personal",
+  );
+
   // Fundamental analysis specific state
   const [selectedTicker, setSelectedTicker] = useState<string>("GOOGL");
   const [availableTickers, setAvailableTickers] = useState<string[]>(["GOOGL"]);
@@ -94,6 +99,10 @@ const PhotoBoothDisplay: React.FC<PhotoBoothDisplayProps> = ({
         const dpiParam = urlParams.get("dpi");
         const scaleParam = urlParams.get("scale");
         const tickerParam = urlParams.get("ticker");
+        const brandParam = urlParams.get("brand") as
+          | "personal"
+          | "attribution"
+          | null;
 
         if (dashboardParam) {
           setSelectedDashboard(dashboardParam);
@@ -128,6 +137,14 @@ const PhotoBoothDisplay: React.FC<PhotoBoothDisplayProps> = ({
 
         if (modeParam && ["light", "dark"].includes(modeParam)) {
           setCurrentMode(modeParam);
+          // Ensure document root theme is synced with URL parameter
+          document.documentElement.classList.toggle(
+            "dark",
+            modeParam === "dark",
+          );
+          console.log(
+            `🎨 Initial photo booth mode set to: ${modeParam} (from URL)`,
+          );
         }
 
         if (formatParam && ["png", "svg", "both"].includes(formatParam)) {
@@ -151,6 +168,10 @@ const PhotoBoothDisplay: React.FC<PhotoBoothDisplayProps> = ({
 
         if (scaleParam && [2, 3, 4].includes(parseInt(scaleParam))) {
           setSelectedScaleFactor(parseInt(scaleParam) as 2 | 3 | 4);
+        }
+
+        if (brandParam && ["personal", "attribution"].includes(brandParam)) {
+          setBrandType(brandParam);
         }
 
         setLoading(false);
@@ -242,6 +263,10 @@ const PhotoBoothDisplay: React.FC<PhotoBoothDisplayProps> = ({
   const handleModeChange = useCallback((mode: "light" | "dark") => {
     setIsReady(false);
     setCurrentMode(mode);
+
+    // Sync with document root theme for proper CSS inheritance
+    document.documentElement.classList.toggle("dark", mode === "dark");
+    console.log(`🎨 Photo booth mode changed to: ${mode}`);
 
     // Update URL without page reload
     const url = new URL(window.location.href);
@@ -686,7 +711,7 @@ const PhotoBoothDisplay: React.FC<PhotoBoothDisplayProps> = ({
       {/* Dashboard Content */}
       <div
         ref={dashboardRef}
-        className={`photo-booth-dashboard ${currentMode === "dark" ? "dark" : ""}`}
+        className="photo-booth-dashboard"
         data-dashboard-id={selectedDashboard}
         data-mode={currentMode}
         data-format={selectedFormat}
@@ -701,6 +726,7 @@ const PhotoBoothDisplay: React.FC<PhotoBoothDisplayProps> = ({
           aspectRatio={selectedAspectRatio}
           selectedTicker={selectedTicker}
           fundamentalMockDataFn={fundamentalMockDataFn}
+          brandType={brandType}
         />
       </div>
     </div>
@@ -714,14 +740,63 @@ const DashboardRenderer: React.FC<{
   aspectRatio: "16:9" | "4:3" | "3:4";
   selectedTicker?: string;
   fundamentalMockDataFn?: ((ticker: string) => any) | null;
+  brandType?: "personal" | "attribution";
 }> = ({
   dashboard,
   mode,
   aspectRatio: _aspectRatio,
   selectedTicker,
   fundamentalMockDataFn,
+  brandType = "personal",
 }) => {
   const layoutClasses = DashboardLoader.getLayoutClasses(dashboard.layout);
+
+  // Handle logo generation dashboard specially
+  if (dashboard.layout === "logo_variants") {
+    return (
+      <div
+        className="logo-generation-container"
+        style={{
+          width: "100%",
+          height: "100%",
+          colorScheme: mode === "dark" ? "dark" : "light",
+        }}
+      >
+        <ErrorBoundary
+          fallback={
+            <div className="flex min-h-[400px] items-center justify-center">
+              <div className="text-center">
+                <h3 className="text-lg font-semibold text-red-600">
+                  Logo Generation Error
+                </h3>
+                <p className="text-gray-600">
+                  Unable to load logo generation dashboard
+                </p>
+                <button
+                  onClick={() => window.location.reload()}
+                  className="mt-4 rounded-md bg-blue-500 px-4 py-2 text-white transition-colors hover:bg-blue-600"
+                >
+                  Reload Page
+                </button>
+              </div>
+            </div>
+          }
+        >
+          {/* Single clean logo optimized for screenshot capture */}
+          <div className="logo-generation-container flex min-h-screen w-full items-center justify-center bg-transparent">
+            <h1 className="brand-text text-text-dark dark:text-darkmode-text-dark text-5xl font-semibold md:text-6xl lg:text-7xl">
+              {brandType === "attribution" ? "colemorton.com" : "Cole Morton"}
+            </h1>
+          </div>
+
+          {/* Photo booth ready indicator */}
+          <div className="photo-booth-ready absolute -bottom-full opacity-0">
+            Logo generation dashboard loaded
+          </div>
+        </ErrorBoundary>
+      </div>
+    );
+  }
 
   // Handle fundamental analysis dashboard specially
   if (dashboard.layout === "fundamental_3x3") {
