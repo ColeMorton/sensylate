@@ -48,6 +48,7 @@ DISABLE_MISE = "true"
   PUBLIC_FEATURE_ELEMENTS_PAGE = "false"
   PUBLIC_FEATURE_AUTHORS_PAGE = "false"
   PUBLIC_FEATURE_CHARTS_PAGE = "false"
+  PUBLIC_FEATURE_RESUME_PAGE = "true"
   PUBLIC_FEATURE_PHOTO_BOOTH = "false"
 
 # Branch deploy context (staging and other branches)
@@ -62,7 +63,6 @@ DISABLE_MISE = "true"
   PUBLIC_FEATURE_ELEMENTS_PAGE = "true"
   PUBLIC_FEATURE_AUTHORS_PAGE = "true"
   PUBLIC_FEATURE_CHARTS_PAGE = "true"
-  PUBLIC_FEATURE_RESUME_PAGE = "true"
   PUBLIC_FEATURE_PHOTO_BOOTH = "true"
 
 # Deploy preview context (pull requests)
@@ -77,5 +77,4 @@ DISABLE_MISE = "true"
   PUBLIC_FEATURE_ELEMENTS_PAGE = "true"
   PUBLIC_FEATURE_AUTHORS_PAGE = "true"
   PUBLIC_FEATURE_CHARTS_PAGE = "true"
-  PUBLIC_FEATURE_RESUME_PAGE = "true"
   PUBLIC_FEATURE_PHOTO_BOOTH = "true"

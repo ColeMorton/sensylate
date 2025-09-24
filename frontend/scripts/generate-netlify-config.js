@@ -30,7 +30,7 @@ const BACKUP_PATH = join(__dirname, '../netlify.toml.backup');
 async function loadFeatureFlags() {
   const flags = [
     { name: 'search', environments: { development: true, staging: true, production: true } },
-    { name: 'themeSwitcher', environments: { development: true, staging: true, production: true } },
+    { name: 'themeSwitcher', environments: { development: true, staging: true, production: false } },
     { name: 'comments', environments: { development: false, staging: false, production: false } },
     { name: 'gtm', environments: { development: false, staging: false, production: true } },
     { name: 'calculators', environments: { development: true, staging: false, production: false } },
