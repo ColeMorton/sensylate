@@ -8,7 +8,7 @@ authors: ["Cole Morton", "Claude"]
 categories: ["Bitcoin", "Analysis", "Cycle Intelligence", "Cryptocurrency", "On-Chain Analysis"]
 tags:
   ["bitcoin", "cycle-intelligence", "bull-market", "optimism", "mvrv-z-score", "nupl", "on-chain"]
-draft: true
+draft: false
 bitcoin_cycle_data:
   confidence: 9.5
   data_quality: 0.94
