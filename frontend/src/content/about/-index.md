@@ -1,5 +1,5 @@
 ---
-title: "About Cole Morton"
+title: "Hi, I'm Cole!"
 meta_title: "Cole Morton - Senior Software Engineer"
 description: "Senior Software Engineer with 11+ years building production systems across fintech, healthcare, and digital commerce. Recently relocated to Brisbane from Berlin, bringing deep commercial expertise and modern development practices to Australia's thriving tech ecosystem."
 image: "/images/photo_2025-06-07 09.33.21.jpeg"
