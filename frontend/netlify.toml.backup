@@ -40,7 +40,7 @@ DISABLE_MISE = "true"
 [context.production.environment]
   PUBLIC_ENV = "production"
   PUBLIC_FEATURE_SEARCH = "true"
-  PUBLIC_FEATURE_THEME_SWITCHER = "true"
+  PUBLIC_FEATURE_THEME_SWITCHER = "false"
   PUBLIC_FEATURE_COMMENTS = "false"
   PUBLIC_FEATURE_GTM = "true"
   PUBLIC_FEATURE_CALCULATORS = "false"
@@ -48,7 +48,6 @@ DISABLE_MISE = "true"
   PUBLIC_FEATURE_ELEMENTS_PAGE = "false"
   PUBLIC_FEATURE_AUTHORS_PAGE = "false"
   PUBLIC_FEATURE_CHARTS_PAGE = "false"
-  PUBLIC_FEATURE_RESUME_PAGE = "true"
   PUBLIC_FEATURE_PHOTO_BOOTH = "false"
 
 # Branch deploy context (staging and other branches)

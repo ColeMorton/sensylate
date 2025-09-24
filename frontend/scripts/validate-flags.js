@@ -85,22 +85,19 @@ class ValidationResult {
 }
 
 /**
- * Load and parse feature flags from config
+ * Load feature flags from the universal configuration loader
  */
 async function loadFeatureFlags() {
-  // Simplified flag loading (same as other scripts)
-  return [
-    { name: 'search', environments: { development: true, staging: true, production: true } },
-    { name: 'themeSwitcher', environments: { development: true, staging: true, production: false } },
-    { name: 'comments', environments: { development: false, staging: false, production: false } },
-    { name: 'gtm', environments: { development: false, staging: false, production: true } },
-    { name: 'calculators', environments: { development: true, staging: false, production: false } },
-    { name: 'calculatorAdvanced', environments: { development: true, staging: true, production: false } },
-    { name: 'elementsPage', environments: { development: true, staging: true, production: false } },
-    { name: 'authorsPage', environments: { development: true, staging: true, production: false } },
-    { name: 'chartsPage', environments: { development: true, staging: true, production: false } },
-    { name: 'photoBooth', environments: { development: true, staging: true, production: false } },
-  ];
+  try {
+    // Import the universal configuration loader
+    const { loadFeatureFlags: universalLoader } = await import('../src/lib/flagLoader.js');
+
+    // Use the universal loader to get flags from the single source of truth
+    return await universalLoader();
+  } catch (error) {
+    console.error('Error loading feature flags via universal loader:', error);
+    throw error;
+  }
 }
 
 /**

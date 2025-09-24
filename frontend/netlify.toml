@@ -48,7 +48,7 @@ DISABLE_MISE = "true"
   PUBLIC_FEATURE_ELEMENTS_PAGE = "false"
   PUBLIC_FEATURE_AUTHORS_PAGE = "false"
   PUBLIC_FEATURE_CHARTS_PAGE = "false"
-  PUBLIC_FEATURE_PHOTO_BOOTH = "false"
+  PUBLIC_FEATURE_PHOTO_BOOTH = "true"
 
 # Branch deploy context (staging and other branches)
 [context.branch-deploy.environment]
