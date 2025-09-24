@@ -16,8 +16,7 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// Path to the feature flags configuration
-const FEATURE_FLAGS_CONFIG_PATH = join(__dirname, '../src/config/feature-flags.config.ts');
+// Path to environment files
 const ENV_DIR = join(__dirname, '..');
 
 // Environment-specific configurations
@@ -76,37 +75,17 @@ const ENV_CONFIGS = {
 };
 
 /**
- * Dynamically import and evaluate the feature flags configuration
+ * Load feature flags from the universal configuration loader
  */
 async function loadFeatureFlags() {
   try {
-    // Read the TypeScript config file
-    const configContent = readFileSync(FEATURE_FLAGS_CONFIG_PATH, 'utf-8');
+    // Import the universal configuration loader
+    const { loadFeatureFlags: universalLoader } = await import('../src/lib/flagLoader.js');
 
-    // Extract the FEATURE_FLAGS array using regex (simple approach)
-    const flagsMatch = configContent.match(/export const FEATURE_FLAGS.*?=\s*\[(.*?)\];/s);
-    if (!flagsMatch) {
-      throw new Error('Could not find FEATURE_FLAGS export in config file');
-    }
-
-    // For now, we'll use a simpler approach and parse the known flags
-    // In a real implementation, you'd want to use a proper TypeScript parser
-    const flags = [
-      { name: 'search', environments: { development: true, staging: true, production: true } },
-      { name: 'themeSwitcher', environments: { development: true, staging: true, production: false } },
-      { name: 'comments', environments: { development: false, staging: false, production: false } },
-      { name: 'gtm', environments: { development: false, staging: false, production: true } },
-      { name: 'calculators', environments: { development: true, staging: false, production: false } },
-      { name: 'calculatorAdvanced', environments: { development: true, staging: true, production: false } },
-      { name: 'elementsPage', environments: { development: true, staging: true, production: false } },
-      { name: 'authorsPage', environments: { development: true, staging: true, production: false } },
-      { name: 'chartsPage', environments: { development: true, staging: true, production: false } },
-      { name: 'photoBooth', environments: { development: true, staging: true, production: false } },
-    ];
-
-    return flags;
+    // Use the universal loader to get flags from the single source of truth
+    return await universalLoader();
   } catch (error) {
-    console.error('Error loading feature flags:', error);
+    console.error('Error loading feature flags via universal loader:', error);
     throw error;
   }
 }
