@@ -1,80 +1,67 @@
 ---
-title: "Hey, I'm Cole!"
-meta_title: "About Cole Morton"
-description: "Software Engineer & Quantitative Trader who built Sensylate, an enterprise-grade GenContentOps platform with 21-command AI orchestration achieving 9.2/10 institutional maturity for systematic trading analysis."
+title: "About Cole Morton"
+meta_title: "Cole Morton - Senior Software Engineer"
+description: "Senior Software Engineer with 11+ years building production systems across fintech, healthcare, and digital commerce. Recently relocated to Brisbane from Berlin, bringing deep commercial expertise and modern development practices to Australia's thriving tech ecosystem."
 image: "/images/photo_2025-06-07 09.33.21.jpeg"
 draft: false
 ---
 
-I'm Cole Morton, a **Software Engineer & Quantitative Trader** who combines technical expertise with systematic trading analysis. I've built Sensylate, an **enterprise-grade GenContentOps platform** that demonstrates sophisticated AI orchestration capabilities with **institutional-grade quality**. The platform transforms complex market data into institutional-quality insights through advanced AI command coordination and automated content generation at scale.
+🚀 **Senior Software Engineer** with 11+ years building production systems across fintech, healthcare, and digital commerce.
+Recently relocated to Brisbane from Berlin, eager to contribute deep commercial expertise and modern development practices to Australia's thriving tech ecosystem.
 
-## My Approach
+## Professional Journey
 
-I bring engineering rigor to market analysis, systematically processing financial data through validated methodologies to produce consistent, high-quality trading insights. My focus is on creating transparent, reproducible analysis that meets institutional standards.
+**Complete Employment History:**
 
-**Professional Standards**:
+- **2024-Present**: Sensylate Platform - AI-orchestrated financial analysis system processing 20+ APIs
+- **2022-Present**: Quantitative Trading Systems - Advanced backtesting and portfolio management toolkit
+- **2018-2020**: Oetker Digital - Multi-stack development across React, Vue.js, GraphQL ecosystems
+- **2018**: Panorama Berlin - React Native app with robust QR scanning for fashion events
+- **2017**: Advertile Mobile - iOS application development with focus on rapid feature delivery
+- **2016-2017**: Market Logic Software - Modern React/Redux search UI implementation
+- **2015-2016**: CrossLend - Scaled FinTech platform and team from 3 to 20+ developers
+- **2013-2015**: Dievision - Lead frontend architect for major German banking project (AngularJS)
+- **2012-2013**: Charm Health - Healthcare systems for Chris O'Brien Lifehouse at Royal Prince Alfred Hospital
+- **2009-2012**: ISAC - Enterprise applications including Door2More freight system for DHL
 
-- Multi-source data validation with confidence scoring
-- Transparent methodology with full audit trails
-- Version-controlled analysis with reproducible results
-- Risk-adjusted metrics and comprehensive quality gates
+## Technical Excellence
 
-**Important Note**: Content generated for educational and informational purposes. Not registered as investment advisor. Users responsible for compliance with local financial regulations. No guarantee of investment performance or outcome accuracy.
+**Modern Stack Mastery:**
 
-## The Sensylate Platform
+- Frontend: React 19, TypeScript, Astro 5.12+, Vue.js, TailwindCSS 4
+- Backend: Python 3.10, Node.js, Express.js, .NET/C#
+- Data: Pandas 2.0+, NumPy, Plotly, SQL Server, PostgreSQL
+- DevOps: Git, Docker, CI/CD, GitHub Actions
+- AI Tools: Expert in leveraging modern AI tools for enhanced productivity
 
-**Enterprise-Grade GenContentOps Platform**: Sensylate implements a sophisticated **21-command AI orchestration system** organized across four classification tiers (Infrastructure, Product, Assistant, Sub-agents). The platform integrates 18+ financial APIs to deliver comprehensive market analysis through the automated DASV framework (Discovery-Analyze-Synthesize-Validate).
+**Production Scale:**
 
-**Production-Scale Content Generation**: The system has generated **100+ fundamental analysis reports** with institutional-grade validation, comprehensive sector reports, and hundreds of multi-format content assets. All outputs meet **9.0+ confidence thresholds** with cross-API validation and comprehensive quality gates.
+- 28,500+ lines of maintained production code
+- 100+ institutional-grade financial analyses generated
+- Daily GitHub contributions over past year
+- Proven ability to architect and deliver enterprise systems
 
-**Contract-Driven Data Pipeline**: Advanced architectural patterns enable automatic service discovery and orchestration, with intelligent template selection and multi-engine content generation (blog posts, social media, interactive visualizations).
+## Leadership & Impact
 
-**AI Command System Integration**: Seamless Claude AI integration through specialized command orchestration:
+**Team Building:** Played pivotal role scaling CrossLend from 3 to 20+ developers while maintaining platform stability and regulatory compliance.
 
-- **Infrastructure Layer**: Implementation planning, codebase health analysis, documentation lifecycle management
-- **Product Layer**: Content generation, analysis processing, quality assurance with institutional standards
-- **DASV Layer**: Atomic DASV processing with fail-fast validation and sequential orchestration
-- **Sub-Agent Layer**: Specialized agents for research, systematic analysis, and viral content creation
+**Technical Leadership:** From healthcare regulatory compliance to FinTech platform scaling, consistently delivered mission-critical systems meeting stringent requirements.
 
-**Analysis Capabilities**:
+**Global Experience:** 11+ years across Australia, New Zealand, and Germany, bringing international perspective to local opportunities.
 
-- **Fundamental Analysis**: Complete financial health assessment with institutional-grade A-F grading system
-- **Sector Analysis**: Comprehensive industry and market segment evaluation with peer benchmarking
-- **Trading Signals**: Systematic signal generation with quantified risk assessment and confidence scoring
-- **Multi-Modal Content Generation**: Automated blog posts, social media optimization, and interactive reports
-- **Quality Assurance Framework**: Institutional validation with 9.0+ confidence thresholds and compliance standards
+## Why Brisbane, Why Now
 
-## Technical Foundation
+After 12 years in Berlin's tech scene, my wife and I chose Brisbane for its exceptional tech growth (81% expansion) and to be closer to family. With my grandfather (a respected engineer who shaped my problem-solving approach) in nearby New Zealand, this move represents both professional opportunity and personal values.
 
-**Enterprise-Grade Architecture**: Sensylate demonstrates **exceptional GenContentOps implementation** with advanced technical patterns including factory design and contract-driven data processing. The platform represents a **reference implementation** for scalable content generation systems.
+I'm excited to contribute to Brisbane's innovation ecosystem, bringing:
 
-**Technical Excellence**:
+- Deep commercial experience across multiple industries
+- Modern development practices and AI productivity tools
+- Proven ability to scale teams and systems
+- Global perspective with local commitment
 
-- **Backend**: Python 3.9+ with sophisticated service orchestration (88 files, 28,506 lines of code)
-- **Frontend**: Modern Astro 5.7.8, React 19.1.0, TailwindCSS 4.1.4 stack
-- **AI Orchestration**: 21-command Claude AI integration with four-tier classification system
-- **Data Processing**: Contract-first pipeline with 18+ API integrations and intelligent multi-level caching
-- **Quality Framework**: Institutional-grade validation with 9.0+ confidence thresholds, automated compliance checking
-- **Production Scale**: 100+ analysis reports generated with comprehensive audit trails and error handling
+## Current Focus
 
-**Data Pipeline**: The system processes market data through structured workflows, maintaining data integrity through multi-source validation and comprehensive error handling. All analysis follows documented procedures with full audit trails.
+**Seeking:** Senior engineering roles where I can apply full-stack expertise and modern development practices to deliver high-impact solutions. Particularly interested in fintech, SaaS platforms, and innovative product teams embracing next-generation development workflows.
 
-**Engineering Principles**: Built following DRY, SOLID, and fail-fast methodologies with automated quality gates ensuring production-ready deployments. The platform emphasizes systematic approaches over ad-hoc analysis.
-
-## Who This Platform Serves
-
-**Primary Audiences**:
-
-- **Active Traders**: Seeking systematic, data-driven analysis with transparent methodology
-- **Content Creators**: Requiring rapid conversion of market data into engaging content
-- **Technical Professionals**: Interested in systematic approaches to financial analysis
-
-**Value Proposition**: Sensylate represents **enterprise-level AI orchestration capabilities** accessible through a personal platform. The system bridges complex market data and actionable insights with institutional-quality standards, providing systematic approaches that exceed typical individual analysis while maintaining full transparency and audit trails required for professional-grade financial research.
-
-## Current Implementation
-
-**Production System**: The platform actively processes market data at enterprise scale, generating **hundreds of analysis assets** with institutional-grade validation. Recent outputs demonstrate consistent **9.0+ confidence scores** across fundamental analyses, sector evaluations, and multi-format content generation.
-
-**Institutional Quality Standards**: All analysis undergoes **four-phase DASV validation** with cross-API verification, comprehensive quality gates, and compliance framework enforcement. The system maintains **9.2/10 GenContentOps maturity** with automated error detection and audit trail documentation.
-
-**Systematic Evolution**: The platform advances through data-driven improvement cycles, with all changes validated through comprehensive testing frameworks and quality regression prevention. The architecture supports horizontal scaling and enterprise deployment patterns.
+**Availability:** Immediately available for Brisbane-based or hybrid opportunities

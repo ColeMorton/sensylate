@@ -61,7 +61,7 @@ export const FEATURE_FLAGS: FeatureFlagDefinition[] = [
     environments: {
       development: true,
       staging: true,
-      production: true,
+      production: false,
     },
     buildTimeOptimization: true,
   },
@@ -147,18 +147,6 @@ export const FEATURE_FLAGS: FeatureFlagDefinition[] = [
       development: true,
       staging: true,
       production: false,
-    },
-    buildTimeOptimization: true,
-  },
-  {
-    name: "resumePage",
-    description: "Enable professional resume page",
-    category: "ui",
-    defaultValue: false,
-    environments: {
-      development: true,
-      staging: true,
-      production: true,
     },
     buildTimeOptimization: true,
   },

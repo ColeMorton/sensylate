@@ -78,7 +78,6 @@ async function startGlobalDevelopmentServer(): Promise<void> {
         PHOTOBOOTH_E2E_DEV: "true",
         // Ensure boolean feature flags are set as strings
         PUBLIC_FEATURE_PHOTO_BOOTH: "true",
-        PUBLIC_FEATURE_RESUME_PAGE: "true",
       },
     },
   );

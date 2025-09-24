@@ -1,11 +1,4 @@
-import {
-  describe,
-  it,
-  expect,
-  beforeEach,
-  afterEach,
-  beforeAll,
-} from "vitest";
+import { describe, it, expect, beforeEach, afterEach, beforeAll } from "vitest";
 import {
   photoBoothE2EHelper,
   setupPhotoBoothE2E,
