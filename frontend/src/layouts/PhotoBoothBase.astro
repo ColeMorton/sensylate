@@ -123,10 +123,24 @@ const { title, meta_title, description, image, noindex, canonical } =
     <!-- Initialize theme before render to prevent FOUC -->
     <script is:inline>
       const loadTheme = function () {
-        // Default theme is now 'dark'
+        // Check for URL mode parameter first (photo booth override)
+        const urlParams = new URLSearchParams(window.location.search);
+        const urlMode = urlParams.get("mode");
+
+        if (urlMode && (urlMode === "light" || urlMode === "dark")) {
+          // URL parameter overrides all other settings for photo booth
+          document.documentElement.classList.toggle("dark", urlMode === "dark");
+          console.log(
+            `🎨 Photo booth theme set to: ${urlMode} (from URL parameter)`,
+          );
+          return;
+        }
+
+        // Fallback to stored theme or default
         const defaultTheme = "dark";
         const theme = localStorage.getItem("theme") || defaultTheme;
         document.documentElement.classList.toggle("dark", theme === "dark");
+        console.log(`🎨 Theme set to: ${theme} (from localStorage/default)`);
       };
       // Initial load
       loadTheme();
@@ -135,6 +149,8 @@ const { title, meta_title, description, image, noindex, canonical } =
       // Listen for Astro view transitions to maintain theme
       document.addEventListener("astro:page-load", loadTheme);
       document.addEventListener("astro:after-swap", loadTheme);
+      // Listen for URL parameter changes (for navigation within photo booth)
+      window.addEventListener("popstate", loadTheme);
     </script>
 
     <!-- Photo booth specific styles -->

@@ -22,7 +22,6 @@ export interface NavigationLink {
 const menuPriority = {
   "/": 7, // Home - always visible
   "/about": 6, // About - always visible
-  "/resume": 5, // Resume - always visible
   "/contact": 4.5, // Contact - positioned after Resume
   "/blog": 4, // Blog - always visible
   "/categories/analysis": 3, // Analysis - moves to dropdown on xl
@@ -43,9 +42,6 @@ const filteredItems = menu.main
       return false;
     }
     if (item.url === "/charts" && !features.chartsPage) {
-      return false;
-    }
-    if (item.url === "/resume" && !features.resumePage) {
       return false;
     }
     return true;
@@ -288,7 +284,7 @@ const { pathname } = Astro.url;
           </button>
         )
       }
-      {import.meta.env.DEV && <ThemeSwitcher className="mr-5" />}
+      {features.themeSwitcher && <ThemeSwitcher className="mr-5" />}
       {
         navigation_button.enable && (
           <a

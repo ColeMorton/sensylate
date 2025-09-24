@@ -85,11 +85,14 @@ class SVGExporter {
       // Extract SVG data from charts
       const svgData = await this._extractChartSVGs(page);
 
+      // Extract text elements (for logos and other non-chart content)
+      const textData = await this._extractTextElements(page);
+
       // Get dashboard layout and styling
       const layoutData = await this._extractLayoutData(page, { width, height });
 
       // Compose final SVG
-      const finalSVG = await this._composeSVG(svgData, layoutData, {
+      const finalSVG = await this._composeSVG(svgData, textData, layoutData, {
         width,
         height,
         backgroundColor,
@@ -110,6 +113,8 @@ class SVGExporter {
         fileSize: stats.size,
         fileSizeKB: (stats.size / 1024).toFixed(2),
         chartCount: svgData.charts.length,
+        textElementCount: textData.textElements.length,
+        hasBrandText: textData.hasBrandText,
         hasEmbeddedCSS: includeCSS,
         exportTime: Date.now()
       };
@@ -118,6 +123,10 @@ class SVGExporter {
         console.log(`✅ SVG exported: ${width}x${height}`);
         console.log(`   File size: ${result.fileSizeKB} KB`);
         console.log(`   Charts included: ${result.chartCount}`);
+        console.log(`   Text elements: ${result.textElementCount}`);
+        if (result.hasBrandText) {
+          console.log(`   ✓ Brand text detected and included`);
+        }
       }
 
       return result;
@@ -243,6 +252,89 @@ class SVGExporter {
   }
 
   /**
+   * Extract text elements from dashboard (especially for logos)
+   * @private
+   */
+  async _extractTextElements(page) {
+    return await page.evaluate(() => {
+      const textElements = [];
+
+      // Look for brand text elements (logos)
+      const brandElements = document.querySelectorAll('.brand-text');
+      brandElements.forEach((element, index) => {
+        try {
+          const rect = element.getBoundingClientRect();
+          const computedStyle = window.getComputedStyle(element);
+
+          // Get the effective text color based on theme
+          const isDarkMode = document.documentElement.classList.contains('dark');
+          const textColor = isDarkMode ? '#ffffff' : '#000000'; // Black for light theme, white for dark
+
+          textElements.push({
+            id: `brand-text-${index}`,
+            type: 'brand-text',
+            content: element.textContent?.trim() || '',
+            position: { x: rect.left, y: rect.top },
+            dimensions: { width: rect.width, height: rect.height },
+            styles: {
+              fontSize: computedStyle.fontSize,
+              fontFamily: computedStyle.fontFamily,
+              fontWeight: computedStyle.fontWeight,
+              color: textColor, // Use theme-appropriate color
+              textAlign: computedStyle.textAlign || 'center'
+            },
+            className: element.className
+          });
+        } catch (error) {
+          console.warn(`Failed to extract text element ${index}:`, error);
+        }
+      });
+
+      // Look for other important text elements
+      const headingElements = document.querySelectorAll('h1, h2, h3');
+      headingElements.forEach((element, index) => {
+        // Skip if already captured as brand-text
+        if (element.classList.contains('brand-text')) return;
+
+        try {
+          const rect = element.getBoundingClientRect();
+          const computedStyle = window.getComputedStyle(element);
+
+          // Only capture visible elements with meaningful content
+          if (rect.width > 0 && rect.height > 0 && element.textContent?.trim()) {
+            const isDarkMode = document.documentElement.classList.contains('dark');
+            const textColor = isDarkMode ? '#ffffff' : '#000000';
+
+            textElements.push({
+              id: `heading-${index}`,
+              type: 'heading',
+              content: element.textContent.trim(),
+              position: { x: rect.left, y: rect.top },
+              dimensions: { width: rect.width, height: rect.height },
+              styles: {
+                fontSize: computedStyle.fontSize,
+                fontFamily: computedStyle.fontFamily,
+                fontWeight: computedStyle.fontWeight,
+                color: textColor,
+                textAlign: computedStyle.textAlign || 'left'
+              },
+              tagName: element.tagName.toLowerCase()
+            });
+          }
+        } catch (error) {
+          console.warn(`Failed to extract heading element ${index}:`, error);
+        }
+      });
+
+      return {
+        textElements,
+        totalElements: textElements.length,
+        hasBrandText: brandElements.length > 0
+      };
+    });
+  }
+
+  /**
    * Extract layout and styling data from dashboard
    * @private
    */
@@ -293,9 +385,10 @@ class SVGExporter {
    * Compose final SVG from extracted data
    * @private
    */
-  async _composeSVG(svgData, layoutData, options) {
+  async _composeSVG(svgData, textData, layoutData, options) {
     const { width, height, backgroundColor, includeCSS, optimizeText } = options;
     const { charts } = svgData;
+    const { textElements } = textData;
     const { theme, isDarkMode } = layoutData;
 
     // SVG header with proper namespaces and viewport
@@ -318,7 +411,7 @@ class SVGExporter {
 
     // Add title and metadata
     svg += `  <title>Dashboard Export - ${new Date().toISOString()}</title>
-  <desc>Vector dashboard export with ${charts.length} charts</desc>\n`;
+  <desc>Vector dashboard export with ${charts.length} charts and ${textElements.length} text elements</desc>\n`;
 
     // Add each chart as a group
     charts.forEach((chart, index) => {
@@ -331,6 +424,37 @@ class SVGExporter {
         svg += `    ${cleanSVG}\n`;
         svg += `  </g>\n`;
       }
+    });
+
+    // Add text elements (logos, headings, etc.)
+    textElements.forEach((textElement, index) => {
+      svg += `  <!-- Text Element ${index + 1}: ${textElement.type} -->\n`;
+      svg += `  <g id="${textElement.id}">\n`;
+
+      // Convert font size from pixels to SVG units
+      const fontSize = parseFloat(textElement.styles.fontSize) || 16;
+      const fontFamily = this._escapeXMLAttribute(textElement.styles.fontFamily || 'Arial, sans-serif');
+      const fontWeight = textElement.styles.fontWeight || 'normal';
+      const textColor = textElement.styles.color || (isDarkMode ? '#ffffff' : '#000000');
+      const textAnchor = textElement.styles.textAlign === 'center' ? 'middle' :
+                        textElement.styles.textAlign === 'right' ? 'end' : 'start';
+
+      // Position text at center of element bounds for center alignment
+      const textX = textElement.styles.textAlign === 'center' ?
+                   textElement.position.x + (textElement.dimensions.width / 2) :
+                   textElement.position.x;
+      const textY = textElement.position.y + (textElement.dimensions.height / 2) + (fontSize / 3);
+
+      svg += `    <text x="${textX}" y="${textY}"\n`;
+      svg += `          font-family="${fontFamily}"\n`;
+      svg += `          font-size="${fontSize}"\n`;
+      svg += `          font-weight="${fontWeight}"\n`;
+      svg += `          fill="${textColor}"\n`;
+      svg += `          text-anchor="${textAnchor}"\n`;
+      svg += `          dominant-baseline="middle">\n`;
+      svg += `      ${textElement.content}\n`;
+      svg += `    </text>\n`;
+      svg += `  </g>\n`;
     });
 
     // Add footer with export info
@@ -373,6 +497,21 @@ class SVGExporter {
       }
     ]]></style>
   </defs>\n`;
+  }
+
+  /**
+   * Escape XML attribute values to prevent syntax errors
+   * @private
+   */
+  _escapeXMLAttribute(value) {
+    if (!value) return '';
+
+    return value
+      .replace(/&/g, '&amp;')    // Must be first
+      .replace(/"/g, '&quot;')   // Escape double quotes
+      .replace(/'/g, '&apos;')   // Escape single quotes
+      .replace(/</g, '&lt;')     // Escape less than
+      .replace(/>/g, '&gt;');    // Escape greater than
   }
 
   /**

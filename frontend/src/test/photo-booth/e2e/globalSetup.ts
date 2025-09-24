@@ -44,8 +44,9 @@ async function startGlobalDevelopmentServer(): Promise<void> {
 
   console.log("🚀 Starting development server for PhotoBooth E2E tests...");
 
-  const path = await import("path");
-  const frontendDir = path.resolve(process.cwd(), "frontend");
+  await import("path");
+  // We're already in the frontend directory when running from frontend/
+  const frontendDir = process.cwd();
 
   // Find available port and set environment
   const availablePort = await findAvailablePort();
@@ -56,26 +57,43 @@ async function startGlobalDevelopmentServer(): Promise<void> {
     const { execSync } = await import("child_process");
     execSync(`lsof -ti:${availablePort} | xargs kill -9`, { stdio: "ignore" });
     await setTimeout(2000); // Wait for cleanup
-  } catch (e) {
+  } catch (_e) {
     // Port was already free
   }
 
+  console.log(`🔧 Starting server in directory: ${frontendDir}`);
+  console.log(`📡 Using port: ${availablePort}`);
+
   // Start development server with PhotoBooth enabled
   globalDevServer = spawn(
-    "yarn",
+    process.platform === "win32" ? "yarn.cmd" : "yarn",
     ["dev", "--port", availablePort.toString(), "--host", "0.0.0.0"],
     {
       cwd: frontendDir,
-      shell: true,
       detached: false,
       stdio: ["ignore", "pipe", "pipe"],
       env: {
         ...process.env,
         NODE_ENV: "development",
         PHOTOBOOTH_E2E_DEV: "true",
+        // Ensure boolean feature flags are set as strings
+        PUBLIC_FEATURE_PHOTO_BOOTH: "true",
       },
     },
   );
+
+  // Add process event listeners for debugging
+  globalDevServer.on("spawn", () => {
+    console.log("🎯 Server process spawned successfully");
+  });
+
+  globalDevServer.on("error", (err) => {
+    console.error("❌ Server spawn error:", err);
+  });
+
+  globalDevServer.on("exit", (code, signal) => {
+    console.log(`🚪 Server process exited with code ${code}, signal ${signal}`);
+  });
 
   let serverOutput = "";
 
@@ -85,9 +103,12 @@ async function startGlobalDevelopmentServer(): Promise<void> {
     if (
       output.includes("Local:") ||
       output.includes("ready in") ||
-      output.includes("astro")
+      output.includes("astro") ||
+      output.includes("Network") ||
+      output.includes("localhost:") ||
+      output.includes("watching for file changes")
     ) {
-      console.log(`✅ Dev server output: ${output.trim()}`);
+      console.log(`🚀 Dev server: ${output.trim()}`);
     }
   });
 
@@ -98,7 +119,7 @@ async function startGlobalDevelopmentServer(): Promise<void> {
       !error.includes("license field") &&
       error.trim()
     ) {
-      console.warn("Dev server warning:", error.trim());
+      console.warn("⚠️  Dev server stderr:", error.trim());
     }
   });
 
@@ -108,39 +129,72 @@ async function startGlobalDevelopmentServer(): Promise<void> {
     `⏳ Waiting for development server at ${process.env.E2E_BASE_URL}...`,
   );
 
+  // Give the server some time to start up before health checks
+  console.log("🕐 Waiting 5 seconds for server initialization...");
+  await setTimeout(5000);
+
   while (attempts < MAX_SERVER_START_ATTEMPTS) {
     try {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 3000);
+      console.log(
+        `🔍 Health check attempt ${attempts + 1}: ${process.env.E2E_BASE_URL}`,
+      );
 
-      const response = await fetch(process.env.E2E_BASE_URL, {
-        signal: controller.signal,
-        headers: { "Cache-Control": "no-cache" },
+      // Check if server process is still running
+      if (globalDevServer && globalDevServer.killed) {
+        throw new Error("Server process has been killed");
+      }
+
+      const http = await import("http");
+      const url = new URL(process.env.E2E_BASE_URL!);
+
+      const success = await new Promise<boolean>((resolve) => {
+        const req = http.request(
+          {
+            hostname: url.hostname,
+            port: url.port,
+            path: "/",
+            method: "GET",
+            timeout: 5000,
+            headers: {
+              "Cache-Control": "no-cache",
+              "User-Agent": "E2E-Health-Check",
+            },
+          },
+          (res) => {
+            console.log(
+              `📊 Server response: ${res.statusCode} ${res.statusMessage}`,
+            );
+            resolve(res.statusCode === 200);
+          },
+        );
+
+        req.on("error", (err) => {
+          console.log(`⚠️  HTTP request error: ${err.message}`);
+          resolve(false);
+        });
+
+        req.on("timeout", () => {
+          console.log("🕐 Request timed out after 5 seconds");
+          req.destroy();
+          resolve(false);
+        });
+
+        req.end();
       });
 
-      clearTimeout(timeoutId);
-
-      if (response.ok) {
+      if (success) {
         console.log("✅ Development server is ready");
         globalServerReady = true;
-
-        // Wait additional time for full initialization and hot reload stability
-        await setTimeout(5000);
+        await setTimeout(2000);
         return;
       }
-
-      console.log(
-        `Server response: ${response.status} (attempt ${attempts + 1}/${MAX_SERVER_START_ATTEMPTS})`,
-      );
     } catch (e: any) {
-      if (attempts % 10 === 0) {
-        console.log(
-          `Server not ready: ${e.message} (attempt ${attempts + 1}/${MAX_SERVER_START_ATTEMPTS})`,
-        );
-      }
+      console.log(
+        `⚠️  Health check failed: ${e.message} (attempt ${attempts + 1}/${MAX_SERVER_START_ATTEMPTS})`,
+      );
     }
 
-    await setTimeout(1000);
+    await setTimeout(2000);
     attempts++;
   }
 
@@ -213,7 +267,7 @@ async function startGlobalProductionServer(): Promise<void> {
     const { execSync } = await import("child_process");
     execSync(`lsof -ti:${availablePort} | xargs kill -9`, { stdio: "ignore" });
     await setTimeout(2000); // Wait for cleanup
-  } catch (e) {
+  } catch (_e) {
     // Port was already free
   }
 
@@ -370,7 +424,7 @@ export async function teardown(): Promise<void> {
       console.log(
         `✅ ${serverType.charAt(0).toUpperCase() + serverType.slice(1)} server stopped`,
       );
-    } catch (e) {
+    } catch (_e) {
       console.warn(`Warning: Failed to stop ${serverType} server:`, e);
     }
   }

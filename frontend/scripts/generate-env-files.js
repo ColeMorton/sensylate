@@ -93,7 +93,7 @@ async function loadFeatureFlags() {
     // In a real implementation, you'd want to use a proper TypeScript parser
     const flags = [
       { name: 'search', environments: { development: true, staging: true, production: true } },
-      { name: 'themeSwitcher', environments: { development: true, staging: true, production: true } },
+      { name: 'themeSwitcher', environments: { development: true, staging: true, production: false } },
       { name: 'comments', environments: { development: false, staging: false, production: false } },
       { name: 'gtm', environments: { development: false, staging: false, production: true } },
       { name: 'calculators', environments: { development: true, staging: false, production: false } },

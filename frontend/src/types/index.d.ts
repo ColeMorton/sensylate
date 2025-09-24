@@ -23,7 +23,6 @@ export interface FeatureFlags {
   elementsPage: boolean;
   authorsPage: boolean;
   chartsPage: boolean;
-  resumePage: boolean;
   photoBooth: boolean;
 }
 

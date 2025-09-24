@@ -222,6 +222,16 @@ const DASHBOARD_CONFIGS: Record<string, DashboardConfig> = {
       },
     ],
   },
+  logo_generation: {
+    id: "logo_generation",
+    title: "Logo Generation Dashboard",
+    description:
+      "Brand logo generation with multiple sizes and formats for high-quality captures",
+    layout: "logo_variants",
+    mode: "both",
+    enabled: true,
+    charts: [], // Logo dashboard uses MDX content, not chart components
+  },
 };
 
 export class DashboardLoader {
@@ -266,6 +276,8 @@ export class DashboardLoader {
         return "grid grid-cols-1 gap-4";
       case "fundamental_3x3":
         return "fundamental-dashboard-grid";
+      case "logo_variants":
+        return "logo-generation-layout flex items-center justify-center w-full h-full";
       default:
         return "grid grid-cols-1 gap-6 lg:grid-cols-2";
     }

@@ -97,6 +97,7 @@ class PhotoBoothGenerator:
         scale_factor: int = 3,
         custom_config: Optional[Dict[str, Any]] = None,
         ticker: Optional[str] = None,
+        brand: Optional[str] = None,
     ) -> Union[Path, List[Path]]:
         """
         Generate a single dashboard screenshot.
@@ -157,6 +158,7 @@ class PhotoBoothGenerator:
                 aspect_ratio=aspect_ratio.replace(":", "x"),
                 format=fmt,
                 dpi=dpi,
+                brand=brand or "personal",
                 timestamp=timestamp,
                 extension=extension,
             )
@@ -649,6 +651,11 @@ def main():
         help="Ticker symbol for fundamental analysis dashboard (e.g., GOOGL, NVDA, ASML)",
     )
     parser.add_argument(
+        "--brand",
+        choices=["personal", "attribution"],
+        help="Brand variant for logo generation dashboard (personal: Cole Morton, attribution: colemorton.com)",
+    )
+    parser.add_argument(
         "--log-level",
         choices=["DEBUG", "INFO", "WARNING", "ERROR"],
         default="INFO",
@@ -689,6 +696,7 @@ def main():
                     dpi=args.dpi,
                     scale_factor=args.scale_factor,
                     ticker=args.ticker,
+                    brand=args.brand,
                 )
                 # Handle both single file and multiple file results
                 if isinstance(result, list):
